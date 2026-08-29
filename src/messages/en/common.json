@@ -1,0 +1,16 @@
+{
+  "appName": "Invio",
+  "loading": "Loading...",
+  "backToTop": "Back to top",
+  "showPassword": "Show password",
+  "hidePassword": "Hide password",
+  "save": "Save",
+
+  "datePicker": {
+    "clear": "Clear date"
+  },
+
+  "timePicker": {
+    "clear": "Clear time"
+  }
+}

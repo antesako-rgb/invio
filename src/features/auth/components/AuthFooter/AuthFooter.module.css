@@ -1,0 +1,35 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 0.4rem;
+
+  margin-top: 1.5rem;
+
+  color:
+    var(--muted-foreground);
+
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+
+.link {
+  color:
+    var(--primary);
+
+  font-weight: 600;
+}
+
+
+.link:hover {
+  color:
+    var(--primary-dark);
+
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

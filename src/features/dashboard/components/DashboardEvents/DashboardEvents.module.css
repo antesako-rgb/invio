@@ -1,0 +1,351 @@
+/* ==========================================================================
+   Dashboard Events
+========================================================================== */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+
+/* ==========================================================================
+   Header
+========================================================================== */
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.title {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+
+  color: var(--foreground);
+}
+
+.description {
+  margin: 6px 0 0;
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: var(--muted-foreground);
+}
+
+
+/* ==========================================================================
+   List
+========================================================================== */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+/* ==========================================================================
+   Card
+========================================================================== */
+
+.card {
+  display: grid;
+  grid-template-columns:
+    72px
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+
+  gap: 24px;
+
+  padding: 20px;
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  background:
+    var(--card);
+
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.card:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--foreground) 16%,
+      var(--border)
+    );
+
+  box-shadow:
+    0 6px 24px
+    rgb(0 0 0 / 5%);
+}
+
+
+/* ==========================================================================
+   Date
+========================================================================== */
+
+.date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 72px;
+  height: 72px;
+
+  border-radius: 14px;
+
+  background:
+    var(--muted);
+
+  text-align: center;
+}
+
+.dateDay {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+
+  letter-spacing: -0.03em;
+
+  color:
+    var(--foreground);
+}
+
+.dateMonth {
+  margin-top: 6px;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+
+  letter-spacing: 0.08em;
+
+  color:
+    var(--muted-foreground);
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.content {
+  min-width: 0;
+}
+
+.eventHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 16px;
+}
+
+.eventName {
+  margin: 0;
+
+  overflow: hidden;
+
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+
+  color:
+    var(--foreground);
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.eventType {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  color:
+    var(--muted-foreground);
+}
+
+
+/* ==========================================================================
+   Meta
+========================================================================== */
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 6px 18px;
+
+  margin-top: 12px;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  min-width: 0;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  color:
+    var(--muted-foreground);
+}
+
+.metaItem svg {
+  width: 15px;
+  height: 15px;
+
+  flex-shrink: 0;
+}
+
+.metaItem span {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   Guests
+========================================================================== */
+
+.guests {
+  margin: 10px 0 0;
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+
+  color:
+    var(--foreground);
+}
+
+
+/* ==========================================================================
+   Footer
+========================================================================== */
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: -4px;
+}
+
+
+/* ==========================================================================
+   Responsive
+========================================================================== */
+
+@media (max-width: 768px) {
+  .header {
+    align-items: flex-start;
+  }
+
+  .card {
+    grid-template-columns:
+      60px
+      minmax(0, 1fr);
+
+    gap: 16px;
+
+    padding: 16px;
+  }
+
+  .date {
+    width: 60px;
+    height: 60px;
+
+    border-radius: 12px;
+  }
+
+  .dateDay {
+    font-size: 22px;
+  }
+
+  .card > :last-child {
+    grid-column: 2;
+
+    justify-self: flex-start;
+  }
+}
+
+
+@media (max-width: 560px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .header > :last-child {
+    width: 100%;
+  }
+
+  .card {
+    grid-template-columns:
+      52px
+      minmax(0, 1fr);
+
+    align-items: flex-start;
+
+    gap: 14px;
+  }
+
+  .date {
+    width: 52px;
+    height: 52px;
+  }
+
+  .dateDay {
+    font-size: 20px;
+  }
+
+  .dateMonth {
+    margin-top: 4px;
+
+    font-size: 10px;
+  }
+
+  .meta {
+    flex-direction: column;
+
+    gap: 6px;
+  }
+
+  .card > :last-child {
+    grid-column:
+      1 / -1;
+
+    width: 100%;
+  }
+
+  .footer {
+    justify-content: stretch;
+  }
+
+  .footer > * {
+    width: 100%;
+  }
+}

@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Invitation Experience
+========================================================================== */
+
+.invitation-experience {
+  position:
+    relative;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    100%;
+
+  min-height:
+    100dvh;
+
+  overflow:
+    hidden;
+
+  background-color:
+    var(--invitation-experience-background);
+
+  background-image:
+    var(--invitation-experience-background-image);
+
+  background-size:
+    var(--invitation-experience-background-size);
+
+  background-position:
+    var(--invitation-experience-background-position);
+
+  background-repeat:
+    var(--invitation-experience-background-repeat);
+}
+
+
+/* ==========================================================================
+   Edit Mode
+========================================================================== */
+
+.invitation-experience[data-mode="edit"] {
+  display:
+    block;
+
+  min-height:
+    0;
+
+  overflow:
+    visible;
+
+  background:
+    transparent;
+}

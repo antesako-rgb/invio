@@ -1,0 +1,80 @@
+{
+  "overview": {
+    "welcome": {
+      "title": "Welcome, {name}!",
+      "titleFallback": "Welcome!",
+      "description": "Ready to create unforgettable events?"
+    },
+
+    "emptyEvent": {
+      "title": "Create your first event",
+      "description": "It all starts with an event. Create one and start managing invitations, your guest list, and seating arrangements.",
+      "action": "New event"
+    },
+
+    "events": {
+      "title": "Your events",
+      "description": "Continue planning your upcoming events.",
+      "newEvent": "New event",
+      "openEvent": "Open event",
+      "viewAll": "View all events",
+      "plannedGuests": "{count, plural, =1 {# planned guest} other {# planned guests}}",
+
+      "types": {
+        "wedding": "Wedding",
+        "confirmation": "Confirmation",
+        "baptism": "Baptism",
+        "communion": "First Communion",
+        "birthday": "Birthday",
+        "other_private": "Other private event",
+
+        "conference": "Conference",
+        "seminar": "Seminar",
+        "team_building": "Team building",
+        "reception": "Reception",
+        "gala_dinner": "Gala dinner",
+        "other_business": "Other business event",
+
+        "festival": "Festival",
+        "charity": "Charity event",
+        "sports": "Sports event",
+        "cultural": "Cultural event",
+        "music": "Music event",
+        "other_social": "Other social event"
+      }
+    },
+
+    "business": {
+      "title": "Offer services for events?",
+      "description": "Showcase your business to thousands of Invio users and receive inquiries for your services.",
+      "action": "Create business profile"
+    },
+
+    "explore": {
+      "title": "Explore Invio",
+
+      "templates": {
+        "title": "Invitation templates",
+        "description": "Beautiful templates for every occasion.",
+        "action": "Browse"
+      },
+
+      "services": {
+        "title": "Services marketplace",
+        "description": "Find the best services for your event.",
+        "action": "Explore"
+      },
+
+      "howItWorks": {
+        "title": "How does it work?",
+        "description": "Discover how Invio makes event planning easier.",
+        "action": "Learn more"
+      }
+    },
+
+    "brandMessage": {
+      "title": "Invio is here to make life's important moments even more special.",
+      "description": "Thank you for being part of our story!"
+    }
+  }
+}

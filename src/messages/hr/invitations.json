@@ -1,0 +1,136 @@
+{
+  "editor": {
+    "navigation": {
+      "label": "Navigacija uređivača pozivnice",
+      "back": "Natrag",
+      "design": "Dizajn",
+      "details": "Detalji",
+      "rsvp": "RSVP",
+      "preview": "Pregled"
+    },
+
+    "actions": {
+      "save": "Spremi",
+      "saveAndContinue": "Spremi i nastavi"
+    },
+
+    "sidebar": {
+      "title": "Uredi pozivnicu",
+      "content": "Sadržaj",
+      "style": "Stil"
+    },
+
+    "status": {
+      "saving": "Spremanje...",
+      "saved": "Spremljeno"
+    },
+
+    "time": {
+      "startTime": "Vrijeme početka",
+      "endTime": "Vrijeme završetka"
+    },
+
+    "date": {
+      "startDate": "Datum početka",
+      "endDate": "Datum završetka"
+    },
+
+    "elementLabels": {
+      "title": "Uredi naziv",
+      "subtitle": "Uredi podnaslov",
+      "initial": "Uredi inicijal",
+      "description": "Uredi opis",
+      "date": "Uredi datum",
+      "time": "Uredi vrijeme",
+      "location": "Uredi lokaciju",
+      "address": "Uredi adresu",
+      "image": "Uredi sliku",
+      "delete": "Delete content"
+    },
+
+    "fallback": {
+      "heroTitle": "Ana & Marko",
+      "heroSubtitle": "Dragi naši, pozivamo vas na vjenčanje",
+      "description": "Veselimo se što ćete ovaj poseban dan proslaviti s nama.",
+      "locationName": "Mjesto događaja",
+      "locationAddress": "Adresa događaja",
+      "rsvpTitle": "Potvrdite dolazak",
+      "rsvpDescription": "Molimo vas da potvrdite svoj dolazak.",
+      "rsvpCalloutSubtitle": "Radujemo se vašem dolasku",
+      "rsvpCalloutNote": "Molimo potvrdite dolazak na vrijeme."
+    },
+
+    "validation": {
+      "end_without_start": "Prvo odaberite početni datum.",
+      "end_before_start": "Završni datum ne može biti prije početnog datuma."
+    }
+  },
+
+  "page": {
+    "title": "Pozivnice",
+    "description": "Kreiraj i upravljaj pozivnicama za svoj događaj.",
+
+    "actions": {
+      "create": "Nova pozivnica"
+    },
+
+    "empty": {
+      "title": "Još nemaš pozivnicu",
+      "description": "Odaberi predložak i izradi prvu pozivnicu za svoj događaj.",
+      "action": "Izradi pozivnicu"
+    },
+
+    "templates": {
+      "newInvitationName": "Nova pozivnica",
+      "variants": "{count, plural, one {# varijanta} few {# varijante} other {# varijanti}}",
+      "variantSelector": "Odaberi varijantu",
+      "useTemplate": "Koristi predložak",
+
+      "categories": {
+        "all": "Sve",
+        "wedding": "Vjenčanje",
+        "confirmation": "Krizma",
+        "baptism": "Krštenje",
+        "communion": "Pričest",
+        "birthday": "Rođendan",
+        "other_private": "Ostalo privatno",
+        "conference": "Konferencija",
+        "seminar": "Seminar",
+        "team_building": "Team building",
+        "reception": "Prijem",
+        "gala_dinner": "Gala večera",
+        "other_business": "Ostalo poslovno",
+        "festival": "Festival",
+        "charity": "Humanitarni događaj",
+        "sports": "Sportski događaj",
+        "cultural": "Kulturni događaj",
+        "music": "Glazbeni događaj",
+        "other_social": "Ostalo društveno"
+      },
+
+      "flora": {
+        "name": "Flora",
+        "description": "Elegantna botanička pozivnica s nježnim i profinjenim detaljima."
+      }
+    }
+  },
+
+  "templateUseDialog": {
+    "title": "Kako želiš koristiti ovaj predložak?",
+    "description": "Odabrao si {template} · {variant}.",
+    "back": "Natrag",
+
+    "existing": {
+      "title": "Primijeni na postojeću pozivnicu",
+      "description": "Promijeni dizajn postojeće pozivnice bez stvaranja nove.",
+      "selectTitle": "Odaberi pozivnicu",
+      "selectDescription": "Odaberi pozivnicu kojoj želiš promijeniti dizajn.",
+      "lastUpdated": "Zadnje uređeno: {date}"
+    },
+
+    "new": {
+      "title": "Kreiraj novu pozivnicu",
+      "description": "Izradi zasebnu pozivnicu koristeći ovaj predložak."
+    }
+  }
+}

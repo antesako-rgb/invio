@@ -1,0 +1,12 @@
+.page {
+  width: 100%;
+  max-width: 960px;
+
+  margin-inline: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2.5rem;
+}
+

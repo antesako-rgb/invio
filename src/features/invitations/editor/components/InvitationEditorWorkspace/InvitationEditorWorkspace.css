@@ -1,0 +1,215 @@
+/* ==========================================================================
+   Invitation Editor Workspace
+========================================================================== */
+
+.invitation-editor-workspace {
+  display:
+    flex;
+
+  flex:
+    1;
+
+  width:
+    100%;
+
+  min-width:
+    0;
+
+  min-height:
+    0;
+
+  background:
+    var(--background);
+}
+
+
+/* ==========================================================================
+   Sidebar
+========================================================================== */
+
+.invitation-editor-workspace__sidebar {
+  flex:
+    0 0 320px;
+
+  width:
+    320px;
+
+  min-width:
+    0;
+
+  overflow-y:
+    auto;
+
+  border-right:
+    1px solid var(--border);
+
+  background:
+    var(--card);
+}
+
+
+/* ==========================================================================
+   Canvas
+========================================================================== */
+
+.invitation-editor-workspace__canvas {
+  display:
+    flex;
+
+  flex:
+    1;
+
+  min-width:
+    0;
+
+  min-height:
+    0;
+
+  overflow:
+    auto;
+
+  background:
+    var(--muted);
+}
+
+
+/* ==========================================================================
+   Canvas Inner
+========================================================================== */
+
+.invitation-editor-workspace__canvas-inner {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+
+  width:
+    100%;
+
+  min-width:
+    min-content;
+
+  min-height:
+    100%;
+
+  padding:
+    3rem
+    calc(3rem + 310px)
+    3rem
+    3rem;
+}
+
+
+/* ==========================================================================
+   Toolbar
+========================================================================== */
+
+.invitation-editor-workspace__toolbar {
+  display:
+    flex;
+
+  flex:
+    0 0 3.5rem;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    100%;
+
+  height:
+    3.5rem;
+}
+
+
+/* ==========================================================================
+   Document
+========================================================================== */
+
+.invitation-editor-workspace__document {
+  flex:
+    0 0 auto;
+
+  width:
+    min(100%, 520px);
+}
+
+/* ==========================================================================
+   Tablet / Compact Desktop
+========================================================================== */
+
+@media (max-width: 1300px) {
+  .invitation-editor-workspace__canvas-inner {
+    padding:
+      2rem;
+  }
+}
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 767px) {
+  .invitation-editor-workspace {
+    position:
+      relative;
+
+    flex-direction:
+      column;
+  }
+
+
+  .invitation-editor-workspace__sidebar {
+    display:
+      none;
+  }
+
+
+  .invitation-editor-workspace__canvas-inner {
+    align-items:
+      stretch;
+
+    justify-content:
+      flex-start;
+
+    min-width:
+      0;
+
+    padding:
+      1rem;
+  }
+
+
+  .invitation-editor-workspace__toolbar {
+    flex:
+      0 0 3.5rem;
+
+    align-items:
+      center;
+
+    justify-content:
+      flex-start;
+
+    width:
+      100%;
+
+    height:
+      3.5rem;
+  }
+
+
+  .invitation-editor-workspace__document {
+    width:
+      100%;
+  }
+}

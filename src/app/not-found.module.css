@@ -1,0 +1,58 @@
+.notFound {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 1rem;
+
+  padding: 2rem;
+
+  text-align: center;
+}
+
+.code {
+  font-size: 6rem;
+  font-weight: 800;
+  line-height: 1;
+
+  color: var(--primary);
+}
+
+.notFound h1 {
+  font-size: 2rem;
+}
+
+.notFound p {
+  max-width: 500px;
+
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
+.button {
+  margin-top: 1rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 44px;
+  padding: 0 1.5rem;
+
+  border-radius: var(--radius);
+
+  background: var(--primary);
+  color: var(--primary-foreground);
+
+  text-decoration: none;
+  font-weight: 600;
+
+  transition: opacity .2s ease;
+}
+
+.button:hover {
+  opacity: .9;
+}

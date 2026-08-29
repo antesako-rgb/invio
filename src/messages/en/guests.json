@@ -1,0 +1,87 @@
+{
+  "page": {
+    "title": "Guests",
+    "description": "Manage guests, groups, and invitation responses.",
+    "loading": "Loading guests..."
+  },
+
+  "stats": {
+    "total": {
+      "title": "Total guests",
+      "description": "On the guest list"
+    },
+
+    "attending": {
+      "title": "Attending",
+      "description": "Confirmed attendance"
+    },
+
+    "pending": {
+      "title": "Awaiting response",
+      "description": "Haven't responded yet"
+    },
+
+    "declined": {
+      "title": "Not attending",
+      "description": "Declined the invitation"
+    }
+  },
+
+  "rsvp": {
+    "pending": "Awaiting response",
+    "attending": "Attending",
+    "declined": "Not attending"
+  },
+
+  "table": {
+    "guest": "Guest",
+    "group": "Group",
+    "contact": "Contact",
+    "status": "Status",
+    "actions": "Actions",
+    "noGroup": "No group",
+    "emptyTitle": "No guests",
+    "emptyDescription": "You have not added any guests yet.",
+    "addGuest": "Add guest"
+  },
+
+  "filters": {
+    "searchPlaceholder": "Search guests...",
+    "allGroups": "All groups",
+    "noGroup": "No group",
+    "allStatuses": "All",
+    "group": "Group"
+  },
+
+  "form": {
+    "firstName": "First name",
+    "firstNamePlaceholder": "Enter first name",
+    "lastName": "Last name",
+    "lastNamePlaceholder": "Enter last name",
+    "email": "Email",
+    "emailPlaceholder": "Enter email address",
+    "phone": "Phone",
+    "phonePlaceholder": "Enter phone number",
+    "group": "Group",
+    "noGroup": "No group",
+    "notes": "Notes",
+    "notesPlaceholder": "Add a note..."
+  },
+
+  "dialog": {
+    "createTitle": "Add guest",
+    "createDescription": "Add a new guest to the guest list.",
+    "editTitle": "Edit guest",
+    "editDescription": "Update the selected guest's information."
+  },
+
+  "messages": {
+    "guestCreated": "Guest added successfully.",
+    "guestCreateError": "An error occurred while adding the guest.",
+    "guestUpdated": "Guest updated successfully.",
+    "guestUpdateError": "An error occurred while updating the guest."
+  },
+"actions": {
+  "addGuest": "Add guest"
+}
+}

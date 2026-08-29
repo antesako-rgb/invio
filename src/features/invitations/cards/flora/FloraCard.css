@@ -1,0 +1,297 @@
+/* ==========================================================================
+   Flora Card
+========================================================================== */
+
+.flora-card {
+
+  position:
+    relative;
+
+  isolation:
+    isolate;
+
+  width:
+    100%;
+
+  aspect-ratio:
+    5 / 7;
+
+  overflow:
+    hidden;
+
+  background:
+    var(--invitation-card-background);
+
+  color:
+    var(--flora-foreground);
+
+}
+
+
+/* ==========================================================================
+   Background
+========================================================================== */
+
+.flora-card__background {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    0;
+
+  background-color:
+    var(--invitation-card-background);
+
+  background-image:
+    var(--invitation-card-background-image);
+
+  background-size:
+    var(--invitation-card-background-size);
+
+  background-position:
+    var(--invitation-card-background-position);
+
+  background-repeat:
+    var(--invitation-card-background-repeat);
+
+  opacity:
+    var(--invitation-card-background-opacity);
+
+  pointer-events:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Frame
+========================================================================== */
+
+.flora-card__frame {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    1;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    contain;
+
+  filter:
+    var(--flora-frame-filter);
+
+  opacity:
+    var(--flora-frame-opacity);
+
+  mix-blend-mode:
+    var(--flora-frame-blend-mode);
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.flora-card__content {
+
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  padding:
+    10%;
+
+  text-align:
+    center;
+
+}
+
+
+/* ==========================================================================
+   Hero
+========================================================================== */
+
+.flora-card__hero {
+
+  width:
+    100%;
+
+}
+
+
+/* ==========================================================================
+   Eyebrow
+========================================================================== */
+
+.flora-card__eyebrow {
+
+  --invitation-element-font-size:
+    var(--flora-eyebrow-size);
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  font-family:
+    var(--flora-eyebrow-font);
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  font-style:
+    var(--flora-eyebrow-style);
+
+  font-weight:
+    var(--flora-eyebrow-weight);
+
+  line-height:
+    var(--flora-eyebrow-line-height);
+
+  letter-spacing:
+    var(--flora-eyebrow-letter-spacing);
+
+  color:
+    var(--flora-eyebrow-color);
+
+  text-transform:
+    var(--flora-eyebrow-text-transform);
+
+  text-align:
+    var(--flora-eyebrow-text-align);
+
+  opacity:
+    var(--flora-eyebrow-opacity);
+
+}
+
+
+/* ==========================================================================
+   Title
+========================================================================== */
+
+.flora-card__title {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  margin:
+    8% 0;
+
+  font-family:
+    var(--flora-title-font);
+
+  font-style:
+    var(--flora-title-style);
+
+  font-weight:
+    var(--flora-title-weight);
+
+  line-height:
+    var(--flora-title-line-height);
+
+  letter-spacing:
+    var(--flora-title-letter-spacing);
+
+  color:
+    var(--flora-title-color);
+
+  text-transform:
+    var(--flora-title-text-transform);
+
+  text-align:
+    var(--flora-title-text-align);
+
+  opacity:
+    var(--flora-title-opacity);
+
+}
+
+
+/* ==========================================================================
+   Title Part
+========================================================================== */
+.flora-card__title-text {
+  --invitation-element-font-size:
+    var(--flora-title-size);
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  white-space:
+    pre-line;
+}
+
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 767px) {
+
+  .flora-card__content {
+
+    padding:
+      0;
+
+  }
+
+}

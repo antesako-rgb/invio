@@ -1,0 +1,16 @@
+{
+  "appName": "Invio",
+  "loading": "Učitavanje...",
+  "backToTop": "Povratak na vrh",
+  "showPassword": "Prikaži lozinku",
+  "hidePassword": "Sakrij lozinku",
+  "save": "Spremi",
+
+  "datePicker": {
+    "clear": "Očisti datum"
+  },
+
+  "timePicker": {
+    "clear": "Očisti vrijeme"
+  }
+}

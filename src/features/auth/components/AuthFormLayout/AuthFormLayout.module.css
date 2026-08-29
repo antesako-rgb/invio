@@ -1,0 +1,79 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  padding: 4rem 2rem;
+}
+
+
+.card {
+  width: 100%;
+  max-width: 28rem;
+}
+
+
+.content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2rem;
+}
+
+
+.header {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.5rem;
+
+  text-align: center;
+}
+
+
+.title {
+  margin: 0;
+
+  color: var(--foreground);
+
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+
+.description {
+  margin: 0;
+
+  color: var(--muted-foreground);
+
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   Responsive
+========================================================================== */
+
+@media (max-width: 640px) {
+  .page {
+    align-items: flex-start;
+
+    padding:
+      2rem 1rem 3rem;
+  }
+
+
+  .content {
+    gap: 1.75rem;
+  }
+
+
+  .title {
+    font-size: 1.65rem;
+  }
+}

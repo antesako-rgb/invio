@@ -1,0 +1,144 @@
+/* ==========================================================================
+   Invitation Design Tokens
+========================================================================== */
+
+[data-invitation-experience] {
+
+  /* ========================================================================
+     Experience
+  ======================================================================== */
+
+  --invitation-experience-background:
+    #eceae5;
+
+  --invitation-experience-background-image:
+    none;
+
+  --invitation-experience-background-size:
+    cover;
+
+  --invitation-experience-background-position:
+    center;
+
+  --invitation-experience-background-repeat:
+    no-repeat;
+
+
+  /* ========================================================================
+     Card
+  ======================================================================== */
+
+  --invitation-card-background:
+    #ffffff;
+
+  --invitation-card-background-image:
+    none;
+
+  --invitation-card-background-size:
+    cover;
+
+  --invitation-card-background-position:
+    center;
+
+  --invitation-card-background-repeat:
+    no-repeat;
+
+  --invitation-card-background-opacity:
+    1;
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-filter:
+    none;
+
+  --invitation-envelope-front-filter:
+    none;
+
+  --invitation-envelope-flap-filter:
+    none;
+
+  --invitation-envelope-liner-filter:
+    none;
+
+
+/* ========================================================================
+   Event Info
+======================================================================== */
+
+--invitation-event-info-font:
+  inherit;
+
+--invitation-event-info-style:
+  normal;
+
+--invitation-event-info-weight:
+  400;
+
+--invitation-event-info-line-height:
+  1.5;
+
+--invitation-event-info-letter-spacing:
+  0;
+
+--invitation-event-info-color:
+  currentColor;
+
+--invitation-event-info-text-transform:
+  none;
+
+--invitation-event-info-text-align:
+  center;
+
+--invitation-event-info-opacity:
+  1;
+
+  /* ========================================================================
+     Event Date
+  ======================================================================== */
+
+  --invitation-event-date-gap:
+    12px;
+
+  --invitation-event-date-letter-spacing:
+    0.14em;
+
+  --invitation-event-date-text-transform:
+    uppercase;
+
+
+  /* ========================================================================
+     Event Day
+  ======================================================================== */
+
+  --invitation-event-day-padding:
+    2px 12px;
+
+  --invitation-event-day-border:
+    1px solid currentColor;
+
+  --invitation-event-day-size:
+    1.5em;
+
+  --invitation-event-day-letter-spacing:
+    0;
+
+
+  /* ========================================================================
+     Event Time
+  ======================================================================== */
+
+  --invitation-event-time-margin-top:
+    6px;
+
+
+  /* ========================================================================
+     Event Location
+  ======================================================================== */
+
+  --invitation-event-location-margin-top:
+    2px;
+
+}

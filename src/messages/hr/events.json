@@ -1,0 +1,152 @@
+{
+  "backToEvents": "Svi događaji",
+
+  "types": {
+    "wedding": "Vjenčanje",
+    "confirmation": "Krizma",
+    "baptism": "Krštenje",
+    "communion": "Prva pričest",
+    "birthday": "Rođendan",
+    "other_private": "Drugi privatni događaj",
+
+    "conference": "Konferencija",
+    "seminar": "Seminar",
+    "team_building": "Team building",
+    "reception": "Prijem",
+    "gala_dinner": "Svečana večera",
+    "other_business": "Drugi poslovni događaj",
+
+    "festival": "Festival",
+    "charity": "Humanitarni događaj",
+    "sports": "Sportski događaj",
+    "cultural": "Kulturni događaj",
+    "music": "Glazbeni događaj",
+    "other_social": "Drugi društveni događaj"
+  },
+
+  "header": {
+    "edit": "Uredi događaj",
+    "moreActions": "Više akcija"
+  },
+
+  "navigation": {
+    "ariaLabel": "Navigacija događaja",
+    "overview": "Pregled",
+    "guests": "Gosti",
+    "invitations": "Pozivnice",
+    "seating": "Raspored stolova"
+  },
+
+  "create": {
+    "backToEvents": "Svi događaji",
+    "title": "Novi događaj",
+    "description": "Unesite osnovne podatke i započnite planiranje svog događaja.",
+    "success": "Događaj je uspješno kreiran."
+  },
+
+  "edit": {
+    "backToEvent": "Natrag na događaj",
+    "title": "Uredi događaj",
+    "description": "Ažurirajte podatke i postavke svog događaja.",
+    "success": "Promjene su uspješno spremljene."
+  },
+
+  "form": {
+    "validationError": "Provjerite unesene podatke i pokušajte ponovno.",
+    "submitError": "Došlo je do pogreške prilikom spremanja događaja.",
+
+    "actions": {
+      "create": "Kreiraj događaj",
+      "save": "Spremi promjene",
+      "clear": "Očisti",
+      "reset": "Poništi promjene"
+    },
+
+    "basic": {
+      "title": "Osnovne informacije",
+      "description": "Unesite osnovne podatke o događaju.",
+
+      "name": {
+        "label": "Naziv događaja",
+        "placeholder": "npr. Ana & Marko"
+      },
+
+      "type": {
+        "label": "Vrsta događaja",
+        "placeholder": "Odaberite vrstu događaja"
+      },
+
+      "customType": {
+        "label": "Druga vrsta događaja",
+        "description": "Unesite vrstu koja najbolje opisuje vaš događaj.",
+        "placeholder": "npr. Obiteljsko okupljanje"
+      },
+
+  "locationName": {
+  "label": "Naziv lokacije",
+  "placeholder": "npr. La Grma"
+},
+
+"locationAddress": {
+  "label": "Adresa lokacije",
+  "placeholder": "npr. Ulica Franje Malnara 33"
+}
+    },
+
+    "schedule": {
+      "title": "Datum i vrijeme",
+      "description": "Odredite kada će se događaj održati.",
+
+      "type": {
+        "label": "Trajanje događaja",
+        "singleDay": "Jednodnevni",
+        "multiDay": "Višednevni"
+      },
+
+      "date": {
+        "label": "Datum",
+        "placeholder": "Odaberite datum"
+      },
+
+      "time": {
+        "start": "Vrijeme početka",
+        "end": "Vrijeme završetka"
+      },
+
+      "startDate": {
+        "label": "Datum početka",
+        "placeholder": "Odaberite datum početka"
+      },
+
+      "startTime": {
+        "label": "Vrijeme početka"
+      },
+
+      "endDate": {
+        "label": "Datum završetka",
+        "placeholder": "Odaberite datum završetka"
+      },
+
+      "endTime": {
+        "label": "Vrijeme završetka"
+      }
+    },
+
+    "planning": {
+      "title": "Planiranje",
+      "description": "Dodajte okvirne podatke koji će vam pomoći u planiranju događaja.",
+
+      "plannedGuests": {
+        "label": "Planirani broj gostiju",
+        "description": "Unesite približan broj gostiju koje očekujete.",
+        "placeholder": "npr. 120"
+      },
+
+      "plannedBudget": {
+        "label": "Planirani budžet",
+        "description": "Unesite okvirni budžet za događaj.",
+        "placeholder": "npr. 20000"
+      }
+    }
+  }
+}

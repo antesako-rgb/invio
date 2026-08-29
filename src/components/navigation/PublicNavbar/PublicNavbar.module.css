@@ -1,0 +1,103 @@
+/* ==========================================================================
+   Header
+========================================================================== */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  width: 100%;
+
+  border-bottom:
+    1px solid
+    var(--border);
+
+  background:
+    var(--background);
+}
+
+
+/* ==========================================================================
+   Container
+========================================================================== */
+
+.container {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  max-width: 1280px;
+  height: 4.5rem;
+
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+
+/* ==========================================================================
+   Navigation
+========================================================================== */
+
+.navigation {
+  display: flex;
+  align-items: center;
+
+  gap: 2rem;
+
+  margin-left: 3rem;
+}
+
+
+/* ==========================================================================
+   Actions
+========================================================================== */
+
+.actions {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  gap: 0.5rem;
+
+  margin-left: auto;
+}
+
+
+/* ==========================================================================
+   User Menu
+========================================================================== */
+
+.desktopUser {
+  display: block;
+}
+
+.mobileUser {
+  display: none;
+}
+
+
+/* ==========================================================================
+   Responsive
+========================================================================== */
+
+@media (max-width: 900px) {
+  .container {
+    height: 4rem;
+
+    padding-inline: 1rem;
+  }
+
+  .navigation {
+    display: none;
+  }
+
+  .desktopUser {
+    display: none;
+  }
+
+  .mobileUser {
+    display: block;
+  }
+}

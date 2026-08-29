@@ -1,0 +1,407 @@
+/* ==========================================================================
+   Backdrop
+========================================================================== */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+
+  background:
+    rgb(0 0 0 / 0.45);
+
+  opacity: 1;
+
+  transition:
+    opacity 0.2s ease;
+}
+
+.backdrop[data-starting-style],
+.backdrop[data-ending-style] {
+  opacity: 0;
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.content {
+  position: fixed;
+  z-index: 51;
+
+  display: flex;
+  flex-direction: column;
+
+  min-height: 0;
+
+  background:
+    var(--background);
+
+  box-shadow:
+    0 20px 50px
+    rgb(0 0 0 / 0.18);
+
+  transition:
+    transform 0.25s ease;
+}
+
+
+/* ==========================================================================
+   Right
+========================================================================== */
+
+.right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  width: min(
+    90vw,
+    28rem
+  );
+
+  border-left:
+    1px solid
+    var(--border);
+}
+
+.right[data-starting-style],
+.right[data-ending-style] {
+  transform:
+    translateX(100%);
+}
+
+
+/* ==========================================================================
+   Left
+========================================================================== */
+
+.left {
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  width: min(
+    90vw,
+    28rem
+  );
+
+  border-right:
+    1px solid
+    var(--border);
+}
+
+.left[data-starting-style],
+.left[data-ending-style] {
+  transform:
+    translateX(-100%);
+}
+
+
+/* ==========================================================================
+   Top
+========================================================================== */
+
+.top {
+  top: 0;
+  right: 0;
+  left: 0;
+
+  max-height:
+    85dvh;
+
+  border-bottom:
+    1px solid
+    var(--border);
+}
+
+.top[data-starting-style],
+.top[data-ending-style] {
+  transform:
+    translateY(-100%);
+}
+
+
+/* ==========================================================================
+   Bottom
+========================================================================== */
+
+.bottom {
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  max-height:
+    90dvh;
+
+  border-top:
+    1px solid
+    var(--border);
+
+  border-radius:
+    1.5rem
+    1.5rem
+    0
+    0;
+}
+
+.bottom[data-starting-style],
+.bottom[data-ending-style] {
+  transform:
+    translateY(100%);
+}
+
+
+/* ==========================================================================
+   Mobile Handle
+========================================================================== */
+
+.mobileHandle {
+  display: none;
+}
+
+
+/* ==========================================================================
+   Close
+========================================================================== */
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  z-index: 10;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.25rem;
+  height: 2.25rem;
+
+  padding: 0;
+
+  border: 0;
+  border-radius:
+    var(--radius);
+
+  background:
+    transparent;
+
+  color:
+    var(--muted-foreground);
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.close:hover {
+  background:
+    var(--accent);
+
+  color:
+    var(--foreground);
+}
+
+.close:focus-visible {
+  outline:
+    2px solid
+    var(--ring);
+
+  outline-offset:
+    2px;
+}
+
+
+/* ==========================================================================
+   Header
+========================================================================== */
+
+.header {
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.375rem;
+
+  padding:
+    1.5rem;
+
+  padding-right:
+    4rem;
+}
+
+
+/* ==========================================================================
+   Footer
+========================================================================== */
+
+.footer {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 0.75rem;
+
+  padding:
+    1.5rem;
+
+  background:
+    var(--background);
+}
+
+
+/* ==========================================================================
+   Title
+========================================================================== */
+
+.title {
+  margin: 0;
+
+  color:
+    var(--foreground);
+
+  font-size:
+    1.125rem;
+
+  font-weight:
+    700;
+
+  line-height:
+    1.3;
+}
+
+
+/* ==========================================================================
+   Description
+========================================================================== */
+
+.description {
+  margin: 0;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.875rem;
+
+  line-height:
+    1.5;
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (
+  max-width: 639px
+) {
+  .right,
+  .left {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: auto;
+
+    max-height:
+      92dvh;
+
+    border-right: 0;
+    border-left: 0;
+    border-top:
+      1px solid
+      var(--border);
+
+    border-radius:
+      1.5rem
+      1.5rem
+      0
+      0;
+  }
+
+
+  .right[data-starting-style],
+  .right[data-ending-style],
+  .left[data-starting-style],
+  .left[data-ending-style] {
+    transform:
+      translateY(100%);
+  }
+
+
+  .mobileHandle {
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+
+    height: 1.25rem;
+
+    padding-top:
+      0.5rem;
+  }
+
+
+  .mobileHandle span {
+    display: block;
+
+    width: 2.5rem;
+    height: 0.25rem;
+
+    border-radius:
+      9999px;
+
+    background:
+      var(--border);
+  }
+
+
+  .header {
+    padding:
+      0.75rem
+      1.25rem
+      1rem;
+
+    padding-right:
+      3.75rem;
+  }
+
+
+  .footer {
+    padding:
+      1rem
+      1.25rem;
+
+    padding-bottom:
+      max(
+        1rem,
+        env(
+          safe-area-inset-bottom
+        )
+      );
+
+    border-top:
+      1px solid
+      var(--border);
+  }
+
+
+  .close {
+    top:
+      1.5rem;
+
+    right:
+      1rem;
+  }
+}

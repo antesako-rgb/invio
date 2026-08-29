@@ -1,0 +1,53 @@
+{
+  "public": {
+    "ariaLabel": "Main navigation",
+    "templates": "Templates",
+    "howItWorks": "How it works",
+    "pricing": "Pricing",
+    "login": "Sign in",
+    "register": "Get started",
+    "dashboard": "Dashboard"
+  },
+
+  "user": {
+    "fallbackName": "User",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "logout": "Sign out"
+  },
+
+  "language": {
+    "ariaLabel": "Change language"
+  },
+
+  "dashboard": {
+    "ariaLabel": "Dashboard navigation",
+    "overview": "Overview",
+
+    "organize": "Organize",
+    "events": "Events",
+
+    "explore": "Explore",
+    "templates": "Templates",
+    "services": "Services",
+
+    "business": "Business",
+    "myBusiness": "My business",
+
+    "account": "Account",
+    "profile": "Profile",
+    "settings": "Settings",
+    "support": "Help & support",
+
+    "more": "More",
+    "moreDescription": "Account, settings and additional options",
+
+    "logout": "Sign out",
+
+    "collapse": "Collapse navigation",
+    "expand": "Expand navigation",
+
+    "premiumDescription": "Unlock more features and take your events to the next level.",
+    "premiumAction": "View plans"
+  }
+}

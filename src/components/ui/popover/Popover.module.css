@@ -1,0 +1,31 @@
+.positioner {
+  z-index: 2000;
+}
+
+.content {
+  min-width: 240px;
+
+  padding: 0.5rem;
+
+  border: 1px solid var(--border);
+  border-radius: 18px;
+
+  background: var(--card);
+
+  box-shadow:
+    0 20px 60px rgb(0 0 0 / 0.12);
+
+  animation: popoverIn 0.18s ease;
+}
+
+@keyframes popoverIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

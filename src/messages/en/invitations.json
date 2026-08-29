@@ -1,0 +1,136 @@
+{
+  "editor": {
+    "navigation": {
+      "label": "Invitation editor navigation",
+      "back": "Back",
+      "design": "Design",
+      "details": "Details",
+      "rsvp": "RSVP",
+      "preview": "Preview"
+    },
+
+    "actions": {
+      "save": "Save",
+      "saveAndContinue": "Save and continue"
+    },
+
+    "sidebar": {
+      "title": "Edit invitation",
+      "content": "Content",
+      "style": "Style"
+    },
+
+    "status": {
+      "saving": "Saving...",
+      "saved": "Saved"
+    },
+
+    "time": {
+      "startTime": "Start time",
+      "endTime": "End time"
+    },
+
+    "date": {
+      "startDate": "Start date",
+      "endDate": "End date"
+    },
+
+"elementLabels": {
+  "title": "Uredi naziv",
+  "subtitle": "Uredi podnaslov",
+  "initial": "Uredi inicijal",
+  "description": "Uredi opis",
+  "date": "Uredi datum",
+  "time": "Uredi vrijeme",
+  "location": "Uredi lokaciju",
+  "address": "Uredi adresu",
+  "image": "Uredi sliku",
+  "delete": "Obriši sadržaj"
+},
+
+    "fallback": {
+      "heroTitle": "Anna & Mark",
+      "heroSubtitle": "Dear friends and family, we invite you to our wedding",
+      "description": "We look forward to celebrating this special day with you.",
+      "locationName": "Event venue",
+      "locationAddress": "Event address",
+      "rsvpTitle": "Confirm attendance",
+      "rsvpDescription": "Please confirm your attendance.",
+      "rsvpCalloutSubtitle": "We look forward to seeing you",
+      "rsvpCalloutNote": "Please confirm your attendance in time."
+    },
+
+    "validation": {
+      "end_without_start": "Select a start date first.",
+      "end_before_start": "The end date cannot be before the start date."
+    }
+  },
+
+  "page": {
+    "title": "Invitations",
+    "description": "Create and manage invitations for your event.",
+
+    "actions": {
+      "create": "New invitation"
+    },
+
+    "empty": {
+      "title": "You don't have an invitation yet",
+      "description": "Choose a template and create your first invitation for your event.",
+      "action": "Create invitation"
+    },
+
+    "templates": {
+      "newInvitationName": "New invitation",
+      "variants": "{count, plural, one {# variant} other {# variants}}",
+      "variantSelector": "Choose variant",
+      "useTemplate": "Use template",
+
+      "categories": {
+        "all": "All",
+        "wedding": "Wedding",
+        "confirmation": "Confirmation",
+        "baptism": "Baptism",
+        "communion": "First Communion",
+        "birthday": "Birthday",
+        "other_private": "Other private event",
+        "conference": "Conference",
+        "seminar": "Seminar",
+        "team_building": "Team building",
+        "reception": "Reception",
+        "gala_dinner": "Gala dinner",
+        "other_business": "Other business event",
+        "festival": "Festival",
+        "charity": "Charity event",
+        "sports": "Sports event",
+        "cultural": "Cultural event",
+        "music": "Music event",
+        "other_social": "Other social event"
+      },
+
+      "flora": {
+        "name": "Flora",
+        "description": "An elegant botanical invitation with soft and refined details."
+      }
+    }
+  },
+
+  "templateUseDialog": {
+    "title": "How would you like to use this template?",
+    "description": "You selected {template} · {variant}.",
+    "back": "Back",
+
+    "existing": {
+      "title": "Apply to an existing invitation",
+      "description": "Change the design of an existing invitation without creating a new one.",
+      "selectTitle": "Choose an invitation",
+      "selectDescription": "Select the invitation whose design you want to change.",
+      "lastUpdated": "Last updated: {date}"
+    },
+
+    "new": {
+      "title": "Create a new invitation",
+      "description": "Create a separate invitation using this template."
+    }
+  }
+}

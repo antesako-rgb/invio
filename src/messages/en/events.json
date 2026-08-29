@@ -1,0 +1,152 @@
+{
+  "backToEvents": "All events",
+
+  "types": {
+    "wedding": "Wedding",
+    "confirmation": "Confirmation",
+    "baptism": "Baptism",
+    "communion": "First Communion",
+    "birthday": "Birthday",
+    "other_private": "Other private event",
+
+    "conference": "Conference",
+    "seminar": "Seminar",
+    "team_building": "Team building",
+    "reception": "Reception",
+    "gala_dinner": "Gala dinner",
+    "other_business": "Other business event",
+
+    "festival": "Festival",
+    "charity": "Charity event",
+    "sports": "Sports event",
+    "cultural": "Cultural event",
+    "music": "Music event",
+    "other_social": "Other social event"
+  },
+
+  "header": {
+    "edit": "Edit event",
+    "moreActions": "More actions"
+  },
+
+  "navigation": {
+    "ariaLabel": "Event navigation",
+    "overview": "Overview",
+    "guests": "Guests",
+    "invitations": "Invitations",
+    "seating": "Seating plan"
+  },
+
+  "create": {
+    "backToEvents": "All events",
+    "title": "New event",
+    "description": "Enter the basic details and start planning your event.",
+    "success": "Event created successfully."
+  },
+
+  "edit": {
+    "backToEvent": "Back to event",
+    "title": "Edit event",
+    "description": "Update your event details and settings.",
+    "success": "Changes saved successfully."
+  },
+
+  "form": {
+    "validationError": "Please check the entered information and try again.",
+    "submitError": "An error occurred while saving the event.",
+
+    "actions": {
+      "create": "Create event",
+      "save": "Save changes",
+      "clear": "Clear",
+      "reset": "Discard changes"
+    },
+
+    "basic": {
+  "title": "Basic information",
+  "description": "Enter the basic details of your event.",
+
+  "name": {
+    "label": "Event name",
+    "placeholder": "e.g. Anna & Mark"
+  },
+
+  "type": {
+    "label": "Event type",
+    "placeholder": "Select an event type"
+  },
+
+  "customType": {
+    "label": "Other event type",
+    "description": "Enter the event type that best describes your event.",
+    "placeholder": "e.g. Family gathering"
+  },
+
+  "locationName": {
+    "label": "Venue name",
+    "placeholder": "e.g. The Grand Hall"
+  },
+
+  "locationAddress": {
+    "label": "Venue address",
+    "placeholder": "e.g. 25 Main Street"
+  }
+},
+
+    "schedule": {
+      "title": "Date and time",
+      "description": "Choose when the event will take place.",
+
+      "type": {
+        "label": "Event duration",
+        "singleDay": "Single-day",
+        "multiDay": "Multi-day"
+      },
+
+      "date": {
+        "label": "Date",
+        "placeholder": "Select a date"
+      },
+
+      "time": {
+        "start": "Start time",
+        "end": "End time"
+      },
+
+      "startDate": {
+        "label": "Start date",
+        "placeholder": "Select a start date"
+      },
+
+      "startTime": {
+        "label": "Start time"
+      },
+
+      "endDate": {
+        "label": "End date",
+        "placeholder": "Select an end date"
+      },
+
+      "endTime": {
+        "label": "End time"
+      }
+    },
+
+    "planning": {
+      "title": "Planning",
+      "description": "Add estimates that will help you plan your event.",
+
+      "plannedGuests": {
+        "label": "Estimated number of guests",
+        "description": "Enter the approximate number of guests you expect.",
+        "placeholder": "e.g. 120"
+      },
+
+      "plannedBudget": {
+        "label": "Estimated budget",
+        "description": "Enter an estimated budget for the event.",
+        "placeholder": "e.g. 20000"
+      }
+    }
+  }
+}

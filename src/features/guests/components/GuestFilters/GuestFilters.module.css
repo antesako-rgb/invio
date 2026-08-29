@@ -1,0 +1,70 @@
+/* ==========================================================================
+   Filters
+========================================================================== */
+
+.filters {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+}
+
+
+/* ==========================================================================
+   Search
+========================================================================== */
+
+.search {
+  position: relative;
+
+  width: 100%;
+  max-width: 24rem;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 0.75rem;
+
+  width: 1rem;
+  height: 1rem;
+
+  color:
+    var(--muted-foreground);
+
+  pointer-events: none;
+
+  transform:
+    translateY(-50%);
+}
+
+.searchInput {
+  padding-left: 2.25rem;
+}
+
+
+/* ==========================================================================
+   Controls
+========================================================================== */
+
+.controls {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.75rem;
+}
+
+
+/* ==========================================================================
+   Desktop
+========================================================================== */
+
+@media (
+  min-width: 1024px
+) {
+  .controls {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}

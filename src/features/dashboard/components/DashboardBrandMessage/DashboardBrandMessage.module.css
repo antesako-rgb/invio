@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Message
+========================================================================== */
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  padding:
+    1.5rem 1rem;
+
+  border-radius:
+    var(--radius);
+
+  background:
+    color-mix(
+      in srgb,
+      var(--primary) 4%,
+      var(--card)
+    );
+
+  text-align:
+    center;
+}
+
+
+/* ==========================================================================
+   Icon
+========================================================================== */
+
+.icon {
+  width:
+    1rem;
+
+  height:
+    1rem;
+
+  margin-bottom:
+    0.5rem;
+
+  color:
+    var(--primary);
+
+  fill:
+    currentColor;
+
+  stroke-width:
+    1.75;
+}
+
+
+/* ==========================================================================
+   Typography
+========================================================================== */
+
+.title {
+  margin:
+    0;
+
+  color:
+    var(--foreground);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.4;
+}
+
+.description {
+  margin:
+    0.25rem 0 0;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.75rem;
+
+  line-height:
+    1.5;
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 640px) {
+  .message {
+    padding:
+      1.25rem 1rem;
+  }
+}

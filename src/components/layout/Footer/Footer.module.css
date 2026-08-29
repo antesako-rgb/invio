@@ -1,0 +1,223 @@
+.footer {
+  width: 100%;
+
+  margin-top: auto;
+
+  border-top:
+    1px solid var(--border);
+
+  background:
+    var(--card);
+
+  color:
+    var(--foreground);
+}
+
+
+/* ==========================================================================
+   Container
+========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+
+  margin-inline: auto;
+
+  padding:
+    4rem 2rem 2rem;
+}
+
+
+/* ==========================================================================
+   Top
+========================================================================== */
+
+.top {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.2fr)
+    minmax(0, 2fr);
+
+  gap: 5rem;
+
+  padding-bottom: 3rem;
+}
+
+
+/* ==========================================================================
+   Brand
+========================================================================== */
+
+.brand {
+  max-width: 24rem;
+}
+
+
+.logo {
+  display: inline-flex;
+
+  margin-bottom: 1rem;
+
+  color:
+    var(--primary);
+
+  font-size: 1.6rem;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+
+.logo:hover {
+  color:
+    var(--primary-dark);
+}
+
+
+.description {
+  margin: 0;
+
+  color:
+    var(--muted-foreground);
+
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+
+/* ==========================================================================
+   Links
+========================================================================== */
+
+.links {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 2.5rem;
+}
+
+
+.linkGroup {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 0.75rem;
+}
+
+
+.linkGroup h4 {
+  margin:
+    0 0 0.25rem;
+
+  color:
+    var(--foreground);
+
+  font-size: 0.875rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+
+.linkGroup a {
+  color:
+    var(--muted-foreground);
+
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+
+.linkGroup a:hover {
+  color:
+    var(--primary);
+}
+
+
+/* ==========================================================================
+   Bottom
+========================================================================== */
+
+.bottom {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1.5rem;
+
+  padding-top: 2rem;
+
+  border-top:
+    1px solid var(--border);
+
+  color:
+    var(--muted-foreground);
+
+  font-size: 0.85rem;
+}
+
+
+/* ==========================================================================
+   Responsive
+========================================================================== */
+
+@media (max-width: 960px) {
+  .top {
+    grid-template-columns: 1fr;
+
+    gap: 3rem;
+  }
+
+
+  .brand {
+    max-width: 32rem;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .container {
+    padding:
+      3rem 1rem 1.5rem;
+  }
+
+
+  .top {
+    gap: 2.5rem;
+
+    padding-bottom: 2.5rem;
+  }
+
+
+  .links {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap:
+      2.5rem 1.5rem;
+  }
+
+
+  .bottom {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    padding-top: 1.5rem;
+  }
+}
+
+
+@media (max-width: 420px) {
+  .links {
+    grid-template-columns: 1fr;
+
+    gap: 2rem;
+  }
+}

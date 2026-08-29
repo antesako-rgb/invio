@@ -1,0 +1,80 @@
+{
+  "overview": {
+    "welcome": {
+      "title": "Dobrodošao, {name}!",
+      "titleFallback": "Dobrodošao!",
+      "description": "Spremni za kreiranje nezaboravnih događaja?"
+    },
+
+    "emptyEvent": {
+      "title": "Kreiraj svoj prvi događaj",
+      "description": "Sve počinje događajem. Kreiraj događaj i počni s pozivnicama, listom gostiju i rasporedom stolova.",
+      "action": "Novi događaj"
+    },
+
+    "events": {
+      "title": "Tvoji događaji",
+      "description": "Nastavi s planiranjem svojih nadolazećih događaja.",
+      "newEvent": "Novi događaj",
+      "openEvent": "Otvori događaj",
+      "viewAll": "Prikaži sve događaje",
+      "plannedGuests": "{count, plural, =1 {# planirani gost} few {# planirana gosta} other {# planiranih gostiju}}",
+
+      "types": {
+        "wedding": "Vjenčanje",
+        "confirmation": "Krizma",
+        "baptism": "Krštenje",
+        "communion": "Prva pričest",
+        "birthday": "Rođendan",
+        "other_private": "Drugi privatni događaj",
+
+        "conference": "Konferencija",
+        "seminar": "Seminar",
+        "team_building": "Team building",
+        "reception": "Prijem",
+        "gala_dinner": "Svečana večera",
+        "other_business": "Drugi poslovni događaj",
+
+        "festival": "Festival",
+        "charity": "Humanitarni događaj",
+        "sports": "Sportski događaj",
+        "cultural": "Kulturni događaj",
+        "music": "Glazbeni događaj",
+        "other_social": "Drugi društveni događaj"
+      }
+    },
+
+    "business": {
+      "title": "Nudite usluge za događaje?",
+      "description": "Predstavite svoje poslovanje tisućama korisnika Invija i primajte upite za svoje usluge.",
+      "action": "Kreiraj poslovni profil"
+    },
+
+    "explore": {
+      "title": "Istraži Invio",
+
+      "templates": {
+        "title": "Predlošci pozivnica",
+        "description": "Prekrasni predlošci za svaku priliku.",
+        "action": "Pregledaj"
+      },
+
+      "services": {
+        "title": "Marketplace usluga",
+        "description": "Pronađi najbolje usluge za svoj događaj.",
+        "action": "Istraži"
+      },
+
+      "howItWorks": {
+        "title": "Kako funkcionira?",
+        "description": "Saznaj kako Invio olakšava organizaciju.",
+        "action": "Saznaj više"
+      }
+    },
+
+    "brandMessage": {
+      "title": "Invio je tu da važne trenutke učini još posebnijima.",
+      "description": "Hvala što ste dio naše priče!"
+    }
+  }
+}

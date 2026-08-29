@@ -1,0 +1,186 @@
+/* ==========================================================================
+   Flora Design Tokens
+========================================================================== */
+
+[data-invitation-experience][data-template="flora"] {
+
+  /* ========================================================================
+     Invitation
+  ======================================================================== */
+
+  --invitation-experience-background:
+    #eceae5;
+
+  --invitation-card-background:
+    #f7f2ea;
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-image:
+    url("/invitation-assets/envelopes/classic/back.png");
+
+  --invitation-envelope-front-image:
+    url("/invitation-assets/envelopes/classic/front.png");
+
+  --invitation-envelope-flap-image:
+    url("/invitation-assets/envelopes/classic/flap.png");
+
+  --invitation-envelope-liner-image:
+    url("/invitation-assets/envelopes/classic/liner.png");
+
+  --invitation-envelope-back-filter:
+    none;
+
+  --invitation-envelope-front-filter:
+    none;
+
+  --invitation-envelope-flap-filter:
+    none;
+
+  --invitation-envelope-liner-filter:
+    none;
+
+
+  /* ========================================================================
+     Colors
+  ======================================================================== */
+
+  --flora-foreground:
+    #332c27;
+
+  --flora-muted:
+    #0f0101;
+
+
+  /* ========================================================================
+     Frame
+  ======================================================================== */
+
+  --flora-frame-filter:
+    none;
+
+  --flora-frame-opacity:
+    1;
+
+  --flora-frame-blend-mode:
+    normal;
+
+
+  /* ========================================================================
+     Typography
+  ======================================================================== */
+
+  --flora-font-primary:
+    var(--font-ephesis),
+    cursive;
+
+  --flora-font-secondary:
+    var(--font-marcellus),
+    serif;
+
+
+  /* ========================================================================
+     Eyebrow
+  ======================================================================== */
+
+  --flora-eyebrow-font:
+    var(--flora-font-secondary);
+
+  --flora-eyebrow-size:
+    clamp(10px, 2vw, 14px);
+
+  --flora-eyebrow-style:
+    normal;
+
+  --flora-eyebrow-weight:
+    500;
+
+  --flora-eyebrow-line-height:
+    1.4;
+
+  --flora-eyebrow-letter-spacing:
+    0.18em;
+
+  --flora-eyebrow-color:
+    var(--flora-muted);
+
+  --flora-eyebrow-text-transform:
+    none;
+
+  --flora-eyebrow-text-align:
+    center;
+
+  --flora-eyebrow-opacity:
+    1;
+
+
+  /* ========================================================================
+     Title
+  ======================================================================== */
+
+  --flora-title-font:
+    var(--flora-font-primary);
+
+--flora-title-size:
+  clamp(24px, 10vw, 72px);
+  --flora-title-style:
+    normal;
+
+  --flora-title-weight:
+    400;
+
+  --flora-title-line-height:
+    0.95;
+
+  --flora-title-letter-spacing:
+    0;
+
+  --flora-title-color:
+    var(--flora-foreground);
+
+  --flora-title-text-transform:
+    none;
+
+  --flora-title-text-align:
+    center;
+
+  --flora-title-opacity:
+    1;
+
+/* ========================================================================
+   Event Info
+======================================================================== */
+
+--invitation-event-info-font:
+  var(--flora-font-secondary);
+
+--invitation-event-info-size:
+  clamp(11px, 1.5vw, 16px);
+
+--invitation-event-info-style:
+  normal;
+
+--invitation-event-info-weight:
+  400;
+
+--invitation-event-info-line-height:
+  1.5;
+
+--invitation-event-info-letter-spacing:
+  0;
+
+--invitation-event-info-color:
+  var(--flora-foreground);
+
+--invitation-event-info-text-transform:
+  none;
+
+--invitation-event-info-text-align:
+  center;
+
+--invitation-event-info-opacity:
+  1;
+}

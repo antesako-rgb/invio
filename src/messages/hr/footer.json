@@ -1,0 +1,23 @@
+{
+  "description": "Kreirajte pozivnice, upravljajte gostima i organizirajte svoje događaje na jednom mjestu.",
+
+  "platform": {
+    "title": "Platforma",
+    "home": "Početna"
+  },
+
+  "account": {
+    "title": "Račun",
+    "login": "Prijava",
+    "register": "Registracija"
+  },
+
+  "legal": {
+    "title": "Pravno",
+    "privacy": "Pravila privatnosti",
+    "terms": "Uvjeti korištenja",
+    "cookies": "Kolačići"
+  },
+
+  "copyright": "© {year} Invio. Sva prava pridržana."
+}

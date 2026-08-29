@@ -1,0 +1,411 @@
+/* ==========================================================================
+   Sidebar
+========================================================================== */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+
+  width: 17rem;
+  height: 100dvh;
+
+  padding:
+    0.875rem
+    1rem
+    1rem;
+
+  border-right:
+    1px solid
+    var(--border);
+
+  background:
+    var(--background);
+
+  overflow: hidden;
+
+  transition:
+    width 0.2s ease,
+    padding 0.2s ease;
+}
+
+
+/* ==========================================================================
+   Header
+========================================================================== */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  flex-shrink: 0;
+
+  gap: 0.75rem;
+
+  min-height: 3rem;
+
+  margin-bottom: 1rem;
+}
+
+
+/* ==========================================================================
+   Toggle
+========================================================================== */
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 2.5rem;
+  height: 2.5rem;
+
+  padding: 0;
+
+  border: 0;
+  border-radius:
+    var(--radius);
+
+  background:
+    transparent;
+
+  color:
+    var(--muted-foreground);
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.toggle:hover {
+  background:
+    var(--accent);
+
+  color:
+    var(--foreground);
+}
+
+.toggle:active {
+  transform:
+    scale(0.96);
+}
+
+.toggle:focus-visible {
+  outline:
+    2px solid
+    var(--ring);
+
+  outline-offset:
+    2px;
+}
+
+
+/* ==========================================================================
+   Navigation
+========================================================================== */
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+
+  flex: 1;
+  min-height: 0;
+
+  gap: 0.875rem;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: none;
+}
+
+.navigation::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* ==========================================================================
+   Navigation Group
+========================================================================== */
+
+.group {
+  display: flex;
+  flex-direction: column;
+
+  flex-shrink: 0;
+
+  gap: 0.25rem;
+}
+
+.groupLabel {
+  display: block;
+
+  padding-inline:
+    0.75rem;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.625rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    0.875rem;
+
+  letter-spacing:
+    0.07em;
+
+  text-transform:
+    uppercase;
+}
+
+
+/* ==========================================================================
+   Footer
+========================================================================== */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+
+  flex-shrink: 0;
+
+  gap: 0.5rem;
+
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+
+  border-top:
+    1px solid
+    var(--border);
+}
+
+
+/* ==========================================================================
+   Premium
+========================================================================== */
+
+.premium {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.5rem;
+
+  padding: 0.75rem;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    calc(
+      var(--radius) + 0.25rem
+    );
+
+  background:
+    var(--muted);
+}
+
+.premiumHeader {
+  display: flex;
+  align-items: center;
+
+  gap: 0.5rem;
+}
+
+.premiumIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 1.75rem;
+  height: 1.75rem;
+
+  border-radius:
+    0.5rem;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--primary) 12%,
+      transparent
+    );
+
+  color:
+    var(--primary);
+}
+
+.premiumTitle {
+  color:
+    var(--foreground);
+
+  font-size:
+    0.8125rem;
+
+  font-weight:
+    700;
+
+  line-height:
+    1.125rem;
+}
+
+.premiumText {
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.6875rem;
+
+  line-height:
+    1.35;
+}
+
+.premium button {
+  align-self:
+    flex-start;
+
+  margin-top:
+    0.125rem;
+}
+
+/* ==========================================================================
+   Logout
+========================================================================== */
+
+.logout {
+  justify-content:
+    flex-start;
+
+  width:
+    100%;
+
+  gap:
+    0.75rem;
+
+  padding-inline:
+    0.75rem;
+
+  color:
+    var(--muted-foreground);
+}
+
+.logout:hover {
+  color:
+    var(--foreground);
+}
+
+
+/* ==========================================================================
+   Collapsed
+========================================================================== */
+
+.collapsed {
+  width:
+    5rem;
+
+  padding-inline:
+    0.75rem;
+}
+
+.collapsed .header {
+  flex-direction:
+    column;
+
+  justify-content:
+    flex-start;
+
+  gap:
+    0.75rem;
+}
+
+.collapsed .navigation {
+  gap:
+    0.625rem;
+}
+
+.collapsed .group {
+  gap:
+    0.25rem;
+}
+
+.collapsed .footer {
+  align-items:
+    center;
+
+  margin-top:
+    0.5rem;
+
+  padding-top:
+    0.5rem;
+}
+
+.collapsed .logout {
+  justify-content:
+    center;
+
+  width:
+    2.5rem;
+
+  padding-inline:
+    0;
+}
+
+
+/* ==========================================================================
+   Short Screens
+========================================================================== */
+
+@media (max-height: 750px) and (min-width: 901px) {
+  .header {
+    margin-bottom:
+      0.75rem;
+  }
+
+  .navigation {
+    gap:
+      0.625rem;
+  }
+
+  .footer {
+    margin-top:
+      0.5rem;
+
+    padding-top:
+      0.5rem;
+  }
+
+  .premium {
+    gap:
+      0.3rem;
+
+    padding:
+      0.625rem;
+  }
+
+  .premiumText {
+    font-size:
+      0.625rem;
+  }
+}
+
+
+/* ==========================================================================
+   Responsive
+========================================================================== */
+
+@media (max-width: 900px) {
+  .sidebar {
+    display:
+      none;
+  }
+}

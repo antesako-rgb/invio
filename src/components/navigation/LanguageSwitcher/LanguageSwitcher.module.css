@@ -1,0 +1,25 @@
+.trigger {
+  flex-shrink: 0;
+}
+
+
+.content {
+  min-width: 10rem;
+}
+
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1rem;
+}
+
+
+.active {
+  color: var(--muted-foreground);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+}

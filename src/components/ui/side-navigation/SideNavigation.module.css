@@ -1,0 +1,234 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.5rem;
+
+  min-width: 0;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  min-height: 2.875rem;
+
+  padding: 0.75rem 1rem;
+
+  border: 0;
+  border-radius: var(--radius);
+
+  background: transparent;
+
+  color: var(--muted-foreground);
+  text-decoration: none;
+
+  font: inherit;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    padding 0.2s ease,
+    gap 0.2s ease,
+    transform 0.15s ease;
+}
+.link:hover {
+  background: var(--accent);
+  color: var(--foreground);
+}
+
+.link:active {
+  transform: scale(0.98);
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.label {
+  overflow: hidden;
+
+  max-width: 180px;
+
+  white-space: nowrap;
+
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Horizontal
+========================================================================== */
+
+.horizontal {
+  flex-direction: row;
+
+  min-width: 0;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  white-space: nowrap;
+
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.horizontal::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==========================================================================
+   Tabs
+========================================================================== */
+
+.tabs {
+  gap: 0.5rem;
+}
+
+.tab {
+  flex-shrink: 0;
+  justify-content: center;
+
+  min-height: auto;
+
+  padding: 0.625rem 1rem;
+
+  border-radius: 999px;
+
+  background: var(--muted);
+}
+
+.tabs .active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ==========================================================================
+   Underline
+========================================================================== */
+
+.underline {
+  gap: 0;
+
+  width: 100%;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.underlineItem {
+  position: relative;
+
+  flex: 1 0 0;
+  justify-content: center;
+
+  min-width: max-content;
+  min-height: 3.25rem;
+
+  padding: 0.625rem 1rem;
+
+  border-radius: 0;
+
+  background: transparent;
+
+  color: var(--muted-foreground);
+
+  font-weight: 600;
+}
+
+.underlineItem:hover {
+  background: transparent;
+  color: var(--foreground);
+}
+
+.underlineItem:active {
+  transform: none;
+}
+
+.underline .active {
+  background: transparent;
+  color: var(--primary);
+}
+
+.underline .active::after {
+  content: "";
+
+  position: absolute;
+  right: 1rem;
+  bottom: -1px;
+  left: 1rem;
+
+  height: 2px;
+
+  border-radius: 999px 999px 0 0;
+
+  background: var(--primary);
+}
+
+/* ==========================================================================
+   Collapsed
+========================================================================== */
+
+.collapsed {
+  justify-content: center;
+
+  gap: 0;
+
+  padding-inline: 0.75rem;
+}
+
+.collapsed .label,
+.hidden {
+  max-width: 0;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Responsive
+========================================================================== */
+
+@media (max-width: 900px) {
+  .horizontal .icon {
+    display: none;
+  }
+
+  .horizontal .link {
+    gap: 0;
+
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .tab {
+    padding: 0.625rem 1rem;
+  }
+
+  .underlineItem {
+    flex: 1 0 auto;
+
+    min-height: 3rem;
+
+    padding: 0.625rem 0.875rem;
+  }
+
+  .underline .active::after {
+    right: 0.875rem;
+    left: 0.875rem;
+  }
+}

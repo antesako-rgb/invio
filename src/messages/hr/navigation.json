@@ -1,0 +1,45 @@
+{
+  "public": {
+    "ariaLabel": "Glavna navigacija",
+    "templates": "Predlošci",
+    "howItWorks": "Kako funkcionira",
+    "pricing": "Cijene",
+    "login": "Prijava",
+    "register": "Započni",
+    "dashboard": "Nadzorna ploča"
+  },
+
+  "user": {
+    "fallbackName": "Korisnik",
+    "dashboard": "Nadzorna ploča",
+    "settings": "Postavke",
+    "logout": "Odjava"
+  },
+
+  "language": {
+    "ariaLabel": "Promijeni jezik"
+  },
+
+  "dashboard": {
+    "ariaLabel": "Navigacija nadzorne ploče",
+    "overview": "Pregled",
+    "organize": "Organiziraj",
+    "events": "Događaji",
+    "explore": "Istraži",
+    "templates": "Predlošci",
+    "services": "Usluge",
+    "business": "Poslovanje",
+    "myBusiness": "Moje poslovanje",
+    "account": "Račun",
+    "profile": "Profil",
+    "settings": "Postavke",
+    "support": "Pomoć i podrška",
+    "more": "Više",
+    "moreDescription": "Račun, postavke i dodatne mogućnosti",
+    "logout": "Odjava",
+    "collapse": "Sažmi navigaciju",
+    "expand": "Proširi navigaciju",
+    "premiumDescription": "Otključaj više mogućnosti i podigni svoje događaje na višu razinu.",
+    "premiumAction": "Pogledaj planove"
+  }
+}

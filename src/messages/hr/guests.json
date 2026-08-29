@@ -1,0 +1,87 @@
+{
+  "page": {
+    "title": "Gosti",
+    "description": "Upravljajte gostima, grupama i odgovorima na pozivnice.",
+    "loading": "Učitavanje gostiju..."
+  },
+
+  "stats": {
+    "total": {
+      "title": "Ukupno gostiju",
+      "description": "Na popisu gostiju"
+    },
+
+    "attending": {
+      "title": "Dolazi",
+      "description": "Potvrdili dolazak"
+    },
+
+    "pending": {
+      "title": "Čeka odgovor",
+      "description": "Još nisu odgovorili"
+    },
+
+    "declined": {
+      "title": "Ne dolazi",
+      "description": "Odbili poziv"
+    }
+  },
+
+  "rsvp": {
+    "pending": "Čeka odgovor",
+    "attending": "Dolazi",
+    "declined": "Ne dolazi"
+  },
+
+  "table": {
+    "guest": "Gost",
+    "group": "Grupa",
+    "contact": "Kontakt",
+    "status": "Status",
+      "actions": "Akcije",
+    "noGroup": "Bez grupe",
+    "emptyTitle": "Nema gostiju",
+    "emptyDescription": "Još niste dodali nijednog gosta.",
+    "addGuest": "Dodaj gosta"
+  },
+
+  "filters": {
+    "searchPlaceholder": "Pretraži goste...",
+    "allGroups": "Sve grupe",
+    "noGroup": "Bez grupe",
+    "allStatuses": "Svi",
+    "group": "Grupa"
+  },
+
+  "form": {
+    "firstName": "Ime",
+    "firstNamePlaceholder": "Unesite ime",
+    "lastName": "Prezime",
+    "lastNamePlaceholder": "Unesite prezime",
+    "email": "Email",
+    "emailPlaceholder": "Unesite email adresu",
+    "phone": "Telefon",
+    "phonePlaceholder": "Unesite broj telefona",
+    "group": "Grupa",
+    "noGroup": "Bez grupe",
+    "notes": "Napomena",
+    "notesPlaceholder": "Dodajte napomenu..."
+  },
+
+  "dialog": {
+    "createTitle": "Dodaj gosta",
+    "createDescription": "Dodajte novog gosta na popis gostiju.",
+    "editTitle": "Uredi gosta",
+    "editDescription": "Uredite podatke odabranog gosta."
+  },
+
+  "messages": {
+    "guestCreated": "Gost je uspješno dodan.",
+    "guestCreateError": "Došlo je do pogreške prilikom dodavanja gosta.",
+    "guestUpdated": "Gost je uspješno ažuriran.",
+    "guestUpdateError": "Došlo je do pogreške prilikom ažuriranja gosta."
+  },
+  "actions": {
+  "addGuest": "Dodaj gosta"
+}
+}

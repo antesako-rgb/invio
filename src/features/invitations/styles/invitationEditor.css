@@ -1,0 +1,247 @@
+/* ==========================================================================
+   Editable Content
+========================================================================== */
+
+[data-editor-element] {
+  white-space:
+    pre-wrap;
+}
+
+
+/* ==========================================================================
+   Editable Elements
+========================================================================== */
+
+[data-mode="edit"] [data-editor-element] {
+  position:
+    relative;
+
+  min-width:
+    1em;
+
+  cursor:
+    pointer;
+
+  border-radius:
+    calc(var(--radius) * 0.5);
+
+  outline:
+    1px dashed
+    color-mix(
+      in srgb,
+      var(--border) 55%,
+      transparent
+    );
+
+  outline-offset:
+    0.25rem;
+
+  transition:
+    outline-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+
+/* ==========================================================================
+   Editable Label
+========================================================================== */
+
+/* ==========================================================================
+   Editable Label
+========================================================================== */
+
+[data-mode="edit"] [data-editor-element]::before {
+  content:
+    attr(data-editor-label);
+
+  position:
+    absolute;
+
+  top:
+    -1.65rem;
+
+  right:
+    -0.65rem;
+
+  bottom:
+    auto;
+
+  left:
+    auto;
+
+  z-index:
+    10;
+
+  padding:
+    0.2rem 0.4rem;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    calc(var(--radius) * 0.4);
+
+  background:
+    var(--background);
+
+  color:
+    var(--primary);
+
+  font-family:
+    var(--font-sans);
+
+  font-size:
+    0.65rem;
+
+  font-style:
+    normal;
+
+  font-weight:
+    500;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    normal;
+
+  text-align:
+    left;
+
+  text-transform:
+    none;
+
+  white-space:
+    nowrap;
+
+  pointer-events:
+    none;
+
+  opacity:
+    0;
+
+  visibility:
+    hidden;
+
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease;
+}
+
+
+/* ==========================================================================
+   Selected Label
+========================================================================== */
+
+[data-mode="edit"]
+[data-editor-element][data-editor-selected="true"]::before {
+  opacity:
+    1;
+
+  visibility:
+    visible;
+}
+
+
+/* ==========================================================================
+   Text Editing
+========================================================================== */
+
+[data-mode="edit"] [data-editor-element][contenteditable="true"] {
+  cursor:
+    text;
+}
+
+
+/* ==========================================================================
+   Hover
+========================================================================== */
+
+[data-mode="edit"]
+[data-editor-element]:not([contenteditable="true"]):hover {
+  outline-color:
+    var(--foreground);
+}
+
+
+/* ==========================================================================
+   Selected
+========================================================================== */
+
+[data-mode="edit"]
+[data-editor-element][data-editor-selected="true"] {
+  outline-color:
+    var(--primary);
+}
+[data-editor-delete] {
+  z-index:
+    1000;
+
+  display:
+    flex;
+
+  width:
+    1.4rem;
+
+  height:
+    1.4rem;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    0;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    50%;
+
+  background:
+    var(--background);
+
+  color:
+    var(--destructive);
+
+  cursor:
+    pointer;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+[data-editor-delete] svg {
+  width:
+    0.8rem;
+
+  height:
+    0.8rem;
+
+  pointer-events:
+    none;
+}
+
+[data-editor-delete]:hover {
+  background:
+    var(--destructive);
+
+  color:
+    var(--background);
+
+  transform:
+    scale(1.05);
+}
+
+[data-editor-delete]:focus-visible {
+  outline:
+    2px solid var(--destructive);
+
+  outline-offset:
+    2px;
+}

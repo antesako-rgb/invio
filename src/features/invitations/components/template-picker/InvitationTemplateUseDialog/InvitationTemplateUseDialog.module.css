@@ -1,0 +1,99 @@
+/* ==========================================================================
+   Actions
+========================================================================== */
+
+.actions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.action {
+  height: auto;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  text-align: left;
+}
+
+.actionIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.actionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.actionTitle {
+  font-weight: 500;
+}
+
+.actionDescription {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+
+
+/* ==========================================================================
+   Invitations
+========================================================================== */
+
+.invitations {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.invitation {
+  height: auto;
+  justify-content: flex-start;
+  padding: 1rem;
+  text-align: left;
+}
+
+.invitationContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.invitationName {
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.invitationTemplate {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+
+/* ==========================================================================
+   Invitation Updated
+========================================================================== */
+
+.invitationUpdated {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--muted-foreground);
+  opacity: 0.8;
+}
+/* ==========================================================================
+   Footer
+========================================================================== */
+
+.footer {
+  margin-top: 1rem;
+}
+
+.backIcon {
+  width: 1rem;
+  height: 1rem;
+}

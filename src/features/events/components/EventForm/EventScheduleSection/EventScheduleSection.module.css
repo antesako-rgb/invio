@@ -1,0 +1,195 @@
+/* ==========================================================================
+   Schedule Type
+========================================================================== */
+
+.scheduleType {
+  display:
+    inline-flex;
+
+  width:
+    fit-content;
+
+  padding:
+    0.25rem;
+
+  border:
+    1px solid
+    color-mix(
+      in oklch,
+      var(--primary) 18%,
+      var(--border)
+    );
+
+  border-radius:
+    calc(var(--radius) * 0.8);
+
+  background:
+    color-mix(
+      in oklch,
+      var(--primary) 7%,
+      var(--background)
+    );
+}
+
+
+.scheduleTypeButton {
+  min-height:
+    2.5rem;
+
+  padding:
+    0.5rem
+    1.125rem;
+
+  border:
+    0;
+
+  border-radius:
+    calc(var(--radius) * 0.55);
+
+  background:
+    transparent;
+
+  color:
+    var(--muted-foreground);
+
+  font:
+    inherit;
+
+  font-weight:
+    600;
+
+  cursor:
+    pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.scheduleTypeButton:hover:not(
+  :disabled
+):not(
+  .scheduleTypeButtonActive
+) {
+  background:
+    color-mix(
+      in oklch,
+      var(--primary) 8%,
+      transparent
+    );
+
+  color:
+    var(--primary);
+}
+
+
+.scheduleTypeButtonActive {
+  background:
+    var(--primary);
+
+  color:
+    var(--primary-foreground);
+
+  box-shadow:
+    0 2px 8px
+    color-mix(
+      in oklch,
+      var(--primary) 24%,
+      transparent
+    );
+}
+
+
+.scheduleTypeButtonActive:hover:not(:disabled) {
+  background:
+    var(--primary-dark);
+}
+
+
+.scheduleTypeButton:focus-visible {
+  outline:
+    2px solid
+    var(--ring);
+
+  outline-offset:
+    2px;
+}
+
+
+.scheduleTypeButton:disabled {
+  cursor:
+    not-allowed;
+
+  opacity:
+    0.6;
+}
+
+
+/* ==========================================================================
+   Time Range
+========================================================================== */
+
+.timeRange {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap:
+    1.5rem;
+}
+
+
+/* ==========================================================================
+   Multi Day Schedule
+========================================================================== */
+
+.scheduleRow {
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+
+  align-items:
+    start;
+
+  gap:
+    1.5rem;
+}
+
+
+/* ==========================================================================
+   Responsive
+========================================================================== */
+
+@media (max-width: 640px) {
+  .scheduleType {
+    display:
+      flex;
+
+    width:
+      100%;
+  }
+
+
+  .scheduleTypeButton {
+    flex:
+      1;
+  }
+
+
+  .timeRange,
+  .scheduleRow {
+    grid-template-columns:
+      1fr;
+  }
+}

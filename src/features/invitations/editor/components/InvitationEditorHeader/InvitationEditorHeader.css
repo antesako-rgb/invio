@@ -1,0 +1,252 @@
+/* ==========================================================================
+   Invitation Editor Header
+========================================================================== */
+
+.invitation-editor-header {
+  position:
+    relative;
+
+  z-index:
+    20;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  flex-shrink:
+    0;
+
+  min-height:
+    var(--dashboard-navbar-height);
+
+  padding:
+    0 1.5rem;
+
+  border-bottom:
+    1px solid var(--border);
+
+  background:
+    var(--card);
+
+  color:
+    var(--card-foreground);
+}
+
+
+/* ==========================================================================
+   Start
+========================================================================== */
+
+.invitation-editor-header__start {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    flex-start;
+
+  min-width:
+    0;
+}
+
+
+/* ==========================================================================
+   Navigation
+========================================================================== */
+
+.invitation-editor-header__navigation {
+  position:
+    absolute;
+
+  top:
+    0;
+
+  left:
+    50%;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  width:
+    min(560px, 50vw);
+
+  height:
+    100%;
+
+  min-width:
+    0;
+
+  transform:
+    translateX(-50%);
+}
+
+
+.invitation-editor-header__navigation > * {
+  width:
+    100%;
+}
+
+
+/* ==========================================================================
+   Save Status
+========================================================================== */
+
+.invitation-editor-header__status {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    flex-end;
+
+  gap:
+    0.375rem;
+
+  min-width:
+    0;
+
+  margin-left:
+    auto;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    500;
+
+  white-space:
+    nowrap;
+}
+
+
+.invitation-editor-header__status-spinner {
+  animation:
+    invitation-editor-header-spin
+    0.8s
+    linear
+    infinite;
+}
+
+
+@keyframes invitation-editor-header-spin {
+  to {
+    transform:
+      rotate(360deg);
+  }
+}
+
+
+/* ==========================================================================
+   Tablet
+========================================================================== */
+
+@media (max-width: 1100px) {
+  .invitation-editor-header {
+    padding:
+      0 1rem;
+  }
+
+
+  .invitation-editor-header__navigation {
+    width:
+      min(520px, 55vw);
+  }
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 767px) {
+  .invitation-editor-header {
+    display:
+      grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto;
+
+    grid-template-areas:
+      "start status"
+      "navigation navigation";
+
+    min-height:
+      auto;
+
+    padding:
+      0;
+  }
+
+
+  /* Start */
+
+  .invitation-editor-header__start {
+    grid-area:
+      start;
+
+    min-width:
+      0;
+
+    min-height:
+      3.5rem;
+
+    padding-inline:
+      0.75rem;
+  }
+
+
+  /* Navigation */
+
+  .invitation-editor-header__navigation {
+    position:
+      static;
+
+    grid-area:
+      navigation;
+
+    width:
+      100%;
+
+    height:
+      auto;
+
+    min-width:
+      0;
+
+    transform:
+      none;
+  }
+
+
+  /* Save Status */
+
+  .invitation-editor-header__status {
+    grid-area:
+      status;
+
+    min-height:
+      3.5rem;
+
+    margin-left:
+      0;
+
+    padding-inline:
+      0.75rem;
+  }
+}

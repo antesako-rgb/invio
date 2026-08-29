@@ -1,0 +1,107 @@
+.trigger {
+  display: flex;
+  align-items: center;
+
+  gap: 0.75rem;
+
+  height: auto;
+
+  padding: 0.375rem 0.5rem;
+
+  border-radius: var(--radius);
+}
+
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  min-width: 0;
+  max-width: 12rem;
+}
+
+
+.name {
+  overflow: hidden;
+
+  width: 100%;
+
+  color: var(--foreground);
+
+  font-size: 0.875rem;
+  font-weight: 600;
+
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.email {
+  overflow: hidden;
+
+  width: 100%;
+
+  color: var(--muted-foreground);
+
+  font-size: 0.75rem;
+
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.chevron {
+  flex-shrink: 0;
+
+  color: var(--muted-foreground);
+
+  transition:
+    transform 0.2s ease;
+}
+
+
+.content {
+  width: 15rem;
+}
+/* ==========================================================================
+   Compact Trigger
+========================================================================== */
+
+.compactTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.75rem;
+  height: 2.75rem;
+
+  padding: 0;
+
+  border-radius: 999px;
+}
+
+
+/* ==========================================================================
+   Dropdown Profile
+========================================================================== */
+
+.profile {
+  display: flex;
+  align-items: center;
+
+  gap: 0.75rem;
+
+  padding: 0.625rem 0.5rem;
+}
+
+
+.profileIdentity {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  min-width: 0;
+}
