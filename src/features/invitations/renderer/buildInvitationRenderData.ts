@@ -1,6 +1,6 @@
 import type {
-  Invitation,
-} from "@/features/invitations/types/invitation.types";
+  Json,
+} from "@/lib/supabase/database.types";
 
 import type {
   InvitationRenderData,
@@ -32,8 +32,13 @@ import {
 ========================================================================== */
 
 interface BuildInvitationRenderDataInput {
-  invitation:
-    Invitation;
+  invitation: {
+    content:
+      Json;
+
+    presentation:
+      Json;
+  };
 
   locale:
     string;

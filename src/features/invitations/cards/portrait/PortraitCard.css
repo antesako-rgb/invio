@@ -1,0 +1,318 @@
+/* ==========================================================================
+   Portrait Card
+========================================================================== */
+
+.portrait-card {
+
+  position:
+    relative;
+
+  width:
+    100%;
+
+  aspect-ratio:
+    5 / 7;
+
+  overflow:
+    hidden;
+  container-type:
+    inline-size;
+  background:
+    var(--invitation-card-background);
+
+  color:
+    var(--portrait-foreground);
+
+}
+
+
+.portrait-card__background {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    0;
+
+  background-color:
+    var(--invitation-card-background);
+
+  background-image:
+    var(--invitation-card-background-image);
+
+  background-size:
+    var(--invitation-card-background-size);
+
+  background-position:
+    var(--invitation-card-background-position);
+
+  background-repeat:
+    var(--invitation-card-background-repeat);
+
+  opacity:
+    var(--invitation-card-background-opacity);
+
+  pointer-events:
+    none;
+
+}
+
+
+
+.portrait-card__frame {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    1;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+
+}
+
+
+
+.portrait-card__content {
+
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  padding:
+    8% 9% 10%;
+
+  text-align:
+    center;
+
+}
+
+/* ==========================================================================
+   Hero
+========================================================================== */
+
+.portrait-card__hero {
+
+  width:
+    100%;
+
+}
+
+
+/* ==========================================================================
+   Eyebrow
+========================================================================== */
+
+.portrait-card__eyebrow {
+
+  --invitation-element-font-size:
+    var(--portrait-eyebrow-size);
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  margin-bottom:
+    4%;
+
+  font-family:
+    var(--portrait-eyebrow-font);
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  font-style:
+    var(--portrait-eyebrow-style);
+
+  font-weight:
+    var(--portrait-eyebrow-weight);
+
+  line-height:
+    var(--portrait-eyebrow-line-height);
+
+  letter-spacing:
+    var(--portrait-eyebrow-letter-spacing);
+
+  color:
+    var(--portrait-eyebrow-color);
+
+  text-transform:
+    var(--portrait-eyebrow-text-transform);
+
+  text-align:
+    var(--portrait-eyebrow-text-align);
+
+  opacity:
+    var(--portrait-eyebrow-opacity);
+
+}
+
+
+/* ==========================================================================
+   Title
+========================================================================== */
+
+.portrait-card__title {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  margin:
+    0;
+
+  font-family:
+    var(--portrait-title-font);
+
+  font-style:
+    var(--portrait-title-style);
+
+  font-weight:
+    var(--portrait-title-weight);
+
+  line-height:
+    var(--portrait-title-line-height);
+
+  letter-spacing:
+    var(--portrait-title-letter-spacing);
+
+  color:
+    var(--portrait-title-color);
+
+  text-transform:
+    var(--portrait-title-text-transform);
+
+  text-align:
+    var(--portrait-title-text-align);
+
+  opacity:
+    var(--portrait-title-opacity);
+
+}
+
+
+/* ==========================================================================
+   Title Text
+========================================================================== */
+
+.portrait-card__title-text {
+
+  --invitation-element-font-size:
+    var(--portrait-title-size);
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  white-space:
+    pre-line;
+
+}
+.portrait-card__photo {
+  flex:
+    0 0 auto;
+
+  width:
+    var(--portrait-photo-width);
+
+  aspect-ratio:
+    var(--portrait-photo-aspect-ratio);
+
+  margin:
+    4% 0;
+}
+
+
+/* ==========================================================================
+   Photo Image
+========================================================================== */
+
+.portrait-card__photo
+.invitation-image-frame__image-content {
+
+  object-position:
+    var(--portrait-photo-object-position);
+
+}
+
+
+/* ==========================================================================
+   Photo Placeholder
+========================================================================== */
+
+.portrait-card__photo-placeholder {
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  background:
+    var(--portrait-photo-background);
+
+}
+
+
+
+.portrait-card__photo
+.invitation-image-frame__frame {
+
+  opacity:
+    var(--portrait-photo-frame-opacity);
+
+  filter:
+    var(--portrait-photo-frame-filter);
+
+}

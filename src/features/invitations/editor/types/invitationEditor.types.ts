@@ -29,11 +29,10 @@ export type InvitationEditorSaveStatus =
   | "error";
 
 
-/* ==========================================================================
-   Invitation Editor Context
-========================================================================== */
-
 export interface InvitationEditorContext {
+  invitationId:
+    string;
+
   selectedElement:
     InvitationEditorSelection | null;
 

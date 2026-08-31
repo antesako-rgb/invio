@@ -56,6 +56,42 @@
 
 
   /* ========================================================================
+     Typography
+  ======================================================================== */
+
+  --flora-font-primary:
+    var(--font-ephesis),
+    cursive;
+
+  --flora-font-secondary:
+    var(--font-marcellus),
+    serif;
+
+
+  /* ========================================================================
+     Details
+  ======================================================================== */
+
+  --invitation-details-foreground:
+    var(--flora-foreground);
+
+  --invitation-details-accent:
+    var(--flora-foreground);
+
+  --invitation-details-title-color:
+    var(--flora-foreground);
+
+  --invitation-details-title-font:
+    var(--flora-font-secondary);
+
+  --invitation-details-event-font:
+    var(--flora-font-primary);
+
+  --invitation-details-section-font:
+    var(--flora-font-secondary);
+
+
+  /* ========================================================================
      Frame
   ======================================================================== */
 
@@ -70,19 +106,6 @@
 
 
   /* ========================================================================
-     Typography
-  ======================================================================== */
-
-  --flora-font-primary:
-    var(--font-ephesis),
-    cursive;
-
-  --flora-font-secondary:
-    var(--font-marcellus),
-    serif;
-
-
-  /* ========================================================================
      Eyebrow
   ======================================================================== */
 
@@ -90,7 +113,7 @@
     var(--flora-font-secondary);
 
   --flora-eyebrow-size:
-    clamp(10px, 2vw, 14px);
+    3.5cqw;
 
   --flora-eyebrow-style:
     normal;
@@ -124,8 +147,9 @@
   --flora-title-font:
     var(--flora-font-primary);
 
---flora-title-size:
-  clamp(24px, 10vw, 72px);
+  --flora-title-size:
+    12cqw;
+
   --flora-title-style:
     normal;
 
@@ -150,37 +174,39 @@
   --flora-title-opacity:
     1;
 
-/* ========================================================================
-   Event Info
-======================================================================== */
 
---invitation-event-info-font:
-  var(--flora-font-secondary);
+  /* ========================================================================
+     Event Info
+  ======================================================================== */
 
---invitation-event-info-size:
-  clamp(11px, 1.5vw, 16px);
+  --invitation-event-info-font:
+    var(--flora-font-secondary);
 
---invitation-event-info-style:
-  normal;
+  --invitation-event-info-size:
+    3.5cqw;
 
---invitation-event-info-weight:
-  400;
+  --invitation-event-info-style:
+    normal;
 
---invitation-event-info-line-height:
-  1.5;
+  --invitation-event-info-weight:
+    400;
 
---invitation-event-info-letter-spacing:
-  0;
+  --invitation-event-info-line-height:
+    1.5;
 
---invitation-event-info-color:
-  var(--flora-foreground);
+  --invitation-event-info-letter-spacing:
+    0;
 
---invitation-event-info-text-transform:
-  none;
+  --invitation-event-info-color:
+    var(--flora-foreground);
 
---invitation-event-info-text-align:
-  center;
+  --invitation-event-info-text-transform:
+    none;
 
---invitation-event-info-opacity:
-  1;
+  --invitation-event-info-text-align:
+    center;
+
+  --invitation-event-info-opacity:
+    1;
+
 }

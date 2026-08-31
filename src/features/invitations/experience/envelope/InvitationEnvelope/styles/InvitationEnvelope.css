@@ -2,7 +2,6 @@
 @import "./InvitationEnvelopeFlap.css";
 
 
-
 /* ==========================================================================
    Invitation Envelope Stage
 ========================================================================== */
@@ -13,9 +12,8 @@
 
   width:
     min(100%, 1120px);
-
-  min-height:
-    720px;
+   min-height:
+    720px;   
 
   margin-inline:
     auto;
@@ -26,11 +24,6 @@
   isolation:
     isolate;
 }
-
-
-/* ==========================================================================
-   Invitation Envelope
-========================================================================== */
 
 .invitation-envelope {
   position:
@@ -46,7 +39,10 @@
     50%;
 
   width:
-    min(100%, 680px);
+    min(
+      calc(100vw - 2rem),
+      776px
+    );
 
   aspect-ratio:
     1600 / 1100;
@@ -64,7 +60,6 @@
   -webkit-backface-visibility:
     hidden;
 }
-
 
 /* ==========================================================================
    Assets
@@ -113,7 +108,6 @@
 }
 
 
-
 /* ==========================================================================
    Front
 ========================================================================== */
@@ -125,7 +119,26 @@
   filter:
     var(--invitation-envelope-front-filter);
 }
+
+/* ==========================================================================
+   Invitation Envelope Actions
+========================================================================== */
+
+.invitation-envelope__actions {
+  position:
+    absolute;
+
+  top:
+    calc(100% + 16px);
+
+  left:
+    0;
+
+  width:
+    100%;
+}
 @media (max-width: 767px) {
+
   .invitation-envelope-stage {
     width:
       100%;
@@ -137,11 +150,10 @@
       none;
   }
 
+
   .invitation-envelope {
     top:
       45%;
-
-    width:
-      min(94%, 580px);
   }
+
 }

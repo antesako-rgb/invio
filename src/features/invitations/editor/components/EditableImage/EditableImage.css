@@ -1,0 +1,280 @@
+/* ==========================================================================
+   Editable Image
+========================================================================== */
+
+.editable-image {
+
+  position:
+    relative;
+
+  display:
+    block;
+
+}
+
+
+/* ==========================================================================
+   Image
+========================================================================== */
+
+.editable-image__image {
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+  user-select:
+    none;
+
+  pointer-events:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Editor
+========================================================================== */
+
+.editable-image[data-editor-element] {
+
+  cursor:
+    pointer;
+
+}
+
+
+/* ==========================================================================
+   Selected
+========================================================================== */
+
+.editable-image[data-editor-selected="true"] {
+
+  outline:
+    1px dashed
+    rgba(255, 255, 255, 0.9);
+
+  outline-offset:
+    4px;
+
+}
+
+
+/* ==========================================================================
+   Empty
+========================================================================== */
+
+.editable-image__empty {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    2;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  pointer-events:
+    none;
+
+}
+
+.editable-image__empty svg {
+
+  width:
+    24px;
+
+  height:
+    24px;
+
+}
+
+
+/* ==========================================================================
+   Loading
+========================================================================== */
+
+.editable-image__loading {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    4;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  background:
+    rgba(0, 0, 0, 0.2);
+
+  cursor:
+    wait;
+
+}
+
+
+/* ==========================================================================
+   Spinner
+========================================================================== */
+
+.editable-image__spinner {
+
+  width:
+    24px;
+
+  height:
+    24px;
+
+  animation:
+    editable-image-spin
+    800ms
+    linear
+    infinite;
+
+}
+
+
+/* ==========================================================================
+   Delete
+========================================================================== */
+
+.editable-image__delete {
+
+  position:
+    absolute;
+
+  top:
+    -12px;
+
+  right:
+    -12px;
+
+  z-index:
+    5;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    28px;
+
+  height:
+    28px;
+
+  padding:
+    0;
+
+  border:
+    0;
+
+  border-radius:
+    999px;
+
+  background:
+    #ffffff;
+
+  color:
+    #111111;
+
+  box-shadow:
+    0 2px 8px
+    rgba(0, 0, 0, 0.18);
+
+  cursor:
+    pointer;
+
+}
+
+.editable-image__delete svg {
+
+  width:
+    16px;
+
+  height:
+    16px;
+
+}
+
+
+/* ==========================================================================
+   File Input
+========================================================================== */
+
+.editable-image__input {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  opacity:
+    0;
+
+  cursor:
+    pointer;
+
+}
+
+
+/* ==========================================================================
+   Spin
+========================================================================== */
+
+@keyframes editable-image-spin {
+
+  from {
+
+    transform:
+      rotate(0deg);
+
+  }
+
+  to {
+
+    transform:
+      rotate(360deg);
+
+  }
+
+}

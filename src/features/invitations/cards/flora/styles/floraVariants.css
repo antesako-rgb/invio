@@ -1,13 +1,8 @@
 /* ==========================================================================
-   Invitation Variants
-========================================================================== */
-
-
-/* ==========================================================================
    Champagne
 ========================================================================== */
 
-[data-invitation-experience][data-variant="champagne"] {
+[data-invitation-experience][data-template="flora"][data-variant="champagne"] {
 
   /* ========================================================================
      Invitation
@@ -21,7 +16,7 @@
 
 
   /* ========================================================================
-     Colors
+     Flora Colors
   ======================================================================== */
 
   --flora-foreground:
@@ -32,20 +27,77 @@
 
 
   /* ========================================================================
+     Guest Actions
+  ======================================================================== */
+
+  --invitation-action-primary:
+    #493729;
+
+  --invitation-action-primary-foreground:
+    #f7f2ea;
+
+  --invitation-action-secondary:
+    #dfd0bd;
+
+  --invitation-action-secondary-foreground:
+    #493729;
+
+  --invitation-action-secondary-border:
+    #b99e80;
+
+
+  /* ========================================================================
+     Details
+  ======================================================================== */
+
+  --invitation-details-foreground:
+    #493729;
+
+  --invitation-details-accent:
+    #8d6848;
+
+  --invitation-details-title-color:
+    #493729;
+
+  --invitation-details-shell-background:
+    #f7f2ea;
+
+  --invitation-details-shell-border:
+    rgba(73, 55, 41, 0.12);
+
+  --invitation-details-section-background:
+    rgba(255, 255, 255, 0.48);
+
+  --invitation-details-section-border:
+    rgba(73, 55, 41, 0.12);
+
+  --invitation-details-control-background:
+    rgba(73, 55, 41, 0.08);
+
+
+  /* ========================================================================
      Envelope
   ======================================================================== */
 
   --invitation-envelope-back-filter:
-    none;
+    sepia(18%)
+    saturate(75%)
+    brightness(98%);
 
   --invitation-envelope-front-filter:
-    none;
+    sepia(18%)
+    saturate(75%)
+    brightness(98%);
 
   --invitation-envelope-flap-filter:
-    none;
+    sepia(18%)
+    saturate(75%)
+    brightness(98%);
 
   --invitation-envelope-liner-filter:
-    none;
+    sepia(18%)
+    saturate(75%)
+    brightness(98%);
 
 
   /* ========================================================================
@@ -60,6 +112,7 @@
 
   --flora-frame-blend-mode:
     normal;
+
 }
 
 
@@ -67,7 +120,7 @@
    Sage
 ========================================================================== */
 
-[data-invitation-experience][data-variant="sage"] {
+[data-invitation-experience][data-template="flora"][data-variant="sage"] {
 
   /* ========================================================================
      Invitation
@@ -81,7 +134,7 @@
 
 
   /* ========================================================================
-     Colors
+     Flora Colors
   ======================================================================== */
 
   --flora-foreground:
@@ -92,20 +145,69 @@
 
 
   /* ========================================================================
+     Guest Actions
+  ======================================================================== */
+
+  --invitation-action-primary:
+    #526454;
+
+  --invitation-action-primary-foreground:
+    #f4f6f1;
+
+  --invitation-action-secondary:
+    #d4ddd1;
+
+  --invitation-action-secondary-foreground:
+    #354036;
+
+  --invitation-action-secondary-border:
+    #9eae9d;
+
+
+  /* ========================================================================
+     Details
+  ======================================================================== */
+
+  --invitation-details-foreground:
+    #354036;
+
+  --invitation-details-accent:
+    #526454;
+
+  --invitation-details-title-color:
+    #354036;
+
+  --invitation-details-shell-background:
+    #eef0e8;
+
+  --invitation-details-shell-border:
+    rgba(53, 64, 54, 0.12);
+
+  --invitation-details-section-background:
+    rgba(255, 255, 255, 0.46);
+
+  --invitation-details-section-border:
+    rgba(53, 64, 54, 0.12);
+
+  --invitation-details-control-background:
+    rgba(53, 64, 54, 0.08);
+
+
+  /* ========================================================================
      Envelope
   ======================================================================== */
 
   --invitation-envelope-back-filter:
-    none;
+    hue-rotate(100deg);
 
   --invitation-envelope-front-filter:
-    none;
+    hue-rotate(100deg);
 
   --invitation-envelope-flap-filter:
-    none;
+    hue-rotate(100deg);
 
   --invitation-envelope-liner-filter:
-    none;
+    hue-rotate(100deg);
 
 
   /* ========================================================================
@@ -120,6 +222,7 @@
 
   --flora-frame-blend-mode:
     normal;
+
 }
 
 
@@ -127,7 +230,7 @@
    Rose
 ========================================================================== */
 
-[data-invitation-experience][data-variant="rose"] {
+[data-invitation-experience][data-template="flora"][data-variant="rose"] {
 
   /* ========================================================================
      Invitation
@@ -141,7 +244,7 @@
 
 
   /* ========================================================================
-     Colors
+     Flora Colors
   ======================================================================== */
 
   --flora-foreground:
@@ -149,6 +252,55 @@
 
   --flora-muted:
     #876b6b;
+
+
+  /* ========================================================================
+     Guest Actions
+  ======================================================================== */
+
+  --invitation-action-primary:
+    #765252;
+
+  --invitation-action-primary-foreground:
+    #fff8f6;
+
+  --invitation-action-secondary:
+    #e6cfcb;
+
+  --invitation-action-secondary-foreground:
+    #5b3e3e;
+
+  --invitation-action-secondary-border:
+    #c49f99;
+
+
+  /* ========================================================================
+     Details
+  ======================================================================== */
+
+  --invitation-details-foreground:
+    #5b3e3e;
+
+  --invitation-details-accent:
+    #876363;
+
+  --invitation-details-title-color:
+    #5b3e3e;
+
+  --invitation-details-shell-background:
+    #f4e8e5;
+
+  --invitation-details-shell-border:
+    rgba(91, 62, 62, 0.12);
+
+  --invitation-details-section-background:
+    rgba(255, 255, 255, 0.46);
+
+  --invitation-details-section-border:
+    rgba(91, 62, 62, 0.12);
+
+  --invitation-details-control-background:
+    rgba(91, 62, 62, 0.08);
 
 
   /* ========================================================================
@@ -180,4 +332,5 @@
 
   --flora-frame-blend-mode:
     normal;
+
 }

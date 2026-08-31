@@ -20,7 +20,26 @@ const withNextIntl =
    Next Config
 ========================================================================== */
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol:
+          "https",
+
+        hostname:
+          "invio.b-cdn.net",
+      },
+    ],
+  },
+
+  experimental: {
+    serverActions: {
+      bodySizeLimit:
+        "12mb",
+    },
+  },
+};
 
 
 /* ==========================================================================

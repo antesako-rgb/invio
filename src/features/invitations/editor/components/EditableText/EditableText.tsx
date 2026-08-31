@@ -9,7 +9,9 @@ import {
 import {
   createPortal,
 } from "react-dom";
-
+import {
+  useInvitationPresentation,
+} from "@/features/invitations/renderer/context/InvitationPresentationContext";
 import type {
   FormEvent,
   KeyboardEvent,
@@ -166,15 +168,18 @@ export default function EditableText({
      Presentation
   ========================================================================== */
 
-  const elementPresentation =
-    editor?.presentation.elements?.[
-      element
-    ];
+const presentation =
+  useInvitationPresentation();
 
-  const elementStyle =
-    getInvitationElementStyle(
-      elementPresentation
-    );
+const elementPresentation =
+  presentation.elements?.[
+    element
+  ];
+
+const elementStyle =
+  getInvitationElementStyle(
+    elementPresentation
+  );
 
 
   /* ==========================================================================

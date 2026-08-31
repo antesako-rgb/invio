@@ -37,6 +37,7 @@ export default function SideNavigation({
   activeId,
   collapsed = false,
   onNavigate,
+  onControlledNavigate,
   ariaLabel = "Navigation",
 }: SideNavigationProps) {
   const pathname =
@@ -48,8 +49,10 @@ export default function SideNavigation({
   ========================================================================== */
 
   function handleAnchorClick(
-    e: MouseEvent<HTMLAnchorElement>,
-    id: string
+    e:
+      MouseEvent<HTMLAnchorElement>,
+    id:
+      string
   ) {
     e.preventDefault();
 
@@ -77,6 +80,20 @@ export default function SideNavigation({
     });
 
     onNavigate?.();
+  }
+
+
+  /* ==========================================================================
+     Controlled Navigation
+  ========================================================================== */
+
+  function handleControlledClick(
+    id:
+      string
+  ) {
+    onControlledNavigate?.(
+      id
+    );
   }
 
 
@@ -276,8 +293,10 @@ export default function SideNavigation({
                       ? "step"
                       : undefined
                   }
-                  onClick={
-                    onNavigate
+                  onClick={() =>
+                    handleControlledClick(
+                      item.id
+                    )
                   }
                 >
                   <Icon
@@ -321,8 +340,10 @@ export default function SideNavigation({
                     aria-label={
                       item.label
                     }
-                    onClick={
-                      onNavigate
+                    onClick={() =>
+                      handleControlledClick(
+                        item.id
+                      )
                     }
                   >
                     <Icon

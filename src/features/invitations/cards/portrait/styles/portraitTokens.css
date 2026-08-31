@@ -1,0 +1,224 @@
+/* ==========================================================================
+   Portrait Design Tokens
+========================================================================== */
+
+[data-invitation-experience][data-template="portrait"] {
+
+  /* ========================================================================
+     Invitation
+  ======================================================================== */
+
+  --invitation-experience-background:
+    #eceae5;
+
+  --invitation-card-background:
+    #f5efe6;
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-image:
+    url("/invitation-assets/envelopes/classic/back.png");
+
+  --invitation-envelope-front-image:
+    url("/invitation-assets/envelopes/classic/front.png");
+
+  --invitation-envelope-flap-image:
+    url("/invitation-assets/envelopes/classic/flap.png");
+
+  --invitation-envelope-liner-image:
+    url("/invitation-assets/envelopes/classic/liner.png");
+
+  --invitation-envelope-back-filter:
+    none;
+
+  --invitation-envelope-front-filter:
+    none;
+
+  --invitation-envelope-flap-filter:
+    none;
+
+  --invitation-envelope-liner-filter:
+    none;
+
+
+  /* ========================================================================
+     Colors
+  ======================================================================== */
+
+  --portrait-foreground:
+    #332c27;
+
+  --portrait-muted:
+    #756a61;
+
+
+  /* ========================================================================
+     Typography
+  ======================================================================== */
+
+  --portrait-font-primary:
+    var(--font-pinyon-script),
+    cursive;
+
+  --portrait-font-secondary:
+    var(--font-marcellus),
+    serif;
+
+
+  /* ========================================================================
+     Details
+  ======================================================================== */
+
+  --invitation-details-foreground:
+    var(--portrait-foreground);
+
+  --invitation-details-accent:
+    var(--portrait-foreground);
+
+  --invitation-details-title-color:
+    var(--portrait-foreground);
+
+  --invitation-details-title-font:
+    var(--portrait-font-secondary);
+
+  --invitation-details-event-font:
+    var(--portrait-font-primary);
+
+  --invitation-details-section-font:
+    var(--portrait-font-secondary);
+
+
+  /* ========================================================================
+     Eyebrow
+  ======================================================================== */
+
+  --portrait-eyebrow-font:
+    var(--portrait-font-primary);
+
+  --portrait-eyebrow-size:
+    4cqw;
+
+  --portrait-eyebrow-style:
+    normal;
+
+  --portrait-eyebrow-weight:
+    500;
+
+  --portrait-eyebrow-line-height:
+    1.4;
+
+  --portrait-eyebrow-letter-spacing:
+    0.08em;
+
+  --portrait-eyebrow-color:
+    var(--portrait-foreground);
+
+  --portrait-eyebrow-text-transform:
+    none;
+
+  --portrait-eyebrow-text-align:
+    center;
+
+  --portrait-eyebrow-opacity:
+    1;
+
+
+  /* ========================================================================
+     Title
+  ======================================================================== */
+
+  --portrait-title-font:
+    var(--portrait-font-primary);
+
+  --portrait-title-size:
+    10cqw;
+
+  --portrait-title-style:
+    normal;
+
+  --portrait-title-weight:
+    400;
+
+  --portrait-title-line-height:
+    0.95;
+
+  --portrait-title-letter-spacing:
+    0;
+
+  --portrait-title-color:
+    var(--portrait-foreground);
+
+  --portrait-title-text-transform:
+    none;
+
+  --portrait-title-text-align:
+    center;
+
+  --portrait-title-opacity:
+    1;
+
+
+  /* ========================================================================
+     Photo
+  ======================================================================== */
+
+  --portrait-photo-background:
+    #e8dfd3;
+
+  --portrait-photo-border-color:
+    rgba(51, 44, 39, 0.18);
+
+  --portrait-photo-width:
+    52%;
+
+  --portrait-photo-aspect-ratio:
+    1 / 1;
+
+  --portrait-photo-object-position:
+    center;
+
+  --portrait-photo-frame-opacity:
+    1;
+
+  --portrait-photo-frame-filter:
+    none;
+
+
+  /* ========================================================================
+     Event Info
+  ======================================================================== */
+
+  --invitation-event-info-font:
+    var(--portrait-font-secondary);
+
+  --invitation-event-info-size:
+    3.5cqw;
+
+  --invitation-event-info-style:
+    normal;
+
+  --invitation-event-info-weight:
+    400;
+
+  --invitation-event-info-line-height:
+    1.5;
+
+  --invitation-event-info-letter-spacing:
+    0;
+
+  --invitation-event-info-color:
+    var(--portrait-foreground);
+
+  --invitation-event-info-text-transform:
+    none;
+
+  --invitation-event-info-text-align:
+    center;
+
+  --invitation-event-info-opacity:
+    1;
+
+}

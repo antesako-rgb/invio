@@ -90,7 +90,6 @@
   justify-content:
     center;
 
-
   width:
     100%;
 
@@ -145,21 +144,27 @@
     min(100%, 520px);
 }
 
+
 /* ==========================================================================
    Tablet / Compact Desktop
 ========================================================================== */
 
 @media (max-width: 1300px) {
+
   .invitation-editor-workspace__canvas-inner {
     padding:
       2rem;
   }
+
 }
+
+
 /* ==========================================================================
    Mobile
 ========================================================================== */
 
 @media (max-width: 767px) {
+
   .invitation-editor-workspace {
     position:
       relative;
@@ -177,7 +182,7 @@
 
   .invitation-editor-workspace__canvas-inner {
     align-items:
-      stretch;
+      center;
 
     justify-content:
       flex-start;
@@ -208,8 +213,5 @@
   }
 
 
-  .invitation-editor-workspace__document {
-    width:
-      100%;
-  }
+
 }

@@ -8,7 +8,9 @@ import {
 import {
   useTranslations,
 } from "next-intl";
-
+import {
+  useInvitationPresentation,
+} from "@/features/invitations/renderer/context/InvitationPresentationContext";
 import {
   Popover,
   PopoverContent,
@@ -270,35 +272,38 @@ const tValidation =
     );
 
 
-  /* ==========================================================================
-     Presentation
-  ========================================================================== */
+/* ==========================================================================
+   Presentation
+========================================================================== */
 
-  const elementPresentation =
-    editor?.presentation.elements?.[
-      DATE_ELEMENT
-    ];
+const presentation =
+  useInvitationPresentation();
 
-  const elementStyle =
-    getInvitationElementStyle(
-      elementPresentation
-    );
+const elementPresentation =
+  presentation.elements?.[
+    DATE_ELEMENT
+  ];
 
-  const dateStyle = {
-    ...elementStyle,
+const elementStyle =
+  getInvitationElementStyle(
+    elementPresentation
+  );
 
-    textAlign:
-      undefined,
+const dateStyle = {
+  ...elementStyle,
 
-    alignSelf:
-      elementPresentation?.text_align === "left"
-        ? "flex-start"
-        : elementPresentation?.text_align === "right"
-          ? "flex-end"
-          : elementPresentation?.text_align === "center"
-            ? "center"
-            : undefined,
-  };
+  textAlign:
+    undefined,
+
+  alignSelf:
+    elementPresentation?.text_align === "left"
+      ? "flex-start"
+      : elementPresentation?.text_align === "right"
+        ? "flex-end"
+        : elementPresentation?.text_align === "center"
+          ? "center"
+          : undefined,
+};
 
 
   /* ==========================================================================

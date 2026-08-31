@@ -11,6 +11,10 @@ import type {
 } from "react";
 
 import {
+  useTranslations,
+} from "next-intl";
+
+import {
   invitationEnvelopeRegistry,
 } from "@/features/invitations/experience/envelope/registry/invitationEnvelopeRegistry";
 
@@ -21,18 +25,27 @@ import "./styles/InvitationEnvelope.css";
    Types
 ========================================================================== */
 
-interface InvitationEnvelopeProps {
-  children:
-    ReactNode;
-
-  envelopeId:
-    keyof typeof invitationEnvelopeRegistry;
-}
-
 type InvitationEnvelopeState =
   | "closed"
   | "opening"
   | "presented";
+
+interface InvitationEnvelopeProps {
+  children:
+    ReactNode;
+
+  actions?:
+    ReactNode;
+
+  envelopeId:
+    keyof typeof invitationEnvelopeRegistry;
+
+  initialState?:
+    InvitationEnvelopeState;
+
+  onPresented?:
+    () => void;
+}
 
 
 /* ==========================================================================
@@ -49,8 +62,17 @@ const PRESENT_DELAY =
 
 export default function InvitationEnvelope({
   children,
+  actions,
   envelopeId,
+  initialState = "closed",
+  onPresented,
 }: InvitationEnvelopeProps) {
+  const t =
+    useTranslations(
+      "Invitations.experience.envelope"
+    );
+
+
   /* ==========================================================================
      State
   ========================================================================== */
@@ -60,7 +82,7 @@ export default function InvitationEnvelope({
     setState,
   ] =
     useState<InvitationEnvelopeState>(
-      "closed"
+      initialState
     );
 
   const presentTimeoutRef =
@@ -83,17 +105,20 @@ export default function InvitationEnvelope({
      Cleanup
   ========================================================================== */
 
-  useEffect(() => {
-    return () => {
-      if (
-        presentTimeoutRef.current
-      ) {
-        clearTimeout(
+  useEffect(
+    () => {
+      return () => {
+        if (
           presentTimeoutRef.current
-        );
-      }
-    };
-  }, []);
+        ) {
+          clearTimeout(
+            presentTimeoutRef.current
+          );
+        }
+      };
+    },
+    []
+  );
 
 
   /* ==========================================================================
@@ -118,6 +143,8 @@ export default function InvitationEnvelope({
           setState(
             "presented"
           );
+
+          onPresented?.();
         },
         PRESENT_DELAY
       );
@@ -139,10 +166,6 @@ export default function InvitationEnvelope({
         state
       }
     >
-      {/* ====================================================================
-          Envelope
-      ==================================================================== */}
-
       <div
         className="invitation-envelope"
       >
@@ -171,15 +194,20 @@ export default function InvitationEnvelope({
         <div
           className="invitation-envelope__card-track"
         >
-          {/* ================================================================
-              Card
-          ================================================================ */}
-
           <div
             className="invitation-envelope__card"
           >
             {children}
           </div>
+
+          {state === "presented" &&
+            actions && (
+              <div
+                className="invitation-envelope__actions"
+              >
+                {actions}
+              </div>
+            )}
         </div>
 
 
@@ -211,30 +239,22 @@ export default function InvitationEnvelope({
           onClick={
             handleOpen
           }
-          aria-label="Otvori pozivnicu"
+          aria-label={
+            t(
+              "open"
+            )
+          }
           aria-expanded={
             state !==
             "closed"
           }
         >
-          {/* ================================================================
-              Flap Hinge
-          ================================================================ */}
-
           <span
             className="invitation-envelope__flap-hinge"
           >
-            {/* ==============================================================
-                Flap Sheet
-            ============================================================== */}
-
             <span
               className="invitation-envelope__flap-sheet"
             >
-              {/* ============================================================
-                  Front Face
-              ============================================================ */}
-
               <img
                 className="
                   invitation-envelope__flap-face
@@ -247,11 +267,6 @@ export default function InvitationEnvelope({
                 aria-hidden="true"
                 draggable={false}
               />
-
-
-              {/* ============================================================
-                  Back Face
-              ============================================================ */}
 
               <img
                 className="

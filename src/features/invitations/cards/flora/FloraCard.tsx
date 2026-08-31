@@ -14,7 +14,7 @@ import {
 
 import "./FloraCard.css";
 import "./styles/floraTokens.css";
-
+import "./styles/floraVariants.css";
 
 /* ==========================================================================
    Flora Card

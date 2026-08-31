@@ -64,36 +64,95 @@
     none;
 
 
-/* ========================================================================
-   Event Info
-======================================================================== */
+  /* ========================================================================
+     Guest Actions
+  ======================================================================== */
 
---invitation-event-info-font:
-  inherit;
+  --invitation-action-primary:
+    #4f4036;
 
---invitation-event-info-style:
-  normal;
+  --invitation-action-primary-foreground:
+    #fffaf4;
 
---invitation-event-info-weight:
-  400;
+  --invitation-action-secondary:
+    #e8ddd0;
 
---invitation-event-info-line-height:
-  1.5;
+  --invitation-action-secondary-foreground:
+    #4f4036;
 
---invitation-event-info-letter-spacing:
-  0;
+  --invitation-action-secondary-border:
+    #c9b6a2;
 
---invitation-event-info-color:
-  currentColor;
 
---invitation-event-info-text-transform:
-  none;
+  /* ========================================================================
+     Details
+  ======================================================================== */
 
---invitation-event-info-text-align:
-  center;
+  --invitation-details-foreground:
+    #4f4036;
 
---invitation-event-info-opacity:
-  1;
+  --invitation-details-accent:
+    #4f4036;
+
+  --invitation-details-title-color:
+    #4f4036;
+
+  --invitation-details-title-font:
+    inherit;
+
+  --invitation-details-event-font:
+    inherit;
+
+  --invitation-details-section-font:
+    inherit;
+
+  --invitation-details-shell-background:
+    rgba(255, 255, 255, 0.34);
+
+  --invitation-details-shell-border:
+    rgba(79, 64, 54, 0.10);
+
+  --invitation-details-section-background:
+    rgba(255, 255, 255, 0.72);
+
+  --invitation-details-section-border:
+    rgba(79, 64, 54, 0.10);
+
+  --invitation-details-control-background:
+    rgba(79, 64, 54, 0.06);
+
+
+  /* ========================================================================
+     Event Info
+  ======================================================================== */
+
+  --invitation-event-info-font:
+    inherit;
+
+  --invitation-event-info-style:
+    normal;
+
+  --invitation-event-info-weight:
+    400;
+
+  --invitation-event-info-line-height:
+    1.5;
+
+  --invitation-event-info-letter-spacing:
+    0;
+
+  --invitation-event-info-color:
+    currentColor;
+
+  --invitation-event-info-text-transform:
+    none;
+
+  --invitation-event-info-text-align:
+    center;
+
+  --invitation-event-info-opacity:
+    1;
+
 
   /* ========================================================================
      Event Date

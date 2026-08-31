@@ -7,7 +7,6 @@ import type {
 } from "@/features/invitations/types/invitationRenderer.types";
 
 import "@/features/invitations/styles/invitationTokens.css";
-import "@/features/invitations/styles/invitationVariants.css";
 
 import "./InvitationExperience.css";
 

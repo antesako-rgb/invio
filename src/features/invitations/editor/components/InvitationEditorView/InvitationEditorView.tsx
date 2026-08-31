@@ -3,7 +3,6 @@
 import {
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 
@@ -11,12 +10,11 @@ import {
   useTranslations,
 } from "next-intl";
 
-import {
-  updateInvitationAction,
-} from "@/features/invitations/actions/updateInvitationAction";
-
 import InvitationEditor
   from "@/features/invitations/editor/components/InvitationEditor/InvitationEditor";
+
+import InvitationEditorPreview
+  from "@/features/invitations/editor/components/InvitationEditorPreview/InvitationEditorPreview";
 
 import InvitationEditorSidebar
   from "@/features/invitations/editor/components/InvitationEditorSidebar/InvitationEditorSidebar";
@@ -28,8 +26,11 @@ import {
   buildInvitationEditorContent,
 } from "@/features/invitations/editor/data/buildInvitationEditorContent";
 
+import {
+  useInvitationAutosave,
+} from "@/features/invitations/editor/hooks/useInvitationAutosave";
+
 import type {
-  InvitationEditorSaveStatus,
   InvitationEditorSelection,
 } from "@/features/invitations/editor/types/invitationEditor.types";
 
@@ -59,14 +60,6 @@ import type {
 import type {
   InvitationRenderData,
 } from "@/features/invitations/types/invitationRenderer.types";
-
-
-/* ==========================================================================
-   Constants
-========================================================================== */
-
-const AUTOSAVE_DELAY =
-  700;
 
 
 /* ==========================================================================
@@ -153,11 +146,11 @@ export default function InvitationEditorView({
     );
 
   const [
-    saveStatus,
-    setSaveStatus,
+    isPreviewOpen,
+    setIsPreviewOpen,
   ] =
-    useState<InvitationEditorSaveStatus>(
-      "saved"
+    useState(
+      false
     );
 
 
@@ -220,23 +213,18 @@ export default function InvitationEditorView({
 
 
   /* ==========================================================================
-     Refs
+     Autosave
   ========================================================================== */
 
-  const lastSavedContentRef =
-    useRef<InvitationContent>(
-      data.content
-    );
-
-  const lastSavedPresentationRef =
-    useRef<InvitationPresentation>(
-      data.presentation
-    );
-
-  const saveRevisionRef =
-    useRef(
-      0
-    );
+  const saveStatus =
+    useInvitationAutosave({
+      invitationId,
+      invitationName,
+      templateId,
+      variantId,
+      content,
+      presentation,
+    });
 
 
   /* ==========================================================================
@@ -259,6 +247,31 @@ export default function InvitationEditorView({
   function handleEndEdit() {
     setEditingElement(
       null
+    );
+  }
+
+
+  /* ==========================================================================
+     Preview
+  ========================================================================== */
+
+  function handleOpenPreview() {
+    setSelectedElement(
+      null
+    );
+
+    setEditingElement(
+      null
+    );
+
+    setIsPreviewOpen(
+      true
+    );
+  }
+
+  function handleClosePreview() {
+    setIsPreviewOpen(
+      false
     );
   }
 
@@ -332,117 +345,10 @@ export default function InvitationEditorView({
 
 
   /* ==========================================================================
-     Autosave
+     Editor Render Data
   ========================================================================== */
 
-  useEffect(
-    () => {
-      const contentChanged =
-        JSON.stringify(
-          content
-        ) !==
-        JSON.stringify(
-          lastSavedContentRef.current
-        );
-
-      const presentationChanged =
-        JSON.stringify(
-          presentation
-        ) !==
-        JSON.stringify(
-          lastSavedPresentationRef.current
-        );
-
-      if (
-        !contentChanged &&
-        !presentationChanged
-      ) {
-        return;
-      }
-
-      const revision =
-        ++saveRevisionRef.current;
-
-      setSaveStatus(
-        "saving"
-      );
-
-      const timeoutId =
-        window.setTimeout(
-          async () => {
-            const result =
-              await updateInvitationAction({
-                p_invitation_id:
-                  invitationId,
-
-                p_name:
-                  invitationName,
-
-                p_template_id:
-                  templateId,
-
-                p_variant_id:
-                  variantId,
-
-                p_content:
-                  content,
-
-                p_presentation:
-                  presentation,
-              });
-
-            if (
-              revision !==
-              saveRevisionRef.current
-            ) {
-              return;
-            }
-
-            if (
-              !result.success
-            ) {
-              setSaveStatus(
-                "error"
-              );
-
-              return;
-            }
-
-            lastSavedContentRef.current =
-              content;
-
-            lastSavedPresentationRef.current =
-              presentation;
-
-            setSaveStatus(
-              "saved"
-            );
-          },
-          AUTOSAVE_DELAY
-        );
-
-      return () => {
-        window.clearTimeout(
-          timeoutId
-        );
-      };
-    },
-    [
-      content,
-      presentation,
-      invitationId,
-      invitationName,
-      templateId,
-      variantId,
-    ]
-  );
-
-
-  /* ==========================================================================
-     Render Data
-  ========================================================================== */
-
-  const renderData =
+  const editorRenderData =
     useMemo<InvitationRenderData>(
       () => {
         const editorContent =
@@ -486,67 +392,125 @@ export default function InvitationEditorView({
 
 
   /* ==========================================================================
+     Live Render Data
+  ========================================================================== */
+
+  const liveRenderData =
+    useMemo<InvitationRenderData>(
+      () => ({
+        content,
+
+        presentation,
+
+        display: {
+          date:
+            buildInvitationDateDisplay(
+              content.date,
+              locale
+            ),
+
+          time:
+            buildInvitationTimeDisplay(
+              content.time
+            ),
+
+          location:
+            buildInvitationLocationDisplay(
+              content.location
+            ),
+        },
+      }),
+      [
+        content,
+        presentation,
+        locale,
+      ]
+    );
+
+
+  /* ==========================================================================
      Render
   ========================================================================== */
 
   return (
-    <InvitationEditor
-      saveStatus={
-        saveStatus
-      }
-      sidebar={
-        <InvitationEditorSidebar />
-      }
-      toolbar={
-        <InvitationEditorToolbar
-          selectedElement={
-            selectedElement
+    <>
+      <InvitationEditor
+        saveStatus={
+          saveStatus
+        }
+        onPreview={
+          handleOpenPreview
+        }
+        sidebar={
+          <InvitationEditorSidebar />
+        }
+        toolbar={
+          <InvitationEditorToolbar
+            selectedElement={
+              selectedElement
+            }
+            presentation={
+              presentation
+            }
+            onPresentationChange={
+              setPresentation
+            }
+          />
+        }
+      >
+        <InvitationRenderer
+          templateId={
+            templateId
           }
-          presentation={
-            presentation
+          variantId={
+            variantId
           }
-          onPresentationChange={
-            setPresentation
+          mode="edit"
+          data={
+            editorRenderData
+          }
+          editor={{
+            invitationId,
+
+            selectedElement,
+            editingElement,
+            content,
+            presentation,
+
+            onSelectElement:
+              setSelectedElement,
+
+            onStartEdit:
+              handleStartEdit,
+
+            onEndEdit:
+              handleEndEdit,
+
+            onContentChange:
+              setContent,
+
+            onPresentationChange:
+              setPresentation,
+          }}
+        />
+      </InvitationEditor>
+
+      {isPreviewOpen && (
+        <InvitationEditorPreview
+          templateId={
+            templateId
+          }
+          variantId={
+            variantId
+          }
+          data={
+            liveRenderData
+          }
+          onClose={
+            handleClosePreview
           }
         />
-      }
-    >
-      <InvitationRenderer
-        templateId={
-          templateId
-        }
-        variantId={
-          variantId
-        }
-        mode="edit"
-        data={
-          renderData
-        }
-        editor={{
-          selectedElement,
-
-          editingElement,
-
-          content,
-
-          presentation,
-
-          onSelectElement:
-            setSelectedElement,
-
-          onStartEdit:
-            handleStartEdit,
-
-          onEndEdit:
-            handleEndEdit,
-
-          onContentChange:
-            setContent,
-
-          onPresentationChange:
-            setPresentation,
-        }}
-      />
-    </InvitationEditor>
+      )}
+    </>
   );
 }

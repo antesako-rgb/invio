@@ -2,6 +2,10 @@ import {
   floraPreviewContent,
 } from "@/features/invitations/preview/data/floraPreviewContent";
 
+import {
+  portraitPreviewContent,
+} from "@/features/invitations/preview/data/portraitPreviewContent";
+
 import type {
   InvitationTemplateConfig,
 } from "@/features/invitations/types/invitationTemplateConfig.types";
@@ -70,6 +74,44 @@ export const invitationTemplateRegistry:
 
           swatch:
             "#c99a9f",
+        },
+      ],
+    },
+
+
+    /* ======================================================================
+       Portrait
+    ====================================================================== */
+
+    portrait: {
+      category:
+        "wedding",
+
+      previewUrl:
+        "/invitation-assets/previews/portrait/classic.webp",
+
+      previewContent:
+        portraitPreviewContent,
+
+      envelopeId:
+        "classic",
+
+     defaultVariantId:
+        "champagne",
+
+      variants: [
+        {
+          id:
+            "champagne",
+
+          label:
+            "Champagne",
+
+          previewUrl:
+            "/invitation-assets/previews/flora/champagne.webp",
+
+          swatch:
+            "#d8c5a3",
         },
       ],
     },

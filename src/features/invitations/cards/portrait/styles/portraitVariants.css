@@ -1,0 +1,127 @@
+/* ==========================================================================
+   Champagne
+========================================================================== */
+
+[data-invitation-experience][data-template="portrait"][data-variant="champagne"] {
+
+  /* ========================================================================
+     Invitation
+  ======================================================================== */
+
+  --invitation-experience-background:
+    #d8d0c3;
+
+  --invitation-experience-background-image:
+    url(
+      "/invitation-assets/cards/portrait/champagne.png"
+    );
+
+  --invitation-experience-background-size:
+    cover;
+
+  --invitation-experience-background-position:
+    center;
+
+  --invitation-experience-background-repeat:
+    no-repeat;
+
+  --invitation-card-background:
+    #faf6ef;
+
+
+  /* ========================================================================
+     Portrait Colors
+  ======================================================================== */
+
+  --portrait-foreground:
+    #5a493b;
+
+  --portrait-muted:
+    #9a8877;
+
+
+  /* ========================================================================
+     Guest Actions
+  ======================================================================== */
+
+  --invitation-action-primary:
+    #6f5a47;
+
+  --invitation-action-primary-foreground:
+    #fffaf4;
+
+  --invitation-action-secondary:
+    #e8ded0;
+
+  --invitation-action-secondary-foreground:
+    #5a493b;
+
+  --invitation-action-secondary-border:
+    #cbbba7;
+
+
+  /* ========================================================================
+     Details
+  ======================================================================== */
+
+  --invitation-details-foreground:
+    #5a493b;
+
+  --invitation-details-accent:
+    #462b0a;
+
+  --invitation-details-title-color:
+    #5a493b;
+
+  --invitation-details-shell-background:
+    #faf6ef;
+
+  --invitation-details-shell-border:
+    rgba(90, 73, 59, 0.10);
+
+  --invitation-details-section-background:
+    rgba(255, 255, 255, 0.52);
+
+  --invitation-details-section-border:
+    rgba(90, 73, 59, 0.10);
+
+  --invitation-details-control-background:
+    rgba(90, 73, 59, 0.06);
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-filter:
+    sepia(10%)
+    saturate(70%)
+    brightness(102%);
+
+  --invitation-envelope-front-filter:
+    sepia(10%)
+    saturate(70%)
+    brightness(102%);
+
+  --invitation-envelope-flap-filter:
+    sepia(10%)
+    saturate(70%)
+    brightness(102%);
+
+  --invitation-envelope-liner-filter:
+    sepia(10%)
+    saturate(70%)
+    brightness(102%);
+
+
+  /* ========================================================================
+     Photo
+  ======================================================================== */
+
+  --portrait-photo-frame-opacity:
+    1;
+
+  --portrait-photo-frame-filter:
+    none;
+
+}

@@ -1,3 +1,9 @@
+"use client";
+
+import {
+  useState,
+} from "react";
+
 import {
   invitationCardRegistry,
 } from "@/features/invitations/cards/registry/invitationCardRegistry";
@@ -6,15 +12,34 @@ import {
   getInvitationTemplateConfig,
 } from "@/features/invitations/cards/registry/invitationTemplateRegistry.utils";
 
+import InvitationGuestActions
+  from "@/features/invitations/experience/actions/InvitationGuestActions/InvitationGuestActions";
+
+import InvitationDetailsView
+  from "@/features/invitations/experience/details/InvitationDetailsView/InvitationDetailsView";
+
 import InvitationEnvelope
   from "@/features/invitations/experience/envelope/InvitationEnvelope/InvitationEnvelope";
 
 import InvitationExperience
   from "@/features/invitations/experience/InvitationExperience/InvitationExperience";
 
+import {
+  InvitationPresentationProvider,
+} from "@/features/invitations/renderer/context/InvitationPresentationContext";
+
 import type {
   InvitationRendererProps,
 } from "@/features/invitations/types/invitationRenderer.types";
+
+
+/* ==========================================================================
+   Types
+========================================================================== */
+
+type InvitationGuestScreen =
+  | "card"
+  | "details";
 
 
 /* ==========================================================================
@@ -28,6 +53,31 @@ export default function InvitationRenderer({
   data,
   editor,
 }: InvitationRendererProps) {
+  /* ==========================================================================
+     State
+  ========================================================================== */
+
+  const [
+    isPresented,
+    setIsPresented,
+  ] =
+    useState(
+      false
+    );
+
+  const [
+    guestScreen,
+    setGuestScreen,
+  ] =
+    useState<InvitationGuestScreen>(
+      "card"
+    );
+
+
+  /* ==========================================================================
+     Template
+  ========================================================================== */
+
   const Card =
     invitationCardRegistry[
       templateId
@@ -45,19 +95,56 @@ export default function InvitationRenderer({
     return null;
   }
 
+
+  /* ==========================================================================
+     Guest Navigation
+  ========================================================================== */
+
+  function handleDetails() {
+    setGuestScreen(
+      "details"
+    );
+  }
+
+  function handleBackToCard() {
+    setGuestScreen(
+      "card"
+    );
+  }
+
+  function handleRsvp() {
+    // RSVP experience ide kasnije.
+  }
+
+
+  /* ==========================================================================
+     Card
+  ========================================================================== */
+
   const card = (
-    <Card
-      data={
-        data
+    <InvitationPresentationProvider
+      presentation={
+        data.presentation
       }
-      mode={
-        mode
-      }
-      editor={
-        editor
-      }
-    />
+    >
+      <Card
+        data={
+          data
+        }
+        mode={
+          mode
+        }
+        editor={
+          editor
+        }
+      />
+    </InvitationPresentationProvider>
   );
+
+
+  /* ==========================================================================
+     Render
+  ========================================================================== */
 
   return (
     <InvitationExperience
@@ -73,15 +160,50 @@ export default function InvitationRenderer({
     >
       {mode === "edit"
         ? card
-        : (
-          <InvitationEnvelope
-            envelopeId={
-              template.envelopeId
-            }
-          >
-            {card}
-          </InvitationEnvelope>
-        )}
+        : guestScreen === "card"
+          ? (
+       <InvitationEnvelope
+  envelopeId={
+    template.envelopeId
+  }
+  initialState={
+    isPresented
+      ? "presented"
+      : "closed"
+  }
+  onPresented={() =>
+    setIsPresented(
+      true
+    )
+  }
+  actions={
+    isPresented
+      ? (
+        <InvitationGuestActions
+          onDetails={
+            handleDetails
+          }
+          onRsvp={
+            handleRsvp
+          }
+        />
+      )
+      : undefined
+  }
+>
+  {card}
+</InvitationEnvelope>
+          )
+          : (
+            <InvitationDetailsView
+              data={
+                data
+              }
+              onBack={
+                handleBackToCard
+              }
+            />
+          )}
     </InvitationExperience>
   );
 }

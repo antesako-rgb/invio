@@ -1,0 +1,110 @@
+/* ==========================================================================
+   Invitation Editor Preview
+========================================================================== */
+
+.invitation-editor-preview {
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  z-index:
+    1000;
+
+  overflow:
+    auto;
+
+  background:
+    var(--background);
+}
+
+
+/* ==========================================================================
+   Close
+========================================================================== */
+
+.invitation-editor-preview__close {
+  position:
+    fixed;
+
+  top:
+    1rem;
+
+  right:
+    1rem;
+
+  z-index:
+    1001;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    2.75rem;
+
+  height:
+    2.75rem;
+
+  padding:
+    0;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    999px;
+
+  background:
+    var(--background);
+
+  color:
+    var(--foreground);
+
+  cursor:
+    pointer;
+
+  box-shadow:
+    var(--shadow-sm);
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.invitation-editor-preview__close:hover {
+  background:
+    var(--accent);
+}
+
+.invitation-editor-preview__close:active {
+  transform:
+    scale(0.96);
+}
+
+.invitation-editor-preview__close:focus-visible {
+  outline:
+    2px solid var(--ring);
+
+  outline-offset:
+    2px;
+}
+
+
+/* ==========================================================================
+   Experience
+========================================================================== */
+
+.invitation-editor-preview__experience {
+  width:
+    100%;
+
+  min-height:
+    100dvh;
+}

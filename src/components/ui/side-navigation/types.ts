@@ -55,6 +55,11 @@ export interface SideNavigationProps {
   onNavigate?:
     () => void;
 
+  onControlledNavigate?:
+    (
+      id: string
+    ) => void;
+
   ariaLabel?:
     string;
 }

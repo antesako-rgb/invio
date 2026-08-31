@@ -1,0 +1,517 @@
+/* ==========================================================================
+   Invitation Details View
+========================================================================== */
+
+.invitation-details-view {
+  position:
+    relative;
+
+  width:
+    100%;
+
+  min-height:
+    100dvh;
+
+  padding:
+    32px 20px;
+
+  background:
+    transparent;
+
+  color:
+    var(
+      --invitation-details-foreground,
+      currentColor
+    );
+}
+
+
+/* ==========================================================================
+   Shell
+========================================================================== */
+
+.invitation-details-view__shell {
+  width:
+    min(100%, 560px);
+
+  min-height:
+    calc(100dvh - 64px);
+
+  margin-inline:
+    auto;
+
+  padding:
+    24px 28px 48px;
+
+  border:
+    1px solid
+    var(
+      --invitation-details-shell-border,
+      rgba(51, 44, 39, 0.10)
+    );
+
+  border-radius:
+    24px;
+
+  background:
+    var(
+      --invitation-details-shell-background,
+      rgba(255, 255, 255, 0.34)
+    );
+
+  box-shadow:
+    0 16px 50px
+    rgba(51, 44, 39, 0.06);
+}
+
+
+/* ==========================================================================
+   Header
+========================================================================== */
+
+.invitation-details-view__header {
+  display:
+    grid;
+
+  grid-template-columns:
+    40px 1fr 40px;
+
+  align-items:
+    center;
+
+  min-height:
+    40px;
+}
+
+.invitation-details-view__back {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    40px;
+
+  height:
+    40px;
+
+  padding:
+    0;
+
+  border:
+    0;
+
+  border-radius:
+    50%;
+
+  background:
+    transparent;
+
+  color:
+    var(
+      --invitation-details-accent,
+      currentColor
+    );
+
+  cursor:
+    pointer;
+
+  transition:
+    background-color 150ms ease,
+    transform 150ms ease;
+}
+
+.invitation-details-view__back:hover {
+  background:
+    var(
+      --invitation-details-control-background,
+      rgba(51, 44, 39, 0.06)
+    );
+}
+
+.invitation-details-view__back:active {
+  transform:
+    scale(0.96);
+}
+
+.invitation-details-view__back:focus-visible {
+  outline:
+    2px solid
+    var(
+      --invitation-details-accent,
+      currentColor
+    );
+
+  outline-offset:
+    2px;
+}
+
+.invitation-details-view__back svg {
+  width:
+    22px;
+
+  height:
+    22px;
+
+  stroke-width:
+    1.4;
+}
+
+.invitation-details-view__event {
+  overflow:
+    hidden;
+
+  font-family:
+    var(
+      --invitation-details-event-font,
+      inherit
+    );
+
+  font-size:
+    1.4rem;
+
+  font-weight:
+    400;
+
+  line-height:
+    1.2;
+
+  text-align:
+    center;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Intro
+========================================================================== */
+
+.invitation-details-view__intro {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  padding:
+    22px 0 24px;
+
+  text-align:
+    center;
+}
+
+.invitation-details-view__title {
+  margin:
+    0;
+
+  font-family:
+    var(
+      --invitation-details-title-font,
+      inherit
+    );
+
+  font-size:
+    clamp(
+      2rem,
+      8cqw,
+      2.75rem
+    );
+
+  font-weight:
+    400;
+
+  line-height:
+    1;
+
+  color:
+    var(
+      --invitation-details-title-color,
+      currentColor
+    );
+}
+
+
+/* ==========================================================================
+   Ornament
+========================================================================== */
+
+.invitation-details-view__ornament {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    12px;
+
+  width:
+    140px;
+
+  margin-top:
+    18px;
+
+  color:
+    var(
+      --invitation-details-accent,
+      currentColor
+    );
+
+  font-size:
+    1rem;
+
+  line-height:
+    1;
+
+
+}
+
+.invitation-details-view__ornament::before,
+.invitation-details-view__ornament::after {
+  content:
+    "";
+
+  flex:
+    1;
+
+  height:
+    1px;
+
+  background:
+    currentColor;
+
+  opacity:
+    0.45;
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.invitation-details-view__content {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    12px;
+
+  width:
+    100%;
+}
+
+
+/* ==========================================================================
+   Section
+========================================================================== */
+
+.invitation-details-view__section {
+  overflow:
+    hidden;
+
+  width:
+    100%;
+
+  border:
+    1px solid
+    var(
+      --invitation-details-section-border,
+      rgba(51, 44, 39, 0.08)
+    );
+
+  border-radius:
+    16px;
+
+  background:
+    var(
+      --invitation-details-section-background,
+      rgba(255, 255, 255, 0.72)
+    );
+
+  box-shadow:
+    0 5px 20px
+    rgba(51, 44, 39, 0.045);
+}
+
+
+/* ==========================================================================
+   Section Header
+========================================================================== */
+
+.invitation-details-view__section-header {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    16px;
+
+  padding:
+    16px 18px 10px;
+}
+
+.invitation-details-view__section-heading {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    11px;
+
+  min-width:
+    0;
+}
+
+.invitation-details-view__section-heading h2 {
+  margin:
+    0;
+
+  font-family:
+    var(
+      --invitation-details-section-font,
+      inherit
+    );
+
+  font-size:
+    0.95rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.2;
+}
+
+.invitation-details-view__section-icon {
+  flex:
+    0 0 auto;
+
+  width:
+    19px;
+
+  height:
+    19px;
+
+  color:
+    var(
+      --invitation-details-accent,
+      currentColor
+    );
+
+  stroke-width:
+    1.5;
+}
+
+.invitation-details-view__chevron {
+  flex:
+    0 0 auto;
+
+  width:
+    17px;
+
+  height:
+    17px;
+
+  color:
+    var(
+      --invitation-details-accent,
+      currentColor
+    );
+
+  opacity:
+    0.4;
+
+  stroke-width:
+    1.4;
+}
+
+
+/* ==========================================================================
+   Section Body
+========================================================================== */
+
+.invitation-details-view__section-body {
+  padding:
+    0 18px 17px 48px;
+}
+
+.invitation-details-view__empty {
+  margin:
+    0;
+
+  font-size:
+    0.82rem;
+
+  line-height:
+    1.5;
+
+  opacity:
+    0.55;
+}
+
+
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 767px) {
+
+  .invitation-details-view {
+    padding:
+      12px;
+  }
+
+  .invitation-details-view__shell {
+    min-height:
+      calc(100dvh - 24px);
+
+    padding:
+      16px 16px 40px;
+
+    border-radius:
+      20px;
+  }
+
+  .invitation-details-view__intro {
+    padding:
+      34px 0 30px;
+  }
+
+  .invitation-details-view__section-header {
+    padding:
+      15px 16px 9px;
+  }
+
+  .invitation-details-view__section-body {
+    padding:
+      0 16px 16px 46px;
+  }
+
+}

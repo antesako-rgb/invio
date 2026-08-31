@@ -19,10 +19,12 @@ import BackLink
 import SideNavigation
   from "@/components/ui/side-navigation/SideNavigation";
 
-import "./InvitationEditorHeader.css";
 import type {
   InvitationEditorSaveStatus,
 } from "@/features/invitations/editor/types/invitationEditor.types";
+
+import "./InvitationEditorHeader.css";
+
 
 /* ==========================================================================
    Types
@@ -35,13 +37,15 @@ type InvitationEditorStep =
   | "preview";
 
 
-
 interface InvitationEditorHeaderProps {
   activeStep?:
     InvitationEditorStep;
 
   saveStatus?:
     InvitationEditorSaveStatus;
+
+  onPreview?:
+    () => void;
 }
 
 
@@ -52,11 +56,17 @@ interface InvitationEditorHeaderProps {
 export default function InvitationEditorHeader({
   activeStep = "design",
   saveStatus = "saved",
+  onPreview,
 }: InvitationEditorHeaderProps) {
   const t =
     useTranslations(
       "Invitations.editor"
     );
+
+
+  /* ==========================================================================
+     Navigation
+  ========================================================================== */
 
   const navigationItems = [
     {
@@ -124,11 +134,35 @@ export default function InvitationEditorHeader({
     },
   ];
 
+
+  /* ==========================================================================
+     Navigation
+  ========================================================================== */
+
+  function handleNavigation(
+    id:
+      string
+  ) {
+    if (
+      id === "preview"
+    ) {
+      onPreview?.();
+    }
+  }
+
+
+  /* ==========================================================================
+     Render
+  ========================================================================== */
+
   return (
     <header
       className="invitation-editor-header"
     >
-      {/* Back */}
+      {/* ====================================================================
+          Back
+      ==================================================================== */}
+
       <div
         className="invitation-editor-header__start"
       >
@@ -142,7 +176,11 @@ export default function InvitationEditorHeader({
         />
       </div>
 
-      {/* Navigation */}
+
+      {/* ====================================================================
+          Navigation
+      ==================================================================== */}
+
       <div
         className="invitation-editor-header__navigation"
       >
@@ -155,6 +193,9 @@ export default function InvitationEditorHeader({
           activeId={
             activeStep
           }
+          onControlledNavigate={
+            handleNavigation
+          }
           ariaLabel={
             t(
               "navigation.label"
@@ -163,7 +204,11 @@ export default function InvitationEditorHeader({
         />
       </div>
 
-      {/* Save Status */}
+
+      {/* ====================================================================
+          Save Status
+      ==================================================================== */}
+
       <div
         className="invitation-editor-header__status"
         role="status"

@@ -24,7 +24,9 @@
       "saving": "Saving...",
       "saved": "Saved"
     },
-
+"preview": {
+  "close": "Close preview"
+},
     "time": {
       "startTime": "Start time",
       "endTime": "End time"
@@ -35,18 +37,18 @@
       "endDate": "End date"
     },
 
-"elementLabels": {
-  "title": "Uredi naziv",
-  "subtitle": "Uredi podnaslov",
-  "initial": "Uredi inicijal",
-  "description": "Uredi opis",
-  "date": "Uredi datum",
-  "time": "Uredi vrijeme",
-  "location": "Uredi lokaciju",
-  "address": "Uredi adresu",
-  "image": "Uredi sliku",
-  "delete": "Obriši sadržaj"
-},
+    "elementLabels": {
+      "title": "Edit title",
+      "subtitle": "Edit subtitle",
+      "initial": "Edit initial",
+      "description": "Edit description",
+      "date": "Edit date",
+      "time": "Edit time",
+      "location": "Edit location",
+      "address": "Edit address",
+      "image": "Edit image",
+      "delete": "Delete content"
+    },
 
     "fallback": {
       "heroTitle": "Anna & Mark",
@@ -66,6 +68,25 @@
     }
   },
 
+"experience": {
+  "envelope": {
+    "open": "Open invitation"
+  },
+
+  "actions": {
+    "details": "Details",
+    "rsvp": "RSVP"
+  },
+"details": {
+  "back": "Natrag na pozivnicu",
+  "title": "Naš dan",
+  "program": "Program",
+  "programEmpty": "Program još nije dodan.",
+  "location": "Lokacija",
+  "locationEmpty": "Lokacija još nije dodana."
+}
+
+},
   "page": {
     "title": "Invitations",
     "description": "Create and manage invitations for your event.",
@@ -111,6 +132,11 @@
       "flora": {
         "name": "Flora",
         "description": "An elegant botanical invitation with soft and refined details."
+      },
+
+      "portrait": {
+        "name": "Portrait",
+        "description": "An elegant photo-focused invitation designed to highlight your favorite moment."
       }
     }
   },

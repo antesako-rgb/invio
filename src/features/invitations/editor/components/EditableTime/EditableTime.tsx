@@ -8,7 +8,9 @@ import {
 import {
   useTranslations,
 } from "next-intl";
-
+import {
+  useInvitationPresentation,
+} from "@/features/invitations/renderer/context/InvitationPresentationContext";
 import {
   Popover,
   PopoverContent,
@@ -117,35 +119,38 @@ export default function EditableTime({
     null;
 
 
-  /* ==========================================================================
-     Presentation
-  ========================================================================== */
+/* ==========================================================================
+   Presentation
+========================================================================== */
 
-  const elementPresentation =
-    editor?.presentation.elements?.[
-      TIME_ELEMENT
-    ];
+const presentation =
+  useInvitationPresentation();
 
-  const elementStyle =
-    getInvitationElementStyle(
-      elementPresentation
-    );
+const elementPresentation =
+  presentation.elements?.[
+    TIME_ELEMENT
+  ];
 
-  const timeStyle = {
-    ...elementStyle,
+const elementStyle =
+  getInvitationElementStyle(
+    elementPresentation
+  );
 
-    textAlign:
-      undefined,
+const timeStyle = {
+  ...elementStyle,
 
-    alignSelf:
-      elementPresentation?.text_align === "left"
-        ? "flex-start"
-        : elementPresentation?.text_align === "right"
-          ? "flex-end"
-          : elementPresentation?.text_align === "center"
-            ? "center"
-            : undefined,
-  };
+  textAlign:
+    undefined,
+
+  alignSelf:
+    elementPresentation?.text_align === "left"
+      ? "flex-start"
+      : elementPresentation?.text_align === "right"
+        ? "flex-end"
+        : elementPresentation?.text_align === "center"
+          ? "center"
+          : undefined,
+};
 
 
   /* ==========================================================================

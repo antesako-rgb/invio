@@ -10,11 +10,11 @@ import type {
 export const floraPreviewContent:
   InvitationContent = {
   hero: {
-    title:
-      "Ana\n&\nMarko",
+  title:
+  "Ana &\nMarko",
 
     subtitle:
-      "S velikim veseljem pozivamo vas da budete dio našeg posebnog dana.",
+      "S velikim veseljem pozivamo na vjenčanje.",
 
     first_initial:
       "A",

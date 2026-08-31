@@ -35,6 +35,9 @@ interface InvitationEditorProps {
 
   saveStatus:
     InvitationEditorSaveStatus;
+
+  onPreview:
+    () => void;
 }
 
 
@@ -47,6 +50,7 @@ export default function InvitationEditor({
   sidebar,
   toolbar,
   saveStatus,
+  onPreview,
 }: InvitationEditorProps) {
   return (
     <div
@@ -57,6 +61,9 @@ export default function InvitationEditor({
         activeStep="design"
         saveStatus={
           saveStatus
+        }
+        onPreview={
+          onPreview
         }
       />
 
