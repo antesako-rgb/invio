@@ -1,49 +1,112 @@
 .avatar {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  flex-shrink: 0;
+  position:
+    relative;
 
-  border-radius: 9999px;
-  background: var(--muted);
-  color: var(--foreground);
+  display:
+    inline-flex;
 
-  font-weight: 600;
-  user-select: none;
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  overflow:
+    hidden;
+
+  flex-shrink:
+    0;
+
+  border:
+    1px solid color-mix(
+      in srgb,
+      var(--primary) 14%,
+      var(--border)
+    );
+
+  border-radius:
+    9999px;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--primary) 9%,
+      var(--muted)
+    );
+
+  color:
+    color-mix(
+      in srgb,
+      var(--primary) 70%,
+      var(--foreground)
+    );
+
+  font-weight:
+    600;
+
+  line-height:
+    1;
+
+  user-select:
+    none;
 }
 
 .image {
-  object-fit: cover;
+  object-fit:
+    cover;
 }
 
 .xs {
-  width: 2rem;
-  height: 2rem;
-  font-size: 0.75rem;
+  width:
+    2rem;
+
+  height:
+    2rem;
+
+  font-size:
+    0.75rem;
 }
 
 .sm {
-  width: 2.5rem;
-  height: 2.5rem;
-  font-size: 0.875rem;
+  width:
+    2.5rem;
+
+  height:
+    2.5rem;
+
+  font-size:
+    0.875rem;
 }
 
 .md {
-  width: 3.5rem;
-  height: 3.5rem;
-  font-size: 1rem;
+  width:
+    3.5rem;
+
+  height:
+    3.5rem;
+
+  font-size:
+    1rem;
 }
 
 .lg {
-  width: 4.5rem;
-  height: 4.5rem;
-  font-size: 1.25rem;
+  width:
+    4.5rem;
+
+  height:
+    4.5rem;
+
+  font-size:
+    1.25rem;
 }
 
 .xl {
-  width: 6rem;
-  height: 6rem;
-  font-size: 1.5rem;
+  width:
+    6rem;
+
+  height:
+    6rem;
+
+  font-size:
+    1.5rem;
 }

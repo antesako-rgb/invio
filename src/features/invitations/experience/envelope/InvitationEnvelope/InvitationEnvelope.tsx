@@ -11,10 +11,6 @@ import type {
 } from "react";
 
 import {
-  useTranslations,
-} from "next-intl";
-
-import {
   invitationEnvelopeRegistry,
 } from "@/features/invitations/experience/envelope/registry/invitationEnvelopeRegistry";
 
@@ -67,12 +63,6 @@ export default function InvitationEnvelope({
   initialState = "closed",
   onPresented,
 }: InvitationEnvelopeProps) {
-  const t =
-    useTranslations(
-      "Invitations.experience.envelope"
-    );
-
-
   /* ==========================================================================
      State
   ========================================================================== */
@@ -166,6 +156,10 @@ export default function InvitationEnvelope({
         state
       }
     >
+      {/* ====================================================================
+          Envelope
+      ==================================================================== */}
+
       <div
         className="invitation-envelope"
       >
@@ -199,6 +193,11 @@ export default function InvitationEnvelope({
           >
             {children}
           </div>
+
+
+          {/* ================================================================
+              Actions
+          ================================================================ */}
 
           {state === "presented" &&
             actions && (
@@ -239,11 +238,7 @@ export default function InvitationEnvelope({
           onClick={
             handleOpen
           }
-          aria-label={
-            t(
-              "open"
-            )
-          }
+          aria-label="Otvori pozivnicu"
           aria-expanded={
             state !==
             "closed"

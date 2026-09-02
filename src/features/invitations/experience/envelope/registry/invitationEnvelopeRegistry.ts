@@ -33,16 +33,16 @@ export const invitationEnvelopeRegistry:
   > = {
     classic: {
       back:
-        "/invitation-assets/envelopes/classic/back.png",
+        "/invitation-assets/envelopes/classic/back.avif",
 
       front:
-        "/invitation-assets/envelopes/classic/front.png",
+        "/invitation-assets/envelopes/classic/front.avif",
 
       flap:
-        "/invitation-assets/envelopes/classic/flap.png",
+        "/invitation-assets/envelopes/classic/flap.avif",
 
       liner:
-        "/invitation-assets/envelopes/classic/liner.png",
+        "/invitation-assets/envelopes/classic/liner.avif",
     },
 
     elegant: {

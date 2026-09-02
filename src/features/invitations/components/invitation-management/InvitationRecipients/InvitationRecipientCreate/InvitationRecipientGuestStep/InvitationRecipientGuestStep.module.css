@@ -1,0 +1,438 @@
+/* ==========================================================================
+   Root
+========================================================================== */
+
+.root {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  width:
+    100%;
+
+  min-width:
+    0;
+
+  gap:
+    1rem;
+}
+
+
+/* ==========================================================================
+   Heading
+========================================================================== */
+
+.heading {
+  display:
+    flex;
+
+  align-items:
+    flex-start;
+
+  justify-content:
+    space-between;
+
+  gap:
+    1rem;
+}
+
+.title {
+  margin:
+    0;
+
+  color:
+    var(--foreground);
+
+  font-size:
+    1rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.4;
+}
+
+.description {
+  max-width:
+    32rem;
+
+  margin:
+    0.25rem 0 0;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.875rem;
+
+  line-height:
+    1.5;
+}
+
+.selectionCount {
+  flex-shrink:
+    0;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  font-weight:
+    500;
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Guest List
+========================================================================== */
+
+.list {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  width:
+    100%;
+
+  overflow:
+    hidden;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    var(--card);
+}
+
+
+/* ==========================================================================
+   Guest
+========================================================================== */
+
+.guest {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  min-width:
+    0;
+
+  gap:
+    0.875rem;
+
+  padding:
+    0.875rem 1rem;
+
+  border-bottom:
+    1px solid var(--border);
+
+  cursor:
+    pointer;
+
+  transition:
+    background-color 0.2s;
+}
+
+.guest:last-child {
+  border-bottom:
+    0;
+}
+
+.guest:hover {
+  background:
+    var(--muted);
+}
+
+.selected {
+  background:
+    color-mix(
+      in srgb,
+      var(--primary) 6%,
+      var(--card)
+    );
+}
+
+.selected:hover {
+  background:
+    color-mix(
+      in srgb,
+      var(--primary) 9%,
+      var(--card)
+    );
+}
+
+
+/* ==========================================================================
+   Checkbox
+========================================================================== */
+
+.checkbox {
+  flex:
+    0 0 auto;
+
+  width:
+    1rem;
+
+  height:
+    1rem;
+
+  margin:
+    0;
+
+  accent-color:
+    var(--primary);
+
+  cursor:
+    pointer;
+}
+
+
+/* ==========================================================================
+   Guest Content
+========================================================================== */
+
+.guestContent {
+  display:
+    flex;
+
+  flex:
+    1;
+
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+
+  gap:
+    0.125rem;
+}
+
+.guestName {
+  overflow:
+    hidden;
+
+  color:
+    var(--foreground);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.4;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+.guestMeta {
+  display:
+    flex;
+
+  flex-wrap:
+    wrap;
+
+  align-items:
+    center;
+
+  min-width:
+    0;
+
+  gap:
+    0.25rem 0.75rem;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.4;
+}
+
+.guestMeta span {
+  overflow:
+    hidden;
+
+  max-width:
+    100%;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Empty
+========================================================================== */
+
+.empty {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  gap:
+    1rem;
+
+  padding:
+    1.25rem;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    var(--card);
+}
+
+.emptyIcon {
+  display:
+    flex;
+
+  flex:
+    0 0 auto;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    2.5rem;
+
+  height:
+    2.5rem;
+
+  border-radius:
+    var(--radius-md);
+
+  background:
+    var(--muted);
+
+  color:
+    var(--muted-foreground);
+}
+
+.emptyContent {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+
+  gap:
+    0.125rem;
+}
+
+.emptyTitle {
+  margin:
+    0;
+
+  color:
+    var(--foreground);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.4;
+}
+
+.emptyDescription {
+  margin:
+    0;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.5;
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 480px) {
+
+  .heading {
+    flex-direction:
+      column;
+
+    gap:
+      0.5rem;
+  }
+
+  .guest {
+    gap:
+      0.75rem;
+
+    padding:
+      0.75rem;
+  }
+
+  .guestMeta {
+    flex-direction:
+      column;
+
+    align-items:
+      flex-start;
+
+    gap:
+      0.125rem;
+  }
+
+  .empty {
+    align-items:
+      flex-start;
+
+    padding:
+      1rem;
+  }
+}

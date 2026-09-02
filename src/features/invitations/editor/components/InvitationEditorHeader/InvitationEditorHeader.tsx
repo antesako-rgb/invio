@@ -21,6 +21,7 @@ import SideNavigation
 
 import type {
   InvitationEditorSaveStatus,
+  InvitationEditorStep,
 } from "@/features/invitations/editor/types/invitationEditor.types";
 
 import "./InvitationEditorHeader.css";
@@ -30,19 +31,17 @@ import "./InvitationEditorHeader.css";
    Types
 ========================================================================== */
 
-type InvitationEditorStep =
-  | "design"
-  | "details"
-  | "rsvp"
-  | "preview";
-
-
 interface InvitationEditorHeaderProps {
-  activeStep?:
+  activeStep:
     InvitationEditorStep;
 
   saveStatus?:
     InvitationEditorSaveStatus;
+
+  onStepChange:
+    (
+      step: InvitationEditorStep
+    ) => void;
 
   onPreview?:
     () => void;
@@ -54,8 +53,9 @@ interface InvitationEditorHeaderProps {
 ========================================================================== */
 
 export default function InvitationEditorHeader({
-  activeStep = "design",
+  activeStep,
   saveStatus = "saved",
+  onStepChange,
   onPreview,
 }: InvitationEditorHeaderProps) {
   const t =
@@ -147,6 +147,18 @@ export default function InvitationEditorHeader({
       id === "preview"
     ) {
       onPreview?.();
+
+      return;
+    }
+
+    if (
+      id === "design" ||
+      id === "details" ||
+      id === "rsvp"
+    ) {
+      onStepChange(
+        id
+      );
     }
   }
 

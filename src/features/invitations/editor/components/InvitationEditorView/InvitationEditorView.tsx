@@ -27,11 +27,16 @@ import {
 } from "@/features/invitations/editor/data/buildInvitationEditorContent";
 
 import {
+  INVITATION_EDITOR_PREVIEW_GUESTS,
+} from "@/features/invitations/editor/data/invitationEditorPreviewGuests";
+
+import {
   useInvitationAutosave,
 } from "@/features/invitations/editor/hooks/useInvitationAutosave";
 
 import type {
   InvitationEditorSelection,
+  InvitationEditorStep,
 } from "@/features/invitations/editor/types/invitationEditor.types";
 
 import {
@@ -59,7 +64,12 @@ import type {
 
 import type {
   InvitationRenderData,
+  InvitationRsvpSubmitHandler,
 } from "@/features/invitations/types/invitationRenderer.types";
+
+import type {
+  InvitationRSVPViewState,
+} from "@/features/invitations/types/invitationRsvp.types";
 
 
 /* ==========================================================================
@@ -108,6 +118,22 @@ export default function InvitationEditorView({
   /* ==========================================================================
      State
   ========================================================================== */
+
+  const [
+    activeStep,
+    setActiveStep,
+  ] =
+    useState<InvitationEditorStep>(
+      "design"
+    );
+
+  const [
+    rsvpPreviewState,
+    setRsvpPreviewState,
+  ] =
+    useState<InvitationRSVPViewState>(
+      "form"
+    );
 
   const [
     selectedElement,
@@ -195,16 +221,6 @@ export default function InvitationEditorView({
           tFallback(
             "rsvpDescription"
           ),
-
-        rsvpCalloutSubtitle:
-          tFallback(
-            "rsvpCalloutSubtitle"
-          ),
-
-        rsvpCalloutNote:
-          tFallback(
-            "rsvpCalloutNote"
-          ),
       }),
       [
         tFallback,
@@ -225,6 +241,28 @@ export default function InvitationEditorView({
       content,
       presentation,
     });
+
+
+  /* ==========================================================================
+     Step
+  ========================================================================== */
+
+  function handleStepChange(
+    step:
+      InvitationEditorStep
+  ) {
+    setSelectedElement(
+      null
+    );
+
+    setEditingElement(
+      null
+    );
+
+    setActiveStep(
+      step
+    );
+  }
 
 
   /* ==========================================================================
@@ -249,6 +287,19 @@ export default function InvitationEditorView({
       null
     );
   }
+
+
+  /* ==========================================================================
+     RSVP Preview
+  ========================================================================== */
+
+  const handleRsvpPreviewSubmit:
+    InvitationRsvpSubmitHandler =
+    () => {
+      setRsvpPreviewState(
+        "success"
+      );
+    };
 
 
   /* ==========================================================================
@@ -380,6 +431,9 @@ export default function InvitationEditorView({
                 editorContent.location
               ),
           },
+
+          guests:
+            INVITATION_EDITOR_PREVIEW_GUESTS,
         };
       },
       [
@@ -392,10 +446,10 @@ export default function InvitationEditorView({
 
 
   /* ==========================================================================
-     Live Render Data
+     Preview Render Data
   ========================================================================== */
 
-  const liveRenderData =
+  const previewRenderData =
     useMemo<InvitationRenderData>(
       () => ({
         content,
@@ -419,6 +473,9 @@ export default function InvitationEditorView({
               content.location
             ),
         },
+
+        guests:
+          INVITATION_EDITOR_PREVIEW_GUESTS,
       }),
       [
         content,
@@ -435,14 +492,36 @@ export default function InvitationEditorView({
   return (
     <>
       <InvitationEditor
+        activeStep={
+          activeStep
+        }
         saveStatus={
           saveStatus
+        }
+        onStepChange={
+          handleStepChange
         }
         onPreview={
           handleOpenPreview
         }
         sidebar={
-          <InvitationEditorSidebar />
+          <InvitationEditorSidebar
+            activeStep={
+              activeStep
+            }
+            content={
+              content
+            }
+            rsvpPreviewState={
+              rsvpPreviewState
+            }
+            onContentChange={
+              setContent
+            }
+            onRsvpPreviewStateChange={
+              setRsvpPreviewState
+            }
+          />
         }
         toolbar={
           <InvitationEditorToolbar
@@ -468,6 +547,15 @@ export default function InvitationEditorView({
           mode="edit"
           data={
             editorRenderData
+          }
+          editorStep={
+            activeStep
+          }
+          rsvpPreviewState={
+            rsvpPreviewState
+          }
+          onRsvpSubmit={
+            handleRsvpPreviewSubmit
           }
           editor={{
             invitationId,
@@ -504,7 +592,7 @@ export default function InvitationEditorView({
             variantId
           }
           data={
-            liveRenderData
+            previewRenderData
           }
           onClose={
             handleClosePreview

@@ -1,0 +1,221 @@
+{
+  "Invitations": {
+    "management": {
+      "status": {
+        "published": "Published",
+        "draft": "Draft"
+      },
+
+      "actions": {
+        "preview": "Preview invitation",
+        "edit": "Edit design"
+      },
+
+      "name": {
+        "label": "Invitation name",
+        "edit": "Edit name",
+        "save": "Save name",
+        "cancel": "Cancel",
+        "error": "Unable to save the invitation name."
+      },
+
+      "updatedAt": "Last updated: {date}",
+
+      "delete": {
+        "title": "Delete invitation",
+        "description": "Permanently delete this invitation and all data associated with it.",
+        "button": "Delete invitation",
+
+        "confirm": {
+          "title": "Delete invitation?",
+          "description": "This action is permanent and cannot be undone.",
+          "confirm": "Delete invitation",
+          "cancel": "Cancel"
+        }
+      },
+
+      "statusCard": {
+        "title": "Invitation status",
+        "description": "Manage the availability of your invitation.",
+
+        "published": {
+          "title": "Invitation is published",
+          "description": "Guests with access to the link can view the invitation and all the information you have chosen to share.",
+          "action": "Unpublish invitation",
+          "success": "Invitation has been unpublished successfully."
+        },
+
+        "draft": {
+          "title": "Invitation is not published",
+          "description": "Guests cannot access or view the invitation until you publish it and make it available for sharing.",
+          "action": "Publish invitation",
+          "success": "Invitation has been published successfully."
+        }
+      },
+
+      "publicLinkCard": {
+        "title": "Public link",
+        "description": "Share the public link to your invitation.",
+
+        "active": {
+          "title": "Public link is active",
+          "description": "Anyone with this link can view the invitation."
+        },
+
+        "inactive": {
+          "title": "Public link is not active",
+          "description": "The link will become available to guests after you publish the invitation."
+        },
+
+        "actions": {
+          "copy": "Copy link",
+          "copied": "Copied",
+          "open": "Open invitation"
+        }
+      },
+
+      "rsvpSummary": {
+        "label": "RSVP overview",
+        "total": "total",
+        "attending": "attending",
+        "declined": "not attending",
+        "pending": "pending"
+      },
+
+      "rsvpStatus": {
+        "pending": "Awaiting response",
+        "attending": "Attending",
+        "declined": "Not attending",
+
+        "pendingCount": "{count, plural, one {# awaiting response} other {# awaiting response}}",
+        "attendingCount": "{count, plural, one {# attending} other {# attending}}",
+        "declinedCount": "{count, plural, one {# not attending} other {# not attending}}"
+      },
+"recipients": {
+  "title": "Recipients",
+  "description": "Manage personalized invitation recipients and their RSVP responses.",
+
+  "guestCount": "{count, plural, one {# guest} other {# guests}}",
+
+  "filters": {
+    "searchPlaceholder": "Search recipients...",
+
+    "rsvp": {
+      "label": "RSVP",
+      "all": "All RSVP",
+      "pending": "Awaiting response",
+      "attending": "Attending",
+      "declined": "Not attending"
+    }
+  },
+
+  "actions": {
+    "add": "Add recipients",
+    "open": "Recipient details"
+  },
+
+        "table": {
+          "recipient": "Recipient",
+          "link": "Link",
+          "guests": "Guests",
+          "rsvp": "RSVP",
+          "updated": "Updated",
+          "actions": "Actions",
+
+          "linkHint": "Double-click to open",
+          "remainingGuests": "+{count, plural, one {# guest} other {# guests}}",
+
+          "emptyTitle": "No recipients",
+          "emptyDescription": "No personalized recipients have been added to this invitation yet.",
+          "addRecipient": "Add recipients"
+        },
+
+        "details": {
+          "title": "Recipient details",
+          "description": "View the personalized invitation recipient, included guests, and RSVP responses.",
+
+          "link": {
+            "title": "Personalized link",
+            "description": "This link is unique to this recipient.",
+            "copy": "Copy link",
+            "copied": "Copied"
+          },
+
+          "guests": {
+            "title": "Guests included",
+            "description": "Guests who share this personalized invitation link."
+          },
+
+          "primary": "Primary recipient",
+
+          "rsvp": {
+            "title": "RSVP responses",
+            "viewAnswers": "View answers",
+            "noAnswers": "No additional answers"
+          },
+
+          "actions": {
+            "openInvitation": "Open invitation",
+            "remove": "Remove recipient"
+          }
+        },
+
+        "create": {
+          "action": "Add recipients",
+          "title": "Add recipients",
+          "description": "Select the guests who will share this personalized invitation link.",
+
+          "steps": {
+            "guests": "Guests",
+            "settings": "Settings",
+            "review": "Review"
+          },
+
+          "back": "Back",
+          "next": "Continue",
+          "submit": "Create recipient",
+          "submitting": "Creating...",
+
+          "guests": {
+            "title": "Select guests",
+            "description": "Choose one or more guests who will receive this invitation together.",
+            "selected": "{count, plural, =0 {No guests selected} one {# guest selected} other {# guests selected}}",
+            "noDetails": "No contact details",
+
+            "empty": {
+              "title": "No guests available",
+              "description": "Add guests to the event before creating a personalized recipient."
+            }
+          },
+
+          "settings": {
+            "title": "Recipient settings",
+            "description": "Choose how this personalized invitation recipient should be configured.",
+
+            "primary": {
+              "title": "Primary recipient",
+              "description": "Choose the main guest for this personalized invitation link."
+            }
+          },
+
+          "review": {
+            "title": "Review recipient",
+            "description": "Review the personalized invitation recipient before creating the link.",
+
+            "guests": {
+              "label": "Guests",
+              "title": "Included guests",
+              "description": "These guests will share the same personalized invitation link.",
+              "count": "{count, plural, one {# guest} other {# guests}}"
+            },
+
+            "primary": {
+              "label": "Primary recipient",
+              "badge": "Primary"
+            }
+          }
+        }
+      }
+    }
+  }
+}

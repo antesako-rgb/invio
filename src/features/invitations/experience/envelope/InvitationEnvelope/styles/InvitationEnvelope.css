@@ -10,10 +10,20 @@
   position:
     relative;
 
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
   width:
     min(100%, 1120px);
-   min-height:
-    720px;   
+
+  min-height:
+    720px;
 
   margin-inline:
     auto;
@@ -25,30 +35,25 @@
     isolate;
 }
 
+
+/* ==========================================================================
+   Invitation Envelope
+========================================================================== */
+
 .invitation-envelope {
   position:
-    absolute;
+    relative;
 
   z-index:
     1;
 
-  top:
-    50%;
-
-  left:
-    50%;
-
   width:
-    min(
-      calc(100vw - 2rem),
-      776px
-    );
+    min(100%, 680px);
 
   aspect-ratio:
     1600 / 1100;
 
   transform:
-    translate(-50%, -50%)
     translateZ(0);
 
   transform-origin:
@@ -60,6 +65,7 @@
   -webkit-backface-visibility:
     hidden;
 }
+
 
 /* ==========================================================================
    Assets
@@ -137,6 +143,10 @@
   width:
     100%;
 }
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
 @media (max-width: 767px) {
 
   .invitation-envelope-stage {
@@ -146,14 +156,17 @@
     min-height:
       620px;
 
+    padding-inline:
+      1rem;
+
     transform:
       none;
   }
 
 
   .invitation-envelope {
-    top:
-      45%;
+    width:
+      100%;
   }
 
 }

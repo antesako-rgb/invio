@@ -19,17 +19,6 @@
      Envelope
   ======================================================================== */
 
-  --invitation-envelope-back-image:
-    url("/invitation-assets/envelopes/classic/back.png");
-
-  --invitation-envelope-front-image:
-    url("/invitation-assets/envelopes/classic/front.png");
-
-  --invitation-envelope-flap-image:
-    url("/invitation-assets/envelopes/classic/flap.png");
-
-  --invitation-envelope-liner-image:
-    url("/invitation-assets/envelopes/classic/liner.png");
 
   --invitation-envelope-back-filter:
     none;

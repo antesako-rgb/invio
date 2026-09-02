@@ -17,7 +17,7 @@ export interface SideNavigationItem {
   href:
     string;
 
-  icon:
+  icon?:
     LucideIcon;
 
   exact?:

@@ -1,51 +1,68 @@
 "use client";
 
-import { cn } from "@/lib/utils/utils";
+import {
+  cn,
+} from "@/lib/utils/utils";
 
-import { Select } from "@/components/ui/select";
+import {
+  Select,
+} from "@/components/ui/select";
 
-import styles from "./SelectFilter.module.css";
+import type {
+  SelectOption,
+} from "@/components/ui/select";
+
+import styles
+  from "./SelectFilter.module.css";
+
 
 /* ==========================================================================
    Types
 ========================================================================== */
 
-export interface SelectFilterOption {
-  value: string;
+interface SelectFilterProps<
+  TValue extends string = string
+> {
+  label:
+    string;
 
-  label: string;
+  showLabel?:
+    boolean;
 
-  disabled?: boolean;
+  value:
+    TValue;
+
+  options:
+    readonly SelectOption<TValue>[];
+
+  onValueChange:
+    (
+      value: TValue
+    ) => void;
+
+  disabled?:
+    boolean;
+
+  className?:
+    string;
 }
 
-interface SelectFilterProps {
-  label: string;
-
-  value: string;
-
-  options: SelectFilterOption[];
-
-  onValueChange: (
-    value: string
-  ) => void;
-
-  disabled?: boolean;
-
-  className?: string;
-}
 
 /* ==========================================================================
    Select Filter
 ========================================================================== */
 
-export default function SelectFilter({
+export default function SelectFilter<
+  TValue extends string = string
+>({
   label,
+  showLabel = true,
   value,
   options,
   onValueChange,
   disabled = false,
   className,
-}: SelectFilterProps) {
+}: SelectFilterProps<TValue>) {
   return (
     <div
       className={cn(
@@ -53,18 +70,32 @@ export default function SelectFilter({
         className
       )}
     >
-      <span className={styles.label}>
-        {label}
-      </span>
+      {showLabel && (
+        <span
+          className={
+            styles.label
+          }
+        >
+          {label}
+        </span>
+      )}
 
       <Select
-        aria-label={label}
-        value={value}
-        options={options}
+        aria-label={
+          label
+        }
+        value={
+          value
+        }
+        options={
+          options
+        }
         onValueChange={
           onValueChange
         }
-        disabled={disabled}
+        disabled={
+          disabled
+        }
       />
     </div>
   );

@@ -37,6 +37,10 @@ import {
 } from "@/components/ui/sheet/Sheet";
 
 import {
+  buildCreateEventGuestInput,
+  buildUpdateEventGuestInput,
+} from "../../utils/guest.utils";
+import {
   createEventGuest,
 } from "../../repositories/createEventGuest";
 
@@ -55,7 +59,6 @@ import type {
 import type {
   EventGuest,
   GuestGroup,
-  UpdateEventGuestInput,
 } from "../../types/guest.types";
 
 import styles
@@ -161,29 +164,9 @@ async function onSubmit(
     if (guest) {
       await updateEventGuest(
         guest.id,
-        {
-          first_name:
-            values.first_name,
-
-          last_name:
-            values.last_name ||
-            null,
-
-          email:
-            values.email ||
-            null,
-
-          phone:
-            values.phone ||
-            null,
-
-          group_id:
-            values.group_id,
-
-          notes:
-            values.notes ||
-            null,
-        }
+        buildUpdateEventGuestInput(
+          values
+        )
       );
 
       toast.success(
@@ -192,32 +175,12 @@ async function onSubmit(
         )
       );
     } else {
-      await createEventGuest({
-        event_id:
+      await createEventGuest(
+        buildCreateEventGuestInput(
           eventId,
-
-        first_name:
-          values.first_name,
-
-        last_name:
-          values.last_name ||
-          null,
-
-        email:
-          values.email ||
-          null,
-
-        phone:
-          values.phone ||
-          null,
-
-        group_id:
-          values.group_id,
-
-        notes:
-          values.notes ||
-          null,
-      });
+          values
+        )
+      );
 
       toast.success(
         messagesT(

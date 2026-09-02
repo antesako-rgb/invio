@@ -1,0 +1,187 @@
+/* ==========================================================================
+   Summary
+========================================================================== */
+
+.summary {
+  display: flex;
+  align-items: center;
+
+  min-height: 3.75rem;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  background: var(--card);
+
+  box-shadow: var(--shadow-xs);
+
+  overflow: hidden;
+}
+
+
+/* ==========================================================================
+   Label
+========================================================================== */
+
+.label {
+  display: flex;
+  align-items: center;
+
+  align-self: stretch;
+
+  padding: 0 1.25rem;
+
+  border-right: 1px solid var(--border);
+}
+
+.label strong {
+  font-size: 0.875rem;
+  font-weight: 600;
+
+  color: var(--foreground);
+}
+
+
+/* ==========================================================================
+   Item
+========================================================================== */
+
+.item {
+  display: flex;
+  align-items: center;
+
+  gap: 0.4rem;
+
+  padding: 0 1.25rem;
+
+  min-width: 0;
+}
+
+.item > svg {
+  width: 1rem;
+  height: 1rem;
+
+  flex-shrink: 0;
+
+  color: var(--primary);
+}
+
+.item strong {
+  font-size: 0.875rem;
+  font-weight: 600;
+
+  color: var(--foreground);
+}
+
+.item span {
+  font-size: 0.8125rem;
+
+  color: var(--muted-foreground);
+
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   Attending
+========================================================================== */
+
+.item[data-status="attending"] > svg {
+  color: var(--success);
+}
+
+
+/* ==========================================================================
+   Declined
+========================================================================== */
+
+.item[data-status="declined"] > svg {
+  color: var(--destructive);
+}
+
+
+/* ==========================================================================
+   Pending
+========================================================================== */
+
+.item[data-status="pending"] > svg {
+  color: var(--warning);
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 768px) {
+  .summary {
+    min-height: 3.5rem;
+
+    overflow-x: auto;
+
+    scrollbar-width: none;
+  }
+
+  .summary::-webkit-scrollbar {
+    display: none;
+  }
+
+  .label {
+    padding: 0 1rem;
+  }
+
+  .item {
+    gap: 0.3rem;
+
+    padding: 0 0.75rem;
+  }
+
+  .item span {
+    font-size: 0.75rem;
+  }
+}
+
+
+/* ==========================================================================
+   Small Mobile
+========================================================================== */
+
+@media (max-width: 550px) {
+  .summary {
+    display: grid;
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
+    min-height: 0;
+
+    overflow: hidden;
+  }
+
+  .label {
+    grid-column: 1 / -1;
+
+    min-height: 2.75rem;
+
+    padding: 0 1rem;
+
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .item {
+    min-height: 2.75rem;
+
+    padding: 0 1rem;
+  }
+
+  .item:nth-of-type(even) {
+    border-right: 1px solid var(--border);
+  }
+
+  .item:nth-of-type(-n + 3) {
+    border-bottom: 1px solid var(--border);
+  }
+}

@@ -9,7 +9,6 @@ import {
 } from "@/i18n/navigation";
 
 import {
-  useLocale,
   useTranslations,
 } from "next-intl";
 import {
@@ -26,11 +25,11 @@ import type {
 
 import {
   createInvitationAction,
-} from "@/features/invitations/actions/createInvitationAction";
+} from "@/features/invitations/actions/invitation/createInvitationAction";
 
 import {
   updateInvitationAction,
-} from "@/features/invitations/actions/updateInvitationAction";
+} from "@/features/invitations/actions/invitation/updateInvitationAction";
 
 import {
   invitationTemplateRegistry,
@@ -47,9 +46,12 @@ import {
 } from "@/features/invitations/content/createInvitationContentFromEvent";
 
 import {
-  buildInvitationRenderData,
-} from "@/features/invitations/renderer/buildInvitationRenderData";
+  parseInvitationContent,
+} from "@/features/invitations/renderer/parsers/parseInvitationContent";
 
+import {
+  parseInvitationPresentation,
+} from "@/features/invitations/renderer/parsers/parseInvitationPresentation";
 import type {
   Invitation,
 } from "@/features/invitations/types/invitation.types";
@@ -135,8 +137,7 @@ const t =
     "Invitations.page.templates"
   );
 
-const locale =
-  useLocale();
+
 
   /* ==========================================================================
      State
@@ -410,31 +411,36 @@ const locale =
     );
 
     try {
-const renderData =
-  buildInvitationRenderData({
-    invitation,
-    locale,
+const content =
+  parseInvitationContent(
+    invitation.content
+  );
+
+const presentation =
+  parseInvitationPresentation(
+    invitation.presentation
+  );
+
+const result =
+  await updateInvitationAction({
+    p_invitation_id:
+      invitation.id,
+
+    p_name:
+      invitation.name,
+
+    p_template_id:
+      selectedTemplate.templateId,
+
+    p_variant_id:
+      selectedTemplate.variantId,
+
+    p_content:
+      content,
+
+    p_presentation:
+      presentation,
   });
-      const result =
-        await updateInvitationAction({
-          p_invitation_id:
-            invitation.id,
-
-          p_name:
-            invitation.name,
-
-          p_template_id:
-            selectedTemplate.templateId,
-
-          p_variant_id:
-            selectedTemplate.variantId,
-
-          p_content:
-            renderData.content,
-
-          p_presentation:
-            renderData.presentation,
-        });
 
       if (!result.success) {
         toast.error(

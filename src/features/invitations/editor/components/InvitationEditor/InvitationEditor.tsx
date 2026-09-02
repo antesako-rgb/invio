@@ -4,6 +4,24 @@ import type {
   ReactNode,
 } from "react";
 
+import {
+  SlidersHorizontal,
+} from "lucide-react";
+
+import {
+  useTranslations,
+} from "next-intl";
+
+import {
+  Button,
+} from "@/components/ui/button";
+
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet/Sheet";
+
 import InvitationEditorHeader
   from "@/features/invitations/editor/components/InvitationEditorHeader/InvitationEditorHeader";
 
@@ -12,6 +30,7 @@ import InvitationEditorWorkspace
 
 import type {
   InvitationEditorSaveStatus,
+  InvitationEditorStep,
 } from "@/features/invitations/editor/types/invitationEditor.types";
 
 import "@/features/invitations/styles/invitationEditor.css";
@@ -33,8 +52,16 @@ interface InvitationEditorProps {
   toolbar?:
     ReactNode;
 
+  activeStep:
+    InvitationEditorStep;
+
   saveStatus:
     InvitationEditorSaveStatus;
+
+  onStepChange:
+    (
+      step: InvitationEditorStep
+    ) => void;
 
   onPreview:
     () => void;
@@ -49,18 +76,35 @@ export default function InvitationEditor({
   children,
   sidebar,
   toolbar,
+  activeStep,
   saveStatus,
+  onStepChange,
   onPreview,
 }: InvitationEditorProps) {
+  const t =
+    useTranslations(
+      "Invitations.editor"
+    );
+
+
+  /* ==========================================================================
+     Render
+  ========================================================================== */
+
   return (
     <div
       className="invitation-editor"
       data-invitation-editor
     >
       <InvitationEditorHeader
-        activeStep="design"
+        activeStep={
+          activeStep
+        }
         saveStatus={
           saveStatus
+        }
+        onStepChange={
+          onStepChange
         }
         onPreview={
           onPreview
@@ -81,6 +125,47 @@ export default function InvitationEditor({
           {children}
         </InvitationEditorWorkspace>
       </main>
+
+
+      {/* ====================================================================
+          Mobile Editor Controls
+      ==================================================================== */}
+
+      {sidebar && (
+        <div
+          className="invitation-editor__mobile-controls"
+        >
+          <Sheet>
+            <SheetTrigger
+              render={
+                <Button
+                  type="button"
+                  size="lg"
+                />
+              }
+            >
+              <SlidersHorizontal
+                aria-hidden="true"
+              />
+
+              {t(
+                "mobile.edit"
+              )}
+            </SheetTrigger>
+
+         <SheetContent
+  side="bottom"
+  className="invitation-editor__mobile-sheet"
+>
+              <div
+                className="invitation-editor__mobile-sheet-content"
+              >
+                {sidebar}
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+      )}
     </div>
   );
 }

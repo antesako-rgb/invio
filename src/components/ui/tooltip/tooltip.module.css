@@ -1,11 +1,16 @@
 .content {
-  max-width: 18rem;
+  max-width:
+    min(24rem, calc(100vw - 2rem));
 
   padding:
     0.5rem 0.75rem;
 
   border:
-    1px solid var(--border);
+    1px solid color-mix(
+      in srgb,
+      var(--background) 12%,
+      transparent
+    );
 
   border-radius:
     var(--radius-md);
@@ -19,18 +24,30 @@
   box-shadow:
     var(--shadow-md);
 
-  font-size: 0.8rem;
-  font-weight: 500;
-  line-height: 1.4;
+  font-size:
+    0.8rem;
 
-  user-select: none;
+  font-weight:
+    500;
 
-  z-index: 1000;
+  line-height:
+    1.4;
+
+  overflow-wrap:
+    anywhere;
+
+  word-break:
+    break-word;
+
+  user-select:
+    none;
+
+  z-index:
+    1000;
 
   animation:
     tooltip-in 0.15s ease-out;
 }
-
 
 .arrow {
   fill:

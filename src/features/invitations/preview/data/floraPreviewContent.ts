@@ -10,8 +10,8 @@ import type {
 export const floraPreviewContent:
   InvitationContent = {
   hero: {
-  title:
-  "Ana &\nMarko",
+    title:
+      "Ana &\nMarko",
 
     subtitle:
       "S velikim veseljem pozivamo na vjenčanje.",
@@ -105,17 +105,29 @@ export const floraPreviewContent:
   ],
 
   rsvp: {
+    enabled:
+      true,
+
     title:
       "Potvrdite dolazak",
 
     description:
       "Molimo vas da potvrdite svoj dolazak.",
 
-    callout_subtitle:
-      "Veselimo se što ćemo ovaj dan proslaviti zajedno.",
+    deadline:
+      null,
 
-    callout_note:
-      "Vidimo se!",
+    success_message:
+      null,
+
+    questions:
+      [],
+
+    allow_generic_responses:
+      false,
+
+    max_party_size:
+      1,
   },
 
   contacts: [

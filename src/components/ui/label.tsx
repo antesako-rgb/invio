@@ -9,10 +9,17 @@ import {
    Types
 ========================================================================== */
 
+export type LabelSize =
+  | "default"
+  | "sm";
+
 interface LabelProps
   extends React.LabelHTMLAttributes<HTMLLabelElement> {
   required?:
     boolean;
+
+  size?:
+    LabelSize;
 }
 
 
@@ -28,6 +35,7 @@ const Label =
     {
       className,
       required = false,
+      size = "default",
       children,
       ...props
     },
@@ -37,17 +45,23 @@ const Label =
       <label
         ref={ref}
         data-slot="label"
+        data-size={size}
         className={cn(
           [
             "inline-flex",
             "items-center",
             "gap-1.5",
-            "text-sm",
             "font-semibold",
             "leading-none",
             "tracking-tight",
             "text-foreground",
             "select-none",
+
+            size === "default" &&
+              "text-sm",
+
+            size === "sm" &&
+              "text-xs",
           ],
           className
         )}

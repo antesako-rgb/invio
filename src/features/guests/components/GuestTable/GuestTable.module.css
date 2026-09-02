@@ -4,26 +4,39 @@
 
 .table {
   width: 100%;
+
+  table-layout:
+    fixed;
 }
+
 
 .guestColumn {
   width: 22%;
 }
 
+
 .contactColumn {
-  width: 30%;
+  width: 28%;
 }
+
 
 .groupColumn {
   width: 18%;
 }
 
-.statusColumn {
-  width: 22%;
+
+.primaryGuestColumn {
+  width: 16%;
 }
 
+
+.notesColumn {
+  width: 12%;
+}
+
+
 .actionsColumn {
-  width: 8%;
+  width: 4%;
 
   text-align:
     right;

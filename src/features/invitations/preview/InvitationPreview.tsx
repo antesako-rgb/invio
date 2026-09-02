@@ -72,6 +72,36 @@ export default function InvitationPreview({
             floraPreviewContent.location
           ),
       },
+
+      guests: [
+        {
+          id:
+            "preview-guest-1",
+
+          firstName:
+            "Ana",
+
+          lastName:
+            "Horvat",
+
+          isPrimaryRecipient:
+            true,
+        },
+
+        {
+          id:
+            "preview-guest-2",
+
+          firstName:
+            "Marko",
+
+          lastName:
+            "Horvat",
+
+          isPrimaryRecipient:
+            false,
+        },
+      ],
     };
 
   return (

@@ -19,17 +19,7 @@
      Envelope
   ======================================================================== */
 
-  --invitation-envelope-back-image:
-    url("/invitation-assets/envelopes/classic/back.png");
 
-  --invitation-envelope-front-image:
-    url("/invitation-assets/envelopes/classic/front.png");
-
-  --invitation-envelope-flap-image:
-    url("/invitation-assets/envelopes/classic/flap.png");
-
-  --invitation-envelope-liner-image:
-    url("/invitation-assets/envelopes/classic/liner.png");
 
   --invitation-envelope-back-filter:
     none;
@@ -90,7 +80,27 @@
   --invitation-details-section-font:
     var(--portrait-font-secondary);
 
+  /* ========================================================================
+     RSVP
+  ======================================================================== */
 
+  --invitation-rsvp-foreground:
+    var(--portrait-foreground);
+
+  --invitation-rsvp-accent:
+    var(--portrait-foreground);
+
+  --invitation-rsvp-title-color:
+    var(--portrait-foreground);
+
+  --invitation-rsvp-title-font:
+    var(--portrait-font-secondary);
+
+  --invitation-rsvp-event-font:
+    var(--portrait-font-primary);
+
+  --invitation-rsvp-section-font:
+    var(--portrait-font-secondary);
   /* ========================================================================
      Eyebrow
   ======================================================================== */

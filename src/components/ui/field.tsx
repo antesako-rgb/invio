@@ -4,6 +4,10 @@ import {
   Label,
 } from "@/components/ui/label";
 
+import type {
+  LabelSize,
+} from "@/components/ui/label";
+
 import {
   cn,
 } from "@/lib/utils/utils";
@@ -36,6 +40,9 @@ interface FieldProps
   invalid?:
     boolean;
 
+  size?:
+    LabelSize;
+
   children:
     React.ReactNode;
 }
@@ -53,6 +60,7 @@ function Field({
   error,
   required,
   invalid,
+  size = "default",
   children,
   className,
   ...props
@@ -109,6 +117,7 @@ function Field({
       data-invalid={
         isInvalid
       }
+      data-size={size}
       className={cn(
         "flex flex-col gap-2",
         className
@@ -126,6 +135,9 @@ function Field({
               htmlFor={id}
               required={
                 required
+              }
+              size={
+                size
               }
             >
               {label}
@@ -153,7 +165,15 @@ function Field({
               : undefined
           }
           data-slot="field-error"
-          className="text-sm font-medium text-destructive"
+          className={cn(
+            "font-medium text-destructive",
+
+            size === "default" &&
+              "text-sm",
+
+            size === "sm" &&
+              "text-xs"
+          )}
           aria-live="polite"
         >
           {error}
@@ -166,7 +186,15 @@ function Field({
               : undefined
           }
           data-slot="field-description"
-          className="text-sm text-muted-foreground"
+          className={cn(
+            "text-muted-foreground",
+
+            size === "default" &&
+              "text-sm",
+
+            size === "sm" &&
+              "text-xs"
+          )}
         >
           {description}
         </p>

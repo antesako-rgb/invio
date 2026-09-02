@@ -121,7 +121,57 @@
   --invitation-details-control-background:
     rgba(79, 64, 54, 0.06);
 
+  /* ========================================================================
+     RSVP
+  ======================================================================== */
 
+  --invitation-rsvp-foreground:
+    #4f4036;
+
+  --invitation-rsvp-accent:
+    #4f4036;
+
+  --invitation-rsvp-title-color:
+    #4f4036;
+
+  --invitation-rsvp-title-font:
+    inherit;
+
+  --invitation-rsvp-event-font:
+    inherit;
+
+  --invitation-rsvp-section-font:
+    inherit;
+
+  --invitation-rsvp-shell-background:
+    rgba(255, 255, 255, 0.34);
+
+  --invitation-rsvp-shell-border:
+    rgba(79, 64, 54, 0.10);
+
+  --invitation-rsvp-section-background:
+    rgba(255, 255, 255, 0.72);
+
+  --invitation-rsvp-section-border:
+    rgba(79, 64, 54, 0.10);
+
+  --invitation-rsvp-control-background:
+    rgba(79, 64, 54, 0.06);
+
+  --invitation-rsvp-control-border:
+    rgba(79, 64, 54, 0.14);
+
+  --invitation-rsvp-control-active-background:
+    #4f4036;
+
+  --invitation-rsvp-control-active-foreground:
+    #fffaf4;
+
+  --invitation-rsvp-submit-background:
+    #4f4036;
+
+  --invitation-rsvp-submit-foreground:
+    #fffaf4;
   /* ========================================================================
      Event Info
   ======================================================================== */

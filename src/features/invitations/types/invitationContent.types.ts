@@ -5,6 +5,7 @@
 export interface InvitationHeroContent {
   title:
     string | null;
+
   subtitle:
     string | null;
 
@@ -87,23 +88,81 @@ export interface InvitationProgramItemContent {
 
 
 /* ==========================================================================
+   Invitation RSVP Question Type
+========================================================================== */
+
+export type InvitationRsvpQuestionType =
+  | "text"
+  | "textarea"
+  | "single_choice"
+  | "yes_no";
+
+
+/* ==========================================================================
+   Invitation RSVP Question Option
+========================================================================== */
+
+export interface InvitationRsvpQuestionOption {
+  id:
+    string;
+
+  label:
+    string;
+}
+
+
+/* ==========================================================================
+   Invitation RSVP Question
+========================================================================== */
+
+export interface InvitationRsvpQuestion {
+  id:
+    string;
+
+  type:
+    InvitationRsvpQuestionType;
+
+  label:
+    string;
+
+  required:
+    boolean;
+
+  options:
+    InvitationRsvpQuestionOption[];
+}
+
+
+/* ==========================================================================
    Invitation RSVP Content
 ========================================================================== */
 
 export interface InvitationRsvpContent {
+  enabled:
+    boolean;
+
   title:
     string | null;
 
   description:
     string | null;
 
-  callout_subtitle:
+  deadline:
     string | null;
 
-  callout_note:
+
+  success_message:
     string | null;
+
+  questions:
+    InvitationRsvpQuestion[];
+
+  allow_generic_responses:
+    boolean;
+
+  max_party_size:
+    number;
 }
-
 
 /* ==========================================================================
    Invitation Contact Content

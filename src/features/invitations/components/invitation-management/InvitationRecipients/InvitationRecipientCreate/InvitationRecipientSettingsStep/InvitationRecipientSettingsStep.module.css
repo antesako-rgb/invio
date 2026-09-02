@@ -1,0 +1,329 @@
+/* ==========================================================================
+   Root
+========================================================================== */
+
+.root {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  width:
+    100%;
+
+  min-width:
+    0;
+
+  gap:
+    1.5rem;
+}
+
+
+/* ==========================================================================
+   Heading
+========================================================================== */
+
+.heading {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    0.25rem;
+}
+
+.title {
+  margin:
+    0;
+
+  color:
+    var(--foreground);
+
+  font-size:
+    1rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.4;
+}
+
+.description {
+  max-width:
+    32rem;
+
+  margin:
+    0;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.875rem;
+
+  line-height:
+    1.5;
+}
+
+
+/* ==========================================================================
+   Field
+========================================================================== */
+
+.field {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  width:
+    100%;
+
+  min-width:
+    0;
+
+  gap:
+    0.875rem;
+}
+
+.fieldHeading {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    0.125rem;
+}
+
+.fieldLabel {
+  color:
+    var(--foreground);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.4;
+}
+
+.fieldDescription {
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.5;
+}
+
+
+/* ==========================================================================
+   Options
+========================================================================== */
+
+.options {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  width:
+    100%;
+
+  overflow:
+    hidden;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    var(--card);
+}
+
+
+/* ==========================================================================
+   Option
+========================================================================== */
+
+.option {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  min-width:
+    0;
+
+  gap:
+    0.875rem;
+
+  padding:
+    0.875rem 1rem;
+
+  border-bottom:
+    1px solid var(--border);
+
+  cursor:
+    pointer;
+
+  transition:
+    background-color 0.2s;
+}
+
+.option:last-child {
+  border-bottom:
+    0;
+}
+
+.option:hover {
+  background:
+    var(--muted);
+}
+
+.selected {
+  background:
+    color-mix(
+      in srgb,
+      var(--primary) 6%,
+      var(--card)
+    );
+}
+
+.selected:hover {
+  background:
+    color-mix(
+      in srgb,
+      var(--primary) 9%,
+      var(--card)
+    );
+}
+
+
+/* ==========================================================================
+   Radio
+========================================================================== */
+
+.radio {
+  flex:
+    0 0 auto;
+
+  width:
+    1rem;
+
+  height:
+    1rem;
+
+  margin:
+    0;
+
+  accent-color:
+    var(--primary);
+
+  cursor:
+    pointer;
+}
+
+
+/* ==========================================================================
+   Guest
+========================================================================== */
+
+.guest {
+  display:
+    flex;
+
+  flex:
+    1;
+
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+
+  gap:
+    0.125rem;
+}
+
+.guestName {
+  overflow:
+    hidden;
+
+  color:
+    var(--foreground);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.4;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+.guestContact {
+  overflow:
+    hidden;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.4;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 480px) {
+
+  .root {
+    gap:
+      1.25rem;
+  }
+
+  .option {
+    gap:
+      0.75rem;
+
+    padding:
+      0.75rem;
+  }
+}

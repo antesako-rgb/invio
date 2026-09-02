@@ -42,7 +42,7 @@ export const invitationTemplateRegistry:
             "Champagne",
 
           previewUrl:
-            "/invitation-assets/previews/flora/champagne.webp",
+            "/invitation-assets/previews/flora/frame.png",
 
           swatch:
             "#d8c5a3",
@@ -96,9 +96,8 @@ export const invitationTemplateRegistry:
       envelopeId:
         "classic",
 
-     defaultVariantId:
-        "champagne",
-
+ defaultVariantId:
+  "champagne",
       variants: [
         {
           id:
@@ -107,8 +106,8 @@ export const invitationTemplateRegistry:
           label:
             "Champagne",
 
-          previewUrl:
-            "/invitation-assets/previews/flora/champagne.webp",
+      previewUrl:
+    "/invitation-assets/previews/portrait/champagne.webp",
 
           swatch:
             "#d8c5a3",

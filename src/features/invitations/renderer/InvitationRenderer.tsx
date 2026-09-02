@@ -24,6 +24,9 @@ import InvitationEnvelope
 import InvitationExperience
   from "@/features/invitations/experience/InvitationExperience/InvitationExperience";
 
+import InvitationRSVPView
+  from "@/features/invitations/experience/rsvp/InvitationRSVPView/InvitationRSVPView";
+
 import {
   InvitationPresentationProvider,
 } from "@/features/invitations/renderer/context/InvitationPresentationContext";
@@ -39,7 +42,8 @@ import type {
 
 type InvitationGuestScreen =
   | "card"
-  | "details";
+  | "details"
+  | "rsvp";
 
 
 /* ==========================================================================
@@ -52,6 +56,9 @@ export default function InvitationRenderer({
   mode,
   data,
   editor,
+  editorStep = "design",
+  rsvpPreviewState = "form",
+  onRsvpSubmit,
 }: InvitationRendererProps) {
   /* ==========================================================================
      State
@@ -95,6 +102,9 @@ export default function InvitationRenderer({
     return null;
   }
 
+  const envelopeId =
+    template.envelopeId;
+
 
   /* ==========================================================================
      Guest Navigation
@@ -106,14 +116,16 @@ export default function InvitationRenderer({
     );
   }
 
+  function handleRsvp() {
+    setGuestScreen(
+      "rsvp"
+    );
+  }
+
   function handleBackToCard() {
     setGuestScreen(
       "card"
     );
-  }
-
-  function handleRsvp() {
-    // RSVP experience ide kasnije.
   }
 
 
@@ -143,6 +155,119 @@ export default function InvitationRenderer({
 
 
   /* ==========================================================================
+     Editor Screen
+  ========================================================================== */
+
+  function renderEditorScreen() {
+    switch (
+      editorStep
+    ) {
+      case "details":
+        return (
+          <InvitationDetailsView
+            data={
+              data
+            }
+          />
+        );
+
+      case "rsvp":
+        return (
+          <InvitationRSVPView
+            data={
+              data
+            }
+            previewState={
+              rsvpPreviewState
+            }
+            onSubmit={
+              onRsvpSubmit
+            }
+          />
+        );
+
+      case "design":
+      default:
+        return card;
+    }
+  }
+
+
+  /* ==========================================================================
+     Guest Screen
+  ========================================================================== */
+
+  function renderGuestScreen() {
+    switch (
+      guestScreen
+    ) {
+      case "details":
+        return (
+          <InvitationDetailsView
+            data={
+              data
+            }
+            onBack={
+              handleBackToCard
+            }
+          />
+        );
+
+      case "rsvp":
+        return (
+          <InvitationRSVPView
+            data={
+              data
+            }
+            onBack={
+              handleBackToCard
+            }
+            onSubmit={
+              onRsvpSubmit
+            }
+          />
+        );
+
+      case "card":
+      default:
+        return (
+          <InvitationEnvelope
+            envelopeId={
+              envelopeId
+            }
+            initialState={
+              isPresented
+                ? "presented"
+                : "closed"
+            }
+            onPresented={() =>
+              setIsPresented(
+                true
+              )
+            }
+            actions={
+              isPresented
+                ? (
+                  <InvitationGuestActions
+                    onDetails={
+                      handleDetails
+                    }
+                    onRsvp={
+                      handleRsvp
+                    }
+                  />
+                )
+                : undefined
+            }
+          >
+            {card}
+          </InvitationEnvelope>
+        );
+    }
+  }
+
+
+  /* ==========================================================================
      Render
   ========================================================================== */
 
@@ -159,51 +284,8 @@ export default function InvitationRenderer({
       }
     >
       {mode === "edit"
-        ? card
-        : guestScreen === "card"
-          ? (
-       <InvitationEnvelope
-  envelopeId={
-    template.envelopeId
-  }
-  initialState={
-    isPresented
-      ? "presented"
-      : "closed"
-  }
-  onPresented={() =>
-    setIsPresented(
-      true
-    )
-  }
-  actions={
-    isPresented
-      ? (
-        <InvitationGuestActions
-          onDetails={
-            handleDetails
-          }
-          onRsvp={
-            handleRsvp
-          }
-        />
-      )
-      : undefined
-  }
->
-  {card}
-</InvitationEnvelope>
-          )
-          : (
-            <InvitationDetailsView
-              data={
-                data
-              }
-              onBack={
-                handleBackToCard
-              }
-            />
-          )}
+        ? renderEditorScreen()
+        : renderGuestScreen()}
     </InvitationExperience>
   );
 }

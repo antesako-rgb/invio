@@ -67,7 +67,7 @@ export default function EventGuestsPage({
   initialGroups,
 }: EventGuestsPageProps) {
   /* ==========================================================================
-     Translation
+     Translations
   ========================================================================== */
 
   const t =
@@ -109,17 +109,11 @@ export default function EventGuestsPage({
     groups,
 
     search,
-    status,
     groupId,
 
     filteredGuests,
 
-    attendingCount,
-    pendingCount,
-    declinedCount,
-
     setSearch,
-    setStatus,
     setGroupId,
 
     reload,
@@ -229,32 +223,14 @@ export default function EventGuestsPage({
           search={
             search
           }
-          status={
-            status
-          }
           groupId={
             groupId
           }
           groups={
             groups
           }
-          totalCount={
-            guests.length
-          }
-          attendingCount={
-            attendingCount
-          }
-          pendingCount={
-            pendingCount
-          }
-          declinedCount={
-            declinedCount
-          }
           onSearchChange={
             setSearch
-          }
-          onStatusChange={
-            setStatus
           }
           onGroupChange={
             setGroupId
@@ -265,6 +241,9 @@ export default function EventGuestsPage({
         <GuestTable
           guests={
             filteredGuests
+          }
+          allGuests={
+            guests
           }
           groups={
             groups

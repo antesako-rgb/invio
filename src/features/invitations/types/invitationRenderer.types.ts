@@ -1,14 +1,20 @@
 import type {
   InvitationEditorContext,
+  InvitationEditorStep,
 } from "@/features/invitations/editor/types/invitationEditor.types";
 
 import type {
   InvitationContent,
-} from "./invitationContent.types";
+} from "@/features/invitations/types/invitationContent.types";
 
 import type {
   InvitationPresentation,
-} from "./invitationPresentation.types";
+} from "@/features/invitations/types/invitationPresentation.types";
+
+import type {
+  InvitationRsvpSubmission,
+  InvitationRSVPViewState,
+} from "@/features/invitations/types/invitationRsvp.types";
 
 
 /* ==========================================================================
@@ -96,6 +102,25 @@ export interface InvitationDisplayData {
 
 
 /* ==========================================================================
+   Invitation Render Guest
+========================================================================== */
+
+export interface InvitationRenderGuest {
+  id:
+    string;
+
+  firstName:
+    string;
+
+  lastName:
+    string | null;
+
+  isPrimaryRecipient:
+    boolean;
+}
+
+
+/* ==========================================================================
    Invitation Render Data
 ========================================================================== */
 
@@ -108,7 +133,21 @@ export interface InvitationRenderData {
 
   display:
     InvitationDisplayData;
+
+  guests:
+    InvitationRenderGuest[];
 }
+
+
+/* ==========================================================================
+   Invitation RSVP Submit Handler
+========================================================================== */
+
+export type InvitationRsvpSubmitHandler =
+  (
+    submissions:
+      InvitationRsvpSubmission[]
+  ) => void | Promise<void>;
 
 
 /* ==========================================================================
@@ -130,4 +169,13 @@ export interface InvitationRendererProps {
 
   editor?:
     InvitationEditorContext;
+
+  editorStep?:
+    InvitationEditorStep;
+
+  rsvpPreviewState?:
+    InvitationRSVPViewState;
+
+  onRsvpSubmit?:
+    InvitationRsvpSubmitHandler;
 }

@@ -90,6 +90,50 @@
 
 
   /* ========================================================================
+     RSVP
+  ======================================================================== */
+
+  --invitation-rsvp-foreground:
+    #5a493b;
+
+  --invitation-rsvp-accent:
+    #462b0a;
+
+  --invitation-rsvp-title-color:
+    #5a493b;
+
+  --invitation-rsvp-shell-background:
+    #faf6ef;
+
+  --invitation-rsvp-shell-border:
+    rgba(90, 73, 59, 0.10);
+
+  --invitation-rsvp-section-background:
+    rgba(255, 255, 255, 0.52);
+
+  --invitation-rsvp-section-border:
+    rgba(90, 73, 59, 0.10);
+
+  --invitation-rsvp-control-background:
+    rgba(90, 73, 59, 0.06);
+
+  --invitation-rsvp-control-border:
+    rgba(90, 73, 59, 0.14);
+
+  --invitation-rsvp-control-active-background:
+    #6f5a47;
+
+  --invitation-rsvp-control-active-foreground:
+    #fffaf4;
+
+  --invitation-rsvp-submit-background:
+    #6f5a47;
+
+  --invitation-rsvp-submit-foreground:
+    #fffaf4;
+
+
+  /* ========================================================================
      Envelope
   ======================================================================== */
 
@@ -123,5 +167,4 @@
 
   --portrait-photo-frame-filter:
     none;
-
 }

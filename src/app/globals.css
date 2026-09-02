@@ -317,7 +317,7 @@
 
   html {
     color-scheme: light;
-
+   
     @apply font-sans antialiased;
 
     scroll-behavior: smooth;

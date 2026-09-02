@@ -41,6 +41,9 @@ interface GuestTableProps {
   guests:
     EventGuest[];
 
+  allGuests:
+    EventGuest[];
+
   groups:
     GuestGroup[];
 
@@ -60,6 +63,7 @@ interface GuestTableProps {
 
 export default function GuestTable({
   guests,
+  allGuests,
   groups,
   onAddGuest,
   onEditGuest,
@@ -75,7 +79,7 @@ export default function GuestTable({
 
 
   /* ==========================================================================
-     Group Map
+     Maps
   ========================================================================== */
 
   const groupMap =
@@ -87,6 +91,16 @@ export default function GuestTable({
         ]
       )
     );
+
+const guestMap =
+  new Map(
+    allGuests.map(
+      (guest) => [
+        guest.id,
+        guest,
+      ]
+    )
+  );
 
 
   /* ==========================================================================
@@ -174,11 +188,22 @@ export default function GuestTable({
             <TableHead
               scope="col"
               className={
-                styles.statusColumn
+                styles.primaryGuestColumn
               }
             >
               {t(
-                "status"
+                "primaryGuest"
+              )}
+            </TableHead>
+
+            <TableHead
+              scope="col"
+              className={
+                styles.notesColumn
+              }
+            >
+              {t(
+                "notes"
               )}
             </TableHead>
 
@@ -188,7 +213,9 @@ export default function GuestTable({
                 styles.actionsColumn
               }
             >
-              <span className="sr-only">
+              <span
+                className="sr-only"
+              >
                 {t(
                   "actions"
                 )}
@@ -216,6 +243,13 @@ export default function GuestTable({
                   guest.group_id
                     ? groupMap.get(
                         guest.group_id
+                      ) ?? null
+                    : null
+                }
+                primaryGuest={
+                  guest.primary_guest_id
+                    ? guestMap.get(
+                        guest.primary_guest_id
                       ) ?? null
                     : null
                 }

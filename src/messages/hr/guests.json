@@ -1,7 +1,7 @@
 {
   "page": {
     "title": "Gosti",
-    "description": "Upravljajte gostima, grupama i odgovorima na pozivnice.",
+    "description": "Upravljajte gostima i grupama za svoj događaj.",
     "loading": "Učitavanje gostiju..."
   },
 
@@ -9,36 +9,16 @@
     "total": {
       "title": "Ukupno gostiju",
       "description": "Na popisu gostiju"
-    },
-
-    "attending": {
-      "title": "Dolazi",
-      "description": "Potvrdili dolazak"
-    },
-
-    "pending": {
-      "title": "Čeka odgovor",
-      "description": "Još nisu odgovorili"
-    },
-
-    "declined": {
-      "title": "Ne dolazi",
-      "description": "Odbili poziv"
     }
-  },
-
-  "rsvp": {
-    "pending": "Čeka odgovor",
-    "attending": "Dolazi",
-    "declined": "Ne dolazi"
   },
 
   "table": {
     "guest": "Gost",
-    "group": "Grupa",
     "contact": "Kontakt",
-    "status": "Status",
-      "actions": "Akcije",
+    "group": "Grupa",
+    "primaryGuest": "Povezan s",
+    "notes": "Napomena",
+    "actions": "Akcije",
     "noGroup": "Bez grupe",
     "emptyTitle": "Nema gostiju",
     "emptyDescription": "Još niste dodali nijednog gosta.",
@@ -49,7 +29,6 @@
     "searchPlaceholder": "Pretraži goste...",
     "allGroups": "Sve grupe",
     "noGroup": "Bez grupe",
-    "allStatuses": "Svi",
     "group": "Grupa"
   },
 
@@ -81,7 +60,9 @@
     "guestUpdated": "Gost je uspješno ažuriran.",
     "guestUpdateError": "Došlo je do pogreške prilikom ažuriranja gosta."
   },
+
   "actions": {
-  "addGuest": "Dodaj gosta"
-}
+    "addGuest": "Dodaj gosta",
+    "open": "Otvori akcije gosta"
+  }
 }

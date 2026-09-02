@@ -194,13 +194,15 @@ export default function SideNavigation({
                     )
                   }
                 >
-                  <Icon
-                    size={20}
-                    className={
-                      styles.icon
-                    }
-                    aria-hidden="true"
-                  />
+                  {Icon && (
+                    <Icon
+                      size={20}
+                      className={
+                        styles.icon
+                      }
+                      aria-hidden="true"
+                    />
+                  )}
 
                   <span
                     className={
@@ -241,13 +243,15 @@ export default function SideNavigation({
                       item.label
                     }
                   >
-                    <Icon
-                      size={20}
-                      className={
-                        styles.icon
-                      }
-                      aria-hidden="true"
-                    />
+                    {Icon && (
+                      <Icon
+                        size={20}
+                        className={
+                          styles.icon
+                        }
+                        aria-hidden="true"
+                      />
+                    )}
 
                     <span
                       className={cn(
@@ -299,13 +303,15 @@ export default function SideNavigation({
                     )
                   }
                 >
-                  <Icon
-                    size={18}
-                    className={
-                      styles.icon
-                    }
-                    aria-hidden="true"
-                  />
+                  {Icon && (
+                    <Icon
+                      size={18}
+                      className={
+                        styles.icon
+                      }
+                      aria-hidden="true"
+                    />
+                  )}
 
                   <span
                     className={
@@ -346,13 +352,15 @@ export default function SideNavigation({
                       )
                     }
                   >
-                    <Icon
-                      size={18}
-                      className={
-                        styles.icon
-                      }
-                      aria-hidden="true"
-                    />
+                    {Icon && (
+                      <Icon
+                        size={18}
+                        className={
+                          styles.icon
+                        }
+                        aria-hidden="true"
+                      />
+                    )}
 
                     <span
                       className={cn(
@@ -405,13 +413,15 @@ export default function SideNavigation({
                   onNavigate
                 }
               >
-                <Icon
-                  size={18}
-                  className={
-                    styles.icon
-                  }
-                  aria-hidden="true"
-                />
+                {Icon && (
+                  <Icon
+                    size={18}
+                    className={
+                      styles.icon
+                    }
+                    aria-hidden="true"
+                  />
+                )}
 
                 <span
                   className={
@@ -456,13 +466,15 @@ export default function SideNavigation({
                     onNavigate
                   }
                 >
-                  <Icon
-                    size={18}
-                    className={
-                      styles.icon
-                    }
-                    aria-hidden="true"
-                  />
+                  {Icon && (
+                    <Icon
+                      size={18}
+                      className={
+                        styles.icon
+                      }
+                      aria-hidden="true"
+                    />
+                  )}
 
                   <span
                     className={cn(

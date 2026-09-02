@@ -55,17 +55,29 @@ export function createDefaultInvitationContent():
       [],
 
     rsvp: {
+      enabled:
+        true,
+
       title:
         null,
 
       description:
         null,
 
-      callout_subtitle:
+      deadline:
         null,
 
-      callout_note:
+      success_message:
         null,
+
+      questions:
+        [],
+
+      allow_generic_responses:
+        false,
+
+      max_party_size:
+        1,
     },
 
     contacts:

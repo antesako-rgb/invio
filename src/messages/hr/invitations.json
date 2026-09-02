@@ -9,6 +9,10 @@
       "preview": "Pregled"
     },
 
+    "mobile": {
+      "edit": "Uredi"
+    },
+
     "actions": {
       "save": "Spremi",
       "saveAndContinue": "Spremi i nastavi"
@@ -24,9 +28,11 @@
       "saving": "Spremanje...",
       "saved": "Spremljeno"
     },
-"preview": {
-  "close": "Zatvori pregled"
-},
+
+    "preview": {
+      "close": "Zatvori pregled"
+    },
+
     "time": {
       "startTime": "Vrijeme početka",
       "endTime": "Vrijeme završetka"
@@ -35,6 +41,109 @@
     "date": {
       "startDate": "Datum početka",
       "endDate": "Datum završetka"
+    },
+
+    "rsvp": {
+      "content": {
+        "title": "Sadržaj",
+        "description": "Prilagodite RSVP iskustvo koje će gosti vidjeti prilikom potvrde dolaska."
+      },
+
+      "enabled": {
+        "label": "Potvrda dolaska",
+        "description": "Omogućite gostima da potvrde dolaze li na događaj."
+      },
+
+      "title": {
+        "label": "Naslov",
+        "description": "Naslov koji će gosti vidjeti na RSVP stranici.",
+        "placeholder": "Potvrda dolaska"
+      },
+
+      "description": {
+        "label": "Opis",
+        "description": "Kratka poruka koja se prikazuje gostima prije potvrde dolaska.",
+        "placeholder": "Molimo vas da potvrdite svoj dolazak."
+      },
+
+      "deadline": {
+        "label": "Rok za odgovor",
+        "description": "Datum do kojeg gosti trebaju potvrditi svoj dolazak.",
+        "placeholder": "Odaberite datum"
+      },
+
+      "preview": {
+        "label": "Prikaz",
+        "form": "Forma",
+        "success": "Nakon potvrde",
+        "ariaLabel": "Prikaz RSVP stanja"
+      },
+
+      "tabs": {
+        "basics": "Osnovno",
+        "questions": "Pitanja",
+        "settings": "Postavke",
+        "ariaLabel": "RSVP postavke"
+      },
+
+      "successMessage": {
+        "label": "Poruka nakon potvrde",
+        "description": "Poruka koju će gosti vidjeti nakon što pošalju svoj odgovor.",
+        "placeholder": "Hvala vam na odgovoru. Veselimo se vašem dolasku!"
+      },
+
+      "questions": {
+        "title": "Dodatna pitanja",
+        "description": "Dodajte pitanja na koja gosti mogu odgovoriti prilikom potvrde dolaska.",
+        "add": "Dodaj",
+        "remove": "Obriši pitanje",
+
+        "empty": {
+          "title": "Nema dodatnih pitanja",
+          "description": "Dodajte pitanje ako želite prikupiti dodatne informacije od gostiju."
+        },
+
+        "question": {
+          "number": "Pitanje {number}",
+          "label": "Pitanje",
+          "placeholder": "Upišite pitanje",
+          "type": "Vrsta odgovora",
+
+          "required": {
+            "label": "Obavezno pitanje",
+            "description": "Gost mora odgovoriti na ovo pitanje prije slanja potvrde."
+          }
+        },
+
+        "types": {
+          "text": "Kratki odgovor",
+          "textarea": "Duži odgovor",
+          "singleChoice": "Jedan izbor",
+          "yesNo": "Da / Ne"
+        },
+
+        "options": {
+          "label": "Opcije odgovora",
+          "add": "Dodaj opciju",
+          "remove": "Obriši opciju",
+          "placeholder": "Opcija {number}"
+        }
+      },
+
+      "settings": {
+        "title": "Postavke odgovora",
+        "description": "Odredite na koji način gosti mogu odgovoriti na ovu pozivnicu.",
+
+        "genericResponses": {
+          "label": "Dopusti odgovore putem javne pozivnice",
+          "description": "Gosti bez personalizirane poveznice mogu poslati RSVP putem javne pozivnice."
+        },
+
+        "maxPartySize": {
+          "label": "Maksimalan broj osoba",
+          "description": "Odredite najveći broj osoba koje jedan odgovor putem javne pozivnice može uključivati."
+        }
+      }
     },
 
     "elementLabels": {
@@ -57,9 +166,7 @@
       "locationName": "Mjesto događaja",
       "locationAddress": "Adresa događaja",
       "rsvpTitle": "Potvrdite dolazak",
-      "rsvpDescription": "Molimo vas da potvrdite svoj dolazak.",
-      "rsvpCalloutSubtitle": "Veselimo se vašem dolasku",
-      "rsvpCalloutNote": "Molimo vas da svoj dolazak potvrdite na vrijeme."
+      "rsvpDescription": "Molimo vas da potvrdite svoj dolazak."
     },
 
     "validation": {
@@ -67,6 +174,7 @@
       "end_before_start": "Datum završetka ne može biti prije datuma početka."
     }
   },
+
 "experience": {
   "envelope": {
     "open": "Otvori pozivnicu"
@@ -76,86 +184,97 @@
     "details": "Detalji",
     "rsvp": "RSVP"
   },
-"details": {
-  "back": "Natrag na pozivnicu",
-  "title": "Naš dan",
-  "program": "Program",
-  "programEmpty": "Program još nije dodan.",
-  "location": "Lokacija",
-  "locationEmpty": "Lokacija još nije dodana."
-}
-},
 
-  "page": {
-    "title": "Pozivnice",
-    "description": "Izradite i upravljajte pozivnicama za svoj događaj.",
-
-    "actions": {
-      "create": "Nova pozivnica"
-    },
-
-    "empty": {
-      "title": "Još nemate pozivnicu",
-      "description": "Odaberite predložak i izradite svoju prvu pozivnicu za događaj.",
-      "action": "Izradi pozivnicu"
-    },
-
-    "templates": {
-      "newInvitationName": "Nova pozivnica",
-      "variants": "{count, plural, one {# varijanta} few {# varijante} other {# varijanti}}",
-      "variantSelector": "Odaberi varijantu",
-      "useTemplate": "Koristi predložak",
-
-      "categories": {
-        "all": "Sve",
-        "wedding": "Vjenčanje",
-        "confirmation": "Krizma",
-        "baptism": "Krštenje",
-        "communion": "Prva pričest",
-        "birthday": "Rođendan",
-        "other_private": "Ostali privatni događaji",
-        "conference": "Konferencija",
-        "seminar": "Seminar",
-        "team_building": "Team building",
-        "reception": "Prijem",
-        "gala_dinner": "Gala večera",
-        "other_business": "Ostali poslovni događaji",
-        "festival": "Festival",
-        "charity": "Humanitarni događaj",
-        "sports": "Sportski događaj",
-        "cultural": "Kulturni događaj",
-        "music": "Glazbeni događaj",
-        "other_social": "Ostali društveni događaji"
-      },
-
-      "flora": {
-        "name": "Flora",
-        "description": "Elegantna botanička pozivnica s nježnim i profinjenim detaljima."
-      },
-
-      "portrait": {
-        "name": "Portrait",
-        "description": "Elegantna pozivnica s fotografijom u središtu dizajna, stvorena za isticanje vašeg omiljenog trenutka."
-      }
-    }
+  "details": {
+    "back": "Natrag na pozivnicu",
+    "title": "Naš dan",
+    "program": "Program",
+    "programEmpty": "Program još nije dodan.",
+    "location": "Lokacija",
+    "locationEmpty": "Lokacija još nije dodana."
   },
 
-  "templateUseDialog": {
-    "title": "Kako želite koristiti ovaj predložak?",
-    "description": "Odabrali ste {template} · {variant}.",
-    "back": "Natrag",
+  "rsvp": {
+    "back": "Natrag na pozivnicu",
+    "title": "Potvrda dolaska",
+    "description": "Molimo vas da potvrdite svoj dolazak.",
+    "deadline": "Molimo odgovorite do {date}.",
+    "attending": "Dolazim",
+    "declined": "Ne dolazim",
+    "yes": "Da",
+    "no": "Ne",
+    "submit": "Potvrdi odgovor",
+    "submitting": "Šaljem...",
+    "submitError": "Nije moguće poslati RSVP odgovor.",
 
-    "existing": {
-      "title": "Primijeni na postojeću pozivnicu",
-      "description": "Promijenite dizajn postojeće pozivnice bez izrade nove.",
-      "selectTitle": "Odaberite pozivnicu",
-      "selectDescription": "Odaberite pozivnicu kojoj želite promijeniti dizajn.",
-      "lastUpdated": "Zadnje ažuriranje: {date}"
+    "validation": {
+      "response_required": "Odaberite dolazite li.",
+      "answer_required": "Ovo pitanje je obavezno."
+    }
+  }
+},
+
+"page": {
+  "title": "Invitations",
+  "description": "Create and manage invitations for your event.",
+
+  "actions": {
+    "create": "New invitation",
+    "manage": "Manage",
+    "edit": "Edit design"
+  },
+
+  "status": {
+    "published": "Published",
+    "draft": "Draft"
+  },
+
+  "publishedAt": "Published {date}",
+  "notPublished": "Not published yet",
+
+  "empty": {
+    "title": "You don't have an invitation yet",
+    "description": "Choose a template and create your first invitation for your event.",
+    "action": "Create invitation"
+  },
+
+  "templates": {
+    "newInvitationName": "New invitation",
+    "variants": "{count, plural, one {# variant} other {# variants}}",
+    "variantSelector": "Choose variant",
+    "useTemplate": "Use template",
+
+    "categories": {
+      "all": "All",
+      "wedding": "Wedding",
+      "confirmation": "Confirmation",
+      "baptism": "Baptism",
+      "communion": "First Communion",
+      "birthday": "Birthday",
+      "other_private": "Other private event",
+      "conference": "Conference",
+      "seminar": "Seminar",
+      "team_building": "Team building",
+      "reception": "Reception",
+      "gala_dinner": "Gala dinner",
+      "other_business": "Other business event",
+      "festival": "Festival",
+      "charity": "Charity event",
+      "sports": "Sports event",
+      "cultural": "Cultural event",
+      "music": "Music event",
+      "other_social": "Other social event"
     },
 
-    "new": {
-      "title": "Izradi novu pozivnicu",
-      "description": "Izradite zasebnu pozivnicu koristeći ovaj predložak."
+    "flora": {
+      "name": "Flora",
+      "description": "An elegant botanical invitation with soft and refined details."
+    },
+
+    "portrait": {
+      "name": "Portrait",
+      "description": "An elegant photo-focused invitation designed to highlight your favorite moment."
     }
+  }
   }
 }

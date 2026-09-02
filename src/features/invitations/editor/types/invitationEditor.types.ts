@@ -20,6 +20,16 @@ export type InvitationEditorSelection =
 
 
 /* ==========================================================================
+   Invitation Editor Step
+========================================================================== */
+
+export type InvitationEditorStep =
+  | "design"
+  | "details"
+  | "rsvp";
+
+
+/* ==========================================================================
    Invitation Editor Save Status
 ========================================================================== */
 
@@ -28,6 +38,10 @@ export type InvitationEditorSaveStatus =
   | "saved"
   | "error";
 
+
+/* ==========================================================================
+   Invitation Editor Context
+========================================================================== */
 
 export interface InvitationEditorContext {
   invitationId:
@@ -47,12 +61,14 @@ export interface InvitationEditorContext {
 
   onSelectElement:
     (
-      element: InvitationEditorSelection
+      element:
+        InvitationEditorSelection
     ) => void;
 
   onStartEdit:
     (
-      element: InvitationEditorSelection
+      element:
+        InvitationEditorSelection
     ) => void;
 
   onEndEdit:
@@ -60,11 +76,13 @@ export interface InvitationEditorContext {
 
   onContentChange:
     (
-      content: InvitationContent
+      content:
+        InvitationContent
     ) => void;
 
   onPresentationChange:
     (
-      presentation: InvitationPresentation
+      presentation:
+        InvitationPresentation
     ) => void;
 }

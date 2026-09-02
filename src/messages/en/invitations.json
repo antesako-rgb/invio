@@ -9,6 +9,10 @@
       "preview": "Preview"
     },
 
+    "mobile": {
+      "edit": "Edit"
+    },
+
     "actions": {
       "save": "Save",
       "saveAndContinue": "Save and continue"
@@ -24,9 +28,11 @@
       "saving": "Saving...",
       "saved": "Saved"
     },
-"preview": {
-  "close": "Close preview"
-},
+
+    "preview": {
+      "close": "Close preview"
+    },
+
     "time": {
       "startTime": "Start time",
       "endTime": "End time"
@@ -35,6 +41,109 @@
     "date": {
       "startDate": "Start date",
       "endDate": "End date"
+    },
+
+    "rsvp": {
+      "content": {
+        "title": "Content",
+        "description": "Customize the RSVP experience guests will see when confirming their attendance."
+      },
+
+      "enabled": {
+        "label": "RSVP",
+        "description": "Allow guests to confirm whether they will attend the event."
+      },
+
+      "title": {
+        "label": "Title",
+        "description": "The title guests will see on the RSVP page.",
+        "placeholder": "RSVP"
+      },
+
+      "description": {
+        "label": "Description",
+        "description": "A short message shown before guests respond.",
+        "placeholder": "Please confirm your attendance."
+      },
+
+      "deadline": {
+        "label": "Response deadline",
+        "description": "The date by which guests should respond.",
+        "placeholder": "Select a date"
+      },
+
+      "preview": {
+        "label": "Preview",
+        "form": "Form",
+        "success": "After confirmation",
+        "ariaLabel": "RSVP state preview"
+      },
+
+      "tabs": {
+        "basics": "Basics",
+        "questions": "Questions",
+        "settings": "Settings",
+        "ariaLabel": "RSVP settings"
+      },
+
+      "successMessage": {
+        "label": "Confirmation message",
+        "description": "The message guests will see after submitting their response.",
+        "placeholder": "Thank you for your response. We look forward to seeing you!"
+      },
+
+      "questions": {
+        "title": "Additional questions",
+        "description": "Add questions guests can answer when confirming their attendance.",
+        "add": "Add",
+        "remove": "Delete question",
+
+        "empty": {
+          "title": "No additional questions",
+          "description": "Add a question if you want to collect additional information from guests."
+        },
+
+        "question": {
+          "number": "Question {number}",
+          "label": "Question",
+          "placeholder": "Enter a question",
+          "type": "Answer type",
+
+          "required": {
+            "label": "Required question",
+            "description": "Guests must answer this question before submitting their RSVP."
+          }
+        },
+
+        "types": {
+          "text": "Short answer",
+          "textarea": "Long answer",
+          "singleChoice": "Single choice",
+          "yesNo": "Yes / No"
+        },
+
+        "options": {
+          "label": "Answer options",
+          "add": "Add option",
+          "remove": "Delete option",
+          "placeholder": "Option {number}"
+        }
+      },
+
+      "settings": {
+        "title": "Response settings",
+        "description": "Configure how guests can respond to this invitation.",
+
+        "genericResponses": {
+          "label": "Allow responses from the public invitation",
+          "description": "Guests without a personalized invitation link can submit an RSVP through the public invitation."
+        },
+
+        "maxPartySize": {
+          "label": "Maximum party size",
+          "description": "Set the maximum number of people that can be included in a response submitted through the public invitation."
+        }
+      }
     },
 
     "elementLabels": {
@@ -57,9 +166,7 @@
       "locationName": "Event venue",
       "locationAddress": "Event address",
       "rsvpTitle": "Confirm attendance",
-      "rsvpDescription": "Please confirm your attendance.",
-      "rsvpCalloutSubtitle": "We look forward to seeing you",
-      "rsvpCalloutNote": "Please confirm your attendance in time."
+      "rsvpDescription": "Please confirm your attendance."
     },
 
     "validation": {
@@ -77,86 +184,97 @@
     "details": "Details",
     "rsvp": "RSVP"
   },
-"details": {
-  "back": "Natrag na pozivnicu",
-  "title": "Naš dan",
-  "program": "Program",
-  "programEmpty": "Program još nije dodan.",
-  "location": "Lokacija",
-  "locationEmpty": "Lokacija još nije dodana."
-}
 
-},
-  "page": {
-    "title": "Invitations",
-    "description": "Create and manage invitations for your event.",
-
-    "actions": {
-      "create": "New invitation"
-    },
-
-    "empty": {
-      "title": "You don't have an invitation yet",
-      "description": "Choose a template and create your first invitation for your event.",
-      "action": "Create invitation"
-    },
-
-    "templates": {
-      "newInvitationName": "New invitation",
-      "variants": "{count, plural, one {# variant} other {# variants}}",
-      "variantSelector": "Choose variant",
-      "useTemplate": "Use template",
-
-      "categories": {
-        "all": "All",
-        "wedding": "Wedding",
-        "confirmation": "Confirmation",
-        "baptism": "Baptism",
-        "communion": "First Communion",
-        "birthday": "Birthday",
-        "other_private": "Other private event",
-        "conference": "Conference",
-        "seminar": "Seminar",
-        "team_building": "Team building",
-        "reception": "Reception",
-        "gala_dinner": "Gala dinner",
-        "other_business": "Other business event",
-        "festival": "Festival",
-        "charity": "Charity event",
-        "sports": "Sports event",
-        "cultural": "Cultural event",
-        "music": "Music event",
-        "other_social": "Other social event"
-      },
-
-      "flora": {
-        "name": "Flora",
-        "description": "An elegant botanical invitation with soft and refined details."
-      },
-
-      "portrait": {
-        "name": "Portrait",
-        "description": "An elegant photo-focused invitation designed to highlight your favorite moment."
-      }
-    }
+  "details": {
+    "back": "Back to invitation",
+    "title": "Our day",
+    "program": "Program",
+    "programEmpty": "The program hasn't been added yet.",
+    "location": "Location",
+    "locationEmpty": "The location hasn't been added yet."
   },
 
-  "templateUseDialog": {
-    "title": "How would you like to use this template?",
-    "description": "You selected {template} · {variant}.",
-    "back": "Back",
+  "rsvp": {
+    "back": "Back to invitation",
+    "title": "RSVP",
+    "description": "Please confirm your attendance.",
+    "deadline": "Please respond by {date}.",
+    "attending": "Attending",
+    "declined": "Unable to attend",
+    "yes": "Yes",
+    "no": "No",
+    "submit": "Confirm response",
+    "submitting": "Submitting...",
+    "submitError": "Unable to submit your RSVP response.",
 
-    "existing": {
-      "title": "Apply to an existing invitation",
-      "description": "Change the design of an existing invitation without creating a new one.",
-      "selectTitle": "Choose an invitation",
-      "selectDescription": "Select the invitation whose design you want to change.",
-      "lastUpdated": "Last updated: {date}"
+    "validation": {
+      "response_required": "Please select your attendance.",
+      "answer_required": "This question is required."
+    }
+  }
+},
+"page": {
+  "title": "Invitations",
+  "description": "Create and manage invitations for your event.",
+
+  "actions": {
+    "create": "New invitation",
+    "manage": "Manage",
+    "edit": "Edit design"
+  },
+
+  "status": {
+    "published": "Published",
+    "draft": "Draft"
+  },
+
+  "publishedAt": "Published {date}",
+  "notPublished": "Not published yet",
+
+  "empty": {
+    "title": "You don't have an invitation yet",
+    "description": "Choose a template and create your first invitation for your event.",
+    "action": "Create invitation"
+  },
+
+  "templates": {
+    "newInvitationName": "New invitation",
+    "variants": "{count, plural, one {# variant} other {# variants}}",
+    "variantSelector": "Choose variant",
+    "useTemplate": "Use template",
+
+    "categories": {
+      "all": "All",
+      "wedding": "Wedding",
+      "confirmation": "Confirmation",
+      "baptism": "Baptism",
+      "communion": "First Communion",
+      "birthday": "Birthday",
+      "other_private": "Other private event",
+      "conference": "Conference",
+      "seminar": "Seminar",
+      "team_building": "Team building",
+      "reception": "Reception",
+      "gala_dinner": "Gala dinner",
+      "other_business": "Other business event",
+      "festival": "Festival",
+      "charity": "Charity event",
+      "sports": "Sports event",
+      "cultural": "Cultural event",
+      "music": "Music event",
+      "other_social": "Other social event"
     },
 
-    "new": {
-      "title": "Create a new invitation",
-      "description": "Create a separate invitation using this template."
+    "flora": {
+      "name": "Flora",
+      "description": "An elegant botanical invitation with soft and refined details."
+    },
+
+    "portrait": {
+      "name": "Portrait",
+      "description": "An elegant photo-focused invitation designed to highlight your favorite moment."
     }
   }
 }
+}
+

@@ -10,7 +10,7 @@ import type {
 export interface InvitationEditorFallbackTranslations {
   heroTitle:
     string;
-    
+
   heroSubtitle:
     string;
 
@@ -29,11 +29,6 @@ export interface InvitationEditorFallbackTranslations {
   rsvpDescription:
     string;
 
-  rsvpCalloutSubtitle:
-    string;
-
-  rsvpCalloutNote:
-    string;
 }
 
 
@@ -47,7 +42,7 @@ export function getInvitationEditorFallbackContent(
   return {
     hero: {
       title:
-        translations.heroTitle, 
+        translations.heroTitle,
 
       subtitle:
         translations.heroSubtitle,
@@ -90,17 +85,29 @@ export function getInvitationEditorFallbackContent(
       [],
 
     rsvp: {
+      enabled:
+        true,
+
       title:
         translations.rsvpTitle,
 
       description:
         translations.rsvpDescription,
 
-      callout_subtitle:
-        translations.rsvpCalloutSubtitle,
+      deadline:
+        null,
 
-      callout_note:
-        translations.rsvpCalloutNote,
+      success_message:
+        null,
+
+      questions:
+        [],
+
+      allow_generic_responses:
+        false,
+
+      max_party_size:
+        1,
     },
 
     contacts:

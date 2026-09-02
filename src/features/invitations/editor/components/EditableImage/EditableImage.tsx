@@ -23,11 +23,11 @@ import {
 
 import {
   removeInvitationImageAction,
-} from "@/features/invitations/actions/removeInvitationImageAction";
+} from "@/features/invitations/actions/invitation/removeInvitationImageAction";
 
 import {
   uploadInvitationImageAction,
-} from "@/features/invitations/actions/uploadInvitationImageAction";
+} from "@/features/invitations/actions/invitation/uploadInvitationImageAction";
 
 import {
   invitationEditorElements,

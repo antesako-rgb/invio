@@ -123,6 +123,12 @@ export function buildInvitationEditorContent(
     },
 
     rsvp: {
+      ...content.rsvp,
+
+      enabled:
+        content.rsvp.enabled ??
+        fallback.rsvp.enabled,
+
       title:
         fallbackString(
           content.rsvp.title,
@@ -135,17 +141,16 @@ export function buildInvitationEditorContent(
           fallback.rsvp.description
         ),
 
-      callout_subtitle:
-        fallbackString(
-          content.rsvp.callout_subtitle,
-          fallback.rsvp.callout_subtitle
-        ),
+      deadline:
+        content.rsvp.deadline,
 
-      callout_note:
-        fallbackString(
-          content.rsvp.callout_note,
-          fallback.rsvp.callout_note
-        ),
+
+
+      success_message:
+        content.rsvp.success_message,
+
+      questions:
+        content.rsvp.questions ?? [],
     },
 
     program:

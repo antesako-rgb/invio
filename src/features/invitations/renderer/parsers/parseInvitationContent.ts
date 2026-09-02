@@ -4,6 +4,9 @@ import type {
 
 import type {
   InvitationContent,
+  InvitationRsvpQuestion,
+  InvitationRsvpQuestionOption,
+  InvitationRsvpQuestionType,
 } from "@/features/invitations/types/invitationContent.types";
 
 
@@ -22,6 +25,124 @@ function isRecord(
     !Array.isArray(
       value
     )
+  );
+}
+
+function isRsvpQuestionType(
+  value: unknown
+): value is InvitationRsvpQuestionType {
+  return (
+    value ===
+      "text" ||
+    value ===
+      "textarea" ||
+    value ===
+      "single_choice" ||
+    value ===
+      "yes_no"
+  );
+}
+
+
+/* ==========================================================================
+   Parse RSVP Question Options
+========================================================================== */
+
+function parseRsvpQuestionOptions(
+  value: unknown
+): InvitationRsvpQuestionOption[] {
+  if (
+    !Array.isArray(
+      value
+    )
+  ) {
+    return [];
+  }
+
+  return value.flatMap(
+    (option) => {
+      if (
+        !isRecord(
+          option
+        ) ||
+        typeof option.id !==
+          "string" ||
+        typeof option.label !==
+          "string"
+      ) {
+        return [];
+      }
+
+      return [
+        {
+          id:
+            option.id,
+
+          label:
+            option.label,
+        },
+      ];
+    }
+  );
+}
+
+
+/* ==========================================================================
+   Parse RSVP Questions
+========================================================================== */
+
+function parseRsvpQuestions(
+  value: unknown
+): InvitationRsvpQuestion[] {
+  if (
+    !Array.isArray(
+      value
+    )
+  ) {
+    return [];
+  }
+
+  return value.flatMap(
+    (question) => {
+      if (
+        !isRecord(
+          question
+        ) ||
+        typeof question.id !==
+          "string" ||
+        !isRsvpQuestionType(
+          question.type
+        ) ||
+        typeof question.label !==
+          "string"
+      ) {
+        return [];
+      }
+
+      return [
+        {
+          id:
+            question.id,
+
+          type:
+            question.type,
+
+          label:
+            question.label,
+
+          required:
+            typeof question.required ===
+              "boolean"
+              ? question.required
+              : false,
+
+          options:
+            parseRsvpQuestionOptions(
+              question.options
+            ),
+        },
+      ];
+    }
   );
 }
 
@@ -90,48 +211,48 @@ export function parseInvitationContent(
       : {};
 
   return {
-hero: {
-  title:
-    typeof hero.title ===
-    "string"
-      ? hero.title
-      : null,
+    hero: {
+      title:
+        typeof hero.title ===
+          "string"
+          ? hero.title
+          : null,
 
-  subtitle:
-    typeof hero.subtitle ===
-    "string"
-      ? hero.subtitle
-      : null,
+      subtitle:
+        typeof hero.subtitle ===
+          "string"
+          ? hero.subtitle
+          : null,
 
-  first_initial:
-    typeof hero.first_initial ===
-    "string"
-      ? hero.first_initial
-      : null,
+      first_initial:
+        typeof hero.first_initial ===
+          "string"
+          ? hero.first_initial
+          : null,
 
-  second_initial:
-    typeof hero.second_initial ===
-    "string"
-      ? hero.second_initial
-      : null,
-},
+      second_initial:
+        typeof hero.second_initial ===
+          "string"
+          ? hero.second_initial
+          : null,
+    },
 
     description:
       typeof value.description ===
-      "string"
+        "string"
         ? value.description
         : null,
 
     date: {
       start_date:
         typeof date.start_date ===
-        "string"
+          "string"
           ? date.start_date
           : null,
 
       end_date:
         typeof date.end_date ===
-        "string"
+          "string"
           ? date.end_date
           : null,
     },
@@ -139,13 +260,13 @@ hero: {
     time: {
       start_time:
         typeof time.start_time ===
-        "string"
+          "string"
           ? time.start_time
           : null,
 
       end_time:
         typeof time.end_time ===
-        "string"
+          "string"
           ? time.end_time
           : null,
     },
@@ -153,13 +274,13 @@ hero: {
     location: {
       name:
         typeof location.name ===
-        "string"
+          "string"
           ? location.name
           : null,
 
       address:
         typeof location.address ===
-        "string"
+          "string"
           ? location.address
           : null,
     },
@@ -187,13 +308,13 @@ hero: {
                 {
                   id:
                     typeof item.id ===
-                    "string"
+                      "string"
                       ? item.id
                       : `program-${index}`,
 
                   date:
                     typeof item.date ===
-                    "string"
+                      "string"
                       ? item.date
                       : null,
 
@@ -202,31 +323,31 @@ hero: {
 
                   description:
                     typeof item.description ===
-                    "string"
+                      "string"
                       ? item.description
                       : null,
 
                   start_time:
                     typeof item.start_time ===
-                    "string"
+                      "string"
                       ? item.start_time
                       : null,
 
                   end_time:
                     typeof item.end_time ===
-                    "string"
+                      "string"
                       ? item.end_time
                       : null,
 
                   location_name:
                     typeof item.location_name ===
-                    "string"
+                      "string"
                       ? item.location_name
                       : null,
 
                   address:
                     typeof item.address ===
-                    "string"
+                      "string"
                       ? item.address
                       : null,
                 },
@@ -236,29 +357,57 @@ hero: {
         : [],
 
     rsvp: {
+      enabled:
+        typeof rsvp.enabled ===
+          "boolean"
+          ? rsvp.enabled
+          : true,
+
       title:
         typeof rsvp.title ===
-        "string"
+          "string"
           ? rsvp.title
           : null,
 
       description:
         typeof rsvp.description ===
-        "string"
+          "string"
           ? rsvp.description
           : null,
 
-      callout_subtitle:
-        typeof rsvp.callout_subtitle ===
-        "string"
-          ? rsvp.callout_subtitle
+      deadline:
+        typeof rsvp.deadline ===
+          "string"
+          ? rsvp.deadline
           : null,
 
-      callout_note:
-        typeof rsvp.callout_note ===
-        "string"
-          ? rsvp.callout_note
+      success_message:
+        typeof rsvp.success_message ===
+          "string"
+          ? rsvp.success_message
           : null,
+
+      questions:
+        parseRsvpQuestions(
+          rsvp.questions
+        ),
+
+      allow_generic_responses:
+        typeof rsvp.allow_generic_responses ===
+          "boolean"
+          ? rsvp.allow_generic_responses
+          : false,
+
+      max_party_size:
+        typeof rsvp.max_party_size ===
+          "number" &&
+        Number.isInteger(
+          rsvp.max_party_size
+        ) &&
+        rsvp.max_party_size >
+          0
+          ? rsvp.max_party_size
+          : 1,
     },
 
     contacts:
@@ -284,13 +433,13 @@ hero: {
 
                   phone:
                     typeof contact.phone ===
-                    "string"
+                      "string"
                       ? contact.phone
                       : null,
 
                   email:
                     typeof contact.email ===
-                    "string"
+                      "string"
                       ? contact.email
                       : null,
                 },
@@ -302,7 +451,7 @@ hero: {
     media: {
       image_url:
         typeof media.image_url ===
-        "string"
+          "string"
           ? media.image_url
           : null,
     },
@@ -310,13 +459,13 @@ hero: {
     music: {
       audio_url:
         typeof music.audio_url ===
-        "string"
+          "string"
           ? music.audio_url
           : null,
 
       enabled:
         typeof music.enabled ===
-        "boolean"
+          "boolean"
           ? music.enabled
           : false,
     },

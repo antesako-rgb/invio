@@ -31,6 +31,9 @@
   display:
     flex;
 
+  flex-shrink:
+    0;
+
   align-items:
     center;
 
@@ -80,3 +83,28 @@
   overflow-y:
     auto;
 }
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (
+  max-width: 767px
+) {
+  .invitation-editor-sidebar {
+    min-height:
+      0;
+
+    max-height:
+      90dvh;
+  }
+
+  .invitation-editor-sidebar__content {
+    overscroll-behavior:
+      contain;
+  }
+}
+/* ==========================================================================
+   RSVP Navigation
+========================================================================== */

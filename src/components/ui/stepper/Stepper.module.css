@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Steps
+========================================================================== */
+
+.steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 44rem;
+
+  margin-inline: auto;
+}
+
+.step {
+  position: relative;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 0;
+
+  text-align: center;
+}
+
+.pending,
+.active,
+.completed {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.25rem;
+  height: 2.25rem;
+
+  border-radius: 9999px;
+
+  font-size: 0.875rem;
+  font-weight: 600;
+
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.pending {
+  border: 2px solid var(--border);
+
+  background: var(--background);
+
+  color: var(--muted-foreground);
+}
+
+.active {
+  border: 2px solid var(--primary);
+
+  background: var(--background);
+
+  color: var(--primary);
+
+  font-weight: 700;
+}
+
+.completed {
+  border: 2px solid var(--primary);
+
+  background: var(--primary);
+
+  color: var(--primary-foreground);
+}
+
+.stepLabel {
+  margin-top: 0.75rem;
+
+  padding-inline: 0.5rem;
+
+  color: var(--foreground);
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.line,
+.lineCompleted {
+  position: absolute;
+
+  top: 1.125rem;
+  left: calc(50% + 1.375rem);
+
+  width: calc(100% - 2.75rem);
+  height: 2px;
+}
+
+.line {
+  background:
+    color-mix(
+      in srgb,
+      var(--primary) 22%,
+      var(--border)
+    );
+}
+
+.lineCompleted {
+  background: var(--primary);
+}
+
+
+/* ==========================================================================
+   Tablet
+========================================================================== */
+
+@media (max-width: 768px) {
+
+  .stepLabel {
+    font-size: 0.75rem;
+  }
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 480px) {
+
+  .pending,
+  .active,
+  .completed {
+    width: 2rem;
+    height: 2rem;
+
+    font-size: 0.75rem;
+  }
+
+  .line,
+  .lineCompleted {
+    top: 1rem;
+    left: calc(50% + 1.2rem);
+
+    width: calc(100% - 2.4rem);
+  }
+
+  .stepLabel {
+    margin-top: 0.5rem;
+
+    padding-inline: 0.25rem;
+
+    font-size: 0.7rem;
+  }
+}

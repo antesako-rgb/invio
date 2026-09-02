@@ -25,7 +25,43 @@ import styles from "./BackToTop.module.css";
 ========================================================================== */
 
 interface BackToTopProps {
-  offsetBottom?: number;
+  offsetBottom?:
+    number;
+}
+
+
+/* ==========================================================================
+   Helpers
+========================================================================== */
+
+function getScrollContainer() {
+  const elements =
+    Array.from(
+      document.querySelectorAll<HTMLElement>(
+        "body *"
+      )
+    );
+
+  return (
+    elements.find(
+      (element) => {
+        const style =
+          window.getComputedStyle(
+            element
+          );
+
+        const isScrollable =
+          style.overflowY === "auto" ||
+          style.overflowY === "scroll";
+
+        return (
+          isScrollable &&
+          element.scrollHeight >
+            element.clientHeight
+        );
+      }
+    ) ?? null
+  );
 }
 
 
@@ -47,6 +83,25 @@ export default function BackToTop({
   ] =
     useState(false);
 
+  const [
+    scrollContainer,
+    setScrollContainer,
+  ] =
+    useState<HTMLElement | null>(
+      null
+    );
+
+
+  /* ==========================================================================
+     Scroll Container
+  ========================================================================== */
+
+  useEffect(() => {
+    setScrollContainer(
+      getScrollContainer()
+    );
+  }, []);
+
 
   /* ==========================================================================
      Scroll Visibility
@@ -54,12 +109,21 @@ export default function BackToTop({
 
   useEffect(() => {
     function handleScroll() {
+      const scrollTop =
+        scrollContainer
+          ? scrollContainer.scrollTop
+          : window.scrollY;
+
       setVisible(
-        window.scrollY > 400
+        scrollTop > 400
       );
     }
 
-    window.addEventListener(
+    const target =
+      scrollContainer ??
+      window;
+
+    target.addEventListener(
       "scroll",
       handleScroll,
       {
@@ -70,12 +134,14 @@ export default function BackToTop({
     handleScroll();
 
     return () => {
-      window.removeEventListener(
+      target.removeEventListener(
         "scroll",
         handleScroll
       );
     };
-  }, []);
+  }, [
+    scrollContainer,
+  ]);
 
 
   /* ==========================================================================
@@ -83,6 +149,15 @@ export default function BackToTop({
   ========================================================================== */
 
   function scrollToTop() {
+    if (scrollContainer) {
+      scrollContainer.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
+      return;
+    }
+
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -98,7 +173,9 @@ export default function BackToTop({
     <button
       type="button"
       aria-label={
-        t("backToTop")
+        t(
+          "backToTop"
+        )
       }
       onClick={
         scrollToTop

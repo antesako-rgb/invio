@@ -21,6 +21,13 @@ import {
 import PageHeader
   from "@/components/ui/page-header/PageHeader";
 
+import EventInvitationsList
+  from "@/features/invitations/components/event-invitations/EventInvitationsList/EventInvitationsList";
+
+import {
+  getEventInvitations,
+} from "@/features/invitations/repositories/invitation/getEventInvitations";
+
 
 /* ==========================================================================
    Types
@@ -46,6 +53,16 @@ export default async function EventInvitationsPage({
   const t =
     await getTranslations(
       "Invitations.page"
+    );
+
+
+  /* ==========================================================================
+     Data
+  ========================================================================== */
+
+  const invitations =
+    await getEventInvitations(
+      eventId
     );
 
 
@@ -83,37 +100,47 @@ export default async function EventInvitationsPage({
         }
       />
 
-      <EmptyState
-        variant="card"
-        icon={
-          Mail
-        }
-        title={
-          t(
-            "empty.title"
-          )
-        }
-        description={
-          t(
-            "empty.description"
-          )
-        }
-        action={
-          <ButtonLink
-            href={
-              `/dashboard/dogadaji/${eventId}/pozivnice/nova`
+      {invitations.length === 0
+        ? (
+          <EmptyState
+            variant="card"
+            icon={
+              Mail
             }
-          >
-            <Plus
-              aria-hidden="true"
-            />
+            title={
+              t(
+                "empty.title"
+              )
+            }
+            description={
+              t(
+                "empty.description"
+              )
+            }
+            action={
+              <ButtonLink
+                href={
+                  `/dashboard/dogadaji/${eventId}/pozivnice/nova`
+                }
+              >
+                <Plus
+                  aria-hidden="true"
+                />
 
-            {t(
-              "empty.action"
-            )}
-          </ButtonLink>
-        }
-      />
+                {t(
+                  "empty.action"
+                )}
+              </ButtonLink>
+            }
+          />
+        )
+        : (
+          <EventInvitationsList
+            invitations={
+              invitations
+            }
+          />
+        )}
     </Page>
   );
 }

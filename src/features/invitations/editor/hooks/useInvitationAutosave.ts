@@ -8,7 +8,7 @@ import {
 
 import {
   updateInvitationAction,
-} from "@/features/invitations/actions/updateInvitationAction";
+} from "@/features/invitations/actions/invitation/updateInvitationAction";
 
 import type {
   InvitationEditorSaveStatus,

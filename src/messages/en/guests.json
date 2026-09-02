@@ -1,7 +1,7 @@
 {
   "page": {
     "title": "Guests",
-    "description": "Manage guests, groups, and invitation responses.",
+    "description": "Manage guests and groups for your event.",
     "loading": "Loading guests..."
   },
 
@@ -9,35 +9,15 @@
     "total": {
       "title": "Total guests",
       "description": "On the guest list"
-    },
-
-    "attending": {
-      "title": "Attending",
-      "description": "Confirmed attendance"
-    },
-
-    "pending": {
-      "title": "Awaiting response",
-      "description": "Haven't responded yet"
-    },
-
-    "declined": {
-      "title": "Not attending",
-      "description": "Declined the invitation"
     }
-  },
-
-  "rsvp": {
-    "pending": "Awaiting response",
-    "attending": "Attending",
-    "declined": "Not attending"
   },
 
   "table": {
     "guest": "Guest",
-    "group": "Group",
     "contact": "Contact",
-    "status": "Status",
+    "group": "Group",
+    "primaryGuest": "Linked to",
+    "notes": "Notes",
     "actions": "Actions",
     "noGroup": "No group",
     "emptyTitle": "No guests",
@@ -49,7 +29,6 @@
     "searchPlaceholder": "Search guests...",
     "allGroups": "All groups",
     "noGroup": "No group",
-    "allStatuses": "All",
     "group": "Group"
   },
 
@@ -81,7 +60,9 @@
     "guestUpdated": "Guest updated successfully.",
     "guestUpdateError": "An error occurred while updating the guest."
   },
-"actions": {
-  "addGuest": "Add guest"
-}
+
+  "actions": {
+    "addGuest": "Add guest",
+    "open": "Open guest actions"
+  }
 }

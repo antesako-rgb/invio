@@ -5,6 +5,10 @@ import {
 } from "lucide-react";
 
 import {
+  useTranslations,
+} from "next-intl";
+
+import {
   Button,
 } from "@/components/ui/button";
 
@@ -12,9 +16,6 @@ import {
   TableCell,
   TableRow,
 } from "@/components/ui/data-table";
-
-import GuestStatusBadge
-  from "../GuestStatusBadge/GuestStatusBadge";
 
 import type {
   EventGuest,
@@ -36,6 +37,9 @@ interface GuestRowProps {
   group:
     GuestGroup | null;
 
+  primaryGuest:
+    EventGuest | null;
+
   onEdit?:
     () => void;
 }
@@ -48,8 +52,19 @@ interface GuestRowProps {
 export default function GuestRow({
   guest,
   group,
+  primaryGuest,
   onEdit,
 }: GuestRowProps) {
+  /* ==========================================================================
+     Translations
+  ========================================================================== */
+
+  const t =
+    useTranslations(
+      "Guests"
+    );
+
+
   /* ==========================================================================
      Guest Name
   ========================================================================== */
@@ -64,6 +79,21 @@ export default function GuestRow({
 
 
   /* ==========================================================================
+     Primary Guest Name
+  ========================================================================== */
+
+  const primaryGuestName =
+    primaryGuest
+      ? [
+          primaryGuest.first_name,
+          primaryGuest.last_name,
+        ]
+          .filter(Boolean)
+          .join(" ")
+      : null;
+
+
+  /* ==========================================================================
      Render
   ========================================================================== */
 
@@ -73,7 +103,9 @@ export default function GuestRow({
         styles.row
       }
     >
-      {/* Guest */}
+      {/* ====================================================================
+          Guest
+      ==================================================================== */}
 
       <TableCell
         className={
@@ -90,7 +122,9 @@ export default function GuestRow({
       </TableCell>
 
 
-      {/* Contact */}
+      {/* ====================================================================
+          Contact
+      ==================================================================== */}
 
       <TableCell
         className={
@@ -136,7 +170,9 @@ export default function GuestRow({
       </TableCell>
 
 
-      {/* Group */}
+      {/* ====================================================================
+          Group
+      ==================================================================== */}
 
       <TableCell
         className={
@@ -163,22 +199,63 @@ export default function GuestRow({
       </TableCell>
 
 
-      {/* RSVP */}
+      {/* ====================================================================
+          Primary Guest
+      ==================================================================== */}
 
       <TableCell
         className={
-          styles.status
+          styles.primaryGuest
         }
       >
-        <GuestStatusBadge
-          status={
-            guest.rsvp_status
-          }
-        />
+        {primaryGuestName ? (
+          <span>
+            {primaryGuestName}
+          </span>
+        ) : (
+          <span
+            className={
+              styles.empty
+            }
+          >
+            —
+          </span>
+        )}
       </TableCell>
 
 
-      {/* Actions */}
+      {/* ====================================================================
+          Notes
+      ==================================================================== */}
+
+      <TableCell
+        className={
+          styles.notes
+        }
+      >
+        {guest.notes ? (
+          <span
+            className={
+              styles.notesText
+            }
+          >
+            {guest.notes}
+          </span>
+        ) : (
+          <span
+            className={
+              styles.empty
+            }
+          >
+            —
+          </span>
+        )}
+      </TableCell>
+
+
+      {/* ====================================================================
+          Actions
+      ==================================================================== */}
 
       <TableCell
         className={
@@ -189,7 +266,11 @@ export default function GuestRow({
           type="button"
           variant="ghost"
           size="icon"
-          aria-label="Guest actions"
+          aria-label={
+            t(
+              "actions.open"
+            )
+          }
           onClick={
             onEdit
           }

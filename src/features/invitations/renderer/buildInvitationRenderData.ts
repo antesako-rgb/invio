@@ -4,6 +4,7 @@ import type {
 
 import type {
   InvitationRenderData,
+  InvitationRenderGuest,
 } from "@/features/invitations/types/invitationRenderer.types";
 
 import {
@@ -42,6 +43,9 @@ interface BuildInvitationRenderDataInput {
 
   locale:
     string;
+
+  guests:
+    InvitationRenderGuest[];
 }
 
 
@@ -52,6 +56,7 @@ interface BuildInvitationRenderDataInput {
 export function buildInvitationRenderData({
   invitation,
   locale,
+  guests,
 }: BuildInvitationRenderDataInput): InvitationRenderData {
   const content =
     parseInvitationContent(
@@ -85,5 +90,7 @@ export function buildInvitationRenderData({
           content.location
         ),
     },
+
+    guests,
   };
 }

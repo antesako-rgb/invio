@@ -10,7 +10,7 @@ import {
 
 import {
   getEventInvitations,
-} from "@/features/invitations/repositories/getEventInvitations";
+} from "@/features/invitations/repositories/invitation/getEventInvitations";
 
 
 /* ==========================================================================

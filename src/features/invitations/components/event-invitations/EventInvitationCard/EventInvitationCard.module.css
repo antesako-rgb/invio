@@ -1,0 +1,218 @@
+/* ==========================================================================
+   Card
+========================================================================== */
+
+.card {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+
+  width: 100%;
+  min-height: 220px;
+}
+
+
+/* ==========================================================================
+   Media
+========================================================================== */
+
+.media {
+  grid-row: 1 / -1;
+
+  padding: 1rem;
+
+  border-right: 1px solid var(--border);
+}
+
+
+/* ==========================================================================
+   Preview
+========================================================================== */
+
+.preview {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+  min-height: 188px;
+
+  overflow: hidden;
+
+  border-radius: 0.75rem;
+
+  background: var(--muted);
+}
+
+.previewImage {
+  object-fit: cover;
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.content {
+  min-width: 0;
+
+  padding: 1.5rem;
+}
+
+
+/* ==========================================================================
+   Heading
+========================================================================== */
+
+.heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.titleGroup {
+  display: grid;
+  gap: 0.25rem;
+
+  min-width: 0;
+}
+
+.variant {
+  font-size: 0.875rem;
+
+  color: var(--muted-foreground);
+
+  text-transform: capitalize;
+}
+
+
+/* ==========================================================================
+   Status
+========================================================================== */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  flex-shrink: 0;
+
+  padding: 0.375rem 0.625rem;
+
+  border-radius: 999px;
+
+  background: var(--muted);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.statusDot {
+  width: 0.5rem;
+  height: 0.5rem;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: currentColor;
+}
+
+.status[data-published="true"] {
+  color: var(--success);
+}
+
+.status[data-published="false"] {
+  color: var(--muted-foreground);
+}
+
+
+/* ==========================================================================
+   Meta
+========================================================================== */
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-size: 0.875rem;
+
+  color: var(--muted-foreground);
+}
+
+.meta svg {
+  width: 1rem;
+  height: 1rem;
+
+  flex-shrink: 0;
+}
+
+
+/* ==========================================================================
+   Footer
+========================================================================== */
+
+.footer {
+  padding: 1rem 1.5rem;
+}
+
+
+/* ==========================================================================
+   Tablet
+========================================================================== */
+
+@media (max-width: 767px) {
+  .card {
+    display: block;
+
+    min-height: 0;
+  }
+
+  .media {
+    padding-bottom: 0;
+
+    border-right: 0;
+  }
+
+  .preview {
+    height: auto;
+    min-height: 0;
+
+    aspect-ratio: 16 / 9;
+  }
+
+  .content {
+    padding: 1.25rem;
+  }
+
+  .heading {
+    gap: 0.75rem;
+  }
+
+  .footer {
+    flex-wrap: wrap;
+
+    padding: 1rem 1.25rem;
+  }
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 479px) {
+  .heading {
+    flex-direction: column;
+  }
+
+  .footer {
+    align-items: stretch;
+  }
+
+  .footer > * {
+    flex: 1;
+  }
+}

@@ -28,7 +28,7 @@ interface InvitationDetailsViewProps {
   data:
     InvitationRenderData;
 
-  onBack:
+  onBack?:
     () => void;
 }
 
@@ -109,22 +109,31 @@ export default function InvitationDetailsView({
         <header
           className="invitation-details-view__header"
         >
-          <button
-            type="button"
-            className="invitation-details-view__back"
-            onClick={
-              onBack
-            }
-            aria-label={
-              t(
-                "back"
-              )
-            }
-          >
-            <ArrowLeft
-              aria-hidden="true"
-            />
-          </button>
+          {onBack
+            ? (
+              <button
+                type="button"
+                className="invitation-details-view__back"
+                onClick={
+                  onBack
+                }
+                aria-label={
+                  t(
+                    "back"
+                  )
+                }
+              >
+                <ArrowLeft
+                  aria-hidden="true"
+                />
+              </button>
+            )
+            : (
+              <div
+                className="invitation-details-view__header-spacer"
+                aria-hidden="true"
+              />
+            )}
 
           {title && (
             <div

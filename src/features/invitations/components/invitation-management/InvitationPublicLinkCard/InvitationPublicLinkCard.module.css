@@ -1,0 +1,307 @@
+/* ==========================================================================
+   Card
+========================================================================== */
+
+.card {
+  height: 100%;
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.content {
+  display: grid;
+
+  gap: 1.5rem;
+
+  padding: 1.5rem;
+}
+
+
+/* ==========================================================================
+   Header
+========================================================================== */
+
+.header {
+  display: grid;
+
+  gap: 0.25rem;
+}
+
+
+/* ==========================================================================
+   Link Box
+========================================================================== */
+
+.linkBox {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 0.875rem;
+
+  min-height: 6.375rem;
+
+  padding: 1rem;
+
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+
+  background: var(--muted);
+}
+
+.linkBox > svg {
+  width: 1.25rem;
+  height: 1.25rem;
+
+  flex-shrink: 0;
+
+  margin-top: 0.125rem;
+
+  color: var(--muted-foreground);
+}
+
+
+/* ==========================================================================
+   Link Content
+========================================================================== */
+
+.linkContent {
+  display: grid;
+
+  gap: 0.25rem;
+
+  min-width: 0;
+}
+
+.linkContent strong {
+  font-size: 0.875rem;
+  font-weight: 600;
+
+  color: var(--foreground);
+}
+
+.publicLink {
+  overflow: hidden;
+
+  font-size: 0.8125rem;
+  font-weight: 500;
+
+  color: var(--primary);
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.linkDescription {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+
+  color: var(--muted-foreground);
+}
+
+
+/* ==========================================================================
+   Active
+========================================================================== */
+
+.linkBox[data-active="true"] {
+  border-color:
+    color-mix(
+      in oklch,
+      var(--primary) 25%,
+      var(--border)
+    );
+
+  background:
+    color-mix(
+      in oklch,
+      var(--primary) 5%,
+      var(--card)
+    );
+}
+
+.linkBox[data-active="true"] > svg {
+  color: var(--primary);
+}
+
+
+/* ==========================================================================
+   Inactive
+========================================================================== */
+
+.linkBox[data-active="false"] .publicLink {
+  color: var(--muted-foreground);
+}
+
+
+/* ==========================================================================
+   Actions
+========================================================================== */
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 0.75rem;
+}
+
+.disabledAction {
+  pointer-events: none;
+
+  opacity: 0.5;
+}
+
+
+/* ==========================================================================
+   Mobile Toggle
+========================================================================== */
+
+.mobileToggle {
+  display: none;
+}
+
+.mobileCollapsible {
+  display: contents;
+}
+
+.mobileToggleContent {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.375rem;
+
+  min-width: 0;
+}
+
+.mobileStatus {
+  display: flex;
+  align-items: center;
+
+  gap: 0.5rem;
+
+  font-size: 0.8125rem;
+  font-weight: 500;
+
+  color: var(--muted-foreground);
+}
+
+.mobileStatusDot {
+  width: 0.5rem;
+  height: 0.5rem;
+
+  flex-shrink: 0;
+
+  border-radius: 999px;
+
+  background: var(--muted-foreground);
+}
+
+.mobileStatus[data-active="true"] {
+  color: var(--primary);
+}
+
+.mobileStatus[data-active="true"]
+.mobileStatusDot {
+  background: var(--primary);
+}
+
+.mobileStatus[data-active="false"] {
+  color: var(--muted-foreground);
+}
+
+.mobileStatus[data-active="false"]
+.mobileStatusDot {
+  background: var(--muted-foreground);
+}
+
+.mobileChevron {
+  flex-shrink: 0;
+
+  color: var(--muted-foreground);
+
+  transition:
+    transform 0.2s ease;
+}
+
+.mobileChevron[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 768px) {
+  .card {
+    height: auto;
+
+    overflow: hidden;
+  }
+
+  .mobileToggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    width: 100%;
+
+    padding: 1.25rem 1.5rem;
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--foreground);
+
+    text-align: left;
+
+    cursor: pointer;
+  }
+
+  .mobileToggleContent > strong {
+    font-size: 1rem;
+    font-weight: 600;
+
+    color: var(--foreground);
+  }
+
+  .mobileCollapsible {
+    display: none;
+  }
+
+  .mobileCollapsible[data-open="true"] {
+    display: block;
+  }
+}
+
+
+/* ==========================================================================
+   Small Mobile
+========================================================================== */
+
+@media (max-width: 479px) {
+  .actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .actions > * {
+    width: 100%;
+  }
+}
+
+
+/* ==========================================================================
+   Reduced Motion
+========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .mobileChevron {
+    transition: none;
+  }
+}

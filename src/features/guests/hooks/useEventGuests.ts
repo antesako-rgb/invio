@@ -18,7 +18,6 @@ import type {
   EventGuest,
   GuestGroup,
   GuestGroupFilter,
-  GuestStatusFilter,
 } from "../types/guest.types";
 
 
@@ -81,15 +80,6 @@ export function useEventGuests({
 
 
   const [
-    status,
-    setStatus,
-  ] =
-    useState<GuestStatusFilter>(
-      "all"
-    );
-
-
-  const [
     groupId,
     setGroupId,
   ] =
@@ -136,52 +126,6 @@ export function useEventGuests({
 
 
   /* ==========================================================================
-     Stats
-  ========================================================================== */
-
-  const attendingCount =
-    useMemo(
-      () =>
-        guests.filter(
-          (guest) =>
-            guest.rsvp_status ===
-            "attending"
-        ).length,
-      [
-        guests,
-      ]
-    );
-
-
-  const pendingCount =
-    useMemo(
-      () =>
-        guests.filter(
-          (guest) =>
-            guest.rsvp_status ===
-            "pending"
-        ).length,
-      [
-        guests,
-      ]
-    );
-
-
-  const declinedCount =
-    useMemo(
-      () =>
-        guests.filter(
-          (guest) =>
-            guest.rsvp_status ===
-            "declined"
-        ).length,
-      [
-        guests,
-      ]
-    );
-
-
-  /* ==========================================================================
      Filtered Guests
   ========================================================================== */
 
@@ -217,12 +161,6 @@ export function useEventGuests({
                 );
 
 
-            const matchesStatus =
-              status === "all" ||
-              guest.rsvp_status ===
-                status;
-
-
             const matchesGroup =
               groupId === "all" ||
               (
@@ -237,7 +175,6 @@ export function useEventGuests({
 
             return (
               matchesSearch &&
-              matchesStatus &&
               matchesGroup
             );
           }
@@ -246,7 +183,6 @@ export function useEventGuests({
       [
         guests,
         search,
-        status,
         groupId,
       ]
     );
@@ -261,17 +197,11 @@ export function useEventGuests({
     groups,
 
     search,
-    status,
     groupId,
 
     filteredGuests,
 
-    attendingCount,
-    pendingCount,
-    declinedCount,
-
     setSearch,
-    setStatus,
     setGroupId,
 
     reload,

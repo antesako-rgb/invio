@@ -1,0 +1,296 @@
+/* ==========================================================================
+   Card
+========================================================================== */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+
+  width: 100%;
+
+  padding: 2rem;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  background: var(--card);
+}
+
+.compact {
+  gap: 2rem;
+
+  padding: 1.5rem;
+}
+
+
+/* ==========================================================================
+   Steps
+========================================================================== */
+
+.steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 44rem;
+
+  margin-inline: auto;
+}
+
+.step {
+  position: relative;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 0;
+
+  text-align: center;
+}
+
+.pending,
+.active,
+.completed {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.25rem;
+  height: 2.25rem;
+
+  border-radius: 9999px;
+
+  font-size: 0.875rem;
+  font-weight: 600;
+
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.pending {
+  border: 2px solid var(--border);
+
+  background: var(--background);
+
+  color: var(--muted-foreground);
+}
+
+.active {
+  border: 2px solid var(--primary);
+
+  background: var(--background);
+
+  color: var(--primary);
+
+  font-weight: 700;
+}
+
+.completed {
+  border: 2px solid var(--primary);
+
+  background: var(--primary);
+
+  color: var(--primary-foreground);
+}
+
+.stepLabel {
+  margin-top: 0.75rem;
+
+  padding-inline: 0.5rem;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+
+  color: var(--foreground);
+}
+
+.line,
+.lineCompleted {
+  position: absolute;
+
+  top: 1.125rem;
+  left: calc(50% + 1.375rem);
+
+  width: calc(100% - 2.75rem);
+  height: 2px;
+}
+
+.line {
+  background: var(--border);
+}
+
+.lineCompleted {
+  background: var(--primary);
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+
+  text-align: center;
+}
+
+.image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  margin-bottom: 1.5rem;
+}
+
+.image img,
+.image svg {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+}
+.title {
+  margin: 0;
+
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.75rem;
+
+  color: var(--foreground);
+}
+
+.description {
+  max-width: 28rem;
+
+  margin: 0.5rem 0 2rem;
+
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+
+  color: var(--muted-foreground);
+}
+
+
+/* ==========================================================================
+   Actions
+========================================================================== */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.75rem;
+}
+
+
+/* ==========================================================================
+   Tablet
+========================================================================== */
+
+@media (max-width: 768px) {
+  .card {
+    gap: 2rem;
+
+    padding: 1.5rem;
+  }
+
+  .compact {
+    gap: 1.5rem;
+
+    padding: 1.25rem;
+  }
+
+  .image img,
+  .image svg {
+    max-width: 180px;
+  }
+
+  .description {
+    margin-bottom: 1.5rem;
+  }
+
+  .stepLabel {
+    font-size: 0.75rem;
+  }
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 480px) {
+  .card {
+    gap: 1.5rem;
+
+    padding: 1.25rem;
+  }
+
+  .compact {
+    gap: 1.25rem;
+
+    padding: 1rem;
+  }
+
+  .pending,
+  .active,
+  .completed {
+    width: 2rem;
+    height: 2rem;
+
+    font-size: 0.75rem;
+  }
+
+  .line,
+  .lineCompleted {
+    top: 1rem;
+    left: calc(50% + 1.2rem);
+
+    width: calc(100% - 2.4rem);
+  }
+
+  .stepLabel {
+    margin-top: 0.5rem;
+
+    padding-inline: 0.25rem;
+
+    font-size: 0.7rem;
+  }
+
+  .image img,
+  .image svg {
+    max-width: 150px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .description {
+    margin-top: 0.75rem;
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .actions {
+    width: 100%;
+  }
+}

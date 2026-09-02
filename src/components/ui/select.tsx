@@ -13,21 +13,33 @@ import {
    Types
 ========================================================================== */
 
-interface SelectOption {
+interface SelectOption<
+  TValue extends string = string
+> {
   value:
-    string;
+    TValue;
 
   label:
     string;
 }
 
-interface SelectProps
+interface SelectProps<
+  TValue extends string = string
+>
   extends Omit<
     React.SelectHTMLAttributes<HTMLSelectElement>,
-    "onChange"
+    | "onChange"
+    | "value"
+    | "defaultValue"
   > {
+  value?:
+    TValue;
+
+  defaultValue?:
+    TValue;
+
   options:
-    readonly SelectOption[];
+    readonly SelectOption<TValue>[];
 
   placeholder?:
     string;
@@ -37,8 +49,11 @@ interface SelectProps
 
   onValueChange?:
     (
-      value: string
+      value: TValue
     ) => void;
+
+  ref?:
+    React.Ref<HTMLSelectElement>;
 }
 
 
@@ -46,110 +61,113 @@ interface SelectProps
    Select
 ========================================================================== */
 
-const Select =
-  React.forwardRef<
-    HTMLSelectElement,
-    SelectProps
-  >(function Select(
-    {
-      className,
-      options,
-      placeholder,
-      onValueChange,
-      onChange,
-      value,
-      ...props
-    },
-    ref
-  ) {
-    return (
-      <div
-        data-slot="select-root"
-        className="relative"
+function Select<
+  TValue extends string = string
+>({
+  className,
+  options,
+  placeholder,
+  onValueChange,
+  onChange,
+  value,
+  defaultValue,
+  ref,
+  ...props
+}: SelectProps<TValue>) {
+  return (
+    <div
+      data-slot="select-root"
+      className="relative"
+    >
+      <select
+        ref={
+          ref
+        }
+        data-slot="select"
+        value={
+          value
+        }
+        defaultValue={
+          defaultValue
+        }
+        className={cn(
+          [
+            "flex",
+            "h-10",
+            "w-full",
+            "appearance-none",
+            "rounded-xl",
+            "border",
+            "border-border",
+            "bg-background",
+            "px-3",
+            "pr-10",
+            "text-base",
+            "text-foreground",
+            "shadow-xs",
+            "transition-all",
+            "outline-none",
+
+            "focus-visible:border-primary",
+            "focus-visible:ring-4",
+            "focus-visible:ring-ring/30",
+
+            "disabled:pointer-events-none",
+            "disabled:opacity-50",
+
+            "aria-invalid:border-destructive",
+            "aria-invalid:ring-4",
+            "aria-invalid:ring-destructive/20",
+
+            "sm:text-sm",
+          ],
+          className
+        )}
+        onChange={(
+          event
+        ) => {
+          onChange?.(
+            event
+          );
+
+          onValueChange?.(
+            event.target.value as TValue
+          );
+        }}
+        {...props}
       >
-        <select
-          ref={ref}
-          data-slot="select"
-          value={value}
-          className={cn(
-            [
-              "flex",
-              "h-10",
-              "w-full",
-              "appearance-none",
-              "rounded-xl",
-              "border",
-              "border-border",
-              "bg-background",
-              "px-3",
-              "pr-10",
-              "text-base",
-              "text-foreground",
-              "shadow-xs",
-              "transition-all",
-              "outline-none",
+        {placeholder && (
+          <option
+            value=""
+            disabled
+          >
+            {placeholder}
+          </option>
+        )}
 
-              "focus-visible:border-primary",
-              "focus-visible:ring-4",
-              "focus-visible:ring-ring/30",
-
-              "disabled:pointer-events-none",
-              "disabled:opacity-50",
-
-              "aria-invalid:border-destructive",
-              "aria-invalid:ring-4",
-              "aria-invalid:ring-destructive/20",
-
-              "sm:text-sm",
-            ],
-            className
-          )}
-          onChange={(event) => {
-            onChange?.(
-              event
-            );
-
-            onValueChange?.(
-              event.target.value
-            );
-          }}
-          {...props}
-        >
-          {placeholder && (
+        {options.map(
+          (option) => (
             <option
-              value=""
-              disabled
+              key={
+                option.value
+              }
+              value={
+                option.value
+              }
             >
-              {placeholder}
+              {option.label}
             </option>
-          )}
+          )
+        )}
+      </select>
 
-          {options.map(
-            (option) => (
-              <option
-                key={
-                  option.value
-                }
-                value={
-                  option.value
-                }
-              >
-                {option.label}
-              </option>
-            )
-          )}
-        </select>
-
-        <ChevronDown
-          aria-hidden="true"
-          className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
-        />
-      </div>
-    );
-  });
-
-Select.displayName =
-  "Select";
+      <ChevronDown
+        aria-hidden="true"
+        className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+      />
+    </div>
+  );
+}
 
 
 /* ==========================================================================
@@ -162,4 +180,5 @@ export {
 
 export type {
   SelectOption,
+  SelectProps,
 };

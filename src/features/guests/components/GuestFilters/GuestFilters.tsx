@@ -19,13 +19,9 @@ import {
 import SelectFilter
   from "@/components/ui/select-filter/SelectFilter";
 
-import TabsFilter
-  from "@/components/ui/filter/TabsFilter";
-
 import type {
   GuestGroup,
   GuestGroupFilter,
-  GuestStatusFilter,
 } from "../../types/guest.types";
 
 import styles
@@ -40,35 +36,15 @@ interface GuestFiltersProps {
   search:
     string;
 
-  status:
-    GuestStatusFilter;
-
   groupId:
     GuestGroupFilter;
 
   groups:
     GuestGroup[];
 
-  totalCount:
-    number;
-
-  attendingCount:
-    number;
-
-  pendingCount:
-    number;
-
-  declinedCount:
-    number;
-
   onSearchChange:
     (
       value: string
-    ) => void;
-
-  onStatusChange:
-    (
-      value: GuestStatusFilter
     ) => void;
 
   onGroupChange:
@@ -84,15 +60,9 @@ interface GuestFiltersProps {
 
 export default function GuestFilters({
   search,
-  status,
   groupId,
   groups,
-  totalCount,
-  attendingCount,
-  pendingCount,
-  declinedCount,
   onSearchChange,
-  onStatusChange,
   onGroupChange,
 }: GuestFiltersProps) {
   /* ==========================================================================
@@ -102,81 +72,6 @@ export default function GuestFilters({
   const t =
     useTranslations(
       "Guests.filters"
-    );
-
-  const rsvpT =
-    useTranslations(
-      "Guests.rsvp"
-    );
-
-
-  /* ==========================================================================
-     Status Items
-  ========================================================================== */
-
-  const statusItems =
-    useMemo(
-      () => [
-        {
-          value:
-            "all",
-
-          label:
-            t(
-              "allStatuses"
-            ),
-
-          count:
-            totalCount,
-        },
-
-        {
-          value:
-            "attending",
-
-          label:
-            rsvpT(
-              "attending"
-            ),
-
-          count:
-            attendingCount,
-        },
-
-        {
-          value:
-            "pending",
-
-          label:
-            rsvpT(
-              "pending"
-            ),
-
-          count:
-            pendingCount,
-        },
-
-        {
-          value:
-            "declined",
-
-          label:
-            rsvpT(
-              "declined"
-            ),
-
-          count:
-            declinedCount,
-        },
-      ],
-      [
-        t,
-        rsvpT,
-        totalCount,
-        attendingCount,
-        pendingCount,
-        declinedCount,
-      ]
     );
 
 
@@ -279,22 +174,6 @@ export default function GuestFilters({
           styles.controls
         }
       >
-        <TabsFilter
-          items={
-            statusItems
-          }
-          value={
-            status
-          }
-          onValueChange={(
-            value
-          ) =>
-            onStatusChange(
-              value as GuestStatusFilter
-            )
-          }
-        />
-
         <SelectFilter
           label={
             t(

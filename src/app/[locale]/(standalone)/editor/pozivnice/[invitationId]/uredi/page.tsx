@@ -7,7 +7,7 @@ import InvitationEditorView
 
 import {
   getInvitation,
-} from "@/features/invitations/repositories/getInvitation";
+} from "@/features/invitations/repositories/invitation/getInvitation";
 
 import {
   buildInvitationRenderData,
@@ -60,6 +60,7 @@ export default async function EditInvitationPage({
     buildInvitationRenderData({
       invitation,
       locale,
+      guests: [],
     });
 
   return (

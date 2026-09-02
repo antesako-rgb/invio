@@ -1,0 +1,413 @@
+/* ==========================================================================
+   Invitation RSVP Guest
+========================================================================== */
+
+.invitation-rsvp-guest {
+  width:
+    100%;
+
+  overflow:
+    hidden;
+
+  background:
+    var(
+      --invitation-rsvp-section-background
+    );
+
+  border:
+    1px solid
+    var(
+      --invitation-rsvp-section-border
+    );
+
+  border-radius:
+    18px;
+
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+
+/* ==========================================================================
+   Expanded
+========================================================================== */
+
+.invitation-rsvp-guest[data-expanded="true"] {
+  border-color:
+    color-mix(
+      in srgb,
+      var(
+        --invitation-rsvp-accent
+      ) 45%,
+      var(
+        --invitation-rsvp-section-border
+      )
+    );
+
+  box-shadow:
+    0 8px 24px
+    color-mix(
+      in srgb,
+      var(
+        --invitation-rsvp-foreground
+      ) 6%,
+      transparent
+    );
+}
+
+
+/* ==========================================================================
+   Header
+========================================================================== */
+
+.invitation-rsvp-guest__header {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    14px;
+
+  padding:
+    18px;
+}
+
+
+/* ==========================================================================
+   Toggle
+========================================================================== */
+
+.invitation-rsvp-guest__toggle {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    12px;
+
+  width:
+    100%;
+
+  padding:
+    0;
+
+  color:
+    inherit;
+
+  font:
+    inherit;
+
+  text-align:
+    left;
+
+  background:
+    transparent;
+
+  border:
+    0;
+
+  cursor:
+    pointer;
+}
+
+
+.invitation-rsvp-guest__toggle:disabled {
+  cursor:
+    default;
+}
+
+
+.invitation-rsvp-guest__toggle:focus-visible {
+  outline:
+    2px solid
+    var(
+      --invitation-rsvp-accent
+    );
+
+  outline-offset:
+    4px;
+
+  border-radius:
+    6px;
+}
+
+
+/* ==========================================================================
+   Name
+========================================================================== */
+
+.invitation-rsvp-guest__name {
+  min-width:
+    0;
+
+  color:
+    var(
+      --invitation-rsvp-foreground
+    );
+
+  font-family:
+    var(
+      --invitation-rsvp-section-font
+    );
+
+  font-size:
+    15px;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.4;
+}
+
+
+/* ==========================================================================
+   Chevron
+========================================================================== */
+
+.invitation-rsvp-guest__chevron {
+  flex:
+    0 0 auto;
+
+  width:
+    18px;
+
+  height:
+    18px;
+
+  color:
+    var(
+      --invitation-rsvp-accent
+    );
+
+  transition:
+    transform 180ms ease;
+}
+
+
+.invitation-rsvp-guest[data-expanded="true"]
+.invitation-rsvp-guest__chevron {
+  transform:
+    rotate(180deg);
+}
+
+
+/* ==========================================================================
+   Attendance Choices
+========================================================================== */
+
+.invitation-rsvp-guest__choices {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(
+        0,
+        1fr
+      )
+    );
+
+  gap:
+    8px;
+}
+
+
+/* ==========================================================================
+   Attendance Choice
+========================================================================== */
+
+.invitation-rsvp-guest__choice {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  min-width:
+    0;
+
+  min-height:
+    42px;
+
+  padding:
+    9px 14px;
+
+  color:
+    var(
+      --invitation-rsvp-foreground
+    );
+
+  font:
+    inherit;
+
+  font-size:
+    13px;
+
+  font-weight:
+    500;
+
+  line-height:
+    1.2;
+
+  text-align:
+    center;
+
+  background:
+    var(
+      --invitation-rsvp-control-background
+    );
+
+  border:
+    1px solid
+    var(
+      --invitation-rsvp-control-border
+    );
+
+  border-radius:
+    999px;
+
+  cursor:
+    pointer;
+
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+
+.invitation-rsvp-guest__choice:hover {
+  border-color:
+    var(
+      --invitation-rsvp-accent
+    );
+}
+
+
+.invitation-rsvp-guest__choice:active {
+  transform:
+    scale(0.98);
+}
+
+
+.invitation-rsvp-guest__choice:focus-visible {
+  outline:
+    2px solid
+    var(
+      --invitation-rsvp-accent
+    );
+
+  outline-offset:
+    3px;
+}
+
+
+/* ==========================================================================
+   Selected Attendance Choice
+========================================================================== */
+
+.invitation-rsvp-guest__choice[data-selected="true"] {
+  color:
+    var(
+      --invitation-rsvp-control-active-foreground
+    );
+
+  background:
+    var(
+      --invitation-rsvp-control-active-background
+    );
+
+  border-color:
+    var(
+      --invitation-rsvp-control-active-background
+    );
+}
+
+
+/* ==========================================================================
+   Questions
+========================================================================== */
+
+.invitation-rsvp-guest__questions {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    22px;
+
+  padding:
+    20px 18px 22px;
+
+  border-top:
+    1px solid
+    var(
+      --invitation-rsvp-section-border
+    );
+}
+
+
+/* ==========================================================================
+   Responsive
+========================================================================== */
+
+@media (
+  max-width: 640px
+) {
+  .invitation-rsvp-guest {
+    border-radius:
+      16px;
+  }
+
+
+  .invitation-rsvp-guest__header {
+    gap:
+      12px;
+
+    padding:
+      16px;
+  }
+
+
+  .invitation-rsvp-guest__name {
+    font-size:
+      14px;
+  }
+
+
+  .invitation-rsvp-guest__choice {
+    min-height:
+      40px;
+
+    padding:
+      8px 12px;
+
+    font-size:
+      12px;
+  }
+
+
+  .invitation-rsvp-guest__questions {
+    gap:
+      18px;
+
+    padding:
+      18px 16px 20px;
+  }
+}

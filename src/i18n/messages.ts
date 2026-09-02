@@ -19,6 +19,7 @@ export async function loadMessages(
     events,
     guests,
     invitations,
+    invitationManagement,
   ] =
     await Promise.all([
       import(
@@ -52,6 +53,10 @@ export async function loadMessages(
       import(
         `../messages/${locale}/invitations.json`
       ),
+
+      import(
+        `../messages/${locale}/invitation-management.json`
+      ),
     ]);
 
   return {
@@ -76,7 +81,11 @@ export async function loadMessages(
     Guests:
       guests.default,
 
-    Invitations:
-      invitations.default,
+    Invitations: {
+      ...invitations.default,
+
+      ...invitationManagement.default
+        .Invitations,
+    },
   };
 }

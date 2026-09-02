@@ -114,7 +114,6 @@ function TableBody({
 /* ==========================================================================
    Table Row
 ========================================================================== */
-
 function TableRow({
   className,
   ...props
@@ -124,19 +123,35 @@ function TableRow({
       data-slot="table-row"
       className={cn(
         `
+          group
+
           border-b
           border-primary/10
 
           bg-card
 
-          transition-[background-color,box-shadow]
+          transition-colors
           duration-150
           ease-out
 
           even:bg-primary/[0.045]
 
           hover:bg-primary/[0.17]
-          hover:shadow-[inset_3px_0_0_var(--primary)]
+
+          [&>td:first-child]:relative
+
+          [&>td:first-child]:before:absolute
+          [&>td:first-child]:before:inset-y-0
+          [&>td:first-child]:before:left-0
+          [&>td:first-child]:before:w-[3px]
+          [&>td:first-child]:before:bg-primary
+          [&>td:first-child]:before:opacity-0
+          [&>td:first-child]:before:transition-opacity
+
+          hover:[&>td:first-child]:before:opacity-100
+
+          first:[&>td:first-child]:before:rounded-tl-2xl
+          last:[&>td:first-child]:before:rounded-bl-2xl
         `,
         className
       )}
