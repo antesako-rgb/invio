@@ -167,6 +167,9 @@ export interface InvitationRendererProps {
   data:
     InvitationRenderData;
 
+  eventTimezone?:
+    string;
+
   editor?:
     InvitationEditorContext;
 

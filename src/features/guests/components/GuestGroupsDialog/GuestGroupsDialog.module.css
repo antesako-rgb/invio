@@ -1,0 +1,347 @@
+/* ==========================================================================
+   Dialog
+========================================================================== */
+
+.dialog {
+  width:
+    min(
+      calc(100vw - 2rem),
+      36rem
+    );
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.content {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+
+  width:
+    100%;
+
+  gap:
+    1.25rem;
+}
+
+
+/* ==========================================================================
+   Toolbar
+========================================================================== */
+
+.toolbar {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    flex-end;
+
+  width:
+    100%;
+}
+
+
+/* ==========================================================================
+   List
+========================================================================== */
+
+.list {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  width:
+    100%;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    1rem;
+
+  overflow:
+    hidden;
+}
+
+
+/* ==========================================================================
+   Item
+========================================================================== */
+
+.item {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  width:
+    100%;
+
+  min-width:
+    0;
+
+  gap:
+    1rem;
+
+  padding:
+    0.875rem 1rem;
+
+  border-bottom:
+    1px solid
+    var(--border);
+}
+
+
+.item:last-child {
+  border-bottom:
+    0;
+}
+
+
+/* ==========================================================================
+   Group
+========================================================================== */
+
+.group {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  min-width:
+    0;
+
+  gap:
+    0.75rem;
+}
+
+
+.icon {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    2.25rem;
+
+  height:
+    2.25rem;
+
+  flex-shrink:
+    0;
+
+  border-radius:
+    9999px;
+
+  background:
+    var(--accent);
+
+  color:
+    var(--primary);
+}
+
+
+.groupContent {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+}
+
+
+.groupContent strong {
+  overflow:
+    hidden;
+
+  color:
+    var(--foreground);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Empty
+========================================================================== */
+
+.empty {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  flex-direction:
+    column;
+
+  justify-content:
+    center;
+
+  width:
+    100%;
+
+  min-height:
+    14rem;
+
+  padding:
+    2rem;
+
+  text-align:
+    center;
+}
+
+
+.emptyIcon {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    2.75rem;
+
+  height:
+    2.75rem;
+
+  margin-bottom:
+    0.75rem;
+
+  border-radius:
+    9999px;
+
+  background:
+    var(--accent);
+
+  color:
+    var(--primary);
+}
+
+
+.empty strong {
+  color:
+    var(--foreground);
+
+  font-size:
+    0.9375rem;
+
+  font-weight:
+    600;
+}
+
+
+.empty span {
+  max-width:
+    20rem;
+
+  margin-top:
+    0.25rem;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.5;
+}
+
+
+.empty button {
+  margin-top:
+    1rem;
+}
+
+/* ==========================================================================
+   Form Header
+========================================================================== */
+
+.formHeader {
+  display:
+    flex;
+
+  align-items:
+    flex-start;
+
+  width:
+    100%;
+
+  gap:
+    0.75rem;
+}
+
+
+.formHeading {
+  display:
+    flex;
+
+  flex:
+    1;
+
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+
+  gap:
+    0.25rem;
+}
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 639px) {
+  .dialog {
+    width:
+      calc(100vw - 2rem);
+  }
+
+
+  .item {
+    padding:
+      0.75rem;
+  }
+}

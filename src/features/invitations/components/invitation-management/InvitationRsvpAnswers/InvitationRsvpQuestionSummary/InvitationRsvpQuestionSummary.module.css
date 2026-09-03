@@ -1,0 +1,384 @@
+/* ==========================================================================
+   Question
+========================================================================== */
+
+.question {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    1rem;
+
+  padding:
+    1rem;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    var(--card);
+}
+
+
+/* ==========================================================================
+   Question Header
+========================================================================== */
+
+.questionHeader {
+  display:
+    flex;
+
+  align-items:
+    flex-start;
+
+  justify-content:
+    space-between;
+
+  gap:
+    1rem;
+}
+
+
+.questionHeader strong {
+  min-width:
+    0;
+
+  color:
+    var(--foreground);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.45;
+}
+
+
+.questionHeader span {
+  flex-shrink:
+    0;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.75rem;
+
+  line-height:
+    1.45;
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Choice Answers
+========================================================================== */
+
+.choiceAnswers {
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    var(--radius);
+}
+
+
+.choiceAnswer {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    1rem;
+
+  min-height:
+    2.75rem;
+
+  padding:
+    0.75rem 0.875rem;
+}
+
+
+.choiceAnswer + .choiceAnswer {
+  border-top:
+    1px solid
+    var(--border);
+}
+
+
+.choiceAnswer span {
+  min-width:
+    0;
+
+  color:
+    var(--foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.4;
+}
+
+
+.choiceAnswer strong {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  flex-shrink:
+    0;
+
+  min-width:
+    1.75rem;
+
+  min-height:
+    1.75rem;
+
+  padding:
+    0 0.5rem;
+
+  color:
+    var(--primary);
+
+  font-size:
+    0.75rem;
+
+  font-weight:
+    600;
+
+  background:
+    var(--accent);
+
+  border-radius:
+    9999px;
+}
+
+
+/* ==========================================================================
+   Text Answers
+========================================================================== */
+
+.textAnswers {
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    var(--radius);
+}
+
+
+.textAnswer {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    0.375rem;
+
+  padding:
+    0.875rem;
+}
+
+
+.textAnswer + .textAnswer {
+  border-top:
+    1px solid
+    var(--border);
+}
+
+
+/* ==========================================================================
+   Guest Name
+========================================================================== */
+
+.guestName {
+  max-width:
+    100%;
+
+  padding:
+    0;
+
+  overflow:
+    hidden;
+
+  border:
+    0;
+
+  background:
+    transparent;
+
+  color:
+    var(--foreground);
+
+  font:
+    inherit;
+
+  font-size:
+    0.8125rem;
+
+  font-weight:
+    600;
+
+  text-align:
+    left;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+
+  cursor:
+    pointer;
+
+  transition:
+    color 150ms ease;
+}
+
+
+.guestName:hover {
+  color:
+    var(--primary);
+}
+
+
+.guestName:focus-visible {
+  color:
+    var(--primary);
+
+  outline:
+    2px solid
+    var(--ring);
+
+  outline-offset:
+    2px;
+
+  border-radius:
+    0.125rem;
+}
+
+
+/* ==========================================================================
+   Text Answer
+========================================================================== */
+
+.textAnswer p {
+  margin:
+    0;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.55;
+
+  overflow-wrap:
+    anywhere;
+}
+
+
+/* ==========================================================================
+   No Answers
+========================================================================== */
+
+.noAnswers {
+  margin:
+    0;
+
+  padding:
+    0.875rem;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.45;
+
+  text-align:
+    center;
+
+  border:
+    1px dashed
+    var(--border);
+
+  border-radius:
+    var(--radius);
+
+  background:
+    var(--muted);
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 480px) {
+  .question {
+    gap:
+      0.875rem;
+
+    padding:
+      0.875rem;
+  }
+
+
+  .questionHeader {
+    flex-direction:
+      column;
+
+    gap:
+      0.25rem;
+  }
+
+
+  .questionHeader span {
+    white-space:
+      normal;
+  }
+
+
+  .choiceAnswer {
+    padding:
+      0.75rem;
+  }
+
+
+  .textAnswer {
+    padding:
+      0.75rem;
+  }
+}

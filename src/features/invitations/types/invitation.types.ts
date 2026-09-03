@@ -33,6 +33,7 @@ export type CreateInvitationInput =
 ========================================================================== */
 
 export interface CreateInvitationData {
+
   p_event_id:
     string;
 
@@ -50,6 +51,7 @@ export interface CreateInvitationData {
 
   p_presentation?:
     InvitationPresentation;
+
 }
 
 
@@ -66,6 +68,7 @@ export type UpdateInvitationInput =
 ========================================================================== */
 
 export interface UpdateInvitationData {
+
   p_invitation_id:
     string;
 
@@ -83,6 +86,7 @@ export interface UpdateInvitationData {
 
   p_presentation:
     InvitationPresentation;
+
 }
 
 
@@ -100,6 +104,14 @@ export type PublishInvitationInput =
 
 export type UnpublishInvitationInput =
   Database["public"]["Functions"]["unpublish_invitation"]["Args"];
+
+
+/* ==========================================================================
+   Set Primary RSVP Invitation Input
+========================================================================== */
+
+export type SetPrimaryRsvpInvitationInput =
+  Database["public"]["Functions"]["set_primary_rsvp_invitation"]["Args"];
 
 
 /* ==========================================================================

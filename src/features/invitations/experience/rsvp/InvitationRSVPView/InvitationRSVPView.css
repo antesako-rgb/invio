@@ -410,6 +410,54 @@
     100%;
 }
 
+/* ==========================================================================
+   Submit Error
+========================================================================== */
+
+.invitation-rsvp-view__submit-error {
+  width:
+    100%;
+
+  margin:
+    0;
+
+  padding:
+    12px 16px;
+
+  color:
+    #b42318;
+
+  font:
+    inherit;
+
+  font-family:
+    var(
+      --invitation-rsvp-section-font
+    );
+
+  font-size:
+    13px;
+
+  font-weight:
+    500;
+
+  line-height:
+    1.4;
+
+  text-align:
+    center;
+
+  background:
+    rgba(180, 35, 24, 0.06);
+
+  border:
+    1px solid
+    rgba(180, 35, 24, 0.16);
+
+  border-radius:
+    12px;
+}
+
 
 /* ==========================================================================
    Submit
@@ -501,7 +549,6 @@
   outline-offset:
     3px;
 }
-
 
 /* ==========================================================================
    Success Content

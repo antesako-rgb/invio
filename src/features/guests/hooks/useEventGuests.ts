@@ -1,24 +1,15 @@
 "use client";
 
 import {
-  useCallback,
   useMemo,
   useState,
 } from "react";
-
-import {
-  getEventGuests,
-} from "../repositories/getEventGuests";
-
-import {
-  getGuestGroups,
-} from "../repositories/getGuestGroups";
 
 import type {
   EventGuest,
   GuestGroup,
   GuestGroupFilter,
-} from "../types/guest.types";
+} from "@/features/guests/types/guest.types";
 
 
 /* ==========================================================================
@@ -26,13 +17,10 @@ import type {
 ========================================================================== */
 
 interface UseEventGuestsProps {
-  eventId:
-    string;
-
-  initialGuests:
+  guests:
     EventGuest[];
 
-  initialGroups:
+  groups:
     GuestGroup[];
 }
 
@@ -42,32 +30,9 @@ interface UseEventGuestsProps {
 ========================================================================== */
 
 export function useEventGuests({
-  eventId,
-  initialGuests,
-  initialGroups,
+  guests,
+  groups,
 }: UseEventGuestsProps) {
-  /* ==========================================================================
-     Data State
-  ========================================================================== */
-
-  const [
-    guests,
-    setGuests,
-  ] =
-    useState<EventGuest[]>(
-      initialGuests
-    );
-
-
-  const [
-    groups,
-    setGroups,
-  ] =
-    useState<GuestGroup[]>(
-      initialGroups
-    );
-
-
   /* ==========================================================================
      Filter State
   ========================================================================== */
@@ -85,43 +50,6 @@ export function useEventGuests({
   ] =
     useState<GuestGroupFilter>(
       "all"
-    );
-
-
-  /* ==========================================================================
-     Reload
-  ========================================================================== */
-
-  const reload =
-    useCallback(
-      async () => {
-        const [
-          guestData,
-          groupData,
-        ] =
-          await Promise.all([
-            getEventGuests(
-              eventId
-            ),
-
-            getGuestGroups(
-              eventId
-            ),
-          ]);
-
-
-        setGuests(
-          guestData
-        );
-
-
-        setGroups(
-          groupData
-        );
-      },
-      [
-        eventId,
-      ]
     );
 
 
@@ -203,7 +131,5 @@ export function useEventGuests({
 
     setSearch,
     setGroupId,
-
-    reload,
   };
 }

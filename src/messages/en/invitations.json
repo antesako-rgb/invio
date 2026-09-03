@@ -199,6 +199,7 @@
     "title": "RSVP",
     "description": "Please confirm your attendance.",
     "deadline": "Please respond by {date}.",
+    "deadlineExpired": "The RSVP deadline has passed.",
     "attending": "Attending",
     "declined": "Unable to attend",
     "yes": "Yes",
@@ -212,6 +213,26 @@
       "answer_required": "This question is required."
     }
   }
+},
+
+"templateUseDialog": {
+  "title": "Use template",
+  "description": "Choose how you want to use the {template} · {variant} template.",
+
+  "existing": {
+    "title": "Apply to an existing invitation",
+    "description": "Replace the design of one of your existing invitations with this template.",
+    "selectTitle": "Choose an invitation",
+    "selectDescription": "Select the invitation you want to apply this template to.",
+    "lastUpdated": "Last updated: {date}"
+  },
+
+  "new": {
+    "title": "Create a new invitation",
+    "description": "Create a new invitation using this template."
+  },
+
+  "back": "Back"
 },
 "page": {
   "title": "Invitations",

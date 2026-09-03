@@ -1,15 +1,31 @@
 import * as React from "react";
 
-import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
+import {
+  Switch as SwitchPrimitive,
+} from "@base-ui/react/switch";
 
-import { Label } from "@/components/ui/label";
+import {
+  Label,
+} from "@/components/ui/label";
 
-import { cn } from "@/lib/utils/utils";
+import {
+  cn,
+} from "@/lib/utils/utils";
+
+
+/* ==========================================================================
+   Types
+========================================================================== */
 
 type SwitchProps =
   React.ComponentPropsWithoutRef<
     typeof SwitchPrimitive.Root
   >;
+
+
+/* ==========================================================================
+   Switch
+========================================================================== */
 
 const Switch = React.forwardRef<
   React.ElementRef<
@@ -25,7 +41,9 @@ const Switch = React.forwardRef<
 ) {
   return (
     <SwitchPrimitive.Root
-      ref={ref}
+      ref={
+        ref
+      }
       data-slot="switch"
       className={cn(
         [
@@ -56,8 +74,8 @@ const Switch = React.forwardRef<
           "aria-invalid:ring-3",
           "aria-invalid:ring-destructive/20",
 
-          "disabled:pointer-events-none",
-          "disabled:opacity-50",
+          "data-[disabled]:cursor-not-allowed",
+"data-[disabled]:opacity-50",
 
           "data-[checked]:border-success",
           "data-[checked]:bg-success",
@@ -88,15 +106,24 @@ const Switch = React.forwardRef<
   );
 });
 
-Switch.displayName = "Switch";
+Switch.displayName =
+  "Switch";
+
+
+/* ==========================================================================
+   Switch Field
+========================================================================== */
 
 interface SwitchFieldProps
   extends SwitchProps {
-  label: React.ReactNode;
+  label:
+    React.ReactNode;
 
-  description?: React.ReactNode;
+  description?:
+    React.ReactNode;
 
-  className?: string;
+  className?:
+    string;
 }
 
 function SwitchField({
@@ -125,14 +152,22 @@ function SwitchField({
         className
       )}
     >
-      <div className="flex-1">
-        <Label htmlFor={switchId}>
+      <div
+        className="flex-1"
+      >
+        <Label
+          htmlFor={
+            switchId
+          }
+        >
           {label}
         </Label>
 
         {description && (
           <p
-            id={descriptionId}
+            id={
+              descriptionId
+            }
             data-slot="switch-description"
             className="mt-1 text-sm text-muted-foreground"
           >
@@ -142,7 +177,9 @@ function SwitchField({
       </div>
 
       <Switch
-        id={switchId}
+        id={
+          switchId
+        }
         aria-describedby={
           descriptionId
         }
@@ -154,6 +191,7 @@ function SwitchField({
 
 SwitchField.displayName =
   "SwitchField";
+
 
 export {
   Switch,

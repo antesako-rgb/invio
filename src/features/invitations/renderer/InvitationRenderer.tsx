@@ -58,6 +58,7 @@ export default function InvitationRenderer({
   editor,
   editorStep = "design",
   rsvpPreviewState = "form",
+  eventTimezone,
   onRsvpSubmit,
 }: InvitationRendererProps) {
   /* ==========================================================================
@@ -218,6 +219,9 @@ export default function InvitationRenderer({
           <InvitationRSVPView
             data={
               data
+            }
+            eventTimezone={
+              eventTimezone
             }
             onBack={
               handleBackToCard

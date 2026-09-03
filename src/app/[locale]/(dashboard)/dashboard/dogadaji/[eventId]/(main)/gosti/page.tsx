@@ -39,6 +39,7 @@ export default async function GuestsPage({
   const {
     guests,
     groups,
+    rsvpInvitations,
   } =
     await getEventGuestsPageData(
       eventId
@@ -54,11 +55,14 @@ export default async function GuestsPage({
       eventId={
         eventId
       }
-      initialGuests={
+      guests={
         guests
       }
-      initialGroups={
+      groups={
         groups
+      }
+      rsvpInvitations={
+        rsvpInvitations
       }
     />
   );

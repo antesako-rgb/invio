@@ -17,7 +17,6 @@ type TablePadding =
 /* ==========================================================================
    Table
 ========================================================================== */
-
 function Table({
   className,
   ...props
@@ -27,7 +26,11 @@ function Table({
       data-slot="table-container"
       className="
         w-full
+        min-w-0
+        max-w-full
+
         overflow-x-auto
+        overflow-y-hidden
 
         rounded-2xl
         border
@@ -44,6 +47,8 @@ function Table({
         className={cn(
           `
             w-full
+            min-w-0
+            max-w-full
 
             table-fixed
             border-collapse

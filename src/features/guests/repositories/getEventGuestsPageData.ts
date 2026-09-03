@@ -5,6 +5,7 @@ import {
 import type {
   EventGuest,
   GuestGroup,
+  GuestRsvpInvitation,
 } from "../types/guest.types";
 
 
@@ -18,6 +19,9 @@ interface EventGuestsPageData {
 
   groups:
     GuestGroup[];
+
+  rsvpInvitations:
+    GuestRsvpInvitation[];
 }
 
 
@@ -35,6 +39,7 @@ export async function getEventGuestsPageData(
   const [
     guestsResult,
     groupsResult,
+    rsvpInvitationsResult,
   ] =
     await Promise.all([
       supabase
@@ -64,6 +69,22 @@ export async function getEventGuestsPageData(
             ascending: true,
           }
         ),
+
+      supabase
+        .from("invitations")
+        .select(
+          "id, name, is_primary_rsvp"
+        )
+        .eq(
+          "event_id",
+          eventId
+        )
+        .order(
+          "created_at",
+          {
+            ascending: true,
+          }
+        ),
     ]);
 
 
@@ -77,11 +98,19 @@ export async function getEventGuestsPageData(
   }
 
 
+  if (rsvpInvitationsResult.error) {
+    throw rsvpInvitationsResult.error;
+  }
+
+
   return {
     guests:
       guestsResult.data,
 
     groups:
       groupsResult.data,
+
+    rsvpInvitations:
+      rsvpInvitationsResult.data,
   };
 }

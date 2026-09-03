@@ -16,13 +16,40 @@
     "guest": "Guest",
     "contact": "Contact",
     "group": "Group",
-    "primaryGuest": "Linked to",
+    "rsvp": "RSVP",
     "notes": "Notes",
     "actions": "Actions",
     "noGroup": "No group",
     "emptyTitle": "No guests",
     "emptyDescription": "You have not added any guests yet.",
     "addGuest": "Add guest"
+  },
+
+  "rsvpStatus": {
+    "unknown": "Not confirmed",
+    "attending": "Attending",
+    "declined": "Not attending"
+  },
+
+  "rsvpSource": {
+    "title": "RSVP status",
+    "success": "Primary RSVP invitation updated.",
+
+    "manual": {
+      "description": "Guest RSVP statuses are currently managed manually."
+    },
+
+    "single": {
+      "description": "Responses from this invitation are used as the event's primary RSVP status.",
+      "notPrimary": "This invitation is not currently used as the event's primary RSVP source.",
+      "action": "Use for RSVP status",
+      "setting": "Setting..."
+    },
+
+    "multiple": {
+      "description": "Choose which invitation's responses should be used as the event's primary RSVP status.",
+      "placeholder": "Select primary RSVP invitation"
+    }
   },
 
   "filters": {
@@ -35,14 +62,21 @@
   "form": {
     "firstName": "First name",
     "firstNamePlaceholder": "Enter first name",
+
     "lastName": "Last name",
     "lastNamePlaceholder": "Enter last name",
+
     "email": "Email",
     "emailPlaceholder": "Enter email address",
+
     "phone": "Phone",
     "phonePlaceholder": "Enter phone number",
+
     "group": "Group",
     "noGroup": "No group",
+
+    "rsvpStatus": "RSVP status",
+
     "notes": "Notes",
     "notesPlaceholder": "Add a note..."
   },
@@ -50,19 +84,81 @@
   "dialog": {
     "createTitle": "Add guest",
     "createDescription": "Add a new guest to the guest list.",
+
     "editTitle": "Edit guest",
     "editDescription": "Update the selected guest's information."
+  },
+
+  "groups": {
+    "title": "Guest groups",
+    "description": "Create and manage groups used to organize your guests.",
+
+    "addGroup": "Add group",
+    "edit": "Edit",
+
+    "emptyTitle": "No groups",
+    "emptyDescription": "Create your first group to organize your guests.",
+
+    "form": {
+      "createTitle": "Create group",
+      "createDescription": "Create a new group to organize your guests.",
+
+      "editTitle": "Edit group",
+      "editDescription": "Update the selected guest group.",
+
+      "name": "Group name",
+      "namePlaceholder": "Enter group name",
+
+      "create": "Create group",
+      "save": "Save changes",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "back": "Back to groups"
+    },
+
+    "messages": {
+      "created": "Group created successfully.",
+      "updated": "Group updated successfully."
+    },
+
+    "delete": {
+      "title": "Delete group",
+      "description": "Permanently delete this group. Guests in the group will remain on the guest list without a group.",
+      "success": "Group deleted successfully.",
+
+      "confirm": {
+        "title": "Delete group?",
+        "description": "This action cannot be undone. Guests in this group will not be deleted and will remain on the guest list without a group.",
+        "confirm": "Delete group",
+        "cancel": "Cancel"
+      }
+    }
+  },
+
+  "delete": {
+    "title": "Delete guest",
+    "description": "Permanently remove this guest from the event and associated invitations.",
+    "button": "Delete guest",
+
+    "confirm": {
+      "title": "Delete guest?",
+      "description": "This action cannot be undone. The guest and their associated RSVP data will be permanently deleted.",
+      "confirm": "Delete guest",
+      "cancel": "Cancel"
+    }
   },
 
   "messages": {
     "guestCreated": "Guest added successfully.",
     "guestCreateError": "An error occurred while adding the guest.",
+
     "guestUpdated": "Guest updated successfully.",
     "guestUpdateError": "An error occurred while updating the guest."
   },
 
   "actions": {
     "addGuest": "Add guest",
+    "manageGroups": "Manage groups",
     "open": "Open guest actions"
   }
 }

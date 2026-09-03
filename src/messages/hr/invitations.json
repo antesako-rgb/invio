@@ -174,7 +174,6 @@
       "end_before_start": "Datum završetka ne može biti prije datuma početka."
     }
   },
-
 "experience": {
   "envelope": {
     "open": "Otvori pozivnicu"
@@ -199,6 +198,7 @@
     "title": "Potvrda dolaska",
     "description": "Molimo vas da potvrdite svoj dolazak.",
     "deadline": "Molimo odgovorite do {date}.",
+    "deadlineExpired": "Rok za RSVP je istekao.",
     "attending": "Dolazim",
     "declined": "Ne dolazim",
     "yes": "Da",
@@ -212,6 +212,26 @@
       "answer_required": "Ovo pitanje je obavezno."
     }
   }
+},
+
+"templateUseDialog": {
+  "title": "Koristi predložak",
+  "description": "Odaberite kako želite koristiti predložak {template} · {variant}.",
+
+  "existing": {
+    "title": "Primijeni na postojeću pozivnicu",
+    "description": "Zamijenite dizajn jedne od postojećih pozivnica ovim predloškom.",
+    "selectTitle": "Odaberite pozivnicu",
+    "selectDescription": "Odaberite pozivnicu na koju želite primijeniti ovaj predložak.",
+    "lastUpdated": "Zadnje ažurirano: {date}"
+  },
+
+  "new": {
+    "title": "Kreiraj novu pozivnicu",
+    "description": "Kreirajte novu pozivnicu koristeći ovaj predložak."
+  },
+
+  "back": "Natrag"
 },
 
 "page": {

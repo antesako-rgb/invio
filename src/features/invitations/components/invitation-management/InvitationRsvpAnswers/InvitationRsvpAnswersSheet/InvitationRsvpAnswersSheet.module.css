@@ -1,0 +1,292 @@
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.content {
+  display:
+    flex;
+
+  flex:
+    1;
+
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+
+  min-height:
+    0;
+
+  width:
+    100%;
+
+  gap:
+    1.5rem;
+
+  padding:
+    1rem;
+
+  overflow:
+    hidden;
+}
+
+
+/* ==========================================================================
+   Tab Content
+========================================================================== */
+
+.tabContent {
+  display:
+    flex;
+
+  flex:
+    1 1 0;
+
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+
+  min-height:
+    0;
+
+  gap:
+    1.5rem;
+
+  overflow-x:
+    hidden;
+
+  overflow-y:
+    auto;
+
+  overscroll-behavior:
+    contain;
+
+  scrollbar-gutter:
+    stable;
+}
+
+
+/* ==========================================================================
+   Overview
+========================================================================== */
+
+.overview {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  flex-shrink:
+    0;
+
+  gap:
+    0.875rem;
+}
+
+
+.overviewIcon {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  flex-shrink:
+    0;
+
+  width:
+    2.75rem;
+
+  height:
+    2.75rem;
+
+  color:
+    var(--primary);
+
+  background:
+    var(--accent);
+
+  border-radius:
+    9999px;
+}
+
+
+.overviewContent {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+
+  gap:
+    0.125rem;
+}
+
+
+.overviewContent strong {
+  color:
+    var(--foreground);
+
+  font-size:
+    1rem;
+
+  font-weight:
+    600;
+}
+
+
+.overviewContent span {
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+}
+
+
+/* ==========================================================================
+   Questions
+========================================================================== */
+
+.questions {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  flex-shrink:
+    0;
+
+  gap:
+    1rem;
+}
+
+
+/* ==========================================================================
+   Empty
+========================================================================== */
+
+.empty {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  flex:
+    1;
+
+  flex-direction:
+    column;
+
+  min-height:
+    14rem;
+
+  gap:
+    0.5rem;
+
+  padding:
+    2rem;
+
+  color:
+    var(--muted-foreground);
+
+  text-align:
+    center;
+
+  border:
+    1px dashed
+    var(--border);
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    var(--muted);
+}
+
+
+.empty > svg {
+  width:
+    1.5rem;
+
+  height:
+    1.5rem;
+
+  margin-bottom:
+    0.25rem;
+}
+
+
+.empty strong {
+  color:
+    var(--foreground);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+}
+
+
+.empty span {
+  max-width:
+    20rem;
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.5;
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 480px) {
+  .content {
+    gap:
+      1rem;
+
+    padding:
+      0.5rem;
+  }
+
+
+  .tabContent {
+    gap:
+      1rem;
+  }
+
+
+  .questions {
+    gap:
+      0.875rem;
+  }
+
+
+  .empty {
+    min-height:
+      12rem;
+
+    padding:
+      1.5rem 1rem;
+  }
+}

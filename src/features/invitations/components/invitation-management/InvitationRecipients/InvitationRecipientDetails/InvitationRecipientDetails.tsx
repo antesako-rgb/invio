@@ -6,21 +6,29 @@ import {
 } from "react";
 
 import {
-  Check,
-  Copy,
-  UserRound,
-  Users,
-} from "lucide-react";
-import {
-  getInvitationPublicPath,
-} from "@/features/invitations/utils/getInvitationPublicPath";
+  useRouter,
+} from "next/navigation";
+
 import {
   useTranslations,
 } from "next-intl";
 
 import {
+  Check,
+  Copy,
+  Users,
+} from "lucide-react";
+
+import {
+  toast,
+} from "sonner";
+
+import {
   Button,
 } from "@/components/ui/button";
+
+import DeleteButton
+  from "@/components/ui/common/DeleteButton";
 
 import {
   Sheet,
@@ -30,12 +38,24 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet/Sheet";
 
-import InvitationRsvpStatusBadge
-  from "@/features/invitations/components/invitation-management/InvitationRsvpStatusBadge/InvitationRsvpStatusBadge";
+import {
+  deleteInvitationRecipientAction,
+} from "@/features/invitations/actions/invitation-recipients/deleteInvitationRecipientAction";
+
+import InvitationRecipientGuestDetails
+  from "@/features/invitations/components/invitation-management/InvitationRecipients/InvitationRecipientDetails/InvitationRecipientGuestDetails/InvitationRecipientGuestDetails";
+
+import type {
+  InvitationRsvpQuestion,
+} from "@/features/invitations/types/invitationContent.types";
 
 import type {
   InvitationRecipientDetails as InvitationRecipientDetailsType,
 } from "@/features/invitations/types/invitationRecipient.types";
+
+import {
+  getInvitationPublicPath,
+} from "@/features/invitations/utils/getInvitationPublicPath";
 
 import styles
   from "./InvitationRecipientDetails.module.css";
@@ -48,6 +68,12 @@ import styles
 interface InvitationRecipientDetailsProps {
   recipient:
     InvitationRecipientDetailsType;
+
+  questions:
+    InvitationRsvpQuestion[];
+
+  selectedGuestId?:
+    string;
 
   open:
     boolean;
@@ -63,9 +89,19 @@ interface InvitationRecipientDetailsProps {
 
 export default function InvitationRecipientDetails({
   recipient,
+  questions,
+  selectedGuestId,
   open,
   onOpenChange,
 }: InvitationRecipientDetailsProps) {
+  /* ==========================================================================
+     Router
+  ========================================================================== */
+
+  const router =
+    useRouter();
+
+
   /* ==========================================================================
      Translations
   ========================================================================== */
@@ -89,6 +125,12 @@ export default function InvitationRecipientDetails({
   const [
     copied,
     setCopied,
+  ] =
+    useState(false);
+
+  const [
+    isDeleting,
+    setIsDeleting,
   ] =
     useState(false);
 
@@ -119,6 +161,35 @@ export default function InvitationRecipientDetails({
     recipient.guests[0] ??
     null;
 
+
+  /* ==========================================================================
+     Selected Guest
+  ========================================================================== */
+
+  const selectedGuest =
+    selectedGuestId
+      ? recipient.guests.find(
+          (guest) =>
+            guest.id ===
+            selectedGuestId
+        ) ??
+        null
+      : null;
+
+  const focusedGuest =
+    selectedGuest ??
+    primaryGuest;
+
+  const focusedGuestName =
+    focusedGuest
+      ? [
+          focusedGuest.first_name,
+          focusedGuest.last_name,
+        ]
+          .filter(Boolean)
+          .join(" ")
+      : "—";
+
   const primaryGuestName =
     primaryGuest
       ? [
@@ -134,10 +205,10 @@ export default function InvitationRecipientDetails({
      Personalized Link
   ========================================================================== */
 
-const personalizedPath =
-  getInvitationPublicPath(
-    recipient.public_id
-  );
+  const personalizedPath =
+    getInvitationPublicPath(
+      recipient.public_id
+    );
 
   const personalizedUrl =
     origin
@@ -179,6 +250,53 @@ const personalizedPath =
 
 
   /* ==========================================================================
+     Delete Recipient
+  ========================================================================== */
+
+  async function handleDelete() {
+    if (isDeleting) {
+      return;
+    }
+
+    setIsDeleting(
+      true
+    );
+
+    try {
+      const result =
+        await deleteInvitationRecipientAction({
+          p_recipient_id:
+            recipient.id,
+        });
+
+      if (!result.success) {
+        toast.error(
+          result.message
+        );
+
+        return;
+      }
+
+      toast.success(
+        t(
+          "details.delete.success"
+        )
+      );
+
+      onOpenChange(
+        false
+      );
+
+      router.refresh();
+    } finally {
+      setIsDeleting(
+        false
+      );
+    }
+  }
+
+
+  /* ==========================================================================
      Render
   ========================================================================== */
 
@@ -196,7 +314,7 @@ const personalizedPath =
       >
         <SheetHeader>
           <SheetTitle>
-            {primaryGuestName}
+            {focusedGuestName}
           </SheetTitle>
 
           <SheetDescription>
@@ -347,70 +465,70 @@ const personalizedPath =
               )}
             </span>
 
+            <InvitationRecipientGuestDetails
+              guests={
+                recipient.guests
+              }
+              questions={
+                questions
+              }
+              selectedGuestId={
+                selectedGuestId
+              }
+            />
+          </div>
+
+
+          {/* ================================================================
+              Danger Zone
+          ================================================================ */}
+
+          <div
+            className={
+              styles.dangerZone
+            }
+          >
             <div
               className={
-                styles.guests
+                styles.dangerContent
               }
             >
-              {recipient.guests.map(
-                (guest) => {
-                  const guestName =
-                    [
-                      guest.first_name,
-                      guest.last_name,
-                    ]
-                      .filter(Boolean)
-                      .join(" ");
+              <strong>
+                {t(
+                  "details.danger.title"
+                )}
+              </strong>
 
-                  return (
-                    <div
-                      key={
-                        guest.id
-                      }
-                      className={
-                        styles.guest
-                      }
-                    >
-                      <div
-                        className={
-                          styles.guestIdentity
-                        }
-                      >
-                        <div
-                          className={
-                            styles.guestIcon
-                          }
-                        >
-                          <UserRound
-                            className="size-4"
-                            aria-hidden="true"
-                          />
-                        </div>
-
-                        <div>
-                          <strong>
-                            {guestName}
-                          </strong>
-
-                          {guest.email && (
-                            <span>
-                              {guest.email}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      <InvitationRsvpStatusBadge
-                        status={
-                          guest.rsvp?.status ??
-                          "pending"
-                        }
-                      />
-                    </div>
-                  );
-                }
-              )}
+              <span>
+                {t(
+                  "details.danger.description"
+                )}
+              </span>
             </div>
+
+            <DeleteButton
+              title={
+                t(
+                  "details.delete.title"
+                )
+              }
+              description={
+                t(
+                  "details.delete.description"
+                )
+              }
+              confirmText={
+                t(
+                  "details.delete.confirm"
+                )
+              }
+              loading={
+                isDeleting
+              }
+              onDelete={
+                handleDelete
+              }
+            />
           </div>
         </div>
       </SheetContent>

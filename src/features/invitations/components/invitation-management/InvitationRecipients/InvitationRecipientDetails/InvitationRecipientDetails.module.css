@@ -6,17 +6,35 @@
   display:
     flex;
 
+  flex:
+    1;
+
   flex-direction:
     column;
 
-  gap:
-    1.75rem;
+  min-width:
+    0;
+
+  min-height:
+    0;
 
   width:
     100%;
 
+  gap:
+    1.5rem;
+
   padding:
     1.5rem;
+
+  overflow-x:
+    hidden;
+
+  overflow-y:
+    auto;
+
+  overscroll-behavior:
+    contain;
 }
 
 
@@ -35,11 +53,8 @@
     0.875rem;
 }
 
-.icon,
-.guestIcon {
-  flex-shrink:
-    0;
 
+.icon {
   display:
     flex;
 
@@ -48,6 +63,15 @@
 
   justify-content:
     center;
+
+  width:
+    2.75rem;
+
+  height:
+    2.75rem;
+
+  flex-shrink:
+    0;
 
   border-radius:
     9999px;
@@ -59,13 +83,6 @@
     var(--primary);
 }
 
-.icon {
-  width:
-    2.75rem;
-
-  height:
-    2.75rem;
-}
 
 .recipientContent {
   display:
@@ -81,6 +98,7 @@
     0.125rem;
 }
 
+
 .recipientContent strong {
   color:
     var(--foreground);
@@ -91,6 +109,7 @@
   font-weight:
     600;
 }
+
 
 .recipientContent span {
   color:
@@ -115,6 +134,7 @@
   gap:
     0.625rem;
 }
+
 
 .label {
   color:
@@ -149,7 +169,8 @@
     0.75rem;
 
   padding:
-    0.75rem 0.875rem;
+    0.75rem
+    0.875rem;
 
   border:
     1px solid
@@ -158,6 +179,7 @@
   border-radius:
     var(--radius);
 }
+
 
 .link span {
   overflow:
@@ -181,22 +203,10 @@
 
 
 /* ==========================================================================
-   Guests
+   Danger Zone
 ========================================================================== */
 
-.guests {
-  overflow:
-    hidden;
-
-  border:
-    1px solid
-    var(--border);
-
-  border-radius:
-    var(--radius);
-}
-
-.guest {
+.dangerZone {
   display:
     flex;
 
@@ -206,36 +216,44 @@
   justify-content:
     space-between;
 
+  width:
+    100%;
+
   gap:
-    1rem;
+    1.5rem;
+
+  margin-top:
+    0.5rem;
 
   padding:
-    0.875rem;
-}
+    1rem;
 
-.guest + .guest {
-  border-top:
+  border:
     1px solid
-    var(--border);
+    color-mix(
+      in srgb,
+      var(--destructive) 20%,
+      transparent
+    );
+
+  border-radius:
+    1rem;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--destructive) 4%,
+      transparent
+    );
 }
 
-.guestIdentity {
+
+.dangerContent {
   display:
     flex;
 
-  align-items:
-    center;
-
-  min-width:
-    0;
-
-  gap:
-    0.75rem;
-}
-
-.guestIdentity > div:last-child {
-  display:
-    flex;
+  flex:
+    1;
 
   flex-direction:
     column;
@@ -244,15 +262,13 @@
     0;
 
   gap:
-    0.125rem;
+    0.25rem;
 }
 
-.guestIdentity strong {
-  overflow:
-    hidden;
 
+.dangerContent strong {
   color:
-    var(--foreground);
+    var(--destructive);
 
   font-size:
     0.875rem;
@@ -260,36 +276,20 @@
   font-weight:
     600;
 
-  text-overflow:
-    ellipsis;
-
-  white-space:
-    nowrap;
+  line-height:
+    1.35;
 }
 
-.guestIdentity span {
-  overflow:
-    hidden;
 
+.dangerContent span {
   color:
     var(--muted-foreground);
 
   font-size:
     0.8125rem;
 
-  text-overflow:
-    ellipsis;
-
-  white-space:
-    nowrap;
-}
-
-.guestIcon {
-  width:
-    2.25rem;
-
-  height:
-    2.25rem;
+  line-height:
+    1.45;
 }
 
 
@@ -300,17 +300,30 @@
 @media (max-width: 480px) {
   .content {
     gap:
-      1.5rem;
+      1.25rem;
 
     padding:
       1rem;
   }
 
-  .guest {
+
+  .dangerZone {
     align-items:
-      flex-start;
+      stretch;
 
     flex-direction:
       column;
+
+    gap:
+      0.875rem;
+
+    padding:
+      1rem;
+  }
+
+
+  .dangerZone > button {
+    width:
+      100%;
   }
 }

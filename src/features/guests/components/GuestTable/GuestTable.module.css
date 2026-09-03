@@ -1,42 +1,69 @@
 /* ==========================================================================
-   Desktop
+   Display
+========================================================================== */
+
+.desktop {
+  display:
+    block;
+}
+
+
+.mobile {
+  display:
+    none;
+}
+
+
+/* ==========================================================================
+   Table
 ========================================================================== */
 
 .table {
-  width: 100%;
+  width:
+    100%;
 
   table-layout:
     fixed;
 }
 
 
+/* ==========================================================================
+   Columns
+========================================================================== */
+
 .guestColumn {
-  width: 22%;
+  width:
+    22%;
 }
 
 
 .contactColumn {
-  width: 28%;
+  width:
+    25%;
 }
 
 
 .groupColumn {
-  width: 18%;
+  width:
+    17%;
 }
 
 
-.primaryGuestColumn {
-  width: 16%;
+.rsvpColumn {
+  width:
+    14%;
 }
 
 
 .notesColumn {
-  width: 12%;
+  width:
+    18%;
 }
 
 
 .actionsColumn {
-  width: 4%;
+  width:
+    4rem;
 
   text-align:
     right;
@@ -48,94 +75,48 @@
 ========================================================================== */
 
 @media (max-width: 767px) {
-
-  /* ========================================================================
-     Table
-  ======================================================================== */
-
-  .table {
-    display: block;
-
-    width: 100%;
-    min-width: 0;
-
-    table-layout:
-      auto;
-  }
-
-
-  /* ========================================================================
-     Header
-  ======================================================================== */
-
-  .header {
+  .desktop {
     display:
       none;
   }
 
 
-  /* ========================================================================
-     Body
-  ======================================================================== */
+  .mobile {
+    display:
+      flex;
 
-  .body {
-    display: flex;
-    flex-direction: column;
+    overflow:
+      hidden;
 
-    width: 100%;
-  }
+    flex-direction:
+      column;
 
-
-  /* ========================================================================
-     Rows
-  ======================================================================== */
-
-  .body > tr {
-    display: grid;
-
-    grid-template-columns:
-      minmax(0, 1fr)
-      auto;
-
-    width: 100%;
-
-    padding:
-      0.875rem
-      1rem;
-
-    border-bottom:
-      1px solid
-      color-mix(
-        in srgb,
-        var(--primary) 10%,
-        transparent
-      );
-  }
-
-  .body > tr:last-child {
-    border-bottom:
-      0;
-  }
-
-
-  /* ========================================================================
-     Cells
-  ======================================================================== */
-
-  .body > tr > td {
     width:
-      auto;
+      100%;
 
     min-width:
       0;
 
-    padding:
-      0;
+    border:
+      1px solid
+      color-mix(
+        in srgb,
+        var(--primary) 20%,
+        transparent
+      );
+
+    border-radius:
+      1rem;
 
     background:
-      transparent;
+      var(--card);
 
-    white-space:
-      normal;
+    box-shadow:
+      0 1px 2px
+      color-mix(
+        in srgb,
+        var(--primary) 5%,
+        transparent
+      );
   }
 }

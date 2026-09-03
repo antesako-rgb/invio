@@ -5,7 +5,12 @@ import {
 } from "react";
 
 import {
+  useRouter,
+} from "next/navigation";
+
+import {
   Plus,
+  UsersRound,
 } from "lucide-react";
 
 import {
@@ -23,22 +28,29 @@ import {
 } from "@/components/ui/button";
 
 import GuestFilters
-  from "../../components/GuestFilters/GuestFilters";
+  from "@/features/guests/components/GuestFilters/GuestFilters";
+
+import GuestGroupsDialog
+  from "@/features/guests/components/GuestGroupsDialog/GuestGroupsDialog";
+
+import GuestRsvpSource
+  from "@/features/guests/components/GuestRsvpSource/GuestRsvpSource";
 
 import GuestSheet
-  from "../../components/GuestSheet/GuestSheet";
+  from "@/features/guests/components/GuestSheet/GuestSheet";
 
 import GuestTable
-  from "../../components/GuestTable/GuestTable";
+  from "@/features/guests/components/GuestTable/GuestTable";
 
 import {
   useEventGuests,
-} from "../../hooks/useEventGuests";
+} from "@/features/guests/hooks/useEventGuests";
 
 import type {
   EventGuest,
   GuestGroup,
-} from "../../types/guest.types";
+  GuestRsvpInvitation,
+} from "@/features/guests/types/guest.types";
 
 
 /* ==========================================================================
@@ -49,11 +61,14 @@ interface EventGuestsPageProps {
   eventId:
     string;
 
-  initialGuests:
+  guests:
     EventGuest[];
 
-  initialGroups:
+  groups:
     GuestGroup[];
+
+  rsvpInvitations:
+    GuestRsvpInvitation[];
 }
 
 
@@ -63,9 +78,18 @@ interface EventGuestsPageProps {
 
 export default function EventGuestsPage({
   eventId,
-  initialGuests,
-  initialGroups,
+  guests,
+  groups,
+  rsvpInvitations,
 }: EventGuestsPageProps) {
+  /* ==========================================================================
+     Router
+  ========================================================================== */
+
+  const router =
+    useRouter();
+
+
   /* ==========================================================================
      Translations
   ========================================================================== */
@@ -82,12 +106,18 @@ export default function EventGuestsPage({
 
 
   /* ==========================================================================
-     Sheet State
+     Dialog / Sheet State
   ========================================================================== */
 
   const [
     guestSheetOpen,
     setGuestSheetOpen,
+  ] =
+    useState(false);
+
+  const [
+    groupsDialogOpen,
+    setGroupsDialogOpen,
   ] =
     useState(false);
 
@@ -101,13 +131,10 @@ export default function EventGuestsPage({
 
 
   /* ==========================================================================
-     Guests State
+     Guests
   ========================================================================== */
 
   const {
-    guests,
-    groups,
-
     search,
     groupId,
 
@@ -115,13 +142,10 @@ export default function EventGuestsPage({
 
     setSearch,
     setGroupId,
-
-    reload,
   } =
     useEventGuests({
-      eventId,
-      initialGuests,
-      initialGroups,
+      guests,
+      groups,
     });
 
 
@@ -168,9 +192,7 @@ export default function EventGuestsPage({
   }
 
 
-  async function handleGuestSuccess() {
-    await reload();
-
+  function handleGuestSuccess() {
     setGuestSheetOpen(
       false
     );
@@ -178,6 +200,33 @@ export default function EventGuestsPage({
     setSelectedGuest(
       null
     );
+
+    router.refresh();
+  }
+
+
+  /* ==========================================================================
+     Groups Dialog
+  ========================================================================== */
+
+  function handleManageGroups() {
+    setGroupsDialogOpen(
+      true
+    );
+  }
+
+
+  function handleGroupsDialogOpenChange(
+    open: boolean
+  ) {
+    setGroupsDialogOpen(
+      open
+    );
+  }
+
+
+  function handleGroupSuccess() {
+    router.refresh();
   }
 
 
@@ -199,26 +248,53 @@ export default function EventGuestsPage({
           )
         }
         actions={
-          <Button
-            type="button"
-            onClick={
-              handleAddGuest
-            }
-          >
-            <Plus
-              className="size-4"
-              aria-hidden="true"
-            />
+          <>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={
+                handleManageGroups
+              }
+            >
+              <UsersRound
+                className="size-4"
+                aria-hidden="true"
+              />
 
-            {actionsT(
-              "addGuest"
-            )}
-          </Button>
+              {actionsT(
+                "manageGroups"
+              )}
+            </Button>
+
+
+            <Button
+              type="button"
+              onClick={
+                handleAddGuest
+              }
+            >
+              <Plus
+                className="size-4"
+                aria-hidden="true"
+              />
+
+              {actionsT(
+                "addGuest"
+              )}
+            </Button>
+          </>
         }
       />
 
 
       <div className="flex flex-col gap-6">
+        <GuestRsvpSource
+          rsvpInvitations={
+            rsvpInvitations
+          }
+        />
+
+
         <GuestFilters
           search={
             search
@@ -241,9 +317,6 @@ export default function EventGuestsPage({
         <GuestTable
           guests={
             filteredGuests
-          }
-          allGuests={
-            guests
           }
           groups={
             groups
@@ -276,6 +349,25 @@ export default function EventGuestsPage({
         }
         onSuccess={
           handleGuestSuccess
+        }
+      />
+
+
+      <GuestGroupsDialog
+        open={
+          groupsDialogOpen
+        }
+        eventId={
+          eventId
+        }
+        groups={
+          groups
+        }
+        onOpenChange={
+          handleGroupsDialogOpenChange
+        }
+        onSuccess={
+          handleGroupSuccess
         }
       />
     </Page>

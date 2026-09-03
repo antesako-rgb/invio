@@ -1,0 +1,301 @@
+/* ==========================================================================
+   List
+========================================================================== */
+
+.list {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  flex-shrink:
+    0;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    var(--card);
+}
+
+
+/* ==========================================================================
+   Guest
+========================================================================== */
+
+.guest {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    1rem;
+
+  min-height:
+    4rem;
+
+  padding:
+    0.75rem 1rem;
+}
+
+
+.guest + .guest {
+  border-top:
+    1px solid
+    var(--border);
+}
+
+
+/* ==========================================================================
+   Identity
+========================================================================== */
+
+.identity {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  min-width:
+    0;
+
+  gap:
+    0.75rem;
+}
+
+
+.avatar {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  flex-shrink:
+    0;
+
+  width:
+    2.25rem;
+
+  height:
+    2.25rem;
+
+  color:
+    var(--primary);
+
+  background:
+    var(--accent);
+
+  border-radius:
+    9999px;
+}
+
+
+.avatar svg {
+  width:
+    1rem;
+
+  height:
+    1rem;
+}
+
+.name {
+  min-width:
+    0;
+
+  padding:
+    0;
+
+  overflow:
+    hidden;
+
+  border:
+    0;
+
+  background:
+    transparent;
+
+  color:
+    var(--foreground);
+
+  font:
+    inherit;
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.4;
+
+  text-align:
+    left;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+
+  cursor:
+    pointer;
+
+  transition:
+    color 150ms ease;
+}
+
+
+.name:hover {
+  color:
+    var(--primary);
+}
+
+
+.name:focus-visible {
+  color:
+    var(--primary);
+
+  outline:
+    2px solid
+    var(--ring);
+
+  outline-offset:
+    2px;
+
+  border-radius:
+    0.125rem;
+}
+
+/* ==========================================================================
+   Empty
+========================================================================== */
+
+.empty {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  flex:
+    1;
+
+  flex-direction:
+    column;
+
+  min-height:
+    14rem;
+
+  gap:
+    0.5rem;
+
+  padding:
+    2rem;
+
+  color:
+    var(--muted-foreground);
+
+  text-align:
+    center;
+
+  border:
+    1px dashed
+    var(--border);
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    var(--muted);
+}
+
+
+.empty > svg {
+  width:
+    1.5rem;
+
+  height:
+    1.5rem;
+
+  margin-bottom:
+    0.25rem;
+}
+
+
+.empty strong {
+  color:
+    var(--foreground);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+}
+
+
+.empty span {
+  max-width:
+    20rem;
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.5;
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 480px) {
+  .guest {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+
+    gap:
+      0.625rem;
+
+    padding:
+      0.875rem;
+  }
+
+
+  .identity {
+    width:
+      100%;
+  }
+
+
+  .empty {
+    min-height:
+      12rem;
+
+    padding:
+      1.5rem 1rem;
+  }
+}

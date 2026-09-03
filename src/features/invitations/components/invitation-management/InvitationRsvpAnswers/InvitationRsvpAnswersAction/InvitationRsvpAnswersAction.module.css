@@ -1,0 +1,148 @@
+/* ==========================================================================
+   Trigger
+========================================================================== */
+
+.trigger {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    0.5rem;
+
+  min-height:
+    2.375rem;
+
+  padding:
+    0.5rem 1rem;
+
+  color:
+    var(--primary);
+
+  font:
+    inherit;
+
+  font-size:
+    0.8125rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1;
+
+  white-space:
+    nowrap;
+
+  background:
+    transparent;
+
+  border:
+    1px solid
+    var(--primary);
+
+  border-radius:
+    var(--radius-md);
+
+  cursor:
+    pointer;
+
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+
+.trigger svg {
+  width:
+    1rem;
+
+  height:
+    1rem;
+
+  flex-shrink:
+    0;
+}
+
+
+.trigger:hover {
+  color:
+    var(--primary-foreground);
+
+  background:
+    var(--primary);
+}
+
+
+.trigger:focus-visible {
+  outline:
+    2px solid
+    var(--ring);
+
+  outline-offset:
+    2px;
+}
+
+
+/* ==========================================================================
+   Compact
+========================================================================== */
+
+@media (max-width: 700px) {
+  .trigger {
+    gap:
+      0.375rem;
+
+    min-height:
+      2.125rem;
+
+    padding:
+      0.375rem 0.75rem;
+
+    font-size:
+      0.75rem;
+  }
+
+  .trigger svg {
+    width:
+      0.875rem;
+
+    height:
+      0.875rem;
+  }
+}
+
+
+/* ==========================================================================
+   Small Mobile
+========================================================================== */
+
+@media (max-width: 560px) {
+  .trigger {
+    width:
+      100%;
+
+    min-height:
+      2.375rem;
+
+    padding:
+      0.5rem 1rem;
+
+    font-size:
+      0.8125rem;
+  }
+
+  .trigger svg {
+    width:
+      1rem;
+
+    height:
+      1rem;
+  }
+}

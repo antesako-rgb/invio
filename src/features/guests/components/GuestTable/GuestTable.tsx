@@ -21,6 +21,9 @@ import {
   TableRow,
 } from "@/components/ui/data-table";
 
+import GuestMobileItem
+  from "../GuestMobileItem/GuestMobileItem";
+
 import GuestRow
   from "../GuestRow/GuestRow";
 
@@ -39,9 +42,6 @@ import styles
 
 interface GuestTableProps {
   guests:
-    EventGuest[];
-
-  allGuests:
     EventGuest[];
 
   groups:
@@ -63,7 +63,6 @@ interface GuestTableProps {
 
 export default function GuestTable({
   guests,
-  allGuests,
   groups,
   onAddGuest,
   onEditGuest,
@@ -91,16 +90,6 @@ export default function GuestTable({
         ]
       )
     );
-
-const guestMap =
-  new Map(
-    allGuests.map(
-      (guest) => [
-        guest.id,
-        guest,
-      ]
-    )
-  );
 
 
   /* ==========================================================================
@@ -141,131 +130,165 @@ const guestMap =
           ) : undefined,
       }}
     >
-      <Table
+      {/* ====================================================================
+          Desktop
+      ==================================================================== */}
+
+      <div
         className={
-          styles.table
+          styles.desktop
         }
       >
-        <TableHeader
+        <Table
           className={
-            styles.header
+            styles.table
           }
         >
-          <TableRow>
-            <TableHead
-              scope="col"
-              className={
-                styles.guestColumn
-              }
-            >
-              {t(
-                "guest"
-              )}
-            </TableHead>
-
-            <TableHead
-              scope="col"
-              className={
-                styles.contactColumn
-              }
-            >
-              {t(
-                "contact"
-              )}
-            </TableHead>
-
-            <TableHead
-              scope="col"
-              className={
-                styles.groupColumn
-              }
-            >
-              {t(
-                "group"
-              )}
-            </TableHead>
-
-            <TableHead
-              scope="col"
-              className={
-                styles.primaryGuestColumn
-              }
-            >
-              {t(
-                "primaryGuest"
-              )}
-            </TableHead>
-
-            <TableHead
-              scope="col"
-              className={
-                styles.notesColumn
-              }
-            >
-              {t(
-                "notes"
-              )}
-            </TableHead>
-
-            <TableHead
-              scope="col"
-              className={
-                styles.actionsColumn
-              }
-            >
-              <span
-                className="sr-only"
+          <TableHeader>
+            <TableRow>
+              <TableHead
+                scope="col"
+                className={
+                  styles.guestColumn
+                }
               >
                 {t(
-                  "actions"
+                  "guest"
                 )}
-              </span>
-            </TableHead>
-          </TableRow>
-        </TableHeader>
+              </TableHead>
+
+              <TableHead
+                scope="col"
+                className={
+                  styles.contactColumn
+                }
+              >
+                {t(
+                  "contact"
+                )}
+              </TableHead>
+
+              <TableHead
+                scope="col"
+                className={
+                  styles.groupColumn
+                }
+              >
+                {t(
+                  "group"
+                )}
+              </TableHead>
+
+              <TableHead
+                scope="col"
+                className={
+                  styles.rsvpColumn
+                }
+              >
+                {t(
+                  "rsvp"
+                )}
+              </TableHead>
+
+              <TableHead
+                scope="col"
+                className={
+                  styles.notesColumn
+                }
+              >
+                {t(
+                  "notes"
+                )}
+              </TableHead>
+
+              <TableHead
+                scope="col"
+                className={
+                  styles.actionsColumn
+                }
+              >
+                <span
+                  className="sr-only"
+                >
+                  {t(
+                    "actions"
+                  )}
+                </span>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
 
 
-        <TableBody
-          className={
-            styles.body
-          }
-        >
-          {guests.map(
-            (guest) => (
-              <GuestRow
-                key={
-                  guest.id
-                }
-                guest={
-                  guest
-                }
-                group={
-                  guest.group_id
-                    ? groupMap.get(
-                        guest.group_id
-                      ) ?? null
-                    : null
-                }
-                primaryGuest={
-                  guest.primary_guest_id
-                    ? guestMap.get(
-                        guest.primary_guest_id
-                      ) ?? null
-                    : null
-                }
-                onEdit={
-                  onEditGuest
-                    ? () =>
-                        onEditGuest(
-                          guest
-                        )
-                    : undefined
-                }
-              />
-            )
-          )}
-        </TableBody>
-      </Table>
+          <TableBody>
+            {guests.map(
+              (guest) => (
+                <GuestRow
+                  key={
+                    guest.id
+                  }
+                  guest={
+                    guest
+                  }
+                  group={
+                    guest.group_id
+                      ? groupMap.get(
+                          guest.group_id
+                        ) ?? null
+                      : null
+                  }
+                  onEdit={
+                    onEditGuest
+                      ? () =>
+                          onEditGuest(
+                            guest
+                          )
+                      : undefined
+                  }
+                />
+              )
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+
+      {/* ====================================================================
+          Mobile
+      ==================================================================== */}
+
+      <div
+        className={
+          styles.mobile
+        }
+      >
+        {guests.map(
+          (guest) => (
+            <GuestMobileItem
+              key={
+                guest.id
+              }
+              guest={
+                guest
+              }
+              group={
+                guest.group_id
+                  ? groupMap.get(
+                      guest.group_id
+                    ) ?? null
+                  : null
+              }
+              onEdit={
+                onEditGuest
+                  ? () =>
+                      onEditGuest(
+                        guest
+                      )
+                  : undefined
+              }
+            />
+          )
+        )}
+      </div>
     </DataTable>
   );
 }

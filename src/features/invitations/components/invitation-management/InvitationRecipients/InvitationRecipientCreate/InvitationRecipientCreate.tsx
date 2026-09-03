@@ -9,6 +9,10 @@ import {
 } from "lucide-react";
 
 import {
+  useRouter,
+} from "next/navigation";
+
+import {
   useTranslations,
 } from "next-intl";
 
@@ -20,12 +24,16 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet/Sheet";
 
 import Stepper
   from "@/components/ui/stepper/Stepper";
+
+import GuestSheet
+  from "@/features/guests/components/GuestSheet/GuestSheet";
 
 import InvitationRecipientGuestStep
   from "@/features/invitations/components/invitation-management/InvitationRecipients/InvitationRecipientCreate/InvitationRecipientGuestStep/InvitationRecipientGuestStep";
@@ -57,6 +65,9 @@ interface InvitationRecipientCreateProps {
   invitationId:
     string;
 
+  eventId:
+    string;
+
   guests:
     EventGuest[];
 
@@ -71,9 +82,18 @@ interface InvitationRecipientCreateProps {
 
 export default function InvitationRecipientCreate({
   invitationId,
+  eventId,
   guests,
   groups,
 }: InvitationRecipientCreateProps) {
+  /* ==========================================================================
+     Router
+  ========================================================================== */
+
+  const router =
+    useRouter();
+
+
   /* ==========================================================================
      Translations
   ========================================================================== */
@@ -91,6 +111,12 @@ export default function InvitationRecipientCreate({
   const [
     open,
     setOpen,
+  ] =
+    useState(false);
+
+  const [
+    guestSheetOpen,
+    setGuestSheetOpen,
   ] =
     useState(false);
 
@@ -228,6 +254,31 @@ export default function InvitationRecipientCreate({
 
 
   /* ==========================================================================
+     Add Guest
+  ========================================================================== */
+
+  function handleAddGuest() {
+    setGuestSheetOpen(
+      true
+    );
+  }
+
+
+  function handleGuestSheetOpenChange(
+    nextOpen: boolean
+  ) {
+    setGuestSheetOpen(
+      nextOpen
+    );
+  }
+
+
+  function handleGuestSuccess() {
+    router.refresh();
+  }
+
+
+  /* ==========================================================================
      Render
   ========================================================================== */
 
@@ -249,6 +300,10 @@ export default function InvitationRecipientCreate({
         )}
       </Button>
 
+
+      {/* ====================================================================
+          Recipient Sheet
+      ==================================================================== */}
 
       <Sheet
         open={
@@ -288,12 +343,16 @@ export default function InvitationRecipientCreate({
             />
 
 
-            {/* ==============================================================
-                Guests
-            ============================================================== */}
+            <div
+              className={
+                styles.scrollContent
+              }
+            >
+              {/* ============================================================
+                  Guests
+              ============================================================ */}
 
-            {step === "guests" && (
-              <>
+              {step === "guests" && (
                 <InvitationRecipientGuestStep
                   guests={
                     guests
@@ -307,38 +366,18 @@ export default function InvitationRecipientCreate({
                   onSelectionChange={
                     handleGuestSelectionChange
                   }
-                />
-
-                <div
-                  className={
-                    styles.stepContent
+                  onAddGuest={
+                    handleAddGuest
                   }
-                >
-                  <Button
-                    type="button"
-                    disabled={
-                      selectedGuestIds.length ===
-                      0
-                    }
-                    onClick={
-                      handleGuestContinue
-                    }
-                  >
-                    {t(
-                      "next"
-                    )}
-                  </Button>
-                </div>
-              </>
-            )}
+                />
+              )}
 
 
-            {/* ==============================================================
-                Settings
-            ============================================================== */}
+              {/* ============================================================
+                  Settings
+              ============================================================ */}
 
-            {step === "settings" && (
-              <>
+              {step === "settings" && (
                 <InvitationRecipientSettingsStep
                   guests={
                     guests
@@ -353,17 +392,112 @@ export default function InvitationRecipientCreate({
                     setPrimaryGuestId
                   }
                 />
+              )}
 
-                <div
-                  className={
-                    styles.stepContent
+
+              {/* ============================================================
+                  Review
+              ============================================================ */}
+
+              {step === "review" &&
+                primaryGuestId && (
+                  <>
+                    <InvitationRecipientReviewStep
+                      guests={
+                        guests
+                      }
+                      selectedGuestIds={
+                        selectedGuestIds
+                      }
+                      primaryGuestId={
+                        primaryGuestId
+                      }
+                    />
+
+                    {submitError && (
+                      <p
+                        className={
+                          styles.error
+                        }
+                      >
+                        {submitError}
+                      </p>
+                    )}
+                  </>
+                )}
+            </div>
+          </div>
+
+
+          {/* ================================================================
+              Actions
+          ================================================================ */}
+
+          <SheetFooter
+            className={
+              styles.stepContent
+            }
+          >
+            {step === "guests" && (
+              <Button
+                type="button"
+                disabled={
+                  selectedGuestIds.length ===
+                  0
+                }
+                onClick={
+                  handleGuestContinue
+                }
+              >
+                {t(
+                  "next"
+                )}
+              </Button>
+            )}
+
+
+            {step === "settings" && (
+              <>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={
+                    handleSettingsBack
                   }
                 >
+                  {t(
+                    "back"
+                  )}
+                </Button>
+
+                <Button
+                  type="button"
+                  disabled={
+                    !primaryGuestId
+                  }
+                  onClick={
+                    handleSettingsContinue
+                  }
+                >
+                  {t(
+                    "next"
+                  )}
+                </Button>
+              </>
+            )}
+
+
+            {step === "review" &&
+              primaryGuestId && (
+                <>
                   <Button
                     type="button"
                     variant="outline"
+                    disabled={
+                      isSubmitting
+                    }
                     onClick={
-                      handleSettingsBack
+                      handleReviewBack
                     }
                   >
                     {t(
@@ -374,93 +508,51 @@ export default function InvitationRecipientCreate({
                   <Button
                     type="button"
                     disabled={
-                      !primaryGuestId
+                      isSubmitting
                     }
                     onClick={
-                      handleSettingsContinue
+                      handleSubmit
                     }
                   >
-                    {t(
-                      "next"
-                    )}
+                    {isSubmitting
+                      ? t(
+                          "submitting"
+                        )
+                      : t(
+                          "submit"
+                        )}
                   </Button>
-                </div>
-              </>
-            )}
-
-
-            {/* ==============================================================
-                Review
-            ============================================================== */}
-
-            {step === "review" &&
-              primaryGuestId && (
-                <>
-                  <InvitationRecipientReviewStep
-                    guests={
-                      guests
-                    }
-                    selectedGuestIds={
-                      selectedGuestIds
-                    }
-                    primaryGuestId={
-                      primaryGuestId
-                    }
-                  />
-
-                  {submitError && (
-                    <p
-                      className={
-                        styles.error
-                      }
-                    >
-                      {submitError}
-                    </p>
-                  )}
-
-                  <div
-                    className={
-                      styles.stepContent
-                    }
-                  >
-                    <Button
-                      type="button"
-                      variant="outline"
-                      disabled={
-                        isSubmitting
-                      }
-                      onClick={
-                        handleReviewBack
-                      }
-                    >
-                      {t(
-                        "back"
-                      )}
-                    </Button>
-
-                    <Button
-                      type="button"
-                      disabled={
-                        isSubmitting
-                      }
-                      onClick={
-                        handleSubmit
-                      }
-                    >
-                      {isSubmitting
-                        ? t(
-                            "submitting"
-                          )
-                        : t(
-                            "submit"
-                          )}
-                    </Button>
-                  </div>
                 </>
               )}
-          </div>
+          </SheetFooter>
         </SheetContent>
       </Sheet>
+
+
+      {/* ====================================================================
+          Quick Add Guest
+      ==================================================================== */}
+
+      <GuestSheet
+        open={
+          guestSheetOpen
+        }
+        eventId={
+          eventId
+        }
+        groups={
+          groups
+        }
+        guest={
+          null
+        }
+        onOpenChange={
+          handleGuestSheetOpenChange
+        }
+        onSuccess={
+          handleGuestSuccess
+        }
+      />
     </>
   );
 }

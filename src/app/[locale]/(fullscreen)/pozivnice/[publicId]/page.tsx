@@ -98,6 +98,9 @@ export default async function PublicInvitationPage({
         recipientPublicId={
           publicId
         }
+        eventTimezone={
+          recipient.event.timezone
+        }
         templateId={
           recipient.invitation.template_id
         }

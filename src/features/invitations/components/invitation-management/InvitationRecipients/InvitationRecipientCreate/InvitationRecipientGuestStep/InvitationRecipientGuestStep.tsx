@@ -5,12 +5,17 @@ import {
 } from "react";
 
 import {
+  Plus,
   Users,
 } from "lucide-react";
 
 import {
   useTranslations,
 } from "next-intl";
+
+import {
+  Button,
+} from "@/components/ui/button";
 
 import type {
   EventGuest,
@@ -39,6 +44,9 @@ interface InvitationRecipientGuestStepProps {
     (
       guestIds: string[]
     ) => void;
+
+  onAddGuest:
+    () => void;
 }
 
 
@@ -51,6 +59,7 @@ export default function InvitationRecipientGuestStep({
   groups,
   selectedGuestIds,
   onSelectionChange,
+  onAddGuest,
 }: InvitationRecipientGuestStepProps) {
   /* ==========================================================================
      Translations
@@ -162,6 +171,24 @@ export default function InvitationRecipientGuestStep({
             )}
           </p>
         </div>
+
+   <Button
+  type="button"
+  variant="outline"
+  size="sm"
+  onClick={
+    onAddGuest
+  }
+>
+  <Plus
+    className="size-4"
+    aria-hidden="true"
+  />
+
+  {t(
+    "addGuest"
+  )}
+</Button>
       </div>
     );
   }
@@ -318,6 +345,35 @@ export default function InvitationRecipientGuestStep({
             );
           }
         )}
+      </div>
+
+
+      {/* ====================================================================
+          Add Guest
+      ==================================================================== */}
+
+      <div
+        className={
+          styles.addGuestAction
+        }
+      >
+        <Button
+          type="button"
+           variant="outline"
+          size="sm"
+          onClick={
+            onAddGuest
+          }
+        >
+          <Plus
+            className="size-4"
+            aria-hidden="true"
+          />
+
+          {t(
+            "addGuest"
+          )}
+        </Button>
       </div>
     </div>
   );

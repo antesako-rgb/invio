@@ -21,12 +21,12 @@ import {
 } from "@/components/ui/button";
 
 import {
-  Input,
-} from "@/components/ui/input";
+  Field,
+} from "@/components/ui/field";
 
 import {
-  Textarea,
-} from "@/components/ui/textarea";
+  Input,
+} from "@/components/ui/input";
 
 import {
   Select,
@@ -37,29 +37,34 @@ import {
 } from "@/components/ui/sheet/Sheet";
 
 import {
-  buildCreateEventGuestInput,
-  buildUpdateEventGuestInput,
-} from "../../utils/guest.utils";
+  Textarea,
+} from "@/components/ui/textarea";
 import {
-  createEventGuest,
-} from "../../repositories/createEventGuest";
+  createEventGuestAction,
+} from "@/features/guests/actions/createEventGuestAction";
 
 import {
-  updateEventGuest,
-} from "../../repositories/updateEventGuest";
+  updateEventGuestAction,
+} from "@/features/guests/actions/updateEventGuestAction";
+
+import {
+  buildCreateEventGuestInput,
+  buildUpdateEventGuestInput,
+  parseGuestRsvpStatus,
+} from "@/features/guests/utils/guest.utils";
 
 import {
   guestSchema,
-} from "../../validation/guest.schema";
-
-import type {
-  GuestFormValues,
-} from "../../validation/guest.schema";
+} from "@/features/guests/validation/guest.schema";
 
 import type {
   EventGuest,
   GuestGroup,
-} from "../../types/guest.types";
+} from "@/features/guests/types/guest.types";
+
+import type {
+  GuestFormValues,
+} from "@/features/guests/validation/guest.schema";
 
 import styles
   from "./GuestForm.module.css";
@@ -85,6 +90,48 @@ interface GuestFormProps {
 
 
 /* ==========================================================================
+   Default Values
+========================================================================== */
+
+function getGuestDefaultValues(
+  guest: EventGuest | null
+): GuestFormValues {
+  return {
+    first_name:
+      guest?.first_name ??
+      "",
+
+    last_name:
+      guest?.last_name ??
+      "",
+
+    email:
+      guest?.email ??
+      "",
+
+    phone:
+      guest?.phone ??
+      "",
+
+    group_id:
+      guest?.group_id ??
+      null,
+
+    rsvp_status:
+      guest
+        ? parseGuestRsvpStatus(
+            guest.rsvp_status
+          )
+        : "unknown",
+
+    notes:
+      guest?.notes ??
+      "",
+  };
+}
+
+
+/* ==========================================================================
    Guest Form
 ========================================================================== */
 
@@ -101,6 +148,11 @@ export default function GuestForm({
   const t =
     useTranslations(
       "Guests.form"
+    );
+
+  const rsvpT =
+    useTranslations(
+      "Guests.rsvpStatus"
     );
 
   const messagesT =
@@ -125,31 +177,10 @@ export default function GuestForm({
           guestSchema
         ),
 
-      defaultValues: {
-        first_name:
-          guest?.first_name ??
-          "",
-
-        last_name:
-          guest?.last_name ??
-          "",
-
-        email:
-          guest?.email ??
-          "",
-
-        phone:
-          guest?.phone ??
-          "",
-
-        group_id:
-          guest?.group_id ??
-          null,
-
-        notes:
-          guest?.notes ??
-          "",
-      },
+      defaultValues:
+        getGuestDefaultValues(
+          guest
+        ),
     });
 
 
@@ -162,12 +193,26 @@ async function onSubmit(
 ) {
   try {
     if (guest) {
-      await updateEventGuest(
-        guest.id,
-        buildUpdateEventGuestInput(
-          values
-        )
-      );
+      const result =
+        await updateEventGuestAction({
+          eventId,
+
+          guestId:
+            guest.id,
+
+          changes:
+            buildUpdateEventGuestInput(
+              values
+            ),
+        });
+
+
+      if (!result.success) {
+        throw new Error(
+          result.message
+        );
+      }
+
 
       toast.success(
         messagesT(
@@ -175,12 +220,24 @@ async function onSubmit(
         )
       );
     } else {
-      await createEventGuest(
-        buildCreateEventGuestInput(
+      const result =
+        await createEventGuestAction({
           eventId,
-          values
-        )
-      );
+
+          guest:
+            buildCreateEventGuestInput(
+              eventId,
+              values
+            ),
+        });
+
+
+      if (!result.success) {
+        throw new Error(
+          result.message
+        );
+      }
+
 
       toast.success(
         messagesT(
@@ -188,6 +245,7 @@ async function onSubmit(
         )
       );
     }
+
 
     onSuccess();
   } catch (error) {
@@ -197,6 +255,7 @@ async function onSubmit(
         : "createEventGuest error:",
       error
     );
+
 
     toast.error(
       messagesT(
@@ -229,22 +288,17 @@ async function onSubmit(
           styles.body
         }
       >
-        <div
-          className={
-            styles.field
-          }
-        >
-          <label
-            className={
-              styles.label
-            }
-          >
-            {t(
+        <Field
+          id="first_name"
+          label={
+            t(
               "firstName"
-            )}
-          </label>
-
+            )
+          }
+          required
+        >
           <Input
+            id="first_name"
             {...form.register(
               "first_name"
             )}
@@ -253,26 +307,22 @@ async function onSubmit(
                 "firstNamePlaceholder"
               )
             }
+            required
           />
-        </div>
+        </Field>
 
 
-        <div
-          className={
-            styles.field
-          }
-        >
-          <label
-            className={
-              styles.label
-            }
-          >
-            {t(
+        <Field
+          id="last_name"
+          label={
+            t(
               "lastName"
-            )}
-          </label>
-
+            )
+          }
+          required
+        >
           <Input
+            id="last_name"
             {...form.register(
               "last_name"
             )}
@@ -281,83 +331,83 @@ async function onSubmit(
                 "lastNamePlaceholder"
               )
             }
+            required
           />
-        </div>
-
-
-        <div
-          className={
-            styles.field
+        </Field>
+        <Field
+          id="rsvp_status"
+          label={
+            t(
+              "rsvpStatus"
+            )
           }
         >
-          <label
-            className={
-              styles.label
-            }
-          >
-            {t(
-              "email"
-            )}
-          </label>
-
-          <Input
-            type="email"
-            {...form.register(
-              "email"
-            )}
-            placeholder={
-              t(
-                "emailPlaceholder"
-              )
-            }
-          />
-        </div>
-
-
-        <div
-          className={
-            styles.field
-          }
-        >
-          <label
-            className={
-              styles.label
-            }
-          >
-            {t(
-              "phone"
-            )}
-          </label>
-
-          <Input
-            {...form.register(
-              "phone"
-            )}
-            placeholder={
-              t(
-                "phonePlaceholder"
-              )
-            }
-          />
-        </div>
-
-
-        <div
-          className={
-            styles.field
-          }
-        >
-          <label
-            className={
-              styles.label
-            }
-          >
-            {t(
-              "group"
-            )}
-          </label>
-
           <Select
+            id="rsvp_status"
+            value={
+              form.watch(
+                "rsvp_status"
+              )
+            }
+            options={[
+              {
+                value:
+                  "unknown",
+
+                label:
+                  rsvpT(
+                    "unknown"
+                  ),
+              },
+
+              {
+                value:
+                  "attending",
+
+                label:
+                  rsvpT(
+                    "attending"
+                  ),
+              },
+
+              {
+                value:
+                  "declined",
+
+                label:
+                  rsvpT(
+                    "declined"
+                  ),
+              },
+            ]}
+            onValueChange={
+              (value) =>
+                form.setValue(
+                  "rsvp_status",
+                  parseGuestRsvpStatus(
+                    value
+                  ),
+                  {
+                    shouldDirty:
+                      true,
+
+                    shouldValidate:
+                      true,
+                  }
+                )
+            }
+          />
+        </Field>
+ <Field
+          id="group_id"
+          label={
+            t(
+              "group"
+            )
+          }
+        >
+          <Select
+            id="group_id"
             value={
               form.watch(
                 "group_id"
@@ -399,25 +449,68 @@ async function onSubmit(
                 )
             }
           />
-        </div>
+        </Field>
 
 
-        <div
-          className={
-            styles.field
+
+
+        <Field
+          id="email"
+          label={
+            t(
+              "email"
+            )
           }
         >
-          <label
-            className={
-              styles.label
-            }
-          >
-            {t(
-              "notes"
+          <Input
+            id="email"
+            type="email"
+            {...form.register(
+              "email"
             )}
-          </label>
+            placeholder={
+              t(
+                "emailPlaceholder"
+              )
+            }
+          />
+        </Field>
 
+
+        <Field
+          id="phone"
+          label={
+            t(
+              "phone"
+            )
+          }
+        >
+          <Input
+            id="phone"
+            {...form.register(
+              "phone"
+            )}
+            placeholder={
+              t(
+                "phonePlaceholder"
+              )
+            }
+          />
+        </Field>
+
+
+       
+
+        <Field
+          id="notes"
+          label={
+            t(
+              "notes"
+            )
+          }
+        >
           <Textarea
+            id="notes"
             {...form.register(
               "notes"
             )}
@@ -427,7 +520,7 @@ async function onSubmit(
               )
             }
           />
-        </div>
+        </Field>
       </div>
 
 

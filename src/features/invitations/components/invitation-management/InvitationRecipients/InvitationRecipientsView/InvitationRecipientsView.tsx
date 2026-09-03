@@ -10,7 +10,9 @@ import InvitationRecipientsFilters
 
 import InvitationRecipientsTable
   from "@/features/invitations/components/invitation-management/InvitationRecipients/InvitationRecipientsTable/InvitationRecipientsTable";
-
+import type {
+  InvitationRsvpQuestion,
+} from "@/features/invitations/types/invitationContent.types";
 import type {
   InvitationRecipientDetails,
   InvitationRecipientRsvpFilter,
@@ -27,6 +29,9 @@ import styles
 interface InvitationRecipientsViewProps {
   recipients:
     InvitationRecipientDetails[];
+
+  questions:
+    InvitationRsvpQuestion[];
 }
 
 
@@ -36,6 +41,7 @@ interface InvitationRecipientsViewProps {
 
 export default function InvitationRecipientsView({
   recipients,
+  questions,
 }: InvitationRecipientsViewProps) {
   /* ==========================================================================
      State
@@ -177,11 +183,14 @@ export default function InvitationRecipientsView({
         }
       />
 
-      <InvitationRecipientsTable
-        recipients={
-          filteredRecipients
-        }
-      />
+    <InvitationRecipientsTable
+  recipients={
+    filteredRecipients
+  }
+  questions={
+    questions
+  }
+/>
     </div>
   );
 }

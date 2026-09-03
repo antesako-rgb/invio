@@ -15,7 +15,9 @@ import type {
 import type {
   InvitationRecipientDetails,
 } from "@/features/invitations/types/invitationRecipient.types";
-
+import type {
+  InvitationRsvpQuestion,
+} from "@/features/invitations/types/invitationContent.types";
 import styles
   from "./InvitationRecipients.module.css";
 
@@ -35,8 +37,14 @@ interface InvitationRecipientsProps {
   invitationId:
     string;
 
+  eventId:
+    string;
+
   recipients:
     InvitationRecipientDetails[];
+
+  questions:
+    InvitationRsvpQuestion[];
 
   availableGuests:
     GuestsPageData["guests"];
@@ -52,7 +60,9 @@ interface InvitationRecipientsProps {
 
 export default async function InvitationRecipients({
   invitationId,
+  eventId,
   recipients,
+  questions,
   availableGuests,
   groups,
 }: InvitationRecipientsProps) {
@@ -112,6 +122,9 @@ export default async function InvitationRecipients({
           invitationId={
             invitationId
           }
+          eventId={
+            eventId
+          }
           guests={
             availableGuests
           }
@@ -122,11 +135,14 @@ export default async function InvitationRecipients({
       </div>
 
 
-      <InvitationRecipientsView
-        recipients={
-          recipients
-        }
-      />
+   <InvitationRecipientsView
+  recipients={
+    recipients
+  }
+  questions={
+    questions
+  }
+/>
     </section>
   );
 }

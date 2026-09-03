@@ -2,6 +2,10 @@ import {
   z,
 } from "zod";
 
+import {
+  GUEST_RSVP_STATUSES,
+} from "@/features/guests/types/guest.types";
+
 
 /* ==========================================================================
    Guest Schema
@@ -26,6 +30,10 @@ export const guestSchema =
       z
         .string()
         .trim()
+        .min(
+          1,
+          "Prezime je obavezno."
+        )
         .max(
           100,
           "Prezime može imati najviše 100 znakova."
@@ -65,6 +73,11 @@ export const guestSchema =
         .string()
         .uuid()
         .nullable(),
+
+    rsvp_status:
+      z.enum(
+        GUEST_RSVP_STATUSES
+      ),
 
     notes:
       z

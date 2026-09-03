@@ -12,6 +12,9 @@ import {
   Copy,
   MoreHorizontal,
 } from "lucide-react";
+import type {
+  InvitationRsvpQuestion,
+} from "@/features/invitations/types/invitationContent.types";
 import {
   Tooltip,
   TooltipContent,
@@ -58,8 +61,10 @@ import styles
 interface InvitationRecipientRowProps {
   recipient:
     InvitationRecipientDetailsType;
-}
 
+  questions:
+    InvitationRsvpQuestion[];
+}
 
 /* ==========================================================================
    Constants
@@ -75,6 +80,7 @@ const VISIBLE_GUESTS =
 
 export default function InvitationRecipientRow({
   recipient,
+  questions,
 }: InvitationRecipientRowProps) {
   /* ==========================================================================
      Translations
@@ -646,17 +652,20 @@ const primaryGuestInitials =
           Details
       ==================================================================== */}
 
-      <InvitationRecipientDetails
-        recipient={
-          recipient
-        }
-        open={
-          detailsOpen
-        }
-        onOpenChange={
-          setDetailsOpen
-        }
-      />
+<InvitationRecipientDetails
+  recipient={
+    recipient
+  }
+  questions={
+    questions
+  }
+  open={
+    detailsOpen
+  }
+  onOpenChange={
+    setDetailsOpen
+  }
+/>
     </>
   );
 }

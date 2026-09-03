@@ -20,6 +20,33 @@ export type UpdateGuestGroupInput =
 
 
 /* ==========================================================================
+   Guest RSVP Status
+========================================================================== */
+
+export const GUEST_RSVP_STATUSES = [
+  "unknown",
+  "attending",
+  "declined",
+] as const;
+
+export type GuestRsvpStatus =
+  typeof GUEST_RSVP_STATUSES[number];
+
+
+/* ==========================================================================
+   Guest RSVP Status Source
+========================================================================== */
+
+export const GUEST_RSVP_STATUS_SOURCES = [
+  "automatic",
+  "manual",
+] as const;
+
+export type GuestRsvpStatusSource =
+  typeof GUEST_RSVP_STATUS_SOURCES[number];
+
+
+/* ==========================================================================
    Event Guest
 ========================================================================== */
 
@@ -31,6 +58,15 @@ export type CreateEventGuestInput =
 
 export type UpdateEventGuestInput =
   TablesUpdate<"event_guests">;
+
+
+export type GuestRsvpInvitation =
+  Pick<
+    Tables<"invitations">,
+    | "id"
+    | "name"
+    | "is_primary_rsvp"
+  >;
 
 
 /* ==========================================================================

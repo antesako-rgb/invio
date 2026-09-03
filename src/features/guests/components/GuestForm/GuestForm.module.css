@@ -3,11 +3,14 @@
 ========================================================================== */
 
 .form {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+  display:
+    flex;
 
-  min-height: 0;
+  flex-direction:
+    column;
+
+  width:
+    100%;
 }
 
 
@@ -16,50 +19,58 @@
 ========================================================================== */
 
 .body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+  display:
+    grid;
 
-  min-height: 0;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
 
-  gap: 1rem;
+  width:
+    100%;
+
+  gap:
+    1rem;
 
   padding:
-    0
-    1.5rem
-    1.5rem;
-
-  overflow-y: auto;
+    0 1.5rem 1rem;
 }
 
 
 /* ==========================================================================
-   Field
+   Full Width Fields
 ========================================================================== */
 
-.field {
-  display: grid;
-
-  gap: 0.5rem;
+.body > :nth-child(1),
+.body > :nth-child(2),
+.body > :nth-child(7) {
+  grid-column:
+    1 / -1;
 }
 
 
 /* ==========================================================================
-   Label
+   Notes
 ========================================================================== */
 
-.label {
-  color:
-    var(--foreground);
+.body textarea {
+  min-height:
+    5rem;
 
-  font-size:
-    0.875rem;
+  resize:
+    vertical;
+}
 
-  font-weight:
-    500;
 
-  line-height:
-    1.4;
+/* ==========================================================================
+   Footer
+========================================================================== */
+
+.form footer {
+  padding-top:
+    0;
+
+  padding-bottom:
+    1rem;
 }
 
 
@@ -67,14 +78,24 @@
    Mobile
 ========================================================================== */
 
-@media (
-  max-width: 639px
-) {
+@media (max-width: 450px) {
   .body {
-    padding-right:
-      1.25rem;
+    display:
+      flex;
 
-    padding-left:
-      1.25rem;
+    flex-direction:
+      column;
+
+    gap:
+      0.875rem;
+
+    padding:
+      0 1.25rem 1rem;
+  }
+
+
+  .body textarea {
+    min-height:
+      5rem;
   }
 }

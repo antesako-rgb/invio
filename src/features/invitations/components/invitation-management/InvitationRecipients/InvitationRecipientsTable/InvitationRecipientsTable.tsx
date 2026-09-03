@@ -17,8 +17,15 @@ import {
   TableRow,
 } from "@/components/ui/data-table";
 
+import InvitationRecipientMobileItem
+  from "@/features/invitations/components/invitation-management/InvitationRecipients/InvitationRecipientMobileItem/InvitationRecipientMobileItem";
+
 import InvitationRecipientRow
   from "@/features/invitations/components/invitation-management/InvitationRecipients/InvitationRecipientRow/InvitationRecipientRow";
+
+import type {
+  InvitationRsvpQuestion,
+} from "@/features/invitations/types/invitationContent.types";
 
 import type {
   InvitationRecipientDetails,
@@ -35,6 +42,9 @@ import styles
 interface InvitationRecipientsTableProps {
   recipients:
     InvitationRecipientDetails[];
+
+  questions:
+    InvitationRsvpQuestion[];
 }
 
 
@@ -44,6 +54,7 @@ interface InvitationRecipientsTableProps {
 
 export default function InvitationRecipientsTable({
   recipients,
+  questions,
 }: InvitationRecipientsTableProps) {
   /* ==========================================================================
      Translations
@@ -79,109 +90,141 @@ export default function InvitationRecipientsTable({
           ),
       }}
     >
-      <Table
+      {/* ====================================================================
+          Desktop
+      ==================================================================== */}
+
+      <div
         className={
-          styles.table
+          styles.desktop
         }
       >
-        <TableHeader
+        <Table
           className={
-            styles.header
+            styles.table
           }
         >
-          <TableRow>
-            <TableHead
-              scope="col"
-              className={
-                styles.recipientColumn
-              }
-            >
-              {t(
-                "recipient"
-              )}
-            </TableHead>
-
-            <TableHead
-              scope="col"
-              className={
-                styles.linkColumn
-              }
-            >
-              {t(
-                "link"
-              )}
-            </TableHead>
-
-            <TableHead
-              scope="col"
-              className={
-                styles.guestsColumn
-              }
-            >
-              {t(
-                "guests"
-              )}
-            </TableHead>
-
-            <TableHead
-              scope="col"
-              className={
-                styles.rsvpColumn
-              }
-            >
-              {t(
-                "rsvp"
-              )}
-            </TableHead>
-
-            <TableHead
-              scope="col"
-              className={
-                styles.updatedColumn
-              }
-            >
-              {t(
-                "updated"
-              )}
-            </TableHead>
-
-            <TableHead
-              scope="col"
-              className={
-                styles.actionsColumn
-              }
-            >
-              <span
-                className="sr-only"
+          <TableHeader>
+            <TableRow>
+              <TableHead
+                scope="col"
+                className={
+                  styles.recipientColumn
+                }
               >
                 {t(
-                  "actions"
+                  "recipient"
                 )}
-              </span>
-            </TableHead>
-          </TableRow>
-        </TableHeader>
+              </TableHead>
+
+              <TableHead
+                scope="col"
+                className={
+                  styles.linkColumn
+                }
+              >
+                {t(
+                  "link"
+                )}
+              </TableHead>
+
+              <TableHead
+                scope="col"
+                className={
+                  styles.guestsColumn
+                }
+              >
+                {t(
+                  "guests"
+                )}
+              </TableHead>
+
+              <TableHead
+                scope="col"
+                className={
+                  styles.rsvpColumn
+                }
+              >
+                {t(
+                  "rsvp"
+                )}
+              </TableHead>
+
+              <TableHead
+                scope="col"
+                className={
+                  styles.updatedColumn
+                }
+              >
+                {t(
+                  "updated"
+                )}
+              </TableHead>
+
+              <TableHead
+                scope="col"
+                className={
+                  styles.actionsColumn
+                }
+              >
+                <span
+                  className="sr-only"
+                >
+                  {t(
+                    "actions"
+                  )}
+                </span>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
 
 
-        <TableBody
-          className={
-            styles.body
-          }
-        >
-          {recipients.map(
-            (recipient) => (
-              <InvitationRecipientRow
-                key={
-                  recipient.id
-                }
-                recipient={
-                  recipient
-                }
-              />
-            )
-          )}
-        </TableBody>
-      </Table>
+          <TableBody>
+            {recipients.map(
+              (recipient) => (
+                <InvitationRecipientRow
+                  key={
+                    recipient.id
+                  }
+                  recipient={
+                    recipient
+                  }
+                  questions={
+                    questions
+                  }
+                />
+              )
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+
+      {/* ====================================================================
+          Mobile
+      ==================================================================== */}
+
+      <div
+        className={
+          styles.mobile
+        }
+      >
+        {recipients.map(
+          (recipient) => (
+            <InvitationRecipientMobileItem
+              key={
+                recipient.id
+              }
+              recipient={
+                recipient
+              }
+              questions={
+                questions
+              }
+            />
+          )
+        )}
+      </div>
     </DataTable>
   );
 }

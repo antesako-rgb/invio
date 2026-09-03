@@ -1,0 +1,278 @@
+/* ==========================================================================
+   Item
+========================================================================== */
+
+.item {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  width:
+    100%;
+
+  min-width:
+    0;
+
+  gap:
+    1rem;
+
+  padding:
+    1rem;
+
+  border-bottom:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--primary) 10%,
+      transparent
+    );
+
+  background:
+    var(--card);
+}
+
+
+.item:last-child {
+  border-bottom:
+    0;
+}
+
+
+/* ==========================================================================
+   Header
+========================================================================== */
+
+.header {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  min-width:
+    0;
+
+  gap:
+    0.75rem;
+}
+
+
+.guest {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  min-width:
+    0;
+
+  gap:
+    0.625rem;
+
+  padding:
+    0;
+
+  border:
+    0;
+
+  background:
+    transparent;
+
+  text-align:
+    left;
+
+  cursor:
+    pointer;
+}
+
+
+.guest:disabled {
+  cursor:
+    default;
+}
+
+
+.guestContent {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+
+  gap:
+    0.125rem;
+}
+
+
+.guestContent strong {
+  overflow:
+    hidden;
+
+  max-width:
+    100%;
+
+  color:
+    var(--foreground);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+
+.guestContent span {
+  overflow:
+    hidden;
+
+  max-width:
+    100%;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.75rem;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Contact
+========================================================================== */
+
+.contact {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+
+  gap:
+    0.125rem;
+}
+
+
+.contact span {
+  overflow:
+    hidden;
+
+  max-width:
+    100%;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.4;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+
+.contact span:first-child {
+  color:
+    color-mix(
+      in srgb,
+      var(--foreground) 88%,
+      transparent
+    );
+}
+
+
+/* ==========================================================================
+   Footer
+========================================================================== */
+
+.footer {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  min-width:
+    0;
+
+  gap:
+    1rem;
+
+  padding-top:
+    0.875rem;
+
+  border-top:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--primary) 14%,
+      var(--border)
+    );
+}
+
+
+/* ==========================================================================
+   Notes
+========================================================================== */
+
+.notes {
+  overflow:
+    hidden;
+
+  min-width:
+    0;
+
+  max-width:
+    55%;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.4;
+
+  text-align:
+    right;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}

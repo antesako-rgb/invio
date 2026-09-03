@@ -1,6 +1,6 @@
 import {
-  supabase,
-} from "@/lib/supabase/client";
+  createServerClient,
+} from "@/lib/supabase/server";
 
 
 /* ==========================================================================
@@ -10,6 +10,10 @@ import {
 export async function deleteGuestGroup(
   groupId: string
 ): Promise<void> {
+  const supabase =
+    await createServerClient();
+
+
   const {
     error,
   } =
@@ -21,7 +25,15 @@ export async function deleteGuestGroup(
         groupId
       );
 
+
   if (error) {
-    throw error;
+    console.error(
+      "deleteGuestGroup error:",
+      error
+    );
+
+    throw new Error(
+      error.message
+    );
   }
 }

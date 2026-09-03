@@ -17,10 +17,13 @@ import {
   TableRow,
 } from "@/components/ui/data-table";
 
+import GuestRsvpStatusBadge
+  from "@/features/guests/components/GuestRsvpStatusBadge/GuestRsvpStatusBadge";
+
 import type {
   EventGuest,
   GuestGroup,
-} from "../../types/guest.types";
+} from "@/features/guests/types/guest.types";
 
 import styles
   from "./GuestRow.module.css";
@@ -37,9 +40,6 @@ interface GuestRowProps {
   group:
     GuestGroup | null;
 
-  primaryGuest:
-    EventGuest | null;
-
   onEdit?:
     () => void;
 }
@@ -52,7 +52,6 @@ interface GuestRowProps {
 export default function GuestRow({
   guest,
   group,
-  primaryGuest,
   onEdit,
 }: GuestRowProps) {
   /* ==========================================================================
@@ -76,21 +75,6 @@ export default function GuestRow({
     ]
       .filter(Boolean)
       .join(" ");
-
-
-  /* ==========================================================================
-     Primary Guest Name
-  ========================================================================== */
-
-  const primaryGuestName =
-    primaryGuest
-      ? [
-          primaryGuest.first_name,
-          primaryGuest.last_name,
-        ]
-          .filter(Boolean)
-          .join(" ")
-      : null;
 
 
   /* ==========================================================================
@@ -200,27 +184,19 @@ export default function GuestRow({
 
 
       {/* ====================================================================
-          Primary Guest
+          RSVP
       ==================================================================== */}
 
       <TableCell
         className={
-          styles.primaryGuest
+          styles.rsvp
         }
       >
-        {primaryGuestName ? (
-          <span>
-            {primaryGuestName}
-          </span>
-        ) : (
-          <span
-            className={
-              styles.empty
-            }
-          >
-            —
-          </span>
-        )}
+        <GuestRsvpStatusBadge
+          status={
+            guest.rsvp_status
+          }
+        />
       </TableCell>
 
 

@@ -9,6 +9,17 @@ import {
   getTranslations,
 } from "next-intl/server";
 
+import InvitationRsvpAnswersAction
+  from "@/features/invitations/components/invitation-management/InvitationRsvpAnswers/InvitationRsvpAnswersAction/InvitationRsvpAnswersAction";
+
+import type {
+  InvitationRecipientDetails,
+} from "@/features/invitations/types/invitationRecipient.types";
+
+import type {
+  InvitationRsvpQuestion,
+} from "@/features/invitations/types/invitationContent.types";
+
 import styles
   from "./InvitationRsvpSummary.module.css";
 
@@ -29,6 +40,12 @@ interface InvitationRsvpSummaryProps {
 
   pending:
     number;
+
+  questions:
+    InvitationRsvpQuestion[];
+
+  recipients:
+    InvitationRecipientDetails[];
 }
 
 
@@ -41,6 +58,8 @@ export default async function InvitationRsvpSummary({
   attending,
   declined,
   pending,
+  questions,
+  recipients,
 }: InvitationRsvpSummaryProps) {
   /* ==========================================================================
      Translations
@@ -182,6 +201,26 @@ export default async function InvitationRsvpSummary({
             "pending"
           )}
         </span>
+      </div>
+
+
+      {/* ==================================================================
+          Answers
+      ================================================================== */}
+
+      <div
+        className={
+          styles.actions
+        }
+      >
+        <InvitationRsvpAnswersAction
+          questions={
+            questions
+          }
+          recipients={
+            recipients
+          }
+        />
       </div>
     </section>
   );

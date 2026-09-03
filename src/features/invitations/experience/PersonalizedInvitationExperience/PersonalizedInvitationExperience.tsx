@@ -21,6 +21,9 @@ interface PersonalizedInvitationExperienceProps {
   recipientPublicId:
     string;
 
+  eventTimezone:
+    string;
+
   templateId:
     string;
 
@@ -38,6 +41,7 @@ interface PersonalizedInvitationExperienceProps {
 
 export default function PersonalizedInvitationExperience({
   recipientPublicId,
+  eventTimezone,
   templateId,
   variantId,
   data,
@@ -85,6 +89,9 @@ export default function PersonalizedInvitationExperience({
       mode="live"
       data={
         data
+      }
+      eventTimezone={
+        eventTimezone
       }
       onRsvpSubmit={
         handleRsvpSubmit

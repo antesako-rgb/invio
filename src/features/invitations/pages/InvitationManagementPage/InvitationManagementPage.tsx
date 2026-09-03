@@ -34,9 +34,14 @@ import {
   getInvitationRecipients,
 } from "@/features/invitations/repositories/invitation-recipients/getInvitationRecipients";
 
+import type {
+  InvitationContent,
+} from "@/features/invitations/types/invitationContent.types";
+
 import {
   getEventGuestsPageData,
 } from "@/features/guests/repositories/getEventGuestsPageData";
+
 import styles
   from "./InvitationManagementPage.module.css";
 
@@ -70,6 +75,20 @@ export default async function InvitationManagementPage({
   if (!invitation) {
     notFound();
   }
+
+
+  /* ==========================================================================
+     Invitation Content
+  ========================================================================== */
+
+  const content =
+    invitation.content as
+      unknown as
+      InvitationContent;
+
+  const rsvpQuestions =
+    content.rsvp?.questions ??
+    [];
 
 
   /* ==========================================================================
@@ -203,19 +222,30 @@ export default async function InvitationManagementPage({
           pending={
             pending
           }
+          questions={
+            rsvpQuestions
+          }
+          recipients={
+            recipients
+          }
         />
 
 
         {/* ==================================================================
             Recipients
         ================================================================== */}
-
 <InvitationRecipients
   invitationId={
     invitation.id
   }
+  eventId={
+    invitation.event_id
+  }
   recipients={
     recipients
+  }
+  questions={
+    rsvpQuestions
   }
   availableGuests={
     availableGuests
@@ -224,7 +254,6 @@ export default async function InvitationManagementPage({
     guestsData.groups
   }
 />
-
 
         {/* ==================================================================
             Danger Zone

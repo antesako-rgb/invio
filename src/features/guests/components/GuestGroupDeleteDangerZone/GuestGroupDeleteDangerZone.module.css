@@ -1,0 +1,102 @@
+.dangerZone {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  width:
+    100%;
+
+  gap:
+    1.5rem;
+
+  padding:
+    1rem;
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--destructive) 20%,
+      transparent
+    );
+
+  border-radius:
+    1rem;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--destructive) 4%,
+      transparent
+    );
+}
+
+
+.dangerContent {
+  display:
+    flex;
+
+  flex:
+    1;
+
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+
+  gap:
+    0.25rem;
+}
+
+
+.dangerContent strong {
+  color:
+    var(--destructive);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.35;
+}
+
+
+.dangerContent span {
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.45;
+}
+
+
+@media (max-width: 480px) {
+  .dangerZone {
+    align-items:
+      stretch;
+
+    flex-direction:
+      column;
+
+    gap:
+      0.875rem;
+  }
+
+
+  .dangerZone > button {
+    width:
+      100%;
+  }
+}

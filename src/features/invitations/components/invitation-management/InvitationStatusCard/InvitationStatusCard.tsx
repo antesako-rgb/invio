@@ -14,6 +14,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+
+
 import InvitationStatusAction
   from "@/features/invitations/components/invitation-management/InvitationStatusCard/InvitationStatusAction";
 
@@ -61,6 +63,9 @@ export default async function InvitationStatusCard({
 
   const isPublished =
     invitation.is_public;
+
+  const isPrimaryRsvp =
+    invitation.is_primary_rsvp;
 
 
   /* ==========================================================================
@@ -148,7 +153,6 @@ export default async function InvitationStatusCard({
           </span>
         </div>
       </div>
-
 
       {/* ==================================================================
           Action

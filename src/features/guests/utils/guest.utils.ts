@@ -1,11 +1,16 @@
+import {
+  GUEST_RSVP_STATUSES,
+} from "@/features/guests/types/guest.types";
+
 import type {
   CreateEventGuestInput,
+  GuestRsvpStatus,
   UpdateEventGuestInput,
-} from "../types/guest.types";
+} from "@/features/guests/types/guest.types";
 
 import type {
   GuestFormValues,
-} from "../validation/guest.schema";
+} from "@/features/guests/validation/guest.schema";
 
 
 /* ==========================================================================
@@ -19,6 +24,24 @@ function toNullableString(
     value.trim();
 
   return trimmed || null;
+}
+
+
+/* ==========================================================================
+   Parse Guest RSVP Status
+========================================================================== */
+
+export function parseGuestRsvpStatus(
+  value: string
+): GuestRsvpStatus {
+  const status =
+    GUEST_RSVP_STATUSES.find(
+      (status) =>
+        status === value
+    );
+
+  return status ??
+    "unknown";
 }
 
 
@@ -38,9 +61,7 @@ export function buildCreateEventGuestInput(
       values.first_name.trim(),
 
     last_name:
-      toNullableString(
-        values.last_name
-      ),
+      values.last_name.trim(),
 
     email:
       toNullableString(
@@ -54,6 +75,9 @@ export function buildCreateEventGuestInput(
 
     group_id:
       values.group_id,
+
+    rsvp_status:
+      values.rsvp_status,
 
     notes:
       toNullableString(
@@ -75,9 +99,7 @@ export function buildUpdateEventGuestInput(
       values.first_name.trim(),
 
     last_name:
-      toNullableString(
-        values.last_name
-      ),
+      values.last_name.trim(),
 
     email:
       toNullableString(
@@ -91,6 +113,9 @@ export function buildUpdateEventGuestInput(
 
     group_id:
       values.group_id,
+
+    rsvp_status:
+      values.rsvp_status,
 
     notes:
       toNullableString(

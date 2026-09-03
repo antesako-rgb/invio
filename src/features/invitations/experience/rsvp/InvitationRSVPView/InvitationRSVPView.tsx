@@ -13,6 +13,10 @@ import {
   useTranslations,
 } from "next-intl";
 
+import {
+  isDatePassedInTimezone,
+  parseDateOnly,
+} from "@/lib/utils/timezone";
 import InvitationRSVPGuest
   from "@/features/invitations/experience/rsvp/InvitationRSVPGuest/InvitationRSVPGuest";
 
@@ -44,6 +48,9 @@ interface InvitationRSVPViewProps {
   data:
     InvitationRenderData;
 
+  eventTimezone?:
+    string;
+
   previewState?:
     InvitationRSVPViewState;
 
@@ -61,6 +68,7 @@ interface InvitationRSVPViewProps {
 
 export default function InvitationRSVPView({
   data,
+  eventTimezone,
   previewState,
   onBack,
   onSubmit,
@@ -123,24 +131,35 @@ export default function InvitationRSVPView({
     previewState ??
     liveState;
 
-  const deadline =
-    rsvp.deadline
-      ? format.dateTime(
-          new Date(
-            `${rsvp.deadline}T00:00:00`
-          ),
-          {
-            day:
-              "numeric",
+const deadline =
+  rsvp.deadline
+    ? format.dateTime(
+        parseDateOnly(
+          rsvp.deadline
+        ),
+        {
+          day:
+            "numeric",
 
-            month:
-              "long",
+          month:
+            "long",
 
-            year:
-              "numeric",
-          }
-        )
-      : null;
+          year:
+            "numeric",
+
+          timeZone:
+            "UTC",
+        }
+      )
+    : null;
+
+  const isDeadlinePassed =
+    previewState ===
+      undefined &&
+    isDatePassedInTimezone(
+      rsvp.deadline,
+      eventTimezone
+    );
 
 
   /* ==========================================================================
@@ -167,72 +186,84 @@ export default function InvitationRSVPView({
      Submit
   ========================================================================== */
 
-  async function handleSubmit() {
-    if (
-      isSubmitting
-    ) {
-      return;
-    }
-
-    const isValid =
-      validate();
-
-    if (
-      !isValid
-    ) {
-      return;
-    }
-
-    if (
-      !onSubmit
-    ) {
-      return;
-    }
-
-    const submissions =
-      buildInvitationRsvpSubmissions(
-        guests,
-        responses,
-        answers
-      );
-
-    setSubmitError(
-      null
-    );
-
-    setIsSubmitting(
-      true
-    );
-
-    try {
-      await onSubmit(
-        submissions
-      );
-
-      if (
-        previewState ===
-        undefined
-      ) {
-        setLiveState(
-          "success"
-        );
-      }
-    } catch (
-      error
-    ) {
-      setSubmitError(
-        error instanceof Error
-          ? error.message
-          : t(
-              "submitError"
-            )
-      );
-    } finally {
-      setIsSubmitting(
-        false
-      );
-    }
+async function handleSubmit() {
+  if (
+    isSubmitting
+  ) {
+    return;
   }
+
+  if (
+    isDeadlinePassed
+  ) {
+    setSubmitError(
+      t(
+        "deadlineExpired"
+      )
+    );
+
+    return;
+  }
+
+  const isValid =
+    validate();
+
+  if (
+    !isValid
+  ) {
+    return;
+  }
+
+  if (
+    !onSubmit
+  ) {
+    return;
+  }
+
+  const submissions =
+    buildInvitationRsvpSubmissions(
+      guests,
+      responses,
+      answers
+    );
+
+  setSubmitError(
+    null
+  );
+
+  setIsSubmitting(
+    true
+  );
+
+  try {
+    await onSubmit(
+      submissions
+    );
+
+    if (
+      previewState ===
+      undefined
+    ) {
+      setLiveState(
+        "success"
+      );
+    }
+  } catch (
+    error
+  ) {
+    setSubmitError(
+      error instanceof Error
+        ? error.message
+        : t(
+            "submitError"
+          )
+    );
+  } finally {
+    setIsSubmitting(
+      false
+    );
+  }
+}
 
 
   /* ==========================================================================
@@ -337,28 +368,27 @@ export default function InvitationRSVPView({
         {/* ================================================================
             Submit
         ================================================================ */}
-
-        <button
-          type="button"
-          className="invitation-rsvp-view__submit"
-          onClick={
-            handleSubmit
-          }
-          disabled={
-            isSubmitting
-          }
-          aria-busy={
-            isSubmitting
-          }
-        >
-          {isSubmitting
-            ? t(
-                "submitting"
-              )
-            : t(
-                "submit"
-              )}
-        </button>
+<button
+  type="button"
+  className="invitation-rsvp-view__submit"
+  onClick={
+    handleSubmit
+  }
+  disabled={
+    isSubmitting
+  }
+  aria-busy={
+    isSubmitting
+  }
+>
+  {isSubmitting
+    ? t(
+        "submitting"
+      )
+    : t(
+        "submit"
+      )}
+</button>
       </div>
     );
   }

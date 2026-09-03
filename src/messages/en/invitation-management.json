@@ -2,218 +2,265 @@
   "Invitations": {
     "management": {
       "status": {
-        "published": "Objavljena",
-        "draft": "Skica"
+        "published": "Published",
+        "draft": "Draft"
       },
 
       "actions": {
-        "preview": "Pregledaj pozivnicu",
-        "edit": "Uredi dizajn"
+        "preview": "Preview invitation",
+        "edit": "Edit design"
       },
 
       "name": {
-        "label": "Naziv pozivnice",
-        "edit": "Uredi naziv",
-        "save": "Spremi naziv",
-        "cancel": "Odustani",
-        "error": "Nije moguće spremiti naziv pozivnice."
+        "label": "Invitation name",
+        "edit": "Edit name",
+        "save": "Save name",
+        "cancel": "Cancel",
+        "error": "Unable to save the invitation name."
       },
 
-      "updatedAt": "Zadnje ažurirano: {date}",
+      "updatedAt": "Last updated: {date}",
 
       "delete": {
-        "title": "Brisanje pozivnice",
-        "description": "Trajno izbrišite ovu pozivnicu i sve podatke povezane s njom.",
-        "button": "Obriši pozivnicu",
+        "title": "Delete invitation",
+        "description": "Permanently delete this invitation and all data associated with it.",
+        "button": "Delete invitation",
 
         "confirm": {
-          "title": "Obrisati pozivnicu?",
-          "description": "Ova radnja je trajna i ne može se poništiti.",
-          "confirm": "Obriši pozivnicu",
-          "cancel": "Odustani"
+          "title": "Delete invitation?",
+          "description": "This action is permanent and cannot be undone.",
+          "confirm": "Delete invitation",
+          "cancel": "Cancel"
         }
       },
 
-      "statusCard": {
-        "title": "Status pozivnice",
-        "description": "Upravljajte dostupnošću svoje pozivnice.",
+"statusCard": {
+  "title": "Invitation status",
+  "description": "Manage the availability of your invitation.",
 
-        "published": {
-          "title": "Pozivnica je objavljena",
-          "description": "Gosti koji imaju pristup poveznici mogu pregledati pozivnicu i sve informacije koje ste odlučili podijeliti.",
-          "action": "Povuci objavu",
-          "success": "Objava pozivnice uspješno je povučena."
-        },
+  "published": {
+    "title": "Invitation is published",
+    "description": "Guests with access to the link can view the invitation and all information you have chosen to share.",
+    "action": "Unpublish invitation",
+    "success": "The invitation has been unpublished successfully."
+  },
 
-        "draft": {
-          "title": "Pozivnica nije objavljena",
-          "description": "Gosti ne mogu pristupiti ni pregledati pozivnicu dok je ne objavite i učinite dostupnom za dijeljenje.",
-          "action": "Objavi pozivnicu",
-          "success": "Pozivnica je uspješno objavljena."
-        }
-      },
+  "draft": {
+    "title": "Invitation is not published",
+    "description": "Guests cannot access or view the invitation until you publish it and make it available for sharing.",
+    "action": "Publish invitation",
+    "success": "The invitation has been published successfully."
+  }
+},
 
-      "publicLinkCard": {
-        "title": "Javni link",
-        "description": "Podijelite javnu poveznicu svoje pozivnice.",
+"publicLinkCard": {
+  "title": "Public link",
+  "description": "Share the public link to your invitation.",
 
-        "active": {
-          "title": "Javni link je aktivan",
-          "description": "Svatko tko ima ovu poveznicu može pregledati pozivnicu."
-        },
+  "active": {
+    "title": "Public link is active",
+    "description": "Anyone with this link can view the invitation."
+  },
 
-        "inactive": {
-          "title": "Javni link nije aktivan",
-          "description": "Poveznica će postati dostupna gostima nakon objave pozivnice."
-        },
-
-        "actions": {
-          "copy": "Kopiraj link",
-          "copied": "Kopirano",
-          "open": "Otvori pozivnicu"
-        }
-      },
-
-      "rsvpSummary": {
-        "label": "RSVP pregled",
-        "total": "ukupno",
-        "attending": "dolazi",
-        "declined": "ne dolazi",
-        "pending": "čeka"
-      },
-
-      "rsvpStatus": {
-        "pending": "Čeka odgovor",
-        "attending": "Dolazi",
-        "declined": "Ne dolazi",
-
-        "pendingCount": "{count, plural, one {# čeka odgovor} few {# čekaju odgovor} other {# čeka odgovor}}",
-        "attendingCount": "{count, plural, one {# dolazi} few {# dolaze} other {# dolazi}}",
-        "declinedCount": "{count, plural, one {# ne dolazi} few {# ne dolaze} other {# ne dolazi}}"
-      },
-
-"recipients": {
-  "title": "Primatelji",
-  "description": "Upravljajte primateljima personaliziranih pozivnica i njihovim RSVP odgovorima.",
-
-  "guestCount": "{count, plural, one {# gost} few {# gosta} other {# gostiju}}",
-
-  "filters": {
-    "searchPlaceholder": "Pretraži primatelje...",
-
-    "rsvp": {
-      "label": "RSVP",
-      "all": "Svi RSVP",
-      "pending": "Čeka odgovor",
-      "attending": "Dolazi",
-      "declined": "Ne dolazi"
-    }
+  "inactive": {
+    "title": "Public link is not active",
+    "description": "The link will become available to guests after the invitation is published."
   },
 
   "actions": {
-    "add": "Dodaj primatelje",
-    "open": "Detalji primatelja"
+    "copy": "Copy link",
+    "copied": "Copied",
+    "open": "Open invitation"
+  }
+},
+
+"rsvpSummary": {
+  "label": "RSVP overview",
+  "total": "total",
+  "attending": "attending",
+  "declined": "not attending",
+  "pending": "awaiting response",
+  "viewAnswers": "View responses"
+},
+
+"rsvpAnswers": {
+  "title": "RSVP responses",
+  "description": "Review guests and responses for this invitation.",
+
+  "tabs": {
+    "guests": "Guests",
+    "answers": "Responses"
   },
 
+  "guestCount": "{count, plural, one {# guest} other {# guests}}",
+  "respondedCount": "{count, plural, one {# responded} other {# responded}}",
+
+  "responseCount": "{count, plural, one {# response} other {# responses}}",
+  "questionCount": "{count, plural, one {# question} other {# questions}}",
+  "answerCount": "{count, plural, one {# response} other {# responses}}",
+
+  "yes": "Yes",
+  "no": "No",
+
+  "noAnswers": "No responses yet.",
+
+  "guests": {
+    "empty": {
+      "title": "No guests",
+      "description": "No guests have been added to this invitation yet."
+    }
+  },
+
+  "empty": {
+    "title": "No RSVP questions",
+    "description": "This invitation doesn't have any additional RSVP questions."
+  }
+},
+      "rsvpStatus": {
+        "pending": "Awaiting response",
+        "attending": "Attending",
+        "declined": "Not attending",
+
+        "pendingCount": "{count, plural, one {# awaiting response} other {# awaiting response}}",
+        "attendingCount": "{count, plural, one {# attending} other {# attending}}",
+        "declinedCount": "{count, plural, one {# not attending} other {# not attending}}"
+      },
+
+      "recipients": {
+        "title": "Recipients",
+        "description": "Manage personalized invitation recipients and their RSVP responses.",
+
+        "guestCount": "{count, plural, one {# guest} other {# guests}}",
+
+        "filters": {
+          "searchPlaceholder": "Search recipients...",
+
+          "rsvp": {
+            "label": "RSVP",
+            "all": "All RSVP",
+            "pending": "Awaiting response",
+            "attending": "Attending",
+            "declined": "Not attending"
+          }
+        },
+
+        "actions": {
+          "add": "Add recipients",
+          "open": "Recipient details"
+        },
 
         "table": {
-          "recipient": "Primatelj",
+          "recipient": "Recipient",
           "link": "Link",
-          "guests": "Gosti",
+          "guests": "Guests",
           "rsvp": "RSVP",
-          "updated": "Ažurirano",
-          "actions": "Akcije",
+          "updated": "Updated",
+          "actions": "Actions",
 
-          "linkHint": "Dvoklik za otvaranje",
-          "remainingGuests": "+{count, plural, one {# gost} few {# gosta} other {# gostiju}}",
+          "linkHint": "Double-click to open",
+          "remainingGuests": "+{count, plural, one {# guest} other {# guests}}",
 
-          "emptyTitle": "Nema primatelja",
-          "emptyDescription": "Ovoj pozivnici još niste dodali nijednog personaliziranog primatelja.",
-          "addRecipient": "Dodaj primatelje"
+          "emptyTitle": "No recipients",
+          "emptyDescription": "You haven't added any personalized recipients to this invitation yet.",
+          "addRecipient": "Add recipients"
         },
 
         "details": {
-          "title": "Detalji primatelja",
-          "description": "Pregledajte primatelja personalizirane pozivnice, uključene goste i njihove RSVP odgovore.",
+          "title": "Recipient details",
+          "description": "View the personalized invitation recipient, included guests, and their RSVP responses.",
 
           "link": {
-            "title": "Personalizirani link",
-            "description": "Ova poveznica jedinstvena je za ovog primatelja.",
-            "copy": "Kopiraj link",
-            "copied": "Kopirano"
+            "title": "Personalized link",
+            "description": "This link is unique to this recipient.",
+            "copy": "Copy link",
+            "copied": "Copied"
           },
 
           "guests": {
-            "title": "Uključeni gosti",
-            "description": "Gosti koji dijele istu personaliziranu poveznicu pozivnice."
+            "title": "Included guests",
+            "description": "Guests who share the same personalized invitation link."
           },
 
-          "primary": "Glavni primatelj",
+          "primary": "Primary recipient",
 
-          "rsvp": {
-            "title": "RSVP odgovori",
-            "viewAnswers": "Pregledaj odgovore",
-            "noAnswers": "Nema dodatnih odgovora"
-          },
-
+      "rsvp": {
+  "title": "RSVP responses",
+  "viewAnswers": "View responses",
+  "yes": "Yes",
+  "no": "No",
+  "noAnswers": "No additional responses"
+},
           "actions": {
-            "openInvitation": "Otvori pozivnicu",
-            "remove": "Ukloni primatelja"
+            "openInvitation": "Open invitation",
+            "remove": "Remove recipient"
+          },
+
+          "danger": {
+            "title": "Remove recipient",
+            "description": "Remove this recipient and their personalized access to the invitation."
+          },
+
+          "delete": {
+            "title": "Remove recipient?",
+            "description": "This recipient and their personalized invitation link will be removed. The included guests will remain in the event.",
+            "confirm": "Remove recipient",
+            "success": "The recipient has been removed successfully."
           }
         },
 
         "create": {
-          "action": "Dodaj primatelje",
-          "title": "Dodaj primatelje",
-          "description": "Odaberite goste koji će dijeliti istu personaliziranu poveznicu pozivnice.",
+          "action": "Add recipients",
+          "title": "Add recipients",
+          "description": "Select guests who will share the same personalized invitation link.",
 
           "steps": {
-            "guests": "Gosti",
-            "settings": "Postavke",
-            "review": "Pregled"
+            "guests": "Guests",
+            "settings": "Settings",
+            "review": "Review"
           },
 
-          "back": "Natrag",
-          "next": "Nastavi",
-          "submit": "Kreiraj primatelja",
-          "submitting": "Kreiranje...",
+          "back": "Back",
+          "next": "Continue",
+          "submit": "Create recipient",
+          "submitting": "Creating...",
 
           "guests": {
-            "title": "Odaberite goste",
-            "description": "Odaberite jednog ili više gostiju koji će zajedno primiti ovu pozivnicu.",
-            "selected": "{count, plural, =0 {Nema odabranih gostiju} one {Odabran je # gost} few {Odabrana su # gosta} other {Odabrano je # gostiju}}",
-            "noDetails": "Nema kontaktnih podataka",
+            "title": "Select guests",
+            "description": "Select one or more guests who will receive this invitation together.",
+            "selected": "{count, plural, =0 {No guests selected} one {# guest selected} other {# guests selected}}",
+            "noDetails": "No contact details",
+            "addGuest": "Add guest",
 
             "empty": {
-              "title": "Nema dostupnih gostiju",
-              "description": "Dodajte goste događaju prije kreiranja personaliziranog primatelja."
+              "title": "No available guests",
+              "description": "Add a guest to the event before creating a personalized recipient."
             }
           },
 
           "settings": {
-            "title": "Postavke primatelja",
-            "description": "Odaberite kako će ovaj primatelj personalizirane pozivnice biti postavljen.",
+            "title": "Recipient settings",
+            "description": "Choose how this personalized invitation recipient should be configured.",
 
             "primary": {
-              "title": "Glavni primatelj",
-              "description": "Odaberite glavnog gosta za ovu personaliziranu poveznicu pozivnice."
+              "title": "Primary recipient",
+              "description": "Select the primary guest for this personalized invitation link."
             }
           },
 
           "review": {
-            "title": "Pregled primatelja",
-            "description": "Provjerite podatke personaliziranog primatelja prije kreiranja poveznice.",
+            "title": "Review recipient",
+            "description": "Review the personalized recipient details before creating the link.",
 
             "guests": {
-              "label": "Gosti",
-              "title": "Uključeni gosti",
-              "description": "Ovi gosti dijelit će istu personaliziranu poveznicu pozivnice.",
-              "count": "{count, plural, one {# gost} few {# gosta} other {# gostiju}}"
+              "label": "Guests",
+              "title": "Included guests",
+              "description": "These guests will share the same personalized invitation link.",
+              "count": "{count, plural, one {# guest} other {# guests}}"
             },
 
             "primary": {
-              "label": "Glavni primatelj",
-              "badge": "Glavni"
+              "label": "Primary recipient",
+              "badge": "Primary"
             }
           }
         }

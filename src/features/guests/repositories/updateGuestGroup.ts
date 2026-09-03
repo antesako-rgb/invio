@@ -1,11 +1,11 @@
 import {
-  supabase,
-} from "@/lib/supabase/client";
+  createServerClient,
+} from "@/lib/supabase/server";
 
 import type {
   GuestGroup,
   UpdateGuestGroupInput,
-} from "../types/guest.types";
+} from "@/features/guests/types/guest.types";
 
 
 /* ==========================================================================
@@ -16,6 +16,10 @@ export async function updateGuestGroup(
   groupId: string,
   changes: UpdateGuestGroupInput
 ): Promise<GuestGroup> {
+  const supabase =
+    await createServerClient();
+
+
   const {
     data,
     error,
@@ -30,9 +34,18 @@ export async function updateGuestGroup(
       .select()
       .single();
 
+
   if (error) {
-    throw error;
+    console.error(
+      "updateGuestGroup error:",
+      error
+    );
+
+    throw new Error(
+      error.message
+    );
   }
+
 
   return data;
 }

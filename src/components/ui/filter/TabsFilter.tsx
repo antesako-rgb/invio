@@ -26,6 +26,7 @@ export interface TabsFilterItem {
     boolean;
 }
 
+
 interface TabsFilterProps {
   items:
     TabsFilterItem[];
@@ -39,6 +40,9 @@ interface TabsFilterProps {
 
   className?:
     string;
+
+  equalWidth?:
+    boolean;
 }
 
 
@@ -51,11 +55,16 @@ export default function TabsFilter({
   value,
   onValueChange,
   className,
+  equalWidth = false,
 }: TabsFilterProps) {
   return (
     <div
       className={cn(
         styles.root,
+
+        equalWidth &&
+          styles.equalWidth,
+
         className
       )}
     >
@@ -90,6 +99,7 @@ export default function TabsFilter({
               }}
               className={cn(
                 styles.tab,
+
                 active &&
                   styles.active
               )}

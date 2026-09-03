@@ -12,13 +12,19 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet/Sheet";
 
+import GuestDeleteDangerZone
+  from "@/features/guests/components/GuestDeleteDangerZone/GuestDeleteDangerZone";
+
 import GuestForm
-  from "../GuestForm/GuestForm";
+  from "@/features/guests/components/GuestForm/GuestForm";
 
 import type {
   EventGuest,
   GuestGroup,
-} from "../../types/guest.types";
+} from "@/features/guests/types/guest.types";
+
+import styles
+  from "./GuestSheet.module.css";
 
 
 /* ==========================================================================
@@ -71,19 +77,6 @@ export default function GuestSheet({
 
 
   /* ==========================================================================
-     Success
-  ========================================================================== */
-
-  function handleSuccess() {
-    onSuccess();
-
-    onOpenChange(
-      false
-    );
-  }
-
-
-  /* ==========================================================================
      Render
   ========================================================================== */
 
@@ -98,6 +91,9 @@ export default function GuestSheet({
     >
       <SheetContent
         side="right"
+        initialFocus={
+          false
+        }
       >
         <SheetHeader>
           <SheetTitle>
@@ -118,24 +114,57 @@ export default function GuestSheet({
         </SheetHeader>
 
 
-        <GuestForm
-          key={
-            guest?.id ??
-            "create"
+        <div
+          className={
+            styles.content
           }
-          eventId={
-            eventId
-          }
-          groups={
-            groups
-          }
-          guest={
-            guest
-          }
-          onSuccess={
-            handleSuccess
-          }
-        />
+        >
+          <div
+            className={
+              styles.form
+            }
+          >
+            <GuestForm
+              key={
+                guest?.id ??
+                "create"
+              }
+              eventId={
+                eventId
+              }
+              groups={
+                groups
+              }
+              guest={
+                guest
+              }
+              onSuccess={
+                onSuccess
+              }
+            />
+          </div>
+
+
+          {guest && (
+            <div
+              className={
+                styles.danger
+              }
+            >
+              <GuestDeleteDangerZone
+                guestId={
+                  guest.id
+                }
+                eventId={
+                  eventId
+                }
+                onSuccess={
+                  onSuccess
+                }
+              />
+            </div>
+          )}
+        </div>
       </SheetContent>
     </Sheet>
   );

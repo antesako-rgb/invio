@@ -46,10 +46,6 @@ export type GetPublicInvitationRecipientInput =
    Recipient RSVP
 ========================================================================== */
 
-/* ==========================================================================
-   Recipient RSVP
-========================================================================== */
-
 export type InvitationRecipientRsvp =
   Pick<
     InvitationRsvpResponse,
@@ -177,6 +173,16 @@ export interface PublicInvitationRecipientInvitation {
 
 
 /* ==========================================================================
+   Public Invitation Recipient Event
+========================================================================== */
+
+export interface PublicInvitationRecipientEvent {
+  timezone:
+    string;
+}
+
+
+/* ==========================================================================
    Public Invitation Recipient
 ========================================================================== */
 
@@ -186,6 +192,9 @@ export interface PublicInvitationRecipient {
 
   invitation:
     PublicInvitationRecipientInvitation;
+
+  event:
+    PublicInvitationRecipientEvent;
 
   guests:
     PublicInvitationRecipientGuest[];

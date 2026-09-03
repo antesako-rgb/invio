@@ -16,13 +16,40 @@
     "guest": "Gost",
     "contact": "Kontakt",
     "group": "Grupa",
-    "primaryGuest": "Povezan s",
+    "rsvp": "RSVP",
     "notes": "Napomena",
     "actions": "Akcije",
     "noGroup": "Bez grupe",
     "emptyTitle": "Nema gostiju",
     "emptyDescription": "Još niste dodali nijednog gosta.",
     "addGuest": "Dodaj gosta"
+  },
+
+  "rsvpStatus": {
+    "unknown": "Nije potvrđeno",
+    "attending": "Dolazi",
+    "declined": "Ne dolazi"
+  },
+
+  "rsvpSource": {
+    "title": "RSVP status",
+    "success": "Glavna RSVP pozivnica je promijenjena.",
+
+    "manual": {
+      "description": "RSVP statusi gostiju trenutno se vode ručno."
+    },
+
+    "single": {
+      "description": "Odgovori s ove pozivnice koriste se kao glavni RSVP status događaja.",
+      "notPrimary": "Ova pozivnica trenutno se ne koristi kao glavni RSVP izvor događaja.",
+      "action": "Koristi za RSVP status",
+      "setting": "Postavljanje..."
+    },
+
+    "multiple": {
+      "description": "Odaberite pozivnicu čiji će se odgovori koristiti kao glavni RSVP status događaja.",
+      "placeholder": "Odaberite glavnu RSVP pozivnicu"
+    }
   },
 
   "filters": {
@@ -35,14 +62,21 @@
   "form": {
     "firstName": "Ime",
     "firstNamePlaceholder": "Unesite ime",
+
     "lastName": "Prezime",
     "lastNamePlaceholder": "Unesite prezime",
+
     "email": "Email",
     "emailPlaceholder": "Unesite email adresu",
+
     "phone": "Telefon",
     "phonePlaceholder": "Unesite broj telefona",
+
     "group": "Grupa",
     "noGroup": "Bez grupe",
+
+    "rsvpStatus": "RSVP status",
+
     "notes": "Napomena",
     "notesPlaceholder": "Dodajte napomenu..."
   },
@@ -50,19 +84,81 @@
   "dialog": {
     "createTitle": "Dodaj gosta",
     "createDescription": "Dodajte novog gosta na popis gostiju.",
+
     "editTitle": "Uredi gosta",
-    "editDescription": "Uredite podatke odabranog gosta."
+    "editDescription": "Ažurirajte podatke odabranog gosta."
+  },
+
+  "groups": {
+    "title": "Grupe gostiju",
+    "description": "Kreirajte i upravljajte grupama za organizaciju svojih gostiju.",
+
+    "addGroup": "Dodaj grupu",
+    "edit": "Uredi",
+
+    "emptyTitle": "Nema grupa",
+    "emptyDescription": "Kreirajte prvu grupu za organizaciju svojih gostiju.",
+
+    "form": {
+      "createTitle": "Nova grupa",
+      "createDescription": "Kreirajte novu grupu za organizaciju svojih gostiju.",
+
+      "editTitle": "Uredi grupu",
+      "editDescription": "Ažurirajte odabranu grupu gostiju.",
+
+      "name": "Naziv grupe",
+      "namePlaceholder": "Unesite naziv grupe",
+
+      "create": "Kreiraj grupu",
+      "save": "Spremi promjene",
+      "saving": "Spremanje...",
+      "cancel": "Odustani",
+      "back": "Natrag na grupe"
+    },
+
+    "messages": {
+      "created": "Grupa je uspješno kreirana.",
+      "updated": "Grupa je uspješno ažurirana."
+    },
+
+    "delete": {
+      "title": "Brisanje grupe",
+      "description": "Trajno obrišite ovu grupu. Gosti iz grupe ostat će na popisu gostiju bez grupe.",
+      "success": "Grupa je uspješno obrisana.",
+
+      "confirm": {
+        "title": "Obrisati grupu?",
+        "description": "Ovu radnju nije moguće poništiti. Gosti iz ove grupe neće biti obrisani i ostat će na popisu gostiju bez grupe.",
+        "confirm": "Obriši grupu",
+        "cancel": "Odustani"
+      }
+    }
+  },
+
+  "delete": {
+    "title": "Brisanje gosta",
+    "description": "Trajno uklonite ovog gosta s događaja i povezanih pozivnica.",
+    "button": "Obriši gosta",
+
+    "confirm": {
+      "title": "Obrisati gosta?",
+      "description": "Ovu radnju nije moguće poništiti. Gost i njegovi povezani RSVP podaci bit će trajno obrisani.",
+      "confirm": "Obriši gosta",
+      "cancel": "Odustani"
+    }
   },
 
   "messages": {
     "guestCreated": "Gost je uspješno dodan.",
     "guestCreateError": "Došlo je do pogreške prilikom dodavanja gosta.",
+
     "guestUpdated": "Gost je uspješno ažuriran.",
     "guestUpdateError": "Došlo je do pogreške prilikom ažuriranja gosta."
   },
 
   "actions": {
     "addGuest": "Dodaj gosta",
+    "manageGroups": "Upravljaj grupama",
     "open": "Otvori akcije gosta"
   }
 }
