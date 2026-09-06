@@ -70,34 +70,33 @@
   ======================================================================== */
 
   .invitation-editor__mobile-controls {
-    position:
-      fixed;
+    display:
+      flex;
 
-    right:
-      1rem;
+    flex:
+      0 0 auto;
 
-    bottom:
+    justify-content:
+      center;
+
+    width:
+      100%;
+
+    padding:
+      0.75rem
+      1rem
       max(
-        1rem,
+        0.75rem,
         env(
           safe-area-inset-bottom
         )
       );
 
-    left:
-      1rem;
+    border-top:
+      1px solid var(--border);
 
-    z-index:
-      40;
-
-    display:
-      flex;
-
-    justify-content:
-      center;
-
-    pointer-events:
-      none;
+    background:
+      var(--background);
   }
 
   .invitation-editor__mobile-controls
@@ -107,9 +106,6 @@
 
     max-width:
       24rem;
-
-    pointer-events:
-      auto;
   }
 
 
