@@ -41,6 +41,12 @@ interface InvitationTemplateCardProps {
   template:
     InvitationTemplateConfig;
 
+  disabled?:
+    boolean;
+
+  isCreating?:
+    boolean;
+
   onSelect:
     (
       templateId: string,
@@ -56,6 +62,8 @@ interface InvitationTemplateCardProps {
 export default function InvitationTemplateCard({
   templateId,
   template,
+  disabled = false,
+  isCreating = false,
   onSelect,
 }: InvitationTemplateCardProps) {
   /* ==========================================================================
@@ -107,7 +115,10 @@ export default function InvitationTemplateCard({
   ========================================================================== */
 
   function handleSelect() {
-    if (!selectedVariant) {
+    if (
+      disabled ||
+      !selectedVariant
+    ) {
       return;
     }
 
@@ -218,6 +229,9 @@ export default function InvitationTemplateCard({
                   aria-pressed={
                     selected
                   }
+                  disabled={
+                    disabled
+                  }
                   onClick={() =>
                     setSelectedVariantId(
                       variant.id
@@ -239,6 +253,8 @@ export default function InvitationTemplateCard({
                     aria-pressed:ring-2
                     aria-pressed:ring-primary
                     aria-pressed:ring-offset-2
+                    disabled:pointer-events-none
+                    disabled:opacity-50
                   "
                   style={{
                     background:
@@ -260,13 +276,20 @@ export default function InvitationTemplateCard({
         <Button
           type="button"
           className="w-full"
+          disabled={
+            disabled
+          }
           onClick={
             handleSelect
           }
         >
-          {t(
-            "useTemplate"
-          )}
+          {isCreating
+            ? t(
+                "creating"
+              )
+            : t(
+                "useTemplate"
+              )}
         </Button>
       </CardFooter>
     </Card>

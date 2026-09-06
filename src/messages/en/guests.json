@@ -25,12 +25,19 @@
     "addGuest": "Add guest"
   },
 
-  "rsvpStatus": {
-    "unknown": "Not confirmed",
-    "attending": "Attending",
-    "declined": "Not attending"
-  },
-
+"rsvpStatus": {
+  "unknown": "Not confirmed",
+  "attending": "Attending",
+  "declined": "Not attending",
+  "not_sent": "Not sent",
+  "awaiting_response": "Awaiting response"
+},
+"rsvpConflict": {
+  "warning": "The RSVP response differs from the guest status",
+  "title": "RSVP status differs",
+  "description": "The guest status was changed manually and differs from the response submitted through the primary RSVP invitation.",
+  "primaryResponse": "RSVP response"
+},
   "rsvpSource": {
     "title": "RSVP status",
     "success": "Primary RSVP invitation updated.",

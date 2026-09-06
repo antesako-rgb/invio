@@ -83,39 +83,39 @@
         "viewAnswers": "Prikaži odgovore"
       },
 
-"rsvpAnswers": {
-  "title": "RSVP odgovori",
-  "description": "Pregledajte goste i njihove odgovore za ovu pozivnicu.",
+      "rsvpAnswers": {
+        "title": "RSVP odgovori",
+        "description": "Pregledajte goste i njihove odgovore za ovu pozivnicu.",
 
-  "tabs": {
-    "guests": "Gosti",
-    "answers": "Odgovori"
-  },
+        "tabs": {
+          "guests": "Gosti",
+          "answers": "Odgovori"
+        },
 
-  "guestCount": "{count, plural, one {# gost} few {# gosta} other {# gostiju}}",
-  "respondedCount": "{count, plural, one {# odgovorio} few {# odgovorila} other {# odgovorilo}}",
+        "guestCount": "{count, plural, one {# gost} few {# gosta} other {# gostiju}}",
+        "respondedCount": "{count, plural, one {# odgovorio} few {# odgovorila} other {# odgovorilo}}",
 
-  "responseCount": "{count, plural, one {# odgovor} few {# odgovora} other {# odgovora}}",
-  "questionCount": "{count, plural, one {# pitanje} few {# pitanja} other {# pitanja}}",
-  "answerCount": "{count, plural, one {# odgovor} few {# odgovora} other {# odgovora}}",
+        "responseCount": "{count, plural, one {# odgovor} few {# odgovora} other {# odgovora}}",
+        "questionCount": "{count, plural, one {# pitanje} few {# pitanja} other {# pitanja}}",
+        "answerCount": "{count, plural, one {# odgovor} few {# odgovora} other {# odgovora}}",
 
-  "yes": "Da",
-  "no": "Ne",
+        "yes": "Da",
+        "no": "Ne",
 
-  "noAnswers": "Još nema odgovora.",
+        "noAnswers": "Još nema odgovora.",
 
-  "guests": {
-    "empty": {
-      "title": "Nema gostiju",
-      "description": "Ovoj pozivnici još nisu dodani gosti."
-    }
-  },
+        "guests": {
+          "empty": {
+            "title": "Nema gostiju",
+            "description": "Ovoj pozivnici još nisu dodani gosti."
+          }
+        },
 
-  "empty": {
-    "title": "Nema RSVP pitanja",
-    "description": "Ova pozivnica nema dodatnih RSVP pitanja."
-  }
-},
+        "empty": {
+          "title": "Nema RSVP pitanja",
+          "description": "Ova pozivnica nema dodatnih RSVP pitanja."
+        }
+      },
 
       "rsvpStatus": {
         "pending": "Čeka odgovor",
@@ -128,13 +128,13 @@
       },
 
       "recipients": {
-        "title": "Primatelji",
-        "description": "Upravljajte primateljima personaliziranih pozivnica i njihovim RSVP odgovorima.",
+        "title": "Gosti pozivnice",
+        "description": "Pregledajte goste povezane s ovom pozivnicom i njihove RSVP odgovore.",
 
         "guestCount": "{count, plural, one {# gost} few {# gosta} other {# gostiju}}",
 
         "filters": {
-          "searchPlaceholder": "Pretraži primatelje...",
+          "searchPlaceholder": "Pretraži goste...",
 
           "rsvp": {
             "label": "RSVP",
@@ -147,11 +147,11 @@
 
         "actions": {
           "add": "Dodaj primatelje",
-          "open": "Detalji primatelja"
+          "open": "Detalji"
         },
 
         "table": {
-          "recipient": "Primatelj",
+          "recipient": "Gost",
           "link": "Link",
           "guests": "Gosti",
           "rsvp": "RSVP",
@@ -159,38 +159,39 @@
           "actions": "Akcije",
 
           "linkHint": "Dvoklik za otvaranje",
+          "publicInvitation": "Javna pozivnica",
           "remainingGuests": "+{count, plural, one {# gost} few {# gosta} other {# gostiju}}",
 
-          "emptyTitle": "Nema primatelja",
-          "emptyDescription": "Ovoj pozivnici još niste dodali nijednog personaliziranog primatelja.",
+          "emptyTitle": "Nema gostiju",
+          "emptyDescription": "Ovoj pozivnici još nisu dodani gosti niti su zaprimljeni odgovori putem javne pozivnice.",
           "addRecipient": "Dodaj primatelje"
         },
 
         "details": {
-          "title": "Detalji primatelja",
-          "description": "Pregledajte primatelja personalizirane pozivnice, uključene goste i njihove RSVP odgovore.",
+          "title": "Detalji",
+          "description": "Pregledajte goste i njihove RSVP odgovore za ovu pozivnicu.",
 
           "link": {
-            "title": "Personalizirani link",
-            "description": "Ova poveznica jedinstvena je za ovog primatelja.",
+            "title": "Link pozivnice",
+            "description": "Poveznica putem koje je gost pristupio pozivnici.",
             "copy": "Kopiraj link",
             "copied": "Kopirano"
           },
 
           "guests": {
-            "title": "Uključeni gosti",
-            "description": "Gosti koji dijele istu personaliziranu poveznicu pozivnice."
+            "title": "Gosti",
+            "description": "Gosti povezani s ovim pristupom pozivnici."
           },
 
           "primary": "Glavni primatelj",
 
-      "rsvp": {
-  "title": "RSVP odgovori",
-  "viewAnswers": "Pregledaj odgovore",
-  "yes": "Da",
-  "no": "Ne",
-  "noAnswers": "Nema dodatnih odgovora"
-},
+          "rsvp": {
+            "title": "RSVP odgovori",
+            "viewAnswers": "Pregledaj odgovore",
+            "yes": "Da",
+            "no": "Ne",
+            "noAnswers": "Nema dodatnih odgovora"
+          },
 
           "actions": {
             "openInvitation": "Otvori pozivnicu",

@@ -1,9 +1,14 @@
 {
   "appName": "Invio",
+
   "loading": "Učitavanje...",
-  "backToTop": "Povratak na vrh",
+
+  "backToTop": "Natrag na vrh",
+
   "showPassword": "Prikaži lozinku",
+
   "hidePassword": "Sakrij lozinku",
+
   "save": "Spremi",
 
   "datePicker": {
@@ -12,5 +17,9 @@
 
   "timePicker": {
     "clear": "Očisti vrijeme"
+  },
+
+  "filePicker": {
+    "select": "Odaberi fotografiju"
   }
 }

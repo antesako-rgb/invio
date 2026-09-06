@@ -1,10 +1,10 @@
 import {
-  floraPreviewContent,
-} from "@/features/invitations/preview/data/floraPreviewContent";
+  floraTemplateConfig,
+} from "@/features/invitations/cards/flora/FloraTemplateConfig";
 
 import {
-  portraitPreviewContent,
-} from "@/features/invitations/preview/data/portraitPreviewContent";
+  portraitTemplateConfig,
+} from "@/features/invitations/cards/portrait/PortraitTemplateConfig";
 
 import type {
   InvitationTemplateConfig,
@@ -17,101 +17,9 @@ import type {
 
 export const invitationTemplateRegistry:
   Record<string, InvitationTemplateConfig> = {
-    flora: {
-      category:
-        "wedding",
+    flora:
+      floraTemplateConfig,
 
-      previewUrl:
-        "/invitation-assets/previews/flora/champagne.webp",
-
-      previewContent:
-        floraPreviewContent,
-
-      envelopeId:
-        "classic",
-
-      defaultVariantId:
-        "champagne",
-
-      variants: [
-        {
-          id:
-            "champagne",
-
-          label:
-            "Champagne",
-
-          previewUrl:
-            "/invitation-assets/previews/flora/frame.png",
-
-          swatch:
-            "#d8c5a3",
-        },
-
-        {
-          id:
-            "sage",
-
-          label:
-            "Sage",
-
-          previewUrl:
-            "/invitation-assets/previews/flora/sage.webp",
-
-          swatch:
-            "#87977a",
-        },
-
-        {
-          id:
-            "rose",
-
-          label:
-            "Rose",
-
-          previewUrl:
-            "/invitation-assets/previews/flora/rose.webp",
-
-          swatch:
-            "#c99a9f",
-        },
-      ],
-    },
-
-
-    /* ======================================================================
-       Portrait
-    ====================================================================== */
-
-    portrait: {
-      category:
-        "wedding",
-
-      previewUrl:
-        "/invitation-assets/previews/portrait/classic.webp",
-
-      previewContent:
-        portraitPreviewContent,
-
-      envelopeId:
-        "classic",
-
- defaultVariantId:
-  "champagne",
-      variants: [
-        {
-          id:
-            "champagne",
-
-          label:
-            "Champagne",
-
-      previewUrl:
-    "/invitation-assets/previews/portrait/champagne.webp",
-
-          swatch:
-            "#d8c5a3",
-        },
-      ],
-    },
+    portrait:
+      portraitTemplateConfig,
   };

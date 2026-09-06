@@ -1,12 +1,10 @@
 "use client";
 
 import {
-  useRef,
   useState,
 } from "react";
 
 import type {
-  ChangeEvent,
   MouseEvent,
   ReactNode,
 } from "react";
@@ -20,6 +18,9 @@ import {
 import {
   useTranslations,
 } from "next-intl";
+
+import FilePicker
+  from "@/components/ui/file-picker/FilePicker";
 
 import {
   removeInvitationImageAction,
@@ -90,15 +91,19 @@ export default function EditableImage({
   imageClassName,
   alt = "",
 }: EditableImageProps) {
+  /* ==========================================================================
+     Translations
+  ========================================================================== */
+
   const t =
     useTranslations(
       "Invitations.editor.elementLabels"
     );
 
-  const inputRef =
-    useRef<HTMLInputElement>(
-      null
-    );
+
+  /* ==========================================================================
+     State
+  ========================================================================== */
 
   const [
     isUploading,
@@ -175,49 +180,18 @@ export default function EditableImage({
     );
   }
 
-function handleClick(
-  event:
-    MouseEvent<HTMLDivElement>
-) {
-  if (
-    !isEditorMode ||
-    isBusy
-  ) {
-    return;
-  }
-
-  event.preventDefault();
-  event.stopPropagation();
-
-  const input =
-    inputRef.current;
-
-  if (!input) {
-    return;
-  }
-
-  input.showPicker();
-}
-
 
   /* ==========================================================================
      Upload
   ========================================================================== */
 
-  async function handleFileChange(
-    event:
-      ChangeEvent<HTMLInputElement>
+  async function handleFileSelect(
+    file: File
   ) {
-    const file =
-      event.target.files?.[0];
-
-    event.target.value =
-      "";
-
     if (
-      !file ||
       !editor ||
-      !invitationId
+      !invitationId ||
+      isBusy
     ) {
       return;
     }
@@ -307,127 +281,168 @@ function handleClick(
 
 
   /* ==========================================================================
+     Render Content
+  ========================================================================== */
+
+  function renderContent(
+    openPicker?: () => void
+  ) {
+    function handleClick(
+      event:
+        MouseEvent<HTMLDivElement>
+    ) {
+      if (
+        !isEditorMode ||
+        isBusy ||
+        !openPicker
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      openPicker();
+    }
+
+
+    return (
+      <div
+        className={[
+          "editable-image",
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        data-editor-element={
+          isEditorMode
+            ? element
+            : undefined
+        }
+        data-editor-label={
+          isEditorMode
+            ? editorLabel
+            : undefined
+        }
+        data-editor-empty={
+          !hasImage
+            ? "true"
+            : undefined
+        }
+        data-editor-loading={
+          isBusy
+            ? "true"
+            : undefined
+        }
+        onClick={
+          isEditorMode
+            ? handleClick
+            : undefined
+        }
+      >
+        {imageUrl ? (
+          <img
+            className={[
+              "editable-image__image",
+              imageClassName,
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            src={
+              imageUrl
+            }
+            alt={
+              alt
+            }
+            draggable={
+              false
+            }
+          />
+        ) : (
+          children
+        )}
+
+        {isEditorMode &&
+          !hasImage &&
+          !isBusy && (
+            <div
+              className="editable-image__empty"
+              aria-hidden="true"
+            >
+              <ImagePlus />
+            </div>
+          )}
+
+        {isEditorMode &&
+          isBusy && (
+            <div
+              className="editable-image__loading"
+              data-invitation-editor-ui
+            >
+              <LoaderCircle
+                className="editable-image__spinner"
+                aria-hidden="true"
+              />
+            </div>
+          )}
+
+        {isEditorMode &&
+          hasImage &&
+          !isBusy && (
+            <button
+              type="button"
+              className="editable-image__delete"
+              data-invitation-editor-ui
+              aria-label={
+                t(
+                  "delete"
+                )
+              }
+              onClick={
+                handleDelete
+              }
+            >
+              <X
+                aria-hidden="true"
+              />
+            </button>
+          )}
+      </div>
+    );
+  }
+
+
+  /* ==========================================================================
+     Editor Render
+  ========================================================================== */
+
+  if (isEditorMode) {
+    return (
+      <FilePicker
+        accept="image/jpeg,image/png,image/webp"
+        disabled={
+          isBusy
+        }
+        label={
+          editorLabel
+        }
+        onSelect={
+          handleFileSelect
+        }
+      >
+        {(openPicker) =>
+          renderContent(
+            openPicker
+          )
+        }
+      </FilePicker>
+    );
+  }
+
+
+  /* ==========================================================================
      Render
   ========================================================================== */
 
-  return (
-    <div
-      className={[
-        "editable-image",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      data-editor-element={
-        isEditorMode
-          ? element
-          : undefined
-      }
-      data-editor-label={
-        isEditorMode
-          ? editorLabel
-          : undefined
-      }
-      data-editor-empty={
-        !hasImage
-          ? "true"
-          : undefined
-      }
-      data-editor-loading={
-        isBusy
-          ? "true"
-          : undefined
-      }
-      onClick={
-        isEditorMode
-          ? handleClick
-          : undefined
-      }
-    >
-      {imageUrl ? (
-        <img
-          className={[
-            "editable-image__image",
-            imageClassName,
-          ]
-            .filter(Boolean)
-            .join(" ")}
-          src={
-            imageUrl
-          }
-          alt={
-            alt
-          }
-          draggable={
-            false
-          }
-        />
-      ) : (
-        children
-      )}
-
-      {isEditorMode &&
-        !hasImage &&
-        !isBusy && (
-          <div
-            className="editable-image__empty"
-            aria-hidden="true"
-          >
-            <ImagePlus />
-          </div>
-        )}
-
-      {isEditorMode &&
-        isBusy && (
-          <div
-            className="editable-image__loading"
-            data-invitation-editor-ui
-          >
-            <LoaderCircle
-              className="editable-image__spinner"
-              aria-hidden="true"
-            />
-          </div>
-        )}
-
-      {isEditorMode &&
-        hasImage &&
-        !isBusy && (
-          <button
-            type="button"
-            className="editable-image__delete"
-            data-invitation-editor-ui
-            aria-label={
-              t(
-                "delete"
-              )
-            }
-            onClick={
-              handleDelete
-            }
-          >
-            <X
-              aria-hidden="true"
-            />
-          </button>
-        )}
-
-      {isEditorMode && (
-        <input
-          ref={
-            inputRef
-          }
-          className="editable-image__input"
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          tabIndex={
-            -1
-          }
-          onChange={
-            handleFileChange
-          }
-        />
-      )}
-    </div>
-  );
+  return renderContent();
 }

@@ -13,8 +13,8 @@ import InvitationRsvpAnswersAction
   from "@/features/invitations/components/invitation-management/InvitationRsvpAnswers/InvitationRsvpAnswersAction/InvitationRsvpAnswersAction";
 
 import type {
-  InvitationRecipientDetails,
-} from "@/features/invitations/types/invitationRecipient.types";
+  InvitationManagementGuest,
+} from "@/features/invitations/types/invitationManagement.types";
 
 import type {
   InvitationRsvpQuestion,
@@ -44,8 +44,8 @@ interface InvitationRsvpSummaryProps {
   questions:
     InvitationRsvpQuestion[];
 
-  recipients:
-    InvitationRecipientDetails[];
+  guests:
+    InvitationManagementGuest[];
 }
 
 
@@ -59,7 +59,7 @@ export default async function InvitationRsvpSummary({
   declined,
   pending,
   questions,
-  recipients,
+  guests,
 }: InvitationRsvpSummaryProps) {
   /* ==========================================================================
      Translations
@@ -217,8 +217,8 @@ export default async function InvitationRsvpSummary({
           questions={
             questions
           }
-          recipients={
-            recipients
+          guests={
+            guests
           }
         />
       </div>

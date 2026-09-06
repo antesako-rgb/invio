@@ -3,103 +3,186 @@
 import {
   useId,
   useRef,
-  type ReactNode,
 } from "react";
 
-import { Camera } from "lucide-react";
+import type {
+  ChangeEvent,
+  ReactNode,
+} from "react";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {
+  Camera,
+} from "lucide-react";
+
+import {
+  useTranslations,
+} from "next-intl";
+
+import {
+  Button,
+} from "@/components/ui/button";
+
+import {
+  Input,
+} from "@/components/ui/input";
+
+
+/* ==========================================================================
+   Types
+========================================================================== */
 
 interface FilePickerProps {
-  accept?: string;
-  label?: string;
-  disabled?: boolean;
+  accept?:
+    string;
 
-  children?: ReactNode;
+  label?:
+    string;
 
-  onSelect?: (file: File) => void;
+  disabled?:
+    boolean;
+
+  children?:
+    (
+      openPicker: () => void
+    ) => ReactNode;
+
+  onSelect?:
+    (file: File) => void;
 }
+
+
+/* ==========================================================================
+   File Picker
+========================================================================== */
 
 export default function FilePicker({
   accept = "image/*",
-  label = "Odaberi fotografiju",
+  label,
   disabled = false,
   children,
   onSelect,
 }: FilePickerProps) {
-  const id = useId();
+  /* ==========================================================================
+     Translations
+  ========================================================================== */
+
+  const t =
+    useTranslations(
+      "Common.filePicker"
+    );
+
+
+  /* ==========================================================================
+     Refs
+  ========================================================================== */
+
+  const id =
+    useId();
 
   const inputRef =
-    useRef<HTMLInputElement>(null);
+    useRef<HTMLInputElement>(
+      null
+    );
 
-  function handleChange(
-    e: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const file = e.target.files?.[0];
 
-    if (!file) return;
+  /* ==========================================================================
+     Derived State
+  ========================================================================== */
 
-    onSelect?.(file);
+  const resolvedLabel =
+    label ??
+    t(
+      "select"
+    );
 
-    e.target.value = "";
-  }
+
+  /* ==========================================================================
+     Open Picker
+  ========================================================================== */
 
   function openPicker() {
-    if (!disabled) {
-      inputRef.current?.click();
+    if (disabled) {
+      return;
     }
+
+    inputRef.current?.click();
   }
+
+
+  /* ==========================================================================
+     Change
+  ========================================================================== */
+
+  function handleChange(
+    event:
+      ChangeEvent<HTMLInputElement>
+  ) {
+    const file =
+      event.target.files?.[0];
+
+    event.target.value =
+      "";
+
+    if (!file) {
+      return;
+    }
+
+    onSelect?.(
+      file
+    );
+  }
+
+
+  /* ==========================================================================
+     Render
+  ========================================================================== */
 
   return (
     <>
       <Input
-        ref={inputRef}
-        id={id}
+        ref={
+          inputRef
+        }
+        id={
+          id
+        }
         type="file"
-        accept={accept}
+        accept={
+          accept
+        }
         className="sr-only"
-        disabled={disabled}
-        onChange={handleChange}
+        disabled={
+          disabled
+        }
+        tabIndex={
+          -1
+        }
+        onChange={
+          handleChange
+        }
       />
 
       {children ? (
-        <div
-          role="button"
-          tabIndex={
-            disabled ? -1 : 0
-          }
-          aria-disabled={disabled}
-          onClick={openPicker}
-          onKeyDown={(e) => {
-            if (
-              disabled
-            ) {
-              return;
-            }
-
-            if (
-              e.key === "Enter" ||
-              e.key === " "
-            ) {
-              e.preventDefault();
-
-              openPicker();
-            }
-          }}
-        >
-          {children}
-        </div>
+        children(
+          openPicker
+        )
       ) : (
         <Button
           type="button"
           variant="outline"
-          disabled={disabled}
-          onClick={openPicker}
+          disabled={
+            disabled
+          }
+          onClick={
+            openPicker
+          }
         >
-          <Camera size={18} />
+          <Camera
+            className="size-4"
+            aria-hidden="true"
+          />
 
-          {label}
+          {resolvedLabel}
         </Button>
       )}
     </>

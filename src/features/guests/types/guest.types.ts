@@ -1,4 +1,5 @@
 import type {
+  Database,
   Tables,
   TablesInsert,
   TablesUpdate,
@@ -59,6 +60,35 @@ export type CreateEventGuestInput =
 export type UpdateEventGuestInput =
   TablesUpdate<"event_guests">;
 
+
+/* ==========================================================================
+   Event Guest With RSVP
+========================================================================== */
+
+type EventGuestWithRsvpRow =
+  Database["public"]["Functions"]["get_event_guests_with_rsvp"]["Returns"][number];
+
+export type EventGuestWithRsvp =
+  Omit<
+    EventGuestWithRsvpRow,
+    | "rsvp_status"
+    | "rsvp_status_source"
+    | "primary_rsvp_status"
+  > & {
+    rsvp_status:
+      GuestRsvpStatus;
+
+    rsvp_status_source:
+      GuestRsvpStatusSource;
+
+    primary_rsvp_status:
+      GuestRsvpStatus | null;
+  };
+
+
+/* ==========================================================================
+   Guest RSVP Invitation
+========================================================================== */
 
 export type GuestRsvpInvitation =
   Pick<

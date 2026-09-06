@@ -2,8 +2,8 @@ import EventPage
   from "@/features/events/pages/EventPage/EventPage";
 
 import {
-  getEventGuestsPageData,
-} from "@/features/guests/repositories/getEventGuestsPageData";
+  getEventGuests,
+} from "@/features/guests/repositories/getEventGuests";
 
 
 /* ==========================================================================
@@ -33,13 +33,11 @@ export default async function EventOverviewPage({
 
 
   /* ==========================================================================
-     Guests Data
+     Guests
   ========================================================================== */
 
-  const {
-    guests,
-  } =
-    await getEventGuestsPageData(
+  const guests =
+    await getEventGuests(
       eventId
     );
 

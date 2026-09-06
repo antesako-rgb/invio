@@ -5,8 +5,8 @@ import {
 } from "next-intl";
 
 import type {
-  InvitationRecipientGuest,
-} from "@/features/invitations/types/invitationRecipient.types";
+  InvitationManagementGuest,
+} from "@/features/invitations/types/invitationManagement.types";
 
 import type {
   InvitationRsvpQuestion,
@@ -29,7 +29,7 @@ interface InvitationRsvpQuestionSummaryProps {
     InvitationRsvpQuestion;
 
   guests:
-    InvitationRecipientGuest[];
+    InvitationManagementGuest[];
 
   onGuestClick:
     (guestId: string) => void;
@@ -151,8 +151,12 @@ export default function InvitationRsvpQuestionSummary({
             guest.first_name,
             guest.last_name,
           ]
-            .filter(Boolean)
-            .join(" ");
+            .filter(
+              Boolean
+            )
+            .join(
+              " "
+            );
 
         return [
           {

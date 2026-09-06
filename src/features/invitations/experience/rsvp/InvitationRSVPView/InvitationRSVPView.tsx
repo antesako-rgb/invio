@@ -17,6 +17,10 @@ import {
   isDatePassedInTimezone,
   parseDateOnly,
 } from "@/lib/utils/timezone";
+
+import InvitationGenericRSVPForm
+  from "@/features/invitations/experience/rsvp/InvitationGenericRSVPForm/InvitationGenericRSVPForm";
+
 import InvitationRSVPGuest
   from "@/features/invitations/experience/rsvp/InvitationRSVPGuest/InvitationRSVPGuest";
 
@@ -29,6 +33,7 @@ import {
 } from "@/features/invitations/utils/buildInvitationRsvpSubmissions";
 
 import type {
+  GenericInvitationRsvpSubmitHandler,
   InvitationRenderData,
   InvitationRsvpSubmitHandler,
 } from "@/features/invitations/types/invitationRenderer.types";
@@ -59,6 +64,9 @@ interface InvitationRSVPViewProps {
 
   onSubmit?:
     InvitationRsvpSubmitHandler;
+
+  onGenericSubmit?:
+    GenericInvitationRsvpSubmitHandler;
 }
 
 
@@ -72,6 +80,7 @@ export default function InvitationRSVPView({
   previewState,
   onBack,
   onSubmit,
+  onGenericSubmit,
 }: InvitationRSVPViewProps) {
   const t =
     useTranslations(
@@ -131,27 +140,31 @@ export default function InvitationRSVPView({
     previewState ??
     liveState;
 
-const deadline =
-  rsvp.deadline
-    ? format.dateTime(
-        parseDateOnly(
-          rsvp.deadline
-        ),
-        {
-          day:
-            "numeric",
+  const isGeneric =
+    onGenericSubmit !==
+    undefined;
 
-          month:
-            "long",
+  const deadline =
+    rsvp.deadline
+      ? format.dateTime(
+          parseDateOnly(
+            rsvp.deadline
+          ),
+          {
+            day:
+              "numeric",
 
-          year:
-            "numeric",
+            month:
+              "long",
 
-          timeZone:
-            "UTC",
-        }
-      )
-    : null;
+            year:
+              "numeric",
+
+            timeZone:
+              "UTC",
+          }
+        )
+      : null;
 
   const isDeadlinePassed =
     previewState ===
@@ -161,9 +174,20 @@ const deadline =
       eventTimezone
     );
 
+  const editableGuests =
+    guests.filter(
+      (guest) =>
+        guest.rsvp === null ||
+        rsvp.allow_response_changes
+    );
+
+  const hasEditableGuests =
+    editableGuests.length >
+    0;
+
 
   /* ==========================================================================
-     Form
+     Personalized Form
   ========================================================================== */
 
   const {
@@ -183,63 +207,96 @@ const deadline =
 
 
   /* ==========================================================================
-     Submit
+     Personalized Submit
   ========================================================================== */
 
-async function handleSubmit() {
-  if (
-    isSubmitting
-  ) {
-    return;
-  }
+  async function handleSubmit() {
+    if (
+      isSubmitting ||
+      !rsvp.enabled ||
+      !hasEditableGuests
+    ) {
+      return;
+    }
 
-  if (
-    isDeadlinePassed
-  ) {
+    if (
+      isDeadlinePassed
+    ) {
+      setSubmitError(
+        t(
+          "deadlineExpired"
+        )
+      );
+
+      return;
+    }
+
+    const isValid =
+      validate();
+
+    if (
+      !isValid
+    ) {
+      return;
+    }
+
+    if (
+      !onSubmit
+    ) {
+      return;
+    }
+
+    const submissions =
+      buildInvitationRsvpSubmissions(
+        editableGuests,
+        responses,
+        answers
+      );
+
     setSubmitError(
-      t(
-        "deadlineExpired"
-      )
+      null
     );
 
-    return;
-  }
-
-  const isValid =
-    validate();
-
-  if (
-    !isValid
-  ) {
-    return;
-  }
-
-  if (
-    !onSubmit
-  ) {
-    return;
-  }
-
-  const submissions =
-    buildInvitationRsvpSubmissions(
-      guests,
-      responses,
-      answers
+    setIsSubmitting(
+      true
     );
 
-  setSubmitError(
-    null
-  );
+    try {
+      await onSubmit(
+        submissions
+      );
 
-  setIsSubmitting(
-    true
-  );
+      if (
+        previewState ===
+        undefined
+      ) {
+        setLiveState(
+          "success"
+        );
+      }
+    } catch (
+      error
+    ) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : t(
+              "submitError"
+            )
+      );
+    } finally {
+      setIsSubmitting(
+        false
+      );
+    }
+  }
 
-  try {
-    await onSubmit(
-      submissions
-    );
 
+  /* ==========================================================================
+     Generic Success
+  ========================================================================== */
+
+  function handleGenericSuccess() {
     if (
       previewState ===
       undefined
@@ -248,29 +305,14 @@ async function handleSubmit() {
         "success"
       );
     }
-  } catch (
-    error
-  ) {
-    setSubmitError(
-      error instanceof Error
-        ? error.message
-        : t(
-            "submitError"
-          )
-    );
-  } finally {
-    setIsSubmitting(
-      false
-    );
   }
-}
 
 
   /* ==========================================================================
-     Form
+     Personalized Form
   ========================================================================== */
 
-  function renderForm() {
+  function renderPersonalizedForm() {
     return (
       <div
         className="invitation-rsvp-view__content"
@@ -283,70 +325,79 @@ async function handleSubmit() {
           className="invitation-rsvp-view__section"
         >
           {guests.map(
-            (guest) => (
-              <InvitationRSVPGuest
-                key={
-                  guest.id
-                }
-                guestId={
-                  guest.id
-                }
-                firstName={
-                  guest.firstName
-                }
-                lastName={
-                  guest.lastName
-                }
-                status={
-                  responses[
+            (guest) => {
+              const isLocked =
+                guest.rsvp !== null &&
+                !rsvp.allow_response_changes;
+
+              return (
+                <InvitationRSVPGuest
+                  key={
                     guest.id
-                  ]
-                }
-                answers={
-                  answers[
+                  }
+                  guestId={
                     guest.id
-                  ] ?? {}
-                }
-                errors={
-                  errors[
+                  }
+                  firstName={
+                    guest.firstName
+                  }
+                  lastName={
+                    guest.lastName
+                  }
+                  status={
+                    responses[
+                      guest.id
+                    ]
+                  }
+                  answers={
+                    answers[
+                      guest.id
+                    ] ?? {}
+                  }
+                  errors={
+                    errors[
+                      guest.id
+                    ] ?? {}
+                  }
+                  questions={
+                    questions
+                  }
+                  isExpanded={
+                    expandedGuestId ===
                     guest.id
-                  ] ?? {}
-                }
-                questions={
-                  questions
-                }
-                isExpanded={
-                  expandedGuestId ===
-                  guest.id
-                }
-                onStatusChange={(
-                  status
-                ) =>
-                  handleResponse(
-                    guest.id,
+                  }
+                  isLocked={
+                    isLocked
+                  }
+                  onStatusChange={(
                     status
-                  )
-                }
-                onAnswerChange={(
-                  questionId,
-                  value
-                ) =>
-                  handleAnswerChange(
-                    guest.id,
+                  ) =>
+                    handleResponse(
+                      guest.id,
+                      status
+                    )
+                  }
+                  onAnswerChange={(
                     questionId,
                     value
-                  )
-                }
-                onExpandedChange={(
-                  expanded
-                ) =>
-                  handleExpandedChange(
-                    guest.id,
+                  ) =>
+                    handleAnswerChange(
+                      guest.id,
+                      questionId,
+                      value
+                    )
+                  }
+                  onExpandedChange={(
                     expanded
-                  )
-                }
-              />
-            )
+                  ) =>
+                    handleExpandedChange(
+                      guest.id,
+                      expanded
+                    )
+                  }
+                />
+              );
+            }
           )}
         </section>
 
@@ -368,29 +419,88 @@ async function handleSubmit() {
         {/* ================================================================
             Submit
         ================================================================ */}
-<button
-  type="button"
-  className="invitation-rsvp-view__submit"
-  onClick={
-    handleSubmit
-  }
-  disabled={
-    isSubmitting
-  }
-  aria-busy={
-    isSubmitting
-  }
->
-  {isSubmitting
-    ? t(
-        "submitting"
-      )
-    : t(
-        "submit"
-      )}
-</button>
+
+        {hasEditableGuests
+          ? (
+            <button
+              type="button"
+              className="invitation-rsvp-view__submit"
+              onClick={
+                handleSubmit
+              }
+              disabled={
+                isSubmitting
+              }
+              aria-busy={
+                isSubmitting
+              }
+            >
+              {isSubmitting
+                ? t(
+                    "submitting"
+                  )
+                : t(
+                    "submit"
+                  )}
+            </button>
+          )
+          : (
+            <p
+              className="invitation-rsvp-view__submit-error"
+              role="status"
+            >
+              {t(
+                "responseLocked"
+              )}
+            </p>
+          )}
       </div>
     );
+  }
+
+
+  /* ==========================================================================
+     Generic Form
+  ========================================================================== */
+
+  function renderGenericForm() {
+    if (
+      !onGenericSubmit
+    ) {
+      return null;
+    }
+
+    return (
+      <InvitationGenericRSVPForm
+        rsvp={
+          rsvp
+        }
+        isDeadlinePassed={
+          isDeadlinePassed
+        }
+        onSubmit={
+          onGenericSubmit
+        }
+        onSuccess={
+          handleGenericSuccess
+        }
+      />
+    );
+  }
+
+
+  /* ==========================================================================
+     Form
+  ========================================================================== */
+
+  function renderForm() {
+    if (
+      isGeneric
+    ) {
+      return renderGenericForm();
+    }
+
+    return renderPersonalizedForm();
   }
 
 
@@ -420,6 +530,39 @@ async function handleSubmit() {
 
 
   /* ==========================================================================
+     Disabled
+  ========================================================================== */
+
+  function renderDisabled() {
+    return (
+      <div
+        className="
+          invitation-rsvp-view__content
+          invitation-rsvp-view__content--disabled
+        "
+        data-rsvp-disabled
+      >
+        <p
+          className="invitation-rsvp-view__disabled-title"
+        >
+          {t(
+            "disabled.title"
+          )}
+        </p>
+
+        <p
+          className="invitation-rsvp-view__disabled-description"
+        >
+          {t(
+            "disabled.description"
+          )}
+        </p>
+      </div>
+    );
+  }
+
+
+  /* ==========================================================================
      Render
   ========================================================================== */
 
@@ -428,7 +571,9 @@ async function handleSubmit() {
       className="invitation-rsvp-view"
       data-invitation-rsvp-view
       data-state={
-        viewState
+        rsvp.enabled
+          ? viewState
+          : "disabled"
       }
     >
       <div
@@ -486,56 +631,64 @@ async function handleSubmit() {
             Intro
         ================================================================== */}
 
-        <div
-          className="invitation-rsvp-view__intro"
-        >
-          {rsvp.title && (
+        {rsvp.enabled && (
+          <div
+            className="invitation-rsvp-view__intro"
+          >
             <h1
               className="invitation-rsvp-view__title"
             >
-              {rsvp.title}
-            </h1>
-          )}
-
-          <span
-            className="invitation-rsvp-view__ornament"
-            aria-hidden="true"
-          >
-            ❧
-          </span>
-
-          {rsvp.description && (
-            <p
-              className="invitation-rsvp-view__description"
-            >
-              {rsvp.description}
-            </p>
-          )}
-
-          {viewState === "form" &&
-            deadline && (
-              <p
-                className="invitation-rsvp-view__deadline"
-              >
-                {t(
-                  "deadline",
-                  {
-                    date:
-                      deadline,
-                  }
+              {rsvp.title ??
+                t(
+                  "title"
                 )}
+            </h1>
+
+            <span
+              className="invitation-rsvp-view__ornament"
+              aria-hidden="true"
+            >
+              ❧
+            </span>
+
+            {viewState === "form" && (
+              <p
+                className="invitation-rsvp-view__description"
+              >
+                {rsvp.description ??
+                  t(
+                    "description"
+                  )}
               </p>
             )}
-        </div>
+
+            {viewState === "form" &&
+              deadline && (
+                <p
+                  className="invitation-rsvp-view__deadline"
+                >
+                  {t(
+                    "deadline",
+                    {
+                      date:
+                        deadline,
+                    }
+                  )}
+                </p>
+              )}
+          </div>
+        )}
 
 
         {/* ==================================================================
             State
         ================================================================== */}
 
-        {viewState === "success"
-          ? renderSuccess()
-          : renderForm()}
+        {!rsvp.enabled
+          ? renderDisabled()
+          : viewState === "success"
+            ? renderSuccess()
+            : renderForm()}
       </div>
     </div>
   );

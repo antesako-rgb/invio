@@ -12,8 +12,8 @@ import InvitationRsvpStatusBadge
   from "@/features/invitations/components/invitation-management/InvitationRsvpStatusBadge/InvitationRsvpStatusBadge";
 
 import type {
-  InvitationRecipientGuest,
-} from "@/features/invitations/types/invitationRecipient.types";
+  InvitationManagementGuest,
+} from "@/features/invitations/types/invitationManagement.types";
 
 import type {
   InvitationRsvpDisplayStatus,
@@ -29,7 +29,7 @@ import styles
 
 interface InvitationRsvpGuestsProps {
   guests:
-    InvitationRecipientGuest[];
+    InvitationManagementGuest[];
 
   onGuestClick:
     (guestId: string) => void;

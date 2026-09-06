@@ -15,8 +15,10 @@
 
   overflow:
     hidden;
+
   container-type:
     inline-size;
+
   background:
     var(--invitation-card-background);
 
@@ -61,7 +63,6 @@
 }
 
 
-
 .portrait-card__frame {
 
   position:
@@ -89,7 +90,6 @@
     none;
 
 }
-
 
 
 .portrait-card__content {
@@ -123,6 +123,7 @@
 
 }
 
+
 /* ==========================================================================
    Hero
 ========================================================================== */
@@ -136,13 +137,13 @@
 
 
 /* ==========================================================================
-   Eyebrow
+   Subtitle
 ========================================================================== */
 
-.portrait-card__eyebrow {
+.portrait-card__subtitle {
 
   --invitation-element-font-size:
-    var(--portrait-eyebrow-size);
+    var(--portrait-subtitle-size);
 
   display:
     block;
@@ -154,34 +155,34 @@
     4%;
 
   font-family:
-    var(--portrait-eyebrow-font);
+    var(--portrait-subtitle-font);
 
   font-size:
     var(--invitation-element-font-size);
 
   font-style:
-    var(--portrait-eyebrow-style);
+    var(--portrait-subtitle-style);
 
   font-weight:
-    var(--portrait-eyebrow-weight);
+    var(--portrait-subtitle-weight);
 
   line-height:
-    var(--portrait-eyebrow-line-height);
+    var(--portrait-subtitle-line-height);
 
   letter-spacing:
-    var(--portrait-eyebrow-letter-spacing);
+    var(--portrait-subtitle-letter-spacing);
 
   color:
-    var(--portrait-eyebrow-color);
+    var(--portrait-subtitle-color);
 
   text-transform:
-    var(--portrait-eyebrow-text-transform);
+    var(--portrait-subtitle-text-transform);
 
   text-align:
-    var(--portrait-eyebrow-text-align);
+    var(--portrait-subtitle-text-align);
 
   opacity:
-    var(--portrait-eyebrow-opacity);
+    var(--portrait-subtitle-opacity);
 
 }
 
@@ -259,7 +260,14 @@
     pre-line;
 
 }
+
+
+/* ==========================================================================
+   Photo
+========================================================================== */
+
 .portrait-card__photo {
+
   flex:
     0 0 auto;
 
@@ -271,6 +279,7 @@
 
   margin:
     4% 0;
+
 }
 
 
@@ -305,6 +314,9 @@
 }
 
 
+/* ==========================================================================
+   Photo Frame
+========================================================================== */
 
 .portrait-card__photo
 .invitation-image-frame__frame {

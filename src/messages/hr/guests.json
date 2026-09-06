@@ -25,12 +25,19 @@
     "addGuest": "Dodaj gosta"
   },
 
-  "rsvpStatus": {
-    "unknown": "Nije potvrđeno",
-    "attending": "Dolazi",
-    "declined": "Ne dolazi"
-  },
-
+"rsvpStatus": {
+  "unknown": "Nije potvrđeno",
+  "attending": "Dolazi",
+  "declined": "Ne dolazi",
+  "not_sent": "Nije poslano",
+  "awaiting_response": "Čeka odgovor"
+},
+"rsvpConflict": {
+  "warning": "RSVP odgovor razlikuje se od statusa gosta",
+  "title": "RSVP status se razlikuje",
+  "description": "Status gosta ručno je promijenjen i razlikuje se od odgovora putem glavne RSVP pozivnice.",
+  "primaryResponse": "RSVP odgovor"
+},
   "rsvpSource": {
     "title": "RSVP status",
     "success": "Glavna RSVP pozivnica je promijenjena.",

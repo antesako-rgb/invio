@@ -67,6 +67,9 @@ export function createDefaultInvitationContent():
       deadline:
         null,
 
+      allow_response_changes:
+        true,
+
       success_message:
         null,
 
@@ -76,8 +79,14 @@ export function createDefaultInvitationContent():
       allow_generic_responses:
         false,
 
+      collect_generic_email:
+        false,
+
       max_party_size:
         1,
+
+      max_generic_guests:
+        null,
     },
 
     contacts:

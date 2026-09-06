@@ -2,6 +2,8 @@
 
 import {
   CalendarDays,
+  Check,
+  Copy,
   MoreHorizontal,
 } from "lucide-react";
 
@@ -19,9 +21,7 @@ import Avatar
 import {
   Button,
 } from "@/components/ui/button";
-import type {
-  InvitationRsvpQuestion,
-} from "@/features/invitations/types/invitationContent.types";
+
 import InvitationRecipientDetails
   from "@/features/invitations/components/invitation-management/InvitationRecipients/InvitationRecipientDetails/InvitationRecipientDetails";
 
@@ -29,8 +29,12 @@ import InvitationRsvpStatusBadge
   from "@/features/invitations/components/invitation-management/InvitationRsvpStatusBadge/InvitationRsvpStatusBadge";
 
 import type {
-  InvitationRecipientDetails as InvitationRecipientDetailsType,
-} from "@/features/invitations/types/invitationRecipient.types";
+  InvitationRsvpQuestion,
+} from "@/features/invitations/types/invitationContent.types";
+
+import type {
+  InvitationManagementRow,
+} from "@/features/invitations/types/invitationManagement.types";
 
 import {
   getInvitationPublicPath,
@@ -49,18 +53,29 @@ import styles
 ========================================================================== */
 
 interface InvitationRecipientMobileItemProps {
-  recipient:
-    InvitationRecipientDetailsType;
+  invitationPublicId:
+    string;
+
+  row:
+    InvitationManagementRow;
 
   questions:
     InvitationRsvpQuestion[];
 }
 
 
+/* ==========================================================================
+   Invitation Recipient Mobile Item
+========================================================================== */
+
 export default function InvitationRecipientMobileItem({
-  recipient,
+  invitationPublicId,
+  row,
   questions,
 }: InvitationRecipientMobileItemProps) {
+  /* ==========================================================================
+     Translations
+  ========================================================================== */
 
   const t =
     useTranslations(
@@ -78,17 +93,38 @@ export default function InvitationRecipientMobileItem({
   ] =
     useState(false);
 
+  const [
+    copied,
+    setCopied,
+  ] =
+    useState(false);
+
 
   /* ==========================================================================
-     Primary Recipient
+     Invitation Link
+  ========================================================================== */
+
+  const isPersonalized =
+    row.public_id !==
+    null;
+
+  const invitationPath =
+    getInvitationPublicPath(
+      row.public_id ??
+        invitationPublicId
+    );
+
+
+  /* ==========================================================================
+     Primary Guest
   ========================================================================== */
 
   const primaryGuest =
-    recipient.guests.find(
+    row.guests.find(
       (guest) =>
         guest.is_primary_recipient
     ) ??
-    recipient.guests[0] ??
+    row.guests[0] ??
     null;
 
   const primaryGuestName =
@@ -97,8 +133,12 @@ export default function InvitationRecipientMobileItem({
           primaryGuest.first_name,
           primaryGuest.last_name,
         ]
-          .filter(Boolean)
-          .join(" ")
+          .filter(
+            Boolean
+          )
+          .join(
+            " "
+          )
       : "—";
 
   const primaryGuestInitials =
@@ -108,35 +148,25 @@ export default function InvitationRecipientMobileItem({
 
 
   /* ==========================================================================
-     Personalized Link
-  ========================================================================== */
-
-  const personalizedPath =
-    getInvitationPublicPath(
-      recipient.public_id
-    );
-
-
-  /* ==========================================================================
      RSVP
   ========================================================================== */
 
   const attendingCount =
-    recipient.guests.filter(
+    row.guests.filter(
       (guest) =>
         guest.rsvp?.status ===
         "attending"
     ).length;
 
   const declinedCount =
-    recipient.guests.filter(
+    row.guests.filter(
       (guest) =>
         guest.rsvp?.status ===
         "declined"
     ).length;
 
   const pendingCount =
-    recipient.guests.length -
+    row.guests.length -
     attendingCount -
     declinedCount;
 
@@ -154,9 +184,66 @@ export default function InvitationRecipientMobileItem({
       }
     ).format(
       new Date(
-        recipient.updated_at
+        row.updated_at
       )
     );
+
+
+  /* ==========================================================================
+     Open Details
+  ========================================================================== */
+
+  function handleOpenDetails() {
+    setDetailsOpen(
+      true
+    );
+  }
+
+
+  /* ==========================================================================
+     Open Invitation
+  ========================================================================== */
+
+  function handleOpenInvitation() {
+    window.open(
+      invitationPath,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  }
+
+
+  /* ==========================================================================
+     Copy Link
+  ========================================================================== */
+
+  async function handleCopyLink() {
+    try {
+      const invitationUrl =
+        `${window.location.origin}${invitationPath}`;
+
+      await navigator.clipboard.writeText(
+        invitationUrl
+      );
+
+      setCopied(
+        true
+      );
+
+      window.setTimeout(
+        () => {
+          setCopied(
+            false
+          );
+        },
+        2000
+      );
+    } catch {
+      setCopied(
+        false
+      );
+    }
+  }
 
 
   /* ==========================================================================
@@ -185,10 +272,7 @@ export default function InvitationRecipientMobileItem({
               styles.recipient
             }
             onClick={
-              () =>
-                setDetailsOpen(
-                  true
-                )
+              handleOpenDetails
             }
           >
             <Avatar
@@ -215,7 +299,7 @@ export default function InvitationRecipientMobileItem({
                   "guestCount",
                   {
                     count:
-                      recipient.guests.length,
+                      row.guests.length,
                   }
                 )}
               </span>
@@ -232,10 +316,7 @@ export default function InvitationRecipientMobileItem({
               )
             }
             onClick={
-              () =>
-                setDetailsOpen(
-                  true
-                )
+              handleOpenDetails
             }
           >
             <MoreHorizontal
@@ -250,22 +331,60 @@ export default function InvitationRecipientMobileItem({
             Link
         ================================================================== */}
 
-        <button
-          type="button"
+        <div
           className={
-            styles.link
-          }
-          onClick={
-            () =>
-              window.open(
-                personalizedPath,
-                "_blank",
-                "noopener,noreferrer"
-              )
+            styles.linkRow
           }
         >
-          {personalizedPath}
-        </button>
+          <button
+            type="button"
+            className={
+              styles.link
+            }
+            onClick={
+              handleOpenInvitation
+            }
+          >
+            {isPersonalized
+              ? invitationPath
+              : t(
+                  "table.publicInvitation"
+                )}
+          </button>
+
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className={
+              styles.copyButton
+            }
+            aria-label={
+              copied
+                ? t(
+                    "details.link.copied"
+                  )
+                : t(
+                    "details.link.copy"
+                  )
+            }
+            onClick={
+              handleCopyLink
+            }
+          >
+            {copied ? (
+             <Check
+  className="size-4 text-green-600"
+  aria-hidden="true"
+/>
+            ) : (
+              <Copy
+                className="size-4"
+                aria-hidden="true"
+              />
+            )}
+          </Button>
+        </div>
 
 
         {/* ==================================================================
@@ -277,17 +396,23 @@ export default function InvitationRecipientMobileItem({
             styles.guests
           }
         >
-          {recipient.guests
+          {row.guests
             .map(
               (guest) =>
                 [
                   guest.first_name,
                   guest.last_name,
                 ]
-                  .filter(Boolean)
-                  .join(" ")
+                  .filter(
+                    Boolean
+                  )
+                  .join(
+                    " "
+                  )
             )
-            .join(", ")}
+            .join(
+              ", "
+            )}
         </div>
 
 
@@ -305,7 +430,8 @@ export default function InvitationRecipientMobileItem({
               styles.rsvp
             }
           >
-            {attendingCount > 0 && (
+            {attendingCount >
+              0 && (
               <InvitationRsvpStatusBadge
                 status="attending"
                 count={
@@ -314,7 +440,8 @@ export default function InvitationRecipientMobileItem({
               />
             )}
 
-            {declinedCount > 0 && (
+            {declinedCount >
+              0 && (
               <InvitationRsvpStatusBadge
                 status="declined"
                 count={
@@ -323,7 +450,8 @@ export default function InvitationRecipientMobileItem({
               />
             )}
 
-            {pendingCount > 0 && (
+            {pendingCount >
+              0 && (
               <InvitationRsvpStatusBadge
                 status="pending"
                 count={
@@ -354,20 +482,21 @@ export default function InvitationRecipientMobileItem({
       {/* ====================================================================
           Details
       ==================================================================== */}
-<InvitationRecipientDetails
-  recipient={
-    recipient
-  }
-  questions={
-    questions
-  }
-  open={
-    detailsOpen
-  }
-  onOpenChange={
-    setDetailsOpen
-  }
-/>
+
+      <InvitationRecipientDetails
+        row={
+          row
+        }
+        questions={
+          questions
+        }
+        open={
+          detailsOpen
+        }
+        onOpenChange={
+          setDetailsOpen
+        }
+      />
     </>
   );
 }

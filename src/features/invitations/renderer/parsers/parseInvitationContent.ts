@@ -381,6 +381,12 @@ export function parseInvitationContent(
           ? rsvp.deadline
           : null,
 
+      allow_response_changes:
+        typeof rsvp.allow_response_changes ===
+          "boolean"
+          ? rsvp.allow_response_changes
+          : true,
+
       success_message:
         typeof rsvp.success_message ===
           "string"
@@ -398,6 +404,12 @@ export function parseInvitationContent(
           ? rsvp.allow_generic_responses
           : false,
 
+      collect_generic_email:
+        typeof rsvp.collect_generic_email ===
+          "boolean"
+          ? rsvp.collect_generic_email
+          : false,
+
       max_party_size:
         typeof rsvp.max_party_size ===
           "number" &&
@@ -408,6 +420,17 @@ export function parseInvitationContent(
           0
           ? rsvp.max_party_size
           : 1,
+
+      max_generic_guests:
+        typeof rsvp.max_generic_guests ===
+          "number" &&
+        Number.isInteger(
+          rsvp.max_generic_guests
+        ) &&
+        rsvp.max_generic_guests >
+          0
+          ? rsvp.max_generic_guests
+          : null,
     },
 
     contacts:

@@ -50,8 +50,8 @@ import type {
 } from "@/features/invitations/types/invitationContent.types";
 
 import type {
-  InvitationRecipientDetails as InvitationRecipientDetailsType,
-} from "@/features/invitations/types/invitationRecipient.types";
+  InvitationManagementRow,
+} from "@/features/invitations/types/invitationManagement.types";
 
 import {
   getInvitationPublicPath,
@@ -66,8 +66,8 @@ import styles
 ========================================================================== */
 
 interface InvitationRecipientDetailsProps {
-  recipient:
-    InvitationRecipientDetailsType;
+  row:
+    InvitationManagementRow;
 
   questions:
     InvitationRsvpQuestion[];
@@ -88,7 +88,7 @@ interface InvitationRecipientDetailsProps {
 ========================================================================== */
 
 export default function InvitationRecipientDetails({
-  recipient,
+  row,
   questions,
   selectedGuestId,
   open,
@@ -150,15 +150,26 @@ export default function InvitationRecipientDetails({
 
 
   /* ==========================================================================
-     Primary Recipient
+     Personalized
+  ========================================================================== */
+
+  const isPersonalized =
+    row.recipient_id !==
+      null &&
+    row.public_id !==
+      null;
+
+
+  /* ==========================================================================
+     Primary Guest
   ========================================================================== */
 
   const primaryGuest =
-    recipient.guests.find(
+    row.guests.find(
       (guest) =>
         guest.is_primary_recipient
     ) ??
-    recipient.guests[0] ??
+    row.guests[0] ??
     null;
 
 
@@ -168,7 +179,7 @@ export default function InvitationRecipientDetails({
 
   const selectedGuest =
     selectedGuestId
-      ? recipient.guests.find(
+      ? row.guests.find(
           (guest) =>
             guest.id ===
             selectedGuestId
@@ -186,8 +197,12 @@ export default function InvitationRecipientDetails({
           focusedGuest.first_name,
           focusedGuest.last_name,
         ]
-          .filter(Boolean)
-          .join(" ")
+          .filter(
+            Boolean
+          )
+          .join(
+            " "
+          )
       : "—";
 
   const primaryGuestName =
@@ -196,8 +211,12 @@ export default function InvitationRecipientDetails({
           primaryGuest.first_name,
           primaryGuest.last_name,
         ]
-          .filter(Boolean)
-          .join(" ")
+          .filter(
+            Boolean
+          )
+          .join(
+            " "
+          )
       : "—";
 
 
@@ -206,14 +225,18 @@ export default function InvitationRecipientDetails({
   ========================================================================== */
 
   const personalizedPath =
-    getInvitationPublicPath(
-      recipient.public_id
-    );
+    row.public_id
+      ? getInvitationPublicPath(
+          row.public_id
+        )
+      : null;
 
   const personalizedUrl =
-    origin
-      ? `${origin}${personalizedPath}`
-      : personalizedPath;
+    personalizedPath
+      ? origin
+        ? `${origin}${personalizedPath}`
+        : personalizedPath
+      : null;
 
 
   /* ==========================================================================
@@ -221,6 +244,12 @@ export default function InvitationRecipientDetails({
   ========================================================================== */
 
   async function handleCopyLink() {
+    if (
+      !personalizedPath
+    ) {
+      return;
+    }
+
     try {
       const url =
         `${window.location.origin}${personalizedPath}`;
@@ -254,7 +283,10 @@ export default function InvitationRecipientDetails({
   ========================================================================== */
 
   async function handleDelete() {
-    if (isDeleting) {
+    if (
+      isDeleting ||
+      !row.recipient_id
+    ) {
       return;
     }
 
@@ -266,10 +298,12 @@ export default function InvitationRecipientDetails({
       const result =
         await deleteInvitationRecipientAction({
           p_recipient_id:
-            recipient.id,
+            row.recipient_id,
         });
 
-      if (!result.success) {
+      if (
+        !result.success
+      ) {
         toast.error(
           result.message
         );
@@ -364,7 +398,7 @@ export default function InvitationRecipientDetails({
                   "guestCount",
                   {
                     count:
-                      recipient.guests.length,
+                      row.guests.length,
                   }
                 )}
               </span>
@@ -373,7 +407,7 @@ export default function InvitationRecipientDetails({
 
 
           {/* ================================================================
-              Personalized Link
+              Link
           ================================================================ */}
 
           <div
@@ -391,58 +425,72 @@ export default function InvitationRecipientDetails({
               )}
             </span>
 
-            <div
-              className={
-                styles.link
-              }
-            >
-              <span
-                title={
-                  personalizedUrl
+            {personalizedUrl ? (
+              <div
+                className={
+                  styles.link
                 }
               >
-                {personalizedUrl}
-              </span>
+                <span
+                  title={
+                    personalizedUrl
+                  }
+                >
+                  {personalizedUrl}
+                </span>
 
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                aria-label={
-                  copied
-                    ? t(
-                        "details.link.copied"
-                      )
-                    : t(
-                        "details.link.copy"
-                      )
-                }
-                title={
-                  copied
-                    ? t(
-                        "details.link.copied"
-                      )
-                    : t(
-                        "details.link.copy"
-                      )
-                }
-                onClick={
-                  handleCopyLink
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  aria-label={
+                    copied
+                      ? t(
+                          "details.link.copied"
+                        )
+                      : t(
+                          "details.link.copy"
+                        )
+                  }
+                  title={
+                    copied
+                      ? t(
+                          "details.link.copied"
+                        )
+                      : t(
+                          "details.link.copy"
+                        )
+                  }
+                  onClick={
+                    handleCopyLink
+                  }
+                >
+                  {copied ? (
+                    <Check
+                      className="size-4"
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <Copy
+                      className="size-4"
+                      aria-hidden="true"
+                    />
+                  )}
+                </Button>
+              </div>
+            ) : (
+              <div
+                className={
+                  styles.link
                 }
               >
-                {copied ? (
-                  <Check
-                    className="size-4"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <Copy
-                    className="size-4"
-                    aria-hidden="true"
-                  />
-                )}
-              </Button>
-            </div>
+                <span>
+                  {t(
+                    "table.publicInvitation"
+                  )}
+                </span>
+              </div>
+            )}
           </div>
 
 
@@ -467,7 +515,7 @@ export default function InvitationRecipientDetails({
 
             <InvitationRecipientGuestDetails
               guests={
-                recipient.guests
+                row.guests
               }
               questions={
                 questions
@@ -483,53 +531,55 @@ export default function InvitationRecipientDetails({
               Danger Zone
           ================================================================ */}
 
-          <div
-            className={
-              styles.dangerZone
-            }
-          >
+          {isPersonalized && (
             <div
               className={
-                styles.dangerContent
+                styles.dangerZone
               }
             >
-              <strong>
-                {t(
-                  "details.danger.title"
-                )}
-              </strong>
+              <div
+                className={
+                  styles.dangerContent
+                }
+              >
+                <strong>
+                  {t(
+                    "details.danger.title"
+                  )}
+                </strong>
 
-              <span>
-                {t(
-                  "details.danger.description"
-                )}
-              </span>
+                <span>
+                  {t(
+                    "details.danger.description"
+                  )}
+                </span>
+              </div>
+
+              <DeleteButton
+                title={
+                  t(
+                    "details.delete.title"
+                  )
+                }
+                description={
+                  t(
+                    "details.delete.description"
+                  )
+                }
+                confirmText={
+                  t(
+                    "details.delete.confirm"
+                  )
+                }
+                loading={
+                  isDeleting
+                }
+                onDelete={
+                  handleDelete
+                }
+              />
             </div>
-
-            <DeleteButton
-              title={
-                t(
-                  "details.delete.title"
-                )
-              }
-              description={
-                t(
-                  "details.delete.description"
-                )
-              }
-              confirmText={
-                t(
-                  "details.delete.confirm"
-                )
-              }
-              loading={
-                isDeleting
-              }
-              onDelete={
-                handleDelete
-              }
-            />
-          </div>
+          )}
         </div>
       </SheetContent>
     </Sheet>

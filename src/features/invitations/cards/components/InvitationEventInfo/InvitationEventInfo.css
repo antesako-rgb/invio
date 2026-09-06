@@ -1,3 +1,7 @@
+/* ==========================================================================
+   Event Info
+========================================================================== */
+
 [data-invitation-event-info] {
 
   display:
@@ -53,6 +57,7 @@
 ========================================================================== */
 
 [data-invitation-event-date] {
+
   --invitation-element-font-size:
     var(--invitation-event-info-size);
 
@@ -75,6 +80,7 @@
 
   text-transform:
     var(--invitation-event-date-text-transform);
+
 }
 
 
@@ -95,6 +101,9 @@
   justify-content:
     center;
 
+  min-width:
+    0;
+
   white-space:
     nowrap;
 
@@ -112,6 +121,22 @@
 
   padding-right:
     var(--invitation-event-date-gap);
+
+}
+
+
+/* ==========================================================================
+   Month Editable Element
+========================================================================== */
+
+[data-invitation-event-month]
+[data-editor-element] {
+
+  width:
+    100%;
+
+  text-align:
+    right;
 
 }
 
@@ -161,7 +186,28 @@
 }
 
 
+/* ==========================================================================
+   Year Editable Element
+========================================================================== */
+
+[data-invitation-event-year]
+[data-editor-element] {
+
+  width:
+    100%;
+
+  text-align:
+    left;
+
+}
+
+
+/* ==========================================================================
+   Time
+========================================================================== */
+
 [data-invitation-event-time] {
+
   --invitation-element-font-size:
     var(--invitation-event-info-size);
 
@@ -179,7 +225,9 @@
 
   text-align:
     center;
+
 }
+
 
 /* ==========================================================================
    Location
@@ -212,7 +260,6 @@
     center;
 
 }
-
 
 
 /* ==========================================================================

@@ -57,6 +57,9 @@ interface InvitationTemplateUseDialogProps {
   invitations:
     Invitation[];
 
+  disabled?:
+    boolean;
+
   onOpenChange:
     (open: boolean) => void;
 
@@ -77,6 +80,7 @@ export default function InvitationTemplateUseDialog({
   templateName,
   variantName,
   invitations,
+  disabled = false,
   onOpenChange,
   onApplyExisting,
   onCreateNew,
@@ -149,12 +153,20 @@ export default function InvitationTemplateUseDialog({
   ========================================================================== */
 
   function handleShowExisting() {
+    if (disabled) {
+      return;
+    }
+
     setStep(
       "existing"
     );
   }
 
   function handleBack() {
+    if (disabled) {
+      return;
+    }
+
     setStep(
       "action"
     );
@@ -203,6 +215,9 @@ export default function InvitationTemplateUseDialog({
                 type="button"
                 variant="outline"
                 className={styles.action}
+                disabled={
+                  disabled
+                }
                 onClick={
                   handleShowExisting
                 }
@@ -230,6 +245,9 @@ export default function InvitationTemplateUseDialog({
                 type="button"
                 variant="outline"
                 className={styles.action}
+                disabled={
+                  disabled
+                }
                 onClick={
                   onCreateNew
                 }
@@ -282,6 +300,9 @@ export default function InvitationTemplateUseDialog({
                     type="button"
                     variant="outline"
                     className={styles.invitation}
+                    disabled={
+                      disabled
+                    }
                     onClick={() =>
                       onApplyExisting(
                         invitation.id
@@ -346,6 +367,9 @@ export default function InvitationTemplateUseDialog({
               <Button
                 type="button"
                 variant="ghost"
+                disabled={
+                  disabled
+                }
                 onClick={
                   handleBack
                 }

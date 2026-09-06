@@ -1,9 +1,14 @@
 {
   "appName": "Invio",
+
   "loading": "Loading...",
+
   "backToTop": "Back to top",
+
   "showPassword": "Show password",
+
   "hidePassword": "Hide password",
+
   "save": "Save",
 
   "datePicker": {
@@ -12,5 +17,9 @@
 
   "timePicker": {
     "clear": "Clear time"
+  },
+
+  "filePicker": {
+    "select": "Choose photo"
   }
 }

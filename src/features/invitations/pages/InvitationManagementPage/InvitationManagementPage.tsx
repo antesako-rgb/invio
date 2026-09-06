@@ -31,6 +31,10 @@ import {
 } from "@/features/invitations/repositories/invitation/getInvitation";
 
 import {
+  getInvitationManagementGuests,
+} from "@/features/invitations/repositories/invitation/getInvitationManagementGuests";
+
+import {
   getInvitationRecipients,
 } from "@/features/invitations/repositories/invitation-recipients/getInvitationRecipients";
 
@@ -97,10 +101,16 @@ export default async function InvitationManagementPage({
 
   const [
     recipients,
+    managementGuests,
     guestsData,
   ] =
     await Promise.all([
       getInvitationRecipients({
+        p_invitation_id:
+          invitation.id,
+      }),
+
+      getInvitationManagementGuests({
         p_invitation_id:
           invitation.id,
       }),
@@ -117,12 +127,9 @@ export default async function InvitationManagementPage({
 
   const assignedGuestIds =
     new Set(
-      recipients.flatMap(
-        (recipient) =>
-          recipient.guests.map(
-            (guest) =>
-              guest.id
-          )
+      managementGuests.map(
+        (guest) =>
+          guest.id
       )
     );
 
@@ -139,24 +146,18 @@ export default async function InvitationManagementPage({
      RSVP Summary
   ========================================================================== */
 
-  const recipientGuests =
-    recipients.flatMap(
-      (recipient) =>
-        recipient.guests
-    );
-
   const total =
-    recipientGuests.length;
+    managementGuests.length;
 
   const attending =
-    recipientGuests.filter(
+    managementGuests.filter(
       (guest) =>
         guest.rsvp?.status ===
         "attending"
     ).length;
 
   const declined =
-    recipientGuests.filter(
+    managementGuests.filter(
       (guest) =>
         guest.rsvp?.status ===
         "declined"
@@ -225,8 +226,8 @@ export default async function InvitationManagementPage({
           questions={
             rsvpQuestions
           }
-          recipients={
-            recipients
+          guests={
+            managementGuests
           }
         />
 
@@ -234,26 +235,34 @@ export default async function InvitationManagementPage({
         {/* ==================================================================
             Recipients
         ================================================================== */}
-<InvitationRecipients
-  invitationId={
-    invitation.id
-  }
-  eventId={
-    invitation.event_id
-  }
-  recipients={
-    recipients
-  }
-  questions={
-    rsvpQuestions
-  }
-  availableGuests={
-    availableGuests
-  }
-  groups={
-    guestsData.groups
-  }
-/>
+
+        <InvitationRecipients
+          invitationId={
+            invitation.id
+          }
+          invitationPublicId={
+            invitation.public_id
+          }
+          eventId={
+            invitation.event_id
+          }
+          recipients={
+            recipients
+          }
+          managementGuests={
+            managementGuests
+          }
+          questions={
+            rsvpQuestions
+          }
+          availableGuests={
+            availableGuests
+          }
+          groups={
+            guestsData.groups
+          }
+        />
+
 
         {/* ==================================================================
             Danger Zone

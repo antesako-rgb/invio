@@ -56,6 +56,9 @@ interface InvitationRSVPGuestProps {
   isExpanded:
     boolean;
 
+  isLocked:
+    boolean;
+
   onStatusChange:
     (
       status:
@@ -91,6 +94,7 @@ export default function InvitationRSVPGuest({
   errors,
   questions,
   isExpanded,
+  isLocked,
   onStatusChange,
   onAnswerChange,
   onExpandedChange,
@@ -134,6 +138,12 @@ export default function InvitationRSVPGuest({
     nextStatus:
       InvitationRsvpStatus
   ) {
+    if (
+      isLocked
+    ) {
+      return;
+    }
+
     onStatusChange(
       nextStatus
     );
@@ -188,6 +198,9 @@ export default function InvitationRSVPGuest({
       data-expanded={
         canExpand &&
         isExpanded
+      }
+      data-locked={
+        isLocked
       }
       data-invalid={
         Object.keys(
@@ -251,6 +264,9 @@ export default function InvitationRSVPGuest({
               status ===
               "attending"
             }
+            disabled={
+              isLocked
+            }
             onClick={() =>
               handleStatusChange(
                 "attending"
@@ -272,6 +288,9 @@ export default function InvitationRSVPGuest({
             aria-pressed={
               status ===
               "declined"
+            }
+            disabled={
+              isLocked
             }
             onClick={() =>
               handleStatusChange(
@@ -315,6 +334,9 @@ export default function InvitationRSVPGuest({
                     errors[
                       question.id
                     ]
+                  }
+                  disabled={
+                    isLocked
                   }
                   onChange={(
                     value

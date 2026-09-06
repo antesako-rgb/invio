@@ -29,6 +29,9 @@ interface InvitationRSVPQuestionProps {
   error?:
     string;
 
+  disabled?:
+    boolean;
+
   onChange:
     (
       value:
@@ -45,6 +48,7 @@ export default function InvitationRSVPQuestion({
   question,
   value,
   error,
+  disabled = false,
   onChange,
 }: InvitationRSVPQuestionProps) {
   const t =
@@ -79,6 +83,9 @@ export default function InvitationRSVPQuestion({
           typeof value === "string"
             ? value
             : ""
+        }
+        disabled={
+          disabled
         }
         aria-invalid={
           hasError
@@ -115,6 +122,9 @@ export default function InvitationRSVPQuestion({
           typeof value === "string"
             ? value
             : ""
+        }
+        disabled={
+          disabled
         }
         aria-invalid={
           hasError
@@ -172,6 +182,9 @@ export default function InvitationRSVPQuestion({
                 aria-pressed={
                   isSelected
                 }
+                disabled={
+                  disabled
+                }
                 onClick={() =>
                   onChange(
                     option.id
@@ -214,6 +227,9 @@ export default function InvitationRSVPQuestion({
           aria-pressed={
             value === true
           }
+          disabled={
+            disabled
+          }
           onClick={() =>
             onChange(
               true
@@ -233,6 +249,9 @@ export default function InvitationRSVPQuestion({
           }
           aria-pressed={
             value === false
+          }
+          disabled={
+            disabled
           }
           onClick={() =>
             onChange(
@@ -285,6 +304,9 @@ export default function InvitationRSVPQuestion({
       }
       data-invalid={
         hasError
+      }
+      data-disabled={
+        disabled
       }
     >
       <div

@@ -3,8 +3,10 @@
 ========================================================================== */
 
 [data-editor-element] {
+
   white-space:
     pre-wrap;
+
 }
 
 
@@ -13,8 +15,6 @@
 ========================================================================== */
 
 [data-mode="edit"] [data-editor-element] {
-  position:
-    relative;
 
   min-width:
     1em;
@@ -39,12 +39,21 @@
   transition:
     outline-color 0.15s ease,
     background-color 0.15s ease;
+
 }
 
 
 /* ==========================================================================
-   Editable Label
+   Editable Element Position
 ========================================================================== */
+
+[data-mode="edit"]
+[data-editor-element]:not(.editable-image) {
+
+  position:
+    relative;
+
+}
 
 /* ==========================================================================
    Editable Label

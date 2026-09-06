@@ -13,11 +13,17 @@ import type {
 } from "@/features/guests/repositories/getEventGuestsPageData";
 
 import type {
+  InvitationManagementGuest,
+} from "@/features/invitations/types/invitationManagement.types";
+
+import type {
   InvitationRecipientDetails,
 } from "@/features/invitations/types/invitationRecipient.types";
+
 import type {
   InvitationRsvpQuestion,
 } from "@/features/invitations/types/invitationContent.types";
+
 import styles
   from "./InvitationRecipients.module.css";
 
@@ -37,11 +43,17 @@ interface InvitationRecipientsProps {
   invitationId:
     string;
 
+  invitationPublicId:
+    string;
+
   eventId:
     string;
 
   recipients:
     InvitationRecipientDetails[];
+
+  managementGuests:
+    InvitationManagementGuest[];
 
   questions:
     InvitationRsvpQuestion[];
@@ -60,8 +72,10 @@ interface InvitationRecipientsProps {
 
 export default async function InvitationRecipients({
   invitationId,
+  invitationPublicId,
   eventId,
   recipients,
+  managementGuests,
   questions,
   availableGuests,
   groups,
@@ -135,14 +149,20 @@ export default async function InvitationRecipients({
       </div>
 
 
-   <InvitationRecipientsView
-  recipients={
-    recipients
-  }
-  questions={
-    questions
-  }
-/>
+      <InvitationRecipientsView
+        invitationPublicId={
+          invitationPublicId
+        }
+        recipients={
+          recipients
+        }
+        managementGuests={
+          managementGuests
+        }
+        questions={
+          questions
+        }
+      />
     </section>
   );
 }

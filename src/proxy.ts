@@ -101,7 +101,7 @@ export default async function proxy(
      Session
   ========================================================================== */
 
-  await supabase.auth.getUser();
+  await supabase.auth.getClaims();
 
 
   /* ==========================================================================

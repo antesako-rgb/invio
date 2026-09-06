@@ -39,6 +39,7 @@ import {
 import {
   Textarea,
 } from "@/components/ui/textarea";
+
 import {
   createEventGuestAction,
 } from "@/features/guests/actions/createEventGuestAction";
@@ -188,84 +189,84 @@ export default function GuestForm({
      Submit
   ========================================================================== */
 
-async function onSubmit(
-  values: GuestFormValues
-) {
-  try {
-    if (guest) {
-      const result =
-        await updateEventGuestAction({
-          eventId,
+  async function onSubmit(
+    values: GuestFormValues
+  ) {
+    try {
+      if (guest) {
+        const result =
+          await updateEventGuestAction({
+            eventId,
 
-          guestId:
-            guest.id,
+            guestId:
+              guest.id,
 
-          changes:
-            buildUpdateEventGuestInput(
-              values
-            ),
-        });
+            changes:
+              buildUpdateEventGuestInput(
+                values
+              ),
+          });
 
 
-      if (!result.success) {
-        throw new Error(
-          result.message
+        if (!result.success) {
+          throw new Error(
+            result.message
+          );
+        }
+
+
+        toast.success(
+          messagesT(
+            "guestUpdated"
+          )
+        );
+      } else {
+        const result =
+          await createEventGuestAction({
+            eventId,
+
+            guest:
+              buildCreateEventGuestInput(
+                eventId,
+                values
+              ),
+          });
+
+
+        if (!result.success) {
+          throw new Error(
+            result.message
+          );
+        }
+
+
+        toast.success(
+          messagesT(
+            "guestCreated"
+          )
         );
       }
 
 
-      toast.success(
-        messagesT(
-          "guestUpdated"
-        )
+      onSuccess();
+    } catch (error) {
+      console.error(
+        guest
+          ? "updateEventGuest error:"
+          : "createEventGuest error:",
+        error
       );
-    } else {
-      const result =
-        await createEventGuestAction({
-          eventId,
-
-          guest:
-            buildCreateEventGuestInput(
-              eventId,
-              values
-            ),
-        });
 
 
-      if (!result.success) {
-        throw new Error(
-          result.message
-        );
-      }
-
-
-      toast.success(
+      toast.error(
         messagesT(
-          "guestCreated"
+          guest
+            ? "guestUpdateError"
+            : "guestCreateError"
         )
       );
     }
-
-
-    onSuccess();
-  } catch (error) {
-    console.error(
-      guest
-        ? "updateEventGuest error:"
-        : "createEventGuest error:",
-      error
-    );
-
-
-    toast.error(
-      messagesT(
-        guest
-          ? "guestUpdateError"
-          : "guestCreateError"
-      )
-    );
   }
-}
 
 
   /* ==========================================================================
@@ -334,71 +335,71 @@ async function onSubmit(
             required
           />
         </Field>
-        <Field
-          id="rsvp_status"
-          label={
-            t(
-              "rsvpStatus"
-            )
-          }
-        >
-          <Select
+
+
+        {/* ==================================================================
+            RSVP Status
+        ================================================================== */}
+
+        {guest && (
+          <Field
             id="rsvp_status"
-            value={
-              form.watch(
-                "rsvp_status"
+            label={
+              t(
+                "rsvpStatus"
               )
             }
-            options={[
-              {
-                value:
-                  "unknown",
-
-                label:
-                  rsvpT(
-                    "unknown"
-                  ),
-              },
-
-              {
-                value:
-                  "attending",
-
-                label:
-                  rsvpT(
-                    "attending"
-                  ),
-              },
-
-              {
-                value:
-                  "declined",
-
-                label:
-                  rsvpT(
-                    "declined"
-                  ),
-              },
-            ]}
-            onValueChange={
-              (value) =>
-                form.setValue(
-                  "rsvp_status",
-                  parseGuestRsvpStatus(
-                    value
-                  ),
-                  {
-                    shouldDirty:
-                      true,
-
-                    shouldValidate:
-                      true,
-                  }
+          >
+            <Select
+              id="rsvp_status"
+              value={
+                form.watch(
+                  "rsvp_status"
                 )
-            }
-          />
-        </Field>
- <Field
+              }
+              options={[
+                {
+                  value:
+                    "attending",
+
+                  label:
+                    rsvpT(
+                      "attending"
+                    ),
+                },
+
+                {
+                  value:
+                    "declined",
+
+                  label:
+                    rsvpT(
+                      "declined"
+                    ),
+                },
+              ]}
+              onValueChange={
+                (value) =>
+                  form.setValue(
+                    "rsvp_status",
+                    parseGuestRsvpStatus(
+                      value
+                    ),
+                    {
+                      shouldDirty:
+                        true,
+
+                      shouldValidate:
+                        true,
+                    }
+                  )
+              }
+            />
+          </Field>
+        )}
+
+
+        <Field
           id="group_id"
           label={
             t(
@@ -452,8 +453,6 @@ async function onSubmit(
         </Field>
 
 
-
-
         <Field
           id="email"
           label={
@@ -498,8 +497,6 @@ async function onSubmit(
           />
         </Field>
 
-
-       
 
         <Field
           id="notes"

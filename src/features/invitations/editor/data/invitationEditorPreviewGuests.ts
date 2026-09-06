@@ -21,6 +21,9 @@ export const INVITATION_EDITOR_PREVIEW_GUESTS:
 
       isPrimaryRecipient:
         true,
+
+      rsvp:
+        null,
     },
 
     {
@@ -35,5 +38,8 @@ export const INVITATION_EDITOR_PREVIEW_GUESTS:
 
       isPrimaryRecipient:
         false,
+
+      rsvp:
+        null,
     },
   ];

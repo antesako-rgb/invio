@@ -22,6 +22,12 @@ interface InvitationTemplateGridProps {
         InvitationTemplateConfig;
     }>;
 
+  disabled?:
+    boolean;
+
+  creatingTemplateId?:
+    string | null;
+
   onSelect:
     (
       templateId: string,
@@ -36,6 +42,8 @@ interface InvitationTemplateGridProps {
 
 export default function InvitationTemplateGrid({
   templates,
+  disabled = false,
+  creatingTemplateId = null,
   onSelect,
 }: InvitationTemplateGridProps) {
   return (
@@ -63,6 +71,12 @@ export default function InvitationTemplateGrid({
             }
             template={
               config
+            }
+            disabled={
+              disabled
+            }
+            isCreating={
+              creatingTemplateId === id
             }
             onSelect={
               onSelect

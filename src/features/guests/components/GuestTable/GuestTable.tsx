@@ -29,6 +29,7 @@ import GuestRow
 
 import type {
   EventGuest,
+  EventGuestWithRsvp,
   GuestGroup,
 } from "../../types/guest.types";
 
@@ -42,10 +43,13 @@ import styles
 
 interface GuestTableProps {
   guests:
-    EventGuest[];
+    EventGuestWithRsvp[];
 
   groups:
     GuestGroup[];
+
+  hasPrimaryRsvpInvitation:
+    boolean;
 
   onAddGuest?:
     () => void;
@@ -64,6 +68,7 @@ interface GuestTableProps {
 export default function GuestTable({
   guests,
   groups,
+  hasPrimaryRsvpInvitation,
   onAddGuest,
   onEditGuest,
 }: GuestTableProps) {
@@ -236,6 +241,9 @@ export default function GuestTable({
                         ) ?? null
                       : null
                   }
+                  hasPrimaryRsvpInvitation={
+                    hasPrimaryRsvpInvitation
+                  }
                   onEdit={
                     onEditGuest
                       ? () =>
@@ -276,6 +284,9 @@ export default function GuestTable({
                       guest.group_id
                     ) ?? null
                   : null
+              }
+              hasPrimaryRsvpInvitation={
+                hasPrimaryRsvpInvitation
               }
               onEdit={
                 onEditGuest

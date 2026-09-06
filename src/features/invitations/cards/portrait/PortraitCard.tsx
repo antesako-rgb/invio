@@ -18,6 +18,8 @@ import {
 import "./PortraitCard.css";
 import "./styles/portraitTokens.css";
 import "./styles/portraitVariants.css";
+
+
 /* ==========================================================================
    Portrait Card
 ========================================================================== */
@@ -83,7 +85,7 @@ export default function PortraitCard({
           className="portrait-card__hero"
         >
           {/* ================================================================
-              Eyebrow
+              Subtitle
           ================================================================ */}
 
           {subtitle && (
@@ -95,7 +97,7 @@ export default function PortraitCard({
               editor={
                 editor
               }
-              className="portrait-card__eyebrow"
+              className="portrait-card__subtitle"
             >
               {subtitle}
             </EditableText>
@@ -106,7 +108,7 @@ export default function PortraitCard({
               Title
           ================================================================ */}
 
-            {title && (
+          {title && (
             <h1
               className="portrait-card__title"
             >

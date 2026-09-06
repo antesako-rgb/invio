@@ -1,31 +1,27 @@
 "use client";
 
 import {
-  useEffect,
   useRef,
-  useState,
 } from "react";
 
-import {
-  createPortal,
-} from "react-dom";
-import {
-  useInvitationPresentation,
-} from "@/features/invitations/renderer/context/InvitationPresentationContext";
 import type {
-  FormEvent,
-  KeyboardEvent,
-  MouseEvent,
   ReactNode,
 } from "react";
 
 import {
-  X,
-} from "lucide-react";
-
-import {
   useTranslations,
 } from "next-intl";
+
+import EditableTextDeleteButton
+  from "@/features/invitations/editor/components/EditableText/components/EditableTextDeleteButton";
+
+import {
+  useEditableTextDelete,
+} from "@/features/invitations/editor/components/EditableText/hooks/useEditableTextDelete";
+
+import {
+  useEditableTextEditing,
+} from "@/features/invitations/editor/components/EditableText/hooks/useEditableTextEditing";
 
 import {
   getInvitationElementStyle,
@@ -39,6 +35,10 @@ import type {
   InvitationEditorContext,
   InvitationEditorSelection,
 } from "@/features/invitations/editor/types/invitationEditor.types";
+
+import {
+  useInvitationPresentation,
+} from "@/features/invitations/renderer/context/InvitationPresentationContext";
 
 import type {
   InvitationRenderMode,
@@ -66,14 +66,6 @@ interface EditableTextProps {
     string;
 }
 
-interface DeletePosition {
-  top:
-    number;
-
-  left:
-    number;
-}
-
 
 /* ==========================================================================
    Editable Text
@@ -93,19 +85,6 @@ export default function EditableText({
 
   const elementRef =
     useRef<HTMLSpanElement>(
-      null
-    );
-
-  const initialValueRef =
-    useRef<string | null>(
-      null
-    );
-
-  const [
-    deletePosition,
-    setDeletePosition,
-  ] =
-    useState<DeletePosition | null>(
       null
     );
 
@@ -168,26 +147,27 @@ export default function EditableText({
      Presentation
   ========================================================================== */
 
-const presentation =
-  useInvitationPresentation();
+  const presentation =
+    useInvitationPresentation();
 
-const elementPresentation =
-  presentation.elements?.[
-    element
-  ];
+  const elementPresentation =
+    presentation.elements?.[
+      element
+    ];
 
-const elementStyle =
-  getInvitationElementStyle(
-    elementPresentation
-  );
+  const elementStyle =
+    getInvitationElementStyle(
+      elementPresentation
+    );
 
 
   /* ==========================================================================
-     Update Value
+     Value
   ========================================================================== */
 
-  function updateValue(
-    value: string
+  function setValue(
+    value:
+      string
   ) {
     if (!editor) {
       return;
@@ -203,319 +183,38 @@ const elementStyle =
 
 
   /* ==========================================================================
-     Delete Value
+     Editing
   ========================================================================== */
 
-  function handleDelete(
-    event:
-      MouseEvent<HTMLButtonElement>
-  ) {
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (
-      !editor ||
-      elementConfig.type !== "text"
-    ) {
-      return;
-    }
-
-    editor.onContentChange(
-      elementConfig.setValue(
-        editor.content,
-        ""
-      )
-    );
-
-    editor.onEndEdit();
-  }
-
-
-  /* ==========================================================================
-     Delete Position
-  ========================================================================== */
-
-  useEffect(
-    () => {
-      if (!canDelete) {
-        setDeletePosition(
-          null
-        );
-
-        return;
-      }
-
-      function updateDeletePosition() {
-        const currentElement =
-          elementRef.current;
-
-        if (!currentElement) {
-          return;
-        }
-
-        const rect =
-          currentElement.getBoundingClientRect();
-
-        setDeletePosition({
-          top:
-            rect.top +
-            window.scrollY -
-            28,
-
-          left:
-            rect.right +
-            window.scrollX +
-            6,
-        });
-      }
-
-      updateDeletePosition();
-
-      window.addEventListener(
-        "resize",
-        updateDeletePosition
-      );
-
-      window.addEventListener(
-        "scroll",
-        updateDeletePosition,
-        true
-      );
-
-      return () => {
-        window.removeEventListener(
-          "resize",
-          updateDeletePosition
-        );
-
-        window.removeEventListener(
-          "scroll",
-          updateDeletePosition,
-          true
-        );
-      };
-    },
-    [
-      canDelete,
-    ]
-  );
-
-
-  /* ==========================================================================
-     Start Editing
-  ========================================================================== */
-
-  function handleClick(
-    event:
-      MouseEvent<HTMLSpanElement>
-  ) {
-    if (!editor) {
-      return;
-    }
-
-    event.stopPropagation();
-
-    editor.onSelectElement(
-      element
-    );
-
-    if (
-      editor.editingElement ===
-      element
-    ) {
-      return;
-    }
-
-    initialValueRef.current =
-      realValue;
-
-    editor.onStartEdit(
-      element
-    );
-  }
-
-
-  /* ==========================================================================
-     Editing Focus
-  ========================================================================== */
-
-  useEffect(
-    () => {
-      if (!isTextEditing) {
-        return;
-      }
-
-      const currentElement =
-        elementRef.current;
-
-      if (!currentElement) {
-        return;
-      }
-
-      currentElement.textContent =
-        realValue ?? "";
-
-      currentElement.focus();
-
-      placeCaretAtEnd(
-        currentElement
-      );
-    },
-    [
-      isTextEditing,
-    ]
-  );
-
-
-  /* ==========================================================================
-     Click Outside
-  ========================================================================== */
-
-  useEffect(
-    () => {
-      if (
-        !isTextEditing ||
-        !editor
-      ) {
-        return;
-      }
-
-      const currentEditor =
-        editor;
-
-      function handlePointerDown(
-        event:
-          PointerEvent
-      ) {
-        const target =
-          event.target;
-
-        if (
-          !(target instanceof Element)
-        ) {
-          return;
-        }
-
-        const currentElement =
-          elementRef.current;
-
-        if (
-          currentElement?.contains(
-            target
-          )
-        ) {
-          return;
-        }
-
-        if (
-          target.closest(
-            "[data-invitation-editor-toolbar]"
-          )
-        ) {
-          return;
-        }
-
-        if (
-          target.closest(
-            "[data-invitation-editor-ui]"
-          )
-        ) {
-          return;
-        }
-
-        currentEditor.onEndEdit();
-      }
-
-      document.addEventListener(
-        "pointerdown",
-        handlePointerDown
-      );
-
-      return () => {
-        document.removeEventListener(
-          "pointerdown",
-          handlePointerDown
-        );
-      };
-    },
-    [
-      isTextEditing,
+  const {
+    handlePointerDown,
+    handleInput,
+    handleKeyDown,
+  } =
+    useEditableTextEditing({
+      element,
       editor,
-    ]
-  );
+      elementRef,
+      realValue,
+      isTextEditing,
+      setValue,
+    });
 
 
   /* ==========================================================================
-     Input
+     Delete
   ========================================================================== */
 
-  function handleInput(
-    event:
-      FormEvent<HTMLSpanElement>
-  ) {
-    if (!isTextEditing) {
-      return;
-    }
-
-    updateValue(
-      event.currentTarget.innerText ??
-        ""
-    );
-  }
-
-
-  /* ==========================================================================
-     Keyboard
-  ========================================================================== */
-
-  function handleKeyDown(
-    event:
-      KeyboardEvent<HTMLSpanElement>
-  ) {
-    if (
-      !editor ||
-      !isTextEditing
-    ) {
-      return;
-    }
-
-    if (
-      event.key === "Enter" &&
-      (
-        event.ctrlKey ||
-        event.metaKey
-      )
-    ) {
-      event.preventDefault();
-
-      editor.onEndEdit();
-
-      return;
-    }
-
-    if (
-      event.key === "Escape"
-    ) {
-      event.preventDefault();
-
-      const initialValue =
-        initialValueRef.current;
-
-      updateValue(
-        initialValue ?? ""
-      );
-
-      const currentElement =
-        elementRef.current;
-
-      if (currentElement) {
-        currentElement.textContent =
-          initialValue ?? "";
-      }
-
-      editor.onEndEdit();
-    }
-  }
+  const {
+    deletePosition,
+    handleDelete,
+  } =
+    useEditableTextDelete({
+      editor,
+      elementRef,
+      canDelete,
+      setValue,
+    });
 
 
   /* ==========================================================================
@@ -577,9 +276,9 @@ const elementStyle =
             ? "true"
             : undefined
         }
-        onClick={
+        onPointerDown={
           isEditorMode
-            ? handleClick
+            ? handlePointerDown
             : undefined
         }
         onInput={
@@ -598,72 +297,22 @@ const elementStyle =
           : children}
       </span>
 
-      {canDelete &&
-        deletePosition &&
-        createPortal(
-          <button
-            type="button"
-            data-invitation-editor-ui
-            data-editor-delete
-            aria-label={
-              t(
-                "delete"
-              )
-            }
-            style={{
-              position:
-                "absolute",
-
-              top:
-                deletePosition.top,
-
-              left:
-                deletePosition.left,
-            }}
-            onClick={
-              handleDelete
-            }
-          >
-            <X
-              aria-hidden="true"
-            />
-          </button>,
-          document.body
-        )}
+      <EditableTextDeleteButton
+        position={
+          deletePosition
+        }
+        visible={
+          canDelete
+        }
+        label={
+          t(
+            "delete"
+          )
+        }
+        onDelete={
+          handleDelete
+        }
+      />
     </>
-  );
-}
-
-
-/* ==========================================================================
-   Place Caret At End
-========================================================================== */
-
-function placeCaretAtEnd(
-  element:
-    HTMLElement
-) {
-  const selection =
-    window.getSelection();
-
-  if (!selection) {
-    return;
-  }
-
-  const range =
-    document.createRange();
-
-  range.selectNodeContents(
-    element
-  );
-
-  range.collapse(
-    false
-  );
-
-  selection.removeAllRanges();
-
-  selection.addRange(
-    range
   );
 }

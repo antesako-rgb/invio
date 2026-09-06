@@ -13,28 +13,37 @@ export type Event =
 
 
 /* ==========================================================================
+   Event Types
+========================================================================== */
+
+export const EVENT_TYPES = [
+  "wedding",
+  "confirmation",
+  "baptism",
+  "communion",
+  "birthday",
+  "other_private",
+  "conference",
+  "seminar",
+  "team_building",
+  "reception",
+  "gala_dinner",
+  "other_business",
+  "festival",
+  "charity",
+  "sports",
+  "cultural",
+  "music",
+  "other_social",
+] as const;
+
+
+/* ==========================================================================
    Event Type
 ========================================================================== */
 
 export type EventType =
-  | "wedding"
-  | "confirmation"
-  | "baptism"
-  | "communion"
-  | "birthday"
-  | "other_private"
-  | "conference"
-  | "seminar"
-  | "team_building"
-  | "reception"
-  | "gala_dinner"
-  | "other_business"
-  | "festival"
-  | "charity"
-  | "sports"
-  | "cultural"
-  | "music"
-  | "other_social";
+  typeof EVENT_TYPES[number];
 
 
 /* ==========================================================================

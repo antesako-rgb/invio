@@ -60,6 +60,7 @@ export default function InvitationRenderer({
   rsvpPreviewState = "form",
   eventTimezone,
   onRsvpSubmit,
+  onGenericRsvpSubmit,
 }: InvitationRendererProps) {
   /* ==========================================================================
      State
@@ -229,6 +230,9 @@ export default function InvitationRenderer({
             onSubmit={
               onRsvpSubmit
             }
+            onGenericSubmit={
+              onGenericRsvpSubmit
+            }
           />
         );
 
@@ -252,15 +256,17 @@ export default function InvitationRenderer({
             actions={
               isPresented
                 ? (
-                  <InvitationGuestActions
-                    onDetails={
-                      handleDetails
-                    }
-                    onRsvp={
-                      handleRsvp
-                    }
-                  />
-                )
+                    <InvitationGuestActions
+                      onDetails={
+                        handleDetails
+                      }
+                      onRsvp={
+                        data.content.rsvp.enabled
+                          ? handleRsvp
+                          : undefined
+                      }
+                    />
+                  )
                 : undefined
             }
           >

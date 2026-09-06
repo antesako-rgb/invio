@@ -34,8 +34,9 @@ import InvitationRsvpQuestionSummary
   from "@/features/invitations/components/invitation-management/InvitationRsvpAnswers/InvitationRsvpQuestionSummary/InvitationRsvpQuestionSummary";
 
 import type {
-  InvitationRecipientDetails as InvitationRecipientDetailsType,
-} from "@/features/invitations/types/invitationRecipient.types";
+  InvitationManagementGuest,
+  InvitationManagementRow,
+} from "@/features/invitations/types/invitationManagement.types";
 
 import type {
   InvitationRsvpQuestion,
@@ -64,8 +65,8 @@ interface InvitationRsvpAnswersSheetProps {
   questions:
     InvitationRsvpQuestion[];
 
-  recipients:
-    InvitationRecipientDetailsType[];
+  guests:
+    InvitationManagementGuest[];
 }
 
 
@@ -77,7 +78,7 @@ export default function InvitationRsvpAnswersSheet({
   open,
   onOpenChange,
   questions,
-  recipients,
+  guests,
 }: InvitationRsvpAnswersSheetProps) {
   /* ==========================================================================
      Translations
@@ -102,10 +103,10 @@ export default function InvitationRsvpAnswersSheet({
     );
 
   const [
-    selectedRecipient,
-    setSelectedRecipient,
+    selectedRow,
+    setSelectedRow,
   ] =
-    useState<InvitationRecipientDetailsType | null>(
+    useState<InvitationManagementRow | null>(
       null
     );
 
@@ -119,14 +120,8 @@ export default function InvitationRsvpAnswersSheet({
 
 
   /* ==========================================================================
-     Guests
+     Responses
   ========================================================================== */
-
-  const guests =
-    recipients.flatMap(
-      (recipient) =>
-        recipient.guests
-    );
 
   const respondedGuests =
     guests.filter(
@@ -200,26 +195,68 @@ export default function InvitationRsvpAnswersSheet({
     guestId:
       string
   ) {
-    const recipient =
-      recipients.find(
-        (recipient) =>
-          recipient.guests.some(
-            (guest) =>
-              guest.id ===
-              guestId
-          )
+    const guest =
+      guests.find(
+        (guest) =>
+          guest.id ===
+          guestId
       );
 
-    if (!recipient) {
+    if (!guest) {
       return;
     }
+
+    const row:
+      InvitationManagementRow = {
+        id:
+          guest.recipient_id ??
+          guest.id,
+
+        recipient_id:
+          guest.recipient_id,
+
+        public_id:
+          guest.recipient_public_id,
+
+        guests: [
+          {
+            id:
+              guest.id,
+
+            first_name:
+              guest.first_name,
+
+            last_name:
+              guest.last_name,
+
+            email:
+              guest.email,
+
+            phone:
+              guest.phone,
+
+            is_primary_recipient:
+              guest.is_primary_recipient,
+
+            rsvp:
+              guest.rsvp,
+          },
+        ],
+
+        created_at:
+          guest.assigned_at,
+
+        updated_at:
+          guest.rsvp?.updated_at ??
+          guest.assigned_at,
+      };
 
     setSelectedGuestId(
       guestId
     );
 
-    setSelectedRecipient(
-      recipient
+    setSelectedRow(
+      row
     );
   }
 
@@ -232,7 +269,7 @@ export default function InvitationRsvpAnswersSheet({
       return;
     }
 
-    setSelectedRecipient(
+    setSelectedRow(
       null
     );
 
@@ -429,20 +466,20 @@ export default function InvitationRsvpAnswersSheet({
                     >
                       {questions.map(
                         (question) => (
-                      <InvitationRsvpQuestionSummary
-  key={
-    question.id
-  }
-  question={
-    question
-  }
-  guests={
-    respondedGuests
-  }
-  onGuestClick={
-    handleGuestClick
-  }
-/>
+                          <InvitationRsvpQuestionSummary
+                            key={
+                              question.id
+                            }
+                            question={
+                              question
+                            }
+                            guests={
+                              respondedGuests
+                            }
+                            onGuestClick={
+                              handleGuestClick
+                            }
+                          />
                         )
                       )}
                     </div>
@@ -479,26 +516,26 @@ export default function InvitationRsvpAnswersSheet({
 
 
       {/* ====================================================================
-          Recipient Details
+          Guest Details
       ==================================================================== */}
 
-      {selectedRecipient && (
- <InvitationRecipientDetails
-  recipient={
-    selectedRecipient
-  }
-  questions={
-    questions
-  }
-  selectedGuestId={
-    selectedGuestId ??
-    undefined
-  }
-  open
-  onOpenChange={
-    handleRecipientDetailsOpenChange
-  }
-/>
+      {selectedRow && (
+        <InvitationRecipientDetails
+          row={
+            selectedRow
+          }
+          questions={
+            questions
+          }
+          selectedGuestId={
+            selectedGuestId ??
+            undefined
+          }
+          open
+          onOpenChange={
+            handleRecipientDetailsOpenChange
+          }
+        />
       )}
     </>
   );

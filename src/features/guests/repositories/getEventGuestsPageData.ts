@@ -2,11 +2,15 @@ import {
   createServerClient,
 } from "@/lib/supabase/server";
 
+import {
+  getEventGuestsWithRsvp,
+} from "@/features/guests/repositories/getEventGuestsWithRsvp";
+
 import type {
-  EventGuest,
+  EventGuestWithRsvp,
   GuestGroup,
   GuestRsvpInvitation,
-} from "../types/guest.types";
+} from "@/features/guests/types/guest.types";
 
 
 /* ==========================================================================
@@ -15,7 +19,7 @@ import type {
 
 interface EventGuestsPageData {
   guests:
-    EventGuest[];
+    EventGuestWithRsvp[];
 
   groups:
     GuestGroup[];
@@ -30,35 +34,29 @@ interface EventGuestsPageData {
 ========================================================================== */
 
 export async function getEventGuestsPageData(
-  eventId: string
+  eventId:
+    string
 ): Promise<EventGuestsPageData> {
   const supabase =
     await createServerClient();
 
-
   const [
-    guestsResult,
+    guests,
     groupsResult,
     rsvpInvitationsResult,
   ] =
     await Promise.all([
-      supabase
-        .from("event_guests")
-        .select("*")
-        .eq(
-          "event_id",
-          eventId
-        )
-        .order(
-          "created_at",
-          {
-            ascending: true,
-          }
-        ),
+      getEventGuestsWithRsvp(
+        eventId
+      ),
 
       supabase
-        .from("guest_groups")
-        .select("*")
+        .from(
+          "guest_groups"
+        )
+        .select(
+          "*"
+        )
         .eq(
           "event_id",
           eventId
@@ -66,12 +64,15 @@ export async function getEventGuestsPageData(
         .order(
           "name",
           {
-            ascending: true,
+            ascending:
+              true,
           }
         ),
 
       supabase
-        .from("invitations")
+        .from(
+          "invitations"
+        )
         .select(
           "id, name, is_primary_rsvp"
         )
@@ -82,30 +83,26 @@ export async function getEventGuestsPageData(
         .order(
           "created_at",
           {
-            ascending: true,
+            ascending:
+              true,
           }
         ),
     ]);
 
-
-  if (guestsResult.error) {
-    throw guestsResult.error;
-  }
-
-
-  if (groupsResult.error) {
+  if (
+    groupsResult.error
+  ) {
     throw groupsResult.error;
   }
 
-
-  if (rsvpInvitationsResult.error) {
+  if (
+    rsvpInvitationsResult.error
+  ) {
     throw rsvpInvitationsResult.error;
   }
 
-
   return {
-    guests:
-      guestsResult.data,
+    guests,
 
     groups:
       groupsResult.data,

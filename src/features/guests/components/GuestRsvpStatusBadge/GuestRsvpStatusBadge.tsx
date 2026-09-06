@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/badge/badge";
 
 import type {
-  EventGuest,
+  GuestRsvpStatus,
 } from "@/features/guests/types/guest.types";
 
 
@@ -17,9 +17,14 @@ import type {
    Types
 ========================================================================== */
 
+type GuestRsvpDisplayStatus =
+  | GuestRsvpStatus
+  | "not_sent"
+  | "awaiting_response";
+
 interface GuestRsvpStatusBadgeProps {
   status:
-    EventGuest["rsvp_status"];
+    GuestRsvpDisplayStatus;
 }
 
 
@@ -43,12 +48,13 @@ export default function GuestRsvpStatusBadge({
   /* ==========================================================================
      Variant
   ========================================================================== */
-
-  const variant =
-    status === "attending"
-      ? "success"
-      : status === "declined"
-        ? "destructive"
+const variant =
+  status === "attending"
+    ? "success"
+    : status === "declined"
+      ? "destructive"
+      : status === "not_sent"
+        ? "muted"
         : "warning";
 
 

@@ -27,6 +27,9 @@ export function buildInvitationRenderGuests(
 
       isPrimaryRecipient:
         guest.is_primary_recipient,
+
+      rsvp:
+        guest.rsvp,
     })
   );
 }

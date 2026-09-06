@@ -20,7 +20,7 @@ interface InvitationGuestActionsProps {
   onDetails:
     () => void;
 
-  onRsvp:
+  onRsvp?:
     () => void;
 }
 
@@ -70,27 +70,29 @@ export default function InvitationGuestActions({
         </span>
       </button>
 
-      <button
-        type="button"
-        className="
-          invitation-guest-actions__button
-          invitation-guest-actions__button--primary
-        "
-        onClick={
-          onRsvp
-        }
-      >
-        <Heart
-          className="invitation-guest-actions__icon"
-          aria-hidden="true"
-        />
+      {onRsvp && (
+        <button
+          type="button"
+          className="
+            invitation-guest-actions__button
+            invitation-guest-actions__button--primary
+          "
+          onClick={
+            onRsvp
+          }
+        >
+          <Heart
+            className="invitation-guest-actions__icon"
+            aria-hidden="true"
+          />
 
-        <span>
-          {t(
-            "rsvp"
-          )}
-        </span>
-      </button>
+          <span>
+            {t(
+              "rsvp"
+            )}
+          </span>
+        </button>
+      )}
     </div>
   );
 }

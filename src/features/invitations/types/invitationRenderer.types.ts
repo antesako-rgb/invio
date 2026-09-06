@@ -4,6 +4,10 @@ import type {
 } from "@/features/invitations/editor/types/invitationEditor.types";
 
 import type {
+  InvitationRecipientRsvp,
+} from "@/features/invitations/types/invitationRecipient.types";
+
+import type {
   InvitationContent,
 } from "@/features/invitations/types/invitationContent.types";
 
@@ -12,6 +16,7 @@ import type {
 } from "@/features/invitations/types/invitationPresentation.types";
 
 import type {
+  GenericInvitationRsvpGuest,
   InvitationRsvpSubmission,
   InvitationRSVPViewState,
 } from "@/features/invitations/types/invitationRsvp.types";
@@ -117,6 +122,9 @@ export interface InvitationRenderGuest {
 
   isPrimaryRecipient:
     boolean;
+
+  rsvp:
+    InvitationRecipientRsvp | null;
 }
 
 
@@ -151,6 +159,17 @@ export type InvitationRsvpSubmitHandler =
 
 
 /* ==========================================================================
+   Generic Invitation RSVP Submit Handler
+========================================================================== */
+
+export type GenericInvitationRsvpSubmitHandler =
+  (
+    guests:
+      GenericInvitationRsvpGuest[]
+  ) => void | Promise<void>;
+
+
+/* ==========================================================================
    Invitation Renderer Props
 ========================================================================== */
 
@@ -181,4 +200,7 @@ export interface InvitationRendererProps {
 
   onRsvpSubmit?:
     InvitationRsvpSubmitHandler;
+
+  onGenericRsvpSubmit?:
+    GenericInvitationRsvpSubmitHandler;
 }

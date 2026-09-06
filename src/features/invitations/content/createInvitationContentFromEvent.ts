@@ -12,11 +12,25 @@ import {
 
 
 /* ==========================================================================
+   Types
+========================================================================== */
+
+interface InvitationEventContentDefaults {
+  heroSubtitle:
+    string;
+
+  description:
+    string;
+}
+
+
+/* ==========================================================================
    Create Invitation Content From Event
 ========================================================================== */
 
 export function createInvitationContentFromEvent(
-  event: Event
+  event: Event,
+  defaults: InvitationEventContentDefaults
 ): InvitationContent {
   const content =
     createDefaultInvitationContent();
@@ -29,7 +43,13 @@ export function createInvitationContentFromEvent(
 
       title:
         event.name,
+
+      subtitle:
+        defaults.heroSubtitle,
     },
+
+    description:
+      defaults.description,
 
     date: {
       ...content.date,

@@ -1,0 +1,27 @@
+import type {
+  EventType,
+} from "@/features/events/types/event.types";
+
+import type {
+  InvitationContent,
+} from "@/features/invitations/types/invitationContent.types";
+
+import {
+  weddingPreviewContent,
+} from "./weddingPreviewContent";
+
+
+/* ==========================================================================
+   Invitation Preview Content Registry
+========================================================================== */
+
+export const invitationPreviewContentRegistry:
+  Partial<
+    Record<
+      EventType,
+      InvitationContent
+    >
+  > = {
+    wedding:
+      weddingPreviewContent,
+  };

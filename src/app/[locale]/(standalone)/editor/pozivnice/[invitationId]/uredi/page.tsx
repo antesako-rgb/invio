@@ -2,12 +2,16 @@ import {
   notFound,
 } from "next/navigation";
 
+import type {
+  EventType,
+} from "@/features/events/types/event.types";
+
 import InvitationEditorView
   from "@/features/invitations/editor/components/InvitationEditorView/InvitationEditorView";
 
 import {
-  getInvitation,
-} from "@/features/invitations/repositories/invitation/getInvitation";
+  getInvitationEditorData,
+} from "@/features/invitations/repositories/invitation/getInvitationEditorData";
 
 import {
   buildInvitationRenderData,
@@ -47,14 +51,20 @@ export default async function EditInvitationPage({
   } =
     await params;
 
-  const invitation =
-    await getInvitation(
+  const editorData =
+    await getInvitationEditorData(
       invitationId
     );
 
-  if (!invitation) {
+  if (!editorData) {
     notFound();
   }
+
+  const {
+    invitation,
+    event,
+  } =
+    editorData;
 
   const data =
     buildInvitationRenderData({
@@ -76,6 +86,9 @@ export default async function EditInvitationPage({
       }
       variantId={
         invitation.variant_id
+      }
+      eventType={
+        event.type as EventType
       }
       locale={
         locale

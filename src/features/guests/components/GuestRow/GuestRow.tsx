@@ -17,11 +17,11 @@ import {
   TableRow,
 } from "@/components/ui/data-table";
 
-import GuestRsvpStatusBadge
-  from "@/features/guests/components/GuestRsvpStatusBadge/GuestRsvpStatusBadge";
+import GuestRsvpConflict
+  from "@/features/guests/components/GuestRsvpConflict/GuestRsvpConflict";
 
 import type {
-  EventGuest,
+  EventGuestWithRsvp,
   GuestGroup,
 } from "@/features/guests/types/guest.types";
 
@@ -35,10 +35,13 @@ import styles
 
 interface GuestRowProps {
   guest:
-    EventGuest;
+    EventGuestWithRsvp;
 
   group:
     GuestGroup | null;
+
+  hasPrimaryRsvpInvitation:
+    boolean;
 
   onEdit?:
     () => void;
@@ -52,6 +55,7 @@ interface GuestRowProps {
 export default function GuestRow({
   guest,
   group,
+  hasPrimaryRsvpInvitation,
   onEdit,
 }: GuestRowProps) {
   /* ==========================================================================
@@ -192,9 +196,21 @@ export default function GuestRow({
           styles.rsvp
         }
       >
-        <GuestRsvpStatusBadge
-          status={
+        <GuestRsvpConflict
+          masterStatus={
             guest.rsvp_status
+          }
+          primaryRsvpStatus={
+            guest.primary_rsvp_status
+          }
+          hasPrimaryRsvpInvitation={
+            hasPrimaryRsvpInvitation
+          }
+          isOnPrimaryRsvpInvitation={
+            guest.is_on_primary_rsvp_invitation
+          }
+          hasConflict={
+            guest.has_rsvp_conflict
           }
         />
       </TableCell>

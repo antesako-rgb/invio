@@ -16,8 +16,8 @@ import InvitationRsvpAnswersSheet
   from "@/features/invitations/components/invitation-management/InvitationRsvpAnswers/InvitationRsvpAnswersSheet/InvitationRsvpAnswersSheet";
 
 import type {
-  InvitationRecipientDetails,
-} from "@/features/invitations/types/invitationRecipient.types";
+  InvitationManagementGuest,
+} from "@/features/invitations/types/invitationManagement.types";
 
 import type {
   InvitationRsvpQuestion,
@@ -35,8 +35,8 @@ interface InvitationRsvpAnswersActionProps {
   questions:
     InvitationRsvpQuestion[];
 
-  recipients:
-    InvitationRecipientDetails[];
+  guests:
+    InvitationManagementGuest[];
 }
 
 
@@ -46,7 +46,7 @@ interface InvitationRsvpAnswersActionProps {
 
 export default function InvitationRsvpAnswersAction({
   questions,
-  recipients,
+  guests,
 }: InvitationRsvpAnswersActionProps) {
   /* ==========================================================================
      Translations
@@ -106,8 +106,8 @@ export default function InvitationRsvpAnswersAction({
         questions={
           questions
         }
-        recipients={
-          recipients
+        guests={
+          guests
         }
       />
     </>

@@ -28,8 +28,8 @@ import type {
 } from "@/features/invitations/types/invitationContent.types";
 
 import type {
-  InvitationRecipientDetails,
-} from "@/features/invitations/types/invitationRecipient.types";
+  InvitationManagementRow,
+} from "@/features/invitations/types/invitationManagement.types";
 
 import styles
   from "./InvitationRecipientsTable.module.css";
@@ -40,8 +40,11 @@ import styles
 ========================================================================== */
 
 interface InvitationRecipientsTableProps {
-  recipients:
-    InvitationRecipientDetails[];
+  invitationPublicId:
+    string;
+
+  rows:
+    InvitationManagementRow[];
 
   questions:
     InvitationRsvpQuestion[];
@@ -53,7 +56,8 @@ interface InvitationRecipientsTableProps {
 ========================================================================== */
 
 export default function InvitationRecipientsTable({
-  recipients,
+  invitationPublicId,
+  rows,
   questions,
 }: InvitationRecipientsTableProps) {
   /* ==========================================================================
@@ -73,7 +77,7 @@ export default function InvitationRecipientsTable({
   return (
     <DataTable
       data={
-        recipients
+        rows
       }
       emptyState={{
         icon:
@@ -180,14 +184,17 @@ export default function InvitationRecipientsTable({
 
 
           <TableBody>
-            {recipients.map(
-              (recipient) => (
+            {rows.map(
+              (row) => (
                 <InvitationRecipientRow
                   key={
-                    recipient.id
+                    row.id
                   }
-                  recipient={
-                    recipient
+                  invitationPublicId={
+                    invitationPublicId
+                  }
+                  row={
+                    row
                   }
                   questions={
                     questions
@@ -209,14 +216,17 @@ export default function InvitationRecipientsTable({
           styles.mobile
         }
       >
-        {recipients.map(
-          (recipient) => (
+        {rows.map(
+          (row) => (
             <InvitationRecipientMobileItem
               key={
-                recipient.id
+                row.id
               }
-              recipient={
-                recipient
+              invitationPublicId={
+                invitationPublicId
+              }
+              row={
+                row
               }
               questions={
                 questions

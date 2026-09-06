@@ -48,6 +48,7 @@ import {
 
 import type {
   EventGuest,
+  EventGuestWithRsvp,
   GuestGroup,
   GuestRsvpInvitation,
 } from "@/features/guests/types/guest.types";
@@ -62,7 +63,7 @@ interface EventGuestsPageProps {
     string;
 
   guests:
-    EventGuest[];
+    EventGuestWithRsvp[];
 
   groups:
     GuestGroup[];
@@ -150,6 +151,17 @@ export default function EventGuestsPage({
 
 
   /* ==========================================================================
+     Primary RSVP
+  ========================================================================== */
+
+  const hasPrimaryRsvpInvitation =
+    rsvpInvitations.some(
+      (invitation) =>
+        invitation.is_primary_rsvp
+    );
+
+
+  /* ==========================================================================
      Guest Sheet
   ========================================================================== */
 
@@ -165,7 +177,8 @@ export default function EventGuestsPage({
 
 
   function handleEditGuest(
-    guest: EventGuest
+    guest:
+      EventGuest
   ) {
     setSelectedGuest(
       guest
@@ -178,13 +191,16 @@ export default function EventGuestsPage({
 
 
   function handleGuestSheetOpenChange(
-    open: boolean
+    open:
+      boolean
   ) {
     setGuestSheetOpen(
       open
     );
 
-    if (!open) {
+    if (
+      !open
+    ) {
       setSelectedGuest(
         null
       );
@@ -217,7 +233,8 @@ export default function EventGuestsPage({
 
 
   function handleGroupsDialogOpenChange(
-    open: boolean
+    open:
+      boolean
   ) {
     setGroupsDialogOpen(
       open
@@ -320,6 +337,9 @@ export default function EventGuestsPage({
           }
           groups={
             groups
+          }
+          hasPrimaryRsvpInvitation={
+            hasPrimaryRsvpInvitation
           }
           onAddGuest={
             handleAddGuest

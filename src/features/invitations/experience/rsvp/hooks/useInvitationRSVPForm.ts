@@ -44,6 +44,53 @@ interface UseInvitationRSVPFormOptions {
 
 
 /* ==========================================================================
+   Parse RSVP Answers
+========================================================================== */
+
+function parseRsvpAnswers(
+  value:
+    unknown
+): InvitationRsvpAnswers {
+  if (
+    !value ||
+    typeof value !== "object" ||
+    Array.isArray(
+      value
+    )
+  ) {
+    return {};
+  }
+
+  const answers:
+    InvitationRsvpAnswers =
+    {};
+
+  for (
+    const [
+      key,
+      answer,
+    ]
+    of Object.entries(
+      value
+    )
+  ) {
+    if (
+      typeof answer === "string" ||
+      typeof answer === "boolean" ||
+      answer === null
+    ) {
+      answers[
+        key
+      ] =
+        answer;
+    }
+  }
+
+  return answers;
+}
+
+
+/* ==========================================================================
    Invitation RSVP Form
 ========================================================================== */
 
@@ -69,7 +116,8 @@ export function useInvitationRSVPForm({
         guests.map(
           (guest) => [
             guest.id,
-            "attending" as InvitationRsvpStatus,
+            guest.rsvp?.status ??
+              "attending",
           ]
         )
       )
@@ -89,7 +137,9 @@ export function useInvitationRSVPForm({
         guests.map(
           (guest) => [
             guest.id,
-            {},
+            parseRsvpAnswers(
+              guest.rsvp?.answers
+            ),
           ]
         )
       )
@@ -258,7 +308,11 @@ export function useInvitationRSVPForm({
      Validate
   ========================================================================== */
 
-  function validate() {
+  function validate(
+    guestsToValidate:
+      InvitationRenderGuest[] =
+      guests
+  ) {
     const nextErrors:
       InvitationRSVPGuestErrors =
       {};
@@ -269,7 +323,7 @@ export function useInvitationRSVPForm({
 
     for (
       const guest
-      of guests
+      of guestsToValidate
     ) {
       const result =
         validateInvitationRsvpAnswers(

@@ -57,7 +57,7 @@
       "title": {
         "label": "Title",
         "description": "The title guests will see on the RSVP page.",
-        "placeholder": "RSVP"
+        "placeholder": "Attendance confirmation"
       },
 
       "description": {
@@ -134,14 +134,29 @@
         "title": "Response settings",
         "description": "Configure how guests can respond to this invitation.",
 
+        "responseChanges": {
+          "label": "Allow response changes",
+          "description": "Guests can change a submitted RSVP response until the response deadline."
+        },
+
         "genericResponses": {
           "label": "Allow responses from the public invitation",
           "description": "Guests without a personalized invitation link can submit an RSVP through the public invitation."
         },
+"collectGenericEmail": {
+  "label": "Collect email addresses",
+  "description": "Require an email address from guests who confirm attendance through the public invitation."
+},
 
         "maxPartySize": {
-          "label": "Maximum party size",
+          "label": "Maximum people per response",
           "description": "Set the maximum number of people that can be included in a response submitted through the public invitation."
+        },
+
+        "maxGenericGuests": {
+          "label": "Total guests from the public invitation",
+          "description": "Limit the total number of guests who can RSVP through the public invitation. Leave empty if you do not want to set a limit.",
+          "placeholder": "No limit"
         }
       }
     },
@@ -159,143 +174,166 @@
       "delete": "Delete content"
     },
 
-    "fallback": {
-      "heroTitle": "Anna & Mark",
-      "heroSubtitle": "Dear friends and family, we invite you to our wedding",
-      "description": "We look forward to celebrating this special day with you.",
-      "locationName": "Event venue",
-      "locationAddress": "Event address",
-      "rsvpTitle": "Confirm attendance",
-      "rsvpDescription": "Please confirm your attendance."
+"fallback": {
+  "locationName": "Event venue",
+  "locationAddress": "Event address",
+  "rsvpTitle": "Attendance confirmation",
+  "rsvpDescription": "Please confirm your attendance."
+},
+"validation": {
+  "end_without_start": "Select a start date first.",
+  "end_before_start": "The end date cannot be before the start date."
+}
+  },
+
+  "experience": {
+    "envelope": {
+      "open": "Open invitation"
     },
 
-    "validation": {
-      "end_without_start": "Select a start date first.",
-      "end_before_start": "The end date cannot be before the start date."
-    }
+    "actions": {
+      "details": "Details",
+      "rsvp": "RSVP"
+    },
+
+    "details": {
+      "back": "Back to invitation",
+      "title": "Our day",
+      "program": "Program",
+      "programEmpty": "The program hasn't been added yet.",
+      "location": "Location",
+      "locationEmpty": "The location hasn't been added yet."
+    },
+
+   "rsvp": {
+  "back": "Back to invitation",
+  "title": "Attendance confirmation",
+  "description": "Please confirm your attendance.",
+  "deadline": "By {date}.",
+  "deadlineExpired": "The RSVP deadline has passed.",
+
+  "disabled": {
+    "title": "RSVP is disabled",
+    "description": "Guests will not be able to submit an RSVP response through this invitation."
   },
 
-"experience": {
-  "envelope": {
-    "open": "Open invitation"
-  },
+  "attending": "Attending",
+  "declined": "Unable to attend",
+  "yes": "Yes",
+  "no": "No",
+  "submit": "Confirm response",
+  "submitting": "Submitting...",
+  "submitError": "Unable to submit your RSVP response.",
+  "responseLocked": "Your response has already been submitted and can no longer be changed.",
 
-  "actions": {
-    "details": "Details",
-    "rsvp": "RSVP"
-  },
+"validation": {
+  "firstNameRequired": "First name is required.",
+  "emailRequired": "Email is required.",
+  "emailInvalid": "Enter a valid email address."
+},
 
-  "details": {
-    "back": "Back to invitation",
-    "title": "Our day",
-    "program": "Program",
-    "programEmpty": "The program hasn't been added yet.",
-    "location": "Location",
-    "locationEmpty": "The location hasn't been added yet."
-  },
-
-  "rsvp": {
-    "back": "Back to invitation",
-    "title": "RSVP",
-    "description": "Please confirm your attendance.",
-    "deadline": "Please respond by {date}.",
-    "deadlineExpired": "The RSVP deadline has passed.",
-    "attending": "Attending",
-    "declined": "Unable to attend",
-    "yes": "Yes",
-    "no": "No",
-    "submit": "Confirm response",
+  "generic": {
+    "guest": "Guest {number}",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "addGuest": "Add guest",
+    "removeGuest": "Remove guest",
+    "submit": "Confirm attendance",
     "submitting": "Submitting...",
-    "submitError": "Unable to submit your RSVP response.",
+    "submitError": "Unable to submit your attendance confirmation.",
+    "deadlineExpired": "The RSVP deadline has passed.",
 
     "validation": {
-      "response_required": "Please select your attendance.",
-      "answer_required": "This question is required."
-    }
-  }
-},
-
-"templateUseDialog": {
-  "title": "Use template",
-  "description": "Choose how you want to use the {template} · {variant} template.",
-
-  "existing": {
-    "title": "Apply to an existing invitation",
-    "description": "Replace the design of one of your existing invitations with this template.",
-    "selectTitle": "Choose an invitation",
-    "selectDescription": "Select the invitation you want to apply this template to.",
-    "lastUpdated": "Last updated: {date}"
-  },
-
-  "new": {
-    "title": "Create a new invitation",
-    "description": "Create a new invitation using this template."
-  },
-
-  "back": "Back"
-},
-"page": {
-  "title": "Invitations",
-  "description": "Create and manage invitations for your event.",
-
-  "actions": {
-    "create": "New invitation",
-    "manage": "Manage",
-    "edit": "Edit design"
-  },
-
-  "status": {
-    "published": "Published",
-    "draft": "Draft"
-  },
-
-  "publishedAt": "Published {date}",
-  "notPublished": "Not published yet",
-
-  "empty": {
-    "title": "You don't have an invitation yet",
-    "description": "Choose a template and create your first invitation for your event.",
-    "action": "Create invitation"
-  },
-
-  "templates": {
-    "newInvitationName": "New invitation",
-    "variants": "{count, plural, one {# variant} other {# variants}}",
-    "variantSelector": "Choose variant",
-    "useTemplate": "Use template",
-
-    "categories": {
-      "all": "All",
-      "wedding": "Wedding",
-      "confirmation": "Confirmation",
-      "baptism": "Baptism",
-      "communion": "First Communion",
-      "birthday": "Birthday",
-      "other_private": "Other private event",
-      "conference": "Conference",
-      "seminar": "Seminar",
-      "team_building": "Team building",
-      "reception": "Reception",
-      "gala_dinner": "Gala dinner",
-      "other_business": "Other business event",
-      "festival": "Festival",
-      "charity": "Charity event",
-      "sports": "Sports event",
-      "cultural": "Cultural event",
-      "music": "Music event",
-      "other_social": "Other social event"
-    },
-
-    "flora": {
-      "name": "Flora",
-      "description": "An elegant botanical invitation with soft and refined details."
-    },
-
-    "portrait": {
-      "name": "Portrait",
-      "description": "An elegant photo-focused invitation designed to highlight your favorite moment."
+      "firstNameRequired": "First name is required.",
+      "emailInvalid": "Enter a valid email address."
     }
   }
 }
-}
+},
 
+  "templateUseDialog": {
+    "title": "Use template",
+    "description": "Choose how you want to use the {template} · {variant} template.",
+
+    "existing": {
+      "title": "Apply to an existing invitation",
+      "description": "Replace the design of one of your existing invitations with this template.",
+      "selectTitle": "Choose an invitation",
+      "selectDescription": "Select the invitation you want to apply this template to.",
+      "lastUpdated": "Last updated: {date}"
+    },
+
+    "new": {
+      "title": "Create a new invitation",
+      "description": "Create a new invitation using this template."
+    },
+
+    "back": "Back"
+  },
+
+  "page": {
+    "title": "Invitations",
+    "description": "Create and manage invitations for your event.",
+
+    "actions": {
+      "create": "New invitation",
+      "manage": "Manage",
+      "edit": "Edit design"
+    },
+
+    "status": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+
+    "publishedAt": "Published {date}",
+    "notPublished": "Not published yet",
+
+    "empty": {
+      "title": "You don't have an invitation yet",
+      "description": "Choose a template and create your first invitation for your event.",
+      "action": "Create invitation"
+    },
+
+    "templates": {
+      "newInvitationName": "New invitation",
+      "variants": "{count, plural, one {# variant} other {# variants}}",
+      "variantSelector": "Choose variant",
+     "useTemplate": "Use template",
+     "creating": "Creating...",
+      
+      "categories": {
+        "all": "All",
+        "wedding": "Wedding",
+        "confirmation": "Confirmation",
+        "baptism": "Baptism",
+        "communion": "First Communion",
+        "birthday": "Birthday",
+        "other_private": "Other private event",
+        "conference": "Conference",
+        "seminar": "Seminar",
+        "team_building": "Team building",
+        "reception": "Reception",
+        "gala_dinner": "Gala dinner",
+        "other_business": "Other business event",
+        "festival": "Festival",
+        "charity": "Charity event",
+        "sports": "Sports event",
+        "cultural": "Cultural event",
+        "music": "Music event",
+        "other_social": "Other social event"
+      },
+
+      "flora": {
+        "name": "Flora",
+        "description": "An elegant botanical invitation with soft and refined details."
+      },
+
+      "portrait": {
+        "name": "Portrait",
+        "description": "An elegant photo-focused invitation designed to highlight your favorite moment."
+      }
+    }
+  }
+}

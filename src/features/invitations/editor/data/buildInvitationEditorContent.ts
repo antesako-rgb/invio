@@ -4,11 +4,13 @@ import type {
 
 import {
   getInvitationEditorFallbackContent,
-} from "@/features/invitations/editor/data/getInvitationEditorFallbackContent";
+} from "@/features/invitations/editor/data/InvitationEditorFallbackContent";
 
 import type {
+  InvitationEditorEventFallback,
+  InvitationEditorEventTranslations,
   InvitationEditorFallbackTranslations,
-} from "@/features/invitations/editor/data/getInvitationEditorFallbackContent";
+} from "@/features/invitations/editor/data/InvitationEditorFallback.types";
 
 
 /* ==========================================================================
@@ -35,12 +37,23 @@ function fallbackString(
 ========================================================================== */
 
 export function buildInvitationEditorContent(
-  content: InvitationContent,
-  translations: InvitationEditorFallbackTranslations
+  content:
+    InvitationContent,
+
+  translations:
+    InvitationEditorFallbackTranslations,
+
+  eventTranslations:
+    InvitationEditorEventTranslations,
+
+  eventFallback:
+    InvitationEditorEventFallback
 ): InvitationContent {
   const fallback =
     getInvitationEditorFallbackContent(
-      translations
+      translations,
+      eventTranslations,
+      eventFallback
     );
 
   return {
@@ -143,8 +156,6 @@ export function buildInvitationEditorContent(
 
       deadline:
         content.rsvp.deadline,
-
-
 
       success_message:
         content.rsvp.success_message,

@@ -3,23 +3,14 @@
 import {
   useState,
 } from "react";
-import {
-  getInitials,
-} from "@/lib/utils/getInitials";
+
 import {
   CalendarDays,
   Check,
   Copy,
   MoreHorizontal,
 } from "lucide-react";
-import type {
-  InvitationRsvpQuestion,
-} from "@/features/invitations/types/invitationContent.types";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip/tooltip";
+
 import {
   useTranslations,
 } from "next-intl";
@@ -36,6 +27,12 @@ import {
   TableRow,
 } from "@/components/ui/data-table";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip/tooltip";
+
 import InvitationRecipientDetails
   from "@/features/invitations/components/invitation-management/InvitationRecipients/InvitationRecipientDetails/InvitationRecipientDetails";
 
@@ -43,12 +40,20 @@ import InvitationRsvpStatusBadge
   from "@/features/invitations/components/invitation-management/InvitationRsvpStatusBadge/InvitationRsvpStatusBadge";
 
 import type {
-  InvitationRecipientDetails as InvitationRecipientDetailsType,
-} from "@/features/invitations/types/invitationRecipient.types";
+  InvitationRsvpQuestion,
+} from "@/features/invitations/types/invitationContent.types";
+
+import type {
+  InvitationManagementRow,
+} from "@/features/invitations/types/invitationManagement.types";
 
 import {
   getInvitationPublicPath,
 } from "@/features/invitations/utils/getInvitationPublicPath";
+
+import {
+  getInitials,
+} from "@/lib/utils/getInitials";
 
 import styles
   from "./InvitationRecipientRow.module.css";
@@ -59,12 +64,16 @@ import styles
 ========================================================================== */
 
 interface InvitationRecipientRowProps {
-  recipient:
-    InvitationRecipientDetailsType;
+  invitationPublicId:
+    string;
+
+  row:
+    InvitationManagementRow;
 
   questions:
     InvitationRsvpQuestion[];
 }
+
 
 /* ==========================================================================
    Constants
@@ -79,7 +88,8 @@ const VISIBLE_GUESTS =
 ========================================================================== */
 
 export default function InvitationRecipientRow({
-  recipient,
+  invitationPublicId,
+  row,
   questions,
 }: InvitationRecipientRowProps) {
   /* ==========================================================================
@@ -110,15 +120,30 @@ export default function InvitationRecipientRow({
 
 
   /* ==========================================================================
-     Primary Recipient
+     Invitation Link
+  ========================================================================== */
+
+  const isPersonalized =
+    row.public_id !==
+    null;
+
+  const invitationPath =
+    getInvitationPublicPath(
+      row.public_id ??
+        invitationPublicId
+    );
+
+
+  /* ==========================================================================
+     Primary Guest
   ========================================================================== */
 
   const primaryGuest =
-    recipient.guests.find(
+    row.guests.find(
       (guest) =>
         guest.is_primary_recipient
     ) ??
-    recipient.guests[0] ??
+    row.guests[0] ??
     null;
 
   const primaryGuestName =
@@ -127,23 +152,17 @@ export default function InvitationRecipientRow({
           primaryGuest.first_name,
           primaryGuest.last_name,
         ]
-          .filter(Boolean)
-          .join(" ")
+          .filter(
+            Boolean
+          )
+          .join(
+            " "
+          )
       : "—";
 
-const primaryGuestInitials =
-  getInitials(
-    primaryGuestName
-  );
-
-
-  /* ==========================================================================
-     Personalized Link
-  ========================================================================== */
-
-  const personalizedPath =
-    getInvitationPublicPath(
-      recipient.public_id
+  const primaryGuestInitials =
+    getInitials(
+      primaryGuestName
     );
 
 
@@ -152,14 +171,14 @@ const primaryGuestInitials =
   ========================================================================== */
 
   const visibleGuests =
-    recipient.guests.slice(
+    row.guests.slice(
       0,
       VISIBLE_GUESTS
     );
 
   const remainingGuestCount =
     Math.max(
-      recipient.guests.length -
+      row.guests.length -
         VISIBLE_GUESTS,
       0
     );
@@ -170,21 +189,21 @@ const primaryGuestInitials =
   ========================================================================== */
 
   const attendingCount =
-    recipient.guests.filter(
+    row.guests.filter(
       (guest) =>
         guest.rsvp?.status ===
         "attending"
     ).length;
 
   const declinedCount =
-    recipient.guests.filter(
+    row.guests.filter(
       (guest) =>
         guest.rsvp?.status ===
         "declined"
     ).length;
 
   const pendingCount =
-    recipient.guests.length -
+    row.guests.length -
     attendingCount -
     declinedCount;
 
@@ -196,7 +215,8 @@ const primaryGuestInitials =
     ].filter(
       (count) =>
         count > 0
-    ).length === 1;
+    ).length ===
+    1;
 
 
   /* ==========================================================================
@@ -212,7 +232,7 @@ const primaryGuestInitials =
       }
     ).format(
       new Date(
-        recipient.updated_at
+        row.updated_at
       )
     );
 
@@ -234,7 +254,7 @@ const primaryGuestInitials =
 
   function handleOpenInvitation() {
     window.open(
-      personalizedPath,
+      invitationPath,
       "_blank",
       "noopener,noreferrer"
     );
@@ -247,11 +267,11 @@ const primaryGuestInitials =
 
   async function handleCopyLink() {
     try {
-      const personalizedUrl =
-        `${window.location.origin}${personalizedPath}`;
+      const invitationUrl =
+        `${window.location.origin}${invitationPath}`;
 
       await navigator.clipboard.writeText(
-        personalizedUrl
+        invitationUrl
       );
 
       setCopied(
@@ -335,7 +355,7 @@ const primaryGuestInitials =
                   "guestCount",
                   {
                     count:
-                      recipient.guests.length,
+                      row.guests.length,
                   }
                 )}
               </span>
@@ -348,101 +368,105 @@ const primaryGuestInitials =
             Link
         ==================================================================== */}
 
-     <TableCell
-  className={
-    styles.link
-  }
->
-  <div
-    className={
-      styles.linkContent
-    }
-  >
-    <div
-      className={
-        styles.linkRow
-      }
-    >
-      <Tooltip>
-        <TooltipTrigger
-          asChild
+        <TableCell
+          className={
+            styles.link
+          }
         >
-          <button
-            type="button"
+          <div
             className={
-              styles.linkValue
-            }
-            onDoubleClick={
-              handleOpenInvitation
+              styles.linkContent
             }
           >
-            {personalizedPath}
-          </button>
-        </TooltipTrigger>
+            <div
+              className={
+                styles.linkRow
+              }
+            >
+              <Tooltip>
+                <TooltipTrigger
+                  asChild
+                >
+                  <button
+                    type="button"
+                    className={
+                      styles.linkValue
+                    }
+                    onDoubleClick={
+                      handleOpenInvitation
+                    }
+                  >
+                    {isPersonalized
+                      ? invitationPath
+                      : t(
+                          "table.publicInvitation"
+                        )}
+                  </button>
+                </TooltipTrigger>
 
-        <TooltipContent>
-          {personalizedPath}
-        </TooltipContent>
-      </Tooltip>
+                <TooltipContent>
+                  {invitationPath}
+                </TooltipContent>
+              </Tooltip>
 
-      <Tooltip>
-        <TooltipTrigger
-          asChild
-        >
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            aria-label={
-              copied
-                ? t(
-                    "details.link.copied"
-                  )
-                : t(
-                    "details.link.copy"
-                  )
-            }
-            onClick={
-              handleCopyLink
-            }
-          >
-            {copied ? (
-              <Check
-                className="size-4"
-                aria-hidden="true"
-              />
-            ) : (
-              <Copy
-                className="size-4"
-                aria-hidden="true"
-              />
-            )}
-          </Button>
-        </TooltipTrigger>
+              <Tooltip>
+                <TooltipTrigger
+                  asChild
+                >
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    aria-label={
+                      copied
+                        ? t(
+                            "details.link.copied"
+                          )
+                        : t(
+                            "details.link.copy"
+                          )
+                    }
+                    onClick={
+                      handleCopyLink
+                    }
+                  >
+                    {copied ? (
+                    <Check
+  className="size-4 text-green-600"
+  aria-hidden="true"
+/>
+                    ) : (
+                      <Copy
+                        className="size-4"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </Button>
+                </TooltipTrigger>
 
-        <TooltipContent>
-          {copied
-            ? t(
-                "details.link.copied"
-              )
-            : t(
-                "details.link.copy"
+                <TooltipContent>
+                  {copied
+                    ? t(
+                        "details.link.copied"
+                      )
+                    : t(
+                        "details.link.copy"
+                      )}
+                </TooltipContent>
+              </Tooltip>
+            </div>
+
+            <span
+              className={
+                styles.linkHint
+              }
+            >
+              {t(
+                "table.linkHint"
               )}
-        </TooltipContent>
-      </Tooltip>
-    </div>
-
-    <span
-      className={
-        styles.linkHint
-      }
-    >
-      {t(
-        "table.linkHint"
-      )}
-    </span>
-  </div>
-</TableCell>
+            </span>
+          </div>
+        </TableCell>
 
 
         {/* ====================================================================
@@ -471,10 +495,16 @@ const primaryGuestInitials =
                       guest.first_name,
                       guest.last_name,
                     ]
-                      .filter(Boolean)
-                      .join(" ")
+                      .filter(
+                        Boolean
+                      )
+                      .join(
+                        " "
+                      )
                 )
-                .join(", ")}
+                .join(
+                  ", "
+                )}
             </span>
 
             {remainingGuestCount >
@@ -508,7 +538,8 @@ const primaryGuestInitials =
         >
           {hasSingleRsvpStatus ? (
             <>
-              {pendingCount > 0 && (
+              {pendingCount >
+                0 && (
                 <InvitationRsvpStatusBadge
                   status="pending"
                   count={
@@ -517,7 +548,8 @@ const primaryGuestInitials =
                 />
               )}
 
-              {attendingCount > 0 && (
+              {attendingCount >
+                0 && (
                 <InvitationRsvpStatusBadge
                   status="attending"
                   count={
@@ -526,7 +558,8 @@ const primaryGuestInitials =
                 />
               )}
 
-              {declinedCount > 0 && (
+              {declinedCount >
+                0 && (
                 <InvitationRsvpStatusBadge
                   status="declined"
                   count={
@@ -609,42 +642,42 @@ const primaryGuestInitials =
             Actions
         ==================================================================== */}
 
-<TableCell
-  className={
-    styles.actions
-  }
->
-  <Tooltip>
-    <TooltipTrigger
-      asChild
-    >
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon"
-        aria-label={
-          t(
-            "actions.open"
-          )
-        }
-        onClick={
-          handleOpenDetails
-        }
-      >
-        <MoreHorizontal
-          className="size-4"
-          aria-hidden="true"
-        />
-      </Button>
-    </TooltipTrigger>
+        <TableCell
+          className={
+            styles.actions
+          }
+        >
+          <Tooltip>
+            <TooltipTrigger
+              asChild
+            >
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                aria-label={
+                  t(
+                    "actions.open"
+                  )
+                }
+                onClick={
+                  handleOpenDetails
+                }
+              >
+                <MoreHorizontal
+                  className="size-4"
+                  aria-hidden="true"
+                />
+              </Button>
+            </TooltipTrigger>
 
-    <TooltipContent>
-      {t(
-        "actions.open"
-      )}
-    </TooltipContent>
-  </Tooltip>
-</TableCell>
+            <TooltipContent>
+              {t(
+                "actions.open"
+              )}
+            </TooltipContent>
+          </Tooltip>
+        </TableCell>
       </TableRow>
 
 
@@ -652,20 +685,20 @@ const primaryGuestInitials =
           Details
       ==================================================================== */}
 
-<InvitationRecipientDetails
-  recipient={
-    recipient
-  }
-  questions={
-    questions
-  }
-  open={
-    detailsOpen
-  }
-  onOpenChange={
-    setDetailsOpen
-  }
-/>
+      <InvitationRecipientDetails
+        row={
+          row
+        }
+        questions={
+          questions
+        }
+        open={
+          detailsOpen
+        }
+        onOpenChange={
+          setDetailsOpen
+        }
+      />
     </>
   );
 }

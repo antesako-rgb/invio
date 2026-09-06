@@ -1,0 +1,597 @@
+/* ==========================================================================
+   Invitation Generic RSVP Form
+========================================================================== */
+
+.invitation-generic-rsvp-form {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    20px;
+
+  width:
+    100%;
+}
+
+
+/* ==========================================================================
+   Guests
+========================================================================== */
+
+.invitation-generic-rsvp-form__guests {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    16px;
+}
+
+
+/* ==========================================================================
+   Guest
+========================================================================== */
+
+.invitation-generic-rsvp-form__guest {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    18px;
+
+  width:
+    100%;
+
+  padding:
+    18px;
+
+  background:
+    var(
+      --invitation-rsvp-section-background
+    );
+
+  border:
+    1px solid
+    var(
+      --invitation-rsvp-section-border
+    );
+
+  border-radius:
+    18px;
+
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+
+.invitation-generic-rsvp-form__guest:focus-within {
+  border-color:
+    color-mix(
+      in srgb,
+      var(
+        --invitation-rsvp-accent
+      ) 45%,
+      var(
+        --invitation-rsvp-section-border
+      )
+    );
+
+  box-shadow:
+    0 8px 24px
+    color-mix(
+      in srgb,
+      var(
+        --invitation-rsvp-foreground
+      ) 6%,
+      transparent
+    );
+}
+
+
+/* ==========================================================================
+   Guest Header
+========================================================================== */
+
+.invitation-generic-rsvp-form__guest-header {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    12px;
+}
+
+
+/* ==========================================================================
+   Guest Title
+========================================================================== */
+
+.invitation-generic-rsvp-form__guest-title {
+  margin:
+    0;
+
+  color:
+    var(
+      --invitation-rsvp-foreground
+    );
+
+  font-family:
+    var(
+      --invitation-rsvp-section-font
+    );
+
+  font-size:
+    15px;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.4;
+}
+
+
+/* ==========================================================================
+   Remove Guest
+========================================================================== */
+
+.invitation-generic-rsvp-form__remove {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  flex:
+    0 0 auto;
+
+  width:
+    34px;
+
+  height:
+    34px;
+
+  padding:
+    0;
+
+  color:
+    var(
+      --invitation-rsvp-accent
+    );
+
+  background:
+    var(
+      --invitation-rsvp-control-background
+    );
+
+  border:
+    1px solid
+    var(
+      --invitation-rsvp-control-border
+    );
+
+  border-radius:
+    999px;
+
+  cursor:
+    pointer;
+
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+
+.invitation-generic-rsvp-form__remove:hover {
+  border-color:
+    var(
+      --invitation-rsvp-accent
+    );
+}
+
+
+.invitation-generic-rsvp-form__remove:active {
+  transform:
+    scale(0.96);
+}
+
+
+.invitation-generic-rsvp-form__remove:focus-visible {
+  outline:
+    2px solid
+    var(
+      --invitation-rsvp-accent
+    );
+
+  outline-offset:
+    3px;
+}
+
+
+.invitation-generic-rsvp-form__remove svg {
+  width:
+    16px;
+
+  height:
+    16px;
+}
+
+
+/* ==========================================================================
+   Field
+========================================================================== */
+
+.invitation-generic-rsvp-form__field {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    7px;
+}
+
+
+/* ==========================================================================
+   Label
+========================================================================== */
+
+.invitation-generic-rsvp-form__label {
+  color:
+    var(
+      --invitation-rsvp-foreground
+    );
+
+  font-family:
+    var(
+      --invitation-rsvp-section-font
+    );
+
+  font-size:
+    13px;
+
+  font-weight:
+    500;
+
+  line-height:
+    1.4;
+}
+
+
+/* ==========================================================================
+   Input
+========================================================================== */
+
+.invitation-generic-rsvp-form__input {
+  width:
+    100%;
+
+  min-height:
+    44px;
+
+  padding:
+    10px 12px;
+
+  color:
+    var(
+      --invitation-rsvp-foreground
+    );
+
+  font:
+    inherit;
+
+  font-size:
+    14px;
+
+  line-height:
+    1.4;
+
+  background:
+    var(
+      --invitation-rsvp-control-background
+    );
+
+  border:
+    1px solid
+    var(
+      --invitation-rsvp-control-border
+    );
+
+  border-radius:
+    10px;
+
+  outline:
+    none;
+
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+
+.invitation-generic-rsvp-form__input:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(
+        --invitation-rsvp-accent
+      ) 45%,
+      var(
+        --invitation-rsvp-control-border
+      )
+    );
+}
+
+
+.invitation-generic-rsvp-form__input:focus {
+  border-color:
+    var(
+      --invitation-rsvp-accent
+    );
+
+  box-shadow:
+    0 0 0 3px
+    color-mix(
+      in srgb,
+      var(
+        --invitation-rsvp-accent
+      ) 10%,
+      transparent
+    );
+}
+
+
+.invitation-generic-rsvp-form__input[aria-invalid="true"] {
+  border-color:
+    #b42318;
+}
+
+
+/* ==========================================================================
+   Questions
+========================================================================== */
+
+.invitation-generic-rsvp-form__questions {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    22px;
+
+  padding-top:
+    20px;
+
+  border-top:
+    1px solid
+    var(
+      --invitation-rsvp-section-border
+    );
+}
+
+
+/* ==========================================================================
+   Error
+========================================================================== */
+
+.invitation-generic-rsvp-form__error {
+  margin:
+    0;
+
+  color:
+    #b42318;
+
+  font-size:
+    12px;
+
+  line-height:
+    1.4;
+}
+
+
+/* ==========================================================================
+   Add Guest
+========================================================================== */
+
+.invitation-generic-rsvp-form__add {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  align-self:
+    center;
+
+  gap:
+    8px;
+
+  min-height:
+    42px;
+
+  padding:
+    9px 16px;
+
+  color:
+    var(
+      --invitation-rsvp-accent
+    );
+
+  font:
+    inherit;
+
+  font-size:
+    13px;
+
+  font-weight:
+    500;
+
+  line-height:
+    1.2;
+
+  background:
+    var(
+      --invitation-rsvp-control-background
+    );
+
+  border:
+    1px solid
+    var(
+      --invitation-rsvp-control-border
+    );
+
+  border-radius:
+    999px;
+
+  cursor:
+    pointer;
+
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+
+.invitation-generic-rsvp-form__add:hover {
+  border-color:
+    var(
+      --invitation-rsvp-accent
+    );
+}
+
+
+.invitation-generic-rsvp-form__add:active {
+  transform:
+    scale(0.98);
+}
+
+
+.invitation-generic-rsvp-form__add:focus-visible {
+  outline:
+    2px solid
+    var(
+      --invitation-rsvp-accent
+    );
+
+  outline-offset:
+    3px;
+}
+
+
+.invitation-generic-rsvp-form__add svg {
+  width:
+    16px;
+
+  height:
+    16px;
+}
+
+
+/* ==========================================================================
+   Disabled
+========================================================================== */
+
+.invitation-generic-rsvp-form__input:disabled,
+.invitation-generic-rsvp-form__add:disabled,
+.invitation-generic-rsvp-form__remove:disabled {
+  cursor:
+    not-allowed;
+
+  opacity:
+    0.6;
+}
+
+
+/* ==========================================================================
+   Responsive
+========================================================================== */
+
+@media (
+  max-width: 640px
+) {
+  .invitation-generic-rsvp-form {
+    gap:
+      18px;
+  }
+
+
+  .invitation-generic-rsvp-form__guests {
+    gap:
+      14px;
+  }
+
+
+  .invitation-generic-rsvp-form__guest {
+    gap:
+      16px;
+
+    padding:
+      16px;
+
+    border-radius:
+      16px;
+  }
+
+
+  .invitation-generic-rsvp-form__guest-title {
+    font-size:
+      14px;
+  }
+
+
+  .invitation-generic-rsvp-form__input {
+    min-height:
+      42px;
+
+    font-size:
+      13px;
+  }
+
+
+  .invitation-generic-rsvp-form__questions {
+    gap:
+      18px;
+
+    padding-top:
+      18px;
+  }
+
+
+  .invitation-generic-rsvp-form__add {
+    min-height:
+      40px;
+
+    padding:
+      8px 14px;
+
+    font-size:
+      12px;
+  }
+}

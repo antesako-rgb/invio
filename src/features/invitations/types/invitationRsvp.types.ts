@@ -94,3 +94,35 @@ export interface SubmitInvitationRsvpData {
   p_responses:
     InvitationRsvpSubmission[];
 }
+
+
+/* ==========================================================================
+   Generic Invitation RSVP Guest
+========================================================================== */
+
+export interface GenericInvitationRsvpGuest {
+  first_name: string;
+  last_name: string | null;
+  email: string | null;
+  answers: InvitationRsvpAnswers;
+}
+
+/* ==========================================================================
+   Submit Generic Invitation RSVP Input
+========================================================================== */
+
+export type SubmitGenericInvitationRsvpInput =
+  Database["public"]["Functions"]["submit_generic_invitation_rsvp"]["Args"];
+
+
+/* ==========================================================================
+   Submit Generic Invitation RSVP Data
+========================================================================== */
+
+export interface SubmitGenericInvitationRsvpData {
+  p_invitation_public_id:
+    string;
+
+  p_guests:
+    GenericInvitationRsvpGuest[];
+}

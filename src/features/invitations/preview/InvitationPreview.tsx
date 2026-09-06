@@ -14,8 +14,16 @@ import {
 } from "@/features/invitations/renderer/buildInvitationTimeDisplay";
 
 import {
-  floraPreviewContent,
-} from "@/features/invitations/preview/data/floraPreviewContent";
+  invitationPreviewContentRegistry,
+} from "@/features/invitations/preview/data/invitationPreviewContentRegistry";
+
+import {
+  invitationTemplateRegistry,
+} from "@/features/invitations/cards/registry/invitationTemplateRegistry";
+
+import {
+  INVITATION_EDITOR_PREVIEW_GUESTS,
+} from "@/features/invitations/editor/data/InvitationEditorPreviewGuests";
 
 import type {
   InvitationRenderData,
@@ -47,10 +55,53 @@ export default function InvitationPreview({
   variantId,
   locale,
 }: InvitationPreviewProps) {
+  /* ==========================================================================
+     Template
+  ========================================================================== */
+
+  const template =
+    invitationTemplateRegistry[
+      templateId
+    ];
+
+  if (!template) {
+    return null;
+  }
+
+
+  /* ==========================================================================
+     Preview Content
+  ========================================================================== */
+
+  const basePreviewContent =
+    invitationPreviewContentRegistry[
+      template.category
+    ];
+
+  if (!basePreviewContent) {
+    return null;
+  }
+
+  const previewContent = {
+    ...basePreviewContent,
+
+    media: {
+      ...basePreviewContent.media,
+
+      image_url:
+        template.preview.imageUrl,
+    },
+  };
+
+
+  /* ==========================================================================
+     Render Data
+  ========================================================================== */
+
   const data:
     InvitationRenderData = {
       content:
-        floraPreviewContent,
+        previewContent,
 
       presentation:
         {},
@@ -58,51 +109,29 @@ export default function InvitationPreview({
       display: {
         date:
           buildInvitationDateDisplay(
-            floraPreviewContent.date,
+            previewContent.date,
             locale
           ),
 
         time:
           buildInvitationTimeDisplay(
-            floraPreviewContent.time
+            previewContent.time
           ),
 
         location:
           buildInvitationLocationDisplay(
-            floraPreviewContent.location
+            previewContent.location
           ),
       },
 
-      guests: [
-        {
-          id:
-            "preview-guest-1",
-
-          firstName:
-            "Ana",
-
-          lastName:
-            "Horvat",
-
-          isPrimaryRecipient:
-            true,
-        },
-
-        {
-          id:
-            "preview-guest-2",
-
-          firstName:
-            "Marko",
-
-          lastName:
-            "Horvat",
-
-          isPrimaryRecipient:
-            false,
-        },
-      ],
+      guests:
+        INVITATION_EDITOR_PREVIEW_GUESTS,
     };
+
+
+  /* ==========================================================================
+     Render
+  ========================================================================== */
 
   return (
     <InvitationRenderer

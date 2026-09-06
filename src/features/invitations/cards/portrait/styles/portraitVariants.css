@@ -16,15 +16,6 @@
       "/invitation-assets/cards/portrait/champagne.png"
     );
 
-  --invitation-experience-background-size:
-    cover;
-
-  --invitation-experience-background-position:
-    center;
-
-  --invitation-experience-background-repeat:
-    no-repeat;
-
   --invitation-card-background:
     #faf6ef;
 
@@ -64,14 +55,8 @@
      Details
   ======================================================================== */
 
-  --invitation-details-foreground:
-    #5a493b;
-
   --invitation-details-accent:
     #462b0a;
-
-  --invitation-details-title-color:
-    #5a493b;
 
   --invitation-details-shell-background:
     #faf6ef;
@@ -93,14 +78,8 @@
      RSVP
   ======================================================================== */
 
-  --invitation-rsvp-foreground:
-    #5a493b;
-
   --invitation-rsvp-accent:
     #462b0a;
-
-  --invitation-rsvp-title-color:
-    #5a493b;
 
   --invitation-rsvp-shell-background:
     #faf6ef;
@@ -157,14 +136,4 @@
     saturate(70%)
     brightness(102%);
 
-
-  /* ========================================================================
-     Photo
-  ======================================================================== */
-
-  --portrait-photo-frame-opacity:
-    1;
-
-  --portrait-photo-frame-filter:
-    none;
 }

@@ -150,6 +150,8 @@ export interface InvitationRsvpContent {
   deadline:
     string | null;
 
+  allow_response_changes:
+    boolean;
 
   success_message:
     string | null;
@@ -160,9 +162,16 @@ export interface InvitationRsvpContent {
   allow_generic_responses:
     boolean;
 
+  collect_generic_email:
+    boolean;
+
   max_party_size:
     number;
+
+  max_generic_guests:
+    number | null;
 }
+
 
 /* ==========================================================================
    Invitation Contact Content

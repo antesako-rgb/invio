@@ -2,34 +2,11 @@ import type {
   InvitationContent,
 } from "@/features/invitations/types/invitationContent.types";
 
-
-/* ==========================================================================
-   Types
-========================================================================== */
-
-export interface InvitationEditorFallbackTranslations {
-  heroTitle:
-    string;
-
-  heroSubtitle:
-    string;
-
-  description:
-    string;
-
-  locationName:
-    string;
-
-  locationAddress:
-    string;
-
-  rsvpTitle:
-    string;
-
-  rsvpDescription:
-    string;
-
-}
+import type {
+  InvitationEditorEventFallback,
+  InvitationEditorEventTranslations,
+  InvitationEditorFallbackTranslations,
+} from "@/features/invitations/editor/data/InvitationEditorFallback.types";
 
 
 /* ==========================================================================
@@ -37,25 +14,32 @@ export interface InvitationEditorFallbackTranslations {
 ========================================================================== */
 
 export function getInvitationEditorFallbackContent(
-  translations: InvitationEditorFallbackTranslations
+  translations:
+    InvitationEditorFallbackTranslations,
+
+  eventTranslations:
+    InvitationEditorEventTranslations,
+
+  eventFallback:
+    InvitationEditorEventFallback
 ): InvitationContent {
   return {
     hero: {
       title:
-        translations.heroTitle,
+        eventTranslations.heroTitle,
 
       subtitle:
-        translations.heroSubtitle,
+        eventTranslations.heroSubtitle,
 
       first_initial:
-        "A",
+        eventFallback.firstInitial,
 
       second_initial:
-        "M",
+        eventFallback.secondInitial,
     },
 
     description:
-      translations.description,
+      eventTranslations.description,
 
     date: {
       start_date:
@@ -97,6 +81,9 @@ export function getInvitationEditorFallbackContent(
       deadline:
         null,
 
+      allow_response_changes:
+        true,
+
       success_message:
         null,
 
@@ -106,8 +93,14 @@ export function getInvitationEditorFallbackContent(
       allow_generic_responses:
         false,
 
+      collect_generic_email:
+        false,
+
       max_party_size:
         1,
+
+      max_generic_guests:
+        null,
     },
 
     contacts:

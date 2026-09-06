@@ -6,10 +6,6 @@ import type {
   InvitationEnvelopeId,
 } from "@/features/invitations/experience/envelope/types/invitationEnvelope.types";
 
-import type {
-  InvitationContent,
-} from "@/features/invitations/types/invitationContent.types";
-
 
 /* ==========================================================================
    Invitation Template Variant Config
@@ -31,6 +27,19 @@ export interface InvitationTemplateVariantConfig {
 
 
 /* ==========================================================================
+   Invitation Template Preview Config
+========================================================================== */
+
+export interface InvitationTemplatePreviewConfig {
+  cardUrl:
+    string;
+
+  imageUrl:
+    string | null;
+}
+
+
+/* ==========================================================================
    Invitation Template Config
 ========================================================================== */
 
@@ -38,11 +47,8 @@ export interface InvitationTemplateConfig {
   category:
     EventType;
 
-  previewUrl:
-    string;
-
-  previewContent:
-    InvitationContent;
+  preview:
+    InvitationTemplatePreviewConfig;
 
   envelopeId:
     InvitationEnvelopeId;

@@ -1,0 +1,19 @@
+{
+  "wedding": {
+    "heroTitle": "Anna & Mark",
+    "heroSubtitle": "Dear friends and family, we invite you to our wedding.",
+    "description": "We look forward to celebrating this special day with you."
+  },
+
+  "birthday": {
+    "heroTitle": "Birthday Celebration",
+    "heroSubtitle": "Join us in celebrating this special day.",
+    "description": "We look forward to celebrating, sharing good moments and making memories together."
+  },
+
+  "conference": {
+    "heroTitle": "Conference",
+    "heroSubtitle": "We invite you to join us for the conference.",
+    "description": "Join us for a day dedicated to sharing knowledge, ideas and experiences."
+  }
+}

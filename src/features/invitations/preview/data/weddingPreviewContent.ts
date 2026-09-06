@@ -3,18 +3,16 @@ import type {
 } from "@/features/invitations/types/invitationContent.types";
 
 
-/* ==========================================================================
-   Flora Preview Content
-========================================================================== */
 
-export const floraPreviewContent:
+
+export const weddingPreviewContent:
   InvitationContent = {
   hero: {
     title:
       "Ana &\nMarko",
 
     subtitle:
-      "S velikim veseljem pozivamo na vjenčanje.",
+      "S velikim veseljem pozivamo vas da budete dio našeg posebnog dana.",
 
     first_initial:
       "A",
@@ -109,13 +107,16 @@ export const floraPreviewContent:
       true,
 
     title:
-      "Potvrdite dolazak",
+      "Potvrda dolaska",
 
     description:
       "Molimo vas da potvrdite svoj dolazak.",
 
     deadline:
       null,
+
+    allow_response_changes:
+      true,
 
     success_message:
       null,
@@ -126,8 +127,14 @@ export const floraPreviewContent:
     allow_generic_responses:
       false,
 
+    collect_generic_email:
+      false,
+
     max_party_size:
       1,
+
+    max_generic_guests:
+      null,
   },
 
   contacts: [
@@ -154,10 +161,10 @@ export const floraPreviewContent:
     },
   ],
 
-  media: {
-    image_url:
-      null,
-  },
+media: {
+  image_url:
+    null,
+},
 
   music: {
     audio_url:

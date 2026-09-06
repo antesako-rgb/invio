@@ -6,9 +6,6 @@ import type {
   Locale,
 } from "@/i18n/config";
 
-import InvitationRenderer
-  from "@/features/invitations/renderer/InvitationRenderer";
-
 import {
   buildInvitationRenderData,
 } from "@/features/invitations/renderer/buildInvitationRenderData";
@@ -25,8 +22,11 @@ import {
   getPublicInvitationRecipient,
 } from "@/features/invitations/repositories/invitation-recipients/getPublicInvitationRecipient";
 
+import GenericInvitationExperience
+  from "@/features/invitations//pages/GenericInvitationExperience/GenericInvitationExperience";
+
 import PersonalizedInvitationExperience
-  from "@/features/invitations/experience/PersonalizedInvitationExperience/PersonalizedInvitationExperience";
+  from "@/features/invitations/pages/PersonalizedInvitationExperience/PersonalizedInvitationExperience";
 
 
 /* ==========================================================================
@@ -147,14 +147,16 @@ export default async function PublicInvitationPage({
     });
 
   return (
-    <InvitationRenderer
+    <GenericInvitationExperience
+      invitationPublicId={
+        publicId
+      }
       templateId={
         invitation.template_id
       }
       variantId={
         invitation.variant_id
       }
-      mode="live"
       data={
         data
       }

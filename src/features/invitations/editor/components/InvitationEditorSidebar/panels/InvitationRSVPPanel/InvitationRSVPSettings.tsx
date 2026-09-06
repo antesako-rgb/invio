@@ -39,7 +39,8 @@ interface InvitationRSVPSettingsProps {
 
   onChange:
     (
-      rsvp: InvitationRsvpContent
+      rsvp:
+        InvitationRsvpContent
     ) => void;
 }
 
@@ -61,9 +62,34 @@ export default function InvitationRSVPSettings({
     rsvp.enabled ??
     true;
 
+  const allowResponseChanges =
+    rsvp.allow_response_changes ??
+    true;
+
   const allowGenericResponses =
     rsvp.allow_generic_responses ??
     false;
+
+  const collectGenericEmail =
+    rsvp.collect_generic_email ??
+    false;
+
+
+  /* ==========================================================================
+     Response Changes
+  ========================================================================== */
+
+  function handleResponseChangesChange(
+    allowResponseChanges:
+      boolean
+  ) {
+    onChange({
+      ...rsvp,
+
+      allow_response_changes:
+        allowResponseChanges,
+    });
+  }
 
 
   /* ==========================================================================
@@ -79,6 +105,23 @@ export default function InvitationRSVPSettings({
 
       allow_generic_responses:
         allowGenericResponses,
+    });
+  }
+
+
+  /* ==========================================================================
+     Collect Generic Email
+  ========================================================================== */
+
+  function handleCollectGenericEmailChange(
+    collectGenericEmail:
+      boolean
+  ) {
+    onChange({
+      ...rsvp,
+
+      collect_generic_email:
+        collectGenericEmail,
     });
   }
 
@@ -116,6 +159,51 @@ export default function InvitationRSVPSettings({
 
 
   /* ==========================================================================
+     Max Generic Guests
+  ========================================================================== */
+
+  function handleMaxGenericGuestsChange(
+    value:
+      string
+  ) {
+    if (
+      value === ""
+    ) {
+      onChange({
+        ...rsvp,
+
+        max_generic_guests:
+          null,
+      });
+
+      return;
+    }
+
+    const parsedValue =
+      Number.parseInt(
+        value,
+        10
+      );
+
+    if (
+      !Number.isInteger(
+        parsedValue
+      ) ||
+      parsedValue < 1
+    ) {
+      return;
+    }
+
+    onChange({
+      ...rsvp,
+
+      max_generic_guests:
+        parsedValue,
+    });
+  }
+
+
+  /* ==========================================================================
      Render
   ========================================================================== */
 
@@ -140,6 +228,34 @@ export default function InvitationRSVPSettings({
         }
       >
         {/* ==================================================================
+            Response Changes
+        ================================================================== */}
+
+        <SwitchField
+          id="invitation-rsvp-response-changes"
+          label={
+            t(
+              "responseChanges.label"
+            )
+          }
+          description={
+            t(
+              "responseChanges.description"
+            )
+          }
+          checked={
+            allowResponseChanges
+          }
+          disabled={
+            !isEnabled
+          }
+          onCheckedChange={
+            handleResponseChangesChange
+          }
+        />
+
+
+        {/* ==================================================================
             Generic Responses
         ================================================================== */}
 
@@ -163,6 +279,35 @@ export default function InvitationRSVPSettings({
           }
           onCheckedChange={
             handleGenericResponsesChange
+          }
+        />
+
+
+        {/* ==================================================================
+            Collect Generic Email
+        ================================================================== */}
+
+        <SwitchField
+          id="invitation-rsvp-collect-generic-email"
+          label={
+            t(
+              "collectGenericEmail.label"
+            )
+          }
+          description={
+            t(
+              "collectGenericEmail.description"
+            )
+          }
+          checked={
+            collectGenericEmail
+          }
+          disabled={
+            !isEnabled ||
+            !allowGenericResponses
+          }
+          onCheckedChange={
+            handleCollectGenericEmailChange
           }
         />
 
@@ -199,6 +344,51 @@ export default function InvitationRSVPSettings({
             onChange={
               (event) =>
                 handleMaxPartySizeChange(
+                  event.target.value
+                )
+            }
+          />
+        </Field>
+
+
+        {/* ==================================================================
+            Max Generic Guests
+        ================================================================== */}
+
+        <Field
+          id="invitation-rsvp-max-generic-guests"
+          size="sm"
+          label={
+            t(
+              "maxGenericGuests.label"
+            )
+          }
+          description={
+            t(
+              "maxGenericGuests.description"
+            )
+          }
+        >
+          <Input
+            type="number"
+            min={1}
+            step={1}
+            value={
+              rsvp.max_generic_guests ??
+              ""
+            }
+            placeholder={
+              t(
+                "maxGenericGuests.placeholder"
+              )
+            }
+            disabled={
+              !isEnabled ||
+              !allowGenericResponses
+            }
+            onChange={
+              (event) =>
+                handleMaxGenericGuestsChange(
                   event.target.value
                 )
             }

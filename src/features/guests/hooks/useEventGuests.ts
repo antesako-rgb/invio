@@ -6,7 +6,7 @@ import {
 } from "react";
 
 import type {
-  EventGuest,
+  EventGuestWithRsvp,
   GuestGroup,
   GuestGroupFilter,
 } from "@/features/guests/types/guest.types";
@@ -18,7 +18,7 @@ import type {
 
 interface UseEventGuestsProps {
   guests:
-    EventGuest[];
+    EventGuestWithRsvp[];
 
   groups:
     GuestGroup[];

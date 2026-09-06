@@ -10,6 +10,10 @@ import {
   useTranslations,
 } from "next-intl";
 
+import type {
+  EventType,
+} from "@/features/events/types/event.types";
+
 import InvitationEditor
   from "@/features/invitations/editor/components/InvitationEditor/InvitationEditor";
 
@@ -27,8 +31,17 @@ import {
 } from "@/features/invitations/editor/data/buildInvitationEditorContent";
 
 import {
+  getInvitationEditorFallback,
+} from "@/features/invitations/editor/data/InvitationEditorFallbacks";
+
+import {
   INVITATION_EDITOR_PREVIEW_GUESTS,
-} from "@/features/invitations/editor/data/invitationEditorPreviewGuests";
+} from "@/features/invitations/editor/data/InvitationEditorPreviewGuests";
+
+import type {
+  InvitationEditorEventTranslations,
+  InvitationEditorFallbackTranslations,
+} from "@/features/invitations/editor/data/InvitationEditorFallback.types";
 
 import {
   useInvitationAutosave,
@@ -89,6 +102,9 @@ interface InvitationEditorViewProps {
   variantId:
     string;
 
+  eventType:
+    EventType;
+
   locale:
     string;
 
@@ -106,12 +122,18 @@ export default function InvitationEditorView({
   invitationName,
   templateId,
   variantId,
+  eventType,
   locale,
   data,
 }: InvitationEditorViewProps) {
   const tFallback =
     useTranslations(
       "Invitations.editor.fallback"
+    );
+
+  const tEventContent =
+    useTranslations(
+      "InvitationContent"
     );
 
 
@@ -185,23 +207,10 @@ export default function InvitationEditorView({
   ========================================================================== */
 
   const fallbackTranslations =
-    useMemo(
+    useMemo<
+      InvitationEditorFallbackTranslations
+    >(
       () => ({
-        heroTitle:
-          tFallback(
-            "heroTitle"
-          ),
-
-        heroSubtitle:
-          tFallback(
-            "heroSubtitle"
-          ),
-
-        description:
-          tFallback(
-            "description"
-          ),
-
         locationName:
           tFallback(
             "locationName"
@@ -224,6 +233,53 @@ export default function InvitationEditorView({
       }),
       [
         tFallback,
+      ]
+    );
+
+
+  /* ==========================================================================
+     Event Translations
+  ========================================================================== */
+
+  const eventTranslations =
+    useMemo<
+      InvitationEditorEventTranslations
+    >(
+      () => ({
+        heroTitle:
+          tEventContent(
+            `${eventType}.heroTitle`
+          ),
+
+        heroSubtitle:
+          tEventContent(
+            `${eventType}.heroSubtitle`
+          ),
+
+        description:
+          tEventContent(
+            `${eventType}.description`
+          ),
+      }),
+      [
+        eventType,
+        tEventContent,
+      ]
+    );
+
+
+  /* ==========================================================================
+     Event Fallback
+  ========================================================================== */
+
+  const eventFallback =
+    useMemo(
+      () =>
+        getInvitationEditorFallback(
+          eventType
+        ),
+      [
+        eventType,
       ]
     );
 
@@ -405,7 +461,9 @@ export default function InvitationEditorView({
         const editorContent =
           buildInvitationEditorContent(
             content,
-            fallbackTranslations
+            fallbackTranslations,
+            eventTranslations,
+            eventFallback
           );
 
         return {
@@ -441,6 +499,8 @@ export default function InvitationEditorView({
         presentation,
         locale,
         fallbackTranslations,
+        eventTranslations,
+        eventFallback,
       ]
     );
 
