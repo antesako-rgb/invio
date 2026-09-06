@@ -12,6 +12,9 @@ import {
   getInvitationTemplateConfig,
 } from "@/features/invitations/cards/registry/invitationTemplateRegistry.utils";
 
+import InvitationEditorPreviewContainer
+  from "@/features/invitations/editor/components/InvitationEditorPreviewContainer/InvitationEditorPreviewContainer";
+
 import InvitationGuestActions
   from "@/features/invitations/experience/actions/InvitationGuestActions/InvitationGuestActions";
 
@@ -166,26 +169,30 @@ export default function InvitationRenderer({
     ) {
       case "details":
         return (
-          <InvitationDetailsView
-            data={
-              data
-            }
-          />
+          <InvitationEditorPreviewContainer>
+            <InvitationDetailsView
+              data={
+                data
+              }
+            />
+          </InvitationEditorPreviewContainer>
         );
 
       case "rsvp":
         return (
-          <InvitationRSVPView
-            data={
-              data
-            }
-            previewState={
-              rsvpPreviewState
-            }
-            onSubmit={
-              onRsvpSubmit
-            }
-          />
+          <InvitationEditorPreviewContainer>
+            <InvitationRSVPView
+              data={
+                data
+              }
+              previewState={
+                rsvpPreviewState
+              }
+              onSubmit={
+                onRsvpSubmit
+              }
+            />
+          </InvitationEditorPreviewContainer>
         );
 
       case "design":
