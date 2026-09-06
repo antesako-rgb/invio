@@ -72,19 +72,26 @@
         "placeholder": "Odaberite datum"
       },
 
-      "preview": {
-        "label": "Prikaz",
-        "form": "Forma",
-        "success": "Nakon potvrde",
-        "ariaLabel": "Prikaz RSVP stanja"
-      },
+"preview": {
+  "label": "Prikaz",
+  "form": "Forma",
+  "success": "Nakon potvrde",
+  "ariaLabel": "Prikaz RSVP stanja"
+},
 
-      "tabs": {
-        "basics": "Osnovno",
-        "questions": "Pitanja",
-        "settings": "Postavke",
-        "ariaLabel": "RSVP postavke"
-      },
+"previewMode": {
+  "label": "Pregled kao",
+  "ariaLabel": "Odaberite vrstu gosta za RSVP pregled",
+  "personalized": "Personalizirani gost",
+  "generic": "Javni gost"
+},
+
+"tabs": {
+  "basics": "Osnovno",
+  "questions": "Pitanja",
+  "settings": "Postavke",
+  "ariaLabel": "RSVP postavke"
+},
 
       "successMessage": {
         "label": "Poruka nakon potvrde",

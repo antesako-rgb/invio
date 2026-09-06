@@ -21,22 +21,6 @@
    Guests
 ========================================================================== */
 
-.invitation-generic-rsvp-form__guests {
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  gap:
-    16px;
-}
-
-
-/* ==========================================================================
-   Guest
-========================================================================== */
-
 .invitation-generic-rsvp-form__guest {
   display:
     flex;
@@ -51,50 +35,10 @@
     100%;
 
   padding:
-    18px;
-
-  background:
-    var(
-      --invitation-rsvp-section-background
-    );
-
-  border:
-    1px solid
-    var(
-      --invitation-rsvp-section-border
-    );
-
-  border-radius:
-    18px;
-
-  transition:
-    border-color 180ms ease,
-    box-shadow 180ms ease;
+    0;
 }
 
 
-.invitation-generic-rsvp-form__guest:focus-within {
-  border-color:
-    color-mix(
-      in srgb,
-      var(
-        --invitation-rsvp-accent
-      ) 45%,
-      var(
-        --invitation-rsvp-section-border
-      )
-    );
-
-  box-shadow:
-    0 8px 24px
-    color-mix(
-      in srgb,
-      var(
-        --invitation-rsvp-foreground
-      ) 6%,
-      transparent
-    );
-}
 
 
 /* ==========================================================================
@@ -536,16 +480,20 @@
 @media (
   max-width: 640px
 ) {
+
   .invitation-generic-rsvp-form {
     gap:
       18px;
   }
 
 
-  .invitation-generic-rsvp-form__guests {
-    gap:
-      14px;
-  }
+.invitation-generic-rsvp-form__guest {
+  gap:
+    16px;
+
+  padding:
+    0;
+}
 
 
   .invitation-generic-rsvp-form__guest {
@@ -553,10 +501,7 @@
       16px;
 
     padding:
-      16px;
-
-    border-radius:
-      16px;
+      8px;
   }
 
 
@@ -594,4 +539,5 @@
     font-size:
       12px;
   }
+
 }

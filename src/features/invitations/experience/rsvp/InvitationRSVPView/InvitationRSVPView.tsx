@@ -28,10 +28,6 @@ import {
   useInvitationRSVPForm,
 } from "@/features/invitations/experience/rsvp/hooks/useInvitationRSVPForm";
 
-import {
-  buildInvitationRsvpSubmissions,
-} from "@/features/invitations/utils/buildInvitationRsvpSubmissions";
-
 import type {
   GenericInvitationRsvpSubmitHandler,
   InvitationRenderData,
@@ -39,8 +35,13 @@ import type {
 } from "@/features/invitations/types/invitationRenderer.types";
 
 import type {
+  InvitationRSVPPreviewMode,
   InvitationRSVPViewState,
 } from "@/features/invitations/types/invitationRsvp.types";
+
+import {
+  buildInvitationRsvpSubmissions,
+} from "@/features/invitations/utils/buildInvitationRsvpSubmissions";
 
 import "./InvitationRSVPView.css";
 
@@ -58,6 +59,9 @@ interface InvitationRSVPViewProps {
 
   previewState?:
     InvitationRSVPViewState;
+
+  previewMode?:
+    InvitationRSVPPreviewMode;
 
   onBack?:
     () => void;
@@ -78,6 +82,7 @@ export default function InvitationRSVPView({
   data,
   eventTimezone,
   previewState,
+  previewMode,
   onBack,
   onSubmit,
   onGenericSubmit,
@@ -141,8 +146,10 @@ export default function InvitationRSVPView({
     liveState;
 
   const isGeneric =
-    onGenericSubmit !==
-    undefined;
+    previewMode !== undefined
+      ? previewMode === "generic"
+      : onGenericSubmit !==
+        undefined;
 
   const deadline =
     rsvp.deadline
@@ -462,15 +469,17 @@ export default function InvitationRSVPView({
   /* ==========================================================================
      Generic Form
   ========================================================================== */
+function renderGenericForm() {
+  if (
+    !onGenericSubmit
+  ) {
+    return null;
+  }
 
-  function renderGenericForm() {
-    if (
-      !onGenericSubmit
-    ) {
-      return null;
-    }
-
-    return (
+  return (
+    <div
+      className="invitation-rsvp-view__content"
+    >
       <InvitationGenericRSVPForm
         rsvp={
           rsvp
@@ -485,8 +494,9 @@ export default function InvitationRSVPView({
           handleGenericSuccess
         }
       />
-    );
-  }
+    </div>
+  );
+}
 
 
   /* ==========================================================================
@@ -570,6 +580,11 @@ export default function InvitationRSVPView({
     <div
       className="invitation-rsvp-view"
       data-invitation-rsvp-view
+      data-rsvp-mode={
+        isGeneric
+          ? "generic"
+          : "personalized"
+      }
       data-state={
         rsvp.enabled
           ? viewState

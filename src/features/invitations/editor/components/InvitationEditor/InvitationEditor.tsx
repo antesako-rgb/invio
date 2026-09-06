@@ -121,6 +121,9 @@ export default function InvitationEditor({
           toolbar={
             toolbar
           }
+          showMobileToolbar={
+            activeStep === "design"
+          }
         >
           {children}
         </InvitationEditorWorkspace>
@@ -153,10 +156,10 @@ export default function InvitationEditor({
               )}
             </SheetTrigger>
 
-         <SheetContent
-  side="bottom"
-  className="invitation-editor__mobile-sheet"
->
+            <SheetContent
+              side="bottom"
+              className="invitation-editor__mobile-sheet"
+            >
               <div
                 className="invitation-editor__mobile-sheet-content"
               >

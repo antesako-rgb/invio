@@ -34,6 +34,9 @@
   overflow:
     hidden;
 
+  padding:
+    24px 28px 32px;
+
   color:
     var(
       --invitation-rsvp-foreground
@@ -72,11 +75,8 @@
   align-items:
     center;
 
-  gap:
-    12px;
-
-  padding:
-    18px 20px;
+  min-height:
+    40px;
 }
 
 
@@ -199,11 +199,11 @@
 
   font-family:
     var(
-      --invitation-rsvp-title-font
+      --invitation-rsvp-event-font
     );
 
   font-size:
-    16px;
+    22px;
 
   font-weight:
     500;
@@ -237,7 +237,7 @@
     center;
 
   padding:
-    22px 36px 26px;
+    18px 0 26px;
 
   text-align:
     center;
@@ -386,9 +386,6 @@
 
   width:
     100%;
-
-  padding:
-    0 28px 32px;
 }
 
 
@@ -410,6 +407,7 @@
     100%;
 }
 
+
 /* ==========================================================================
    Submit Error
 ========================================================================== */
@@ -427,8 +425,6 @@
   color:
     #b42318;
 
-  font:
-    inherit;
 
   font-family:
     var(
@@ -482,13 +478,11 @@
   padding:
     12px 20px;
 
-  color:
-    var(
-      --invitation-rsvp-control-active-foreground
-    );
+color:
+  var(
+    --invitation-rsvp-submit-foreground
+  );
 
-  font:
-    inherit;
 
   font-family:
     var(
@@ -504,16 +498,15 @@
   line-height:
     1.2;
 
-  background:
-    var(
-      --invitation-rsvp-control-active-background
-    );
-
-  border:
-    1px solid
-    var(
-      --invitation-rsvp-control-active-background
-    );
+background:
+  var(
+    --invitation-rsvp-submit-background
+  );
+border:
+  1px solid
+  var(
+    --invitation-rsvp-submit-background
+  );
 
   border-radius:
     999px;
@@ -550,6 +543,7 @@
     3px;
 }
 
+
 /* ==========================================================================
    Success Content
 ========================================================================== */
@@ -574,7 +568,7 @@
     150px;
 
   padding:
-    12px 36px 42px;
+    12px 8px 10px;
 
   text-align:
     center;
@@ -617,6 +611,12 @@
   text-align:
     center;
 }
+
+
+/* ==========================================================================
+   Disabled Content
+========================================================================== */
+
 .invitation-rsvp-view__content--disabled {
   display:
     flex;
@@ -631,10 +631,10 @@
     6px;
 
   width:
-    auto;
+    100%;
 
   margin:
-    24px 28px 32px;
+    0;
 
   padding:
     16px 18px;
@@ -650,6 +650,10 @@
     14px;
 }
 
+
+/* ==========================================================================
+   Disabled Title
+========================================================================== */
 
 .invitation-rsvp-view__disabled-title {
   width:
@@ -681,6 +685,10 @@
     center;
 }
 
+
+/* ==========================================================================
+   Disabled Description
+========================================================================== */
 
 .invitation-rsvp-view__disabled-description {
   width:
@@ -718,6 +726,7 @@
     0.7;
 }
 
+
 /* ==========================================================================
    Responsive
 ========================================================================== */
@@ -725,6 +734,7 @@
 @media (
   max-width: 640px
 ) {
+
   .invitation-rsvp-view {
     padding:
       14px;
@@ -732,6 +742,9 @@
 
 
   .invitation-rsvp-view__shell {
+    padding:
+      16px 18px 24px;
+
     border-radius:
       22px;
   }
@@ -744,11 +757,8 @@
         1fr
       ) 36px;
 
-    gap:
-      8px;
-
-    padding:
-      14px 16px;
+    min-height:
+      36px;
   }
 
 
@@ -770,15 +780,9 @@
   }
 
 
-  .invitation-rsvp-view__event {
-    font-size:
-      14px;
-  }
-
-
   .invitation-rsvp-view__intro {
     padding:
-      18px 22px 22px;
+      16px 0 22px;
   }
 
 
@@ -801,9 +805,6 @@
   .invitation-rsvp-view__content {
     gap:
       18px;
-
-    padding:
-      0 18px 24px;
   }
 
 
@@ -824,7 +825,7 @@
       130px;
 
     padding:
-      10px 24px 34px;
+      10px 6px;
   }
 
 
@@ -832,9 +833,11 @@
     font-size:
       15px;
   }
+
+
   .invitation-rsvp-view__content--disabled {
     margin:
-      18px 18px 24px;
+      0;
 
     padding:
       14px 16px;
@@ -851,4 +854,5 @@
     font-size:
       12px;
   }
+
 }

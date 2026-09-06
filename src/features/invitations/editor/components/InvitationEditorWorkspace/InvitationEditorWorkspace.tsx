@@ -18,6 +18,9 @@ interface InvitationEditorWorkspaceProps {
   toolbar?:
     ReactNode;
 
+  showMobileToolbar?:
+    boolean;
+
   children:
     ReactNode;
 }
@@ -30,12 +33,18 @@ interface InvitationEditorWorkspaceProps {
 export default function InvitationEditorWorkspace({
   sidebar,
   toolbar,
+  showMobileToolbar = true,
   children,
 }: InvitationEditorWorkspaceProps) {
   return (
     <div
       className="invitation-editor-workspace"
       data-invitation-editor-workspace
+      data-mobile-toolbar={
+        showMobileToolbar
+          ? "visible"
+          : "hidden"
+      }
     >
       {sidebar && (
         <aside

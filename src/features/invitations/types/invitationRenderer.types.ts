@@ -18,6 +18,7 @@ import type {
 import type {
   GenericInvitationRsvpGuest,
   InvitationRsvpSubmission,
+  InvitationRSVPPreviewMode,
   InvitationRSVPViewState,
 } from "@/features/invitations/types/invitationRsvp.types";
 
@@ -173,6 +174,10 @@ export type GenericInvitationRsvpSubmitHandler =
    Invitation Renderer Props
 ========================================================================== */
 
+/* ==========================================================================
+   Invitation Renderer Props
+========================================================================== */
+
 export interface InvitationRendererProps {
   templateId:
     string;
@@ -197,6 +202,15 @@ export interface InvitationRendererProps {
 
   rsvpPreviewState?:
     InvitationRSVPViewState;
+
+  rsvpPreviewMode?:
+    InvitationRSVPPreviewMode;
+
+  onRsvpPreviewModeChange?:
+    (
+      mode:
+        InvitationRSVPPreviewMode
+    ) => void;
 
   onRsvpSubmit?:
     InvitationRsvpSubmitHandler;

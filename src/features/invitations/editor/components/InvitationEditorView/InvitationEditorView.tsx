@@ -76,11 +76,13 @@ import type {
 } from "@/features/invitations/types/invitationPresentation.types";
 
 import type {
+  GenericInvitationRsvpSubmitHandler,
   InvitationRenderData,
   InvitationRsvpSubmitHandler,
 } from "@/features/invitations/types/invitationRenderer.types";
 
 import type {
+  InvitationRSVPPreviewMode,
   InvitationRSVPViewState,
 } from "@/features/invitations/types/invitationRsvp.types";
 
@@ -155,6 +157,14 @@ export default function InvitationEditorView({
   ] =
     useState<InvitationRSVPViewState>(
       "form"
+    );
+
+  const [
+    rsvpPreviewMode,
+    setRsvpPreviewMode,
+  ] =
+    useState<InvitationRSVPPreviewMode>(
+      "personalized"
     );
 
   const [
@@ -356,6 +366,43 @@ export default function InvitationEditorView({
         "success"
       );
     };
+
+  const handleGenericRsvpPreviewSubmit:
+    GenericInvitationRsvpSubmitHandler =
+    () => {
+      setRsvpPreviewState(
+        "success"
+      );
+    };
+
+
+  /* ==========================================================================
+     RSVP Preview Mode
+  ========================================================================== */
+
+  useEffect(
+    () => {
+      if (
+        content.rsvp.allow_generic_responses
+      ) {
+        return;
+      }
+
+      if (
+        rsvpPreviewMode !== "generic"
+      ) {
+        return;
+      }
+
+      setRsvpPreviewMode(
+        "personalized"
+      );
+    },
+    [
+      content.rsvp.allow_generic_responses,
+      rsvpPreviewMode,
+    ]
+  );
 
 
   /* ==========================================================================
@@ -597,50 +644,59 @@ export default function InvitationEditorView({
           />
         }
       >
-        <InvitationRenderer
-          templateId={
-            templateId
-          }
-          variantId={
-            variantId
-          }
-          mode="edit"
-          data={
-            editorRenderData
-          }
-          editorStep={
-            activeStep
-          }
-          rsvpPreviewState={
-            rsvpPreviewState
-          }
-          onRsvpSubmit={
-            handleRsvpPreviewSubmit
-          }
-          editor={{
-            invitationId,
+<InvitationRenderer
+  templateId={
+    templateId
+  }
+  variantId={
+    variantId
+  }
+  mode="edit"
+  data={
+    editorRenderData
+  }
+  editorStep={
+    activeStep
+  }
+  rsvpPreviewState={
+    rsvpPreviewState
+  }
+  rsvpPreviewMode={
+    rsvpPreviewMode
+  }
+  onRsvpPreviewModeChange={
+    setRsvpPreviewMode
+  }
+  onRsvpSubmit={
+    handleRsvpPreviewSubmit
+  }
+  onGenericRsvpSubmit={
+    handleGenericRsvpPreviewSubmit
+  }
+  editor={{
+    invitationId,
 
-            selectedElement,
-            editingElement,
-            content,
-            presentation,
+    selectedElement,
+    editingElement,
+    content,
+    presentation,
 
-            onSelectElement:
-              setSelectedElement,
+    onSelectElement:
+      setSelectedElement,
 
-            onStartEdit:
-              handleStartEdit,
+    onStartEdit:
+      handleStartEdit,
 
-            onEndEdit:
-              handleEndEdit,
+    onEndEdit:
+      handleEndEdit,
 
-            onContentChange:
-              setContent,
+    onContentChange:
+      setContent,
 
-            onPresentationChange:
-              setPresentation,
-          }}
-        />
+    onPresentationChange:
+      setPresentation,
+  }}
+/>
       </InvitationEditor>
 
       {isPreviewOpen && (

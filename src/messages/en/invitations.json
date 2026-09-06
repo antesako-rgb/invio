@@ -78,7 +78,12 @@
         "success": "After confirmation",
         "ariaLabel": "RSVP state preview"
       },
-
+"previewMode": {
+  "label": "Preview as",
+  "ariaLabel": "Select guest type for RSVP preview",
+  "personalized": "Personalized guest",
+  "generic": "Public guest"
+},
       "tabs": {
         "basics": "Basics",
         "questions": "Questions",

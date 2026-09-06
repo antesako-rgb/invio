@@ -15,6 +15,9 @@ import {
 import InvitationEditorPreviewContainer
   from "@/features/invitations/editor/components/InvitationEditorPreviewContainer/InvitationEditorPreviewContainer";
 
+import InvitationRSVPPreviewMode
+  from "@/features/invitations/editor/components/InvitationRSVPPreviewMode/InvitationRSVPPreviewMode";
+
 import InvitationGuestActions
   from "@/features/invitations/experience/actions/InvitationGuestActions/InvitationGuestActions";
 
@@ -61,6 +64,8 @@ export default function InvitationRenderer({
   editor,
   editorStep = "design",
   rsvpPreviewState = "form",
+  rsvpPreviewMode = "personalized",
+  onRsvpPreviewModeChange,
   eventTimezone,
   onRsvpSubmit,
   onGenericRsvpSubmit,
@@ -181,6 +186,18 @@ export default function InvitationRenderer({
       case "rsvp":
         return (
           <InvitationEditorPreviewContainer>
+            {data.content.rsvp.allow_generic_responses &&
+              onRsvpPreviewModeChange && (
+                <InvitationRSVPPreviewMode
+                  value={
+                    rsvpPreviewMode
+                  }
+                  onChange={
+                    onRsvpPreviewModeChange
+                  }
+                />
+              )}
+
             <InvitationRSVPView
               data={
                 data
@@ -188,8 +205,14 @@ export default function InvitationRenderer({
               previewState={
                 rsvpPreviewState
               }
+              previewMode={
+                rsvpPreviewMode
+              }
               onSubmit={
                 onRsvpSubmit
+              }
+              onGenericSubmit={
+                onGenericRsvpSubmit
               }
             />
           </InvitationEditorPreviewContainer>

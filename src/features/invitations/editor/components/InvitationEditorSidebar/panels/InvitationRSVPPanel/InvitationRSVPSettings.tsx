@@ -1,6 +1,11 @@
 "use client";
 
 import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
   Users,
 } from "lucide-react";
 
@@ -58,6 +63,11 @@ export default function InvitationRSVPSettings({
       "Invitations.editor.rsvp.settings"
     );
 
+
+  /* ==========================================================================
+     Values
+  ========================================================================== */
+
   const isEnabled =
     rsvp.enabled ??
     true;
@@ -73,6 +83,39 @@ export default function InvitationRSVPSettings({
   const collectGenericEmail =
     rsvp.collect_generic_email ??
     false;
+
+
+  /* ==========================================================================
+     Input State
+  ========================================================================== */
+
+  const [
+    maxPartySizeInput,
+    setMaxPartySizeInput,
+  ] =
+    useState(
+      String(
+        rsvp.max_party_size
+      )
+    );
+
+
+  /* ==========================================================================
+     Sync Input State
+  ========================================================================== */
+
+  useEffect(
+    () => {
+      setMaxPartySizeInput(
+        String(
+          rsvp.max_party_size
+        )
+      );
+    },
+    [
+      rsvp.max_party_size,
+    ]
+  );
 
 
   /* ==========================================================================
@@ -134,6 +177,16 @@ export default function InvitationRSVPSettings({
     value:
       string
   ) {
+    setMaxPartySizeInput(
+      value
+    );
+
+    if (
+      value === ""
+    ) {
+      return;
+    }
+
     const parsedValue =
       Number.parseInt(
         value,
@@ -155,6 +208,35 @@ export default function InvitationRSVPSettings({
       max_party_size:
         parsedValue,
     });
+  }
+
+  function handleMaxPartySizeBlur() {
+    const parsedValue =
+      Number.parseInt(
+        maxPartySizeInput,
+        10
+      );
+
+    if (
+      Number.isInteger(
+        parsedValue
+      ) &&
+      parsedValue >= 1
+    ) {
+      setMaxPartySizeInput(
+        String(
+          parsedValue
+        )
+      );
+
+      return;
+    }
+
+    setMaxPartySizeInput(
+      String(
+        rsvp.max_party_size
+      )
+    );
   }
 
 
@@ -335,7 +417,7 @@ export default function InvitationRSVPSettings({
             min={1}
             step={1}
             value={
-              rsvp.max_party_size
+              maxPartySizeInput
             }
             disabled={
               !isEnabled ||
@@ -346,6 +428,9 @@ export default function InvitationRSVPSettings({
                 handleMaxPartySizeChange(
                   event.target.value
                 )
+            }
+            onBlur={
+              handleMaxPartySizeBlur
             }
           />
         </Field>

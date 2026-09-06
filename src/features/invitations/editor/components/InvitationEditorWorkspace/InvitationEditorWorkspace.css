@@ -146,18 +146,8 @@
 
 
 /* ==========================================================================
-   Tablet / Compact Desktop
+   Mobile
 ========================================================================== */
-
-@media (max-width: 1300px) {
-
-  .invitation-editor-workspace__canvas-inner {
-    padding:
-      2rem;
-  }
-
-}
-
 
 /* ==========================================================================
    Mobile
@@ -238,6 +228,15 @@
   }
 
 
+  .invitation-editor-workspace[
+    data-mobile-toolbar="hidden"
+  ]
+  .invitation-editor-workspace__toolbar {
+    display:
+      none;
+  }
+
+
   /* ==========================================================================
      Mobile Document
   ========================================================================== */
@@ -245,6 +244,15 @@
   .invitation-editor-workspace__document {
     width:
       min(100%, 520px);
+  }
+
+
+  .invitation-editor-workspace[
+    data-mobile-toolbar="hidden"
+  ]
+  .invitation-editor-workspace__document {
+    padding-top:
+      0.75rem;
   }
 
 }

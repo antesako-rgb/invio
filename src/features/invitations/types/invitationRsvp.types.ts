@@ -39,6 +39,15 @@ export type InvitationRSVPViewState =
 
 
 /* ==========================================================================
+   Invitation RSVP Preview Mode
+========================================================================== */
+
+export type InvitationRSVPPreviewMode =
+  | "personalized"
+  | "generic";
+
+
+/* ==========================================================================
    Invitation RSVP Answer Value
 ========================================================================== */
 
@@ -46,7 +55,6 @@ export type InvitationRsvpAnswerValue =
   string
   | boolean
   | null;
-
 
 /* ==========================================================================
    Invitation RSVP Answers
