@@ -75,6 +75,12 @@ export default function InvitationEnvelope({
       initialState
     );
 
+  const [
+    isReady,
+    setIsReady,
+  ] =
+    useState(false);
+
   const presentTimeoutRef =
     useRef<ReturnType<typeof setTimeout> | null>(
       null
@@ -89,6 +95,87 @@ export default function InvitationEnvelope({
     invitationEnvelopeRegistry[
       envelopeId
     ];
+
+
+  /* ==========================================================================
+     Preload Envelope Assets
+  ========================================================================== */
+
+  useEffect(
+    () => {
+      let isActive =
+        true;
+
+      setIsReady(
+        false
+      );
+
+      const sources = [
+        envelope.back,
+        envelope.front,
+        envelope.flap,
+        envelope.liner,
+      ];
+
+      const preloadImage = (
+        source: string
+      ) =>
+        new Promise<void>(
+          (resolve) => {
+            const image =
+              new Image();
+
+            image.onload =
+              () => {
+                resolve();
+              };
+
+            image.onerror =
+              () => {
+                resolve();
+              };
+
+            image.src =
+              source;
+
+            if (
+              image.complete
+            ) {
+              resolve();
+            }
+          }
+        );
+
+      Promise.all(
+        sources.map(
+          preloadImage
+        )
+      ).then(
+        () => {
+          if (
+            !isActive
+          ) {
+            return;
+          }
+
+          setIsReady(
+            true
+          );
+        }
+      );
+
+      return () => {
+        isActive =
+          false;
+      };
+    },
+    [
+      envelope.back,
+      envelope.front,
+      envelope.flap,
+      envelope.liner,
+    ]
+  );
 
 
   /* ==========================================================================
@@ -117,8 +204,9 @@ export default function InvitationEnvelope({
 
   function handleOpen() {
     if (
+      !isReady ||
       state !==
-      "closed"
+        "closed"
     ) {
       return;
     }
@@ -154,6 +242,11 @@ export default function InvitationEnvelope({
       }
       data-state={
         state
+      }
+      data-ready={
+        isReady
+          ? "true"
+          : "false"
       }
     >
       {/* ====================================================================
@@ -242,6 +335,9 @@ export default function InvitationEnvelope({
           aria-expanded={
             state !==
             "closed"
+          }
+          disabled={
+            !isReady
           }
         >
           <span
