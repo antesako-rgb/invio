@@ -26,6 +26,25 @@
 
   background-color:
     var(--invitation-experience-background);
+}
+
+
+/* ==========================================================================
+   Background
+========================================================================== */
+
+.invitation-experience::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    0;
 
   background-image:
     var(--invitation-experience-background-image);
@@ -38,6 +57,25 @@
 
   background-repeat:
     var(--invitation-experience-background-repeat);
+
+  filter:
+    var(--invitation-experience-background-filter);
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.invitation-experience > * {
+  position:
+    relative;
+
+  z-index:
+    1;
 }
 
 
@@ -57,4 +95,10 @@
 
   background:
     transparent;
+}
+
+
+.invitation-experience[data-mode="edit"]::before {
+  display:
+    none;
 }

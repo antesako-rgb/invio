@@ -163,9 +163,8 @@ export const weddingPreviewContent:
 
 media: {
   image_url:
-    null,
+    "/invitation-assets/media-card-previews/wedding/couple.avif",
 },
-
   music: {
     audio_url:
       null,

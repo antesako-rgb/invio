@@ -73,25 +73,14 @@ export default function InvitationPreview({
      Preview Content
   ========================================================================== */
 
-  const basePreviewContent =
+  const previewContent =
     invitationPreviewContentRegistry[
       template.category
     ];
 
-  if (!basePreviewContent) {
+  if (!previewContent) {
     return null;
   }
-
-  const previewContent = {
-    ...basePreviewContent,
-
-    media: {
-      ...basePreviewContent.media,
-
-      image_url:
-        template.preview.imageUrl,
-    },
-  };
 
 
   /* ==========================================================================

@@ -59,43 +59,46 @@ export default function InvitationEventInfo({
           Date
       ==================================================================== */}
 
-{display.date.hasDate && (
-  <EditableDate
-    month={
-      display.date.month
-    }
-    day={
-      display.date.day
-    }
-    year={
-      display.date.year
-    }
-    mode={
-      mode
-    }
-    editor={
-      editor
-    }
-  />
-)}
+      {display.date.hasDate && (
+        <EditableDate
+          month={
+            display.date.month
+          }
+          day={
+            display.date.day
+          }
+          dayName={
+            display.date.dayName
+          }
+          year={
+            display.date.year
+          }
+          mode={
+            mode
+          }
+          editor={
+            editor
+          }
+        />
+      )}
 
 
       {/* ====================================================================
           Time
       ==================================================================== */}
 
- {display.time.hasTime && (
-  <EditableTime
-    mode={
-      mode
-    }
-    editor={
-      editor
-    }
-  >
-    {display.time.text}
-  </EditableTime>
-)}
+      {display.time.hasTime && (
+        <EditableTime
+          mode={
+            mode
+          }
+          editor={
+            editor
+          }
+        >
+          {display.time.text}
+        </EditableTime>
+      )}
 
 
       {/* ====================================================================

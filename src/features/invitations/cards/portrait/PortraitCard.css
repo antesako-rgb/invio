@@ -64,7 +64,6 @@
 
 
 .portrait-card__frame {
-
   position:
     absolute;
 
@@ -83,17 +82,19 @@
   object-fit:
     cover;
 
+  filter:
+    var(
+      --portrait-card-frame-filter
+    );
+
   pointer-events:
     none;
 
   user-select:
     none;
-
 }
 
-
 .portrait-card__content {
-
   position:
     relative;
 
@@ -116,13 +117,11 @@
     100%;
 
   padding:
-    8% 9% 10%;
+    var(--portrait-card-content-padding);
 
   text-align:
     center;
-
 }
-
 
 /* ==========================================================================
    Hero

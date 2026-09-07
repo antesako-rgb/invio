@@ -4,32 +4,42 @@
 
 [data-invitation-experience][data-template="portrait"][data-variant="champagne"] {
 
-  /* ========================================================================
-     Invitation
-  ======================================================================== */
+/* ========================================================================
+   Invitation
+========================================================================= */
 
   --invitation-experience-background:
-    #d8d0c3;
-
-  --invitation-experience-background-image:
-    url(
-      "/invitation-assets/cards/portrait/champagne.png"
-    );
+    #eceae5;
+    
+--invitation-experience-background-filter: none;
 
   --invitation-card-background:
-    #faf6ef;
+    #f5efe6;
 
 
   /* ========================================================================
      Portrait Colors
   ======================================================================== */
 
-  --portrait-foreground:
-    #5a493b;
+--portrait-foreground:
+  #2f2823;
 
-  --portrait-muted:
-    #9a8877;
+--portrait-muted:
+  #584d39;
 
+
+/* ========================================================================
+   Card Frame
+========================================================================= */
+
+--portrait-card-frame-filter: none;
+
+
+/* ========================================================================
+   Photo Frame
+========================================================================= */
+
+--portrait-photo-frame-filter: none;
 
   /* ========================================================================
      Guest Actions
@@ -136,4 +146,320 @@
     saturate(70%)
     brightness(102%);
 
+}
+/* ==========================================================================
+   Sage
+========================================================================== */
+
+[data-invitation-experience][data-template="portrait"][data-variant="sage"] {
+
+  /* ========================================================================
+     Invitation
+  ======================================================================== */
+
+  --invitation-experience-background:
+    #e8ebe4;
+
+--invitation-experience-background-filter:
+  hue-rotate(45deg)
+  saturate(55%)
+  brightness(96%);
+
+  --invitation-card-background:
+    #f4f5ef;
+
+
+  /* ========================================================================
+     Portrait Colors
+  ======================================================================== */
+
+  --portrait-foreground:
+    #30382f;
+
+  --portrait-muted:
+    #687264;
+
+
+  /* ========================================================================
+     Card Frame
+  ======================================================================== */
+
+  --portrait-card-frame-filter:
+    hue-rotate(55deg)
+    saturate(45%)
+    brightness(88%);
+
+
+  /* ========================================================================
+     Photo Frame
+  ======================================================================== */
+
+  --portrait-photo-frame-filter:
+    hue-rotate(55deg)
+    saturate(45%)
+    brightness(88%);
+
+
+  /* ========================================================================
+     Guest Actions
+  ======================================================================== */
+
+  --invitation-action-primary:
+    #66705f;
+
+  --invitation-action-primary-foreground:
+    #fbfcf8;
+
+  --invitation-action-secondary:
+    #e2e6dd;
+
+  --invitation-action-secondary-foreground:
+    #30382f;
+
+  --invitation-action-secondary-border:
+    #bdc6b7;
+
+
+  /* ========================================================================
+     Details
+  ======================================================================== */
+
+  --invitation-details-accent:
+    #53604e;
+
+  --invitation-details-shell-background:
+    #f4f5ef;
+
+  --invitation-details-shell-border:
+    rgba(48, 56, 47, 0.10);
+
+  --invitation-details-section-background:
+    rgba(255, 255, 255, 0.52);
+
+  --invitation-details-section-border:
+    rgba(48, 56, 47, 0.10);
+
+  --invitation-details-control-background:
+    rgba(48, 56, 47, 0.06);
+
+
+  /* ========================================================================
+     RSVP
+  ======================================================================== */
+
+  --invitation-rsvp-accent:
+    #53604e;
+
+  --invitation-rsvp-shell-background:
+    #f4f5ef;
+
+  --invitation-rsvp-shell-border:
+    rgba(48, 56, 47, 0.10);
+
+  --invitation-rsvp-section-background:
+    rgba(255, 255, 255, 0.52);
+
+  --invitation-rsvp-section-border:
+    rgba(48, 56, 47, 0.10);
+
+  --invitation-rsvp-control-background:
+    rgba(48, 56, 47, 0.06);
+
+  --invitation-rsvp-control-border:
+    rgba(48, 56, 47, 0.14);
+
+  --invitation-rsvp-control-active-background:
+    #66705f;
+
+  --invitation-rsvp-control-active-foreground:
+    #fbfcf8;
+
+  --invitation-rsvp-submit-background:
+    #66705f;
+
+  --invitation-rsvp-submit-foreground:
+    #fbfcf8;
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-filter:
+    hue-rotate(45deg)
+    saturate(55%)
+    brightness(96%);
+
+  --invitation-envelope-front-filter:
+    hue-rotate(45deg)
+    saturate(55%)
+    brightness(96%);
+
+  --invitation-envelope-flap-filter:
+    hue-rotate(45deg)
+    saturate(55%)
+    brightness(96%);
+
+  --invitation-envelope-liner-filter:
+    hue-rotate(45deg)
+    saturate(55%)
+    brightness(96%);
+}
+/* ==========================================================================
+   Dusty Rose
+========================================================================== */
+
+[data-invitation-experience][data-template="portrait"][data-variant="dusty-rose"] {
+
+  /* ========================================================================
+     Invitation
+  ======================================================================== */
+
+--invitation-experience-background:
+  #eee6e4;
+
+--invitation-experience-background-filter:
+  hue-rotate(325deg)
+  saturate(38%)
+  brightness(102%);
+
+--invitation-card-background:
+  #f8f1ef;
+
+
+  /* ========================================================================
+     Portrait Colors
+  ======================================================================== */
+
+  --portrait-foreground:
+    #40302f;
+
+  --portrait-muted:
+    #806965;
+
+
+  /* ========================================================================
+     Card Frame
+  ======================================================================== */
+
+  --portrait-card-frame-filter:
+    hue-rotate(320deg)
+    saturate(42%)
+    brightness(91%);
+
+
+  /* ========================================================================
+     Photo Frame
+  ======================================================================== */
+
+  --portrait-photo-frame-filter:
+    hue-rotate(320deg)
+    saturate(42%)
+    brightness(91%);
+
+
+  /* ========================================================================
+     Guest Actions
+  ======================================================================== */
+
+  --invitation-action-primary:
+    #806762;
+
+  --invitation-action-primary-foreground:
+    #fffafa;
+
+  --invitation-action-secondary:
+    #eadfdd;
+
+  --invitation-action-secondary-foreground:
+    #40302f;
+
+  --invitation-action-secondary-border:
+    #cfbbb7;
+
+
+  /* ========================================================================
+     Details
+  ======================================================================== */
+
+  --invitation-details-accent:
+    #725651;
+
+  --invitation-details-shell-background:
+    #f8f1ef;
+
+  --invitation-details-shell-border:
+    rgba(64, 48, 47, 0.10);
+
+  --invitation-details-section-background:
+    rgba(255, 255, 255, 0.52);
+
+  --invitation-details-section-border:
+    rgba(64, 48, 47, 0.10);
+
+  --invitation-details-control-background:
+    rgba(64, 48, 47, 0.06);
+
+
+  /* ========================================================================
+     RSVP
+  ======================================================================== */
+
+  --invitation-rsvp-accent:
+    #725651;
+
+  --invitation-rsvp-shell-background:
+    #f8f1ef;
+
+  --invitation-rsvp-shell-border:
+    rgba(64, 48, 47, 0.10);
+
+  --invitation-rsvp-section-background:
+    rgba(255, 255, 255, 0.52);
+
+  --invitation-rsvp-section-border:
+    rgba(64, 48, 47, 0.10);
+
+  --invitation-rsvp-control-background:
+    rgba(64, 48, 47, 0.06);
+
+  --invitation-rsvp-control-border:
+    rgba(64, 48, 47, 0.14);
+
+  --invitation-rsvp-control-active-background:
+    #806762;
+
+  --invitation-rsvp-control-active-foreground:
+    #fffafa;
+
+  --invitation-rsvp-submit-background:
+    #806762;
+
+  --invitation-rsvp-submit-foreground:
+    #fffafa;
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-filter:
+    hue-rotate(325deg)
+    saturate(48%)
+    brightness(100%);
+
+  --invitation-envelope-front-filter:
+    hue-rotate(325deg)
+    saturate(48%)
+    brightness(100%);
+
+  --invitation-envelope-flap-filter:
+    hue-rotate(325deg)
+    saturate(48%)
+    brightness(100%);
+
+  --invitation-envelope-liner-filter:
+    hue-rotate(325deg)
+    saturate(48%)
+    brightness(100%);
 }

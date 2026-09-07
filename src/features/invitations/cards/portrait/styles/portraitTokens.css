@@ -1,232 +1,337 @@
-  /* ==========================================================================
-    Portrait Design Tokens
-  ========================================================================== */
+/* ==========================================================================
+   Portrait Design Tokens
+========================================================================== */
 
-  [data-invitation-experience][data-template="portrait"] {
+[data-invitation-experience][data-template="portrait"] {
 
-    /* ========================================================================
-      Invitation
-    ======================================================================== */
+  /* ========================================================================
+     Invitation
+  ======================================================================== */
 
-    --invitation-experience-background:
-      #eceae5;
+  --invitation-experience-background:
+    #eceae5;
 
-    --invitation-card-background:
-      #f5efe6;
+  --invitation-experience-background-image:
+    url(
+      "/invitation-assets/cards/portrait/background.avif"
+    );
 
+  --invitation-experience-background-filter:
+    none;
 
-    /* ========================================================================
-      Envelope
-    ======================================================================== */
+  --invitation-card-background:
+    #f5efe6;
 
-    --invitation-envelope-back-filter:
-      none;
 
-    --invitation-envelope-front-filter:
-      none;
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
 
-    --invitation-envelope-flap-filter:
-      none;
+  --invitation-envelope-back-filter:
+    none;
 
-    --invitation-envelope-liner-filter:
-      none;
+  --invitation-envelope-front-filter:
+    none;
 
+  --invitation-envelope-flap-filter:
+    none;
 
-    /* ========================================================================
-      Colors
-    ======================================================================== */
+  --invitation-envelope-liner-filter:
+    none;
 
-    --portrait-foreground:
-      #332c27;
 
-    --portrait-muted:
-      #756a61;
+  /* ========================================================================
+     Colors
+  ======================================================================== */
 
+--portrait-foreground:
+  #2f2823;
 
-    /* ========================================================================
-      Typography
-    ======================================================================== */
+--portrait-muted:
+  #584d39;
 
-    --portrait-font-primary:
-      var(--font-pinyon-script),
-      cursive;
+  /* ========================================================================
+     Typography
+  ======================================================================== */
 
-    --portrait-font-secondary:
-      var(--font-marcellus),
-      serif;
+  --portrait-font-primary:
+    var(--font-pinyon-script),
+    cursive;
 
+  --portrait-font-secondary:
+    var(--font-marcellus),
+    serif;
 
-    /* ========================================================================
-      Details
-    ======================================================================== */
 
-    --invitation-details-foreground:
-      var(--portrait-foreground);
+  /* ========================================================================
+     Card Frame
+  ======================================================================== */
 
-    --invitation-details-accent:
-      var(--portrait-foreground);
+  --portrait-card-frame-filter:
+    none;
 
-    --invitation-details-title-color:
-      var(--portrait-foreground);
 
-    --invitation-details-title-font:
-      var(--portrait-font-secondary);
+  /* ========================================================================
+     Card Layout
+  ======================================================================== */
 
-    --invitation-details-event-font:
-      var(--portrait-font-primary);
+  --portrait-card-content-padding:
+    8% 9% 10%;
 
-    --invitation-details-section-font:
-      var(--portrait-font-secondary);
 
+  /* ========================================================================
+     Details
+  ======================================================================== */
 
-    /* ========================================================================
-      RSVP
-    ======================================================================== */
+  --invitation-details-foreground:
+    var(--portrait-foreground);
 
-    --invitation-rsvp-foreground:
-      var(--portrait-foreground);
+  --invitation-details-accent:
+    var(--portrait-foreground);
 
-    --invitation-rsvp-accent:
-      var(--portrait-foreground);
+  --invitation-details-title-color:
+    var(--portrait-foreground);
 
-    --invitation-rsvp-title-color:
-      var(--portrait-foreground);
+  --invitation-details-title-font:
+    var(--portrait-font-secondary);
 
-    --invitation-rsvp-title-font:
-      var(--portrait-font-secondary);
+  --invitation-details-event-font:
+    var(--portrait-font-primary);
 
-    --invitation-rsvp-event-font:
-      var(--portrait-font-primary);
+  --invitation-details-section-font:
+    var(--portrait-font-secondary);
 
-    --invitation-rsvp-section-font:
-      var(--portrait-font-secondary);
 
+  /* ========================================================================
+     RSVP
+  ======================================================================== */
 
-    /* ========================================================================
-      Subtitle
-    ======================================================================== */
+  --invitation-rsvp-foreground:
+    var(--portrait-foreground);
 
-    --portrait-subtitle-font:
-      var(--portrait-font-primary);
+  --invitation-rsvp-accent:
+    var(--portrait-foreground);
 
-    --portrait-subtitle-size:
-      4cqw;
+  --invitation-rsvp-title-color:
+    var(--portrait-foreground);
 
-    --portrait-subtitle-style:
-      normal;
+  --invitation-rsvp-title-font:
+    var(--portrait-font-secondary);
 
-    --portrait-subtitle-weight:
-      500;
+  --invitation-rsvp-event-font:
+    var(--portrait-font-primary);
 
-    --portrait-subtitle-line-height:
-      1.4;
+  --invitation-rsvp-section-font:
+    var(--portrait-font-secondary);
 
-    --portrait-subtitle-letter-spacing:
-      0.08em;
 
-    --portrait-subtitle-color:
-      var(--portrait-foreground);
+  /* ========================================================================
+     Subtitle
+  ======================================================================== */
 
-    --portrait-subtitle-text-transform:
-      none;
+  --portrait-subtitle-font:
+    var(--portrait-font-primary);
 
-    --portrait-subtitle-text-align:
-      center;
+  --portrait-subtitle-size:
+    3.5cqw;
 
-    --portrait-subtitle-opacity:
-      1;
+  --portrait-subtitle-style:
+    normal;
 
+  --portrait-subtitle-weight:
+    500;
 
-    /* ========================================================================
-      Title
-    ======================================================================== */
+  --portrait-subtitle-line-height:
+    1.4;
 
-    --portrait-title-font:
-      var(--portrait-font-primary);
+  --portrait-subtitle-letter-spacing:
+    0.08em;
 
-    --portrait-title-size:
-      10cqw;
+  --portrait-subtitle-color:
+    var(--portrait-foreground);
 
-    --portrait-title-style:
-      normal;
+  --portrait-subtitle-text-transform:
+    none;
 
-    --portrait-title-weight:
-      400;
+  --portrait-subtitle-text-align:
+    center;
 
-    --portrait-title-line-height:
-      0.95;
+  --portrait-subtitle-opacity:
+    1;
 
-    --portrait-title-letter-spacing:
-      0;
 
-    --portrait-title-color:
-      var(--portrait-foreground);
+  /* ========================================================================
+     Title
+  ======================================================================== */
 
-    --portrait-title-text-transform:
-      none;
+  --portrait-title-font:
+    var(--portrait-font-primary);
 
-    --portrait-title-text-align:
-      center;
+  --portrait-title-size:
+    8cqw;
 
-    --portrait-title-opacity:
-      1;
+  --portrait-title-style:
+    normal;
 
+  --portrait-title-weight:
+    400;
 
-    /* ========================================================================
-      Photo
-    ======================================================================== */
+  --portrait-title-line-height:
+    0.95;
 
-    --portrait-photo-background:
-      #e8dfd3;
+  --portrait-title-letter-spacing:
+    0;
 
-    --portrait-photo-width:
-      52%;
+  --portrait-title-color:
+    var(--portrait-foreground);
 
-    --portrait-photo-aspect-ratio:
-      1 / 1;
+  --portrait-title-text-transform:
+    none;
 
-    --portrait-photo-object-position:
-      center;
+  --portrait-title-text-align:
+    center;
 
-    --portrait-photo-frame-opacity:
-      1;
+  --portrait-title-opacity:
+    1;
 
-    --portrait-photo-frame-filter:
-      none;
 
+  /* ========================================================================
+     Photo
+  ======================================================================== */
 
-    /* ========================================================================
-      Event Info
-    ======================================================================== */
+  --portrait-photo-background:
+    #e8dfd3;
 
-    --invitation-event-info-font:
-      var(--portrait-font-secondary);
+  --portrait-photo-width:
+    48%;
 
-    --invitation-event-info-size:
-      3.5cqw;
+  --portrait-photo-aspect-ratio:
+    1 / 1;
 
-    --invitation-event-info-style:
-      normal;
+  --portrait-photo-object-position:
+    center;
 
-    --invitation-event-info-weight:
-      400;
+  --portrait-photo-frame-opacity:
+    1;
 
-    --invitation-event-info-line-height:
-      1.5;
+  --portrait-photo-frame-filter:
+    none;
 
-    --invitation-event-info-letter-spacing:
-      0;
 
-    --invitation-event-info-color:
-      var(--portrait-foreground);
+  /* ========================================================================
+     Description
+  ======================================================================== */
 
-    --invitation-event-info-text-transform:
-      none;
+  --invitation-description-font:
+    var(--portrait-font-primary);
 
-    --invitation-event-info-text-align:
-      center;
+  --invitation-description-size:
+    3.2cqw;
 
-    --invitation-event-info-opacity:
-      1;
+  --invitation-description-style:
+    normal;
 
-  }
+  --invitation-description-weight:
+    400;
+
+  --invitation-description-line-height:
+    1.3;
+
+  --invitation-description-letter-spacing:
+    0.02em;
+
+  --invitation-description-color:
+    var(--portrait-muted);
+
+  --invitation-description-text-transform:
+    none;
+
+  --invitation-description-text-align:
+    center;
+
+  --invitation-description-opacity:
+    1;
+
+  --invitation-description-width:
+    100%;
+
+  --invitation-description-max-width:
+    70%;
+
+  --invitation-description-margin-top:
+    5cqw;
+
+
+  /* ========================================================================
+     Event Info
+  ======================================================================== */
+
+  --invitation-event-info-font:
+    var(--portrait-font-secondary);
+
+  --invitation-event-info-size:
+    3cqw;
+
+  --invitation-event-info-style:
+    normal;
+
+  --invitation-event-info-weight:
+    400;
+
+  --invitation-event-info-line-height:
+    1;
+
+  --invitation-event-info-letter-spacing:
+    0;
+
+  --invitation-event-info-color:
+    var(--portrait-foreground);
+
+  --invitation-event-info-text-transform:
+    none;
+
+  --invitation-event-info-text-align:
+    center;
+
+  --invitation-event-info-opacity:
+    1;
+
+  --invitation-event-info-gap:
+    4cqw;
+
+  --invitation-event-location-gap:
+    3cqw;
+
+
+  /* ========================================================================
+     Event Date
+  ======================================================================== */
+
+  --invitation-event-date-gap:
+    3cqw;
+
+  --invitation-event-date-width:
+    65cqw;
+
+
+  /* ========================================================================
+     Event Day
+  ======================================================================== */
+
+  --invitation-event-day-min-width:
+    13cqw;
+
+  --invitation-event-day-padding:
+    1cqw 4cqw;
+
+
+  /* ========================================================================
+     Event Day Name
+  ======================================================================== */
+
+  --invitation-event-day-name-gap:
+    3cqw;
+
+  --invitation-event-day-name-space:
+    3.5cqw;
+}

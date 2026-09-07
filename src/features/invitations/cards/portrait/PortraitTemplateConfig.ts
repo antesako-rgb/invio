@@ -40,5 +40,33 @@ export const portraitTemplateConfig:
         swatch:
           "#d8c5a3",
       },
+
+      {
+        id:
+          "sage",
+
+        label:
+          "Sage",
+
+        previewUrl:
+          "/invitation-assets/previews/portrait/sage.webp",
+
+        swatch:
+          "#66705f",
+      },
+
+      {
+        id:
+          "dusty-rose",
+
+        label:
+          "Dusty Rose",
+
+        previewUrl:
+          "/invitation-assets/previews/portrait/dusty-rose.webp",
+
+        swatch:
+          "#806762",
+      },
     ],
   };

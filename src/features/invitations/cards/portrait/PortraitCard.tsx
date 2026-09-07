@@ -1,3 +1,6 @@
+import InvitationDescription
+  from "@/features/invitations/cards/components/InvitationDescription/InvitationDescription";
+
 import InvitationEventInfo
   from "@/features/invitations/cards/components/InvitationEventInfo/InvitationEventInfo";
 
@@ -165,6 +168,23 @@ export default function PortraitCard({
         <InvitationEventInfo
           display={
             data.display
+          }
+          mode={
+            mode
+          }
+          editor={
+            editor
+          }
+        />
+
+
+        {/* ==================================================================
+            Description
+        ================================================================== */}
+
+        <InvitationDescription
+          value={
+            data.content.description
           }
           mode={
             mode

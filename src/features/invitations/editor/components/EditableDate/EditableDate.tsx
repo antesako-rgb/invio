@@ -61,6 +61,9 @@ interface EditableDateProps {
   day:
     string;
 
+  dayName:
+    string;
+
   year:
     string;
 
@@ -141,10 +144,10 @@ function formatDate(
 /* ==========================================================================
    Date Display
 ========================================================================== */
-
 function DateDisplay({
   month,
   day,
+  dayName,
   year,
   style,
 }: {
@@ -152,6 +155,9 @@ function DateDisplay({
     string;
 
   day:
+    string;
+
+  dayName:
     string;
 
   year:
@@ -178,7 +184,17 @@ function DateDisplay({
       <span
         data-invitation-event-day
       >
-        {day}
+        <span
+          data-invitation-event-day-name
+        >
+          {dayName}
+        </span>
+
+        <span
+          data-invitation-event-day-value
+        >
+          {day}
+        </span>
       </span>
 
       <span
@@ -198,6 +214,7 @@ function DateDisplay({
 export default function EditableDate({
   month,
   day,
+  dayName,
   year,
   mode,
   editor,
@@ -471,145 +488,154 @@ const dateStyle = {
 
   if (!isEditorMode) {
     return (
-      <DateDisplay
-        month={
-          month
-        }
-        day={
-          day
-        }
-        year={
-          year
-        }
-        style={
-          dateStyle
-        }
-      />
+<DateDisplay
+  month={
+    month
+  }
+  day={
+    day
+  }
+  dayName={
+    dayName
+  }
+  year={
+    year
+  }
+  style={
+    dateStyle
+  }
+/>
     );
   }
 
 
-  /* ==========================================================================
-     Render
-  ========================================================================== */
+return (
+  <Popover>
+    <PopoverTrigger
+      nativeButton={
+        false
+      }
+      render={
+        <div
+          data-invitation-event-date
+          data-invitation-editor-ui
+          data-editor-element={
+            DATE_ELEMENT
+          }
+          data-editor-label={
+            editorLabel
+          }
+          data-editor-selected={
+            isSelected
+              ? "true"
+              : undefined
+          }
+          role="button"
+          tabIndex={0}
+          style={
+            dateStyle
+          }
+          onClick={
+            handleClick
+          }
+        >
+          <span
+            data-invitation-event-month
+          >
+            {month}
+          </span>
 
-  return (
-    <Popover>
-      <PopoverTrigger
-        nativeButton={
-          false
-        }
-        render={
-          <div
-            data-invitation-event-date
-            data-invitation-editor-ui
-            data-editor-element={
-              DATE_ELEMENT
-            }
-            data-editor-label={
-              editorLabel
-            }
-            data-editor-selected={
-              isSelected
-                ? "true"
-                : undefined
-            }
-            role="button"
-            tabIndex={0}
-            style={
-              dateStyle
-            }
-            onClick={
-              handleClick
-            }
+          <span
+            data-invitation-event-day
           >
             <span
-              data-invitation-event-month
+              data-invitation-event-day-name
             >
-              {month}
+              {dayName}
             </span>
 
             <span
-              data-invitation-event-day
+              data-invitation-event-day-value
             >
               {day}
             </span>
+          </span>
 
-            <span
-              data-invitation-event-year
-            >
-              {year}
-            </span>
-          </div>
-        }
-      />
+          <span
+            data-invitation-event-year
+          >
+            {year}
+          </span>
+        </div>
+      }
+    />
 
-      <PopoverContent
-        sideOffset={8}
-        className="w-72 space-y-5 rounded-xl border bg-popover p-4 shadow-xl"
-        data-invitation-editor-ui
+    <PopoverContent
+      sideOffset={8}
+      className="w-72 space-y-5 rounded-xl border bg-popover p-4 shadow-xl"
+      data-invitation-editor-ui
+    >
+      <div
+        className="space-y-2"
       >
         <div
-          className="space-y-2"
+          className="text-sm font-medium"
         >
-          <div
-            className="text-sm font-medium"
-          >
-            {t(
-              "startDate"
-            )}
-          </div>
-
-       <DatePicker
-  id="invitation_start_date"
-  value={
-    startDate
-  }
-  onChange={
-    handleStartDateChange
-  }
-  disablePast
-  clearable
-/>
-        </div>
-
-        <div
-          className="space-y-2"
-        >
-          <div
-            className="text-sm font-medium"
-          >
-            {t(
-              "endDate"
-            )}
-          </div>
-
-      <DatePicker
-  id="invitation_end_date"
-  value={
-    endDate
-  }
-  onChange={
-    handleEndDateChange
-  }
-  minDate={
-    startDate
-  }
-  disablePast
-  clearable
-/>
-
-          {validationError && (
-            <p
-              className="text-xs text-destructive"
-            >
-              {tValidation(
-                validationError
-              )}
-            </p>
+          {t(
+            "startDate"
           )}
         </div>
-      </PopoverContent>
-    </Popover>
-  );
+
+        <DatePicker
+          id="invitation_start_date"
+          value={
+            startDate
+          }
+          onChange={
+            handleStartDateChange
+          }
+          disablePast
+          clearable
+        />
+      </div>
+
+      <div
+        className="space-y-2"
+      >
+        <div
+          className="text-sm font-medium"
+        >
+          {t(
+            "endDate"
+          )}
+        </div>
+
+        <DatePicker
+          id="invitation_end_date"
+          value={
+            endDate
+          }
+          onChange={
+            handleEndDateChange
+          }
+          minDate={
+            startDate
+          }
+          disablePast
+          clearable
+        />
+
+        {validationError && (
+          <p
+            className="text-xs text-destructive"
+          >
+            {tValidation(
+              validationError
+            )}
+          </p>
+        )}
+      </div>
+    </PopoverContent>
+  </Popover>
+);
 }
