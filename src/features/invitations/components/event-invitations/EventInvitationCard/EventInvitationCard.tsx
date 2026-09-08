@@ -28,6 +28,10 @@ import {
   invitationTemplateRegistry,
 } from "@/features/invitations/cards/registry/invitationTemplateRegistry";
 
+import {
+  invitationVariants,
+} from "@/features/invitations/config/invitationVariants";
+
 import type {
   Invitation,
 } from "@/features/invitations/types/invitation.types";
@@ -85,25 +89,28 @@ export default async function EventInvitationCard({
           "status.draft"
         );
 
-const template =
-  invitationTemplateRegistry[
-    invitation.template_id
-  ];
+  const template =
+    invitationTemplateRegistry[
+      invitation.template_id
+    ];
 
-const variant =
-  template?.variants.find(
-    (variant) =>
-      variant.id ===
-      invitation.variant_id
-  );
+  const variant =
+    template?.variants.find(
+      (variant) =>
+        variant.id ===
+        invitation.variant_id
+    );
 
-const previewUrl =
-  variant?.previewUrl ??
-  template?.preview.cardUrl;
+  const previewUrl =
+    variant?.previewUrl ??
+    template?.preview.cardUrl;
 
-const variantLabel =
-  variant?.label ??
-  invitation.variant_id;
+  const variantLabel =
+    variant
+      ? invitationVariants[
+          variant.id
+        ].label
+      : invitation.variant_id;
 
   const publishedDate =
     invitation.published_at

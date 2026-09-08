@@ -19,6 +19,10 @@ import {
 import InvitationNameEdit
   from "@/features/invitations/components/invitation-management/InvitationManagementHeader/InvitationNameEdit/InvitationNameEdit";
 
+import {
+  invitationVariants,
+} from "@/features/invitations/config/invitationVariants";
+
 import type {
   Invitation,
 } from "@/features/invitations/types/invitation.types";
@@ -81,8 +85,11 @@ export default async function InvitationManagementHeader({
     );
 
   const variantLabel =
-    variant?.label ??
-    invitation.variant_id;
+    variant
+      ? invitationVariants[
+          variant.id
+        ].label
+      : invitation.variant_id;
 
   const templateLabel =
     invitation.template_id;
