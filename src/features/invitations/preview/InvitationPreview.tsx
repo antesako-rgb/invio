@@ -31,6 +31,14 @@ import type {
 
 
 /* ==========================================================================
+   Constants
+========================================================================== */
+
+const INVITATION_PREVIEW_TIMEZONE =
+  "Europe/Zagreb";
+
+
+/* ==========================================================================
    Types
 ========================================================================== */
 
@@ -115,6 +123,9 @@ export default function InvitationPreview({
 
       guests:
         INVITATION_EDITOR_PREVIEW_GUESTS,
+
+      eventTimezone:
+        INVITATION_PREVIEW_TIMEZONE,
     };
 
 

@@ -1,10 +1,14 @@
 import {
+  celesteTemplateConfig,
+} from "@/features/invitations/cards/templates/wedding/celeste/CelesteTemplateConfig";
+
+import {
   floraTemplateConfig,
-} from "@/features/invitations/cards/flora/FloraTemplateConfig";
+} from "@/features/invitations/cards/templates/wedding/flora/FloraTemplateConfig";
 
 import {
   portraitTemplateConfig,
-} from "@/features/invitations/cards/portrait/PortraitTemplateConfig";
+} from "@/features/invitations/cards/templates/wedding/portrait/PortraitTemplateConfig";
 
 import type {
   InvitationTemplateConfig,
@@ -17,6 +21,9 @@ import type {
 
 export const invitationTemplateRegistry:
   Record<string, InvitationTemplateConfig> = {
+    celeste:
+      celesteTemplateConfig,
+
     flora:
       floraTemplateConfig,
 

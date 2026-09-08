@@ -1,0 +1,361 @@
+/* ==========================================================================
+   Card
+========================================================================== */
+
+.celeste-card {
+  position:
+    relative;
+
+  width:
+    100%;
+
+  aspect-ratio:
+    5 / 7;
+
+  overflow:
+    hidden;
+
+  container-type:
+    inline-size;
+
+  background:
+    var(--invitation-card-background);
+
+  color:
+    var(--invitation-foreground);
+}
+
+
+/* ==========================================================================
+   Background
+========================================================================== */
+
+.celeste-card__background {
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    0;
+
+  background-color:
+    var(--invitation-card-background);
+
+  background-image:
+    var(--invitation-card-background-image);
+
+  background-size:
+    var(--invitation-card-background-size);
+
+  background-position:
+    var(--invitation-card-background-position);
+
+  background-repeat:
+    var(--invitation-card-background-repeat);
+
+  opacity:
+    var(--invitation-card-background-opacity);
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================================================
+   Frame
+========================================================================== */
+
+.celeste-card__frame {
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    1;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+  filter:
+    var(
+      --celeste-card-frame-filter
+    );
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.celeste-card__content {
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-end;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  padding:
+    var(--celeste-card-content-padding);
+
+  text-align:
+    right;
+}
+
+
+/* ==========================================================================
+   Hero
+========================================================================== */
+
+.celeste-card__hero {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-end;
+
+  width:
+    100%;
+
+  margin-bottom:
+    var(--celeste-hero-margin-bottom);
+}
+
+
+/* ==========================================================================
+   Subtitle
+========================================================================== */
+
+.celeste-card__subtitle {
+  --invitation-element-font-size:
+    var(--invitation-subtitle-size);
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  margin-bottom:
+    var(--celeste-subtitle-margin-bottom);
+
+  font-family:
+    var(--invitation-subtitle-font);
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  font-style:
+    var(--invitation-subtitle-style);
+
+  font-weight:
+    var(--invitation-subtitle-weight);
+
+  line-height:
+    var(--invitation-subtitle-line-height);
+
+  letter-spacing:
+    var(--invitation-subtitle-letter-spacing);
+
+  color:
+    var(--invitation-subtitle-color);
+
+  text-transform:
+    var(--invitation-subtitle-text-transform);
+
+  text-align:
+    var(--invitation-subtitle-text-align);
+
+  opacity:
+    var(--invitation-subtitle-opacity);
+
+  white-space:
+    pre-line;
+}
+
+
+/* ==========================================================================
+   Names
+========================================================================== */
+
+.celeste-card__names {
+  position:
+    relative;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-end;
+
+  width:
+    100%;
+
+  margin:
+    0;
+
+  font-family:
+    var(--invitation-name-font);
+
+  font-style:
+    var(--invitation-name-style);
+
+  font-weight:
+    var(--invitation-name-weight);
+
+  line-height:
+    var(--invitation-name-line-height);
+
+  letter-spacing:
+    var(--invitation-name-letter-spacing);
+
+  color:
+    var(--invitation-name-color);
+
+  text-transform:
+    var(--invitation-name-text-transform);
+
+  text-align:
+    var(--invitation-name-text-align);
+
+  opacity:
+    var(--invitation-name-opacity);
+}
+
+
+/* ==========================================================================
+   Name
+========================================================================== */
+
+.celeste-card__name {
+  --invitation-element-font-size:
+    var(--invitation-name-size);
+
+  position:
+    relative;
+
+  z-index:
+    1;
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  line-height:
+    inherit;
+
+  white-space:
+    pre-line;
+}
+
+
+/* ==========================================================================
+   Name Separator
+========================================================================== */
+
+.celeste-card__name-separator {
+  position:
+    relative;
+
+  z-index:
+    0;
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  font-family:
+    var(--celeste-name-separator-font);
+
+  font-size:
+    var(--celeste-name-separator-size);
+
+  line-height:
+    1;
+
+  color:
+    var(--celeste-name-separator-color);
+
+  text-align:
+    right;
+
+  opacity:
+    var(--celeste-name-separator-opacity);
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+}
+
+
+/* ==========================================================================
+   Event Details
+========================================================================== */
+
+.celeste-card
+[data-invitation-event-details] {
+  margin-bottom:
+    var(--celeste-event-margin-bottom);
+}
+
+
+/* ==========================================================================
+   Countdown
+========================================================================== */
+
+.celeste-card
+[data-invitation-countdown] {
+  align-items:
+    flex-end;
+
+  width:
+    100%;
+
+  margin-bottom:
+    var(--celeste-countdown-margin-bottom);
+}

@@ -11,6 +11,12 @@ export function createDefaultInvitationContent():
   InvitationContent {
   return {
     hero: {
+      primary_name:
+        null,
+
+      secondary_name:
+        null,
+
       title:
         null,
 

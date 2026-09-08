@@ -1,8 +1,11 @@
+import CelesteCard
+  from "@/features/invitations/cards/templates/wedding/celeste/CelesteCard";
+
 import FloraCard
-  from "@/features/invitations/cards/flora/FloraCard";
+  from "@/features/invitations/cards/templates/wedding/flora/FloraCard";
 
 import PortraitCard
-  from "@/features/invitations/cards/portrait/PortraitCard";
+  from "@/features/invitations/cards/templates/wedding/portrait/PortraitCard";
 
 import type {
   InvitationTemplateComponent,
@@ -18,6 +21,9 @@ export const invitationCardRegistry:
     string,
     InvitationTemplateComponent
   > = {
+    celeste:
+      CelesteCard,
+
     flora:
       FloraCard,
 

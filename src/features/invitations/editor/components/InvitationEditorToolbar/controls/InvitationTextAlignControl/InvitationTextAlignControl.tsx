@@ -1,6 +1,11 @@
 "use client";
 
 import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
   AlignCenter,
   AlignLeft,
   AlignRight,
@@ -18,15 +23,6 @@ import type {
   InvitationPresentation,
   InvitationTextAlign,
 } from "@/features/invitations/types/invitationPresentation.types";
-
-
-/* ==========================================================================
-   Constants
-========================================================================== */
-
-const DEFAULT_TEXT_ALIGN:
-  InvitationTextAlign =
-    "center";
 
 
 /* ==========================================================================
@@ -72,12 +68,66 @@ export default function InvitationTextAlignControl({
 
 
   /* ==========================================================================
+     State
+  ========================================================================== */
+
+  const [
+    computedTextAlign,
+    setComputedTextAlign,
+  ] =
+    useState<InvitationTextAlign | null>(
+      null
+    );
+
+
+  /* ==========================================================================
+     Computed Text Align
+  ========================================================================== */
+
+  useEffect(
+    () => {
+      const target =
+        document.querySelector<HTMLElement>(
+          `[data-editor-element="${element}"]`
+        );
+
+      if (!target) {
+        return;
+      }
+
+      const styles =
+        window.getComputedStyle(
+          target
+        );
+
+      const textAlign =
+        styles.textAlign;
+
+      if (
+        textAlign === "left" ||
+        textAlign === "center" ||
+        textAlign === "right"
+      ) {
+        setComputedTextAlign(
+          textAlign
+        );
+      }
+    },
+    [
+      element,
+      elementPresentation?.text_align,
+    ]
+  );
+
+
+  /* ==========================================================================
      Text Align
   ========================================================================== */
 
   const textAlign =
     elementPresentation?.text_align ??
-    DEFAULT_TEXT_ALIGN;
+    computedTextAlign ??
+    "center";
 
 
   /* ==========================================================================

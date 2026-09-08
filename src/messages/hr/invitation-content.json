@@ -1,14 +1,16 @@
 {
   "wedding": {
-    "heroTitle": "Ana & Marko",
+    "heroTitle": "Naše vjenčanje",
     "heroSubtitle": "Dragi prijatelji i obitelji, pozivamo vas na naše vjenčanje.",
     "description": "Veselimo se što ćemo ovaj poseban dan proslaviti zajedno s vama."
   },
+
   "birthday": {
     "heroTitle": "Proslava rođendana",
     "heroSubtitle": "Pozivamo vas da zajedno proslavimo ovaj poseban dan.",
     "description": "Veselimo se zajedničkom slavlju, druženju i stvaranju lijepih uspomena."
   },
+
   "conference": {
     "heroTitle": "Konferencija",
     "heroSubtitle": "Pozivamo vas da nam se pridružite na konferenciji.",

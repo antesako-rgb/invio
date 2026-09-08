@@ -3,6 +3,10 @@ import type {
 } from "@/features/events/types/event.types";
 
 import type {
+  InvitationVariantId,
+} from "@/features/invitations/config/invitationVariants";
+
+import type {
   InvitationEnvelopeId,
 } from "@/features/invitations/experience/envelope/types/invitationEnvelope.types";
 
@@ -13,15 +17,9 @@ import type {
 
 export interface InvitationTemplateVariantConfig {
   id:
-    string;
-
-  label:
-    string;
+    InvitationVariantId;
 
   previewUrl:
-    string;
-
-  swatch:
     string;
 }
 
@@ -54,7 +52,7 @@ export interface InvitationTemplateConfig {
     InvitationEnvelopeId;
 
   defaultVariantId:
-    string;
+    InvitationVariantId;
 
   variants:
     readonly InvitationTemplateVariantConfig[];

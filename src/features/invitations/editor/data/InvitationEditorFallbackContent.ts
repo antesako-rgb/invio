@@ -24,20 +24,25 @@ export function getInvitationEditorFallbackContent(
     InvitationEditorEventFallback
 ): InvitationContent {
   return {
-    hero: {
-      title:
-        eventTranslations.heroTitle,
+hero: {
+  primary_name:
+    eventFallback.primaryName,
 
-      subtitle:
-        eventTranslations.heroSubtitle,
+  secondary_name:
+    eventFallback.secondaryName,
 
-      first_initial:
-        eventFallback.firstInitial,
+  title:
+    eventTranslations.heroTitle,
 
-      second_initial:
-        eventFallback.secondInitial,
-    },
+  subtitle:
+    eventTranslations.heroSubtitle,
 
+  first_initial:
+    eventFallback.firstInitial,
+
+  second_initial:
+    eventFallback.secondInitial,
+},
     description:
       eventTranslations.description,
 

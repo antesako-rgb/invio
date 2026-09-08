@@ -44,6 +44,9 @@ interface BuildInvitationRenderDataInput {
   locale:
     string;
 
+  eventTimezone:
+    string;
+
   guests:
     InvitationRenderGuest[];
 }
@@ -56,6 +59,7 @@ interface BuildInvitationRenderDataInput {
 export function buildInvitationRenderData({
   invitation,
   locale,
+  eventTimezone,
   guests,
 }: BuildInvitationRenderDataInput): InvitationRenderData {
   const content =
@@ -92,5 +96,7 @@ export function buildInvitationRenderData({
     },
 
     guests,
+
+    eventTimezone,
   };
 }

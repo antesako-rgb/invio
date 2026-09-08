@@ -1,6 +1,11 @@
 "use client";
 
 import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
   Bold,
 } from "lucide-react";
 
@@ -25,7 +30,7 @@ const DEFAULT_FONT_WEIGHT =
   400;
 
 const BOLD_FONT_WEIGHT =
-  700;
+  600;
 
 
 /* ==========================================================================
@@ -71,11 +76,67 @@ export default function InvitationFontWeightControl({
 
 
   /* ==========================================================================
+     State
+  ========================================================================== */
+
+  const [
+    computedFontWeight,
+    setComputedFontWeight,
+  ] =
+    useState<number | null>(
+      null
+    );
+
+
+  /* ==========================================================================
+     Computed Font Weight
+  ========================================================================== */
+
+  useEffect(
+    () => {
+      const target =
+        document.querySelector<HTMLElement>(
+          `[data-editor-element="${element}"]`
+        );
+
+      if (!target) {
+        return;
+      }
+
+      const styles =
+        window.getComputedStyle(
+          target
+        );
+
+      const fontWeight =
+        Number(
+          styles.fontWeight
+        );
+
+      if (
+        Number.isFinite(
+          fontWeight
+        )
+      ) {
+        setComputedFontWeight(
+          fontWeight
+        );
+      }
+    },
+    [
+      element,
+      elementPresentation?.font_weight,
+    ]
+  );
+
+
+  /* ==========================================================================
      Font Weight
   ========================================================================== */
 
   const fontWeight =
     elementPresentation?.font_weight ??
+    computedFontWeight ??
     DEFAULT_FONT_WEIGHT;
 
   const isBold =

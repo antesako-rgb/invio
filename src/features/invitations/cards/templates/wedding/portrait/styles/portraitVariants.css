@@ -1,0 +1,178 @@
+/* ==========================================================================
+   Champagne
+========================================================================== */
+
+[data-invitation-experience][data-template="portrait"][data-variant="champagne"] {
+
+  /* ========================================================================
+     Experience Background
+  ======================================================================== */
+
+  --invitation-experience-background-filter:
+    none;
+
+
+  /* ========================================================================
+     Card Frame
+  ======================================================================== */
+
+  --portrait-card-frame-filter:
+    none;
+
+
+  /* ========================================================================
+     Photo Frame
+  ======================================================================== */
+
+  --portrait-photo-frame-filter:
+    none;
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-filter:
+    sepia(10%)
+    saturate(70%)
+    brightness(102%);
+
+  --invitation-envelope-front-filter:
+    sepia(10%)
+    saturate(70%)
+    brightness(102%);
+
+  --invitation-envelope-flap-filter:
+    sepia(10%)
+    saturate(70%)
+    brightness(102%);
+
+  --invitation-envelope-liner-filter:
+    sepia(10%)
+    saturate(70%)
+    brightness(102%);
+}
+
+
+/* ==========================================================================
+   Sage
+========================================================================== */
+
+[data-invitation-experience][data-template="portrait"][data-variant="sage"] {
+
+  /* ========================================================================
+     Experience Background
+  ======================================================================== */
+
+  --invitation-experience-background-filter:
+    hue-rotate(45deg)
+    saturate(55%)
+    brightness(96%);
+
+
+  /* ========================================================================
+     Card Frame
+  ======================================================================== */
+
+  --portrait-card-frame-filter:
+    hue-rotate(55deg)
+    saturate(45%)
+    brightness(88%);
+
+
+  /* ========================================================================
+     Photo Frame
+  ======================================================================== */
+
+  --portrait-photo-frame-filter:
+    hue-rotate(55deg)
+    saturate(45%)
+    brightness(88%);
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-filter:
+    hue-rotate(45deg)
+    saturate(55%)
+    brightness(96%);
+
+  --invitation-envelope-front-filter:
+    hue-rotate(45deg)
+    saturate(55%)
+    brightness(96%);
+
+  --invitation-envelope-flap-filter:
+    hue-rotate(45deg)
+    saturate(55%)
+    brightness(96%);
+
+  --invitation-envelope-liner-filter:
+    hue-rotate(45deg)
+    saturate(55%)
+    brightness(96%);
+}
+
+
+/* ==========================================================================
+   Dusty Rose
+========================================================================== */
+
+[data-invitation-experience][data-template="portrait"][data-variant="dusty-rose"] {
+
+  /* ========================================================================
+     Experience Background
+  ======================================================================== */
+
+  --invitation-experience-background-filter:
+    hue-rotate(325deg)
+    saturate(38%)
+    brightness(102%);
+
+
+  /* ========================================================================
+     Card Frame
+  ======================================================================== */
+
+  --portrait-card-frame-filter:
+    hue-rotate(320deg)
+    saturate(42%)
+    brightness(91%);
+
+
+  /* ========================================================================
+     Photo Frame
+  ======================================================================== */
+
+  --portrait-photo-frame-filter:
+    hue-rotate(320deg)
+    saturate(42%)
+    brightness(91%);
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-filter:
+    hue-rotate(325deg)
+    saturate(48%)
+    brightness(100%);
+
+  --invitation-envelope-front-filter:
+    hue-rotate(325deg)
+    saturate(48%)
+    brightness(100%);
+
+  --invitation-envelope-flap-filter:
+    hue-rotate(325deg)
+    saturate(48%)
+    brightness(100%);
+
+  --invitation-envelope-liner-filter:
+    hue-rotate(325deg)
+    saturate(48%)
+    brightness(100%);
+}

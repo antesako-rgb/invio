@@ -70,6 +70,10 @@ export default async function EditInvitationPage({
     buildInvitationRenderData({
       invitation,
       locale,
+
+      eventTimezone:
+        event.timezone,
+
       guests: [],
     });
 

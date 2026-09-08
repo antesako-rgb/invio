@@ -169,18 +169,20 @@
       }
     },
 
-    "elementLabels": {
-      "title": "Uredi naziv",
-      "subtitle": "Uredi podnaslov",
-      "initial": "Uredi inicijal",
-      "description": "Uredi opis",
-      "date": "Uredi datum",
-      "time": "Uredi vrijeme",
-      "location": "Uredi lokaciju",
-      "address": "Uredi adresu",
-      "image": "Uredi sliku",
-      "delete": "Obriši sadržaj"
-    },
+"elementLabels": {
+  "primaryName": "Uredi prvo ime",
+  "secondaryName": "Uredi drugo ime",
+  "title": "Uredi naziv",
+  "subtitle": "Uredi podnaslov",
+  "initial": "Uredi inicijal",
+  "description": "Uredi opis",
+  "date": "Uredi datum",
+  "time": "Uredi vrijeme",
+  "location": "Uredi lokaciju",
+  "address": "Uredi adresu",
+  "image": "Uredi sliku",
+  "delete": "Obriši sadržaj"
+},
 
 "fallback": {
   "locationName": "Mjesto događaja",
@@ -199,7 +201,9 @@
     "envelope": {
       "open": "Otvori pozivnicu"
     },
-
+  "countdown": {
+    "daysRemaining": "{count, plural, one {dan do događaja} few {dana do događaja} other {dana do događaja}}"
+  },
     "actions": {
       "details": "Detalji",
       "rsvp": "RSVP"
@@ -338,11 +342,15 @@
         "name": "Flora",
         "description": "Elegantna botanička pozivnica s nježnim i profinjenim detaljima."
       },
+"portrait": {
+  "name": "Portrait",
+  "description": "Elegantna pozivnica s naglaskom na fotografiju, osmišljena kako bi istaknula vaš omiljeni trenutak."
+},
 
-      "portrait": {
-        "name": "Portrait",
-        "description": "Elegantna pozivnica usmjerena na fotografiju, osmišljena kako bi istaknula vaš omiljeni trenutak."
-      }
+"celeste": {
+  "name": "Celeste",
+  "description": "Profinjena pozivnica za vjenčanje s bogatim plavim tonovima, zlatnim detaljima i bezvremenskom elegancijom."
+}
     }
   }
 }

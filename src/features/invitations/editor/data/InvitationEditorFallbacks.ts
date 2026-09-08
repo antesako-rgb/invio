@@ -16,11 +16,17 @@ export const weddingEditorFallback:
     type:
       "wedding",
 
+    primaryName:
+      "Matilda",
+
+    secondaryName:
+      "Daniel",
+
     firstInitial:
-      "A",
+      "M",
 
     secondInitial:
-      "M",
+      "D",
   };
 
 
@@ -33,8 +39,14 @@ export const confirmationEditorFallback:
     type:
       "confirmation",
 
+    primaryName:
+      "Matilda",
+
+    secondaryName:
+      null,
+
     firstInitial:
-      "A",
+      "M",
 
     secondInitial:
       null,
@@ -49,6 +61,12 @@ export const baptismEditorFallback:
   InvitationEditorEventFallback = {
     type:
       "baptism",
+
+    primaryName:
+      "Ana",
+
+    secondaryName:
+      null,
 
     firstInitial:
       "A",
@@ -67,6 +85,12 @@ export const communionEditorFallback:
     type:
       "communion",
 
+    primaryName:
+      "Ana",
+
+    secondaryName:
+      null,
+
     firstInitial:
       "A",
 
@@ -83,6 +107,12 @@ export const birthdayEditorFallback:
   InvitationEditorEventFallback = {
     type:
       "birthday",
+
+    primaryName:
+      "Ana",
+
+    secondaryName:
+      null,
 
     firstInitial:
       "A",
@@ -101,6 +131,12 @@ export const otherPrivateEditorFallback:
     type:
       "other_private",
 
+    primaryName:
+      "Ana",
+
+    secondaryName:
+      null,
+
     firstInitial:
       "A",
 
@@ -117,6 +153,12 @@ export const conferenceEditorFallback:
   InvitationEditorEventFallback = {
     type:
       "conference",
+
+    primaryName:
+      null,
+
+    secondaryName:
+      null,
 
     firstInitial:
       "C",
@@ -135,6 +177,12 @@ export const seminarEditorFallback:
     type:
       "seminar",
 
+    primaryName:
+      null,
+
+    secondaryName:
+      null,
+
     firstInitial:
       "S",
 
@@ -151,6 +199,12 @@ export const teamBuildingEditorFallback:
   InvitationEditorEventFallback = {
     type:
       "team_building",
+
+    primaryName:
+      null,
+
+    secondaryName:
+      null,
 
     firstInitial:
       "T",
@@ -169,6 +223,12 @@ export const receptionEditorFallback:
     type:
       "reception",
 
+    primaryName:
+      null,
+
+    secondaryName:
+      null,
+
     firstInitial:
       "R",
 
@@ -185,6 +245,12 @@ export const galaDinnerEditorFallback:
   InvitationEditorEventFallback = {
     type:
       "gala_dinner",
+
+    primaryName:
+      null,
+
+    secondaryName:
+      null,
 
     firstInitial:
       "G",
@@ -203,6 +269,12 @@ export const otherBusinessEditorFallback:
     type:
       "other_business",
 
+    primaryName:
+      null,
+
+    secondaryName:
+      null,
+
     firstInitial:
       "E",
 
@@ -219,6 +291,12 @@ export const festivalEditorFallback:
   InvitationEditorEventFallback = {
     type:
       "festival",
+
+    primaryName:
+      null,
+
+    secondaryName:
+      null,
 
     firstInitial:
       "F",
@@ -237,6 +315,12 @@ export const charityEditorFallback:
     type:
       "charity",
 
+    primaryName:
+      null,
+
+    secondaryName:
+      null,
+
     firstInitial:
       "C",
 
@@ -253,6 +337,12 @@ export const sportsEditorFallback:
   InvitationEditorEventFallback = {
     type:
       "sports",
+
+    primaryName:
+      null,
+
+    secondaryName:
+      null,
 
     firstInitial:
       "S",
@@ -271,6 +361,12 @@ export const culturalEditorFallback:
     type:
       "cultural",
 
+    primaryName:
+      null,
+
+    secondaryName:
+      null,
+
     firstInitial:
       "C",
 
@@ -288,6 +384,12 @@ export const musicEditorFallback:
     type:
       "music",
 
+    primaryName:
+      null,
+
+    secondaryName:
+      null,
+
     firstInitial:
       "M",
 
@@ -304,6 +406,12 @@ export const otherSocialEditorFallback:
   InvitationEditorEventFallback = {
     type:
       "other_social",
+
+    primaryName:
+      null,
+
+    secondaryName:
+      null,
 
     firstInitial:
       "E",

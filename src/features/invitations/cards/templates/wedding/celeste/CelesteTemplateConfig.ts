@@ -4,20 +4,20 @@ import type {
 
 
 /* ==========================================================================
-   Portrait Template Config
+   Celeste Template Config
 ========================================================================== */
 
-export const portraitTemplateConfig:
+export const celesteTemplateConfig:
   InvitationTemplateConfig = {
     category:
       "wedding",
 
     preview: {
       cardUrl:
-        "/invitation-assets/previews/portrait/classic.webp",
+        "/invitation-assets/previews/celeste/classic.webp",
 
       imageUrl:
-        "/invitation-assets/previews/portrait/couple.webp",
+        "/invitation-assets/previews/celeste/couple.webp",
     },
 
     envelopeId:
@@ -31,42 +31,24 @@ export const portraitTemplateConfig:
         id:
           "champagne",
 
-        label:
-          "Champagne",
-
         previewUrl:
-          "/invitation-assets/previews/portrait/champagne.webp",
-
-        swatch:
-          "#d8c5a3",
+          "/invitation-assets/previews/celeste/champagne.webp",
       },
 
       {
         id:
           "sage",
 
-        label:
-          "Sage",
-
         previewUrl:
-          "/invitation-assets/previews/portrait/sage.webp",
-
-        swatch:
-          "#66705f",
+          "/invitation-assets/previews/celeste/sage.webp",
       },
 
       {
         id:
           "dusty-rose",
 
-        label:
-          "Dusty Rose",
-
         previewUrl:
-          "/invitation-assets/previews/portrait/dusty-rose.webp",
-
-        swatch:
-          "#806762",
+          "/invitation-assets/previews/celeste/dusty-rose.webp",
       },
     ],
   };

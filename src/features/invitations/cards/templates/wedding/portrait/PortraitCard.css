@@ -1,9 +1,8 @@
 /* ==========================================================================
-   Portrait Card
+   Card
 ========================================================================== */
 
 .portrait-card {
-
   position:
     relative;
 
@@ -23,13 +22,15 @@
     var(--invitation-card-background);
 
   color:
-    var(--portrait-foreground);
-
+    var(--invitation-foreground);
 }
 
 
-.portrait-card__background {
+/* ==========================================================================
+   Background
+========================================================================== */
 
+.portrait-card__background {
   position:
     absolute;
 
@@ -59,9 +60,12 @@
 
   pointer-events:
     none;
-
 }
 
+
+/* ==========================================================================
+   Frame
+========================================================================== */
 
 .portrait-card__frame {
   position:
@@ -94,6 +98,11 @@
     none;
 }
 
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
 .portrait-card__content {
   position:
     relative;
@@ -123,15 +132,14 @@
     center;
 }
 
+
 /* ==========================================================================
    Hero
 ========================================================================== */
 
 .portrait-card__hero {
-
   width:
     100%;
-
 }
 
 
@@ -140,9 +148,8 @@
 ========================================================================== */
 
 .portrait-card__subtitle {
-
   --invitation-element-font-size:
-    var(--portrait-subtitle-size);
+    var(--invitation-subtitle-size);
 
   display:
     block;
@@ -151,47 +158,48 @@
     100%;
 
   margin-bottom:
-    4%;
+    6%;
 
   font-family:
-    var(--portrait-subtitle-font);
+    var(--invitation-subtitle-font);
 
   font-size:
     var(--invitation-element-font-size);
 
   font-style:
-    var(--portrait-subtitle-style);
+    var(--invitation-subtitle-style);
 
   font-weight:
-    var(--portrait-subtitle-weight);
+    var(--invitation-subtitle-weight);
 
   line-height:
-    var(--portrait-subtitle-line-height);
+    var(--invitation-subtitle-line-height);
 
   letter-spacing:
-    var(--portrait-subtitle-letter-spacing);
+    var(--invitation-subtitle-letter-spacing);
 
   color:
-    var(--portrait-subtitle-color);
+    var(--invitation-subtitle-color);
 
   text-transform:
-    var(--portrait-subtitle-text-transform);
+    var(--invitation-subtitle-text-transform);
 
   text-align:
-    var(--portrait-subtitle-text-align);
+    var(--invitation-subtitle-text-align);
 
   opacity:
-    var(--portrait-subtitle-opacity);
+    var(--invitation-subtitle-opacity);
 
+  white-space:
+    pre-line;
 }
 
 
 /* ==========================================================================
-   Title
+   Names
 ========================================================================== */
 
-.portrait-card__title {
-
+.portrait-card__names {
   display:
     flex;
 
@@ -208,43 +216,41 @@
     0;
 
   font-family:
-    var(--portrait-title-font);
+    var(--invitation-name-font);
 
   font-style:
-    var(--portrait-title-style);
+    var(--invitation-name-style);
 
   font-weight:
-    var(--portrait-title-weight);
+    var(--invitation-name-weight);
 
   line-height:
-    var(--portrait-title-line-height);
+    var(--invitation-name-line-height);
 
   letter-spacing:
-    var(--portrait-title-letter-spacing);
+    var(--invitation-name-letter-spacing);
 
   color:
-    var(--portrait-title-color);
+    var(--invitation-name-color);
 
   text-transform:
-    var(--portrait-title-text-transform);
+    var(--invitation-name-text-transform);
 
   text-align:
-    var(--portrait-title-text-align);
+    var(--invitation-name-text-align);
 
   opacity:
-    var(--portrait-title-opacity);
-
+    var(--invitation-name-opacity);
 }
 
 
 /* ==========================================================================
-   Title Text
+   Name
 ========================================================================== */
 
-.portrait-card__title-text {
-
+.portrait-card__name {
   --invitation-element-font-size:
-    var(--portrait-title-size);
+    var(--invitation-name-size);
 
   display:
     block;
@@ -255,9 +261,36 @@
   font-size:
     var(--invitation-element-font-size);
 
+  line-height:
+    inherit;
+
   white-space:
     pre-line;
+}
 
+
+/* ==========================================================================
+   Name Separator
+========================================================================== */
+
+.portrait-card__name-separator {
+  display:
+    block;
+
+  width:
+    100%;
+
+  font-size:
+    var(--invitation-name-size);
+
+  line-height:
+    inherit;
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
 }
 
 
@@ -266,7 +299,6 @@
 ========================================================================== */
 
 .portrait-card__photo {
-
   flex:
     0 0 auto;
 
@@ -277,30 +309,18 @@
     var(--portrait-photo-aspect-ratio);
 
   margin:
-    4% 0;
-
+    2% 0;
 }
 
-
-/* ==========================================================================
-   Photo Image
-========================================================================== */
 
 .portrait-card__photo
 .invitation-image-frame__image-content {
-
   object-position:
     var(--portrait-photo-object-position);
-
 }
 
 
-/* ==========================================================================
-   Photo Placeholder
-========================================================================== */
-
 .portrait-card__photo-placeholder {
-
   width:
     100%;
 
@@ -309,21 +329,14 @@
 
   background:
     var(--portrait-photo-background);
-
 }
 
 
-/* ==========================================================================
-   Photo Frame
-========================================================================== */
-
 .portrait-card__photo
 .invitation-image-frame__frame {
-
   opacity:
     var(--portrait-photo-frame-opacity);
 
   filter:
     var(--portrait-photo-frame-filter);
-
 }

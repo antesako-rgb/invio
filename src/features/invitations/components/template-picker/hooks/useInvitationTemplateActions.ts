@@ -17,6 +17,10 @@ import {
   useRouter,
 } from "@/i18n/navigation";
 
+import {
+  isEventType,
+} from "@/features/events/types/event.types";
+
 import type {
   Event,
 } from "@/features/events/types/event.types";
@@ -30,8 +34,12 @@ import {
 } from "@/features/invitations/actions/invitation/updateInvitationAction";
 
 import {
-  createInvitationContentFromEvent,
-} from "@/features/invitations/content/createInvitationContentFromEvent";
+  createInitialInvitationContent,
+} from "@/features/invitations/content/createInitialInvitationContent";
+
+import {
+  getInvitationEditorFallback,
+} from "@/features/invitations/editor/data/InvitationEditorFallbacks";
 
 import {
   parseInvitationContent,
@@ -188,6 +196,17 @@ export function useInvitationTemplateActions({
     );
 
     try {
+      if (!isEventType(event.type)) {
+        throw new Error(
+          `Unsupported event type: ${event.type}`
+        );
+      }
+
+      const eventFallback =
+        getInvitationEditorFallback(
+          event.type
+        );
+
       const result =
         await createInvitationAction({
           p_event_id:
@@ -205,13 +224,30 @@ export function useInvitationTemplateActions({
             variantId,
 
           p_content:
-            createInvitationContentFromEvent(
+            createInitialInvitationContent(
               event,
               {
+                primaryName:
+                  eventFallback.primaryName,
+
+                secondaryName:
+                  eventFallback.secondaryName,
+
+                heroTitle:
+                  contentT(
+                    `${event.type}.heroTitle`
+                  ),
+
                 heroSubtitle:
                   contentT(
                     `${event.type}.heroSubtitle`
                   ),
+
+                firstInitial:
+                  eventFallback.firstInitial,
+
+                secondInitial:
+                  eventFallback.secondInitial,
 
                 description:
                   contentT(

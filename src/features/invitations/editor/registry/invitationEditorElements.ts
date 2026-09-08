@@ -56,6 +56,68 @@ export const invitationEditorElements = {
      Hero
   ========================================================================== */
 
+  "hero.primary_name": {
+    type:
+      "text",
+
+    labelKey:
+      "primaryName",
+
+    getValue:
+      (
+        content
+      ) =>
+        content.hero.primary_name,
+
+    setValue:
+      (
+        content,
+        value
+      ) => ({
+        ...content,
+
+        hero: {
+          ...content.hero,
+
+          primary_name:
+            normalizeTextValue(
+              value
+            ),
+        },
+      }),
+  },
+
+  "hero.secondary_name": {
+    type:
+      "text",
+
+    labelKey:
+      "secondaryName",
+
+    getValue:
+      (
+        content
+      ) =>
+        content.hero.secondary_name,
+
+    setValue:
+      (
+        content,
+        value
+      ) => ({
+        ...content,
+
+        hero: {
+          ...content.hero,
+
+          secondary_name:
+            normalizeTextValue(
+              value
+            ),
+        },
+      }),
+  },
+
   "hero.title": {
     type:
       "text",
@@ -179,7 +241,6 @@ export const invitationEditorElements = {
         },
       }),
   },
-
 
   /* ==========================================================================
      Description

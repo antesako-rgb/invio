@@ -539,6 +539,9 @@ export default function InvitationEditorView({
 
           guests:
             INVITATION_EDITOR_PREVIEW_GUESTS,
+
+          eventTimezone:
+            data.eventTimezone,
         };
       },
       [
@@ -548,6 +551,7 @@ export default function InvitationEditorView({
         fallbackTranslations,
         eventTranslations,
         eventFallback,
+        data.eventTimezone,
       ]
     );
 
@@ -583,11 +587,15 @@ export default function InvitationEditorView({
 
         guests:
           INVITATION_EDITOR_PREVIEW_GUESTS,
+
+        eventTimezone:
+          data.eventTimezone,
       }),
       [
         content,
         presentation,
         locale,
+        data.eventTimezone,
       ]
     );
 
@@ -644,59 +652,59 @@ export default function InvitationEditorView({
           />
         }
       >
-<InvitationRenderer
-  templateId={
-    templateId
-  }
-  variantId={
-    variantId
-  }
-  mode="edit"
-  data={
-    editorRenderData
-  }
-  editorStep={
-    activeStep
-  }
-  rsvpPreviewState={
-    rsvpPreviewState
-  }
-  rsvpPreviewMode={
-    rsvpPreviewMode
-  }
-  onRsvpPreviewModeChange={
-    setRsvpPreviewMode
-  }
-  onRsvpSubmit={
-    handleRsvpPreviewSubmit
-  }
-  onGenericRsvpSubmit={
-    handleGenericRsvpPreviewSubmit
-  }
-  editor={{
-    invitationId,
+        <InvitationRenderer
+          templateId={
+            templateId
+          }
+          variantId={
+            variantId
+          }
+          mode="edit"
+          data={
+            editorRenderData
+          }
+          editorStep={
+            activeStep
+          }
+          rsvpPreviewState={
+            rsvpPreviewState
+          }
+          rsvpPreviewMode={
+            rsvpPreviewMode
+          }
+          onRsvpPreviewModeChange={
+            setRsvpPreviewMode
+          }
+          onRsvpSubmit={
+            handleRsvpPreviewSubmit
+          }
+          onGenericRsvpSubmit={
+            handleGenericRsvpPreviewSubmit
+          }
+          editor={{
+            invitationId,
 
-    selectedElement,
-    editingElement,
-    content,
-    presentation,
+            selectedElement,
+            editingElement,
+            content,
+            presentation,
 
-    onSelectElement:
-      setSelectedElement,
+            onSelectElement:
+              setSelectedElement,
 
-    onStartEdit:
-      handleStartEdit,
+            onStartEdit:
+              handleStartEdit,
 
-    onEndEdit:
-      handleEndEdit,
+            onEndEdit:
+              handleEndEdit,
 
-    onContentChange:
-      setContent,
+            onContentChange:
+              setContent,
 
-    onPresentationChange:
-      setPresentation,
-  }}
-/>
+            onPresentationChange:
+              setPresentation,
+          }}
+        />
       </InvitationEditor>
 
       {isPreviewOpen && (

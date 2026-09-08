@@ -3,6 +3,12 @@
 ========================================================================== */
 
 export interface InvitationHeroContent {
+  primary_name:
+    string | null;
+
+  secondary_name:
+    string | null;
+
   title:
     string | null;
 
@@ -15,7 +21,6 @@ export interface InvitationHeroContent {
   second_initial:
     string | null;
 }
-
 
 /* ==========================================================================
    Invitation Date Content

@@ -3,6 +3,9 @@
 ========================================================================== */
 
 .invitation-description {
+  --invitation-element-font-size:
+    var(--invitation-description-size);
+
   width:
     var(--invitation-description-width);
 
@@ -18,7 +21,7 @@
     var(--invitation-description-font);
 
   font-size:
-    var(--invitation-description-size);
+    var(--invitation-element-font-size);
 
   font-style:
     var(--invitation-description-style);
@@ -40,6 +43,9 @@
 
   text-transform:
     var(--invitation-description-text-transform);
+
+  white-space:
+    pre-line;
 
   opacity:
     var(--invitation-description-opacity);

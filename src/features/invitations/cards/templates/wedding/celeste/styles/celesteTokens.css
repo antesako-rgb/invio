@@ -1,0 +1,273 @@
+/* ==========================================================================
+   Celeste Design Tokens
+========================================================================== */
+
+[data-invitation-experience][data-template="celeste"] {
+
+  /* ========================================================================
+     Invitation
+  ======================================================================== */
+
+  --invitation-experience-background:
+    #eceae5;
+
+  --invitation-experience-background-image:
+    none;
+
+  --invitation-experience-background-filter:
+    none;
+
+  --invitation-card-background:
+    #f7f4ee;
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-filter:
+    none;
+
+  --invitation-envelope-front-filter:
+    none;
+
+  --invitation-envelope-flap-filter:
+    none;
+
+  --invitation-envelope-liner-filter:
+    none;
+
+
+  /* ========================================================================
+     Typography
+  ======================================================================== */
+
+  --celeste-font-primary:
+    var(--font-beau-rivage),
+    cursive;
+
+  --celeste-font-secondary:
+    var(--font-marcellus),
+    serif;
+
+
+/* ========================================================================
+   Card Layout
+======================================================================== */
+
+--celeste-card-content-padding:
+  10% 8% 9% 38%;
+
+--celeste-card-frame-filter:
+  none;
+
+--celeste-hero-margin-bottom:
+  10cqw;
+
+--celeste-subtitle-margin-bottom:
+  10cqw;
+
+--celeste-event-margin-bottom:
+  6cqw;
+
+--celeste-countdown-margin-bottom:
+  5cqw;
+
+
+  /* ========================================================================
+     Details
+  ======================================================================== */
+
+  --invitation-details-title-font:
+    var(--celeste-font-secondary);
+
+  --invitation-details-event-font:
+    var(--celeste-font-primary);
+
+  --invitation-details-section-font:
+    var(--celeste-font-secondary);
+
+
+  /* ========================================================================
+     RSVP
+  ======================================================================== */
+
+  --invitation-rsvp-title-font:
+    var(--celeste-font-secondary);
+
+  --invitation-rsvp-event-font:
+    var(--celeste-font-primary);
+
+  --invitation-rsvp-section-font:
+    var(--celeste-font-secondary);
+
+
+  /* ========================================================================
+     Subtitle
+  ======================================================================== */
+
+  --invitation-subtitle-font:
+    var(--celeste-font-secondary);
+
+  --invitation-subtitle-size:
+    3cqw;
+
+  --invitation-subtitle-style:
+    italic;
+
+  --invitation-subtitle-text-align:
+    right;
+
+
+  /* ========================================================================
+     Names
+  ======================================================================== */
+
+  --invitation-name-font:
+    var(--celeste-font-primary);
+
+  --invitation-name-size:
+    9cqw;
+
+  --invitation-name-line-height:
+    0.95;
+
+  --invitation-name-text-align:
+    right;
+
+
+  /* ========================================================================
+     Name Separator
+  ======================================================================== */
+
+  --celeste-name-separator-font:
+    var(--celeste-font-primary);
+
+  --celeste-name-separator-size:
+    14cqw;
+
+  --celeste-name-separator-color:
+    var(--invitation-accent);
+
+  --celeste-name-separator-opacity:
+    0.35;
+
+
+  /* ========================================================================
+     Description
+  ======================================================================== */
+
+  --invitation-description-font:
+    var(--celeste-font-secondary);
+
+  --invitation-description-size:
+    2.5cqw;
+
+  --invitation-description-style:
+    italic;
+
+  --invitation-description-line-height:
+    1.35;
+
+  --invitation-description-text-align:
+    right;
+
+  --invitation-description-max-width:
+    100%;
+
+  --invitation-description-margin-top:
+    0;
+
+
+  /* ========================================================================
+     Event
+  ======================================================================== */
+
+  --invitation-event-font:
+    var(--celeste-font-secondary);
+
+  --invitation-event-size:
+    2.7cqw;
+
+  --invitation-event-style:
+    italic;
+
+  --invitation-event-line-height:
+    1.2;
+
+  --invitation-event-text-align:
+    right;
+
+  --invitation-event-gap:
+    4cqw;
+
+
+/* ========================================================================
+   Event Date
+======================================================================== */
+
+--invitation-event-date-font:
+  var(--celeste-font-primary);
+
+--invitation-event-date-size:
+  2em;
+
+--invitation-event-date-gap:
+  1cqw;
+
+--invitation-event-date-width:
+  100%;
+
+--invitation-event-date-text-transform:
+  capitalize;
+
+
+  /* ========================================================================
+     Event Day
+  ======================================================================== */
+
+  --invitation-event-day-min-width:
+    auto;
+
+  --invitation-event-day-padding:
+    0;
+
+
+  /* ========================================================================
+     Event Day Name
+  ======================================================================== */
+
+  --invitation-event-day-name-size:
+    0.5em;
+
+
+  /* ========================================================================
+     Event Location
+  ======================================================================== */
+
+  --invitation-event-location-gap:
+    2cqw;
+
+
+  /* ========================================================================
+     Countdown
+  ======================================================================== */
+
+  --invitation-countdown-text-align:
+    right;
+
+  --invitation-countdown-value-font:
+    var(--celeste-font-primary);
+
+  --invitation-countdown-value-size:
+    8cqw;
+
+  --invitation-countdown-label-font:
+    var(--celeste-font-secondary);
+
+  --invitation-countdown-label-size:
+    2.4cqw;
+
+  --invitation-countdown-label-gap:
+    1cqw;
+}

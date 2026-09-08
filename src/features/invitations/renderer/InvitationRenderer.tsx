@@ -66,7 +66,6 @@ export default function InvitationRenderer({
   rsvpPreviewState = "form",
   rsvpPreviewMode = "personalized",
   onRsvpPreviewModeChange,
-  eventTimezone,
   onRsvpSubmit,
   onGenericRsvpSubmit,
 }: InvitationRendererProps) {
@@ -202,6 +201,9 @@ export default function InvitationRenderer({
               data={
                 data
               }
+              eventTimezone={
+                data.eventTimezone
+              }
               previewState={
                 rsvpPreviewState
               }
@@ -252,7 +254,7 @@ export default function InvitationRenderer({
               data
             }
             eventTimezone={
-              eventTimezone
+              data.eventTimezone
             }
             onBack={
               handleBackToCard

@@ -23,7 +23,7 @@ import {
 } from "@/features/invitations/repositories/invitation-recipients/getPublicInvitationRecipient";
 
 import GenericInvitationExperience
-  from "@/features/invitations//pages/GenericInvitationExperience/GenericInvitationExperience";
+  from "@/features/invitations/pages/GenericInvitationExperience/GenericInvitationExperience";
 
 import PersonalizedInvitationExperience
   from "@/features/invitations/pages/PersonalizedInvitationExperience/PersonalizedInvitationExperience";
@@ -90,6 +90,9 @@ export default async function PublicInvitationPage({
 
         locale,
 
+        eventTimezone:
+          recipient.event.timezone,
+
         guests,
       });
 
@@ -97,9 +100,6 @@ export default async function PublicInvitationPage({
       <PersonalizedInvitationExperience
         recipientPublicId={
           publicId
-        }
-        eventTimezone={
-          recipient.event.timezone
         }
         templateId={
           recipient.invitation.template_id
@@ -136,15 +136,17 @@ export default async function PublicInvitationPage({
   if (!invitation) {
     notFound();
   }
+const data =
+  buildInvitationRenderData({
+    invitation,
 
-  const data =
-    buildInvitationRenderData({
-      invitation,
+    locale,
 
-      locale,
+    eventTimezone:
+      invitation.event_timezone,
 
-      guests: [],
-    });
+    guests: [],
+  });
 
   return (
     <GenericInvitationExperience

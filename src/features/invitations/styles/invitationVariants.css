@@ -2,44 +2,32 @@
    Champagne
 ========================================================================== */
 
-[data-invitation-experience][data-template="portrait"][data-variant="champagne"] {
+[data-invitation-experience][data-variant="champagne"] {
 
-/* ========================================================================
-   Invitation
-========================================================================= */
+  /* ========================================================================
+     Palette
+  ======================================================================== */
+
+  --invitation-foreground:
+    #5a493b;
+
+  --invitation-muted:
+    #9a8877;
+
+  --invitation-accent:
+    #462b0a;
+
+
+  /* ========================================================================
+     Invitation
+  ======================================================================== */
 
   --invitation-experience-background:
     #eceae5;
-    
---invitation-experience-background-filter: none;
 
   --invitation-card-background:
     #f5efe6;
 
-
-  /* ========================================================================
-     Portrait Colors
-  ======================================================================== */
-
---portrait-foreground:
-  #2f2823;
-
---portrait-muted:
-  #584d39;
-
-
-/* ========================================================================
-   Card Frame
-========================================================================= */
-
---portrait-card-frame-filter: none;
-
-
-/* ========================================================================
-   Photo Frame
-========================================================================= */
-
---portrait-photo-frame-filter: none;
 
   /* ========================================================================
      Guest Actions
@@ -54,8 +42,8 @@
   --invitation-action-secondary:
     #e8ded0;
 
-  --invitation-action-secondary-foreground:
-    #5a493b;
+--invitation-action-secondary-foreground:
+  var(--invitation-foreground);
 
   --invitation-action-secondary-border:
     #cbbba7;
@@ -64,9 +52,6 @@
   /* ========================================================================
      Details
   ======================================================================== */
-
-  --invitation-details-accent:
-    #462b0a;
 
   --invitation-details-shell-background:
     #faf6ef;
@@ -87,9 +72,6 @@
   /* ========================================================================
      RSVP
   ======================================================================== */
-
-  --invitation-rsvp-accent:
-    #462b0a;
 
   --invitation-rsvp-shell-background:
     #faf6ef;
@@ -120,38 +102,28 @@
 
   --invitation-rsvp-submit-foreground:
     #fffaf4;
-
-
-  /* ========================================================================
-     Envelope
-  ======================================================================== */
-
-  --invitation-envelope-back-filter:
-    sepia(10%)
-    saturate(70%)
-    brightness(102%);
-
-  --invitation-envelope-front-filter:
-    sepia(10%)
-    saturate(70%)
-    brightness(102%);
-
-  --invitation-envelope-flap-filter:
-    sepia(10%)
-    saturate(70%)
-    brightness(102%);
-
-  --invitation-envelope-liner-filter:
-    sepia(10%)
-    saturate(70%)
-    brightness(102%);
-
 }
+
+
 /* ==========================================================================
    Sage
 ========================================================================== */
 
-[data-invitation-experience][data-template="portrait"][data-variant="sage"] {
+[data-invitation-experience][data-variant="sage"] {
+
+  /* ========================================================================
+     Palette
+  ======================================================================== */
+
+  --invitation-foreground:
+    #30382f;
+
+  --invitation-muted:
+    #65776a;
+
+  --invitation-accent:
+    #53604e;
+
 
   /* ========================================================================
      Invitation
@@ -160,44 +132,8 @@
   --invitation-experience-background:
     #e8ebe4;
 
---invitation-experience-background-filter:
-  hue-rotate(45deg)
-  saturate(55%)
-  brightness(96%);
-
   --invitation-card-background:
     #f4f5ef;
-
-
-  /* ========================================================================
-     Portrait Colors
-  ======================================================================== */
-
-  --portrait-foreground:
-    #30382f;
-
-  --portrait-muted:
-    #687264;
-
-
-  /* ========================================================================
-     Card Frame
-  ======================================================================== */
-
-  --portrait-card-frame-filter:
-    hue-rotate(55deg)
-    saturate(45%)
-    brightness(88%);
-
-
-  /* ========================================================================
-     Photo Frame
-  ======================================================================== */
-
-  --portrait-photo-frame-filter:
-    hue-rotate(55deg)
-    saturate(45%)
-    brightness(88%);
 
 
   /* ========================================================================
@@ -213,8 +149,10 @@
   --invitation-action-secondary:
     #e2e6dd;
 
-  --invitation-action-secondary-foreground:
-    #30382f;
+
+--invitation-action-secondary-foreground:
+  var(--invitation-foreground);
+
 
   --invitation-action-secondary-border:
     #bdc6b7;
@@ -223,9 +161,6 @@
   /* ========================================================================
      Details
   ======================================================================== */
-
-  --invitation-details-accent:
-    #53604e;
 
   --invitation-details-shell-background:
     #f4f5ef;
@@ -246,9 +181,6 @@
   /* ========================================================================
      RSVP
   ======================================================================== */
-
-  --invitation-rsvp-accent:
-    #53604e;
 
   --invitation-rsvp-shell-background:
     #f4f5ef;
@@ -279,83 +211,38 @@
 
   --invitation-rsvp-submit-foreground:
     #fbfcf8;
-
-
-  /* ========================================================================
-     Envelope
-  ======================================================================== */
-
-  --invitation-envelope-back-filter:
-    hue-rotate(45deg)
-    saturate(55%)
-    brightness(96%);
-
-  --invitation-envelope-front-filter:
-    hue-rotate(45deg)
-    saturate(55%)
-    brightness(96%);
-
-  --invitation-envelope-flap-filter:
-    hue-rotate(45deg)
-    saturate(55%)
-    brightness(96%);
-
-  --invitation-envelope-liner-filter:
-    hue-rotate(45deg)
-    saturate(55%)
-    brightness(96%);
 }
+
+
 /* ==========================================================================
    Dusty Rose
 ========================================================================== */
 
-[data-invitation-experience][data-template="portrait"][data-variant="dusty-rose"] {
+[data-invitation-experience][data-variant="dusty-rose"] {
+
+  /* ========================================================================
+     Palette
+  ======================================================================== */
+
+  --invitation-foreground:
+    #40302f;
+
+  --invitation-muted:
+    #987780;
+
+  --invitation-accent:
+    #725651;
+
 
   /* ========================================================================
      Invitation
   ======================================================================== */
 
---invitation-experience-background:
-  #eee6e4;
+  --invitation-experience-background:
+    #eee6e4;
 
---invitation-experience-background-filter:
-  hue-rotate(325deg)
-  saturate(38%)
-  brightness(102%);
-
---invitation-card-background:
-  #f8f1ef;
-
-
-  /* ========================================================================
-     Portrait Colors
-  ======================================================================== */
-
-  --portrait-foreground:
-    #40302f;
-
-  --portrait-muted:
-    #806965;
-
-
-  /* ========================================================================
-     Card Frame
-  ======================================================================== */
-
-  --portrait-card-frame-filter:
-    hue-rotate(320deg)
-    saturate(42%)
-    brightness(91%);
-
-
-  /* ========================================================================
-     Photo Frame
-  ======================================================================== */
-
-  --portrait-photo-frame-filter:
-    hue-rotate(320deg)
-    saturate(42%)
-    brightness(91%);
+  --invitation-card-background:
+    #f8f1ef;
 
 
   /* ========================================================================
@@ -371,8 +258,9 @@
   --invitation-action-secondary:
     #eadfdd;
 
-  --invitation-action-secondary-foreground:
-    #40302f;
+
+--invitation-action-secondary-foreground:
+  var(--invitation-foreground);
 
   --invitation-action-secondary-border:
     #cfbbb7;
@@ -381,9 +269,6 @@
   /* ========================================================================
      Details
   ======================================================================== */
-
-  --invitation-details-accent:
-    #725651;
 
   --invitation-details-shell-background:
     #f8f1ef;
@@ -404,9 +289,6 @@
   /* ========================================================================
      RSVP
   ======================================================================== */
-
-  --invitation-rsvp-accent:
-    #725651;
 
   --invitation-rsvp-shell-background:
     #f8f1ef;
@@ -437,29 +319,4 @@
 
   --invitation-rsvp-submit-foreground:
     #fffafa;
-
-
-  /* ========================================================================
-     Envelope
-  ======================================================================== */
-
-  --invitation-envelope-back-filter:
-    hue-rotate(325deg)
-    saturate(48%)
-    brightness(100%);
-
-  --invitation-envelope-front-filter:
-    hue-rotate(325deg)
-    saturate(48%)
-    brightness(100%);
-
-  --invitation-envelope-flap-filter:
-    hue-rotate(325deg)
-    saturate(48%)
-    brightness(100%);
-
-  --invitation-envelope-liner-filter:
-    hue-rotate(325deg)
-    saturate(48%)
-    brightness(100%);
 }

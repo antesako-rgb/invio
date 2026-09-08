@@ -25,6 +25,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import {
+  invitationVariants,
+} from "@/features/invitations/config/invitationVariants";
+
 import type {
   InvitationTemplateConfig,
 } from "@/features/invitations/types/invitationTemplateConfig.types";
@@ -210,6 +214,11 @@ export default function InvitationTemplateCard({
         >
           {template.variants.map(
             (variant) => {
+              const variantConfig =
+                invitationVariants[
+                  variant.id
+                ];
+
               const selected =
                 variant.id ===
                 selectedVariant.id;
@@ -221,10 +230,10 @@ export default function InvitationTemplateCard({
                   }
                   type="button"
                   title={
-                    variant.label
+                    variantConfig.label
                   }
                   aria-label={
-                    variant.label
+                    variantConfig.label
                   }
                   aria-pressed={
                     selected
@@ -258,7 +267,7 @@ export default function InvitationTemplateCard({
                   "
                   style={{
                     background:
-                      variant.swatch,
+                      variantConfig.swatch,
                   }}
                 />
               );

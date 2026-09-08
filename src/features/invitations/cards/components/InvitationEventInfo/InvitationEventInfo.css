@@ -15,38 +15,38 @@
   width:
     100%;
 
-gap:
-  var(--invitation-event-info-gap);
+  gap:
+    var(--invitation-event-gap);
 
   font-family:
-    var(--invitation-event-info-font);
+    var(--invitation-event-font);
 
   font-size:
-    var(--invitation-event-info-size);
+    var(--invitation-event-size);
 
   font-style:
-    var(--invitation-event-info-style);
+    var(--invitation-event-style);
 
   font-weight:
-    var(--invitation-event-info-weight);
+    var(--invitation-event-weight);
 
   line-height:
-    var(--invitation-event-info-line-height);
+    var(--invitation-event-line-height);
 
   letter-spacing:
-    var(--invitation-event-info-letter-spacing);
+    var(--invitation-event-letter-spacing);
 
   color:
-    var(--invitation-event-info-color);
+    var(--invitation-event-color);
 
   text-transform:
-    var(--invitation-event-info-text-transform);
+    var(--invitation-event-text-transform);
 
   text-align:
-    var(--invitation-event-info-text-align);
+    var(--invitation-event-text-align);
 
   opacity:
-    var(--invitation-event-info-opacity);
+    var(--invitation-event-opacity);
 }
 
 
@@ -54,10 +54,10 @@ gap:
    Date
 ========================================================================== */
 
-
+[data-invitation-event-info]
 [data-invitation-event-date] {
   --invitation-element-font-size:
-    var(--invitation-event-info-size);
+    var(--invitation-event-size);
 
   display:
     grid;
@@ -70,11 +70,11 @@ gap:
   align-items:
     end;
 
-width:
-  min(
-    100%,
-    var(--invitation-event-date-width)
-  );
+  width:
+    min(
+      100%,
+      var(--invitation-event-date-width)
+    );
 
   padding-top:
     var(--invitation-event-day-name-space);
@@ -86,12 +86,16 @@ width:
     var(--invitation-event-date-text-transform);
 }
 
+
 /* ==========================================================================
    Date Parts
 ========================================================================== */
 
+[data-invitation-event-info]
 [data-invitation-event-month],
+[data-invitation-event-info]
 [data-invitation-event-day],
+[data-invitation-event-info]
 [data-invitation-event-year] {
   display:
     flex;
@@ -114,6 +118,7 @@ width:
    Month
 ========================================================================== */
 
+[data-invitation-event-info]
 [data-invitation-event-month] {
   justify-content:
     flex-end;
@@ -127,6 +132,7 @@ width:
    Month Editable Element
 ========================================================================== */
 
+[data-invitation-event-info]
 [data-invitation-event-month]
 [data-editor-element] {
   width:
@@ -140,6 +146,8 @@ width:
 /* ==========================================================================
    Day
 ========================================================================== */
+
+[data-invitation-event-info]
 [data-invitation-event-day] {
   position:
     relative;
@@ -168,6 +176,7 @@ width:
    Day Name
 ========================================================================== */
 
+[data-invitation-event-info]
 [data-invitation-event-day-name] {
   position:
     absolute;
@@ -206,10 +215,12 @@ width:
     var(--invitation-event-day-name-opacity);
 }
 
+
 /* ==========================================================================
    Day Value
 ========================================================================== */
 
+[data-invitation-event-info]
 [data-invitation-event-day-value] {
   display:
     block;
@@ -229,6 +240,7 @@ width:
    Year
 ========================================================================== */
 
+[data-invitation-event-info]
 [data-invitation-event-year] {
   justify-content:
     flex-start;
@@ -242,6 +254,7 @@ width:
    Year Editable Element
 ========================================================================== */
 
+[data-invitation-event-info]
 [data-invitation-event-year]
 [data-editor-element] {
   width:
@@ -256,9 +269,10 @@ width:
    Time
 ========================================================================== */
 
+[data-invitation-event-info]
 [data-invitation-event-time] {
   --invitation-element-font-size:
-    var(--invitation-event-info-size);
+    var(--invitation-event-size);
 
   width:
     fit-content;
@@ -278,6 +292,7 @@ width:
    Location
 ========================================================================== */
 
+[data-invitation-event-info]
 [data-invitation-event-location] {
   display:
     flex;
@@ -290,15 +305,18 @@ width:
 
   width:
     100%;
- gap:
-  var(--invitation-event-location-gap);
- 
+
+  gap:
+    var(--invitation-event-location-gap);
 
   line-height:
     1.2;
 
   text-align:
     center;
+
+  white-space:
+    pre-line;
 }
 
 
@@ -306,9 +324,11 @@ width:
    Location Parts
 ========================================================================== */
 
-[data-invitation-event-location] > * {
+[data-invitation-event-info]
+[data-invitation-event-location]
+> * {
   --invitation-element-font-size:
-    var(--invitation-event-info-size);
+    var(--invitation-event-size);
 
   display:
     block;

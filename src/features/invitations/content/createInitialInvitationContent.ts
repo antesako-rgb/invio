@@ -15,22 +15,40 @@ import {
    Types
 ========================================================================== */
 
-interface InvitationEventContentDefaults {
+interface InvitationContentDefaults {
+  primaryName:
+    string | null;
+
+  secondaryName:
+    string | null;
+
+  heroTitle:
+    string | null;
+
   heroSubtitle:
-    string;
+    string | null;
+
+  firstInitial:
+    string | null;
+
+  secondInitial:
+    string | null;
 
   description:
-    string;
+    string | null;
 }
 
 
 /* ==========================================================================
-   Create Invitation Content From Event
+   Create Initial Invitation Content
 ========================================================================== */
 
-export function createInvitationContentFromEvent(
-  event: Event,
-  defaults: InvitationEventContentDefaults
+export function createInitialInvitationContent(
+  event:
+    Event,
+
+  defaults:
+    InvitationContentDefaults
 ): InvitationContent {
   const content =
     createDefaultInvitationContent();
@@ -41,11 +59,23 @@ export function createInvitationContentFromEvent(
     hero: {
       ...content.hero,
 
+      primary_name:
+        defaults.primaryName,
+
+      secondary_name:
+        defaults.secondaryName,
+
       title:
-        event.name,
+        defaults.heroTitle,
 
       subtitle:
         defaults.heroSubtitle,
+
+      first_initial:
+        defaults.firstInitial,
+
+      second_initial:
+        defaults.secondInitial,
     },
 
     description:

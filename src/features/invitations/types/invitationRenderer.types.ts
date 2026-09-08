@@ -145,6 +145,9 @@ export interface InvitationRenderData {
 
   guests:
     InvitationRenderGuest[];
+
+  eventTimezone:
+    string;
 }
 
 
@@ -174,10 +177,6 @@ export type GenericInvitationRsvpSubmitHandler =
    Invitation Renderer Props
 ========================================================================== */
 
-/* ==========================================================================
-   Invitation Renderer Props
-========================================================================== */
-
 export interface InvitationRendererProps {
   templateId:
     string;
@@ -190,9 +189,6 @@ export interface InvitationRendererProps {
 
   data:
     InvitationRenderData;
-
-  eventTimezone?:
-    string;
 
   editor?:
     InvitationEditorContext;

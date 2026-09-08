@@ -1,0 +1,294 @@
+/* ==========================================================================
+   Event Details
+========================================================================== */
+
+[data-invitation-event-details] {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-end;
+
+  width:
+    100%;
+
+  gap:
+    var(--invitation-event-gap);
+
+  font-family:
+    var(--invitation-event-font);
+
+  font-size:
+    var(--invitation-event-size);
+
+  font-style:
+    var(--invitation-event-style);
+
+  font-weight:
+    var(--invitation-event-weight);
+
+  line-height:
+    var(--invitation-event-line-height);
+
+  letter-spacing:
+    var(--invitation-event-letter-spacing);
+
+  color:
+    var(--invitation-event-color);
+
+  text-transform:
+    var(--invitation-event-text-transform);
+
+  text-align:
+    right;
+
+  opacity:
+    var(--invitation-event-opacity);
+}
+
+
+/* ==========================================================================
+   Date
+========================================================================== */
+
+[data-invitation-event-details]
+> [data-invitation-event-date] {
+  --invitation-element-font-size:
+    var(--invitation-event-date-size);
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-end;
+
+  width:
+    fit-content;
+
+  max-width:
+    100%;
+
+  gap:
+    var(--invitation-event-date-gap);
+
+  font-family:
+    var(--invitation-event-date-font);
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  font-style:
+    var(--invitation-event-style);
+
+  font-weight:
+    var(--invitation-event-weight);
+
+  line-height:
+    var(--invitation-event-line-height);
+
+  letter-spacing:
+    var(--invitation-event-date-letter-spacing);
+
+  color:
+    var(--invitation-event-color);
+
+  text-transform:
+    var(--invitation-event-date-text-transform);
+
+  text-align:
+    right;
+}
+
+
+/* ==========================================================================
+   Date Main
+========================================================================== */
+
+[data-invitation-event-details]
+[data-invitation-event-details-date-main] {
+  display:
+    block;
+
+  width:
+    100%;
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Day Name
+========================================================================== */
+
+[data-invitation-event-details]
+[data-invitation-event-details-day-name] {
+  display:
+    block;
+
+  width:
+    100%;
+
+  font-family:
+    var(--invitation-event-font);
+
+  font-size:
+    var(--invitation-event-day-name-size);
+
+  font-style:
+    var(--invitation-event-style);
+
+  font-weight:
+    var(--invitation-event-day-name-weight);
+
+  line-height:
+    var(--invitation-event-line-height);
+
+  letter-spacing:
+    var(--invitation-event-day-name-letter-spacing);
+
+  color:
+    var(--invitation-event-color);
+
+  text-transform:
+    var(--invitation-event-day-name-text-transform);
+
+  text-align:
+    right;
+
+  opacity:
+    var(--invitation-event-day-name-opacity);
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Time
+========================================================================== */
+
+[data-invitation-event-details]
+> [data-invitation-event-time] {
+  --invitation-element-font-size:
+    var(--invitation-event-size);
+
+  width:
+    fit-content;
+
+  max-width:
+    100%;
+
+  font-family:
+    var(--invitation-event-font);
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  font-style:
+    var(--invitation-event-style);
+
+  font-weight:
+    var(--invitation-event-weight);
+
+  line-height:
+    var(--invitation-event-line-height);
+
+  letter-spacing:
+    var(--invitation-event-letter-spacing);
+
+  color:
+    var(--invitation-event-color);
+
+  text-transform:
+    var(--invitation-event-text-transform);
+
+  text-align:
+    right;
+}
+
+
+/* ==========================================================================
+   Location
+========================================================================== */
+
+[data-invitation-event-details]
+[data-invitation-event-details-location] {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-end;
+
+  width:
+    100%;
+
+  gap:
+    var(--invitation-event-location-gap);
+
+  font-family:
+    var(--invitation-event-font);
+
+  font-size:
+    var(--invitation-event-size);
+
+  font-style:
+    var(--invitation-event-style);
+
+  font-weight:
+    var(--invitation-event-weight);
+
+  line-height:
+    var(--invitation-event-line-height);
+
+  letter-spacing:
+    var(--invitation-event-letter-spacing);
+
+  color:
+    var(--invitation-event-color);
+
+  text-transform:
+    var(--invitation-event-text-transform);
+
+  text-align:
+    right;
+
+  white-space:
+    pre-line;
+}
+
+
+/* ==========================================================================
+   Location Parts
+========================================================================== */
+
+[data-invitation-event-details]
+[data-invitation-event-details-location]
+> * {
+  --invitation-element-font-size:
+    var(--invitation-event-size);
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  max-width:
+    100%;
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  text-align:
+    right;
+}

@@ -166,18 +166,20 @@
       }
     },
 
-    "elementLabels": {
-      "title": "Edit title",
-      "subtitle": "Edit subtitle",
-      "initial": "Edit initial",
-      "description": "Edit description",
-      "date": "Edit date",
-      "time": "Edit time",
-      "location": "Edit location",
-      "address": "Edit address",
-      "image": "Edit image",
-      "delete": "Delete content"
-    },
+"elementLabels": {
+  "primaryName": "Edit first name",
+  "secondaryName": "Edit second name",
+  "title": "Edit title",
+  "subtitle": "Edit subtitle",
+  "initial": "Edit initial",
+  "description": "Edit description",
+  "date": "Edit date",
+  "time": "Edit time",
+  "location": "Edit location",
+  "address": "Edit address",
+  "image": "Edit image",
+  "delete": "Delete content"
+},
 
 "fallback": {
   "locationName": "Event venue",
@@ -200,7 +202,9 @@
       "details": "Details",
       "rsvp": "RSVP"
     },
-
+"countdown": {
+  "daysRemaining": "{count, plural, one {day to go} other {days to go}}"
+},
     "details": {
       "back": "Back to invitation",
       "title": "Our day",
@@ -335,10 +339,16 @@
         "description": "An elegant botanical invitation with soft and refined details."
       },
 
-      "portrait": {
-        "name": "Portrait",
-        "description": "An elegant photo-focused invitation designed to highlight your favorite moment."
-      }
+  "portrait": {
+  "name": "Portrait",
+  "description": "An elegant photo-focused invitation designed to highlight your favorite moment."
+},
+
+"celeste": {
+  "name": "Celeste",
+  "description": "A refined wedding invitation with rich blue tones, golden details and timeless elegance."
+}
+      
     }
   }
 }

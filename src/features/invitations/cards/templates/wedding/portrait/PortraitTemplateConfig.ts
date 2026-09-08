@@ -4,20 +4,20 @@ import type {
 
 
 /* ==========================================================================
-   Flora Template Config
+   Portrait Template Config
 ========================================================================== */
 
-export const floraTemplateConfig:
+export const portraitTemplateConfig:
   InvitationTemplateConfig = {
     category:
       "wedding",
 
     preview: {
       cardUrl:
-        "/invitation-assets/previews/flora/champagne.webp",
+        "/invitation-assets/previews/portrait/classic.webp",
 
       imageUrl:
-        null,
+        "/invitation-assets/previews/portrait/couple.webp",
     },
 
     envelopeId:
@@ -31,42 +31,24 @@ export const floraTemplateConfig:
         id:
           "champagne",
 
-        label:
-          "Champagne",
-
         previewUrl:
-          "/invitation-assets/previews/flora/frame.png",
-
-        swatch:
-          "#d8c5a3",
+          "/invitation-assets/previews/portrait/champagne.webp",
       },
 
       {
         id:
           "sage",
 
-        label:
-          "Sage",
-
         previewUrl:
-          "/invitation-assets/previews/flora/sage.webp",
-
-        swatch:
-          "#87977a",
+          "/invitation-assets/previews/portrait/sage.webp",
       },
 
       {
         id:
-          "rose",
-
-        label:
-          "Rose",
+          "dusty-rose",
 
         previewUrl:
-          "/invitation-assets/previews/flora/rose.webp",
-
-        swatch:
-          "#c99a9f",
+          "/invitation-assets/previews/portrait/dusty-rose.webp",
       },
     ],
   };

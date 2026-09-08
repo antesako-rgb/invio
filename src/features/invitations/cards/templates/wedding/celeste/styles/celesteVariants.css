@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Champagne
+========================================================================== */
+
+[data-invitation-experience][data-template="celeste"][data-variant="champagne"] {
+
+  /* ========================================================================
+     Experience Background
+  ======================================================================== */
+
+  --invitation-experience-background-filter:
+    none;
+
+
+  /* ========================================================================
+     Card
+  ======================================================================== */
+
+  --celeste-card-frame-filter:
+    none;
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-filter:
+    none;
+
+  --invitation-envelope-front-filter:
+    none;
+
+  --invitation-envelope-flap-filter:
+    none;
+
+  --invitation-envelope-liner-filter:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Sage
+========================================================================== */
+
+[data-invitation-experience][data-template="celeste"][data-variant="sage"] {
+
+  /* ========================================================================
+     Experience Background
+  ======================================================================== */
+
+  --invitation-experience-background-filter:
+    hue-rotate(55deg)
+    saturate(55%)
+    brightness(97%);
+
+
+  /* ========================================================================
+     Card
+  ======================================================================== */
+
+  --celeste-card-frame-filter:
+    hue-rotate(55deg)
+    saturate(50%)
+    brightness(97%);
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-filter:
+    hue-rotate(55deg)
+    saturate(50%)
+    brightness(97%);
+
+  --invitation-envelope-front-filter:
+    hue-rotate(55deg)
+    saturate(50%)
+    brightness(97%);
+
+  --invitation-envelope-flap-filter:
+    hue-rotate(55deg)
+    saturate(50%)
+    brightness(97%);
+
+  --invitation-envelope-liner-filter:
+    hue-rotate(55deg)
+    saturate(50%)
+    brightness(97%);
+
+}
+
+
+/* ==========================================================================
+   Dusty Rose
+========================================================================== */
+
+[data-invitation-experience][data-template="celeste"][data-variant="dusty-rose"] {
+
+  /* ========================================================================
+     Experience Background
+  ======================================================================== */
+
+  --invitation-experience-background-filter:
+    hue-rotate(325deg)
+    saturate(40%)
+    brightness(102%);
+
+
+  /* ========================================================================
+     Card
+  ======================================================================== */
+
+  --celeste-card-frame-filter:
+    hue-rotate(325deg)
+    saturate(45%)
+    brightness(100%);
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --invitation-envelope-back-filter:
+    hue-rotate(325deg)
+    saturate(45%)
+    brightness(100%);
+
+  --invitation-envelope-front-filter:
+    hue-rotate(325deg)
+    saturate(45%)
+    brightness(100%);
+
+  --invitation-envelope-flap-filter:
+    hue-rotate(325deg)
+    saturate(45%)
+    brightness(100%);
+
+  --invitation-envelope-liner-filter:
+    hue-rotate(325deg)
+    saturate(45%)
+    brightness(100%);
+
+}

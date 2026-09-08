@@ -2,15 +2,14 @@
 
 import {
   type MouseEvent,
+  type ReactNode,
   useState,
 } from "react";
 
 import {
   useTranslations,
 } from "next-intl";
-import {
-  useInvitationPresentation,
-} from "@/features/invitations/renderer/context/InvitationPresentationContext";
+
 import {
   Popover,
   PopoverContent,
@@ -33,6 +32,10 @@ import type {
   InvitationEditorContext,
 } from "@/features/invitations/editor/types/invitationEditor.types";
 
+import {
+  useInvitationPresentation,
+} from "@/features/invitations/renderer/context/InvitationPresentationContext";
+
 import type {
   InvitationRenderMode,
 } from "@/features/invitations/types/invitationRenderer.types";
@@ -54,7 +57,7 @@ const DATE_ELEMENT =
    Types
 ========================================================================== */
 
-interface EditableDateProps {
+interface EditableDateDisplay {
   month:
     string;
 
@@ -66,12 +69,22 @@ interface EditableDateProps {
 
   year:
     string;
+}
 
+
+interface EditableDateProps
+  extends EditableDateDisplay {
   mode:
     InvitationRenderMode;
 
   editor?:
     InvitationEditorContext;
+
+  children?:
+    (
+      display:
+        EditableDateDisplay
+    ) => ReactNode;
 }
 
 
@@ -142,39 +155,17 @@ function formatDate(
 
 
 /* ==========================================================================
-   Date Display
+   Default Date Display
 ========================================================================== */
-function DateDisplay({
+
+function DefaultDateDisplay({
   month,
   day,
   dayName,
   year,
-  style,
-}: {
-  month:
-    string;
-
-  day:
-    string;
-
-  dayName:
-    string;
-
-  year:
-    string;
-
-  style?:
-    ReturnType<
-      typeof getInvitationElementStyle
-    >;
-}) {
+}: EditableDateDisplay) {
   return (
-    <div
-      data-invitation-event-date
-      style={
-        style
-      }
-    >
+    <>
       <span
         data-invitation-event-month
       >
@@ -202,7 +193,7 @@ function DateDisplay({
       >
         {year}
       </span>
-    </div>
+    </>
   );
 }
 
@@ -218,16 +209,17 @@ export default function EditableDate({
   year,
   mode,
   editor,
+  children,
 }: EditableDateProps) {
   const t =
     useTranslations(
       "Invitations.editor.date"
     );
 
-const tValidation =
-  useTranslations(
-    "Invitations.editor.validation"
-  );
+  const tValidation =
+    useTranslations(
+      "Invitations.editor.validation"
+    );
 
   const tElementLabel =
     useTranslations(
@@ -289,38 +281,61 @@ const tValidation =
     );
 
 
-/* ==========================================================================
-   Presentation
-========================================================================== */
+  /* ==========================================================================
+     Presentation
+  ========================================================================== */
 
-const presentation =
-  useInvitationPresentation();
+  const presentation =
+    useInvitationPresentation();
 
-const elementPresentation =
-  presentation.elements?.[
-    DATE_ELEMENT
-  ];
+  const elementPresentation =
+    presentation.elements?.[
+      DATE_ELEMENT
+    ];
 
-const elementStyle =
-  getInvitationElementStyle(
-    elementPresentation
-  );
+  const elementStyle =
+    getInvitationElementStyle(
+      elementPresentation
+    );
 
-const dateStyle = {
-  ...elementStyle,
+  const dateStyle = {
+    ...elementStyle,
 
-  textAlign:
-    undefined,
+    textAlign:
+      undefined,
 
-  alignSelf:
-    elementPresentation?.text_align === "left"
-      ? "flex-start"
-      : elementPresentation?.text_align === "right"
-        ? "flex-end"
-        : elementPresentation?.text_align === "center"
-          ? "center"
-          : undefined,
-};
+    alignSelf:
+      elementPresentation?.text_align === "left"
+        ? "flex-start"
+        : elementPresentation?.text_align === "right"
+          ? "flex-end"
+          : elementPresentation?.text_align === "center"
+            ? "center"
+            : undefined,
+  };
+
+
+  /* ==========================================================================
+     Display
+  ========================================================================== */
+
+  const display = {
+    month,
+    day,
+    dayName,
+    year,
+  };
+
+  const dateContent =
+    children
+      ? children(
+          display
+        )
+      : (
+          <DefaultDateDisplay
+            {...display}
+          />
+        );
 
 
   /* ==========================================================================
@@ -475,6 +490,9 @@ const dateStyle = {
       date: {
         ...editor.content.date,
 
+        start_date:
+          currentStartDate,
+
         end_date:
           nextEndDate,
       },
@@ -483,159 +501,128 @@ const dateStyle = {
 
 
   /* ==========================================================================
-     Display
+     Live / Preview
   ========================================================================== */
 
   if (!isEditorMode) {
     return (
-<DateDisplay
-  month={
-    month
-  }
-  day={
-    day
-  }
-  dayName={
-    dayName
-  }
-  year={
-    year
-  }
-  style={
-    dateStyle
-  }
-/>
+      <div
+        data-invitation-event-date
+        style={
+          dateStyle
+        }
+      >
+        {dateContent}
+      </div>
     );
   }
 
 
-return (
-  <Popover>
-    <PopoverTrigger
-      nativeButton={
-        false
-      }
-      render={
-        <div
-          data-invitation-event-date
-          data-invitation-editor-ui
-          data-editor-element={
-            DATE_ELEMENT
-          }
-          data-editor-label={
-            editorLabel
-          }
-          data-editor-selected={
-            isSelected
-              ? "true"
-              : undefined
-          }
-          role="button"
-          tabIndex={0}
-          style={
-            dateStyle
-          }
-          onClick={
-            handleClick
-          }
-        >
-          <span
-            data-invitation-event-month
+  /* ==========================================================================
+     Editor
+  ========================================================================== */
+
+  return (
+    <Popover>
+      <PopoverTrigger
+        nativeButton={
+          false
+        }
+        render={
+          <div
+            data-invitation-event-date
+            data-invitation-editor-ui
+            data-editor-element={
+              DATE_ELEMENT
+            }
+            data-editor-label={
+              editorLabel
+            }
+            data-editor-selected={
+              isSelected
+                ? "true"
+                : undefined
+            }
+            role="button"
+            tabIndex={0}
+            style={
+              dateStyle
+            }
+            onClick={
+              handleClick
+            }
           >
-            {month}
-          </span>
+            {dateContent}
+          </div>
+        }
+      />
 
-          <span
-            data-invitation-event-day
-          >
-            <span
-              data-invitation-event-day-name
-            >
-              {dayName}
-            </span>
-
-            <span
-              data-invitation-event-day-value
-            >
-              {day}
-            </span>
-          </span>
-
-          <span
-            data-invitation-event-year
-          >
-            {year}
-          </span>
-        </div>
-      }
-    />
-
-    <PopoverContent
-      sideOffset={8}
-      className="w-72 space-y-5 rounded-xl border bg-popover p-4 shadow-xl"
-      data-invitation-editor-ui
-    >
-      <div
-        className="space-y-2"
+      <PopoverContent
+        sideOffset={8}
+        className="w-72 space-y-5 rounded-xl border bg-popover p-4 shadow-xl"
+        data-invitation-editor-ui
       >
         <div
-          className="text-sm font-medium"
+          className="space-y-2"
         >
-          {t(
-            "startDate"
-          )}
-        </div>
-
-        <DatePicker
-          id="invitation_start_date"
-          value={
-            startDate
-          }
-          onChange={
-            handleStartDateChange
-          }
-          disablePast
-          clearable
-        />
-      </div>
-
-      <div
-        className="space-y-2"
-      >
-        <div
-          className="text-sm font-medium"
-        >
-          {t(
-            "endDate"
-          )}
-        </div>
-
-        <DatePicker
-          id="invitation_end_date"
-          value={
-            endDate
-          }
-          onChange={
-            handleEndDateChange
-          }
-          minDate={
-            startDate
-          }
-          disablePast
-          clearable
-        />
-
-        {validationError && (
-          <p
-            className="text-xs text-destructive"
+          <div
+            className="text-sm font-medium"
           >
-            {tValidation(
-              validationError
+            {t(
+              "startDate"
             )}
-          </p>
-        )}
-      </div>
-    </PopoverContent>
-  </Popover>
-);
+          </div>
+
+          <DatePicker
+            id="invitation_start_date"
+            value={
+              startDate
+            }
+            onChange={
+              handleStartDateChange
+            }
+            disablePast
+            clearable
+          />
+        </div>
+
+        <div
+          className="space-y-2"
+        >
+          <div
+            className="text-sm font-medium"
+          >
+            {t(
+              "endDate"
+            )}
+          </div>
+
+          <DatePicker
+            id="invitation_end_date"
+            value={
+              endDate
+            }
+            onChange={
+              handleEndDateChange
+            }
+            minDate={
+              startDate
+            }
+            disablePast
+            clearable
+          />
+
+          {validationError && (
+            <p
+              className="text-xs text-destructive"
+            >
+              {tValidation(
+                validationError
+              )}
+            </p>
+          )}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
 }

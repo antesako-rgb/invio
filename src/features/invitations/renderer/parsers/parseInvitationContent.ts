@@ -210,33 +210,44 @@ export function parseInvitationContent(
       ? value.music
       : {};
 
-  return {
-    hero: {
-      title:
-        typeof hero.title ===
-          "string"
-          ? hero.title
-          : null,
+return {
+  hero: {
+    primary_name:
+      typeof hero.primary_name ===
+        "string"
+        ? hero.primary_name
+        : null,
 
-      subtitle:
-        typeof hero.subtitle ===
-          "string"
-          ? hero.subtitle
-          : null,
+    secondary_name:
+      typeof hero.secondary_name ===
+        "string"
+        ? hero.secondary_name
+        : null,
 
-      first_initial:
-        typeof hero.first_initial ===
-          "string"
-          ? hero.first_initial
-          : null,
+    title:
+      typeof hero.title ===
+        "string"
+        ? hero.title
+        : null,
 
-      second_initial:
-        typeof hero.second_initial ===
-          "string"
-          ? hero.second_initial
-          : null,
-    },
+    subtitle:
+      typeof hero.subtitle ===
+        "string"
+        ? hero.subtitle
+        : null,
 
+    first_initial:
+      typeof hero.first_initial ===
+        "string"
+        ? hero.first_initial
+        : null,
+
+    second_initial:
+      typeof hero.second_initial ===
+        "string"
+        ? hero.second_initial
+        : null,
+  },
     description:
       typeof value.description ===
         "string"

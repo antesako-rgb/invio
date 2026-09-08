@@ -46,6 +46,12 @@ export interface InvitationEditorEventFallback {
   type:
     EventType;
 
+  primaryName:
+    string | null;
+
+  secondaryName:
+    string | null;
+
   firstInitial:
     string;
 

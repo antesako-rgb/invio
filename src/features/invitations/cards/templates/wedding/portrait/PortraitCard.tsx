@@ -33,7 +33,8 @@ export default function PortraitCard({
   editor,
 }: InvitationTemplateProps) {
   const {
-    title,
+    primary_name,
+    secondary_name,
     subtitle,
   } =
     data.content.hero;
@@ -108,25 +109,51 @@ export default function PortraitCard({
 
 
           {/* ================================================================
-              Title
+              Names
           ================================================================ */}
 
-          {title && (
+          {(primary_name || secondary_name) && (
             <h1
-              className="portrait-card__title"
+              className="portrait-card__names"
             >
-              <EditableText
-                element="hero.title"
-                mode={
-                  mode
-                }
-                editor={
-                  editor
-                }
-                className="portrait-card__title-text"
-              >
-                {title}
-              </EditableText>
+              {primary_name && (
+                <EditableText
+                  element="hero.primary_name"
+                  mode={
+                    mode
+                  }
+                  editor={
+                    editor
+                  }
+                  className="portrait-card__name"
+                >
+                  {primary_name}
+                </EditableText>
+              )}
+
+              {primary_name && secondary_name && (
+                <span
+                  className="portrait-card__name-separator"
+                  aria-hidden="true"
+                >
+                  &
+                </span>
+              )}
+
+              {secondary_name && (
+                <EditableText
+                  element="hero.secondary_name"
+                  mode={
+                    mode
+                  }
+                  editor={
+                    editor
+                  }
+                  className="portrait-card__name"
+                >
+                  {secondary_name}
+                </EditableText>
+              )}
             </h1>
           )}
         </div>

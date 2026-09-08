@@ -18,8 +18,11 @@ import type {
 ========================================================================== */
 
 function fallbackString(
-  value: string | null,
-  fallback: string | null
+  value:
+    string | null,
+
+  fallback:
+    string | null
 ): string | null {
   if (
     value !== null &&
@@ -61,6 +64,18 @@ export function buildInvitationEditorContent(
 
     hero: {
       ...content.hero,
+
+      primary_name:
+        fallbackString(
+          content.hero.primary_name,
+          fallback.hero.primary_name
+        ),
+
+      secondary_name:
+        fallbackString(
+          content.hero.secondary_name,
+          fallback.hero.secondary_name
+        ),
 
       title:
         fallbackString(
