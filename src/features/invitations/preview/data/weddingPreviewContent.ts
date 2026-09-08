@@ -7,7 +7,7 @@ import type {
    Wedding Preview Content
 ========================================================================== */
 
-export const weddingPreviewContent:
+const weddingPreviewContent:
   InvitationContent = {
     hero: {
       primary_name:
@@ -181,4 +181,60 @@ export const weddingPreviewContent:
       enabled:
         false,
     },
+  };
+
+
+/* ==========================================================================
+   Invitation
+========================================================================== */
+
+export const weddingInvitationPreviewContent:
+  InvitationContent = {
+    ...weddingPreviewContent,
+  };
+
+
+/* ==========================================================================
+   Save The Date
+========================================================================== */
+
+export const weddingSaveTheDatePreviewContent:
+  InvitationContent = {
+    ...weddingPreviewContent,
+
+    hero: {
+      ...weddingPreviewContent.hero,
+
+      title:
+        "Save the Date",
+
+      subtitle:
+        "Vjenčajemo se.",
+    },
+
+    description:
+      "Sačuvajte datum i proslavite ovaj poseban dan zajedno s nama.",
+  };
+
+
+/* ==========================================================================
+   Thank You
+========================================================================== */
+
+export const weddingThankYouPreviewContent:
+  InvitationContent = {
+    ...weddingPreviewContent,
+
+    hero: {
+      ...weddingPreviewContent.hero,
+
+      title:
+        "Hvala",
+
+      subtitle:
+        "S ljubavlju i zahvalnošću.",
+    },
+
+    description:
+      "Hvala vam što ste bili dio našeg posebnog dana.",
   };

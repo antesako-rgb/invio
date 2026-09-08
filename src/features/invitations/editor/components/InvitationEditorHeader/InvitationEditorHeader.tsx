@@ -24,6 +24,10 @@ import type {
   InvitationEditorStep,
 } from "@/features/invitations/editor/types/invitationEditor.types";
 
+import type {
+  InvitationTemplateFeaturesConfig,
+} from "@/features/invitations/types/invitationTemplateConfig.types";
+
 import "./InvitationEditorHeader.css";
 
 
@@ -34,6 +38,9 @@ import "./InvitationEditorHeader.css";
 interface InvitationEditorHeaderProps {
   activeStep:
     InvitationEditorStep;
+
+  features:
+    InvitationTemplateFeaturesConfig;
 
   saveStatus?:
     InvitationEditorSaveStatus;
@@ -54,6 +61,7 @@ interface InvitationEditorHeaderProps {
 
 export default function InvitationEditorHeader({
   activeStep,
+  features,
   saveStatus = "saved",
   onStepChange,
   onPreview,
@@ -85,37 +93,45 @@ export default function InvitationEditorHeader({
         Palette,
     },
 
-    {
-      id:
-        "details",
+    ...(features.details
+      ? [
+          {
+            id:
+              "details",
 
-      href:
-        "#details",
+            href:
+              "#details",
 
-      label:
-        t(
-          "navigation.details"
-        ),
+            label:
+              t(
+                "navigation.details"
+              ),
 
-      icon:
-        FileText,
-    },
+            icon:
+              FileText,
+          },
+        ]
+      : []),
 
-    {
-      id:
-        "rsvp",
+    ...(features.rsvp
+      ? [
+          {
+            id:
+              "rsvp",
 
-      href:
-        "#rsvp",
+            href:
+              "#rsvp",
 
-      label:
-        t(
-          "navigation.rsvp"
-        ),
+            label:
+              t(
+                "navigation.rsvp"
+              ),
 
-      icon:
-        Heart,
-    },
+            icon:
+              Heart,
+          },
+        ]
+      : []),
 
     {
       id:
@@ -152,9 +168,29 @@ export default function InvitationEditorHeader({
     }
 
     if (
-      id === "design" ||
-      id === "details" ||
-      id === "rsvp"
+      id === "design"
+    ) {
+      onStepChange(
+        id
+      );
+
+      return;
+    }
+
+    if (
+      id === "details" &&
+      features.details
+    ) {
+      onStepChange(
+        id
+      );
+
+      return;
+    }
+
+    if (
+      id === "rsvp" &&
+      features.rsvp
     ) {
       onStepChange(
         id

@@ -14,6 +14,10 @@ import type {
   EventType,
 } from "@/features/events/types/event.types";
 
+import {
+  getInvitationTemplateConfig,
+} from "@/features/invitations/cards/registry/invitationTemplateRegistry.utils";
+
 import InvitationEditor
   from "@/features/invitations/editor/components/InvitationEditor/InvitationEditor";
 
@@ -76,8 +80,8 @@ import type {
 } from "@/features/invitations/types/invitationPresentation.types";
 
 import type {
-  GenericInvitationRsvpSubmitHandler,
   InvitationRenderData,
+  GenericInvitationRsvpSubmitHandler,
   InvitationRsvpSubmitHandler,
 } from "@/features/invitations/types/invitationRenderer.types";
 
@@ -128,6 +132,10 @@ export default function InvitationEditorView({
   locale,
   data,
 }: InvitationEditorViewProps) {
+  /* ==========================================================================
+     Translation
+  ========================================================================== */
+
   const tFallback =
     useTranslations(
       "Invitations.editor.fallback"
@@ -137,6 +145,23 @@ export default function InvitationEditorView({
     useTranslations(
       "InvitationContent"
     );
+
+
+  /* ==========================================================================
+     Template
+  ========================================================================== */
+
+  const template =
+    getInvitationTemplateConfig(
+      templateId
+    );
+
+  if (!template) {
+    return null;
+  }
+
+  const features =
+    template.features;
 
 
   /* ==========================================================================
@@ -255,24 +280,32 @@ export default function InvitationEditorView({
     useMemo<
       InvitationEditorEventTranslations
     >(
-      () => ({
-        heroTitle:
-          tEventContent(
-            `${eventType}.heroTitle`
-          ),
+      () => {
+        const contentPath =
+          eventType === "wedding"
+            ? `${eventType}.${template.type}`
+            : eventType;
 
-        heroSubtitle:
-          tEventContent(
-            `${eventType}.heroSubtitle`
-          ),
+        return {
+          heroTitle:
+            tEventContent(
+              `${contentPath}.heroTitle`
+            ),
 
-        description:
-          tEventContent(
-            `${eventType}.description`
-          ),
-      }),
+          heroSubtitle:
+            tEventContent(
+              `${contentPath}.heroSubtitle`
+            ),
+
+          description:
+            tEventContent(
+              `${contentPath}.description`
+            ),
+        };
+      },
       [
         eventType,
+        template.type,
         tEventContent,
       ]
     );
@@ -609,6 +642,9 @@ export default function InvitationEditorView({
       <InvitationEditor
         activeStep={
           activeStep
+        }
+        features={
+          features
         }
         saveStatus={
           saveStatus

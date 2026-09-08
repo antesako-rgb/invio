@@ -1,26 +1,32 @@
 /* ==========================================================================
-   Portrait Design Tokens
+   Garden Grace Family Design Tokens
 ========================================================================== */
 
-[data-invitation-experience][data-template="portrait"] {
+[data-invitation-experience][data-family="garden-grace"] {
 
   /* ========================================================================
-     Invitation
+     Experience
   ======================================================================== */
 
   --invitation-experience-background:
     #eceae5;
 
   --invitation-experience-background-image:
-    url(
-      "/invitation-assets/cards/portrait/background.avif"
-    );
+    none;
 
   --invitation-experience-background-filter:
     none;
 
+
+  /* ========================================================================
+     Card
+  ======================================================================== */
+
   --invitation-card-background:
-    #f5efe6;
+    #f4f7f2;
+
+  --garden-grace-card-frame-filter:
+    none;
 
 
   /* ========================================================================
@@ -44,29 +50,13 @@
      Typography
   ======================================================================== */
 
-  --portrait-font-primary:
-    var(--font-pinyon-script),
+  --garden-grace-font-primary:
+    var(--font-dm-sans),
+    sans-serif;
+
+  --garden-grace-font-secondary:
+    var(--font-ephesis),
     cursive;
-
-  --portrait-font-secondary:
-    var(--font-marcellus),
-    serif;
-
-
-  /* ========================================================================
-     Card Frame
-  ======================================================================== */
-
-  --portrait-card-frame-filter:
-    none;
-
-
-  /* ========================================================================
-     Card Layout
-  ======================================================================== */
-
-  --portrait-card-content-padding:
-    8% 9% 10%;
 
 
   /* ========================================================================
@@ -74,13 +64,13 @@
   ======================================================================== */
 
   --invitation-details-title-font:
-    var(--portrait-font-secondary);
+    var(--garden-grace-font-primary);
 
   --invitation-details-event-font:
-    var(--portrait-font-primary);
+    var(--garden-grace-font-secondary);
 
   --invitation-details-section-font:
-    var(--portrait-font-secondary);
+    var(--garden-grace-font-primary);
 
 
   /* ========================================================================
@@ -88,13 +78,13 @@
   ======================================================================== */
 
   --invitation-rsvp-title-font:
-    var(--portrait-font-secondary);
+    var(--garden-grace-font-primary);
 
   --invitation-rsvp-event-font:
-    var(--portrait-font-primary);
+    var(--garden-grace-font-secondary);
 
   --invitation-rsvp-section-font:
-    var(--portrait-font-secondary);
+    var(--garden-grace-font-primary);
 
 
   /* ========================================================================
@@ -102,16 +92,22 @@
   ======================================================================== */
 
   --invitation-subtitle-font:
-    var(--portrait-font-primary);
+    var(--garden-grace-font-primary);
 
-  --invitation-subtitle-size:
-    3.5cqw;
+  --invitation-subtitle-style:
+    italic;
 
   --invitation-subtitle-weight:
-    500;
+    400;
+
+  --invitation-subtitle-line-height:
+    1.3;
 
   --invitation-subtitle-letter-spacing:
-    0.1em;
+    0;
+
+  --invitation-subtitle-text-transform:
+    uppercase;
 
 
   /* ========================================================================
@@ -119,59 +115,33 @@
   ======================================================================== */
 
   --invitation-name-font:
-    var(--portrait-font-primary);
+    var(--garden-grace-font-secondary);
 
-  --invitation-name-size:
-    8cqw;
+  --invitation-name-style:
+    normal;
 
+  --invitation-name-weight:
+    400;
 
-  /* ========================================================================
-     Photo
-  ======================================================================== */
+  --invitation-name-letter-spacing:
+    0;
 
-  --portrait-photo-background:
-    #e8dfd3;
-
-  --portrait-photo-width:
-    48%;
-
-  --portrait-photo-aspect-ratio:
-    1 / 1;
-
-  --portrait-photo-object-position:
-    center;
-
-  --portrait-photo-frame-opacity:
-    1;
-
-  --portrait-photo-frame-filter:
+  --invitation-name-text-transform:
     none;
 
 
   /* ========================================================================
-     Description
+     Name Separator
   ======================================================================== */
 
-  --invitation-description-font:
-    var(--portrait-font-primary);
+  --garden-grace-name-separator-font:
+    var(--garden-grace-font-secondary);
 
-  --invitation-description-size:
-    3.2cqw;
+  --garden-grace-name-separator-color:
+    var(--invitation-foreground);
 
-  --invitation-description-line-height:
-    1.3;
-
-  --invitation-description-letter-spacing:
-    0.02em;
-
-  --invitation-description-color:
-    var(--invitation-muted);
-
-  --invitation-description-max-width:
-    70%;
-
-  --invitation-description-margin-top:
-    5cqw;
+  --garden-grace-name-separator-opacity:
+    1;
 
 
   /* ========================================================================
@@ -179,55 +149,62 @@
   ======================================================================== */
 
   --invitation-event-font:
-    var(--portrait-font-secondary);
+    var(--garden-grace-font-primary);
 
-  --invitation-event-size:
-    3cqw;
+  --invitation-event-style:
+    normal;
 
-  --invitation-event-line-height:
-    1;
+  --invitation-event-weight:
+    400;
 
-  --invitation-event-gap:
-    3cqw;
+  --invitation-event-letter-spacing:
+    0;
+
+  --invitation-event-text-transform:
+    uppercase;
 
 
   /* ========================================================================
      Event Date
   ======================================================================== */
 
-  --invitation-event-date-gap:
-    3cqw;
+  --invitation-event-date-font:
+    var(--garden-grace-font-primary);
 
-  --invitation-event-date-width:
-    65cqw;
+  --invitation-event-date-letter-spacing:
+    0;
 
-
-  /* ========================================================================
-     Event Day
-  ======================================================================== */
-
-  --invitation-event-day-min-width:
-    13cqw;
-
-  --invitation-event-day-padding:
-    0 2cqw;
+  --invitation-event-date-text-transform:
+    uppercase;
 
 
   /* ========================================================================
-     Event Day Name
+     Description
   ======================================================================== */
 
-  --invitation-event-day-name-gap:
-    2cqw;
+  --invitation-description-font:
+    var(--garden-grace-font-secondary);
 
-  --invitation-event-day-name-space:
-    4cqw;
+  --invitation-description-style:
+    normal;
+
+  --invitation-description-weight:
+    400;
+
+  --invitation-description-letter-spacing:
+    0;
+
+  --invitation-description-text-transform:
+    none;
 
 
   /* ========================================================================
-     Event Location
+     Countdown
   ======================================================================== */
 
-  --invitation-event-location-gap:
-    2cqw;
+  --invitation-countdown-value-font:
+    var(--garden-grace-font-secondary);
+
+  --invitation-countdown-label-font:
+    var(--garden-grace-font-primary);
 }

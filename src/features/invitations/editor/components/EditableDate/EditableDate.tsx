@@ -281,38 +281,35 @@ export default function EditableDate({
     );
 
 
-  /* ==========================================================================
-     Presentation
-  ========================================================================== */
+/* ==========================================================================
+   Presentation
+========================================================================== */
 
-  const presentation =
-    useInvitationPresentation();
+const presentation =
+  useInvitationPresentation();
 
-  const elementPresentation =
-    presentation.elements?.[
-      DATE_ELEMENT
-    ];
+const elementPresentation =
+  presentation.elements?.[
+    DATE_ELEMENT
+  ];
 
-  const elementStyle =
-    getInvitationElementStyle(
-      elementPresentation
-    );
+const elementStyle =
+  getInvitationElementStyle(
+    elementPresentation
+  );
 
-  const dateStyle = {
-    ...elementStyle,
+const dateStyle = {
+  ...elementStyle,
 
-    textAlign:
-      undefined,
-
-    alignSelf:
-      elementPresentation?.text_align === "left"
-        ? "flex-start"
-        : elementPresentation?.text_align === "right"
-          ? "flex-end"
-          : elementPresentation?.text_align === "center"
-            ? "center"
-            : undefined,
-  };
+  alignSelf:
+    elementPresentation?.text_align === "left"
+      ? "flex-start"
+      : elementPresentation?.text_align === "right"
+        ? "flex-end"
+        : elementPresentation?.text_align === "center"
+          ? "center"
+          : undefined,
+};
 
 
   /* ==========================================================================

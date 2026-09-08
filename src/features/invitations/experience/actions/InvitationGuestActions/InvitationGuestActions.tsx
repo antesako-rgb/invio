@@ -17,7 +17,7 @@ import "./InvitationGuestActions.css";
 ========================================================================== */
 
 interface InvitationGuestActionsProps {
-  onDetails:
+  onDetails?:
     () => void;
 
   onRsvp?:
@@ -48,27 +48,29 @@ export default function InvitationGuestActions({
       className="invitation-guest-actions"
       data-invitation-guest-actions
     >
-      <button
-        type="button"
-        className="
-          invitation-guest-actions__button
-          invitation-guest-actions__button--secondary
-        "
-        onClick={
-          onDetails
-        }
-      >
-        <Info
-          className="invitation-guest-actions__icon"
-          aria-hidden="true"
-        />
+      {onDetails && (
+        <button
+          type="button"
+          className="
+            invitation-guest-actions__button
+            invitation-guest-actions__button--secondary
+          "
+          onClick={
+            onDetails
+          }
+        >
+          <Info
+            className="invitation-guest-actions__icon"
+            aria-hidden="true"
+          />
 
-        <span>
-          {t(
-            "details"
-          )}
-        </span>
-      </button>
+          <span>
+            {t(
+              "details"
+            )}
+          </span>
+        </button>
+      )}
 
       {onRsvp && (
         <button

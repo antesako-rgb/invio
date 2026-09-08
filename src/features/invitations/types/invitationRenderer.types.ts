@@ -34,6 +34,7 @@ export type InvitationRenderMode =
   | "print";
 
 
+
 /* ==========================================================================
    Invitation Date Display
 ========================================================================== */
@@ -58,6 +59,24 @@ export interface InvitationDateDisplay {
     string;
 
   year:
+    string;
+
+  hasEndDate:
+    boolean;
+
+  endValue:
+    string | null;
+
+  endDay:
+    string;
+
+  endDayName:
+    string;
+
+  endMonth:
+    string;
+
+  endYear:
     string;
 }
 

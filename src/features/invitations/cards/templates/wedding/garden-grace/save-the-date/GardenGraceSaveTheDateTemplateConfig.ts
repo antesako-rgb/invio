@@ -4,20 +4,39 @@ import type {
 
 
 /* ==========================================================================
-   Celeste Template Config
+   Garden Grace Save The Date Template Config
 ========================================================================== */
 
-export const celesteTemplateConfig:
+export const gardenGraceSaveTheDateTemplateConfig:
   InvitationTemplateConfig = {
+    type:
+      "save-the-date",
+
+    family:
+      "garden-grace",
+
     category:
       "wedding",
 
     preview: {
       cardUrl:
-        "/invitation-assets/previews/celeste/classic.webp",
+        "/invitation-assets/previews/garden-grace/save-the-date/classic.webp",
 
       imageUrl:
-        "/invitation-assets/previews/celeste/couple.webp",
+        null,
+    },
+
+    card: {
+      aspectRatio:
+        "1 / 1",
+    },
+
+    features: {
+      details:
+        false,
+
+      rsvp:
+        false,
     },
 
     envelopeId:
@@ -32,7 +51,7 @@ export const celesteTemplateConfig:
           "champagne",
 
         previewUrl:
-          "/invitation-assets/previews/celeste/champagne.webp",
+          "/invitation-assets/previews/garden-grace/save-the-date/champagne.webp",
       },
 
       {
@@ -40,7 +59,7 @@ export const celesteTemplateConfig:
           "sage",
 
         previewUrl:
-          "/invitation-assets/previews/celeste/sage.webp",
+          "/invitation-assets/previews/garden-grace/save-the-date/sage.webp",
       },
 
       {
@@ -48,7 +67,7 @@ export const celesteTemplateConfig:
           "dusty-rose",
 
         previewUrl:
-          "/invitation-assets/previews/celeste/dusty-rose.webp",
+          "/invitation-assets/previews/garden-grace/save-the-date/dusty-rose.webp",
       },
     ],
   };

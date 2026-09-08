@@ -292,34 +292,49 @@
 
   --invitation-event-text-align:
     center;
-
+  --invitation-event-align-items:
+  center;
   --invitation-event-opacity:
     1;
 
   --invitation-event-gap:
     18px;
 
-/* ==========================================================================
-   Event Date
-========================================================================== */
 
---invitation-event-date-font:
-  var(--invitation-event-font);
+  /* ========================================================================
+     Event Schedule
+  ======================================================================== */
 
---invitation-event-date-size:
-  1em;
+  --invitation-event-schedule-time-padding-bottom:
+    6px;
 
---invitation-event-date-width:
-  260px;
+  --invitation-event-schedule-time-border:
+    1px solid currentColor;
 
---invitation-event-date-gap:
-  12px;
 
---invitation-event-date-letter-spacing:
-  0.14em;
 
---invitation-event-date-text-transform:
-  uppercase;
+  /* ========================================================================
+     Event Date
+  ======================================================================== */
+
+  --invitation-event-date-font:
+    var(--invitation-event-font);
+
+  --invitation-event-date-size:
+    1em;
+
+  --invitation-event-date-width:
+    260px;
+
+  --invitation-event-date-gap:
+    12px;
+
+  --invitation-event-date-letter-spacing:
+    0.14em;
+
+  --invitation-event-date-text-transform:
+    uppercase;
+
 
   /* ========================================================================
      Event Day
@@ -449,4 +464,5 @@
 
   --invitation-countdown-label-gap:
     8px;
+    
 }

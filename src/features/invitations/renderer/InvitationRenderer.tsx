@@ -12,6 +12,10 @@ import {
   getInvitationTemplateConfig,
 } from "@/features/invitations/cards/registry/invitationTemplateRegistry.utils";
 
+import {
+  getInvitationCardOrientation,
+} from "@/features/invitations/cards/utils/invitationCard.utils";
+
 import InvitationEditorPreviewContainer
   from "@/features/invitations/editor/components/InvitationEditorPreviewContainer/InvitationEditorPreviewContainer";
 
@@ -114,18 +118,52 @@ export default function InvitationRenderer({
   const envelopeId =
     template.envelopeId;
 
+  const cardAspectRatio =
+    template.card.aspectRatio;
+
+  const cardOrientation =
+    getInvitationCardOrientation(
+      cardAspectRatio
+    );
+
+  const supportsDetails =
+    template.features.details;
+
+  const supportsRsvp =
+    template.features.rsvp;
+
+  const hasGuestActions =
+    supportsDetails ||
+    (
+      supportsRsvp &&
+      data.content.rsvp.enabled
+    );
+
 
   /* ==========================================================================
      Guest Navigation
   ========================================================================== */
 
   function handleDetails() {
+    if (
+      !supportsDetails
+    ) {
+      return;
+    }
+
     setGuestScreen(
       "details"
     );
   }
 
   function handleRsvp() {
+    if (
+      !supportsRsvp ||
+      !data.content.rsvp.enabled
+    ) {
+      return;
+    }
+
     setGuestScreen(
       "rsvp"
     );
@@ -172,6 +210,12 @@ export default function InvitationRenderer({
       editorStep
     ) {
       case "details":
+        if (
+          !supportsDetails
+        ) {
+          return card;
+        }
+
         return (
           <InvitationEditorPreviewContainer>
             <InvitationDetailsView
@@ -183,6 +227,12 @@ export default function InvitationRenderer({
         );
 
       case "rsvp":
+        if (
+          !supportsRsvp
+        ) {
+          return card;
+        }
+
         return (
           <InvitationEditorPreviewContainer>
             {data.content.rsvp.allow_generic_responses &&
@@ -236,6 +286,12 @@ export default function InvitationRenderer({
       guestScreen
     ) {
       case "details":
+        if (
+          !supportsDetails
+        ) {
+          return card;
+        }
+
         return (
           <InvitationDetailsView
             data={
@@ -248,6 +304,13 @@ export default function InvitationRenderer({
         );
 
       case "rsvp":
+        if (
+          !supportsRsvp ||
+          !data.content.rsvp.enabled
+        ) {
+          return card;
+        }
+
         return (
           <InvitationRSVPView
             data={
@@ -275,6 +338,9 @@ export default function InvitationRenderer({
             envelopeId={
               envelopeId
             }
+            cardOrientation={
+              cardOrientation
+            }
             initialState={
               isPresented
                 ? "presented"
@@ -286,13 +352,17 @@ export default function InvitationRenderer({
               )
             }
             actions={
-              isPresented
+              isPresented &&
+              hasGuestActions
                 ? (
                     <InvitationGuestActions
                       onDetails={
-                        handleDetails
+                        supportsDetails
+                          ? handleDetails
+                          : undefined
                       }
                       onRsvp={
+                        supportsRsvp &&
                         data.content.rsvp.enabled
                           ? handleRsvp
                           : undefined
@@ -313,21 +383,31 @@ export default function InvitationRenderer({
      Render
   ========================================================================== */
 
-  return (
-    <InvitationExperience
-      templateId={
-        templateId
-      }
-      variantId={
-        variantId
-      }
-      mode={
-        mode
-      }
-    >
-      {mode === "edit"
-        ? renderEditorScreen()
-        : renderGuestScreen()}
-    </InvitationExperience>
-  );
+/* ==========================================================================
+   Render
+========================================================================== */
+
+return (
+  <InvitationExperience
+    templateId={
+      templateId
+    }
+    family={
+      template.family
+    }
+    variantId={
+      variantId
+    }
+    mode={
+      mode
+    }
+    cardAspectRatio={
+      cardAspectRatio
+    }
+  >
+    {mode === "edit"
+      ? renderEditorScreen()
+      : renderGuestScreen()}
+  </InvitationExperience>
+);
 }

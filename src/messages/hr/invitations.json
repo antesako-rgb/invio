@@ -72,26 +72,26 @@
         "placeholder": "Odaberite datum"
       },
 
-"preview": {
-  "label": "Prikaz",
-  "form": "Forma",
-  "success": "Nakon potvrde",
-  "ariaLabel": "Prikaz RSVP stanja"
-},
+      "preview": {
+        "label": "Prikaz",
+        "form": "Forma",
+        "success": "Nakon potvrde",
+        "ariaLabel": "Prikaz RSVP stanja"
+      },
 
-"previewMode": {
-  "label": "Pregled kao",
-  "ariaLabel": "Odaberite vrstu gosta za RSVP pregled",
-  "personalized": "Personalizirani gost",
-  "generic": "Javni gost"
-},
+      "previewMode": {
+        "label": "Pregled kao",
+        "ariaLabel": "Odaberite vrstu gosta za RSVP pregled",
+        "personalized": "Personalizirani gost",
+        "generic": "Javni gost"
+      },
 
-"tabs": {
-  "basics": "Osnovno",
-  "questions": "Pitanja",
-  "settings": "Postavke",
-  "ariaLabel": "RSVP postavke"
-},
+      "tabs": {
+        "basics": "Osnovno",
+        "questions": "Pitanja",
+        "settings": "Postavke",
+        "ariaLabel": "RSVP postavke"
+      },
 
       "successMessage": {
         "label": "Poruka nakon potvrde",
@@ -169,31 +169,31 @@
       }
     },
 
-"elementLabels": {
-  "primaryName": "Uredi prvo ime",
-  "secondaryName": "Uredi drugo ime",
-  "title": "Uredi naziv",
-  "subtitle": "Uredi podnaslov",
-  "initial": "Uredi inicijal",
-  "description": "Uredi opis",
-  "date": "Uredi datum",
-  "time": "Uredi vrijeme",
-  "location": "Uredi lokaciju",
-  "address": "Uredi adresu",
-  "image": "Uredi sliku",
-  "delete": "Obriši sadržaj"
-},
+    "elementLabels": {
+      "primaryName": "Uredi prvo ime",
+      "secondaryName": "Uredi drugo ime",
+      "title": "Uredi naziv",
+      "subtitle": "Uredi podnaslov",
+      "initial": "Uredi inicijal",
+      "description": "Uredi opis",
+      "date": "Uredi datum",
+      "time": "Uredi vrijeme",
+      "location": "Uredi lokaciju",
+      "address": "Uredi adresu",
+      "image": "Uredi sliku",
+      "delete": "Obriši sadržaj"
+    },
 
-"fallback": {
-  "locationName": "Mjesto događaja",
-  "locationAddress": "Adresa događaja",
-  "rsvpTitle": "Potvrda dolaska",
-  "rsvpDescription": "Molimo vas da potvrdite svoj dolazak."
-},
+    "fallback": {
+      "locationName": "Mjesto događaja",
+      "locationAddress": "Adresa događaja",
+      "rsvpTitle": "Potvrda dolaska",
+      "rsvpDescription": "Molimo vas da potvrdite svoj dolazak."
+    },
 
     "validation": {
-      "end_without_start": "Prvo odaberite datum početka.",
-      "end_before_start": "Datum završetka ne može biti prije datuma početka."
+      "date_start_required": "Datum početka je obavezan.",
+      "date_end_before_start": "Datum završetka ne može biti prije datuma početka."
     }
   },
 
@@ -201,9 +201,11 @@
     "envelope": {
       "open": "Otvori pozivnicu"
     },
-  "countdown": {
-    "daysRemaining": "{count, plural, one {dan do događaja} few {dana do događaja} other {dana do događaja}}"
-  },
+
+    "countdown": {
+      "daysRemaining": "{count, plural, one {dan do događaja} few {dana do događaja} other {dana do događaja}}"
+    },
+
     "actions": {
       "details": "Detalji",
       "rsvp": "RSVP"
@@ -265,26 +267,6 @@
     }
   },
 
-  "templateUseDialog": {
-    "title": "Koristi predložak",
-    "description": "Odaberite kako želite koristiti predložak {template} · {variant}.",
-
-    "existing": {
-      "title": "Primijeni na postojeću pozivnicu",
-      "description": "Zamijenite dizajn jedne od postojećih pozivnica ovim predloškom.",
-      "selectTitle": "Odaberite pozivnicu",
-      "selectDescription": "Odaberite pozivnicu na koju želite primijeniti ovaj predložak.",
-      "lastUpdated": "Zadnje ažurirano: {date}"
-    },
-
-    "new": {
-      "title": "Kreiraj novu pozivnicu",
-      "description": "Kreirajte novu pozivnicu koristeći ovaj predložak."
-    },
-
-    "back": "Natrag"
-  },
-
   "page": {
     "title": "Pozivnice",
     "description": "Kreirajte i upravljajte pozivnicama za svoj događaj.",
@@ -307,50 +289,6 @@
       "title": "Još nemate pozivnicu",
       "description": "Odaberite predložak i kreirajte svoju prvu pozivnicu za događaj.",
       "action": "Kreiraj pozivnicu"
-    },
-
-    "templates": {
-      "newInvitationName": "Nova pozivnica",
-      "variants": "{count, plural, one {# varijanta} few {# varijante} other {# varijanti}}",
-      "variantSelector": "Odaberite varijantu",
-      "useTemplate": "Koristi predložak",
-      "creating": "Kreiranje...",
-
-      "categories": {
-        "all": "Sve",
-        "wedding": "Vjenčanje",
-        "confirmation": "Krizma",
-        "baptism": "Krštenje",
-        "communion": "Prva pričest",
-        "birthday": "Rođendan",
-        "other_private": "Ostali privatni događaji",
-        "conference": "Konferencija",
-        "seminar": "Seminar",
-        "team_building": "Team building",
-        "reception": "Prijem",
-        "gala_dinner": "Svečana večera",
-        "other_business": "Ostali poslovni događaji",
-        "festival": "Festival",
-        "charity": "Humanitarni događaj",
-        "sports": "Sportski događaj",
-        "cultural": "Kulturni događaj",
-        "music": "Glazbeni događaj",
-        "other_social": "Ostali društveni događaji"
-      },
-
-      "flora": {
-        "name": "Flora",
-        "description": "Elegantna botanička pozivnica s nježnim i profinjenim detaljima."
-      },
-"portrait": {
-  "name": "Portrait",
-  "description": "Elegantna pozivnica s naglaskom na fotografiju, osmišljena kako bi istaknula vaš omiljeni trenutak."
-},
-
-"celeste": {
-  "name": "Celeste",
-  "description": "Profinjena pozivnica za vjenčanje s bogatim plavim tonovima, zlatnim detaljima i bezvremenskom elegancijom."
-}
     }
   }
 }

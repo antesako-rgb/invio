@@ -1,16 +1,26 @@
 {
   "wedding": {
-    "heroTitle": "Our Wedding",
-    "heroSubtitle": "Dear friends and family, we invite you to our wedding.",
-    "description": "We look forward to celebrating this special day with you."
+    "invitation": {
+      "heroTitle": "Our Wedding",
+      "heroSubtitle": "Dear friends and family, we invite you to our wedding.",
+      "description": "We look forward to celebrating this special day with you."
+    },
+"save-the-date": {
+  "heroTitle": "Save the Date",
+  "heroSubtitle": "Save the date for our special day.",
+  "description": "More details are coming soon. We can't wait to celebrate this special day with you."
+},
+    "thank-you": {
+      "heroTitle": "Thank You",
+      "heroSubtitle": "With love and gratitude.",
+      "description": "Thank you for being part of our special day."
+    }
   },
-
   "birthday": {
     "heroTitle": "Birthday Celebration",
     "heroSubtitle": "Join us in celebrating this special day.",
     "description": "We look forward to celebrating, sharing good moments and making memories together."
   },
-
   "conference": {
     "heroTitle": "Conference",
     "heroSubtitle": "We invite you to join us for the conference.",

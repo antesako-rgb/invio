@@ -105,22 +105,25 @@ export default function InvitationEventDetails({
       )}
 
 
-      {/* ====================================================================
-          Time
-      ==================================================================== */}
+{/* ====================================================================
+    Time
+==================================================================== */}
 
-      {display.time.hasTime && (
-        <EditableTime
-          mode={
-            mode
-          }
-          editor={
-            editor
-          }
-        >
-          {display.time.text}
-        </EditableTime>
-      )}
+{(
+  mode === "edit" ||
+  display.time.hasTime
+) && (
+  <EditableTime
+    mode={
+      mode
+    }
+    editor={
+      editor
+    }
+  >
+    {display.time.text}
+  </EditableTime>
+)}
 
 
       {/* ====================================================================

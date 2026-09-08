@@ -1,4 +1,5 @@
 import type {
+  CSSProperties,
   ReactNode,
 } from "react";
 
@@ -23,11 +24,17 @@ interface InvitationExperienceProps {
   templateId:
     string;
 
+  family:
+    string;
+
   variantId:
     string;
 
   mode:
     InvitationRenderMode;
+
+  cardAspectRatio:
+    `${number} / ${number}`;
 }
 
 
@@ -38,9 +45,25 @@ interface InvitationExperienceProps {
 export default function InvitationExperience({
   children,
   templateId,
+  family,
   variantId,
   mode,
+  cardAspectRatio,
 }: InvitationExperienceProps) {
+  /* ==========================================================================
+     Style
+  ========================================================================== */
+
+  const style = {
+    "--invitation-card-aspect-ratio":
+      cardAspectRatio,
+  } as CSSProperties;
+
+
+  /* ==========================================================================
+     Render
+  ========================================================================== */
+
   return (
     <div
       className="invitation-experience"
@@ -48,11 +71,17 @@ export default function InvitationExperience({
       data-template={
         templateId
       }
+      data-family={
+        family
+      }
       data-variant={
         variantId
       }
       data-mode={
         mode
+      }
+      style={
+        style
       }
     >
       {children}

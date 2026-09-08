@@ -6,8 +6,14 @@ import type {
   InvitationContent,
 } from "@/features/invitations/types/invitationContent.types";
 
+import type {
+  InvitationTemplateType,
+} from "@/features/invitations/types/invitationTemplateConfig.types";
+
 import {
-  weddingPreviewContent,
+  weddingInvitationPreviewContent,
+  weddingSaveTheDatePreviewContent,
+  weddingThankYouPreviewContent,
 } from "./weddingPreviewContent";
 
 
@@ -19,9 +25,22 @@ export const invitationPreviewContentRegistry:
   Partial<
     Record<
       EventType,
-      InvitationContent
+      Partial<
+        Record<
+          InvitationTemplateType,
+          InvitationContent
+        >
+      >
     >
   > = {
-    wedding:
-      weddingPreviewContent,
+    wedding: {
+      invitation:
+        weddingInvitationPreviewContent,
+
+      "save-the-date":
+        weddingSaveTheDatePreviewContent,
+
+      "thank-you":
+        weddingThankYouPreviewContent,
+    },
   };

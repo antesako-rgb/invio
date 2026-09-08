@@ -9,6 +9,12 @@ import type {
 
 export const floraTemplateConfig:
   InvitationTemplateConfig = {
+    type:
+      "invitation",
+
+    family:
+      "flora",
+
     category:
       "wedding",
 
@@ -18,6 +24,19 @@ export const floraTemplateConfig:
 
       imageUrl:
         null,
+    },
+
+    card: {
+      aspectRatio:
+        "5 / 7",
+    },
+
+    features: {
+      details:
+        true,
+
+      rsvp:
+        true,
     },
 
     envelopeId:

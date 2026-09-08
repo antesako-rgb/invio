@@ -21,6 +21,7 @@ export async function loadMessages(
     invitations,
     invitationManagement,
     invitationContent,
+    invitationTemplates,
   ] =
     await Promise.all([
       import(
@@ -62,6 +63,10 @@ export async function loadMessages(
       import(
         `../messages/${locale}/invitation-content.json`
       ),
+
+      import(
+        `../messages/${locale}/invitation-templates.json`
+      ),
     ]);
 
   return {
@@ -95,5 +100,9 @@ export async function loadMessages(
 
     InvitationContent:
       invitationContent.default,
+
+    InvitationTemplates:
+      invitationTemplates.default
+        .InvitationTemplates,
   };
-} 
+}

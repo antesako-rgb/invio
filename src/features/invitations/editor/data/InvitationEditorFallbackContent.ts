@@ -51,16 +51,16 @@ hero: {
         "2027-06-15",
 
       end_date:
-        "2027-06-16",
-    },
-
-    time: {
-      start_time:
-        "16:00",
-
-      end_time:
         null,
     },
+
+time: {
+  start_time:
+    null,
+
+  end_time:
+    null,
+},
 
     location: {
       name:

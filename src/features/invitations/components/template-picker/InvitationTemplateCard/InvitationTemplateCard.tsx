@@ -26,12 +26,20 @@ import {
 } from "@/components/ui/card";
 
 import {
+  getInvitationCardOrientation,
+} from "@/features/invitations/cards/utils/invitationCard.utils";
+
+import {
   invitationVariants,
 } from "@/features/invitations/config/invitationVariants";
 
 import type {
   InvitationTemplateConfig,
 } from "@/features/invitations/types/invitationTemplateConfig.types";
+
+import {
+  cn,
+} from "@/lib/utils/utils";
 
 
 /* ==========================================================================
@@ -76,7 +84,17 @@ export default function InvitationTemplateCard({
 
   const t =
     useTranslations(
-      "Invitations.page.templates"
+      "InvitationTemplates"
+    );
+
+
+  /* ==========================================================================
+     Card
+  ========================================================================== */
+
+  const orientation =
+    getInvitationCardOrientation(
+      template.card.aspectRatio
     );
 
 
@@ -153,24 +171,55 @@ export default function InvitationTemplateCard({
       ==================================================================== */}
 
       <CardMedia
-        className="relative aspect-[5/7] bg-muted"
+        className="
+          flex
+          aspect-[5/7]
+          items-center
+          justify-center
+          bg-muted
+          p-3
+        "
       >
-        <Image
-          key={
-            selectedVariant.id
-          }
-          src={
-            selectedVariant.previewUrl
-          }
-          alt={
-            t(
-              `${templateId}.name`
+        <div
+          className={
+            cn(
+              "relative max-h-full max-w-full overflow-hidden bg-background shadow-sm",
+
+              orientation ===
+                "portrait" &&
+                "h-full",
+
+              orientation ===
+                "landscape" &&
+                "w-full",
+
+              orientation ===
+                "square" &&
+                "w-full"
             )
           }
-          fill
-          sizes="(max-width: 767px) 100vw, 320px"
-          className="object-cover"
-        />
+          style={{
+            aspectRatio:
+              template.card.aspectRatio,
+          }}
+        >
+          <Image
+            key={
+              selectedVariant.id
+            }
+            src={
+              selectedVariant.previewUrl
+            }
+            alt={
+              t(
+                `templates.${templateId}.name`
+              )
+            }
+            fill
+            sizes="(max-width: 767px) 100vw, 320px"
+            className="object-cover"
+          />
+        </div>
       </CardMedia>
 
 
@@ -185,7 +234,7 @@ export default function InvitationTemplateCard({
         <div>
           <CardTitle>
             {t(
-              `${templateId}.name`
+              `templates.${templateId}.name`
             )}
           </CardTitle>
 
@@ -193,7 +242,7 @@ export default function InvitationTemplateCard({
             className="mt-1"
           >
             {t(
-              `${templateId}.description`
+              `templates.${templateId}.description`
             )}
           </CardDescription>
         </div>

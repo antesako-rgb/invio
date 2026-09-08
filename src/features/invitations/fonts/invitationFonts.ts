@@ -6,13 +6,16 @@ import {
   Bangers,
   Beau_Rivage,
   Bilbo_Swash_Caps,
+  Bodoni_Moda,
   Caveat,
+  Cormorant_Garamond,
   Dancing_Script,
   DM_Sans,
   Ephesis,
   Faster_One,
   Great_Vibes,
   Honk,
+  Italiana,
   Italianno,
   Kalnia_Glaze,
   Luckiest_Guy,
@@ -21,8 +24,11 @@ import {
   Mrs_Saint_Delafield,
   Parisienne,
   Pinyon_Script,
+  Playfair_Display,
   Plus_Jakarta_Sans,
+  Sacramento,
   Style_Script,
+  Tangerine,
   WindSong,
 } from "next/font/google";
 
@@ -122,6 +128,16 @@ export const bilboSwashCaps =
       "400",
   });
 
+export const bodoniModa =
+  Bodoni_Moda({
+    variable:
+      "--font-bodoni-moda",
+
+    subsets: [
+      "latin",
+    ],
+  });
+
 export const caveat =
   Caveat({
     variable:
@@ -129,6 +145,22 @@ export const caveat =
 
     subsets: [
       "latin",
+    ],
+  });
+
+export const cormorantGaramond =
+  Cormorant_Garamond({
+    variable:
+      "--font-cormorant-garamond",
+
+    subsets: [
+      "latin",
+    ],
+
+    weight: [
+      "400",
+      "500",
+      "600",
     ],
   });
 
@@ -199,6 +231,19 @@ export const honk =
     subsets: [
       "latin",
     ],
+  });
+
+export const italiana =
+  Italiana({
+    variable:
+      "--font-italiana",
+
+    subsets: [
+      "latin",
+    ],
+
+    weight:
+      "400",
   });
 
 export const italianno =
@@ -299,6 +344,16 @@ export const pinyonScript =
       "400",
   });
 
+export const playfairDisplay =
+  Playfair_Display({
+    variable:
+      "--font-playfair-display",
+
+    subsets: [
+      "latin",
+    ],
+  });
+
 export const plusJakartaSans =
   Plus_Jakarta_Sans({
     variable:
@@ -307,6 +362,19 @@ export const plusJakartaSans =
     subsets: [
       "latin",
     ],
+  });
+
+export const sacramento =
+  Sacramento({
+    variable:
+      "--font-sacramento",
+
+    subsets: [
+      "latin",
+    ],
+
+    weight:
+      "400",
   });
 
 export const styleScript =
@@ -320,6 +388,21 @@ export const styleScript =
 
     weight:
       "400",
+  });
+
+export const tangerine =
+  Tangerine({
+    variable:
+      "--font-tangerine",
+
+    subsets: [
+      "latin",
+    ],
+
+    weight: [
+      "400",
+      "700",
+    ],
   });
 
 export const windSong =
@@ -336,7 +419,9 @@ export const windSong =
       "500",
     ],
   });
-  /* ==========================================================================
+
+
+/* ==========================================================================
    Invitation Font Variables
 ========================================================================== */
 
@@ -348,13 +433,16 @@ export const invitationFontVariables = [
   bangers.variable,
   beauRivage.variable,
   bilboSwashCaps.variable,
+  bodoniModa.variable,
   caveat.variable,
+  cormorantGaramond.variable,
   dancingScript.variable,
   dmSans.variable,
   ephesis.variable,
   fasterOne.variable,
   greatVibes.variable,
   honk.variable,
+  italiana.variable,
   italianno.variable,
   kalniaGlaze.variable,
   luckiestGuy.variable,
@@ -363,12 +451,17 @@ export const invitationFontVariables = [
   mrsSaintDelafield.variable,
   parisienne.variable,
   pinyonScript.variable,
+  playfairDisplay.variable,
   plusJakartaSans.variable,
+  sacramento.variable,
   styleScript.variable,
+  tangerine.variable,
   windSong.variable,
 ].join(
   " "
 );
+
+
 /* ==========================================================================
    Invitation Font Options
 ========================================================================== */
@@ -425,10 +518,24 @@ export const INVITATION_FONT_OPTIONS = [
   },
   {
     label:
+      "Bodoni Moda",
+
+    value:
+      "var(--font-bodoni-moda)",
+  },
+  {
+    label:
       "Caveat",
 
     value:
       "var(--font-caveat)",
+  },
+  {
+    label:
+      "Cormorant Garamond",
+
+    value:
+      "var(--font-cormorant-garamond)",
   },
   {
     label:
@@ -471,6 +578,13 @@ export const INVITATION_FONT_OPTIONS = [
 
     value:
       "var(--font-honk)",
+  },
+  {
+    label:
+      "Italiana",
+
+    value:
+      "var(--font-italiana)",
   },
   {
     label:
@@ -530,6 +644,13 @@ export const INVITATION_FONT_OPTIONS = [
   },
   {
     label:
+      "Playfair Display",
+
+    value:
+      "var(--font-playfair-display)",
+  },
+  {
+    label:
       "Plus Jakarta Sans",
 
     value:
@@ -537,10 +658,24 @@ export const INVITATION_FONT_OPTIONS = [
   },
   {
     label:
+      "Sacramento",
+
+    value:
+      "var(--font-sacramento)",
+  },
+  {
+    label:
       "Style Script",
 
     value:
       "var(--font-style-script)",
+  },
+  {
+    label:
+      "Tangerine",
+
+    value:
+      "var(--font-tangerine)",
   },
   {
     label:

@@ -8,43 +8,16 @@ import type {
 
 
 /* ==========================================================================
-   Build Invitation Date Display
+   Helpers
 ========================================================================== */
 
-export function buildInvitationDateDisplay(
-  dateContent: InvitationDateContent,
+function buildDateParts(
+  value: string,
   locale: string
-): InvitationDateDisplay {
-  if (
-    !dateContent.start_date
-  ) {
-    return {
-      hasDate:
-        false,
-
-      value:
-        null,
-
-      formatted:
-        "",
-
-      day:
-        "",
-
-      dayName:
-        "",
-
-      month:
-        "",
-
-      year:
-        "",
-    };
-  }
-
+) {
   const date =
     new Date(
-      `${dateContent.start_date}T00:00:00`
+      `${value}T00:00:00`
     );
 
   const day =
@@ -109,20 +82,120 @@ export function buildInvitationDateDisplay(
     );
 
   return {
+    day,
+    dayName,
+    month,
+    year,
+    formatted,
+  };
+}
+
+
+/* ==========================================================================
+   Build Invitation Date Display
+========================================================================== */
+
+export function buildInvitationDateDisplay(
+  dateContent: InvitationDateContent,
+  locale: string
+): InvitationDateDisplay {
+  if (
+    !dateContent.start_date
+  ) {
+    return {
+      hasDate:
+        false,
+
+      value:
+        null,
+
+      formatted:
+        "",
+
+      day:
+        "",
+
+      dayName:
+        "",
+
+      month:
+        "",
+
+      year:
+        "",
+
+      hasEndDate:
+        false,
+
+      endValue:
+        null,
+
+      endDay:
+        "",
+
+      endDayName:
+        "",
+
+      endMonth:
+        "",
+
+      endYear:
+        "",
+    };
+  }
+
+  const start =
+    buildDateParts(
+      dateContent.start_date,
+      locale
+    );
+
+  const end =
+    dateContent.end_date
+      ? buildDateParts(
+          dateContent.end_date,
+          locale
+        )
+      : null;
+
+  return {
     hasDate:
       true,
 
     value:
       dateContent.start_date,
 
-    formatted,
+    formatted:
+      start.formatted,
 
-    day,
+    day:
+      start.day,
 
-    dayName,
+    dayName:
+      start.dayName,
 
-    month,
+    month:
+      start.month,
 
-    year,
+    year:
+      start.year,
+
+    hasEndDate:
+      Boolean(end),
+
+    endValue:
+      dateContent.end_date,
+
+    endDay:
+      end?.day ?? "",
+
+    endDayName:
+      end?.dayName ?? "",
+
+    endMonth:
+      end?.month ?? "",
+
+    endYear:
+      end?.year ?? "",
   };
 }

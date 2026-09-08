@@ -84,6 +84,8 @@ export default function InvitationPreview({
   const previewContent =
     invitationPreviewContentRegistry[
       template.category
+    ]?.[
+      template.type
     ];
 
   if (!previewContent) {

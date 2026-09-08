@@ -10,6 +10,10 @@ import type {
   ReactNode,
 } from "react";
 
+import type {
+  InvitationCardOrientation,
+} from "@/features/invitations/cards/utils/invitationCard.utils";
+
 import {
   invitationEnvelopeRegistry,
 } from "@/features/invitations/experience/envelope/registry/invitationEnvelopeRegistry";
@@ -36,6 +40,9 @@ interface InvitationEnvelopeProps {
   envelopeId:
     keyof typeof invitationEnvelopeRegistry;
 
+  cardOrientation:
+    InvitationCardOrientation;
+
   initialState?:
     InvitationEnvelopeState;
 
@@ -49,7 +56,7 @@ interface InvitationEnvelopeProps {
 ========================================================================== */
 
 const PRESENT_DELAY =
-  3650;
+  3600;
 
 
 /* ==========================================================================
@@ -60,6 +67,7 @@ export default function InvitationEnvelope({
   children,
   actions,
   envelopeId,
+  cardOrientation,
   initialState = "closed",
   onPresented,
 }: InvitationEnvelopeProps) {
@@ -239,6 +247,9 @@ export default function InvitationEnvelope({
       data-invitation-envelope
       data-envelope={
         envelopeId
+      }
+      data-card-orientation={
+        cardOrientation
       }
       data-state={
         state

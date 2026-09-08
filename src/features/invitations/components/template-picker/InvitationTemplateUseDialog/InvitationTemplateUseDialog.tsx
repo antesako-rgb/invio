@@ -2,6 +2,7 @@
 
 import {
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -17,16 +18,16 @@ import {
 } from "lucide-react";
 
 import {
+  Button,
+} from "@/components/ui/button";
+
+import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog/dialog";
-
-import {
-  Button,
-} from "@/components/ui/button";
 
 import type {
   Invitation,
@@ -61,10 +62,14 @@ interface InvitationTemplateUseDialogProps {
     boolean;
 
   onOpenChange:
-    (open: boolean) => void;
+    (
+      open: boolean
+    ) => void;
 
   onApplyExisting:
-    (invitationId: string) => void;
+    (
+      invitationId: string
+    ) => void;
 
   onCreateNew:
     () => void;
@@ -91,7 +96,7 @@ export default function InvitationTemplateUseDialog({
 
   const t =
     useTranslations(
-      "Invitations.templateUseDialog"
+      "InvitationTemplates.useDialog"
     );
 
   const format =
@@ -112,6 +117,34 @@ export default function InvitationTemplateUseDialog({
 
 
   /* ==========================================================================
+     Existing Invitations
+  ========================================================================== */
+
+  const sortedInvitations =
+    useMemo(
+      () =>
+        [...invitations].sort(
+          (
+            first,
+            second
+          ) =>
+            new Date(
+              second.updated_at
+            ).getTime() -
+            new Date(
+              first.updated_at
+            ).getTime()
+        ),
+      [
+        invitations,
+      ]
+    );
+
+  const hasExistingInvitations =
+    sortedInvitations.length > 0;
+
+
+  /* ==========================================================================
      Reset
   ========================================================================== */
 
@@ -121,31 +154,25 @@ export default function InvitationTemplateUseDialog({
         setStep(
           "action"
         );
+
+        return;
+      }
+
+      if (
+        step === "existing" &&
+        !hasExistingInvitations
+      ) {
+        setStep(
+          "action"
+        );
       }
     },
     [
       open,
+      step,
+      hasExistingInvitations,
     ]
   );
-
-
-  /* ==========================================================================
-     Existing Invitations
-  ========================================================================== */
-
-  const sortedInvitations =
-    [...invitations].sort(
-      (
-        first,
-        second
-      ) =>
-        new Date(
-          second.updated_at
-        ).getTime() -
-        new Date(
-          first.updated_at
-        ).getTime()
-    );
 
 
   /* ==========================================================================
@@ -153,7 +180,10 @@ export default function InvitationTemplateUseDialog({
   ========================================================================== */
 
   function handleShowExisting() {
-    if (disabled) {
+    if (
+      disabled ||
+      !hasExistingInvitations
+    ) {
       return;
     }
 
@@ -210,41 +240,65 @@ export default function InvitationTemplateUseDialog({
               </DialogDescription>
             </DialogHeader>
 
-            <div className={styles.actions}>
+            <div
+              className={
+                styles.actions
+              }
+            >
+              {hasExistingInvitations && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className={
+                    styles.action
+                  }
+                  disabled={
+                    disabled
+                  }
+                  onClick={
+                    handleShowExisting
+                  }
+                >
+                  <RefreshCw
+                    className={
+                      styles.actionIcon
+                    }
+                  />
+
+                  <span
+                    className={
+                      styles.actionContent
+                    }
+                  >
+                    <span
+                      className={
+                        styles.actionTitle
+                      }
+                    >
+                      {t(
+                        "existing.title"
+                      )}
+                    </span>
+
+                    <span
+                      className={
+                        styles.actionDescription
+                      }
+                    >
+                      {t(
+                        "existing.description"
+                      )}
+                    </span>
+                  </span>
+                </Button>
+              )}
+
               <Button
                 type="button"
                 variant="outline"
-                className={styles.action}
-                disabled={
-                  disabled
+                className={
+                  styles.action
                 }
-                onClick={
-                  handleShowExisting
-                }
-              >
-                <RefreshCw
-                  className={styles.actionIcon}
-                />
-
-                <span className={styles.actionContent}>
-                  <span className={styles.actionTitle}>
-                    {t(
-                      "existing.title"
-                    )}
-                  </span>
-
-                  <span className={styles.actionDescription}>
-                    {t(
-                      "existing.description"
-                    )}
-                  </span>
-                </span>
-              </Button>
-
-              <Button
-                type="button"
-                variant="outline"
-                className={styles.action}
                 disabled={
                   disabled
                 }
@@ -253,17 +307,31 @@ export default function InvitationTemplateUseDialog({
                 }
               >
                 <CopyPlus
-                  className={styles.actionIcon}
+                  className={
+                    styles.actionIcon
+                  }
                 />
 
-                <span className={styles.actionContent}>
-                  <span className={styles.actionTitle}>
+                <span
+                  className={
+                    styles.actionContent
+                  }
+                >
+                  <span
+                    className={
+                      styles.actionTitle
+                    }
+                  >
                     {t(
                       "new.title"
                     )}
                   </span>
 
-                  <span className={styles.actionDescription}>
+                  <span
+                    className={
+                      styles.actionDescription
+                    }
+                  >
                     {t(
                       "new.description"
                     )}
@@ -290,7 +358,11 @@ export default function InvitationTemplateUseDialog({
               </DialogDescription>
             </DialogHeader>
 
-            <div className={styles.invitations}>
+            <div
+              className={
+                styles.invitations
+              }
+            >
               {sortedInvitations.map(
                 (invitation) => (
                   <Button
@@ -299,7 +371,9 @@ export default function InvitationTemplateUseDialog({
                     }
                     type="button"
                     variant="outline"
-                    className={styles.invitation}
+                    className={
+                      styles.invitation
+                    }
                     disabled={
                       disabled
                     }
@@ -309,14 +383,26 @@ export default function InvitationTemplateUseDialog({
                       )
                     }
                   >
-                    <span className={styles.invitationContent}>
-                      <span className={styles.invitationName}>
+                    <span
+                      className={
+                        styles.invitationContent
+                      }
+                    >
+                      <span
+                        className={
+                          styles.invitationName
+                        }
+                      >
                         {
                           invitation.name
                         }
                       </span>
 
-                      <span className={styles.invitationTemplate}>
+                      <span
+                        className={
+                          styles.invitationTemplate
+                        }
+                      >
                         {
                           invitation.template_id
                         }
@@ -328,7 +414,11 @@ export default function InvitationTemplateUseDialog({
                         }
                       </span>
 
-                      <span className={styles.invitationUpdated}>
+                      <span
+                        className={
+                          styles.invitationUpdated
+                        }
+                      >
                         {t(
                           "existing.lastUpdated",
                           {
@@ -363,7 +453,11 @@ export default function InvitationTemplateUseDialog({
               )}
             </div>
 
-            <div className={styles.footer}>
+            <div
+              className={
+                styles.footer
+              }
+            >
               <Button
                 type="button"
                 variant="ghost"
@@ -375,7 +469,9 @@ export default function InvitationTemplateUseDialog({
                 }
               >
                 <ArrowLeft
-                  className={styles.backIcon}
+                  className={
+                    styles.backIcon
+                  }
                 />
 
                 {t(

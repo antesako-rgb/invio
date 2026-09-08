@@ -2,7 +2,7 @@
    Card
 ========================================================================== */
 
-.celeste-card {
+.portrait-card {
   position:
     relative;
 
@@ -10,7 +10,7 @@
     100%;
 
   aspect-ratio:
-    5 / 7;
+    var(--invitation-card-aspect-ratio);
 
   overflow:
     hidden;
@@ -30,7 +30,7 @@
    Background
 ========================================================================== */
 
-.celeste-card__background {
+.portrait-card__background {
   position:
     absolute;
 
@@ -67,7 +67,7 @@
    Frame
 ========================================================================== */
 
-.celeste-card__frame {
+.portrait-card__frame {
   position:
     absolute;
 
@@ -88,7 +88,7 @@
 
   filter:
     var(
-      --celeste-card-frame-filter
+      --portrait-card-frame-filter
     );
 
   pointer-events:
@@ -103,7 +103,7 @@
    Content
 ========================================================================== */
 
-.celeste-card__content {
+.portrait-card__content {
   position:
     relative;
 
@@ -117,7 +117,7 @@
     column;
 
   align-items:
-    flex-end;
+    center;
 
   width:
     100%;
@@ -126,10 +126,10 @@
     100%;
 
   padding:
-    var(--celeste-card-content-padding);
+    var(--portrait-card-content-padding);
 
   text-align:
-    right;
+    center;
 }
 
 
@@ -137,21 +137,9 @@
    Hero
 ========================================================================== */
 
-.celeste-card__hero {
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  align-items:
-    flex-end;
-
+.portrait-card__hero {
   width:
     100%;
-
-  margin-bottom:
-    var(--celeste-hero-margin-bottom);
 }
 
 
@@ -159,7 +147,7 @@
    Subtitle
 ========================================================================== */
 
-.celeste-card__subtitle {
+.portrait-card__subtitle {
   --invitation-element-font-size:
     var(--invitation-subtitle-size);
 
@@ -170,7 +158,7 @@
     100%;
 
   margin-bottom:
-    var(--celeste-subtitle-margin-bottom);
+    6%;
 
   font-family:
     var(--invitation-subtitle-font);
@@ -211,10 +199,7 @@
    Names
 ========================================================================== */
 
-.celeste-card__names {
-  position:
-    relative;
-
+.portrait-card__names {
   display:
     flex;
 
@@ -222,7 +207,7 @@
     column;
 
   align-items:
-    flex-end;
+    center;
 
   width:
     100%;
@@ -263,15 +248,9 @@
    Name
 ========================================================================== */
 
-.celeste-card__name {
+.portrait-card__name {
   --invitation-element-font-size:
     var(--invitation-name-size);
-
-  position:
-    relative;
-
-  z-index:
-    1;
 
   display:
     block;
@@ -294,36 +273,18 @@
    Name Separator
 ========================================================================== */
 
-.celeste-card__name-separator {
-  position:
-    relative;
-
-  z-index:
-    0;
-
+.portrait-card__name-separator {
   display:
     block;
 
   width:
     100%;
 
-  font-family:
-    var(--celeste-name-separator-font);
-
   font-size:
-    var(--celeste-name-separator-size);
+    var(--invitation-name-size);
 
   line-height:
-    1;
-
-  color:
-    var(--celeste-name-separator-color);
-
-  text-align:
-    right;
-
-  opacity:
-    var(--celeste-name-separator-opacity);
+    inherit;
 
   pointer-events:
     none;
@@ -334,28 +295,48 @@
 
 
 /* ==========================================================================
-   Event Details
+   Photo
 ========================================================================== */
 
-.celeste-card
-[data-invitation-event-details] {
-  margin-bottom:
-    var(--celeste-event-margin-bottom);
+.portrait-card__photo {
+  flex:
+    0 0 auto;
+
+  width:
+    var(--portrait-photo-width);
+
+  aspect-ratio:
+    var(--portrait-photo-aspect-ratio);
+
+  margin:
+    2% 0;
 }
 
 
-/* ==========================================================================
-   Countdown
-========================================================================== */
+.portrait-card__photo
+.invitation-image-frame__image-content {
+  object-position:
+    var(--portrait-photo-object-position);
+}
 
-.celeste-card
-[data-invitation-countdown] {
-  align-items:
-    flex-end;
 
+.portrait-card__photo-placeholder {
   width:
     100%;
 
-  margin-bottom:
-    var(--celeste-countdown-margin-bottom);
+  height:
+    100%;
+
+  background:
+    var(--portrait-photo-background);
+}
+
+
+.portrait-card__photo
+.invitation-image-frame__frame {
+  opacity:
+    var(--portrait-photo-frame-opacity);
+
+  filter:
+    var(--portrait-photo-frame-filter);
 }

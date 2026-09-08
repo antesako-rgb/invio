@@ -1,8 +1,8 @@
 /* ==========================================================================
-   Celeste Design Tokens
+   Portrait Design Tokens
 ========================================================================== */
 
-[data-invitation-experience][data-template="celeste"] {
+[data-invitation-experience][data-template="portrait"] {
 
   /* ========================================================================
      Invitation
@@ -12,13 +12,15 @@
     #eceae5;
 
   --invitation-experience-background-image:
-    none;
+    url(
+      "/invitation-assets/cards/portrait/background.avif"
+    );
 
   --invitation-experience-background-filter:
     none;
 
   --invitation-card-background:
-    #f7f4ee;
+    #f5efe6;
 
 
   /* ========================================================================
@@ -42,36 +44,29 @@
      Typography
   ======================================================================== */
 
-  --celeste-font-primary:
-    var(--font-beau-rivage),
+  --portrait-font-primary:
+    var(--font-pinyon-script),
     cursive;
 
-  --celeste-font-secondary:
+  --portrait-font-secondary:
     var(--font-marcellus),
     serif;
 
 
-/* ========================================================================
-   Card Layout
-======================================================================== */
+  /* ========================================================================
+     Card Frame
+  ======================================================================== */
 
---celeste-card-content-padding:
-  10% 8% 9% 38%;
+  --portrait-card-frame-filter:
+    none;
 
---celeste-card-frame-filter:
-  none;
 
---celeste-hero-margin-bottom:
-  10cqw;
+  /* ========================================================================
+     Card Layout
+  ======================================================================== */
 
---celeste-subtitle-margin-bottom:
-  10cqw;
-
---celeste-event-margin-bottom:
-  6cqw;
-
---celeste-countdown-margin-bottom:
-  5cqw;
+  --portrait-card-content-padding:
+    8% 9% 10%;
 
 
   /* ========================================================================
@@ -79,13 +74,13 @@
   ======================================================================== */
 
   --invitation-details-title-font:
-    var(--celeste-font-secondary);
+    var(--portrait-font-secondary);
 
   --invitation-details-event-font:
-    var(--celeste-font-primary);
+    var(--portrait-font-primary);
 
   --invitation-details-section-font:
-    var(--celeste-font-secondary);
+    var(--portrait-font-secondary);
 
 
   /* ========================================================================
@@ -93,13 +88,13 @@
   ======================================================================== */
 
   --invitation-rsvp-title-font:
-    var(--celeste-font-secondary);
+    var(--portrait-font-secondary);
 
   --invitation-rsvp-event-font:
-    var(--celeste-font-primary);
+    var(--portrait-font-primary);
 
   --invitation-rsvp-section-font:
-    var(--celeste-font-secondary);
+    var(--portrait-font-secondary);
 
 
   /* ========================================================================
@@ -107,16 +102,16 @@
   ======================================================================== */
 
   --invitation-subtitle-font:
-    var(--celeste-font-secondary);
+    var(--portrait-font-primary);
 
   --invitation-subtitle-size:
-    3cqw;
+    3.5cqw;
 
-  --invitation-subtitle-style:
-    italic;
+  --invitation-subtitle-weight:
+    500;
 
-  --invitation-subtitle-text-align:
-    right;
+  --invitation-subtitle-letter-spacing:
+    0.1em;
 
 
   /* ========================================================================
@@ -124,33 +119,33 @@
   ======================================================================== */
 
   --invitation-name-font:
-    var(--celeste-font-primary);
+    var(--portrait-font-primary);
 
   --invitation-name-size:
-    9cqw;
-
-  --invitation-name-line-height:
-    0.95;
-
-  --invitation-name-text-align:
-    right;
+    8cqw;
 
 
   /* ========================================================================
-     Name Separator
+     Photo
   ======================================================================== */
 
-  --celeste-name-separator-font:
-    var(--celeste-font-primary);
+  --portrait-photo-background:
+    #e8dfd3;
 
-  --celeste-name-separator-size:
-    14cqw;
+  --portrait-photo-width:
+    48%;
 
-  --celeste-name-separator-color:
-    var(--invitation-accent);
+  --portrait-photo-aspect-ratio:
+    1 / 1;
 
-  --celeste-name-separator-opacity:
-    0.35;
+  --portrait-photo-object-position:
+    center;
+
+  --portrait-photo-frame-opacity:
+    1;
+
+  --portrait-photo-frame-filter:
+    none;
 
 
   /* ========================================================================
@@ -158,25 +153,25 @@
   ======================================================================== */
 
   --invitation-description-font:
-    var(--celeste-font-secondary);
+    var(--portrait-font-primary);
 
   --invitation-description-size:
-    2.5cqw;
-
-  --invitation-description-style:
-    italic;
+    3.2cqw;
 
   --invitation-description-line-height:
-    1.35;
+    1.3;
 
-  --invitation-description-text-align:
-    right;
+  --invitation-description-letter-spacing:
+    0.02em;
+
+  --invitation-description-color:
+    var(--invitation-muted);
 
   --invitation-description-max-width:
-    100%;
+    70%;
 
   --invitation-description-margin-top:
-    0;
+    5cqw;
 
 
   /* ========================================================================
@@ -184,42 +179,27 @@
   ======================================================================== */
 
   --invitation-event-font:
-    var(--celeste-font-secondary);
+    var(--portrait-font-secondary);
 
   --invitation-event-size:
-    2.7cqw;
-
-  --invitation-event-style:
-    italic;
+    3cqw;
 
   --invitation-event-line-height:
-    1.2;
-
-  --invitation-event-text-align:
-    right;
+    1;
 
   --invitation-event-gap:
-    4cqw;
+    3cqw;
 
 
-/* ========================================================================
-   Event Date
-======================================================================== */
+  /* ========================================================================
+     Event Date
+  ======================================================================== */
 
---invitation-event-date-font:
-  var(--celeste-font-primary);
+  --invitation-event-date-gap:
+    3cqw;
 
---invitation-event-date-size:
-  2em;
-
---invitation-event-date-gap:
-  1cqw;
-
---invitation-event-date-width:
-  100%;
-
---invitation-event-date-text-transform:
-  capitalize;
+  --invitation-event-date-width:
+    65cqw;
 
 
   /* ========================================================================
@@ -227,18 +207,21 @@
   ======================================================================== */
 
   --invitation-event-day-min-width:
-    auto;
+    13cqw;
 
   --invitation-event-day-padding:
-    0;
+    0 2cqw;
 
 
   /* ========================================================================
      Event Day Name
   ======================================================================== */
 
-  --invitation-event-day-name-size:
-    0.5em;
+  --invitation-event-day-name-gap:
+    2cqw;
+
+  --invitation-event-day-name-space:
+    4cqw;
 
 
   /* ========================================================================
@@ -246,28 +229,5 @@
   ======================================================================== */
 
   --invitation-event-location-gap:
-    2cqw;
-
-
-  /* ========================================================================
-     Countdown
-  ======================================================================== */
-
-  --invitation-countdown-text-align:
-    right;
-
-  --invitation-countdown-value-font:
-    var(--celeste-font-primary);
-
-  --invitation-countdown-value-size:
-    8cqw;
-
-  --invitation-countdown-label-font:
-    var(--celeste-font-secondary);
-
-  --invitation-countdown-label-size:
-    2.4cqw;
-
-  --invitation-countdown-label-gap:
-    1cqw;
+    2.5cqw;
 }

@@ -1,0 +1,463 @@
+/* ==========================================================================
+   Card
+========================================================================== */
+
+.garden-grace-save-the-date-card {
+
+  /* ========================================================================
+     Description
+  ======================================================================== */
+
+  --invitation-description-size:
+    4cqw;
+
+  --invitation-description-width:
+    100%;
+
+  --invitation-description-max-width:
+    80%;
+
+  --invitation-description-margin-top:
+    5cqw;
+
+  --invitation-description-line-height:
+    1.1;
+
+  --invitation-description-letter-spacing:
+    0.02em;
+
+  --invitation-description-text-align:
+    center;
+
+
+  /* ========================================================================
+     Base
+  ======================================================================== */
+
+  position:
+    relative;
+
+  width:
+    100%;
+
+  aspect-ratio:
+    var(--invitation-card-aspect-ratio);
+
+  overflow:
+    hidden;
+
+  container-type:
+    inline-size;
+
+  background:
+    var(--invitation-card-background);
+
+  color:
+    var(--invitation-foreground);
+
+}
+
+
+/* ==========================================================================
+   Background
+========================================================================== */
+
+.garden-grace-save-the-date-card__background {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    0;
+
+  background-color:
+    var(--invitation-card-background);
+
+  background-image:
+    var(--invitation-card-background-image);
+
+  background-size:
+    var(--invitation-card-background-size);
+
+  background-position:
+    var(--invitation-card-background-position);
+
+  background-repeat:
+    var(--invitation-card-background-repeat);
+
+  opacity:
+    var(--invitation-card-background-opacity);
+
+  pointer-events:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Frame
+========================================================================== */
+
+.garden-grace-save-the-date-card__frame {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    1;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+  filter:
+    var(
+      --garden-grace-card-frame-filter
+    );
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.garden-grace-save-the-date-card__content {
+
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  padding:
+    8% 10%;
+
+  text-align:
+    center;
+
+}
+
+
+/* ==========================================================================
+   Title
+========================================================================== */
+
+.garden-grace-save-the-date-card__title {
+
+  --invitation-element-font-size:
+    12cqw;
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  margin-bottom:
+    7cqw;
+
+  font-family:
+    var(--garden-grace-font-secondary);
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  font-style:
+    normal;
+
+  font-weight:
+    400;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    0.01em;
+
+  color:
+    var(--invitation-foreground);
+
+  text-transform:
+    none;
+
+  text-align:
+    center;
+
+  white-space:
+    pre-line;
+
+}
+
+
+/* ==========================================================================
+   Names
+========================================================================== */
+
+.garden-grace-save-the-date-card__names {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  flex-wrap:
+    wrap;
+
+  width:
+    100%;
+
+  margin:
+    0 0 6cqw;
+
+  gap:
+    2.5cqw;
+
+  font-family:
+    var(--invitation-name-font);
+
+  font-style:
+    var(--invitation-name-style);
+
+  font-weight:
+    var(--invitation-name-weight);
+
+  line-height:
+    1.1;
+
+  letter-spacing:
+    var(--invitation-name-letter-spacing);
+
+  color:
+    var(--invitation-name-color);
+
+  text-transform:
+    var(--invitation-name-text-transform);
+
+  text-align:
+    center;
+
+  opacity:
+    var(--invitation-name-opacity);
+
+}
+
+
+/* ==========================================================================
+   Name
+========================================================================== */
+
+.garden-grace-save-the-date-card__name {
+
+  --invitation-element-font-size:
+    7cqw;
+
+  display:
+    block;
+
+  width:
+    auto;
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  line-height:
+    inherit;
+
+  white-space:
+    pre-line;
+
+}
+
+
+/* ==========================================================================
+   Name Separator
+========================================================================== */
+
+.garden-grace-save-the-date-card__name-separator {
+
+  font-family:
+    var(--garden-grace-font-secondary);
+
+  font-size:
+    4cqw;
+
+  font-weight:
+    400;
+
+  line-height:
+    1;
+
+  color:
+    var(--invitation-foreground);
+
+  opacity:
+    1;
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Event
+========================================================================== */
+
+.garden-grace-save-the-date-card__event {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  gap:
+    2cqw;
+
+  font-family:
+    var(--invitation-event-font);
+
+  font-style:
+    var(--invitation-event-style);
+
+  font-weight:
+    var(--invitation-event-weight);
+
+  line-height:
+    1.5;
+
+  letter-spacing:
+    0.1em;
+
+  color:
+    var(--invitation-foreground);
+
+  text-transform:
+    uppercase;
+
+  text-align:
+    center;
+
+}
+
+
+/* ==========================================================================
+   Date
+========================================================================== */
+
+.garden-grace-save-the-date-card__date {
+
+  --invitation-element-font-size:
+    2.5cqw;
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  line-height:
+    inherit;
+
+  text-align:
+    center;
+
+  white-space:
+    pre-line;
+
+}
+
+
+/* ==========================================================================
+   Location
+========================================================================== */
+
+.garden-grace-save-the-date-card__location {
+
+  --invitation-element-font-size:
+    2.3cqw;
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  line-height:
+    inherit;
+
+  text-align:
+    center;
+
+  white-space:
+    pre-line;
+
+}
+
+
+/* ==========================================================================
+   Description
+========================================================================== */
+
+.garden-grace-save-the-date-card
+[data-invitation-description] {
+
+  width:
+    100%;
+
+}

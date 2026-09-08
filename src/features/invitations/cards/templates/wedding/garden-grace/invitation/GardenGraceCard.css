@@ -1,0 +1,612 @@
+/* ==========================================================================
+   Card
+========================================================================== */
+
+.garden-grace-card {
+
+  /* ========================================================================
+     Card Layout
+  ======================================================================== */
+
+  --garden-grace-card-content-padding:
+    20% 8% 8% 22%;
+
+  --garden-grace-hero-margin-bottom:
+    8cqw;
+
+  --garden-grace-subtitle-margin-bottom:
+    8cqw;
+
+  --garden-grace-event-margin-bottom:
+    7cqw;
+
+  --garden-grace-countdown-margin-bottom:
+    5cqw;
+
+  --garden-grace-names-column-gap:
+    5cqw;
+
+  --garden-grace-names-row-gap:
+    3cqw;
+
+
+  /* ========================================================================
+     Subtitle
+  ======================================================================== */
+
+  --invitation-subtitle-size:
+    3cqw;
+
+  --invitation-subtitle-text-align:
+    right;
+
+
+  /* ========================================================================
+     Names
+  ======================================================================== */
+
+  --invitation-name-size:
+    13cqw;
+
+  --invitation-name-line-height:
+    0.8;
+
+  --invitation-name-text-align:
+    right;
+
+
+  /* ========================================================================
+     Name Separator
+  ======================================================================== */
+
+  --garden-grace-name-separator-size:
+    7cqw;
+
+
+  /* ========================================================================
+     Event
+  ======================================================================== */
+
+  --invitation-event-size:
+    2.9cqw;
+
+  --invitation-event-line-height:
+    1.4;
+
+  --invitation-event-text-align:
+    right;
+
+  --invitation-event-align-items:
+    flex-end;
+
+  --invitation-event-gap:
+    5cqw;
+
+
+  /* ========================================================================
+     Event Schedule
+  ======================================================================== */
+
+  --invitation-event-schedule-time-padding-bottom:
+    2cqw;
+
+  --invitation-event-schedule-time-border:
+    1px solid currentColor;
+
+
+  /* ========================================================================
+     Event Date
+  ======================================================================== */
+
+  --invitation-event-date-size:
+    1em;
+
+  --invitation-event-date-width:
+    100%;
+
+  --invitation-event-date-gap:
+    0;
+
+
+  /* ========================================================================
+     Event Location
+  ======================================================================== */
+
+  --invitation-event-location-gap:
+    2.5cqw;
+
+
+  /* ========================================================================
+     Description
+  ======================================================================== */
+
+  --invitation-description-size:
+    4.3cqw;
+
+  --invitation-description-line-height:
+    1.2;
+
+  --invitation-description-text-align:
+    right;
+
+  --invitation-description-max-width:
+    100%;
+
+  --invitation-description-margin-top:
+    0;
+
+
+  /* ========================================================================
+     Countdown
+  ======================================================================== */
+
+  --invitation-countdown-text-align:
+    right;
+
+  --invitation-countdown-value-size:
+    8cqw;
+
+  --invitation-countdown-label-size:
+    2.7cqw;
+
+  --invitation-countdown-label-gap:
+    1cqw;
+
+
+  /* ========================================================================
+     Base
+  ======================================================================== */
+
+  position:
+    relative;
+
+  width:
+    100%;
+
+  aspect-ratio:
+    var(--invitation-card-aspect-ratio);
+
+  overflow:
+    hidden;
+
+  container-type:
+    inline-size;
+
+  background:
+    var(--invitation-card-background);
+
+  color:
+    var(--invitation-foreground);
+
+}
+
+
+/* ==========================================================================
+   Background
+========================================================================== */
+
+.garden-grace-card__background {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    0;
+
+  background-color:
+    var(--invitation-card-background);
+
+  background-image:
+    var(--invitation-card-background-image);
+
+  background-size:
+    var(--invitation-card-background-size);
+
+  background-position:
+    var(--invitation-card-background-position);
+
+  background-repeat:
+    var(--invitation-card-background-repeat);
+
+  opacity:
+    var(--invitation-card-background-opacity);
+
+  pointer-events:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Frame
+========================================================================== */
+
+.garden-grace-card__frame {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    1;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+  filter:
+    var(
+      --garden-grace-card-frame-filter
+    );
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.garden-grace-card__content {
+
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-end;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  padding:
+    var(--garden-grace-card-content-padding);
+
+  text-align:
+    right;
+
+}
+
+
+/* ==========================================================================
+   Hero
+========================================================================== */
+
+.garden-grace-card__hero {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-end;
+
+  width:
+    100%;
+
+  margin-bottom:
+    var(--garden-grace-hero-margin-bottom);
+
+}
+
+
+/* ==========================================================================
+   Subtitle
+========================================================================== */
+
+.garden-grace-card__subtitle {
+
+  --invitation-element-font-size:
+    var(--invitation-subtitle-size);
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  margin-bottom:
+    var(--garden-grace-subtitle-margin-bottom);
+
+  font-family:
+    var(--invitation-subtitle-font);
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  font-style:
+    var(--invitation-subtitle-style);
+
+  font-weight:
+    var(--invitation-subtitle-weight);
+
+  line-height:
+    var(--invitation-subtitle-line-height);
+
+  letter-spacing:
+    var(--invitation-subtitle-letter-spacing);
+
+  color:
+    var(--invitation-subtitle-color);
+
+  text-transform:
+    var(--invitation-subtitle-text-transform);
+
+  text-align:
+    var(--invitation-subtitle-text-align);
+
+  opacity:
+    var(--invitation-subtitle-opacity);
+
+  white-space:
+    pre-line;
+
+}
+
+
+/* ==========================================================================
+   Names
+========================================================================== */
+
+.garden-grace-card__names {
+
+  position:
+    relative;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    auto auto;
+
+  grid-template-rows:
+    auto auto;
+
+  align-items:
+    center;
+
+  justify-content:
+    end;
+
+  width:
+    100%;
+
+  margin:
+    0;
+
+  column-gap:
+    var(--garden-grace-names-column-gap);
+
+  row-gap:
+    var(--garden-grace-names-row-gap);
+
+  font-family:
+    var(--invitation-name-font);
+
+  font-style:
+    var(--invitation-name-style);
+
+  font-weight:
+    var(--invitation-name-weight);
+
+  line-height:
+    var(--invitation-name-line-height);
+
+  letter-spacing:
+    var(--invitation-name-letter-spacing);
+
+  color:
+    var(--invitation-name-color);
+
+  text-transform:
+    var(--invitation-name-text-transform);
+
+  text-align:
+    var(--invitation-name-text-align);
+
+  opacity:
+    var(--invitation-name-opacity);
+
+}
+
+
+/* ==========================================================================
+   Primary Name
+========================================================================== */
+
+.garden-grace-card__name:first-child {
+
+  --invitation-element-font-size:
+    var(--invitation-name-size);
+
+  grid-column:
+    1 / -1;
+
+  grid-row:
+    1;
+
+  justify-self:
+    end;
+
+  position:
+    relative;
+
+  z-index:
+    1;
+
+  display:
+    block;
+
+  width:
+    auto;
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  line-height:
+    inherit;
+
+  white-space:
+    pre-line;
+
+}
+
+
+/* ==========================================================================
+   Secondary Name
+========================================================================== */
+
+.garden-grace-card__name:last-child {
+
+  --invitation-element-font-size:
+    var(--invitation-name-size);
+
+  grid-column:
+    2;
+
+  grid-row:
+    2;
+
+  justify-self:
+    end;
+
+  position:
+    relative;
+
+  z-index:
+    1;
+
+  display:
+    block;
+
+  width:
+    auto;
+
+  font-size:
+    var(--invitation-element-font-size);
+
+  line-height:
+    inherit;
+
+  white-space:
+    pre-line;
+
+}
+
+
+/* ==========================================================================
+   Name Separator
+========================================================================== */
+
+.garden-grace-card__name-separator {
+
+  grid-column:
+    1;
+
+  grid-row:
+    2;
+
+  align-self:
+    center;
+
+  justify-self:
+    end;
+
+  font-family:
+    var(--garden-grace-name-separator-font);
+
+  font-size:
+    var(--garden-grace-name-separator-size);
+
+  line-height:
+    1;
+
+  color:
+    var(--garden-grace-name-separator-color);
+
+  opacity:
+    var(--garden-grace-name-separator-opacity);
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Event Schedule
+========================================================================== */
+
+.garden-grace-card
+[data-invitation-event-schedule] {
+
+  width:
+    100%;
+
+  margin-bottom:
+    var(--garden-grace-event-margin-bottom);
+
+}
+
+
+/* ==========================================================================
+   Countdown
+========================================================================== */
+
+.garden-grace-card
+[data-invitation-countdown] {
+
+  align-items:
+    flex-end;
+
+  width:
+    100%;
+
+  margin-bottom:
+    var(--garden-grace-countdown-margin-bottom);
+
+}
+
+
+/* ==========================================================================
+   Description
+========================================================================== */
+
+.garden-grace-card
+[data-invitation-description] {
+
+  width:
+    100%;
+
+}

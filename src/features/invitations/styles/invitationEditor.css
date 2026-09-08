@@ -2,28 +2,34 @@
    Editable Content
 ========================================================================== */
 
-[data-editor-element] {
+[data-mode="edit"]
+[data-editor-element][contenteditable="true"] {
+  cursor:
+    text;
 
   white-space:
     pre-wrap;
-
 }
+/* ==========================================================================
+   Editable Placeholder
+========================================================================== */
 
+[data-mode="edit"]
+[data-editor-element][data-editor-placeholder="true"] {
+  opacity:
+    1;
+}
 
 /* ==========================================================================
    Editable Elements
 ========================================================================== */
 
 [data-mode="edit"] [data-editor-element] {
-
   min-width:
     1em;
 
   cursor:
     pointer;
-
-  border-radius:
-    calc(var(--radius) * 0.5);
 
   outline:
     1px dashed
@@ -34,12 +40,11 @@
     );
 
   outline-offset:
-    0.25rem;
+    0.3rem;
 
   transition:
     outline-color 0.15s ease,
     background-color 0.15s ease;
-
 }
 
 

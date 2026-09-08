@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -34,6 +35,10 @@ import {
 } from "@/features/invitations/actions/invitation/updateInvitationAction";
 
 import {
+  getInvitationTemplateConfig,
+} from "@/features/invitations/cards/registry/invitationTemplateRegistry.utils";
+
+import {
   createInitialInvitationContent,
 } from "@/features/invitations/content/createInitialInvitationContent";
 
@@ -52,6 +57,10 @@ import {
 import type {
   Invitation,
 } from "@/features/invitations/types/invitation.types";
+
+import type {
+  InvitationTemplateType,
+} from "@/features/invitations/types/invitationTemplateConfig.types";
 
 
 /* ==========================================================================
@@ -101,7 +110,7 @@ export function useInvitationTemplateActions({
 
   const t =
     useTranslations(
-      "Invitations.page.templates"
+      "InvitationTemplates"
     );
 
   const contentT =
@@ -170,6 +179,85 @@ export function useInvitationTemplateActions({
 
 
   /* ==========================================================================
+     Selected Template Config
+  ========================================================================== */
+
+  const selectedTemplateConfig =
+    useMemo(
+      () => {
+        if (!selectedTemplate) {
+          return null;
+        }
+
+        return getInvitationTemplateConfig(
+          selectedTemplate.templateId
+        );
+      },
+      [
+        selectedTemplate,
+      ]
+    );
+
+
+  /* ==========================================================================
+     Compatible Invitations
+  ========================================================================== */
+
+  const compatibleInvitations =
+    useMemo(
+      () => {
+        if (!selectedTemplateConfig) {
+          return [];
+        }
+
+        return invitations.filter(
+          (invitation) => {
+            const invitationTemplate =
+              getInvitationTemplateConfig(
+                invitation.template_id
+              );
+
+            if (!invitationTemplate) {
+              return false;
+            }
+
+            return (
+              invitationTemplate.type ===
+              selectedTemplateConfig.type
+            );
+          }
+        );
+      },
+      [
+        invitations,
+        selectedTemplateConfig,
+      ]
+    );
+
+
+  /* ==========================================================================
+     Content Translation Key
+  ========================================================================== */
+
+  function getContentTranslationKey(
+    templateType:
+      InvitationTemplateType,
+    field:
+      | "heroTitle"
+      | "heroSubtitle"
+      | "description"
+  ) {
+    if (
+      event.type === "wedding"
+    ) {
+      return `${event.type}.${templateType}.${field}`;
+    }
+
+    return `${event.type}.${field}`;
+  }
+
+
+  /* ==========================================================================
      Create Invitation
   ========================================================================== */
 
@@ -202,26 +290,37 @@ export function useInvitationTemplateActions({
         );
       }
 
-      const eventFallback =
-        getInvitationEditorFallback(
-          event.type
-        );
+  const template =
+  getInvitationTemplateConfig(
+    templateId
+  );
 
-      const result =
-        await createInvitationAction({
-          p_event_id:
-            eventId,
+if (!template) {
+  throw new Error(
+    `Unknown invitation template: ${templateId}`
+  );
+}
 
-          p_name:
-            t(
-              "newInvitationName"
-            ),
+const eventFallback =
+  getInvitationEditorFallback(
+    event.type
+  );
 
-          p_template_id:
-            templateId,
+const result =
+  await createInvitationAction({
+    p_event_id:
+      eventId,
 
-          p_variant_id:
-            variantId,
+    p_name:
+      t(
+        `newTemplateName.${template.type}`
+      ),
+
+    p_template_id:
+      templateId,
+
+    p_variant_id:
+      variantId,
 
           p_content:
             createInitialInvitationContent(
@@ -235,12 +334,18 @@ export function useInvitationTemplateActions({
 
                 heroTitle:
                   contentT(
-                    `${event.type}.heroTitle`
+                    getContentTranslationKey(
+                      template.type,
+                      "heroTitle"
+                    )
                   ),
 
                 heroSubtitle:
                   contentT(
-                    `${event.type}.heroSubtitle`
+                    getContentTranslationKey(
+                      template.type,
+                      "heroSubtitle"
+                    )
                   ),
 
                 firstInitial:
@@ -251,7 +356,10 @@ export function useInvitationTemplateActions({
 
                 description:
                   contentT(
-                    `${event.type}.description`
+                    getContentTranslationKey(
+                      template.type,
+                      "description"
+                    )
                   ),
               }
             ),
@@ -318,9 +426,31 @@ export function useInvitationTemplateActions({
       return;
     }
 
-    if (
-      invitations.length === 0
-    ) {
+    const template =
+      getInvitationTemplateConfig(
+        templateId
+      );
+
+    if (!template) {
+      return;
+    }
+
+    const hasCompatibleInvitation =
+      invitations.some(
+        (invitation) => {
+          const invitationTemplate =
+            getInvitationTemplateConfig(
+              invitation.template_id
+            );
+
+          return (
+            invitationTemplate?.type ===
+            template.type
+          );
+        }
+      );
+
+    if (!hasCompatibleInvitation) {
       await createInvitation(
         templateId,
         variantId
@@ -349,6 +479,7 @@ export function useInvitationTemplateActions({
   ) {
     if (
       !selectedTemplate ||
+      !selectedTemplateConfig ||
       isCreatingRef.current ||
       isUpdatingRef.current
     ) {
@@ -356,13 +487,26 @@ export function useInvitationTemplateActions({
     }
 
     const invitation =
-      invitations.find(
+      compatibleInvitations.find(
         (invitation) =>
           invitation.id ===
           invitationId
       );
 
     if (!invitation) {
+      return;
+    }
+
+    const invitationTemplate =
+      getInvitationTemplateConfig(
+        invitation.template_id
+      );
+
+    if (
+      !invitationTemplate ||
+      invitationTemplate.type !==
+        selectedTemplateConfig.type
+    ) {
       return;
     }
 
@@ -474,6 +618,12 @@ export function useInvitationTemplateActions({
     setIsUseDialogOpen(
       open
     );
+
+    if (!open) {
+      setSelectedTemplate(
+        null
+      );
+    }
   }
 
 
@@ -483,6 +633,7 @@ export function useInvitationTemplateActions({
 
   return {
     selectedTemplate,
+    compatibleInvitations,
     isUseDialogOpen,
     isCreating,
     isUpdating,

@@ -9,6 +9,12 @@ import type {
 
 export const portraitTemplateConfig:
   InvitationTemplateConfig = {
+    type:
+      "invitation",
+
+    family:
+      "portrait",
+
     category:
       "wedding",
 
@@ -18,6 +24,19 @@ export const portraitTemplateConfig:
 
       imageUrl:
         "/invitation-assets/previews/portrait/couple.webp",
+    },
+
+    card: {
+      aspectRatio:
+        "5 / 7",
+    },
+
+    features: {
+      details:
+        true,
+
+      rsvp:
+        true,
     },
 
     envelopeId:

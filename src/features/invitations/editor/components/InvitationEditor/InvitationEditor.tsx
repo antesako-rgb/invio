@@ -33,6 +33,10 @@ import type {
   InvitationEditorStep,
 } from "@/features/invitations/editor/types/invitationEditor.types";
 
+import type {
+  InvitationTemplateFeaturesConfig,
+} from "@/features/invitations/types/invitationTemplateConfig.types";
+
 import "@/features/invitations/styles/invitationEditor.css";
 
 import "./InvitationEditor.css";
@@ -54,6 +58,9 @@ interface InvitationEditorProps {
 
   activeStep:
     InvitationEditorStep;
+
+  features:
+    InvitationTemplateFeaturesConfig;
 
   saveStatus:
     InvitationEditorSaveStatus;
@@ -77,6 +84,7 @@ export default function InvitationEditor({
   sidebar,
   toolbar,
   activeStep,
+  features,
   saveStatus,
   onStepChange,
   onPreview,
@@ -99,6 +107,9 @@ export default function InvitationEditor({
       <InvitationEditorHeader
         activeStep={
           activeStep
+        }
+        features={
+          features
         }
         saveStatus={
           saveStatus

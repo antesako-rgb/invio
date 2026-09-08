@@ -8,9 +8,7 @@ import {
 import {
   useTranslations,
 } from "next-intl";
-import {
-  useInvitationPresentation,
-} from "@/features/invitations/renderer/context/InvitationPresentationContext";
+
 import {
   Popover,
   PopoverContent,
@@ -33,6 +31,10 @@ import type {
   InvitationEditorContext,
 } from "@/features/invitations/editor/types/invitationEditor.types";
 
+import {
+  useInvitationPresentation,
+} from "@/features/invitations/renderer/context/InvitationPresentationContext";
+
 import type {
   InvitationRenderMode,
 } from "@/features/invitations/types/invitationRenderer.types";
@@ -44,6 +46,9 @@ import type {
 
 const TIME_ELEMENT =
   "time.start_time" as const;
+
+const TIME_PLACEHOLDER =
+  "--:--";
 
 
 /* ==========================================================================
@@ -118,39 +123,42 @@ export default function EditableTime({
     editor?.content.time.end_time ??
     null;
 
+  const isTimeEmpty =
+    startTime === null;
 
-/* ==========================================================================
-   Presentation
-========================================================================== */
 
-const presentation =
-  useInvitationPresentation();
+  /* ==========================================================================
+     Presentation
+  ========================================================================== */
 
-const elementPresentation =
-  presentation.elements?.[
-    TIME_ELEMENT
-  ];
+  const presentation =
+    useInvitationPresentation();
 
-const elementStyle =
-  getInvitationElementStyle(
-    elementPresentation
-  );
+  const elementPresentation =
+    presentation.elements?.[
+      TIME_ELEMENT
+    ];
 
-const timeStyle = {
-  ...elementStyle,
+  const elementStyle =
+    getInvitationElementStyle(
+      elementPresentation
+    );
 
-  textAlign:
-    undefined,
+  const timeStyle = {
+    ...elementStyle,
 
-  alignSelf:
-    elementPresentation?.text_align === "left"
-      ? "flex-start"
-      : elementPresentation?.text_align === "right"
-        ? "flex-end"
-        : elementPresentation?.text_align === "center"
-          ? "center"
-          : undefined,
-};
+    textAlign:
+      undefined,
+
+    alignSelf:
+      elementPresentation?.text_align === "left"
+        ? "flex-start"
+        : elementPresentation?.text_align === "right"
+          ? "flex-end"
+          : elementPresentation?.text_align === "center"
+            ? "center"
+            : undefined,
+  };
 
 
   /* ==========================================================================
@@ -266,6 +274,11 @@ const timeStyle = {
                 ? "true"
                 : undefined
             }
+            data-editor-placeholder={
+              isTimeEmpty
+                ? "true"
+                : undefined
+            }
             role="button"
             tabIndex={0}
             style={
@@ -275,7 +288,9 @@ const timeStyle = {
               handleClick
             }
           >
-            {children}
+            {isTimeEmpty
+              ? TIME_PLACEHOLDER
+              : children}
           </div>
         }
       />
