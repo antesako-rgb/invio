@@ -29,16 +29,16 @@ import InvitationRsvpStatusBadge
   from "@/features/invitations/components/invitation-management/InvitationRsvpStatusBadge/InvitationRsvpStatusBadge";
 
 import type {
-  InvitationRsvpQuestion,
-} from "@/features/invitations/types/invitationContent.types";
-
-import type {
   InvitationManagementRow,
 } from "@/features/invitations/types/invitationManagement.types";
 
+import type {
+  InvitationRsvpQuestion,
+} from "@/features/invitations/types/invitationRsvp.types";
+
 import {
-  getInvitationPublicPath,
-} from "@/features/invitations/utils/getInvitationPublicPath";
+  getEventExperiencePublicPath,
+} from "@/features/invitations/utils/getEventExperiencePublicPath";
 
 import {
   getInitials,
@@ -109,7 +109,7 @@ export default function InvitationRecipientMobileItem({
     null;
 
   const invitationPath =
-    getInvitationPublicPath(
+    getEventExperiencePublicPath(
       row.public_id ??
         invitationPublicId
     );
@@ -254,7 +254,7 @@ export default function InvitationRecipientMobileItem({
     <>
       <article
         className={
-          styles.item
+          styles.card
         }
       >
         {/* ==================================================================
@@ -373,10 +373,10 @@ export default function InvitationRecipientMobileItem({
             }
           >
             {copied ? (
-             <Check
-  className="size-4 text-green-600"
-  aria-hidden="true"
-/>
+              <Check
+                className="size-4 text-green-600"
+                aria-hidden="true"
+              />
             ) : (
               <Copy
                 className="size-4"

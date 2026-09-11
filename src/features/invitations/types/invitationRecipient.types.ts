@@ -1,11 +1,15 @@
 import type {
-  Database,
   Json,
   Tables,
 } from "@/lib/supabase/database.types";
 
 import type {
+  EventExperienceType,
+} from "@/features/invitations/types/eventExperience.types";
+
+import type {
   InvitationRsvpResponse,
+  InvitationRsvpStatus,
 } from "@/features/invitations/types/invitationRsvp.types";
 
 
@@ -26,20 +30,34 @@ export type InvitationGuest =
 
 
 /* ==========================================================================
-   Recipient RPC Inputs
+   Invitation Recipient Inputs
 ========================================================================== */
 
-export type CreateInvitationRecipientInput =
-  Database["public"]["Functions"]["create_invitation_recipient"]["Args"];
+export interface CreateInvitationRecipientInput {
+  invitationId:
+    string;
 
-export type DeleteInvitationRecipientInput =
-  Database["public"]["Functions"]["delete_invitation_recipient"]["Args"];
+  guestIds:
+    string[];
 
-export type GetInvitationRecipientsInput =
-  Database["public"]["Functions"]["get_invitation_recipients"]["Args"];
+  primaryGuestId:
+    string;
+}
 
-export type GetPublicInvitationRecipientInput =
-  Database["public"]["Functions"]["get_public_invitation_recipient"]["Args"];
+export interface DeleteInvitationRecipientInput {
+  recipientId:
+    string;
+}
+
+export interface GetInvitationRecipientsInput {
+  invitationId:
+    string;
+}
+
+export interface GetPublicInvitationRecipientInput {
+  publicId:
+    string;
+}
 
 
 /* ==========================================================================
@@ -47,13 +65,19 @@ export type GetPublicInvitationRecipientInput =
 ========================================================================== */
 
 export type InvitationRecipientRsvp =
-  Pick<
-    InvitationRsvpResponse,
-    | "status"
-    | "answers"
-    | "responded_at"
-    | "updated_at"
-  >;
+  Omit<
+    Pick<
+      InvitationRsvpResponse,
+      | "status"
+      | "answers"
+      | "responded_at"
+      | "updated_at"
+    >,
+    "status"
+  > & {
+    status:
+      InvitationRsvpStatus;
+  };
 
 
 /* ==========================================================================
@@ -118,14 +142,6 @@ export interface InvitationRecipientDetails {
 
 
 /* ==========================================================================
-   Public Invitation Recipient RSVP
-========================================================================== */
-
-export type PublicInvitationRecipientRsvp =
-  InvitationRecipientRsvp;
-
-
-/* ==========================================================================
    Public Invitation Recipient Guest
 ========================================================================== */
 
@@ -143,7 +159,7 @@ export interface PublicInvitationRecipientGuest {
     boolean;
 
   rsvp:
-    PublicInvitationRecipientRsvp | null;
+    InvitationRecipientRsvp | null;
 }
 
 
@@ -154,6 +170,9 @@ export interface PublicInvitationRecipientGuest {
 export interface PublicInvitationRecipientInvitation {
   public_id:
     string;
+
+  type:
+    EventExperienceType;
 
   template_id:
     string;

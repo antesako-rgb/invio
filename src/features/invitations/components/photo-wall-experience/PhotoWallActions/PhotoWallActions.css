@@ -1,0 +1,115 @@
+/* ==========================================================================
+   Photo Wall Actions
+========================================================================== */
+
+.photo-wall-actions {
+
+  display:
+    flex;
+
+  justify-content:
+    center;
+
+  width:
+    100%;
+
+  padding:
+    20px;
+
+}
+
+
+/* ==========================================================================
+   Button
+========================================================================== */
+
+.photo-wall-actions__button {
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    8px;
+
+  min-height:
+    44px;
+
+  padding:
+    10px 18px;
+
+  border:
+    1px solid
+    var(--event-experience-action-secondary-border);
+
+  border-radius:
+    999px;
+
+  background:
+    var(--event-experience-action-primary);
+
+  color:
+    var(--event-experience-action-primary-foreground);
+
+  font:
+    inherit;
+
+  font-weight:
+    500;
+
+  cursor:
+    pointer;
+
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+
+}
+
+.photo-wall-actions__button:hover {
+
+  opacity:
+    0.9;
+
+}
+
+.photo-wall-actions__button:active {
+
+  transform:
+    scale(0.98);
+
+}
+
+.photo-wall-actions__button:focus-visible {
+
+  outline:
+    2px solid
+    var(--event-experience-action-primary);
+
+  outline-offset:
+    3px;
+
+}
+
+
+/* ==========================================================================
+   Icon
+========================================================================== */
+
+.photo-wall-actions__icon {
+
+  width:
+    18px;
+
+  height:
+    18px;
+
+  flex:
+    0 0 auto;
+
+}

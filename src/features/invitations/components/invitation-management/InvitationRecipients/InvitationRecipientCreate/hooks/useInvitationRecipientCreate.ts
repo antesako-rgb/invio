@@ -236,14 +236,12 @@ export function useInvitationRecipientCreate({
 
     const result =
       await createInvitationRecipientAction({
-        p_invitation_id:
-          invitationId,
+        invitationId,
 
-        p_guest_ids:
+        guestIds:
           selectedGuestIds,
 
-        p_primary_guest_id:
-          primaryGuestId,
+        primaryGuestId,
       });
 
     if (!result.success) {

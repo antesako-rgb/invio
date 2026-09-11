@@ -1,0 +1,288 @@
+/* ==========================================================================
+   Event Details
+========================================================================== */
+
+[data-event-experience-details] {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-end;
+
+  width:
+    100%;
+
+  gap:
+    var(--event-experience-event-gap);
+
+  font-family:
+    var(--event-experience-event-font);
+
+  font-size:
+    var(--event-experience-event-size);
+
+  font-style:
+    var(--event-experience-event-style);
+
+  font-weight:
+    var(--event-experience-event-weight);
+
+  line-height:
+    var(--event-experience-event-line-height);
+
+  letter-spacing:
+    var(--event-experience-event-letter-spacing);
+
+  color:
+    var(--event-experience-event-color);
+
+  text-transform:
+    var(--event-experience-event-text-transform);
+
+  text-align:
+    right;
+
+  opacity:
+    var(--event-experience-event-opacity);
+}
+
+
+/* ==========================================================================
+   Date
+========================================================================== */
+
+[data-event-experience-details]
+> [data-event-experience-date] {
+  --event-experience-element-font-size:
+    var(--event-experience-event-date-size);
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-end;
+
+  width:
+    fit-content;
+
+  max-width:
+    100%;
+
+  gap:
+    var(--event-experience-event-date-gap);
+
+  font-family:
+    var(--event-experience-event-date-font);
+
+  font-size:
+    var(--event-experience-element-font-size);
+
+  font-style:
+    var(--event-experience-event-style);
+
+  font-weight:
+    var(--event-experience-event-weight);
+
+  line-height:
+    var(--event-experience-event-line-height);
+
+  letter-spacing:
+    var(--event-experience-event-date-letter-spacing);
+
+  color:
+    var(--event-experience-event-color);
+
+  text-transform:
+    var(--event-experience-event-date-text-transform);
+
+  text-align:
+    right;
+}
+
+
+/* ==========================================================================
+   Date Main
+========================================================================== */
+
+[data-event-experience-details]
+[data-event-experience-details-date-main] {
+  display:
+    block;
+
+  width:
+    100%;
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Day Name
+========================================================================== */
+
+[data-event-experience-details]
+[data-event-experience-details-day-name] {
+  display:
+    block;
+
+  width:
+    100%;
+
+  margin-top:
+    var(--event-experience-event-day-name-gap);
+
+  padding-top:
+    var(--event-experience-event-day-name-space);
+
+  font-size:
+    var(--event-experience-event-day-name-size);
+
+  font-weight:
+    var(--event-experience-event-day-name-weight);
+
+  letter-spacing:
+    var(--event-experience-event-day-name-letter-spacing);
+
+  text-transform:
+    var(--event-experience-event-day-name-text-transform);
+
+  text-align:
+    right;
+
+  opacity:
+    var(--event-experience-event-day-name-opacity);
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Time
+========================================================================== */
+
+[data-event-experience-details]
+> [data-event-experience-time] {
+  --event-experience-element-font-size:
+    var(--event-experience-event-size);
+
+  width:
+    fit-content;
+
+  max-width:
+    100%;
+
+  font-family:
+    var(--event-experience-event-font);
+
+  font-size:
+    var(--event-experience-element-font-size);
+
+  font-style:
+    var(--event-experience-event-style);
+
+  font-weight:
+    var(--event-experience-event-weight);
+
+  line-height:
+    var(--event-experience-event-line-height);
+
+  letter-spacing:
+    var(--event-experience-event-letter-spacing);
+
+  color:
+    var(--event-experience-event-color);
+
+  text-transform:
+    var(--event-experience-event-text-transform);
+
+  text-align:
+    right;
+}
+
+
+/* ==========================================================================
+   Location
+========================================================================== */
+
+[data-event-experience-details]
+[data-event-experience-details-location] {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-end;
+
+  width:
+    100%;
+
+  gap:
+    var(--event-experience-event-location-gap);
+
+  font-family:
+    var(--event-experience-event-font);
+
+  font-size:
+    var(--event-experience-event-size);
+
+  font-style:
+    var(--event-experience-event-style);
+
+  font-weight:
+    var(--event-experience-event-weight);
+
+  line-height:
+    var(--event-experience-event-line-height);
+
+  letter-spacing:
+    var(--event-experience-event-letter-spacing);
+
+  color:
+    var(--event-experience-event-color);
+
+  text-transform:
+    var(--event-experience-event-text-transform);
+
+  text-align:
+    right;
+
+  white-space:
+    pre-line;
+}
+
+
+/* ==========================================================================
+   Location Parts
+========================================================================== */
+
+[data-event-experience-details]
+[data-event-experience-details-location]
+> * {
+  --event-experience-element-font-size:
+    var(--event-experience-event-size);
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  max-width:
+    100%;
+
+  font-size:
+    var(--event-experience-element-font-size);
+
+  text-align:
+    right;
+}

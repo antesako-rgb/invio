@@ -1,6 +1,6 @@
 import type {
   InvitationRenderGuest,
-} from "@/features/invitations/types/invitationRenderer.types";
+} from "@/features/invitations/types/eventExperienceRenderer.types";
 
 
 /* ==========================================================================

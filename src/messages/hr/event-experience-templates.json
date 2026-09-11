@@ -1,0 +1,111 @@
+{
+  "EventExperienceTemplates": {
+    "newTemplateName": {
+      "invitation": "Nova pozivnica",
+      "save-the-date": "Novi Save the Date",
+      "thank-you": "Nova zahvalnica",
+      "photo-wall": "Novi Photo Wall"
+    },
+
+    "variants": "{count, plural, one {# varijanta} few {# varijante} other {# varijanti}}",
+    "variantSelector": "Odaberite varijantu",
+    "useTemplate": "Koristi predložak",
+    "creating": "Kreiranje...",
+
+    "types": {
+      "all": "Sve",
+      "invitation": "Pozivnice",
+      "save-the-date": "Save the Date",
+      "thank-you": "Zahvalnice",
+      "photo-wall": "Photo Wall"
+    },
+
+    "categories": {
+      "all": "Sve",
+      "wedding": "Vjenčanje",
+      "confirmation": "Krizma",
+      "baptism": "Krštenje",
+      "communion": "Prva pričest",
+      "birthday": "Rođendan",
+      "other_private": "Ostali privatni događaji",
+      "conference": "Konferencija",
+      "seminar": "Seminar",
+      "team_building": "Team building",
+      "reception": "Domjenak",
+      "gala_dinner": "Svečana večera",
+      "other_business": "Ostali poslovni događaji",
+      "festival": "Festival",
+      "charity": "Humanitarni događaj",
+      "sports": "Sportski događaj",
+      "cultural": "Kulturni događaj",
+      "music": "Glazbeni događaj",
+      "other_social": "Ostali društveni događaji"
+    },
+
+    "templates": {
+      "flora": {
+        "name": "Flora",
+        "description": "Elegantna botanička pozivnica s nježnim i profinjenim detaljima."
+      },
+
+      "portrait": {
+        "name": "Portrait",
+        "description": "Elegantna pozivnica s naglaskom na fotografiju, osmišljena kako bi istaknula vaš omiljeni trenutak."
+      },
+
+      "celeste": {
+        "name": "Celeste",
+        "description": "Profinjena pozivnica za vjenčanje s bogatim plavim tonovima, zlatnim detaljima i bezvremenskom elegancijom."
+      },
+
+      "garden-grace": {
+        "name": "Garden Grace",
+        "description": "Profinjena botanička pozivnica za vjenčanje s raskošnim zelenilom, nježnim cvjetnim detaljima i bezvremenskom elegancijom."
+      },
+
+      "garden-grace-save-the-date": {
+        "name": "Garden Grace Save the Date",
+        "description": "Usklađeni Garden Grace dizajn za najavu datuma vašeg vjenčanja."
+      },
+
+      "garden-grace-photo-wall": {
+        "name": "Garden Grace Photo Wall",
+        "description": "Usklađeni Garden Grace prostor za dijeljenje fotografija s vašeg događaja."
+      }
+    },
+
+"familyDialog": {
+  "matchingDesigns": "Usklađeni dizajni",
+  "matchingDesignsDescription": "Upotpunite svoj događaj usklađenim dizajnima iz iste kolekcije.",
+  "variants": "Varijante",
+  "useTemplate": "Koristi predložak",
+
+  "types": {
+    "invitation": "Pozivnica",
+    "save-the-date": "Save the Date",
+    "thank-you": "Zahvala",
+     "photo-wall": "Foto zid"
+  }
+},
+
+"useDialog": {
+  "title": "Koristi predložak",
+  "description": "Odaberite kako želite koristiti predložak {template} · {variant}.",
+
+  "existing": {
+    "title": "Primijeni na postojeće iskustvo",
+    "description": "Zamijenite dizajn jednog od postojećih iskustava ovim predloškom.",
+    "selectTitle": "Odaberite iskustvo",
+    "selectDescription": "Odaberite iskustvo na koje želite primijeniti ovaj predložak.",
+    "lastUpdated": "Posljednje ažuriranje: {date}"
+  },
+
+  "new": {
+    "title": "Izradi novo iskustvo",
+    "description": "Izradite novo iskustvo koristeći ovaj predložak."
+  },
+
+  "back": "Natrag"
+}
+  }
+}

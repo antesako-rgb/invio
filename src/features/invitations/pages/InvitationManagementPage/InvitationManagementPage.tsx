@@ -8,43 +8,28 @@ import Container
 import Page
   from "@/components/layout/PageContainer/Page";
 
-import InvitationDeleteDangerZone
-  from "@/features/invitations/components/invitation-management/InvitationDeleteDangerZone/InvitationDeleteDangerZone";
+import EventExperienceDeleteDangerZone
+  from "@/features/invitations/components/experience-management/EventExperienceDeleteDangerZone/EventExperienceDeleteDangerZone";
 
-import InvitationManagementHeader
-  from "@/features/invitations/components/invitation-management/InvitationManagementHeader/InvitationManagementHeader";
+import EventExperienceManagementHeader
+  from "@/features/invitations/components/experience-management/EventExperienceManagementHeader/EventExperienceManagementHeader";
 
-import InvitationPublicLinkCard
-  from "@/features/invitations/components/invitation-management/InvitationPublicLinkCard/InvitationPublicLinkCard";
+import EventExperiencePublicLinkCard
+  from "@/features/invitations/components/experience-management/EventExperiencePublicLinkCard/EventExperiencePublicLinkCard";
 
-import InvitationRecipients
-  from "@/features/invitations/components/invitation-management/InvitationRecipients/InvitationRecipients";
+import EventExperienceStatusCard
+  from "@/features/invitations/components/experience-management/EventExperienceStatusCard/EventExperienceStatusCard";
 
-import InvitationRsvpSummary
-  from "@/features/invitations/components/invitation-management/InvitationRsvpSummary/InvitationRsvpSummary";
-
-import InvitationStatusCard
-  from "@/features/invitations/components/invitation-management/InvitationStatusCard/InvitationStatusCard";
+import InvitationRsvpManagement
+  from "@/features/invitations/components/invitation-management/InvitationRsvpManagement/InvitationRsvpManagement";
 
 import {
-  getInvitation,
-} from "@/features/invitations/repositories/invitation/getInvitation";
+  getEventExperienceTemplateConfig,
+} from "@/features/invitations/cards/registry/eventExperienceTemplateRegistry.utils";
 
 import {
-  getInvitationManagementGuests,
-} from "@/features/invitations/repositories/invitation/getInvitationManagementGuests";
-
-import {
-  getInvitationRecipients,
-} from "@/features/invitations/repositories/invitation-recipients/getInvitationRecipients";
-
-import type {
-  InvitationContent,
-} from "@/features/invitations/types/invitationContent.types";
-
-import {
-  getEventGuestsPageData,
-} from "@/features/guests/repositories/getEventGuestsPageData";
+  getEventExperience,
+} from "@/features/invitations/repositories/experience/getEventExperience";
 
 import styles
   from "./InvitationManagementPage.module.css";
@@ -72,7 +57,7 @@ export default async function InvitationManagementPage({
   ========================================================================== */
 
   const invitation =
-    await getInvitation(
+    await getEventExperience(
       invitationId
     );
 
@@ -82,91 +67,21 @@ export default async function InvitationManagementPage({
 
 
   /* ==========================================================================
-     Invitation Content
+     Template
   ========================================================================== */
 
-  const content =
-    invitation.content as
-      unknown as
-      InvitationContent;
+const template =
+  getEventExperienceTemplateConfig(
+    invitation.type,
+    invitation.template_id
+  );
 
-  const rsvpQuestions =
-    content.rsvp?.questions ??
-    [];
+if (!template) {
+  notFound();
+}
 
-
-  /* ==========================================================================
-     Management Data
-  ========================================================================== */
-
-  const [
-    recipients,
-    managementGuests,
-    guestsData,
-  ] =
-    await Promise.all([
-      getInvitationRecipients({
-        p_invitation_id:
-          invitation.id,
-      }),
-
-      getInvitationManagementGuests({
-        p_invitation_id:
-          invitation.id,
-      }),
-
-      getEventGuestsPageData(
-        invitation.event_id
-      ),
-    ]);
-
-
-  /* ==========================================================================
-     Available Guests
-  ========================================================================== */
-
-  const assignedGuestIds =
-    new Set(
-      managementGuests.map(
-        (guest) =>
-          guest.id
-      )
-    );
-
-  const availableGuests =
-    guestsData.guests.filter(
-      (guest) =>
-        !assignedGuestIds.has(
-          guest.id
-        )
-    );
-
-
-  /* ==========================================================================
-     RSVP Summary
-  ========================================================================== */
-
-  const total =
-    managementGuests.length;
-
-  const attending =
-    managementGuests.filter(
-      (guest) =>
-        guest.rsvp?.status ===
-        "attending"
-    ).length;
-
-  const declined =
-    managementGuests.filter(
-      (guest) =>
-        guest.rsvp?.status ===
-        "declined"
-    ).length;
-
-  const pending =
-    total -
-    attending -
-    declined;
+  const supportsRsvp =
+    template.features.rsvp;
 
 
   /* ==========================================================================
@@ -176,8 +91,8 @@ export default async function InvitationManagementPage({
   return (
     <Container>
       <Page>
-        <InvitationManagementHeader
-          invitation={
+        <EventExperienceManagementHeader
+          experience={
             invitation
           }
         />
@@ -192,14 +107,14 @@ export default async function InvitationManagementPage({
             styles.overview
           }
         >
-          <InvitationStatusCard
-            invitation={
+          <EventExperienceStatusCard
+            experience={
               invitation
             }
           />
 
-          <InvitationPublicLinkCard
-            invitation={
+          <EventExperiencePublicLinkCard
+            experience={
               invitation
             }
           />
@@ -207,74 +122,32 @@ export default async function InvitationManagementPage({
 
 
         {/* ==================================================================
-            RSVP Summary
+            RSVP Management
         ================================================================== */}
 
-        <InvitationRsvpSummary
-          total={
-            total
-          }
-          attending={
-            attending
-          }
-          declined={
-            declined
-          }
-          pending={
-            pending
-          }
-          questions={
-            rsvpQuestions
-          }
-          guests={
-            managementGuests
-          }
-        />
-
-
-        {/* ==================================================================
-            Recipients
-        ================================================================== */}
-
-        <InvitationRecipients
-          invitationId={
-            invitation.id
-          }
-          invitationPublicId={
-            invitation.public_id
-          }
-          eventId={
-            invitation.event_id
-          }
-          recipients={
-            recipients
-          }
-          managementGuests={
-            managementGuests
-          }
-          questions={
-            rsvpQuestions
-          }
-          availableGuests={
-            availableGuests
-          }
-          groups={
-            guestsData.groups
-          }
-        />
+        {supportsRsvp && (
+          <InvitationRsvpManagement
+            invitation={
+              invitation
+            }
+          />
+        )}
 
 
         {/* ==================================================================
             Danger Zone
         ================================================================== */}
 
-        <InvitationDeleteDangerZone
-          invitationId={
+        <EventExperienceDeleteDangerZone
+          experienceId={
             invitation.id
           }
           eventId={
             invitation.event_id
           }
+       experienceType={
+  invitation.type
+}
         />
       </Page>
     </Container>

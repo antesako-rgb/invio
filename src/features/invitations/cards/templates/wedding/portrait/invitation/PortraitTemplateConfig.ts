@@ -1,6 +1,6 @@
 import type {
-  InvitationTemplateConfig,
-} from "@/features/invitations/types/invitationTemplateConfig.types";
+  EventExperienceTemplateConfig,
+} from "@/features/invitations/types/eventExperienceTemplateConfig.types";
 
 
 /* ==========================================================================
@@ -8,9 +8,7 @@ import type {
 ========================================================================== */
 
 export const portraitTemplateConfig:
-  InvitationTemplateConfig = {
-    type:
-      "invitation",
+  EventExperienceTemplateConfig = {
 
     family:
       "portrait",
@@ -37,6 +35,9 @@ export const portraitTemplateConfig:
 
       rsvp:
         true,
+
+      photos:
+        false,
     },
 
     envelopeId:

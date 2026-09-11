@@ -1,6 +1,6 @@
 import type {
-  InvitationTemplateConfig,
-} from "@/features/invitations/types/invitationTemplateConfig.types";
+  EventExperienceTemplateConfig,
+} from "@/features/invitations/types/eventExperienceTemplateConfig.types";
 
 
 /* ==========================================================================
@@ -8,10 +8,7 @@ import type {
 ========================================================================== */
 
 export const gardenGraceSaveTheDateTemplateConfig:
-  InvitationTemplateConfig = {
-    type:
-      "save-the-date",
-
+  EventExperienceTemplateConfig = {
     family:
       "garden-grace",
 
@@ -36,6 +33,9 @@ export const gardenGraceSaveTheDateTemplateConfig:
         false,
 
       rsvp:
+        false,
+
+      photos:
         false,
     },
 

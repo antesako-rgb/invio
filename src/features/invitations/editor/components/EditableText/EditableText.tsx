@@ -24,25 +24,25 @@ import {
 } from "@/features/invitations/editor/components/EditableText/hooks/useEditableTextEditing";
 
 import {
-  getInvitationElementStyle,
-} from "@/features/invitations/editor/presentation/getInvitationElementStyle";
+  getEventExperienceElementStyle,
+} from "@/features/invitations/editor/presentation/getEventExperienceElementStyle";
 
 import {
-  invitationEditorElements,
-} from "@/features/invitations/editor/registry/invitationEditorElements";
+  eventExperienceEditorElements,
+} from "@/features/invitations/editor/registry/eventExperienceEditorElements";
 
 import type {
-  InvitationEditorContext,
-  InvitationEditorSelection,
-} from "@/features/invitations/editor/types/invitationEditor.types";
+  EventExperienceEditorContext,
+  EventExperienceEditorSelection,
+} from "@/features/invitations/editor/types/eventExperienceEditor.types";
 
 import {
-  useInvitationPresentation,
-} from "@/features/invitations/renderer/context/InvitationPresentationContext";
+  useEventExperiencePresentation,
+} from "@/features/invitations/renderer/context/EventExperiencePresentationContext";
 
 import type {
-  InvitationRenderMode,
-} from "@/features/invitations/types/invitationRenderer.types";
+  EventExperienceRenderMode,
+} from "@/features/invitations/types/eventExperienceRenderer.types";
 
 
 /* ==========================================================================
@@ -51,13 +51,13 @@ import type {
 
 interface EditableTextProps {
   element:
-    InvitationEditorSelection;
+    EventExperienceEditorSelection;
 
   mode:
-    InvitationRenderMode;
+    EventExperienceRenderMode;
 
   editor?:
-    InvitationEditorContext;
+     EventExperienceEditorContext;
 
   children:
     ReactNode;
@@ -78,10 +78,19 @@ export default function EditableText({
   children,
   className,
 }: EditableTextProps) {
+  /* ==========================================================================
+     Translations
+  ========================================================================== */
+
   const t =
     useTranslations(
-      "Invitations.editor.elementLabels"
+     "EventExperiences.editor.elementLabels"
     );
+
+
+  /* ==========================================================================
+     Ref
+  ========================================================================== */
 
   const elementRef =
     useRef<HTMLSpanElement>(
@@ -94,7 +103,7 @@ export default function EditableText({
   ========================================================================== */
 
   const elementConfig =
-    invitationEditorElements[
+    eventExperienceEditorElements[
       element
     ];
 
@@ -148,7 +157,7 @@ export default function EditableText({
   ========================================================================== */
 
   const presentation =
-    useInvitationPresentation();
+    useEventExperiencePresentation();
 
   const elementPresentation =
     presentation.elements?.[
@@ -156,7 +165,7 @@ export default function EditableText({
     ];
 
   const elementStyle =
-    getInvitationElementStyle(
+    getEventExperienceElementStyle(
       elementPresentation
     );
 

@@ -22,11 +22,8 @@ import type {
 } from "@/features/invitations/types/invitationRecipient.types";
 
 import type {
-  InvitationRsvpQuestion,
-} from "@/features/invitations/types/invitationContent.types";
-
-import type {
   InvitationRsvpAnswers,
+  InvitationRsvpQuestion,
 } from "@/features/invitations/types/invitationRsvp.types";
 
 import styles

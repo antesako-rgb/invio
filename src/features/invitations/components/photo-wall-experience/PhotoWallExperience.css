@@ -1,0 +1,432 @@
+/* ==========================================================================
+   Photo Wall Experience
+========================================================================== */
+
+.photo-wall-experience {
+
+  position:
+    relative;
+
+  width:
+    min(
+      100%,
+      1040px
+    );
+
+  margin:
+    48px auto;
+
+  padding:
+    48px;
+
+  border:
+    1px solid
+    rgba(
+      79,
+      64,
+      54,
+      0.08
+    );
+
+  border-radius:
+    24px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.56
+    );
+
+  box-shadow:
+    0 20px 60px
+    rgba(
+      79,
+      64,
+      54,
+      0.08
+    );
+
+  backdrop-filter:
+    blur(
+      8px
+    );
+
+  color:
+    var(--event-experience-foreground);
+
+}
+
+
+/* ==========================================================================
+   Navigation
+========================================================================== */
+
+.photo-wall-experience__back {
+
+  position:
+    absolute;
+
+  top:
+    24px;
+
+  left:
+    24px;
+
+  z-index:
+    2;
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    44px;
+
+  height:
+    44px;
+
+  padding:
+    0;
+
+  border:
+    1px solid
+    var(--event-experience-action-secondary-border);
+
+  border-radius:
+    50%;
+
+  background:
+    var(--event-experience-action-secondary);
+
+  color:
+    var(--event-experience-action-secondary-foreground);
+
+  cursor:
+    pointer;
+
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+
+}
+
+.photo-wall-experience__back svg {
+
+  width:
+    20px;
+
+  height:
+    20px;
+
+}
+
+.photo-wall-experience__back:hover {
+
+  opacity:
+    0.85;
+
+}
+
+.photo-wall-experience__back:active {
+
+  transform:
+    scale(0.96);
+
+}
+
+.photo-wall-experience__back:focus-visible {
+
+  outline:
+    2px solid
+    var(--event-experience-action-primary);
+
+  outline-offset:
+    3px;
+
+}
+
+
+/* ==========================================================================
+   Header
+========================================================================== */
+
+.photo-wall-experience__header {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  margin-bottom:
+    40px;
+
+  padding:
+    8px 72px 0;
+
+  text-align:
+    center;
+
+}
+
+
+/* ==========================================================================
+   Names
+========================================================================== */
+
+.photo-wall-experience__names {
+
+  margin:
+    0;
+
+  font-family:
+    var(--event-experience-name-font);
+
+  font-size:
+    clamp(
+      2.75rem,
+      5vw,
+      4rem
+    );
+
+  font-style:
+    var(--event-experience-name-style);
+
+  font-weight:
+    var(--event-experience-name-weight);
+
+  line-height:
+    var(--event-experience-name-line-height);
+
+  letter-spacing:
+    var(--event-experience-name-letter-spacing);
+
+  color:
+    var(--event-experience-name-color);
+
+}
+
+
+/* ==========================================================================
+   Date
+========================================================================== */
+
+.photo-wall-experience__date {
+
+  margin:
+    12px 0 0;
+
+  font-family:
+    var(--event-experience-event-date-font);
+
+  font-size:
+    0.85rem;
+
+  font-weight:
+    500;
+
+  line-height:
+    1.4;
+
+  letter-spacing:
+    0.12em;
+
+  color:
+    var(--event-experience-muted);
+
+  text-transform:
+    uppercase;
+
+}
+
+
+/* ==========================================================================
+   Add Photos
+========================================================================== */
+
+.photo-wall-experience__add {
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    8px;
+
+  min-height:
+    44px;
+
+  margin-top:
+    24px;
+
+  padding:
+    10px 20px;
+
+  border:
+    0;
+
+  border-radius:
+    999px;
+
+  background:
+    var(--event-experience-action-primary);
+
+  color:
+    var(--event-experience-action-primary-foreground);
+
+  font:
+    inherit;
+
+  font-weight:
+    600;
+
+  cursor:
+    pointer;
+
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+
+}
+
+.photo-wall-experience__add svg {
+
+  width:
+    18px;
+
+  height:
+    18px;
+
+}
+
+.photo-wall-experience__add:hover {
+
+  opacity:
+    0.9;
+
+}
+
+.photo-wall-experience__add:active {
+
+  transform:
+    scale(0.98);
+
+}
+
+.photo-wall-experience__add:focus-visible {
+
+  outline:
+    2px solid
+    var(--event-experience-action-primary);
+
+  outline-offset:
+    3px;
+
+}
+
+
+/* ==========================================================================
+   Count
+========================================================================== */
+
+.photo-wall-experience__count {
+
+  width:
+    100%;
+
+  margin:
+    0 0 16px;
+
+  font-family:
+    var(--event-experience-event-font);
+
+  font-size:
+    0.8rem;
+
+  font-weight:
+    500;
+
+  line-height:
+    1.4;
+
+  letter-spacing:
+    0.04em;
+
+  color:
+    var(--event-experience-muted);
+
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 767px) {
+
+  .photo-wall-experience {
+
+    width:
+      calc(100% - 24px);
+
+    margin:
+      12px auto;
+
+    padding:
+      72px 16px 24px;
+
+    border-radius:
+      18px;
+
+  }
+
+  .photo-wall-experience__back {
+
+    top:
+      16px;
+
+    left:
+      16px;
+
+  }
+
+  .photo-wall-experience__header {
+
+    margin-bottom:
+      32px;
+
+    padding:
+      0;
+
+  }
+
+  .photo-wall-experience__names {
+
+    font-size:
+      clamp(
+        2.25rem,
+        12vw,
+        3.25rem
+      );
+
+  }
+
+}

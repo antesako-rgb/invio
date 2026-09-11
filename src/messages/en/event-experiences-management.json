@@ -1,0 +1,195 @@
+{
+  "EventExperiences": {
+    "management": {
+      "status": {
+        "published": "Published",
+        "draft": "Draft"
+      },
+
+  "actions": {
+  "preview": {
+    "invitation": "Preview invitation",
+    "save-the-date": "Preview Save the Date",
+    "thank-you": "Preview thank you card",
+    "photo-wall": "Preview Photo Wall"
+  },
+  "view": "Open",
+  "edit": "Edit design"
+},
+
+      "name": {
+        "label": "Experience name",
+        "edit": "Edit name",
+        "save": "Save name",
+        "cancel": "Cancel",
+        "error": "Unable to save the experience name."
+      },
+
+      "updatedAt": "Last updated: {date}",
+
+      "delete": {
+        "title": {
+          "invitation": "Delete invitation",
+          "save-the-date": "Delete Save the Date",
+          "thank-you": "Delete thank you card",
+          "photo-wall": "Delete Photo Wall"
+        },
+
+        "description": {
+          "invitation": "Permanently delete this invitation and all data associated with it.",
+          "save-the-date": "Permanently delete this Save the Date and all data associated with it.",
+          "thank-you": "Permanently delete this thank you card and all data associated with it.",
+          "photo-wall": "Permanently delete this Photo Wall and all data associated with it."
+        },
+
+        "button": {
+          "invitation": "Delete invitation",
+          "save-the-date": "Delete Save the Date",
+          "thank-you": "Delete thank you card",
+          "photo-wall": "Delete Photo Wall"
+        },
+
+        "confirm": {
+          "title": {
+            "invitation": "Delete invitation?",
+            "save-the-date": "Delete Save the Date?",
+            "thank-you": "Delete thank you card?",
+            "photo-wall": "Delete Photo Wall?"
+          },
+
+          "description": "This action is permanent and cannot be undone.",
+
+          "confirm": {
+            "invitation": "Delete invitation",
+            "save-the-date": "Delete Save the Date",
+            "thank-you": "Delete thank you card",
+            "photo-wall": "Delete Photo Wall"
+          },
+
+          "cancel": "Cancel"
+        }
+      },
+
+      "statusCard": {
+        "title": {
+          "invitation": "Invitation status",
+          "save-the-date": "Save the Date status",
+          "thank-you": "Thank you card status",
+          "photo-wall": "Photo Wall status"
+        },
+
+        "description": {
+          "invitation": "Manage the availability of your invitation.",
+          "save-the-date": "Manage the availability of your Save the Date.",
+          "thank-you": "Manage the availability of your thank you card.",
+          "photo-wall": "Manage the availability of your Photo Wall."
+        },
+
+        "published": {
+          "title": {
+            "invitation": "Invitation is published",
+            "save-the-date": "Save the Date is published",
+            "thank-you": "Thank you card is published",
+            "photo-wall": "Photo Wall is published"
+          },
+
+          "description": {
+            "invitation": "Guests with access to the link can view the invitation and all information you have chosen to share.",
+            "save-the-date": "Guests with access to the link can view the Save the Date and all information you have chosen to share.",
+            "thank-you": "Guests with access to the link can view the thank you card and all information you have chosen to share.",
+            "photo-wall": "Guests with access to the link can view the Photo Wall and the content you have chosen to share."
+          },
+
+          "action": {
+            "invitation": "Unpublish invitation",
+            "save-the-date": "Unpublish Save the Date",
+            "thank-you": "Unpublish thank you card",
+            "photo-wall": "Unpublish Photo Wall"
+          },
+
+          "success": {
+            "invitation": "The invitation has been unpublished successfully.",
+            "save-the-date": "The Save the Date has been unpublished successfully.",
+            "thank-you": "The thank you card has been unpublished successfully.",
+            "photo-wall": "The Photo Wall has been unpublished successfully."
+          }
+        },
+
+        "draft": {
+          "title": {
+            "invitation": "Invitation is not published",
+            "save-the-date": "Save the Date is not published",
+            "thank-you": "Thank you card is not published",
+            "photo-wall": "Photo Wall is not published"
+          },
+
+          "description": {
+            "invitation": "Guests cannot access or view the invitation until you publish it and make it available for sharing.",
+            "save-the-date": "Guests cannot access or view the Save the Date until you publish it and make it available for sharing.",
+            "thank-you": "Guests cannot access or view the thank you card until you publish it and make it available for sharing.",
+            "photo-wall": "Guests cannot access or view the Photo Wall until you publish it and make it available for sharing."
+          },
+
+          "action": {
+            "invitation": "Publish invitation",
+            "save-the-date": "Publish Save the Date",
+            "thank-you": "Publish thank you card",
+            "photo-wall": "Publish Photo Wall"
+          },
+
+          "success": {
+            "invitation": "The invitation has been published successfully.",
+            "save-the-date": "The Save the Date has been published successfully.",
+            "thank-you": "The thank you card has been published successfully.",
+            "photo-wall": "The Photo Wall has been published successfully."
+          }
+        }
+      },
+
+      "publicLinkCard": {
+        "title": "Public link",
+
+        "description": {
+          "invitation": "Share the public link to your invitation.",
+          "save-the-date": "Share the public link to your Save the Date.",
+          "thank-you": "Share the public link to your thank you card.",
+          "photo-wall": "Share the public link to your Photo Wall."
+        },
+
+        "active": {
+          "title": "Public link is active",
+
+          "description": {
+            "invitation": "Anyone with this link can view the invitation.",
+            "save-the-date": "Anyone with this link can view the Save the Date.",
+            "thank-you": "Anyone with this link can view the thank you card.",
+            "photo-wall": "Anyone with this link can view the Photo Wall."
+          }
+        },
+
+        "inactive": {
+          "title": "Public link is not active",
+
+          "description": {
+            "invitation": "The link will become available to guests after the invitation is published.",
+            "save-the-date": "The link will become available to guests after the Save the Date is published.",
+            "thank-you": "The link will become available to guests after the thank you card is published.",
+            "photo-wall": "The link will become available to guests after the Photo Wall is published."
+          }
+        },
+
+        "actions": {
+          "copy": "Copy link",
+          "copied": "Copied",
+
+          "open": {
+            "invitation": "Open invitation",
+            "save-the-date": "Open Save the Date",
+            "thank-you": "Open thank you card",
+            "photo-wall": "Open Photo Wall"
+          }
+        }
+      }
+    }
+  }
+}

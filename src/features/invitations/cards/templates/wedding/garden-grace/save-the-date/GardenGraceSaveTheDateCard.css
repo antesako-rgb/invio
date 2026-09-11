@@ -8,25 +8,25 @@
      Description
   ======================================================================== */
 
-  --invitation-description-size:
+  --event-experience-description-size:
     4cqw;
 
-  --invitation-description-width:
+  --event-experience-description-width:
     100%;
 
-  --invitation-description-max-width:
+  --event-experience-description-max-width:
     80%;
 
-  --invitation-description-margin-top:
+  --event-experience-description-margin-top:
     5cqw;
 
-  --invitation-description-line-height:
+  --event-experience-description-line-height:
     1.1;
 
-  --invitation-description-letter-spacing:
+  --event-experience-description-letter-spacing:
     0.02em;
 
-  --invitation-description-text-align:
+  --event-experience-description-text-align:
     center;
 
 
@@ -41,7 +41,7 @@
     100%;
 
   aspect-ratio:
-    var(--invitation-card-aspect-ratio);
+    var(--event-experience-card-aspect-ratio);
 
   overflow:
     hidden;
@@ -50,10 +50,10 @@
     inline-size;
 
   background:
-    var(--invitation-card-background);
+    var(--event-experience-card-background);
 
   color:
-    var(--invitation-foreground);
+    var(--event-experience-foreground);
 
 }
 
@@ -74,22 +74,22 @@
     0;
 
   background-color:
-    var(--invitation-card-background);
+    var(--event-experience-card-background);
 
   background-image:
-    var(--invitation-card-background-image);
+    var(--event-experience-card-background-image);
 
   background-size:
-    var(--invitation-card-background-size);
+    var(--event-experience-card-background-size);
 
   background-position:
-    var(--invitation-card-background-position);
+    var(--event-experience-card-background-position);
 
   background-repeat:
-    var(--invitation-card-background-repeat);
+    var(--event-experience-card-background-repeat);
 
   opacity:
-    var(--invitation-card-background-opacity);
+    var(--event-experience-card-background-opacity);
 
   pointer-events:
     none;
@@ -180,7 +180,7 @@
 
 .garden-grace-save-the-date-card__title {
 
-  --invitation-element-font-size:
+  --event-experience-element-font-size:
     12cqw;
 
   display:
@@ -196,7 +196,7 @@
     var(--garden-grace-font-secondary);
 
   font-size:
-    var(--invitation-element-font-size);
+    var(--event-experience-element-font-size);
 
   font-style:
     normal;
@@ -211,7 +211,7 @@
     0.01em;
 
   color:
-    var(--invitation-foreground);
+    var(--event-experience-foreground);
 
   text-transform:
     none;
@@ -253,31 +253,31 @@
     2.5cqw;
 
   font-family:
-    var(--invitation-name-font);
+    var(--event-experience-name-font);
 
   font-style:
-    var(--invitation-name-style);
+    var(--event-experience-name-style);
 
   font-weight:
-    var(--invitation-name-weight);
+    var(--event-experience-name-weight);
 
   line-height:
     1.1;
 
   letter-spacing:
-    var(--invitation-name-letter-spacing);
+    var(--event-experience-name-letter-spacing);
 
   color:
-    var(--invitation-name-color);
+    var(--event-experience-name-color);
 
   text-transform:
-    var(--invitation-name-text-transform);
+    var(--event-experience-name-text-transform);
 
   text-align:
     center;
 
   opacity:
-    var(--invitation-name-opacity);
+    var(--event-experience-name-opacity);
 
 }
 
@@ -288,7 +288,7 @@
 
 .garden-grace-save-the-date-card__name {
 
-  --invitation-element-font-size:
+  --event-experience-element-font-size:
     7cqw;
 
   display:
@@ -298,7 +298,7 @@
     auto;
 
   font-size:
-    var(--invitation-element-font-size);
+    var(--event-experience-element-font-size);
 
   line-height:
     inherit;
@@ -328,7 +328,7 @@
     1;
 
   color:
-    var(--invitation-foreground);
+    var(--event-experience-foreground);
 
   opacity:
     1;
@@ -364,13 +364,13 @@
     2cqw;
 
   font-family:
-    var(--invitation-event-font);
+    var(--event-experience-event-font);
 
   font-style:
-    var(--invitation-event-style);
+    var(--event-experience-event-style);
 
   font-weight:
-    var(--invitation-event-weight);
+    var(--event-experience-event-weight);
 
   line-height:
     1.5;
@@ -379,7 +379,7 @@
     0.1em;
 
   color:
-    var(--invitation-foreground);
+    var(--event-experience-foreground);
 
   text-transform:
     uppercase;
@@ -396,7 +396,7 @@
 
 .garden-grace-save-the-date-card__date {
 
-  --invitation-element-font-size:
+  --event-experience-element-font-size:
     2.5cqw;
 
   display:
@@ -406,7 +406,7 @@
     100%;
 
   font-size:
-    var(--invitation-element-font-size);
+    var(--event-experience-element-font-size);
 
   line-height:
     inherit;
@@ -426,8 +426,8 @@
 
 .garden-grace-save-the-date-card__location {
 
-  --invitation-element-font-size:
-    2.3cqw;
+  --event-experience-element-font-size:
+    2.5cqw;
 
   display:
     block;
@@ -436,7 +436,7 @@
     100%;
 
   font-size:
-    var(--invitation-element-font-size);
+    var(--event-experience-element-font-size);
 
   line-height:
     inherit;
@@ -446,18 +446,5 @@
 
   white-space:
     pre-line;
-
-}
-
-
-/* ==========================================================================
-   Description
-========================================================================== */
-
-.garden-grace-save-the-date-card
-[data-invitation-description] {
-
-  width:
-    100%;
 
 }

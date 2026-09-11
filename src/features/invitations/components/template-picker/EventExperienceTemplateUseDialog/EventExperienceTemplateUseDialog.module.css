@@ -1,0 +1,92 @@
+/* ==========================================================================
+   Actions
+========================================================================== */
+
+.actions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.action {
+  height: auto;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  text-align: left;
+}
+
+.actionIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.actionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.actionTitle {
+  font-weight: 500;
+}
+
+.actionDescription {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+
+
+/* ==========================================================================
+   Experiences
+========================================================================== */
+
+.experiences {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.experience {
+  height: auto;
+  justify-content: flex-start;
+  padding: 1rem;
+  text-align: left;
+}
+
+.experienceContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.experienceName {
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.experienceTemplate {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+
+
+/* ==========================================================================
+   Footer
+========================================================================== */
+
+.footer {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 0.25rem;
+}
+
+.backIcon {
+  width: 1rem;
+  height: 1rem;
+}

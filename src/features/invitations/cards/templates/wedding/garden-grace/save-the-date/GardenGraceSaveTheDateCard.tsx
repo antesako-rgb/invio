@@ -1,12 +1,12 @@
+import EventExperienceDescription
+  from "@/features/invitations/cards/components/EventExperienceDescription/EventExperienceDescription";
+
 import EditableText
   from "@/features/invitations/editor/components/EditableText/EditableText";
 
-import InvitationDescription
-  from "@/features/invitations/cards/components/InvitationDescription/InvitationDescription";
-
 import type {
-  InvitationTemplateProps,
-} from "@/features/invitations/types/invitationTemplate.types";
+  EventExperienceTemplateProps,
+} from "@/features/invitations/types/eventExperienceTemplate.types";
 
 import {
   gardenGraceSaveTheDateCardAssets,
@@ -25,7 +25,7 @@ export default function GardenGraceSaveTheDateCard({
   data,
   mode,
   editor,
-}: InvitationTemplateProps) {
+}: EventExperienceTemplateProps) {
   const {
     title,
     primary_name,
@@ -57,7 +57,6 @@ export default function GardenGraceSaveTheDateCard({
   return (
     <article
       className="garden-grace-save-the-date-card"
-      data-invitation-card="garden-grace-save-the-date"
     >
       {/* ====================================================================
           Background
@@ -204,7 +203,7 @@ export default function GardenGraceSaveTheDateCard({
             Description
         ================================================================== */}
 
-        <InvitationDescription
+        <EventExperienceDescription
           value={
             description
           }

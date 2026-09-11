@@ -21,29 +21,28 @@ import {
 } from "@/components/ui/picker/DatePicker";
 
 import {
-  getInvitationElementStyle,
-} from "@/features/invitations/editor/presentation/getInvitationElementStyle";
+  getEventExperienceElementStyle,
+} from "@/features/invitations/editor/presentation/getEventExperienceElementStyle";
 
 import {
-  invitationEditorElements,
-} from "@/features/invitations/editor/registry/invitationEditorElements";
+  eventExperienceEditorElements,
+} from "@/features/invitations/editor/registry/eventExperienceEditorElements";
 
 import type {
-  InvitationEditorContext,
-} from "@/features/invitations/editor/types/invitationEditor.types";
+  EventExperienceEditorContext
+} from "@/features/invitations/editor/types/eventExperienceEditor.types";
 
 import {
-  useInvitationPresentation,
-} from "@/features/invitations/renderer/context/InvitationPresentationContext";
+  useEventExperiencePresentation,
+} from "@/features/invitations/renderer/context/EventExperiencePresentationContext";
 
 import type {
-  InvitationRenderMode,
-} from "@/features/invitations/types/invitationRenderer.types";
+  EventExperienceRenderMode,
+} from "@/features/invitations/types/eventExperienceRenderer.types";
 
 import {
-  invitationDateSchema,
-} from "@/features/invitations/validation/invitationContent.schema";
-
+  eventExperienceDateSchema,
+} from "@/features/invitations/validation/eventExperienceDate.schema";
 
 /* ==========================================================================
    Constants
@@ -75,10 +74,10 @@ interface EditableDateDisplay {
 interface EditableDateProps
   extends EditableDateDisplay {
   mode:
-    InvitationRenderMode;
+    EventExperienceRenderMode;
 
   editor?:
-    InvitationEditorContext;
+    EventExperienceEditorContext;
 
   children?:
     (
@@ -167,29 +166,29 @@ function DefaultDateDisplay({
   return (
     <>
       <span
-        data-invitation-event-month
+        data-event-experience-event-month
       >
         {month}
       </span>
 
       <span
-        data-invitation-event-day
+        data-event-experience-event-day
       >
         <span
-          data-invitation-event-day-name
+          data-event-experience-event-day-name
         >
           {dayName}
         </span>
 
         <span
-          data-invitation-event-day-value
+          data-event-experience-event-day-value
         >
           {day}
         </span>
       </span>
 
       <span
-        data-invitation-event-year
+        data-event-experience-event-year
       >
         {year}
       </span>
@@ -213,7 +212,7 @@ export default function EditableDate({
 }: EditableDateProps) {
   const t =
     useTranslations(
-      "Invitations.editor.date"
+       "EventExperiences.editor.date"
     );
 
   const tValidation =
@@ -223,7 +222,7 @@ export default function EditableDate({
 
   const tElementLabel =
     useTranslations(
-      "Invitations.editor.elementLabels"
+      "EventExperiences.editor.elementLabels"
     );
 
 
@@ -244,10 +243,10 @@ export default function EditableDate({
      Element
   ========================================================================== */
 
-  const elementConfig =
-    invitationEditorElements[
-      DATE_ELEMENT
-    ];
+const elementConfig =
+  eventExperienceEditorElements[
+    DATE_ELEMENT
+  ];
 
   const editorLabel =
     tElementLabel(
@@ -280,13 +279,12 @@ export default function EditableDate({
         null
     );
 
-
 /* ==========================================================================
    Presentation
 ========================================================================== */
 
 const presentation =
-  useInvitationPresentation();
+  useEventExperiencePresentation();
 
 const elementPresentation =
   presentation.elements?.[
@@ -294,7 +292,7 @@ const elementPresentation =
   ];
 
 const elementStyle =
-  getInvitationElementStyle(
+  getEventExperienceElementStyle(
     elementPresentation
   );
 
@@ -346,7 +344,7 @@ const dateStyle = {
       string | null
   ) {
     const result =
-      invitationDateSchema.safeParse({
+      eventExperienceDateSchema.safeParse({
         start_date:
           startDate,
 
@@ -504,7 +502,7 @@ const dateStyle = {
   if (!isEditorMode) {
     return (
       <div
-        data-invitation-event-date
+        data-event-experience-date
         style={
           dateStyle
         }
@@ -527,7 +525,7 @@ const dateStyle = {
         }
         render={
           <div
-            data-invitation-event-date
+            data-event-experience-date
             data-invitation-editor-ui
             data-editor-element={
               DATE_ELEMENT

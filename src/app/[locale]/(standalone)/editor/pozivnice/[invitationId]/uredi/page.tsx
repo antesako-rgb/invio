@@ -6,16 +6,20 @@ import type {
   EventType,
 } from "@/features/events/types/event.types";
 
-import InvitationEditorView
-  from "@/features/invitations/editor/components/InvitationEditorView/InvitationEditorView";
+import EventExperienceEditorView
+  from "@/features/invitations/editor/components/EventExperienceEditorView/EventExperienceEditorView";
 
 import {
-  getInvitationEditorData,
-} from "@/features/invitations/repositories/invitation/getInvitationEditorData";
+  getEventExperienceEditorData,
+} from "@/features/invitations/repositories/experience/getEventExperienceEditorData";
 
 import {
-  buildInvitationRenderData,
-} from "@/features/invitations/renderer/buildInvitationRenderData";
+  getPhotoWallPhotos,
+} from "@/features/invitations/repositories/photo-wall/getPhotoWallPhotos";
+
+import {
+  buildEventExperienceRenderData,
+} from "@/features/invitations/renderer/data/buildEventExperienceRenderData";
 
 import type {
   Locale,
@@ -52,47 +56,83 @@ export default async function EditInvitationPage({
     await params;
 
   const editorData =
-    await getInvitationEditorData(
+    await getEventExperienceEditorData(
       invitationId
     );
 
-  if (!editorData) {
+  if (
+    !editorData
+  ) {
     notFound();
   }
 
   const {
-    invitation,
+    experience,
     event,
   } =
     editorData;
 
-  const data =
-    buildInvitationRenderData({
-      invitation,
+
+  /* ==========================================================================
+     Photo Wall
+  ========================================================================== */
+
+  const photoWallPhotos =
+    experience.type ===
+      "photo-wall"
+      ? await getPhotoWallPhotos(
+          experience.id
+        )
+      : undefined;
+
+
+  /* ==========================================================================
+     Render Data
+  ========================================================================== */
+
+  const baseData =
+    buildEventExperienceRenderData({
+      experience,
+
       locale,
 
       eventTimezone:
         event.timezone,
-
-      guests: [],
     });
 
+  const data = {
+    ...baseData,
+
+    photoWall:
+      photoWallPhotos
+        ? {
+            photos:
+              photoWallPhotos,
+          }
+        : undefined,
+  };
+
+
+  /* ==========================================================================
+     Render
+  ========================================================================== */
+
   return (
-    <InvitationEditorView
-      invitationId={
-        invitation.id
+    <EventExperienceEditorView
+      experienceId={
+        experience.id
       }
-      invitationName={
-        invitation.name
-      }
-      templateId={
-        invitation.template_id
-      }
-      variantId={
-        invitation.variant_id
+      experienceName={
+        experience.name
       }
       eventType={
         event.type as EventType
+      }
+      templateId={
+        experience.template_id
+      }
+      variantId={
+        experience.variant_id
       }
       locale={
         locale

@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Description
+========================================================================== */
+
+.event-experience-description {
+  width:
+    var(--event-experience-description-width);
+
+  max-width:
+    var(--event-experience-description-max-width);
+
+  margin-top:
+    var(--event-experience-description-margin-top);
+
+  color:
+    var(--event-experience-description-color);
+
+  font-family:
+    var(--event-experience-description-font);
+
+  font-size:
+    var(--event-experience-description-size);
+
+  font-style:
+    var(--event-experience-description-style);
+
+  font-weight:
+    var(--event-experience-description-weight);
+
+  line-height:
+    var(--event-experience-description-line-height);
+
+  letter-spacing:
+    var(--event-experience-description-letter-spacing);
+
+  text-align:
+    var(--event-experience-description-text-align);
+
+  text-transform:
+    var(--event-experience-description-text-transform);
+
+  opacity:
+    var(--event-experience-description-opacity);
+}

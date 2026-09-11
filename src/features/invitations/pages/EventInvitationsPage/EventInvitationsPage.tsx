@@ -21,31 +21,31 @@ import {
 import PageHeader
   from "@/components/ui/page-header/PageHeader";
 
-import EventInvitationsList
-  from "@/features/invitations/components/event-invitations/EventInvitationsList/EventInvitationsList";
+import EventExperiencesList
+  from "@/features/invitations/components/event-experiences/EventExperiencesList/EventExperiencesList";
 
 import {
-  getEventInvitations,
-} from "@/features/invitations/repositories/invitation/getEventInvitations";
+  getEventExperiences,
+} from "@/features/invitations/repositories/experience/getEventExperiences";
 
 
 /* ==========================================================================
    Types
 ========================================================================== */
 
-interface EventInvitationsPageProps {
+interface EventExperiencesPageProps {
   eventId:
     string;
 }
 
 
 /* ==========================================================================
-   Event Invitations Page
+   Event Experiences Page
 ========================================================================== */
 
-export default async function EventInvitationsPage({
+export default async function EventExperiencesPage({
   eventId,
-}: EventInvitationsPageProps) {
+}: EventExperiencesPageProps) {
   /* ==========================================================================
      Translation
   ========================================================================== */
@@ -60,8 +60,8 @@ export default async function EventInvitationsPage({
      Data
   ========================================================================== */
 
-  const invitations =
-    await getEventInvitations(
+  const experiences =
+    await getEventExperiences(
       eventId
     );
 
@@ -100,7 +100,7 @@ export default async function EventInvitationsPage({
         }
       />
 
-      {invitations.length === 0
+      {experiences.length === 0
         ? (
           <EmptyState
             variant="card"
@@ -135,9 +135,9 @@ export default async function EventInvitationsPage({
           />
         )
         : (
-          <EventInvitationsList
-            invitations={
-              invitations
+          <EventExperiencesList
+            experiences={
+              experiences
             }
           />
         )}

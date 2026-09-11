@@ -1,6 +1,6 @@
 import type {
-  InvitationContent,
-} from "@/features/invitations/types/invitationContent.types";
+  EventExperienceContent,
+} from "@/features/invitations/types/eventExperienceContent.types";
 
 
 /* ==========================================================================
@@ -8,7 +8,7 @@ import type {
 ========================================================================== */
 
 const weddingPreviewContent:
-  InvitationContent = {
+  EventExperienceContent = {
     hero: {
       primary_name:
         "Matilda",
@@ -126,6 +126,12 @@ const weddingPreviewContent:
       allow_response_changes:
         true,
 
+      callout_subtitle:
+        null,
+
+      callout_note:
+        null,
+
       success_message:
         null,
 
@@ -189,7 +195,7 @@ const weddingPreviewContent:
 ========================================================================== */
 
 export const weddingInvitationPreviewContent:
-  InvitationContent = {
+  EventExperienceContent = {
     ...weddingPreviewContent,
   };
 
@@ -199,7 +205,7 @@ export const weddingInvitationPreviewContent:
 ========================================================================== */
 
 export const weddingSaveTheDatePreviewContent:
-  InvitationContent = {
+  EventExperienceContent = {
     ...weddingPreviewContent,
 
     hero: {
@@ -222,7 +228,7 @@ export const weddingSaveTheDatePreviewContent:
 ========================================================================== */
 
 export const weddingThankYouPreviewContent:
-  InvitationContent = {
+  EventExperienceContent = {
     ...weddingPreviewContent,
 
     hero: {
@@ -237,4 +243,27 @@ export const weddingThankYouPreviewContent:
 
     description:
       "Hvala vam što ste bili dio našeg posebnog dana.",
+  };
+
+
+/* ==========================================================================
+   Photo Wall
+========================================================================== */
+
+export const weddingPhotoWallPreviewContent:
+  EventExperienceContent = {
+    ...weddingPreviewContent,
+
+    hero: {
+      ...weddingPreviewContent.hero,
+
+      title:
+        "Photo Wall",
+
+      subtitle:
+        "Podijelite svoje najljepše trenutke s nama.",
+    },
+
+    description:
+      "Dodajte fotografije i zajedno stvorimo uspomene na ovaj poseban dan.",
   };

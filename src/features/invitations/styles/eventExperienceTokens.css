@@ -1,0 +1,519 @@
+/* ==========================================================================
+   Event Experience Design Tokens
+========================================================================== */
+
+[data-event-experience] {
+
+  /* ========================================================================
+     Experience
+  ======================================================================== */
+
+  --event-experience-background:
+    #eceae5;
+
+  --event-experience-background-image:
+    none;
+
+  --event-experience-background-size:
+    cover;
+
+  --event-experience-background-position:
+    center;
+
+  --event-experience-background-repeat:
+    no-repeat;
+
+  --event-experience-background-filter:
+    none;
+
+
+  /* ========================================================================
+     Palette
+  ======================================================================== */
+
+  --event-experience-foreground:
+    #4f4036;
+
+  --event-experience-muted:
+    #7a6b60;
+
+  --event-experience-accent:
+    #4f4036;
+
+
+  /* ========================================================================
+     Card
+  ======================================================================== */
+
+  --event-experience-card-background:
+    #ffffff;
+
+  --event-experience-card-background-image:
+    none;
+
+  --event-experience-card-background-size:
+    cover;
+
+  --event-experience-card-background-position:
+    center;
+
+  --event-experience-card-background-repeat:
+    no-repeat;
+
+  --event-experience-card-background-opacity:
+    1;
+
+
+  /* ========================================================================
+     Envelope
+  ======================================================================== */
+
+  --event-experience-envelope-back-filter:
+    none;
+
+  --event-experience-envelope-front-filter:
+    none;
+
+  --event-experience-envelope-flap-filter:
+    none;
+
+  --event-experience-envelope-liner-filter:
+    none;
+
+
+  /* ========================================================================
+     Actions
+  ======================================================================== */
+
+  --event-experience-action-primary:
+    #4f4036;
+
+  --event-experience-action-primary-foreground:
+    #fffaf4;
+
+  --event-experience-action-secondary:
+    #e8ddd0;
+
+  --event-experience-action-secondary-foreground:
+    #4f4036;
+
+  --event-experience-action-secondary-border:
+    #c9b6a2;
+
+
+  /* ========================================================================
+     Invitation Details
+  ======================================================================== */
+
+  --invitation-details-foreground:
+    var(--event-experience-foreground);
+
+  --invitation-details-accent:
+    var(--event-experience-accent);
+
+  --invitation-details-title-color:
+    var(--event-experience-foreground);
+
+  --invitation-details-title-font:
+    inherit;
+
+  --invitation-details-event-font:
+    inherit;
+
+  --invitation-details-section-font:
+    inherit;
+
+  --invitation-details-shell-background:
+    rgba(255, 255, 255, 0.34);
+
+  --invitation-details-shell-border:
+    rgba(79, 64, 54, 0.10);
+
+  --invitation-details-section-background:
+    rgba(255, 255, 255, 0.72);
+
+  --invitation-details-section-border:
+    rgba(79, 64, 54, 0.10);
+
+  --invitation-details-control-background:
+    rgba(79, 64, 54, 0.06);
+
+
+  /* ========================================================================
+     Invitation RSVP
+  ======================================================================== */
+
+  --invitation-rsvp-foreground:
+    var(--event-experience-foreground);
+
+  --invitation-rsvp-accent:
+    var(--event-experience-accent);
+
+  --invitation-rsvp-title-color:
+    var(--event-experience-foreground);
+
+  --invitation-rsvp-title-font:
+    inherit;
+
+  --invitation-rsvp-event-font:
+    inherit;
+
+  --invitation-rsvp-section-font:
+    inherit;
+
+  --invitation-rsvp-shell-background:
+    rgba(255, 255, 255, 0.34);
+
+  --invitation-rsvp-shell-border:
+    rgba(79, 64, 54, 0.10);
+
+  --invitation-rsvp-section-background:
+    rgba(255, 255, 255, 0.72);
+
+  --invitation-rsvp-section-border:
+    rgba(79, 64, 54, 0.10);
+
+  --invitation-rsvp-control-background:
+    rgba(79, 64, 54, 0.06);
+
+  --invitation-rsvp-control-border:
+    rgba(79, 64, 54, 0.14);
+
+  --invitation-rsvp-control-active-background:
+    var(--event-experience-accent);
+
+  --invitation-rsvp-control-active-foreground:
+    #fffaf4;
+
+  --invitation-rsvp-submit-background:
+    var(--event-experience-accent);
+
+  --invitation-rsvp-submit-foreground:
+    #fffaf4;
+
+  /* ========================================================================
+     Title
+  ======================================================================== */
+
+  --event-experience-title-font:
+    inherit;
+
+  --event-experience-title-size:
+    1em;
+
+  --event-experience-title-style:
+    normal;
+
+  --event-experience-title-weight:
+    400;
+
+  --event-experience-title-line-height:
+    1.2;
+
+  --event-experience-title-letter-spacing:
+    0;
+
+  --event-experience-title-color:
+    var(--event-experience-foreground);
+
+  --event-experience-title-text-transform:
+    none;
+
+  --event-experience-title-text-align:
+    center;
+
+  --event-experience-title-opacity:
+    1;
+  /* ========================================================================
+     Subtitle
+  ======================================================================== */
+
+  --event-experience-subtitle-font:
+    inherit;
+
+  --event-experience-subtitle-size:
+    1em;
+
+  --event-experience-subtitle-style:
+    normal;
+
+  --event-experience-subtitle-weight:
+    400;
+
+  --event-experience-subtitle-line-height:
+    1.3;
+
+  --event-experience-subtitle-letter-spacing:
+    0;
+
+  --event-experience-subtitle-color:
+    var(--event-experience-foreground);
+
+  --event-experience-subtitle-text-transform:
+    none;
+
+  --event-experience-subtitle-text-align:
+    center;
+
+  --event-experience-subtitle-opacity:
+    1;
+
+
+  /* ========================================================================
+     Names
+  ======================================================================== */
+
+  --event-experience-name-font:
+    inherit;
+
+  --event-experience-name-size:
+    1em;
+
+  --event-experience-name-style:
+    normal;
+
+  --event-experience-name-weight:
+    400;
+
+  --event-experience-name-line-height:
+    1;
+
+  --event-experience-name-letter-spacing:
+    0;
+
+  --event-experience-name-color:
+    var(--event-experience-foreground);
+
+  --event-experience-name-text-transform:
+    none;
+
+  --event-experience-name-text-align:
+    center;
+
+  --event-experience-name-opacity:
+    1;
+
+
+  /* ========================================================================
+     Event
+  ======================================================================== */
+
+  --event-experience-event-font:
+    inherit;
+
+  --event-experience-event-size:
+    16px;
+
+  --event-experience-event-style:
+    normal;
+
+  --event-experience-event-weight:
+    400;
+
+  --event-experience-event-line-height:
+    1.5;
+
+  --event-experience-event-letter-spacing:
+    0;
+
+  --event-experience-event-color:
+    var(--event-experience-foreground);
+
+  --event-experience-event-text-transform:
+    none;
+
+  --event-experience-event-text-align:
+    center;
+
+  --event-experience-event-align-items:
+    center;
+
+  --event-experience-event-opacity:
+    1;
+
+  --event-experience-event-gap:
+    18px;
+
+
+  /* ========================================================================
+     Event Schedule
+  ======================================================================== */
+
+  --event-experience-event-schedule-time-padding-bottom:
+    6px;
+
+  --event-experience-event-schedule-time-border:
+    1px solid currentColor;
+
+
+  /* ========================================================================
+     Event Date
+  ======================================================================== */
+
+  --event-experience-event-date-font:
+    var(--event-experience-event-font);
+
+  --event-experience-event-date-size:
+    1em;
+
+  --event-experience-event-date-width:
+    260px;
+
+  --event-experience-event-date-gap:
+    12px;
+
+  --event-experience-event-date-letter-spacing:
+    0.14em;
+
+  --event-experience-event-date-text-transform:
+    uppercase;
+
+  --event-experience-event-date-number-size:
+    4.6em;
+
+  --event-experience-event-date-number-line-height:
+    0.9;
+
+  --event-experience-event-date-number-weight:
+    inherit;
+
+  --event-experience-event-date-number-letter-spacing:
+    0;
+
+
+  /* ========================================================================
+     Event Day Name
+  ======================================================================== */
+
+  --event-experience-event-day-name-size:
+    1em;
+
+  --event-experience-event-day-name-gap:
+    6px;
+
+  --event-experience-event-day-name-space:
+    14px;
+
+  --event-experience-event-day-name-letter-spacing:
+    0.12em;
+
+  --event-experience-event-day-name-weight:
+    inherit;
+
+  --event-experience-event-day-name-text-transform:
+    uppercase;
+
+  --event-experience-event-day-name-opacity:
+    1;
+
+
+  /* ========================================================================
+     Event Location
+  ======================================================================== */
+
+  --event-experience-event-location-gap:
+    8px;
+
+
+  /* ========================================================================
+     Description
+  ======================================================================== */
+
+  --event-experience-description-font:
+    inherit;
+
+  --event-experience-description-size:
+    16px;
+
+  --event-experience-description-style:
+    normal;
+
+  --event-experience-description-weight:
+    400;
+
+  --event-experience-description-line-height:
+    1.5;
+
+  --event-experience-description-letter-spacing:
+    0;
+
+  --event-experience-description-color:
+    var(--event-experience-foreground);
+
+  --event-experience-description-text-transform:
+    none;
+
+  --event-experience-description-text-align:
+    center;
+
+  --event-experience-description-opacity:
+    1;
+
+  --event-experience-description-width:
+    100%;
+
+  --event-experience-description-max-width:
+    none;
+
+  --event-experience-description-margin-top:
+    16px;
+
+/* ==========================================================================
+   Photo Wall
+========================================================================== */
+
+--event-experience-photo-wall-surface-background:
+  var(--event-experience-card-background);
+
+--event-experience-photo-wall-surface-foreground:
+  var(--event-experience-foreground);
+
+--event-experience-photo-wall-dialog-background:
+  #ffffff;
+
+--event-experience-photo-wall-photo-background:
+  rgba(79, 64, 54, 0.06);
+
+--event-experience-photo-wall-metadata-foreground:
+  var(--event-experience-action-primary-foreground);
+
+--event-experience-photo-wall-caption-placeholder:
+  var(--event-experience-muted);
+
+--event-experience-photo-wall-control-background:
+  var(--event-experience-action-primary);
+
+--event-experience-photo-wall-control-foreground:
+  var(--event-experience-action-primary-foreground);
+
+  /* ========================================================================
+     Countdown
+  ======================================================================== */
+
+  --event-experience-countdown-color:
+    var(--event-experience-foreground);
+
+  --event-experience-countdown-text-align:
+    center;
+
+  --event-experience-countdown-value-font:
+    inherit;
+
+  --event-experience-countdown-value-size:
+    2em;
+
+  --event-experience-countdown-value-weight:
+    400;
+
+  --event-experience-countdown-label-font:
+    inherit;
+
+  --event-experience-countdown-label-size:
+    1em;
+
+  --event-experience-countdown-label-weight:
+    400;
+
+  --event-experience-countdown-label-gap:
+    8px;
+}

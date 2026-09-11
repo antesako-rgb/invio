@@ -1,18 +1,18 @@
 import InvitationDescription
-  from "@/features/invitations/cards/components/InvitationDescription/InvitationDescription";
+  from "@/features/invitations/cards/components/EventExperienceDescription/EventExperienceDescription";
 
 import InvitationEventInfo
-  from "@/features/invitations/cards/components/InvitationEventInfo/InvitationEventInfo";
+  from "@/features/invitations/cards/components/EventExperienceInfo/EventExperienceInfo";
 
 import InvitationImageFrame
-  from "@/features/invitations/cards/components/InvitationImageFrame/InvitationImageFrame";
+  from "@/features/invitations/cards/components/EventExperienceImageFrame/EventExperienceImageFrame";
 
 import EditableText
   from "@/features/invitations/editor/components/EditableText/EditableText";
 
 import type {
-  InvitationTemplateProps,
-} from "@/features/invitations/types/invitationTemplate.types";
+  EventExperienceTemplateProps,
+} from "@/features/invitations/types/eventExperienceTemplate.types";
 
 import {
   portraitCardAssets,
@@ -31,7 +31,7 @@ export default function PortraitCard({
   data,
   mode,
   editor,
-}: InvitationTemplateProps) {
+}: EventExperienceTemplateProps) {
   const {
     primary_name,
     secondary_name,

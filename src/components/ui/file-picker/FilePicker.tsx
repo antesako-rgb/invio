@@ -38,16 +38,27 @@ interface FilePickerProps {
   label?:
     string;
 
+  multiple?:
+    boolean;
+
+  capture?:
+    "user" |
+    "environment";
+
   disabled?:
     boolean;
 
   children?:
     (
-      openPicker: () => void
+      openPicker:
+        () => void
     ) => ReactNode;
 
   onSelect?:
-    (file: File) => void;
+    (
+      files:
+        File[]
+    ) => void;
 }
 
 
@@ -58,6 +69,8 @@ interface FilePickerProps {
 export default function FilePicker({
   accept = "image/*",
   label,
+  multiple = false,
+  capture,
   disabled = false,
   children,
   onSelect,
@@ -101,7 +114,9 @@ export default function FilePicker({
   ========================================================================== */
 
   function openPicker() {
-    if (disabled) {
+    if (
+      disabled
+    ) {
       return;
     }
 
@@ -117,18 +132,24 @@ export default function FilePicker({
     event:
       ChangeEvent<HTMLInputElement>
   ) {
-    const file =
-      event.target.files?.[0];
+    const files =
+      Array.from(
+        event.target.files ??
+        []
+      );
 
     event.target.value =
       "";
 
-    if (!file) {
+    if (
+      files.length ===
+      0
+    ) {
       return;
     }
 
     onSelect?.(
-      file
+      files
     );
   }
 
@@ -150,6 +171,12 @@ export default function FilePicker({
         accept={
           accept
         }
+        multiple={
+          multiple
+        }
+        capture={
+          capture
+        }
         className="sr-only"
         disabled={
           disabled
@@ -162,29 +189,31 @@ export default function FilePicker({
         }
       />
 
-      {children ? (
-        children(
-          openPicker
-        )
-      ) : (
-        <Button
-          type="button"
-          variant="outline"
-          disabled={
-            disabled
-          }
-          onClick={
-            openPicker
-          }
-        >
-          <Camera
-            className="size-4"
-            aria-hidden="true"
-          />
+      {children
+        ? (
+            children(
+              openPicker
+            )
+          )
+        : (
+            <Button
+              type="button"
+              variant="outline"
+              disabled={
+                disabled
+              }
+              onClick={
+                openPicker
+              }
+            >
+              <Camera
+                className="size-4"
+                aria-hidden="true"
+              />
 
-          {resolvedLabel}
-        </Button>
-      )}
+              {resolvedLabel}
+            </Button>
+          )}
     </>
   );
 }

@@ -22,7 +22,7 @@ import type {
 
 import type {
   InvitationRsvpQuestion,
-} from "@/features/invitations/types/invitationContent.types";
+} from "@/features/invitations/types/invitationRsvp.types";
 
 import styles
   from "./InvitationRecipients.module.css";

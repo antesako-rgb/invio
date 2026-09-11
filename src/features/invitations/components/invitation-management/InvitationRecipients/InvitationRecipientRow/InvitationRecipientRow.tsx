@@ -40,16 +40,16 @@ import InvitationRsvpStatusBadge
   from "@/features/invitations/components/invitation-management/InvitationRsvpStatusBadge/InvitationRsvpStatusBadge";
 
 import type {
-  InvitationRsvpQuestion,
-} from "@/features/invitations/types/invitationContent.types";
-
-import type {
   InvitationManagementRow,
 } from "@/features/invitations/types/invitationManagement.types";
 
+import type {
+  InvitationRsvpQuestion,
+} from "@/features/invitations/types/invitationRsvp.types";
+
 import {
-  getInvitationPublicPath,
-} from "@/features/invitations/utils/getInvitationPublicPath";
+  getEventExperiencePublicPath,
+} from "@/features/invitations/utils/getEventExperiencePublicPath";
 
 import {
   getInitials,
@@ -128,7 +128,7 @@ export default function InvitationRecipientRow({
     null;
 
   const invitationPath =
-    getInvitationPublicPath(
+    getEventExperiencePublicPath(
       row.public_id ??
         invitationPublicId
     );
@@ -207,20 +207,9 @@ export default function InvitationRecipientRow({
     attendingCount -
     declinedCount;
 
-  const hasSingleRsvpStatus =
-    [
-      attendingCount,
-      declinedCount,
-      pendingCount,
-    ].filter(
-      (count) =>
-        count > 0
-    ).length ===
-    1;
-
 
   /* ==========================================================================
-     Updated At
+     Updated
   ========================================================================== */
 
   const updatedAt =
@@ -431,10 +420,10 @@ export default function InvitationRecipientRow({
                     }
                   >
                     {copied ? (
-                    <Check
-  className="size-4 text-green-600"
-  aria-hidden="true"
-/>
+                      <Check
+                        className="size-4 text-green-600"
+                        aria-hidden="true"
+                      />
                     ) : (
                       <Copy
                         className="size-4"
@@ -511,16 +500,10 @@ export default function InvitationRecipientRow({
               0 && (
               <span
                 className={
-                  styles.remainingGuests
+                  styles.moreGuests
                 }
               >
-                {t(
-                  "table.remainingGuests",
-                  {
-                    count:
-                      remainingGuestCount,
-                  }
-                )}
+                +{remainingGuestCount}
               </span>
             )}
           </div>
@@ -531,12 +514,9 @@ export default function InvitationRecipientRow({
             RSVP
         ==================================================================== */}
 
-        <TableCell
-          className={
-            styles.rsvp
-          }
-        >
-          {hasSingleRsvpStatus ? (
+        <TableCell>
+          {row.guests.length ===
+          1 ? (
             <>
               {pendingCount >
                 0 && (

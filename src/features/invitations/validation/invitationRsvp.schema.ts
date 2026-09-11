@@ -3,11 +3,8 @@ import {
 } from "zod";
 
 import type {
-  InvitationRsvpQuestion,
-} from "@/features/invitations/types/invitationContent.types";
-
-import type {
   InvitationRsvpAnswers,
+  InvitationRsvpQuestion,
   InvitationRsvpStatus,
 } from "@/features/invitations/types/invitationRsvp.types";
 

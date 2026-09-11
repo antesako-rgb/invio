@@ -7,26 +7,30 @@ import type {
 } from "@/i18n/config";
 
 import {
-  buildInvitationRenderData,
-} from "@/features/invitations/renderer/buildInvitationRenderData";
+  buildEventExperienceRenderData,
+} from "@/features/invitations/renderer/data/buildEventExperienceRenderData";
 
 import {
   buildInvitationRenderGuests,
-} from "@/features/invitations/renderer/buildInvitationRenderGuests";
+} from "@/features/invitations/renderer/data/buildInvitationRenderGuests";
 
 import {
-  getPublicInvitation,
-} from "@/features/invitations/repositories/invitation/getPublicInvitation";
+  getPublicEventExperience,
+} from "@/features/invitations/repositories/experience/getPublicEventExperience";
 
 import {
   getPublicInvitationRecipient,
 } from "@/features/invitations/repositories/invitation-recipients/getPublicInvitationRecipient";
 
+import {
+  getPublicPhotoWallPhotos,
+} from "@/features/invitations/repositories/photo-wall/getPublicPhotoWallPhotos";
+
 import GenericInvitationExperience
-  from "@/features/invitations/pages/GenericInvitationExperience/GenericInvitationExperience";
+  from "@/features/invitations/components/invitation-experience/GenericInvitationExperience/GenericInvitationExperience";
 
 import PersonalizedInvitationExperience
-  from "@/features/invitations/pages/PersonalizedInvitationExperience/PersonalizedInvitationExperience";
+  from "@/features/invitations/components/invitation-experience/PersonalizedInvitationExperience/PersonalizedInvitationExperience";
 
 
 /* ==========================================================================
@@ -70,11 +74,12 @@ export default async function PublicInvitationPage({
   ) {
     const recipient =
       await getPublicInvitationRecipient({
-        p_public_id:
-          publicId,
+        publicId,
       });
 
-    if (!recipient) {
+    if (
+      !recipient
+    ) {
       notFound();
     }
 
@@ -83,18 +88,24 @@ export default async function PublicInvitationPage({
         recipient.guests
       );
 
-    const data =
-      buildInvitationRenderData({
-        invitation:
+    const baseData =
+      buildEventExperienceRenderData({
+        experience:
           recipient.invitation,
 
         locale,
 
         eventTimezone:
           recipient.event.timezone,
-
-        guests,
       });
+
+    const data = {
+      ...baseData,
+
+      invitation: {
+        guests,
+      },
+    };
 
     return (
       <PersonalizedInvitationExperience
@@ -128,25 +139,67 @@ export default async function PublicInvitationPage({
   }
 
   const invitation =
-    await getPublicInvitation({
-      p_public_id:
-        publicId,
+    await getPublicEventExperience({
+      publicId,
     });
 
-  if (!invitation) {
+  if (
+    !invitation
+  ) {
     notFound();
   }
-const data =
-  buildInvitationRenderData({
-    invitation,
 
-    locale,
 
-    eventTimezone:
-      invitation.event_timezone,
+  /* ==========================================================================
+     Photo Wall
+  ========================================================================== */
 
-    guests: [],
-  });
+const photoWallPhotos =
+  invitation.type ===
+    "photo-wall"
+    ? await getPublicPhotoWallPhotos({
+        p_public_id:
+          publicId,
+
+        p_limit:
+          30,
+      })
+    : undefined;
+
+
+  /* ==========================================================================
+     Render Data
+  ========================================================================== */
+
+  const baseData =
+    buildEventExperienceRenderData({
+      experience:
+        invitation,
+
+      locale,
+
+      eventTimezone:
+        invitation.event_timezone,
+
+      publicId,
+    });
+
+  const data = {
+    ...baseData,
+
+    photoWall:
+      photoWallPhotos
+        ? {
+            photos:
+              photoWallPhotos,
+          }
+        : undefined,
+  };
+
+
+  /* ==========================================================================
+     Render
+  ========================================================================== */
 
   return (
     <GenericInvitationExperience

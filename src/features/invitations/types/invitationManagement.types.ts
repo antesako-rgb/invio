@@ -121,6 +121,6 @@ export interface InvitationManagementRow {
 ========================================================================== */
 
 export interface GetInvitationManagementGuestsInput {
-  p_invitation_id:
+  invitationId:
     string;
 }

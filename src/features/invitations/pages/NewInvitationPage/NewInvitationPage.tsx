@@ -1,48 +1,48 @@
 import Page
   from "@/components/layout/PageContainer/Page";
 
-import InvitationTemplatePicker
-  from "@/features/invitations/components/template-picker/InvitationTemplatePicker/InvitationTemplatePicker";
-
 import {
   getEvent,
 } from "@/features/events/repositories/getEvent";
 
+import EventExperienceTemplatePicker
+  from "@/features/invitations/components/template-picker/EventExperienceTemplatePicker/EventExperienceTemplatePicker";
+
 import {
-  getEventInvitations,
-} from "@/features/invitations/repositories/invitation/getEventInvitations";
+  getEventExperiences,
+} from "@/features/invitations/repositories/experience/getEventExperiences";
 
 
 /* ==========================================================================
    Types
 ========================================================================== */
 
-interface NewInvitationPageProps {
+interface NewEventExperiencePageProps {
   eventId:
     string;
 }
 
 
 /* ==========================================================================
-   New Invitation Page
+   New Event Experience Page
 ========================================================================== */
 
-export default async function NewInvitationPage({
+export default async function NewEventExperiencePage({
   eventId,
-}: NewInvitationPageProps) {
+}: NewEventExperiencePageProps) {
   /* ==========================================================================
      Data
   ========================================================================== */
 
   const [
     event,
-    invitations,
+    experiences,
   ] =
     await Promise.all([
       getEvent(
         eventId
       ),
-      getEventInvitations(
+      getEventExperiences(
         eventId
       ),
     ]);
@@ -60,15 +60,15 @@ export default async function NewInvitationPage({
     <Page>
       {/* PageHeader ide ovdje */}
 
-      <InvitationTemplatePicker
+      <EventExperienceTemplatePicker
         eventId={
           eventId
         }
         event={
           event
         }
-        invitations={
-          invitations
+        experiences={
+          experiences
         }
       />
     </Page>

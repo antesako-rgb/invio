@@ -13,7 +13,8 @@ import type {
 ========================================================================== */
 
 export async function createInvitationRecipient(
-  input: CreateInvitationRecipientInput
+  input:
+    CreateInvitationRecipientInput
 ): Promise<InvitationRecipient> {
   const supabase =
     await createServerClient();
@@ -24,7 +25,16 @@ export async function createInvitationRecipient(
   } =
     await supabase.rpc(
       "create_invitation_recipient",
-      input
+      {
+        p_invitation_id:
+          input.invitationId,
+
+        p_guest_ids:
+          input.guestIds,
+
+        p_primary_guest_id:
+          input.primaryGuestId,
+      }
     );
 
   if (error) {

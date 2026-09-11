@@ -7,7 +7,6 @@ import type {
 } from "@/lib/supabase/database.types";
 
 import type {
-  SubmitGenericInvitationRsvpData,
   SubmitGenericInvitationRsvpInput,
 } from "@/features/invitations/types/invitationRsvp.types";
 
@@ -32,27 +31,26 @@ function toJson(
 ========================================================================== */
 
 export async function submitGenericInvitationRsvp(
-  input: SubmitGenericInvitationRsvpData
+  input:
+    SubmitGenericInvitationRsvpInput
 ): Promise<void> {
   const supabase =
     await createServerClient();
-
-  const rpcInput: SubmitGenericInvitationRsvpInput = {
-    p_invitation_public_id:
-      input.p_invitation_public_id,
-
-    p_guests:
-      toJson(
-        input.p_guests
-      ),
-  };
 
   const {
     error,
   } =
     await supabase.rpc(
       "submit_generic_invitation_rsvp",
-      rpcInput
+      {
+        p_invitation_public_id:
+          input.invitationPublicId,
+
+        p_guests:
+          toJson(
+            input.guests
+          ),
+      }
     );
 
   if (error) {

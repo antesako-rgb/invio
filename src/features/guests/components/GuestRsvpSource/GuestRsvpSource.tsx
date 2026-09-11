@@ -26,7 +26,7 @@ import {
 
 import {
   setPrimaryRsvpInvitationAction,
-} from "@/features/invitations/actions/invitation/setPrimaryRsvpInvitationAction";
+} from "@/features/invitations/actions/experience/setPrimaryRsvpInvitationAction";
 
 import type {
   GuestRsvpInvitation,

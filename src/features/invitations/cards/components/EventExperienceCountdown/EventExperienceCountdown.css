@@ -1,0 +1,61 @@
+/* ==========================================================================
+   Countdown
+========================================================================== */
+
+[data-event-experience-countdown] {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  color:
+    var(--event-experience-countdown-color);
+
+  text-align:
+    var(--event-experience-countdown-text-align);
+}
+
+
+/* ==========================================================================
+   Value
+========================================================================== */
+
+[data-event-experience-countdown-value] {
+  font-family:
+    var(--event-experience-countdown-value-font);
+
+  font-size:
+    var(--event-experience-countdown-value-size);
+
+  font-weight:
+    var(--event-experience-countdown-value-weight);
+
+  line-height:
+    1;
+}
+
+
+/* ==========================================================================
+   Label
+========================================================================== */
+
+[data-event-experience-countdown-label] {
+  margin-top:
+    var(--event-experience-countdown-label-gap);
+
+  font-family:
+    var(--event-experience-countdown-label-font);
+
+  font-size:
+    var(--event-experience-countdown-label-size);
+
+  font-weight:
+    var(--event-experience-countdown-label-weight);
+
+  line-height:
+    1.3;
+}

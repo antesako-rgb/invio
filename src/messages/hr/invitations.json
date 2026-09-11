@@ -1,48 +1,5 @@
 {
   "editor": {
-    "navigation": {
-      "label": "Navigacija uređivača pozivnice",
-      "back": "Natrag",
-      "design": "Dizajn",
-      "details": "Detalji",
-      "rsvp": "RSVP",
-      "preview": "Pregled"
-    },
-
-    "mobile": {
-      "edit": "Uredi"
-    },
-
-    "actions": {
-      "save": "Spremi",
-      "saveAndContinue": "Spremi i nastavi"
-    },
-
-    "sidebar": {
-      "title": "Uredi pozivnicu",
-      "content": "Sadržaj",
-      "style": "Stil"
-    },
-
-    "status": {
-      "saving": "Spremanje...",
-      "saved": "Spremljeno"
-    },
-
-    "preview": {
-      "close": "Zatvori pregled"
-    },
-
-    "time": {
-      "startTime": "Vrijeme početka",
-      "endTime": "Vrijeme završetka"
-    },
-
-    "date": {
-      "startDate": "Datum početka",
-      "endDate": "Datum završetka"
-    },
-
     "rsvp": {
       "content": {
         "title": "Sadržaj",
@@ -169,41 +126,15 @@
       }
     },
 
-    "elementLabels": {
-      "primaryName": "Uredi prvo ime",
-      "secondaryName": "Uredi drugo ime",
-      "title": "Uredi naziv",
-      "subtitle": "Uredi podnaslov",
-      "initial": "Uredi inicijal",
-      "description": "Uredi opis",
-      "date": "Uredi datum",
-      "time": "Uredi vrijeme",
-      "location": "Uredi lokaciju",
-      "address": "Uredi adresu",
-      "image": "Uredi sliku",
-      "delete": "Obriši sadržaj"
-    },
-
     "fallback": {
-      "locationName": "Mjesto događaja",
-      "locationAddress": "Adresa događaja",
       "rsvpTitle": "Potvrda dolaska",
       "rsvpDescription": "Molimo vas da potvrdite svoj dolazak."
-    },
-
-    "validation": {
-      "date_start_required": "Datum početka je obavezan.",
-      "date_end_before_start": "Datum završetka ne može biti prije datuma početka."
     }
   },
 
   "experience": {
     "envelope": {
       "open": "Otvori pozivnicu"
-    },
-
-    "countdown": {
-      "daysRemaining": "{count, plural, one {dan do događaja} few {dana do događaja} other {dana do događaja}}"
     },
 
     "actions": {

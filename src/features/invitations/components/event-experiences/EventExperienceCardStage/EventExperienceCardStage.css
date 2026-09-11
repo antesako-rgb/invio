@@ -1,0 +1,50 @@
+/* ==========================================================================
+   Event Experience Card Stage
+========================================================================== */
+
+.event-experience-card-stage {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    100%;
+
+  max-width:
+    640px;
+
+  padding:
+    24px;
+
+  box-sizing:
+    border-box;
+
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 767px) {
+
+  .event-experience-card-stage {
+
+    max-width:
+      none;
+
+    padding:
+      16px;
+
+  }
+
+}

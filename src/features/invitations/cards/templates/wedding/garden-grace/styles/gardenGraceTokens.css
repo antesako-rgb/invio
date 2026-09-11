@@ -2,19 +2,18 @@
    Garden Grace Family Design Tokens
 ========================================================================== */
 
-[data-invitation-experience][data-family="garden-grace"] {
+[data-event-experience][data-family="garden-grace"] {
 
-  /* ========================================================================
-     Experience
-  ======================================================================== */
 
-  --invitation-experience-background:
+  --event-experience-background:
     #eceae5;
 
-  --invitation-experience-background-image:
-    none;
+  --event-experience-background-image:
+    url(
+      "/invitation-assets/cards/garden-grace/background.avif"
+    );
 
-  --invitation-experience-background-filter:
+  --event-experience-background-filter:
     none;
 
 
@@ -22,7 +21,7 @@
      Card
   ======================================================================== */
 
-  --invitation-card-background:
+  --event-experience-card-background:
     #f4f7f2;
 
   --garden-grace-card-frame-filter:
@@ -33,16 +32,16 @@
      Envelope
   ======================================================================== */
 
-  --invitation-envelope-back-filter:
+  --event-experience-envelope-back-filter:
     none;
 
-  --invitation-envelope-front-filter:
+  --event-experience-envelope-front-filter:
     none;
 
-  --invitation-envelope-flap-filter:
+  --event-experience-envelope-flap-filter:
     none;
 
-  --invitation-envelope-liner-filter:
+  --event-experience-envelope-liner-filter:
     none;
 
 
@@ -86,48 +85,66 @@
   --invitation-rsvp-section-font:
     var(--garden-grace-font-primary);
 
-
   /* ========================================================================
-     Subtitle
+     Title
   ======================================================================== */
 
-  --invitation-subtitle-font:
+  --event-experience-title-font:
     var(--garden-grace-font-primary);
 
-  --invitation-subtitle-style:
-    italic;
+  --event-experience-title-style:
+    normal;
 
-  --invitation-subtitle-weight:
+  --event-experience-title-weight:
     400;
 
-  --invitation-subtitle-line-height:
-    1.3;
+  --event-experience-title-line-height:
+    1;
 
-  --invitation-subtitle-letter-spacing:
+  --event-experience-title-letter-spacing:
     0;
 
-  --invitation-subtitle-text-transform:
-    uppercase;
+  --event-experience-title-color:
+    var(--event-experience-foreground);
 
+  --event-experience-title-text-transform:
+    none;
 
+  --event-experience-title-text-align:
+    center;
+
+  --event-experience-title-opacity:
+    1;
   /* ========================================================================
      Names
   ======================================================================== */
 
-  --invitation-name-font:
+  --event-experience-name-font:
     var(--garden-grace-font-secondary);
 
-  --invitation-name-style:
+  --event-experience-name-style:
     normal;
 
-  --invitation-name-weight:
+  --event-experience-name-weight:
     400;
 
-  --invitation-name-letter-spacing:
+  --event-experience-name-line-height:
+    1;
+
+  --event-experience-name-letter-spacing:
     0;
 
-  --invitation-name-text-transform:
+  --event-experience-name-color:
+    var(--event-experience-foreground);
+
+  --event-experience-name-text-transform:
     none;
+
+  --event-experience-name-text-align:
+    center;
+
+  --event-experience-name-opacity:
+    1;
 
 
   /* ========================================================================
@@ -138,9 +155,41 @@
     var(--garden-grace-font-secondary);
 
   --garden-grace-name-separator-color:
-    var(--invitation-foreground);
+    var(--event-experience-foreground);
 
   --garden-grace-name-separator-opacity:
+    1;
+
+
+  /* ========================================================================
+     Subtitle
+  ======================================================================== */
+
+  --event-experience-subtitle-font:
+    var(--garden-grace-font-secondary);
+
+  --event-experience-subtitle-style:
+    normal;
+
+  --event-experience-subtitle-weight:
+    500;
+
+  --event-experience-subtitle-line-height:
+    1.3;
+
+  --event-experience-subtitle-letter-spacing:
+    0.28em;
+
+  --event-experience-subtitle-color:
+    var(--event-experience-foreground);
+
+  --event-experience-subtitle-text-transform:
+    none;
+
+  --event-experience-subtitle-text-align:
+    center;
+
+  --event-experience-subtitle-opacity:
     1;
 
 
@@ -148,33 +197,45 @@
      Event
   ======================================================================== */
 
-  --invitation-event-font:
+  --event-experience-event-font:
     var(--garden-grace-font-primary);
 
-  --invitation-event-style:
+  --event-experience-event-style:
     normal;
 
-  --invitation-event-weight:
+  --event-experience-event-weight:
     400;
 
-  --invitation-event-letter-spacing:
+  --event-experience-event-line-height:
+    1.5;
+
+  --event-experience-event-letter-spacing:
     0;
 
-  --invitation-event-text-transform:
+  --event-experience-event-color:
+    var(--event-experience-foreground);
+
+  --event-experience-event-text-transform:
     uppercase;
+
+  --event-experience-event-text-align:
+    center;
+
+  --event-experience-event-opacity:
+    1;
 
 
   /* ========================================================================
      Event Date
   ======================================================================== */
 
-  --invitation-event-date-font:
+  --event-experience-event-date-font:
     var(--garden-grace-font-primary);
 
-  --invitation-event-date-letter-spacing:
+  --event-experience-event-date-letter-spacing:
     0;
 
-  --invitation-event-date-text-transform:
+  --event-experience-event-date-text-transform:
     uppercase;
 
 
@@ -182,29 +243,54 @@
      Description
   ======================================================================== */
 
-  --invitation-description-font:
+  --event-experience-description-font:
     var(--garden-grace-font-secondary);
 
-  --invitation-description-style:
+  --event-experience-description-style:
     normal;
 
-  --invitation-description-weight:
+  --event-experience-description-weight:
     400;
 
-  --invitation-description-letter-spacing:
+  --event-experience-description-line-height:
+    1.5;
+
+  --event-experience-description-letter-spacing:
     0;
 
-  --invitation-description-text-transform:
+  --event-experience-description-color:
+    var(--event-experience-foreground);
+
+  --event-experience-description-text-transform:
     none;
+
+  --event-experience-description-text-align:
+    center;
+
+  --event-experience-description-opacity:
+    1;
 
 
   /* ========================================================================
      Countdown
   ======================================================================== */
 
-  --invitation-countdown-value-font:
+  --event-experience-countdown-color:
+    var(--event-experience-foreground);
+
+  --event-experience-countdown-text-align:
+    center;
+
+  --event-experience-countdown-value-font:
     var(--garden-grace-font-secondary);
 
-  --invitation-countdown-label-font:
+  --event-experience-countdown-value-weight:
+    400;
+
+  --event-experience-countdown-label-font:
     var(--garden-grace-font-primary);
+
+  --event-experience-countdown-label-weight:
+    400;
+
 }

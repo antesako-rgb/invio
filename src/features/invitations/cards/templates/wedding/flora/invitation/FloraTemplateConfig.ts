@@ -1,17 +1,14 @@
 import type {
-  InvitationTemplateConfig,
-} from "@/features/invitations/types/invitationTemplateConfig.types";
-
+  EventExperienceTemplateConfig,
+} from "@/features/invitations/types/eventExperienceTemplateConfig.types";
 
 /* ==========================================================================
    Flora Template Config
 ========================================================================== */
 
 export const floraTemplateConfig:
-  InvitationTemplateConfig = {
-    type:
-      "invitation",
-
+  EventExperienceTemplateConfig = {
+    
     family:
       "flora",
 
@@ -37,6 +34,9 @@ export const floraTemplateConfig:
 
       rsvp:
         true,
+
+      photos:
+        false,
     },
 
     envelopeId:

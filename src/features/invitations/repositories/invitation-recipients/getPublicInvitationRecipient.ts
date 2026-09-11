@@ -13,7 +13,8 @@ import type {
 ========================================================================== */
 
 export async function getPublicInvitationRecipient(
-  input: GetPublicInvitationRecipientInput
+  input:
+    GetPublicInvitationRecipientInput
 ): Promise<PublicInvitationRecipient | null> {
   const supabase =
     await createServerClient();
@@ -24,7 +25,10 @@ export async function getPublicInvitationRecipient(
   } =
     await supabase.rpc(
       "get_public_invitation_recipient",
-      input
+      {
+        p_public_id:
+          input.publicId,
+      }
     );
 
   if (error) {

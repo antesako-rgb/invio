@@ -13,9 +13,9 @@ import type {
 } from "react";
 
 import type {
-  InvitationEditorContext,
-  InvitationEditorSelection,
-} from "@/features/invitations/editor/types/invitationEditor.types";
+  EventExperienceEditorContext,
+  EventExperienceEditorSelection,
+} from "@/features/invitations/editor/types/eventExperienceEditor.types";
 
 
 /* ==========================================================================
@@ -24,10 +24,10 @@ import type {
 
 interface UseEditableTextEditingOptions {
   element:
-    InvitationEditorSelection;
+    EventExperienceEditorSelection;
 
   editor:
-    InvitationEditorContext | undefined;
+    EventExperienceEditorContext| undefined;
 
   elementRef:
     RefObject<HTMLSpanElement | null>;

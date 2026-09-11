@@ -13,7 +13,8 @@ import type {
 ========================================================================== */
 
 export async function getInvitationRecipients(
-  input: GetInvitationRecipientsInput
+  input:
+    GetInvitationRecipientsInput
 ): Promise<InvitationRecipientDetails[]> {
   const supabase =
     await createServerClient();
@@ -24,7 +25,10 @@ export async function getInvitationRecipients(
   } =
     await supabase.rpc(
       "get_invitation_recipients",
-      input
+      {
+        p_invitation_id:
+          input.invitationId,
+      }
     );
 
   if (error) {
@@ -42,5 +46,6 @@ export async function getInvitationRecipients(
     return [];
   }
 
-  return data as unknown as InvitationRecipientDetails[];
+  return data as unknown as
+    InvitationRecipientDetails[];
 }

@@ -9,3 +9,16 @@ export function buildInvitationImageFileName(
 ) {
   return `invitations/${invitationId}/images/${imageId}.${extension}`;
 }
+
+
+/* ==========================================================================
+   Photo Wall Photo File Name
+========================================================================== */
+
+export function buildPhotoWallPhotoFileName(
+  invitationId: string,
+  photoId: string,
+  extension = "webp"
+) {
+  return `photo-wall/${invitationId}/${photoId}.${extension}`;
+}

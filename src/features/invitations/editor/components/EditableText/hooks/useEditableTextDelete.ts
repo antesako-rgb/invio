@@ -11,8 +11,8 @@ import type {
 } from "react";
 
 import type {
-  InvitationEditorContext,
-} from "@/features/invitations/editor/types/invitationEditor.types";
+  EventExperienceEditorContext
+} from "@/features/invitations/editor/types/eventExperienceEditor.types";
 
 
 /* ==========================================================================
@@ -29,7 +29,7 @@ export interface EditableTextDeletePosition {
 
 interface UseEditableTextDeleteOptions {
   editor:
-    InvitationEditorContext | undefined;
+    EventExperienceEditorContext | undefined;
 
   elementRef:
     RefObject<HTMLSpanElement | null>;

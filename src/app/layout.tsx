@@ -11,8 +11,8 @@ import {
 } from "sonner";
 
 import {
-  invitationFontVariables,
-} from "@/features/invitations/fonts/invitationFonts";
+  eventExperienceFonts,
+} from "@/features/invitations/editor/fonts/eventExperienceFonts";
 
 import "./globals.css";
 
@@ -63,7 +63,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`
         ${inter.variable}
-        ${invitationFontVariables}
+        ${eventExperienceFonts}
         h-full
         antialiased
       `}

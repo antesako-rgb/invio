@@ -18,10 +18,12 @@ export async function loadMessages(
     dashboard,
     events,
     guests,
+    eventExperiences,
+    eventExperiencesManagement,
     invitations,
     invitationManagement,
-    invitationContent,
-    invitationTemplates,
+    eventExperienceContent,
+    eventExperienceTemplates,
   ] =
     await Promise.all([
       import(
@@ -53,6 +55,14 @@ export async function loadMessages(
       ),
 
       import(
+        `../messages/${locale}/event-experiences.json`
+      ),
+
+      import(
+        `../messages/${locale}/event-experiences-management.json`
+      ),
+
+      import(
         `../messages/${locale}/invitations.json`
       ),
 
@@ -61,11 +71,11 @@ export async function loadMessages(
       ),
 
       import(
-        `../messages/${locale}/invitation-content.json`
+        `../messages/${locale}/event-experience-content.json`
       ),
 
       import(
-        `../messages/${locale}/invitation-templates.json`
+        `../messages/${locale}/event-experience-templates.json`
       ),
     ]);
 
@@ -91,6 +101,13 @@ export async function loadMessages(
     Guests:
       guests.default,
 
+    EventExperiences: {
+      ...eventExperiences.default,
+
+      ...eventExperiencesManagement.default
+        .EventExperiences,
+    },
+
     Invitations: {
       ...invitations.default,
 
@@ -98,11 +115,11 @@ export async function loadMessages(
         .Invitations,
     },
 
-    InvitationContent:
-      invitationContent.default,
+    EventExperienceContent:
+      eventExperienceContent.default,
 
-    InvitationTemplates:
-      invitationTemplates.default
-        .InvitationTemplates,
+    EventExperienceTemplates:
+      eventExperienceTemplates.default
+        .EventExperienceTemplates,
   };
 }

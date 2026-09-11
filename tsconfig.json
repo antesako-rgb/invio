@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "src/features/invitations/components/template-picker/InvitationTemplatePicker/EventExperienceTemplatePicker.tsxx"  ],
   "exclude": ["node_modules"]
 }

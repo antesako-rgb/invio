@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Event Experience
+========================================================================== */
+
+.event-experience {
+  position:
+    relative;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    100%;
+
+  min-height:
+    100dvh;
+
+  overflow:
+    hidden;
+
+  background-color:
+    var(--event-experience-background);
+}
+
+/* ==========================================================================
+   Card Stage
+========================================================================== */
+
+.event-experience-card-stage {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    min(
+      100%,
+      640px
+    );
+
+  padding:
+    24px;
+
+  box-sizing:
+    border-box;
+
+}
+/* ==========================================================================
+   Background
+========================================================================== */
+
+.event-experience::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    0;
+
+  background-image:
+    var(--event-experience-background-image);
+
+  background-size:
+    var(--event-experience-background-size);
+
+  background-position:
+    var(--event-experience-background-position);
+
+  background-repeat:
+    var(--event-experience-background-repeat);
+
+  filter:
+    var(--event-experience-background-filter);
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.event-experience > * {
+  position:
+    relative;
+
+  z-index:
+    1;
+}
+
+
+/* ==========================================================================
+   Edit Mode
+========================================================================== */
+
+.event-experience[data-mode="edit"] {
+  display:
+    block;
+
+  min-height:
+    0;
+
+  overflow:
+    visible;
+
+  background:
+    transparent;
+}
+
+
+.event-experience[data-mode="edit"]::before {
+  display:
+    none;
+}

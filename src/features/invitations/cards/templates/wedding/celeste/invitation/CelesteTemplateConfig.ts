@@ -1,16 +1,13 @@
 import type {
-  InvitationTemplateConfig,
-} from "@/features/invitations/types/invitationTemplateConfig.types";
-
+  EventExperienceTemplateConfig,
+} from "@/features/invitations/types/eventExperienceTemplateConfig.types";
 
 /* ==========================================================================
    Celeste Template Config
 ========================================================================== */
 
 export const celesteTemplateConfig:
-  InvitationTemplateConfig = {
-    type:
-      "invitation",
+ EventExperienceTemplateConfig = {
 
     family:
       "celeste",
@@ -37,6 +34,9 @@ export const celesteTemplateConfig:
 
       rsvp:
         true,
+
+      photos:
+        false,
     },
 
     envelopeId:

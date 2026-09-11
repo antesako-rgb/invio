@@ -34,10 +34,10 @@
      Subtitle
   ======================================================================== */
 
-  --invitation-subtitle-size:
+  --event-experience-subtitle-size:
     3cqw;
 
-  --invitation-subtitle-text-align:
+  --event-experience-subtitle-text-align:
     right;
 
 
@@ -45,13 +45,13 @@
      Names
   ======================================================================== */
 
-  --invitation-name-size:
+  --event-experience-name-size:
     13cqw;
 
-  --invitation-name-line-height:
+  --event-experience-name-line-height:
     0.8;
 
-  --invitation-name-text-align:
+  --event-experience-name-text-align:
     right;
 
 
@@ -67,19 +67,19 @@
      Event
   ======================================================================== */
 
-  --invitation-event-size:
+  --event-experience-event-size:
     2.9cqw;
 
-  --invitation-event-line-height:
+  --event-experience-event-line-height:
     1.4;
 
-  --invitation-event-text-align:
+  --event-experience-event-text-align:
     right;
 
-  --invitation-event-align-items:
+  --event-experience-event-align-items:
     flex-end;
 
-  --invitation-event-gap:
+  --event-experience-event-gap:
     5cqw;
 
 
@@ -87,10 +87,10 @@
      Event Schedule
   ======================================================================== */
 
-  --invitation-event-schedule-time-padding-bottom:
+  --event-experience-event-schedule-time-padding-bottom:
     2cqw;
 
-  --invitation-event-schedule-time-border:
+  --event-experience-event-schedule-time-border:
     1px solid currentColor;
 
 
@@ -98,13 +98,13 @@
      Event Date
   ======================================================================== */
 
-  --invitation-event-date-size:
+  --event-experience-event-date-size:
     1em;
 
-  --invitation-event-date-width:
+  --event-experience-event-date-width:
     100%;
 
-  --invitation-event-date-gap:
+  --event-experience-event-date-gap:
     0;
 
 
@@ -112,7 +112,7 @@
      Event Location
   ======================================================================== */
 
-  --invitation-event-location-gap:
+  --event-experience-event-location-gap:
     2.5cqw;
 
 
@@ -120,19 +120,19 @@
      Description
   ======================================================================== */
 
-  --invitation-description-size:
+  --event-experience-description-size:
     4.3cqw;
 
-  --invitation-description-line-height:
+  --event-experience-description-line-height:
     1.2;
 
-  --invitation-description-text-align:
+  --event-experience-description-text-align:
     right;
 
-  --invitation-description-max-width:
+  --event-experience-description-max-width:
     100%;
 
-  --invitation-description-margin-top:
+  --event-experience-description-margin-top:
     0;
 
 
@@ -140,16 +140,16 @@
      Countdown
   ======================================================================== */
 
-  --invitation-countdown-text-align:
+  --event-experience-countdown-text-align:
     right;
 
-  --invitation-countdown-value-size:
+  --event-experience-countdown-value-size:
     8cqw;
 
-  --invitation-countdown-label-size:
+  --event-experience-countdown-label-size:
     2.7cqw;
 
-  --invitation-countdown-label-gap:
+  --event-experience-countdown-label-gap:
     1cqw;
 
 
@@ -164,7 +164,7 @@
     100%;
 
   aspect-ratio:
-    var(--invitation-card-aspect-ratio);
+    var(--event-experience-card-aspect-ratio);
 
   overflow:
     hidden;
@@ -173,10 +173,10 @@
     inline-size;
 
   background:
-    var(--invitation-card-background);
+    var(--event-experience-card-background);
 
   color:
-    var(--invitation-foreground);
+    var(--event-experience-foreground);
 
 }
 
@@ -197,25 +197,10 @@
     0;
 
   background-color:
-    var(--invitation-card-background);
+    var(--event-experience-card-background);
 
   background-image:
-    var(--invitation-card-background-image);
-
-  background-size:
-    var(--invitation-card-background-size);
-
-  background-position:
-    var(--invitation-card-background-position);
-
-  background-repeat:
-    var(--invitation-card-background-repeat);
-
-  opacity:
-    var(--invitation-card-background-opacity);
-
-  pointer-events:
-    none;
+    var(--event-experience-card-background-image);
 
 }
 
@@ -245,9 +230,7 @@
     cover;
 
   filter:
-    var(
-      --garden-grace-card-frame-filter
-    );
+    var(--garden-grace-card-frame-filter);
 
   pointer-events:
     none;
@@ -324,8 +307,8 @@
 
 .garden-grace-card__subtitle {
 
-  --invitation-element-font-size:
-    var(--invitation-subtitle-size);
+  --event-experience-element-font-size:
+    var(--event-experience-subtitle-size);
 
   display:
     block;
@@ -337,34 +320,34 @@
     var(--garden-grace-subtitle-margin-bottom);
 
   font-family:
-    var(--invitation-subtitle-font);
+    var(--event-experience-subtitle-font);
 
   font-size:
-    var(--invitation-element-font-size);
+    var(--event-experience-element-font-size);
 
   font-style:
-    var(--invitation-subtitle-style);
+    var(--event-experience-subtitle-style);
 
   font-weight:
-    var(--invitation-subtitle-weight);
+    var(--event-experience-subtitle-weight);
 
   line-height:
-    var(--invitation-subtitle-line-height);
+    var(--event-experience-subtitle-line-height);
 
   letter-spacing:
-    var(--invitation-subtitle-letter-spacing);
+    var(--event-experience-subtitle-letter-spacing);
 
   color:
-    var(--invitation-subtitle-color);
+    var(--event-experience-subtitle-color);
 
   text-transform:
-    var(--invitation-subtitle-text-transform);
+    var(--event-experience-subtitle-text-transform);
 
   text-align:
-    var(--invitation-subtitle-text-align);
+    var(--event-experience-subtitle-text-align);
 
   opacity:
-    var(--invitation-subtitle-opacity);
+    var(--event-experience-subtitle-opacity);
 
   white-space:
     pre-line;
@@ -409,31 +392,31 @@
     var(--garden-grace-names-row-gap);
 
   font-family:
-    var(--invitation-name-font);
+    var(--event-experience-name-font);
 
   font-style:
-    var(--invitation-name-style);
+    var(--event-experience-name-style);
 
   font-weight:
-    var(--invitation-name-weight);
+    var(--event-experience-name-weight);
 
   line-height:
-    var(--invitation-name-line-height);
+    var(--event-experience-name-line-height);
 
   letter-spacing:
-    var(--invitation-name-letter-spacing);
+    var(--event-experience-name-letter-spacing);
 
   color:
-    var(--invitation-name-color);
+    var(--event-experience-name-color);
 
   text-transform:
-    var(--invitation-name-text-transform);
+    var(--event-experience-name-text-transform);
 
   text-align:
-    var(--invitation-name-text-align);
+    var(--event-experience-name-text-align);
 
   opacity:
-    var(--invitation-name-opacity);
+    var(--event-experience-name-opacity);
 
 }
 
@@ -444,8 +427,8 @@
 
 .garden-grace-card__name:first-child {
 
-  --invitation-element-font-size:
-    var(--invitation-name-size);
+  --event-experience-element-font-size:
+    var(--event-experience-name-size);
 
   grid-column:
     1 / -1;
@@ -469,7 +452,7 @@
     auto;
 
   font-size:
-    var(--invitation-element-font-size);
+    var(--event-experience-element-font-size);
 
   line-height:
     inherit;
@@ -486,8 +469,8 @@
 
 .garden-grace-card__name:last-child {
 
-  --invitation-element-font-size:
-    var(--invitation-name-size);
+  --event-experience-element-font-size:
+    var(--event-experience-name-size);
 
   grid-column:
     2;
@@ -511,7 +494,7 @@
     auto;
 
   font-size:
-    var(--invitation-element-font-size);
+    var(--event-experience-element-font-size);
 
   line-height:
     inherit;
@@ -546,20 +529,11 @@
   font-size:
     var(--garden-grace-name-separator-size);
 
-  line-height:
-    1;
-
   color:
     var(--garden-grace-name-separator-color);
 
   opacity:
     var(--garden-grace-name-separator-opacity);
-
-  pointer-events:
-    none;
-
-  user-select:
-    none;
 
 }
 
@@ -569,10 +543,7 @@
 ========================================================================== */
 
 .garden-grace-card
-[data-invitation-event-schedule] {
-
-  width:
-    100%;
+[data-event-experience-schedule] {
 
   margin-bottom:
     var(--garden-grace-event-margin-bottom);
@@ -585,7 +556,7 @@
 ========================================================================== */
 
 .garden-grace-card
-[data-invitation-countdown] {
+[data-event-experience-countdown] {
 
   align-items:
     flex-end;
@@ -604,7 +575,7 @@
 ========================================================================== */
 
 .garden-grace-card
-[data-invitation-description] {
+[data-event-experience-description] {
 
   width:
     100%;

@@ -1,86 +1,13 @@
 {
   "Invitations": {
     "management": {
-      "status": {
-        "published": "Objavljena",
-        "draft": "Skica"
-      },
-
-      "actions": {
-        "preview": "Pregledaj pozivnicu",
-        "edit": "Uredi dizajn"
-      },
-
-      "name": {
-        "label": "Naziv pozivnice",
-        "edit": "Uredi naziv",
-        "save": "Spremi naziv",
-        "cancel": "Odustani",
-        "error": "Nije moguće spremiti naziv pozivnice."
-      },
-
-      "updatedAt": "Zadnje ažurirano: {date}",
-
-      "delete": {
-        "title": "Brisanje pozivnice",
-        "description": "Trajno izbrišite ovu pozivnicu i sve podatke povezane s njom.",
-        "button": "Obriši pozivnicu",
-
-        "confirm": {
-          "title": "Obrisati pozivnicu?",
-          "description": "Ova radnja je trajna i ne može se poništiti.",
-          "confirm": "Obriši pozivnicu",
-          "cancel": "Odustani"
-        }
-      },
-
-      "statusCard": {
-        "title": "Status pozivnice",
-        "description": "Upravljajte dostupnošću i ulogom svoje pozivnice.",
-
-        "published": {
-          "title": "Pozivnica je objavljena",
-          "description": "Gosti koji imaju pristup poveznici mogu pregledati pozivnicu i sve informacije koje ste odlučili podijeliti.",
-          "action": "Povuci objavu",
-          "success": "Objava pozivnice uspješno je povučena."
-        },
-
-        "draft": {
-          "title": "Pozivnica nije objavljena",
-          "description": "Gosti ne mogu pristupiti ni pregledati pozivnicu dok je ne objavite i učinite dostupnom za dijeljenje.",
-          "action": "Objavi pozivnicu",
-          "success": "Pozivnica je uspješno objavljena."
-        }
-      },
-
-      "publicLinkCard": {
-        "title": "Javni link",
-        "description": "Podijelite javnu poveznicu svoje pozivnice.",
-
-        "active": {
-          "title": "Javni link je aktivan",
-          "description": "Svatko tko ima ovu poveznicu može pregledati pozivnicu."
-        },
-
-        "inactive": {
-          "title": "Javni link nije aktivan",
-          "description": "Poveznica će postati dostupna gostima nakon objave pozivnice."
-        },
-
-        "actions": {
-          "copy": "Kopiraj link",
-          "copied": "Kopirano",
-          "open": "Otvori pozivnicu"
-        }
-      },
-
       "rsvpSummary": {
         "label": "RSVP pregled",
         "total": "ukupno",
         "attending": "dolazi",
         "declined": "ne dolazi",
-        "pending": "čeka",
-        "viewAnswers": "Prikaži odgovore"
+        "pending": "čeka odgovor",
+        "viewAnswers": "Pregledaj odgovore"
       },
 
       "rsvpAnswers": {
@@ -138,7 +65,7 @@
 
           "rsvp": {
             "label": "RSVP",
-            "all": "Svi RSVP",
+            "all": "Svi RSVP statusi",
             "pending": "Čeka odgovor",
             "attending": "Dolazi",
             "declined": "Ne dolazi"
@@ -152,13 +79,13 @@
 
         "table": {
           "recipient": "Gost",
-          "link": "Link",
+          "link": "Poveznica",
           "guests": "Gosti",
           "rsvp": "RSVP",
           "updated": "Ažurirano",
-          "actions": "Akcije",
+          "actions": "Radnje",
 
-          "linkHint": "Dvoklik za otvaranje",
+          "linkHint": "Dvostruki klik za otvaranje",
           "publicInvitation": "Javna pozivnica",
           "remainingGuests": "+{count, plural, one {# gost} few {# gosta} other {# gostiju}}",
 
@@ -172,9 +99,9 @@
           "description": "Pregledajte goste i njihove RSVP odgovore za ovu pozivnicu.",
 
           "link": {
-            "title": "Link pozivnice",
-            "description": "Poveznica putem koje je gost pristupio pozivnici.",
-            "copy": "Kopiraj link",
+            "title": "Poveznica pozivnice",
+            "description": "Poveznica kojom gost pristupa pozivnici.",
+            "copy": "Kopiraj poveznicu",
             "copied": "Kopirano"
           },
 
@@ -205,7 +132,7 @@
 
           "delete": {
             "title": "Ukloniti primatelja?",
-            "description": "Primatelj i njegova personalizirana poveznica pozivnice bit će uklonjeni. Uključeni gosti ostat će na događaju.",
+            "description": "Ovaj primatelj i njegova personalizirana poveznica pozivnice bit će uklonjeni. Uključeni gosti ostat će u događaju.",
             "confirm": "Ukloni primatelja",
             "success": "Primatelj je uspješno uklonjen."
           }
@@ -224,8 +151,8 @@
 
           "back": "Natrag",
           "next": "Nastavi",
-          "submit": "Kreiraj primatelja",
-          "submitting": "Kreiranje...",
+          "submit": "Izradi primatelja",
+          "submitting": "Izrada...",
 
           "guests": {
             "title": "Odaberite goste",
@@ -236,13 +163,13 @@
 
             "empty": {
               "title": "Nema dostupnih gostiju",
-              "description": "Dodajte gosta događaju prije kreiranja personaliziranog primatelja."
+              "description": "Dodajte gosta u događaj prije izrade personaliziranog primatelja."
             }
           },
 
           "settings": {
             "title": "Postavke primatelja",
-            "description": "Odaberite kako će ovaj primatelj personalizirane pozivnice biti postavljen.",
+            "description": "Odaberite kako želite postaviti ovog primatelja personalizirane pozivnice.",
 
             "primary": {
               "title": "Glavni primatelj",
@@ -252,7 +179,7 @@
 
           "review": {
             "title": "Pregled primatelja",
-            "description": "Provjerite podatke personaliziranog primatelja prije kreiranja poveznice.",
+            "description": "Pregledajte podatke personaliziranog primatelja prije izrade poveznice.",
 
             "guests": {
               "label": "Gosti",

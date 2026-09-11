@@ -1,0 +1,524 @@
+/* ==========================================================================
+   Photo Wall Upload
+========================================================================== */
+
+.photo-wall-upload {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  width:
+    min(
+      calc(100vw - 32px),
+      720px
+    );
+
+  max-width:
+    720px;
+
+  max-height:
+    min(
+      860px,
+      calc(100dvh - 48px)
+    );
+
+  padding:
+    32px;
+
+  overflow:
+    hidden;
+
+  border:
+    1px solid
+    var(--event-experience-action-secondary-border);
+
+  border-radius:
+    24px;
+
+
+  color:
+    var(--event-experience-photo-wall-surface-foreground);
+}
+
+
+/* ==========================================================================
+   Navigation
+========================================================================== */
+
+.photo-wall-upload__navigation {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  margin-bottom:
+    20px;
+
+}
+
+.photo-wall-upload__navigation-button {
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    42px;
+
+  height:
+    42px;
+
+  padding:
+    0;
+
+  border:
+    1px solid
+    var(--event-experience-action-secondary-border);
+
+  border-radius:
+    50%;
+
+  background:
+    var(--event-experience-action-secondary);
+
+  color:
+    var(--event-experience-action-secondary-foreground);
+
+  cursor:
+    pointer;
+
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+
+}
+
+.photo-wall-upload__navigation-button svg {
+
+  width:
+    19px;
+
+  height:
+    19px;
+
+}
+
+.photo-wall-upload__navigation-button:hover {
+
+  opacity:
+    0.85;
+
+}
+
+.photo-wall-upload__navigation-button:active {
+
+  transform:
+    scale(0.96);
+
+}
+
+.photo-wall-upload__navigation-button:focus-visible {
+
+  outline:
+    2px solid
+    var(--event-experience-action-primary);
+
+  outline-offset:
+    3px;
+
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.photo-wall-upload__content {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  width:
+    100%;
+
+  min-height:
+    0;
+
+  overflow-y:
+    auto;
+
+  overscroll-behavior:
+    contain;
+
+  scrollbar-gutter:
+    stable;
+
+}
+
+
+/* ==========================================================================
+   Selected Photos
+========================================================================== */
+
+.photo-wall-upload__photos {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  gap:
+    10px;
+
+  margin-top:
+    20px;
+
+  padding:
+    4px;
+
+  overflow-x:
+    auto;
+
+  overscroll-behavior-x:
+    contain;
+
+}
+
+.photo-wall-upload__photo {
+
+  position:
+    relative;
+
+  flex:
+    0 0 auto;
+
+  width:
+    64px;
+
+  height:
+    64px;
+
+  padding:
+    0;
+
+  overflow:
+    hidden;
+
+  border:
+    2px solid
+    transparent;
+
+  border-radius:
+    12px;
+
+  background:
+    var(--event-experience-photo-wall-photo-background);
+
+  cursor:
+    pointer;
+
+  opacity:
+    0.62;
+
+  transition:
+    border-color 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+
+}
+
+.photo-wall-upload__photo img {
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+}
+
+.photo-wall-upload__photo:hover {
+
+  opacity:
+    0.9;
+
+}
+
+.photo-wall-upload__photo:active {
+
+  transform:
+    scale(0.96);
+
+}
+
+.photo-wall-upload__photo[data-active="true"] {
+
+  border-color:
+    var(--event-experience-action-primary);
+
+  opacity:
+    1;
+
+}
+
+.photo-wall-upload__photo:focus-visible {
+
+  outline:
+    2px solid
+    var(--event-experience-action-primary);
+
+  outline-offset:
+    3px;
+
+}
+
+
+/* ==========================================================================
+   Add More
+========================================================================== */
+
+.photo-wall-upload__add-more {
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  align-self:
+    center;
+
+  gap:
+    8px;
+
+  min-height:
+    42px;
+
+  margin-top:
+    20px;
+
+  padding:
+    9px 18px;
+
+  border:
+    1px solid
+    var(--event-experience-action-secondary-border);
+
+  border-radius:
+    999px;
+
+  background:
+    var(--event-experience-action-secondary);
+
+  color:
+    var(--event-experience-action-secondary-foreground);
+
+  font:
+    inherit;
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+
+  cursor:
+    pointer;
+
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+
+}
+
+.photo-wall-upload__add-more svg {
+
+  width:
+    17px;
+
+  height:
+    17px;
+
+}
+
+.photo-wall-upload__add-more:hover {
+
+  opacity:
+    0.85;
+
+}
+
+.photo-wall-upload__add-more:active {
+
+  transform:
+    scale(0.98);
+
+}
+
+.photo-wall-upload__add-more:focus-visible {
+
+  outline:
+    2px solid
+    var(--event-experience-action-primary);
+
+  outline-offset:
+    3px;
+
+}
+
+
+/* ==========================================================================
+   Error
+========================================================================== */
+
+.photo-wall-upload__error {
+
+  width:
+    100%;
+
+  margin:
+    16px 0 0;
+
+  padding:
+    10px 12px;
+
+  border:
+    1px solid
+    rgba(
+      185,
+      28,
+      28,
+      0.16
+    );
+
+  border-radius:
+    10px;
+
+  background:
+    rgba(
+      185,
+      28,
+      28,
+      0.06
+    );
+
+  font-family:
+    var(--event-experience-event-font);
+
+  font-size:
+    0.8rem;
+
+  font-weight:
+    500;
+
+  line-height:
+    1.4;
+
+  color:
+    #991b1b;
+
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 767px) {
+
+  .photo-wall-upload {
+
+    width:
+      calc(100vw - 24px);
+
+    max-height:
+      calc(100dvh - 24px);
+
+    padding:
+      24px 16px;
+
+    border-radius:
+      20px;
+
+  }
+
+  .photo-wall-upload__navigation {
+
+    margin-bottom:
+      16px;
+
+  }
+
+  .photo-wall-upload__navigation-button {
+
+    width:
+      40px;
+
+    height:
+      40px;
+
+  }
+
+  .photo-wall-upload__photos {
+
+    gap:
+      8px;
+
+    margin-top:
+      16px;
+
+  }
+
+  .photo-wall-upload__photo {
+
+    width:
+      58px;
+
+    height:
+      58px;
+
+    border-radius:
+      10px;
+
+  }
+
+  .photo-wall-upload__add-more {
+
+    width:
+      100%;
+
+    margin-top:
+      16px;
+
+  }
+
+}

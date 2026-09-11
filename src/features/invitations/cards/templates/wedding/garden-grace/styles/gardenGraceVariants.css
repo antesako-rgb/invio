@@ -2,13 +2,13 @@
    Champagne
 ========================================================================== */
 
-[data-invitation-experience][data-family="garden-grace"][data-variant="champagne"] {
+[data-event-experience][data-family="garden-grace"][data-variant="champagne"] {
 
   /* ========================================================================
      Experience Background
   ======================================================================== */
 
-  --invitation-experience-background-filter:
+  --event-experience-background-filter:
     none;
 
 
@@ -17,25 +17,25 @@
   ======================================================================== */
 
   --garden-grace-card-frame-filter:
-    none;
-
+    hue-rotate(300deg)
+    saturate(100%)
+    brightness(100%);
 
   /* ========================================================================
      Envelope
   ======================================================================== */
 
-  --invitation-envelope-back-filter:
+  --event-experience-envelope-back-filter:
     none;
 
-  --invitation-envelope-front-filter:
+  --event-experience-envelope-front-filter:
     none;
 
-  --invitation-envelope-flap-filter:
+  --event-experience-envelope-flap-filter:
     none;
 
-  --invitation-envelope-liner-filter:
+  --event-experience-envelope-liner-filter:
     none;
-
 }
 
 
@@ -43,13 +43,13 @@
    Sage
 ========================================================================== */
 
-[data-invitation-experience][data-family="garden-grace"][data-variant="sage"] {
+[data-event-experience][data-family="garden-grace"][data-variant="sage"] {
 
   /* ========================================================================
      Experience Background
   ======================================================================== */
 
-  --invitation-experience-background-filter:
+  --event-experience-background-filter:
     hue-rotate(55deg)
     saturate(55%)
     brightness(97%);
@@ -67,26 +67,25 @@
      Envelope
   ======================================================================== */
 
-  --invitation-envelope-back-filter:
+  --event-experience-envelope-back-filter:
     hue-rotate(55deg)
     saturate(50%)
     brightness(97%);
 
-  --invitation-envelope-front-filter:
+  --event-experience-envelope-front-filter:
     hue-rotate(55deg)
     saturate(50%)
     brightness(97%);
 
-  --invitation-envelope-flap-filter:
+  --event-experience-envelope-flap-filter:
     hue-rotate(55deg)
     saturate(50%)
     brightness(97%);
 
-  --invitation-envelope-liner-filter:
+  --event-experience-envelope-liner-filter:
     hue-rotate(55deg)
     saturate(50%)
     brightness(97%);
-
 }
 
 
@@ -94,13 +93,13 @@
    Dusty Rose
 ========================================================================== */
 
-[data-invitation-experience][data-family="garden-grace"][data-variant="dusty-rose"] {
+[data-event-experience][data-family="garden-grace"][data-variant="dusty-rose"] {
 
   /* ========================================================================
      Experience Background
   ======================================================================== */
 
-  --invitation-experience-background-filter:
+  --event-experience-background-filter:
     hue-rotate(325deg)
     saturate(40%)
     brightness(102%);
@@ -111,8 +110,8 @@
   ======================================================================== */
 
   --garden-grace-card-frame-filter:
-    hue-rotate(325deg)
-    saturate(45%)
+    hue-rotate(260deg)
+    saturate(100%)
     brightness(100%);
 
 
@@ -120,24 +119,23 @@
      Envelope
   ======================================================================== */
 
-  --invitation-envelope-back-filter:
+  --event-experience-envelope-back-filter:
     hue-rotate(325deg)
     saturate(45%)
     brightness(100%);
 
-  --invitation-envelope-front-filter:
+  --event-experience-envelope-front-filter:
     hue-rotate(325deg)
     saturate(45%)
     brightness(100%);
 
-  --invitation-envelope-flap-filter:
+  --event-experience-envelope-flap-filter:
     hue-rotate(325deg)
     saturate(45%)
     brightness(100%);
 
-  --invitation-envelope-liner-filter:
+  --event-experience-envelope-liner-filter:
     hue-rotate(325deg)
     saturate(45%)
     brightness(100%);
-
 }

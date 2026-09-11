@@ -1,18 +1,18 @@
-import InvitationCountdown
-  from "@/features/invitations/cards/components/InvitationCountdown/InvitationCountdown";
+import EventExperienceCountdown
+  from "@/features/invitations/cards/components/EventExperienceCountdown/EventExperienceCountdown";
 
-import InvitationDescription
-  from "@/features/invitations/cards/components/InvitationDescription/InvitationDescription";
+import EventExperienceDescription
+  from "@/features/invitations/cards/components/EventExperienceDescription/EventExperienceDescription";
 
-import InvitationEventSchedule
-  from "@/features/invitations/cards/components/InvitationEventSchedule/InvitationEventSchedule";
+import EventExperienceSchedule
+  from "@/features/invitations/cards/components/EventExperienceSchedule/EventExperienceSchedule";
 
 import EditableText
   from "@/features/invitations/editor/components/EditableText/EditableText";
 
 import type {
-  InvitationTemplateProps,
-} from "@/features/invitations/types/invitationTemplate.types";
+  EventExperienceTemplateProps,
+} from "@/features/invitations/types/eventExperienceTemplate.types";
 
 import {
   gardenGraceCardAssets,
@@ -21,6 +21,7 @@ import {
 import "./GardenGraceCard.css";
 import "../styles/gardenGraceTokens.css";
 import "../styles/gardenGraceVariants.css";
+
 /* ==========================================================================
    Garden Grace Card
 ========================================================================== */
@@ -29,7 +30,7 @@ export default function GardenGraceCard({
   data,
   mode,
   editor,
-}: InvitationTemplateProps) {
+}: EventExperienceTemplateProps) {
   const {
     primary_name,
     secondary_name,
@@ -45,17 +46,7 @@ export default function GardenGraceCard({
   return (
     <article
       className="garden-grace-card"
-      data-invitation-card="garden-grace"
     >
-      {/* ====================================================================
-          Background
-      ==================================================================== */}
-
-      <div
-        className="garden-grace-card__background"
-        aria-hidden="true"
-      />
-
 
       {/* ====================================================================
           Frame
@@ -161,7 +152,7 @@ export default function GardenGraceCard({
             Event Schedule
         ================================================================== */}
 
-        <InvitationEventSchedule
+        <EventExperienceSchedule
           display={
             data.display
           }
@@ -178,7 +169,7 @@ export default function GardenGraceCard({
             Countdown
         ================================================================== */}
 
-        <InvitationCountdown
+        <EventExperienceCountdown
           date={
             data.content.date.start_date
           }
@@ -192,7 +183,7 @@ export default function GardenGraceCard({
             Description
         ================================================================== */}
 
-        <InvitationDescription
+        <EventExperienceDescription
           value={
             data.content.description
           }

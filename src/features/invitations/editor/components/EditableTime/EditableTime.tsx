@@ -20,24 +20,24 @@ import {
 } from "@/components/ui/picker/TimePicker";
 
 import {
-  getInvitationElementStyle,
-} from "@/features/invitations/editor/presentation/getInvitationElementStyle";
+  getEventExperienceElementStyle,
+} from "@/features/invitations/editor/presentation/getEventExperienceElementStyle";
 
 import {
-  invitationEditorElements,
-} from "@/features/invitations/editor/registry/invitationEditorElements";
+  eventExperienceEditorElements,
+} from "@/features/invitations/editor/registry/eventExperienceEditorElements";
 
 import type {
-  InvitationEditorContext,
-} from "@/features/invitations/editor/types/invitationEditor.types";
+   EventExperienceEditorContext,
+} from "@/features/invitations/editor/types/eventExperienceEditor.types";
 
 import {
-  useInvitationPresentation,
-} from "@/features/invitations/renderer/context/InvitationPresentationContext";
+  useEventExperiencePresentation,
+} from "@/features/invitations/renderer/context/EventExperiencePresentationContext";
 
 import type {
-  InvitationRenderMode,
-} from "@/features/invitations/types/invitationRenderer.types";
+  EventExperienceRenderMode,
+} from "@/features/invitations/types/eventExperienceRenderer.types";
 
 
 /* ==========================================================================
@@ -48,7 +48,7 @@ const TIME_ELEMENT =
   "time.start_time" as const;
 
 const TIME_PLACEHOLDER =
-  "--:--";
+  "—";
 
 
 /* ==========================================================================
@@ -56,14 +56,14 @@ const TIME_PLACEHOLDER =
 ========================================================================== */
 
 interface EditableTimeProps {
-  children:
-    ReactNode;
-
   mode:
-    InvitationRenderMode;
+    EventExperienceRenderMode;
 
   editor?:
-    InvitationEditorContext;
+     EventExperienceEditorContext;
+
+  children?:
+    ReactNode;
 }
 
 
@@ -72,18 +72,18 @@ interface EditableTimeProps {
 ========================================================================== */
 
 export default function EditableTime({
-  children,
   mode,
   editor,
+  children,
 }: EditableTimeProps) {
   const t =
     useTranslations(
-      "Invitations.editor.time"
+      "EventExperiences.editor.time"
     );
 
   const tElementLabel =
     useTranslations(
-      "Invitations.editor.elementLabels"
+     "EventExperiences.editor.elementLabels"
     );
 
 
@@ -92,7 +92,7 @@ export default function EditableTime({
   ========================================================================== */
 
   const elementConfig =
-    invitationEditorElements[
+    eventExperienceEditorElements[
       TIME_ELEMENT
     ];
 
@@ -132,7 +132,7 @@ export default function EditableTime({
   ========================================================================== */
 
   const presentation =
-    useInvitationPresentation();
+    useEventExperiencePresentation();
 
   const elementPresentation =
     presentation.elements?.[
@@ -140,7 +140,7 @@ export default function EditableTime({
     ];
 
   const elementStyle =
-    getInvitationElementStyle(
+    getEventExperienceElementStyle(
       elementPresentation
     );
 
@@ -238,7 +238,7 @@ export default function EditableTime({
   if (!isEditorMode) {
     return (
       <div
-        data-invitation-event-time
+        data-event-experience-time
         style={
           timeStyle
         }
@@ -261,7 +261,7 @@ export default function EditableTime({
         }
         render={
           <div
-            data-invitation-event-time
+            data-event-experience-time
             data-invitation-editor-ui
             data-editor-element={
               TIME_ELEMENT

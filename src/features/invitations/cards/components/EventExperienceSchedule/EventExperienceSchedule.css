@@ -1,0 +1,235 @@
+/* ==========================================================================
+   Event Schedule
+========================================================================== */
+
+[data-event-experience-schedule] {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    var(--event-experience-event-align-items);
+
+  width:
+    100%;
+
+  gap:
+    var(--event-experience-event-gap);
+
+  font-family:
+    var(--event-experience-event-font);
+
+  font-size:
+    var(--event-experience-event-size);
+
+  font-style:
+    var(--event-experience-event-style);
+
+  font-weight:
+    var(--event-experience-event-weight);
+
+  line-height:
+    var(--event-experience-event-line-height);
+
+  letter-spacing:
+    var(--event-experience-event-letter-spacing);
+
+  color:
+    var(--event-experience-event-color);
+
+  text-transform:
+    var(--event-experience-event-text-transform);
+
+  text-align:
+    var(--event-experience-event-text-align);
+
+  opacity:
+    var(--event-experience-event-opacity);
+}
+
+
+/* ==========================================================================
+   Date
+========================================================================== */
+
+[data-event-experience-schedule]
+> [data-event-experience-date] {
+  --event-experience-element-font-size:
+    var(--event-experience-event-date-size);
+
+  width:
+    fit-content;
+
+  max-width:
+    100%;
+
+  font-family:
+    var(--event-experience-event-date-font);
+
+  font-size:
+    var(--event-experience-element-font-size);
+
+  font-style:
+    var(--event-experience-event-style);
+
+  font-weight:
+    var(--event-experience-event-weight);
+
+  line-height:
+    var(--event-experience-event-line-height);
+
+  letter-spacing:
+    var(--event-experience-event-date-letter-spacing);
+
+  color:
+    var(--event-experience-event-color);
+
+  text-transform:
+    var(--event-experience-event-date-text-transform);
+
+  text-align:
+    var(--event-experience-event-text-align);
+}
+
+
+/* ==========================================================================
+   Date Content
+========================================================================== */
+
+[data-event-experience-schedule]
+[data-event-experience-schedule-date] {
+  display:
+    block;
+
+  max-width:
+    100%;
+
+  text-align:
+    inherit;
+
+  white-space:
+    normal;
+}
+
+
+/* ==========================================================================
+   Time
+========================================================================== */
+
+[data-event-experience-schedule]
+> [data-event-experience-time] {
+  --event-experience-element-font-size:
+    var(--event-experience-event-size);
+
+  width:
+    fit-content;
+
+  max-width:
+    100%;
+
+  padding-bottom:
+    var(--event-experience-event-schedule-time-padding-bottom);
+
+  border-bottom:
+    var(--event-experience-event-schedule-time-border);
+
+  font-family:
+    var(--event-experience-event-font);
+
+  font-size:
+    var(--event-experience-element-font-size);
+
+  font-style:
+    var(--event-experience-event-style);
+
+  font-weight:
+    var(--event-experience-event-weight);
+
+  line-height:
+    var(--event-experience-event-line-height);
+
+  letter-spacing:
+    var(--event-experience-event-letter-spacing);
+
+  color:
+    var(--event-experience-event-color);
+
+  text-transform:
+    var(--event-experience-event-text-transform);
+
+  text-align:
+    var(--event-experience-event-text-align);
+}
+
+
+/* ==========================================================================
+   Location
+========================================================================== */
+
+[data-event-experience-schedule]
+[data-event-experience-schedule-location] {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    var(--event-experience-event-align-items);
+
+  width:
+    100%;
+
+  gap:
+    var(--event-experience-event-location-gap);
+
+  line-height:
+    1.2;
+
+  text-align:
+    var(--event-experience-event-text-align);
+
+  white-space:
+    pre-line;
+}
+
+
+/* ==========================================================================
+   Location Parts
+========================================================================== */
+
+[data-event-experience-schedule]
+[data-event-experience-schedule-location]
+> * {
+  --event-experience-element-font-size:
+    var(--event-experience-event-size);
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  max-width:
+    100%;
+
+  font-size:
+    var(--event-experience-element-font-size);
+
+  text-align:
+    inherit;
+}
+
+
+/* ==========================================================================
+   Location Address
+========================================================================== */
+
+[data-event-experience-schedule]
+[data-event-experience-schedule-location]
+[data-editor-element="location.address"] {
+  --event-experience-element-font-size:
+    0.9em;
+}

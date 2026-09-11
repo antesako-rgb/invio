@@ -1,0 +1,319 @@
+/* ==========================================================================
+   Champagne
+========================================================================== */
+
+[data-event-experience][data-variant="champagne"] {
+
+  /* ========================================================================
+     Palette
+  ======================================================================== */
+
+  --event-experience-foreground:
+    #5a493b;
+
+  --event-experience-muted:
+    #9a8877;
+
+  --event-experience-accent:
+    #462b0a;
+
+
+  /* ========================================================================
+     Experience
+  ======================================================================== */
+
+  --event-experience-background:
+    #eceae5;
+
+  --event-experience-card-background:
+    #f5efe6;
+
+
+  /* ========================================================================
+     Actions
+  ======================================================================== */
+
+  --event-experience-action-primary:
+    #6f5a47;
+
+  --event-experience-action-primary-foreground:
+    #fffaf4;
+
+  --event-experience-action-secondary:
+    #e8ded0;
+
+  --event-experience-action-secondary-foreground:
+    var(--event-experience-foreground);
+
+  --event-experience-action-secondary-border:
+    #cbbba7;
+
+
+  /* ========================================================================
+     Invitation Details
+  ======================================================================== */
+
+  --invitation-details-shell-background:
+    #faf6ef;
+
+  --invitation-details-shell-border:
+    rgba(90, 73, 59, 0.10);
+
+  --invitation-details-section-background:
+    rgba(255, 255, 255, 0.52);
+
+  --invitation-details-section-border:
+    rgba(90, 73, 59, 0.10);
+
+  --invitation-details-control-background:
+    rgba(90, 73, 59, 0.06);
+
+
+  /* ========================================================================
+     Invitation RSVP
+  ======================================================================== */
+
+  --invitation-rsvp-shell-background:
+    #faf6ef;
+
+  --invitation-rsvp-shell-border:
+    rgba(90, 73, 59, 0.10);
+
+  --invitation-rsvp-section-background:
+    rgba(255, 255, 255, 0.52);
+
+  --invitation-rsvp-section-border:
+    rgba(90, 73, 59, 0.10);
+
+  --invitation-rsvp-control-background:
+    rgba(90, 73, 59, 0.06);
+
+  --invitation-rsvp-control-border:
+    rgba(90, 73, 59, 0.14);
+
+  --invitation-rsvp-control-active-background:
+    #6f5a47;
+
+  --invitation-rsvp-control-active-foreground:
+    #fffaf4;
+
+  --invitation-rsvp-submit-background:
+    #6f5a47;
+
+  --invitation-rsvp-submit-foreground:
+    #fffaf4;
+}
+
+
+/* ==========================================================================
+   Sage
+========================================================================== */
+
+[data-event-experience][data-variant="sage"] {
+
+  /* ========================================================================
+     Palette
+  ======================================================================== */
+
+  --event-experience-foreground:
+    #30382f;
+
+  --event-experience-muted:
+    #65776a;
+
+  --event-experience-accent:
+    #53604e;
+
+
+  /* ========================================================================
+     Experience
+  ======================================================================== */
+
+  --event-experience-background:
+    #e8ebe4;
+
+  --event-experience-card-background:
+    #f4f5ef;
+
+
+  /* ========================================================================
+     Actions
+  ======================================================================== */
+
+  --event-experience-action-primary:
+    #66705f;
+
+  --event-experience-action-primary-foreground:
+    #fbfcf8;
+
+  --event-experience-action-secondary:
+    #e2e6dd;
+
+  --event-experience-action-secondary-foreground:
+    var(--event-experience-foreground);
+
+  --event-experience-action-secondary-border:
+    #bdc6b7;
+
+
+  /* ========================================================================
+     Invitation Details
+  ======================================================================== */
+
+  --invitation-details-shell-background:
+    #f4f5ef;
+
+  --invitation-details-shell-border:
+    rgba(48, 56, 47, 0.10);
+
+  --invitation-details-section-background:
+    rgba(255, 255, 255, 0.52);
+
+  --invitation-details-section-border:
+    rgba(48, 56, 47, 0.10);
+
+  --invitation-details-control-background:
+    rgba(48, 56, 47, 0.06);
+
+
+  /* ========================================================================
+     Invitation RSVP
+  ======================================================================== */
+
+  --invitation-rsvp-shell-background:
+    #f4f5ef;
+
+  --invitation-rsvp-shell-border:
+    rgba(48, 56, 47, 0.10);
+
+  --invitation-rsvp-section-background:
+    rgba(255, 255, 255, 0.52);
+
+  --invitation-rsvp-section-border:
+    rgba(48, 56, 47, 0.10);
+
+  --invitation-rsvp-control-background:
+    rgba(48, 56, 47, 0.06);
+
+  --invitation-rsvp-control-border:
+    rgba(48, 56, 47, 0.14);
+
+  --invitation-rsvp-control-active-background:
+    #66705f;
+
+  --invitation-rsvp-control-active-foreground:
+    #fbfcf8;
+
+  --invitation-rsvp-submit-background:
+    #66705f;
+
+  --invitation-rsvp-submit-foreground:
+    #fbfcf8;
+}
+
+
+/* ==========================================================================
+   Dusty Rose
+========================================================================== */
+
+[data-event-experience][data-variant="dusty-rose"] {
+
+  /* ========================================================================
+     Palette
+  ======================================================================== */
+
+  --event-experience-foreground:
+    #40302f;
+
+  --event-experience-muted:
+    #987780;
+
+  --event-experience-accent:
+    #725651;
+
+
+  /* ========================================================================
+     Experience
+  ======================================================================== */
+
+  --event-experience-background:
+    #eee6e4;
+
+  --event-experience-card-background:
+    #f8f1ef;
+
+
+  /* ========================================================================
+     Actions
+  ======================================================================== */
+
+  --event-experience-action-primary:
+    #806762;
+
+  --event-experience-action-primary-foreground:
+    #fffafa;
+
+  --event-experience-action-secondary:
+    #eadfdd;
+
+  --event-experience-action-secondary-foreground:
+    var(--event-experience-foreground);
+
+  --event-experience-action-secondary-border:
+    #cfbbb7;
+
+
+  /* ========================================================================
+     Invitation Details
+  ======================================================================== */
+
+  --invitation-details-shell-background:
+    #f8f1ef;
+
+  --invitation-details-shell-border:
+    rgba(64, 48, 47, 0.10);
+
+  --invitation-details-section-background:
+    rgba(255, 255, 255, 0.52);
+
+  --invitation-details-section-border:
+    rgba(64, 48, 47, 0.10);
+
+  --invitation-details-control-background:
+    rgba(64, 48, 47, 0.06);
+
+
+  /* ========================================================================
+     Invitation RSVP
+  ======================================================================== */
+
+  --invitation-rsvp-shell-background:
+    #f8f1ef;
+
+  --invitation-rsvp-shell-border:
+    rgba(64, 48, 47, 0.10);
+
+  --invitation-rsvp-section-background:
+    rgba(255, 255, 255, 0.52);
+
+  --invitation-rsvp-section-border:
+    rgba(64, 48, 47, 0.10);
+
+  --invitation-rsvp-control-background:
+    rgba(64, 48, 47, 0.06);
+
+  --invitation-rsvp-control-border:
+    rgba(64, 48, 47, 0.14);
+
+  --invitation-rsvp-control-active-background:
+    #806762;
+
+  --invitation-rsvp-control-active-foreground:
+    #fffafa;
+
+  --invitation-rsvp-submit-background:
+    #806762;
+
+  --invitation-rsvp-submit-foreground:
+    #fffafa;
+}

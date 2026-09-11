@@ -1,0 +1,396 @@
+/* ==========================================================================
+   Card
+========================================================================== */
+
+.garden-grace-photo-wall-card {
+
+  /* ========================================================================
+     Card Layout
+  ======================================================================== */
+
+  --garden-grace-photo-wall-card-content-padding:
+    20% 10% 10% 10%;
+
+  --garden-grace-photo-wall-names-margin-bottom:
+    10cqw;
+
+  --garden-grace-photo-wall-title-margin-bottom:
+    10cqw;
+
+
+  /* ========================================================================
+     Names
+  ======================================================================== */
+
+  --event-experience-name-size:
+    8cqw;
+
+  --event-experience-name-line-height:
+    1;
+
+  --event-experience-name-text-align:
+    center;
+
+
+  /* ========================================================================
+     Name Separator
+  ======================================================================== */
+
+  --garden-grace-photo-wall-name-separator-size:
+    5cqw;
+
+
+  /* ========================================================================
+     Title
+  ======================================================================== */
+
+  --event-experience-title-size:
+    8cqw;
+
+  --event-experience-title-line-height:
+    1;
+
+  --event-experience-title-text-align:
+    center;
+
+
+  /* ========================================================================
+     Description
+  ======================================================================== */
+
+  --event-experience-description-size:
+    4cqw;
+
+  --event-experience-description-line-height:
+    1.2;
+
+  --event-experience-description-text-align:
+    center;
+
+  --event-experience-description-max-width:
+    100%;
+
+  --event-experience-description-margin-top:
+    0;
+
+
+  /* ========================================================================
+     Base
+  ======================================================================== */
+
+  position:
+    relative;
+
+  width:
+    100%;
+
+  aspect-ratio:
+    var(--event-experience-card-aspect-ratio);
+
+  overflow:
+    hidden;
+
+  container-type:
+    inline-size;
+
+  background:
+    var(--event-experience-card-background);
+
+  color:
+    var(--event-experience-foreground);
+
+}
+
+
+/* ==========================================================================
+   Background
+========================================================================== */
+
+.garden-grace-photo-wall-card__background {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    0;
+
+  background-color:
+    var(--event-experience-card-background);
+
+  background-image:
+    var(--event-experience-card-background-image);
+
+  background-size:
+    var(--event-experience-card-background-size);
+
+  background-position:
+    var(--event-experience-card-background-position);
+
+  background-repeat:
+    var(--event-experience-card-background-repeat);
+
+  opacity:
+    var(--event-experience-card-background-opacity);
+
+  pointer-events:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Frame
+========================================================================== */
+
+.garden-grace-photo-wall-card__frame {
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    1;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+  filter:
+    var(
+      --garden-grace-card-frame-filter
+    );
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.garden-grace-photo-wall-card__content {
+
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  padding:
+    var(
+      --garden-grace-photo-wall-card-content-padding
+    );
+
+  text-align:
+    center;
+
+}
+
+
+/* ==========================================================================
+   Names
+========================================================================== */
+
+.garden-grace-photo-wall-card__names {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    100%;
+
+  margin-bottom:
+    var(
+      --garden-grace-photo-wall-names-margin-bottom
+    );
+
+  font-family:
+    var(--event-experience-name-font);
+
+  font-style:
+    var(--event-experience-name-style);
+
+  font-weight:
+    var(--event-experience-name-weight);
+
+  line-height:
+    var(--event-experience-name-line-height);
+
+  letter-spacing:
+    var(--event-experience-name-letter-spacing);
+
+  color:
+    var(--event-experience-name-color);
+
+  text-transform:
+    var(--event-experience-name-text-transform);
+
+  text-align:
+    var(--event-experience-name-text-align);
+
+  opacity:
+    var(--event-experience-name-opacity);
+
+}
+
+
+/* ==========================================================================
+   Name
+========================================================================== */
+
+.garden-grace-photo-wall-card__name {
+
+  --event-experience-element-font-size:
+    var(--event-experience-name-size);
+
+  display:
+    block;
+
+  font-size:
+    var(--event-experience-element-font-size);
+
+  line-height:
+    inherit;
+
+  white-space:
+    pre-line;
+
+}
+
+
+/* ==========================================================================
+   Name Separator
+========================================================================== */
+
+.garden-grace-photo-wall-card__name-separator {
+
+  margin:
+    0 2cqw;
+
+  font-family:
+    var(--garden-grace-name-separator-font);
+
+  font-size:
+    var(--garden-grace-photo-wall-name-separator-size);
+
+  line-height:
+    1;
+
+  color:
+    var(--garden-grace-name-separator-color);
+
+  opacity:
+    var(--garden-grace-name-separator-opacity);
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Title
+========================================================================== */
+
+.garden-grace-photo-wall-card__title {
+
+  --event-experience-element-font-size:
+    var(--event-experience-title-size);
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  margin-bottom:
+    var(
+      --garden-grace-photo-wall-title-margin-bottom
+    );
+
+  font-family:
+    var(--event-experience-title-font);
+
+  font-size:
+    var(--event-experience-element-font-size);
+
+  font-style:
+    var(--event-experience-title-style);
+
+  font-weight:
+    var(--event-experience-title-weight);
+
+  line-height:
+    var(--event-experience-title-line-height);
+
+  letter-spacing:
+    var(--event-experience-title-letter-spacing);
+
+  color:
+    var(--event-experience-title-color);
+
+  text-transform:
+    var(--event-experience-title-text-transform);
+
+  text-align:
+    var(--event-experience-title-text-align);
+
+  opacity:
+    var(--event-experience-title-opacity);
+
+  white-space:
+    pre-line;
+
+}
+
+
+/* ==========================================================================
+   Description
+========================================================================== */
+
+.garden-grace-photo-wall-card
+[data-event-experience-description] {
+
+  width:
+    100%;
+
+}

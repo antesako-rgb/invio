@@ -1,48 +1,5 @@
 {
   "editor": {
-    "navigation": {
-      "label": "Invitation editor navigation",
-      "back": "Back",
-      "design": "Design",
-      "details": "Details",
-      "rsvp": "RSVP",
-      "preview": "Preview"
-    },
-
-    "mobile": {
-      "edit": "Edit"
-    },
-
-    "actions": {
-      "save": "Save",
-      "saveAndContinue": "Save and continue"
-    },
-
-    "sidebar": {
-      "title": "Edit invitation",
-      "content": "Content",
-      "style": "Style"
-    },
-
-    "status": {
-      "saving": "Saving...",
-      "saved": "Saved"
-    },
-
-    "preview": {
-      "close": "Close preview"
-    },
-
-    "time": {
-      "startTime": "Start time",
-      "endTime": "End time"
-    },
-
-    "date": {
-      "startDate": "Start date",
-      "endDate": "End date"
-    },
-
     "rsvp": {
       "content": {
         "title": "Content",
@@ -169,41 +126,15 @@
       }
     },
 
-    "elementLabels": {
-      "primaryName": "Edit first name",
-      "secondaryName": "Edit second name",
-      "title": "Edit title",
-      "subtitle": "Edit subtitle",
-      "initial": "Edit initial",
-      "description": "Edit description",
-      "date": "Edit date",
-      "time": "Edit time",
-      "location": "Edit location",
-      "address": "Edit address",
-      "image": "Edit image",
-      "delete": "Delete content"
-    },
-
     "fallback": {
-      "locationName": "Event venue",
-      "locationAddress": "Event address",
       "rsvpTitle": "Attendance confirmation",
       "rsvpDescription": "Please confirm your attendance."
-    },
-
-    "validation": {
-      "date_start_required": "Start date is required.",
-      "date_end_before_start": "End date cannot be before the start date."
     }
   },
 
   "experience": {
     "envelope": {
       "open": "Open invitation"
-    },
-
-    "countdown": {
-      "daysRemaining": "{count, plural, one {day to go} other {days to go}}"
     },
 
     "actions": {

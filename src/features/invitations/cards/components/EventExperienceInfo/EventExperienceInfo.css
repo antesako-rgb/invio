@@ -1,0 +1,344 @@
+/* ==========================================================================
+   Event Info
+========================================================================== */
+
+[data-event-experience-info] {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  gap:
+    var(--event-experience-event-gap);
+
+  font-family:
+    var(--event-experience-event-font);
+
+  font-size:
+    var(--event-experience-event-size);
+
+  font-style:
+    var(--event-experience-event-style);
+
+  font-weight:
+    var(--event-experience-event-weight);
+
+  line-height:
+    var(--event-experience-event-line-height);
+
+  letter-spacing:
+    var(--event-experience-event-letter-spacing);
+
+  color:
+    var(--event-experience-event-color);
+
+  text-transform:
+    var(--event-experience-event-text-transform);
+
+  text-align:
+    var(--event-experience-event-text-align);
+
+  opacity:
+    var(--event-experience-event-opacity);
+}
+
+
+/* ==========================================================================
+   Date
+========================================================================== */
+
+[data-event-experience-info]
+[data-event-experience-date] {
+  --event-experience-element-font-size:
+    var(--event-experience-event-size);
+
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto
+    minmax(0, 1fr);
+
+  align-items:
+    end;
+
+  width:
+    min(
+      100%,
+      var(--event-experience-event-date-width)
+    );
+
+  padding-top:
+    var(--event-experience-event-day-name-space);
+
+  letter-spacing:
+    var(--event-experience-event-date-letter-spacing);
+
+  text-transform:
+    var(--event-experience-event-date-text-transform);
+}
+
+
+/* ==========================================================================
+   Date Parts
+========================================================================== */
+
+[data-event-experience-info]
+[data-event-experience-event-month],
+[data-event-experience-info]
+[data-event-experience-event-day],
+[data-event-experience-info]
+[data-event-experience-event-year] {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  min-width:
+    0;
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Month
+========================================================================== */
+
+[data-event-experience-info]
+[data-event-experience-event-month] {
+  justify-content:
+    flex-end;
+
+  padding-right:
+    var(--event-experience-event-date-gap);
+}
+
+
+/* ==========================================================================
+   Month Editable Element
+========================================================================== */
+
+[data-event-experience-info]
+[data-event-experience-event-month]
+[data-editor-element] {
+  width:
+    100%;
+
+  text-align:
+    right;
+}
+
+
+/* ==========================================================================
+   Day
+========================================================================== */
+
+[data-event-experience-info]
+[data-event-experience-event-day] {
+  position:
+    relative;
+
+  flex-direction:
+    column;
+
+  min-width:
+    var(--event-experience-event-day-min-width);
+
+  padding:
+    var(--event-experience-event-day-padding);
+
+  border-right:
+    var(--event-experience-event-day-border);
+
+  border-left:
+    var(--event-experience-event-day-border);
+
+  line-height:
+    1;
+}
+
+
+/* ==========================================================================
+   Day Name
+========================================================================== */
+
+[data-event-experience-info]
+[data-event-experience-event-day-name] {
+  position:
+    absolute;
+
+  bottom:
+    calc(
+      100% +
+      var(--event-experience-event-day-name-gap)
+    );
+
+  left:
+    50%;
+
+  font-size:
+    var(--event-experience-event-day-name-size);
+
+  font-weight:
+    var(--event-experience-event-day-name-weight);
+
+  line-height:
+    1;
+
+  letter-spacing:
+    var(--event-experience-event-day-name-letter-spacing);
+
+  text-transform:
+    var(--event-experience-event-day-name-text-transform);
+
+  transform:
+    translateX(-50%);
+
+  opacity:
+    var(--event-experience-event-day-name-opacity);
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==========================================================================
+   Day Value
+========================================================================== */
+
+[data-event-experience-info]
+[data-event-experience-event-day-value] {
+  font-size:
+    var(--event-experience-event-day-size);
+
+  font-weight:
+    inherit;
+
+  letter-spacing:
+    var(--event-experience-event-day-letter-spacing);
+}
+
+
+/* ==========================================================================
+   Year
+========================================================================== */
+
+[data-event-experience-info]
+[data-event-experience-event-year] {
+  justify-content:
+    flex-start;
+
+  padding-left:
+    var(--event-experience-event-date-gap);
+}
+
+
+/* ==========================================================================
+   Year Editable Element
+========================================================================== */
+
+[data-event-experience-info]
+[data-event-experience-event-year]
+[data-editor-element] {
+  width:
+    100%;
+
+  text-align:
+    left;
+}
+
+
+/* ==========================================================================
+   Time
+========================================================================== */
+
+[data-event-experience-info]
+[data-event-experience-time] {
+  --event-experience-element-font-size:
+    var(--event-experience-event-size);
+
+  width:
+    fit-content;
+
+  max-width:
+    100%;
+
+  line-height:
+    1.2;
+
+  text-align:
+    center;
+}
+
+
+/* ==========================================================================
+   Location
+========================================================================== */
+
+[data-event-experience-info]
+[data-event-experience-location] {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  gap:
+    var(--event-experience-event-location-gap);
+
+  line-height:
+    1.2;
+
+  text-align:
+    center;
+
+  white-space:
+    pre-line;
+}
+
+
+/* ==========================================================================
+   Location Parts
+========================================================================== */
+
+[data-event-experience-info]
+[data-event-experience-location]
+> * {
+  --event-experience-element-font-size:
+    var(--event-experience-event-size);
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  max-width:
+    100%;
+
+  font-size:
+    var(--event-experience-element-font-size);
+
+  text-align:
+    center;
+}

@@ -9,7 +9,7 @@ import {
 } from "@/features/invitations/repositories/invitation-rsvp/submitInvitationRsvp";
 
 import type {
-  SubmitInvitationRsvpData,
+  SubmitInvitationRsvpInput,
 } from "@/features/invitations/types/invitationRsvp.types";
 
 
@@ -18,7 +18,8 @@ import type {
 ========================================================================== */
 
 export async function submitInvitationRsvpAction(
-  input: SubmitInvitationRsvpData
+  input:
+    SubmitInvitationRsvpInput
 ): Promise<ActionResult<void>> {
   try {
     await submitInvitationRsvp(

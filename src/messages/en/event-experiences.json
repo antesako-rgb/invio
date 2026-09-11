@@ -1,0 +1,141 @@
+{
+  "editor": {
+    "navigation": {
+      "label": "Event experience editor navigation",
+      "back": "Back",
+      "design": "Design",
+      "details": "Details",
+      "rsvp": "RSVP",
+      "preview": "Preview"
+    },
+
+    "mobile": {
+      "edit": "Edit"
+    },
+
+    "actions": {
+      "save": "Save",
+      "saveAndContinue": "Save and continue"
+    },
+
+    "sidebar": {
+      "title": "Edit experience",
+      "content": "Content",
+      "style": "Style"
+    },
+
+    "status": {
+      "saving": "Saving...",
+      "saved": "Saved"
+    },
+
+    "preview": {
+      "close": "Close preview"
+    },
+
+    "time": {
+      "startTime": "Start time",
+      "endTime": "End time"
+    },
+
+    "date": {
+      "startDate": "Start date",
+      "endDate": "End date"
+    },
+
+    "elementLabels": {
+      "primaryName": "Edit first name",
+      "secondaryName": "Edit second name",
+      "title": "Edit title",
+      "subtitle": "Edit subtitle",
+      "initial": "Edit initial",
+      "description": "Edit description",
+      "date": "Edit date",
+      "time": "Edit time",
+      "location": "Edit location",
+      "address": "Edit address",
+      "image": "Edit image",
+      "delete": "Delete content"
+    },
+
+    "fallback": {
+      "locationName": "Event venue",
+      "locationAddress": "Event address"
+    },
+
+    "validation": {
+      "date_start_required": "Start date is required.",
+      "date_end_before_start": "End date cannot be before the start date."
+    }
+  },
+
+  "experience": {
+    "countdown": {
+      "days": "{count, plural, one {day} other {days}}"
+    }
+  },
+
+  "photoWall": {
+    "back": "Back",
+
+    "actions": {
+      "viewPhotos": "View photos",
+      "addPhotos": "Add photos"
+    },
+
+    "gallery": {
+      "count": "{count, plural, one {# photo} other {# photos}}",
+      "empty": "No photos yet",
+      "emptyDescription": "Be the first to share a photo from this event."
+    },
+
+    "upload": {
+      "title": "Add photos",
+      "description": "Select up to {count} photos. Each photo can be up to {size} MB.",
+
+      "close": "Close",
+      "back": "Back",
+      "addMore": "Add more photos",
+      "selectPhoto": "Select photo",
+
+      "source": {
+        "title": "Add photos",
+        "description": "Capture the moment or choose photos from your device.",
+
+        "camera": {
+          "title": "Take a photo",
+          "description": "Capture a new photo with your camera."
+        },
+
+        "gallery": {
+          "title": "Choose photos",
+          "description": "Choose one or more photos from your gallery."
+        }
+      },
+
+      "dropzone": {
+        "title": "Choose photos",
+        "description": "Drag photos here or click to choose."
+      },
+
+      "selected": "{count} of {max} selected",
+      "remove": "Remove photo",
+      "cancel": "Cancel",
+
+      "submit": "Add photos ({count})",
+      "submitting": "Adding...",
+
+      "errors": {
+        "invalidFiles": "Some photos are unsupported or too large.",
+        "tooManyFiles": "You can add up to {count} photos.",
+        "upload": "Photos could not be added. Please try again."
+      }
+    },
+
+    "composer": {
+      "descriptionLabel": "Photo description",
+      "descriptionPlaceholder": "Add a description...",
+      "remove": "Remove photo"
+    }
+  }
+}

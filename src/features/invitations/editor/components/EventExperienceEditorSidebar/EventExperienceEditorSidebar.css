@@ -1,0 +1,108 @@
+/* ==========================================================================
+   Event Experience Editor Sidebar
+========================================================================== */
+
+.event-experience-editor-sidebar {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  width:
+    100%;
+
+  min-height:
+    100%;
+
+  background:
+    var(--card);
+
+  color:
+    var(--card-foreground);
+}
+
+
+/* ==========================================================================
+   Header
+========================================================================== */
+
+.event-experience-editor-sidebar__header {
+  display:
+    flex;
+
+  flex-shrink:
+    0;
+
+  align-items:
+    center;
+
+  min-height:
+    4rem;
+
+  padding:
+    0 1.25rem;
+
+  border-bottom:
+    1px solid var(--border);
+}
+
+
+.event-experience-editor-sidebar__title {
+  margin:
+    0;
+
+  color:
+    var(--foreground);
+
+  font-size:
+    1rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.4;
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.event-experience-editor-sidebar__content {
+  flex:
+    1;
+
+  min-height:
+    0;
+
+  padding:
+    1.25rem;
+
+  overflow-y:
+    auto;
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (
+  max-width: 767px
+) {
+  .event-experience-editor-sidebar {
+    min-height:
+      0;
+
+    max-height:
+      90dvh;
+  }
+
+
+  .event-experience-editor-sidebar__content {
+    overscroll-behavior:
+      contain;
+  }
+}

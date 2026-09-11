@@ -23,25 +23,25 @@ import FilePicker
   from "@/components/ui/file-picker/FilePicker";
 
 import {
-  removeInvitationImageAction,
-} from "@/features/invitations/actions/invitation/removeInvitationImageAction";
+  removeEventExperienceImageAction,
+} from "@/features/invitations/actions/experience/removeEventExperienceImageAction";
 
 import {
-  uploadInvitationImageAction,
-} from "@/features/invitations/actions/invitation/uploadInvitationImageAction";
+  uploadEventExperienceImageAction,
+} from "@/features/invitations/actions/experience/uploadEventExperienceImageAction";
 
 import {
-  invitationEditorElements,
-} from "@/features/invitations/editor/registry/invitationEditorElements";
+  eventExperienceEditorElements,
+} from "@/features/invitations/editor/registry/eventExperienceEditorElements";
 
 import type {
-  InvitationEditorContext,
-  InvitationEditorSelection,
-} from "@/features/invitations/editor/types/invitationEditor.types";
+  EventExperienceEditorContext,
+  EventExperienceEditorSelection,
+} from "@/features/invitations/editor/types/eventExperienceEditor.types";
 
 import type {
-  InvitationRenderMode,
-} from "@/features/invitations/types/invitationRenderer.types";
+  EventExperienceRenderMode,
+} from "@/features/invitations/types/eventExperienceRenderer.types";
 
 import "./EditableImage.css";
 
@@ -52,16 +52,16 @@ import "./EditableImage.css";
 
 interface EditableImageProps {
   element:
-    InvitationEditorSelection;
+    EventExperienceEditorSelection;
 
   value:
     string | null;
 
   mode:
-    InvitationRenderMode;
+    EventExperienceRenderMode;
 
   editor?:
-    InvitationEditorContext;
+    EventExperienceEditorContext;
 
   children?:
     ReactNode;
@@ -97,7 +97,7 @@ export default function EditableImage({
 
   const t =
     useTranslations(
-      "Invitations.editor.elementLabels"
+     "EventExperiences.editor.elementLabels"
     );
 
 
@@ -123,7 +123,7 @@ export default function EditableImage({
   ========================================================================== */
 
   const elementConfig =
-    invitationEditorElements[
+    eventExperienceEditorElements[
       element
     ];
 
@@ -141,8 +141,8 @@ export default function EditableImage({
     mode === "edit" &&
     Boolean(editor);
 
-  const invitationId =
-    editor?.invitationId;
+  const experienceId =
+    editor?.experienceId;
 
   const imageUrl =
     editor
@@ -166,7 +166,8 @@ export default function EditableImage({
   ========================================================================== */
 
   function updateValue(
-    newValue: string
+    newValue:
+      string
   ) {
     if (!editor) {
       return;
@@ -185,47 +186,52 @@ export default function EditableImage({
      Upload
   ========================================================================== */
 
-  async function handleFileSelect(
-    file: File
+async function handleFileSelect(
+  files:
+    File[]
+) {
+  const file =
+    files[0];
+
+  if (
+    !file ||
+    !editor ||
+    !experienceId ||
+    isBusy
   ) {
-    if (
-      !editor ||
-      !invitationId ||
-      isBusy
-    ) {
-      return;
-    }
-
-    setIsUploading(
-      true
-    );
-
-    try {
-      const result =
-        await uploadInvitationImageAction(
-          file,
-          invitationId
-        );
-
-      if (!result.success) {
-        throw new Error(
-          result.message
-        );
-      }
-
-      updateValue(
-        result.data
-      );
-    } catch (error) {
-      console.error(
-        error
-      );
-    } finally {
-      setIsUploading(
-        false
-      );
-    }
+    return;
   }
+
+  setIsUploading(
+    true
+  );
+
+  try {
+    const result =
+      await uploadEventExperienceImageAction(
+        file,
+        experienceId
+      );
+
+    if (!result.success) {
+      throw new Error(
+        result.message
+      );
+    }
+
+    updateValue(
+      result.data
+    );
+  } catch (error) {
+    console.error(
+      error
+    );
+  } finally {
+    setIsUploading(
+      false
+    );
+  }
+}
 
 
   /* ==========================================================================
@@ -241,7 +247,7 @@ export default function EditableImage({
 
     if (
       !editor ||
-      !invitationId ||
+      !experienceId ||
       !imageUrl ||
       isBusy
     ) {
@@ -254,8 +260,8 @@ export default function EditableImage({
 
     try {
       const result =
-        await removeInvitationImageAction(
-          invitationId,
+        await removeEventExperienceImageAction(
+          experienceId,
           imageUrl
         );
 
@@ -285,7 +291,8 @@ export default function EditableImage({
   ========================================================================== */
 
   function renderContent(
-    openPicker?: () => void
+    openPicker?:
+      () => void
   ) {
     function handleClick(
       event:
@@ -377,7 +384,7 @@ export default function EditableImage({
           isBusy && (
             <div
               className="editable-image__loading"
-              data-invitation-editor-ui
+              data-event-experience-editor-ui
             >
               <LoaderCircle
                 className="editable-image__spinner"
@@ -392,7 +399,7 @@ export default function EditableImage({
             <button
               type="button"
               className="editable-image__delete"
-              data-invitation-editor-ui
+              data-event-experience-editor-ui
               aria-label={
                 t(
                   "delete"

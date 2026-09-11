@@ -12,7 +12,8 @@ import type {
 ========================================================================== */
 
 export async function deleteInvitationRecipient(
-  input: DeleteInvitationRecipientInput
+  input:
+    DeleteInvitationRecipientInput
 ): Promise<void> {
   const supabase =
     await createServerClient();
@@ -22,7 +23,10 @@ export async function deleteInvitationRecipient(
   } =
     await supabase.rpc(
       "delete_invitation_recipient",
-      input
+      {
+        p_recipient_id:
+          input.recipientId,
+      }
     );
 
   if (error) {

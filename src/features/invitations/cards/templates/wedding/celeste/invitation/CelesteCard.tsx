@@ -1,19 +1,18 @@
-import InvitationCountdown
-  from "@/features/invitations/cards/components/InvitationCountdown/InvitationCountdown";
+import EventExperienceCountdown
+  from "@/features/invitations/cards/components/EventExperienceCountdown/EventExperienceCountdown";
 
 import InvitationDescription
-  from "@/features/invitations/cards/components/InvitationDescription/InvitationDescription";
+  from "@/features/invitations/cards/components/EventExperienceDescription/EventExperienceDescription";
 
 import InvitationEventDetails
-  from "@/features/invitations/cards/components/InvitationEventDetails/InvitationEventDetails";
+  from "@/features/invitations/cards/components/EventExperienceDetails/EventExperienceDetails";
 
 import EditableText
   from "@/features/invitations/editor/components/EditableText/EditableText";
 
 import type {
-  InvitationTemplateProps,
-} from "@/features/invitations/types/invitationTemplate.types";
-
+  EventExperienceTemplateProps,
+} from "@/features/invitations/types/eventExperienceTemplate.types";
 import {
   celesteCardAssets,
 } from "./CelesteCardAssets";
@@ -31,7 +30,7 @@ export default function CelesteCard({
   data,
   mode,
   editor,
-}: InvitationTemplateProps) {
+}: EventExperienceTemplateProps) {
   const {
     primary_name,
     secondary_name,
@@ -180,7 +179,7 @@ export default function CelesteCard({
             Countdown
         ================================================================== */}
 
-        <InvitationCountdown
+        <EventExperienceCountdown
           date={
             data.content.date.start_date
           }

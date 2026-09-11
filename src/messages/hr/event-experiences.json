@@ -1,0 +1,141 @@
+{
+  "editor": {
+    "navigation": {
+      "label": "Navigacija uređivača iskustva",
+      "back": "Natrag",
+      "design": "Dizajn",
+      "details": "Detalji",
+      "rsvp": "RSVP",
+      "preview": "Pregled"
+    },
+
+    "mobile": {
+      "edit": "Uredi"
+    },
+
+    "actions": {
+      "save": "Spremi",
+      "saveAndContinue": "Spremi i nastavi"
+    },
+
+    "sidebar": {
+      "title": "Uredi iskustvo",
+      "content": "Sadržaj",
+      "style": "Stil"
+    },
+
+    "status": {
+      "saving": "Spremanje...",
+      "saved": "Spremljeno"
+    },
+
+    "preview": {
+      "close": "Zatvori pregled"
+    },
+
+    "time": {
+      "startTime": "Vrijeme početka",
+      "endTime": "Vrijeme završetka"
+    },
+
+    "date": {
+      "startDate": "Datum početka",
+      "endDate": "Datum završetka"
+    },
+
+    "elementLabels": {
+      "primaryName": "Uredi prvo ime",
+      "secondaryName": "Uredi drugo ime",
+      "title": "Uredi naziv",
+      "subtitle": "Uredi podnaslov",
+      "initial": "Uredi inicijal",
+      "description": "Uredi opis",
+      "date": "Uredi datum",
+      "time": "Uredi vrijeme",
+      "location": "Uredi lokaciju",
+      "address": "Uredi adresu",
+      "image": "Uredi sliku",
+      "delete": "Obriši sadržaj"
+    },
+
+    "fallback": {
+      "locationName": "Mjesto događaja",
+      "locationAddress": "Adresa događaja"
+    },
+
+    "validation": {
+      "date_start_required": "Datum početka je obavezan.",
+      "date_end_before_start": "Datum završetka ne može biti prije datuma početka."
+    }
+  },
+
+  "experience": {
+    "countdown": {
+      "days": "{count, plural, one {dan} few {dana} other {dana}}"
+    }
+  },
+
+  "photoWall": {
+    "back": "Natrag",
+
+    "actions": {
+      "viewPhotos": "Pogledaj fotografije",
+      "addPhotos": "Dodaj fotografije"
+    },
+
+    "gallery": {
+      "count": "{count, plural, one {# fotografija} few {# fotografije} other {# fotografija}}",
+      "empty": "Još nema fotografija",
+      "emptyDescription": "Budite prvi koji će podijeliti fotografiju s ovog događaja."
+    },
+
+    "upload": {
+      "title": "Dodaj fotografije",
+      "description": "Odaberite do {count} fotografija. Maksimalna veličina pojedine fotografije je {size} MB.",
+
+      "close": "Zatvori",
+      "back": "Natrag",
+      "addMore": "Dodaj još fotografija",
+      "selectPhoto": "Odaberi fotografiju",
+
+      "source": {
+        "title": "Dodaj fotografije",
+        "description": "Fotografirajte trenutak ili odaberite fotografije sa svog uređaja.",
+
+        "camera": {
+          "title": "Fotografiraj",
+          "description": "Snimi novu fotografiju kamerom."
+        },
+
+        "gallery": {
+          "title": "Odaberi fotografije",
+          "description": "Odaberi jednu ili više fotografija iz galerije."
+        }
+      },
+
+      "dropzone": {
+        "title": "Odaberite fotografije",
+        "description": "Povucite fotografije ovdje ili kliknite za odabir."
+      },
+
+      "selected": "Odabrano {count} od {max}",
+      "remove": "Ukloni fotografiju",
+      "cancel": "Odustani",
+
+      "submit": "Dodaj fotografije ({count})",
+      "submitting": "Dodavanje...",
+
+      "errors": {
+        "invalidFiles": "Neke fotografije nisu podržane ili su prevelike.",
+        "tooManyFiles": "Možete odabrati najviše {count} fotografija.",
+        "upload": "Fotografije nije moguće dodati. Pokušajte ponovno."
+      }
+    },
+
+    "composer": {
+      "descriptionLabel": "Opis fotografije",
+      "descriptionPlaceholder": "Dodaj opis...",
+      "remove": "Ukloni fotografiju"
+    }
+  }
+}

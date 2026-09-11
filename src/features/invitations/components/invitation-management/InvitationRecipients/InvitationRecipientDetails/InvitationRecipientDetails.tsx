@@ -46,16 +46,16 @@ import InvitationRecipientGuestDetails
   from "@/features/invitations/components/invitation-management/InvitationRecipients/InvitationRecipientDetails/InvitationRecipientGuestDetails/InvitationRecipientGuestDetails";
 
 import type {
-  InvitationRsvpQuestion,
-} from "@/features/invitations/types/invitationContent.types";
-
-import type {
   InvitationManagementRow,
 } from "@/features/invitations/types/invitationManagement.types";
 
+import type {
+  InvitationRsvpQuestion,
+} from "@/features/invitations/types/invitationRsvp.types";
+
 import {
-  getInvitationPublicPath,
-} from "@/features/invitations/utils/getInvitationPublicPath";
+  getEventExperiencePublicPath,
+} from "@/features/invitations/utils/getEventExperiencePublicPath";
 
 import styles
   from "./InvitationRecipientDetails.module.css";
@@ -224,12 +224,12 @@ export default function InvitationRecipientDetails({
      Personalized Link
   ========================================================================== */
 
-  const personalizedPath =
-    row.public_id
-      ? getInvitationPublicPath(
-          row.public_id
-        )
-      : null;
+const personalizedPath =
+  row.public_id
+    ? getEventExperiencePublicPath(
+        row.public_id
+      )
+    : null;
 
   const personalizedUrl =
     personalizedPath
@@ -297,7 +297,7 @@ export default function InvitationRecipientDetails({
     try {
       const result =
         await deleteInvitationRecipientAction({
-          p_recipient_id:
+          recipientId:
             row.recipient_id,
         });
 

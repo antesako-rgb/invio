@@ -1,0 +1,195 @@
+{
+  "EventExperiences": {
+    "management": {
+      "status": {
+        "published": "Objavljeno",
+        "draft": "Skica"
+      },
+
+  "actions": {
+  "preview": {
+    "invitation": "Pregledaj pozivnicu",
+    "save-the-date": "Pregledaj Save the Date",
+    "thank-you": "Pregledaj zahvalnicu",
+    "photo-wall": "Pregledaj Photo Wall"
+  },
+  "view": "Otvori",
+  "edit": "Uredi dizajn"
+},
+
+      "name": {
+        "label": "Naziv iskustva",
+        "edit": "Uredi naziv",
+        "save": "Spremi naziv",
+        "cancel": "Odustani",
+        "error": "Nije moguće spremiti naziv iskustva."
+      },
+
+      "updatedAt": "Posljednje ažuriranje: {date}",
+
+      "delete": {
+        "title": {
+          "invitation": "Obriši pozivnicu",
+          "save-the-date": "Obriši Save the Date",
+          "thank-you": "Obriši zahvalnicu",
+          "photo-wall": "Obriši Photo Wall"
+        },
+
+        "description": {
+          "invitation": "Trajno obrišite ovu pozivnicu i sve podatke povezane s njom.",
+          "save-the-date": "Trajno obrišite ovaj Save the Date i sve podatke povezane s njim.",
+          "thank-you": "Trajno obrišite ovu zahvalnicu i sve podatke povezane s njom.",
+          "photo-wall": "Trajno obrišite ovaj Photo Wall i sve podatke povezane s njim."
+        },
+
+        "button": {
+          "invitation": "Obriši pozivnicu",
+          "save-the-date": "Obriši Save the Date",
+          "thank-you": "Obriši zahvalnicu",
+          "photo-wall": "Obriši Photo Wall"
+        },
+
+        "confirm": {
+          "title": {
+            "invitation": "Obrisati pozivnicu?",
+            "save-the-date": "Obrisati Save the Date?",
+            "thank-you": "Obrisati zahvalnicu?",
+            "photo-wall": "Obrisati Photo Wall?"
+          },
+
+          "description": "Ova radnja je trajna i ne može se poništiti.",
+
+          "confirm": {
+            "invitation": "Obriši pozivnicu",
+            "save-the-date": "Obriši Save the Date",
+            "thank-you": "Obriši zahvalnicu",
+            "photo-wall": "Obriši Photo Wall"
+          },
+
+          "cancel": "Odustani"
+        }
+      },
+
+      "statusCard": {
+        "title": {
+          "invitation": "Status pozivnice",
+          "save-the-date": "Status Save the Datea",
+          "thank-you": "Status zahvalnice",
+          "photo-wall": "Status Photo Walla"
+        },
+
+        "description": {
+          "invitation": "Upravljajte dostupnošću svoje pozivnice.",
+          "save-the-date": "Upravljajte dostupnošću svog Save the Datea.",
+          "thank-you": "Upravljajte dostupnošću svoje zahvalnice.",
+          "photo-wall": "Upravljajte dostupnošću svog Photo Walla."
+        },
+
+        "published": {
+          "title": {
+            "invitation": "Pozivnica je objavljena",
+            "save-the-date": "Save the Date je objavljen",
+            "thank-you": "Zahvalnica je objavljena",
+            "photo-wall": "Photo Wall je objavljen"
+          },
+
+          "description": {
+            "invitation": "Gosti s pristupom poveznici mogu pregledati pozivnicu i sve informacije koje ste odlučili podijeliti.",
+            "save-the-date": "Gosti s pristupom poveznici mogu pregledati Save the Date i sve informacije koje ste odlučili podijeliti.",
+            "thank-you": "Gosti s pristupom poveznici mogu pregledati zahvalnicu i sve informacije koje ste odlučili podijeliti.",
+            "photo-wall": "Gosti s pristupom poveznici mogu pregledati Photo Wall i sadržaj koji ste odlučili podijeliti."
+          },
+
+          "action": {
+            "invitation": "Povuci objavu pozivnice",
+            "save-the-date": "Povuci objavu Save the Datea",
+            "thank-you": "Povuci objavu zahvalnice",
+            "photo-wall": "Povuci objavu Photo Walla"
+          },
+
+          "success": {
+            "invitation": "Pozivnica više nije javno dostupna.",
+            "save-the-date": "Save the Date više nije javno dostupan.",
+            "thank-you": "Zahvalnica više nije javno dostupna.",
+            "photo-wall": "Photo Wall više nije javno dostupan."
+          }
+        },
+
+        "draft": {
+          "title": {
+            "invitation": "Pozivnica nije objavljena",
+            "save-the-date": "Save the Date nije objavljen",
+            "thank-you": "Zahvalnica nije objavljena",
+            "photo-wall": "Photo Wall nije objavljen"
+          },
+
+          "description": {
+            "invitation": "Gosti ne mogu pristupiti pozivnici dok je ne objavite i učinite dostupnom za dijeljenje.",
+            "save-the-date": "Gosti ne mogu pristupiti Save the Dateu dok ga ne objavite i učinite dostupnim za dijeljenje.",
+            "thank-you": "Gosti ne mogu pristupiti zahvalnici dok je ne objavite i učinite dostupnom za dijeljenje.",
+            "photo-wall": "Gosti ne mogu pristupiti Photo Wallu dok ga ne objavite i učinite dostupnim za dijeljenje."
+          },
+
+          "action": {
+            "invitation": "Objavi pozivnicu",
+            "save-the-date": "Objavi Save the Date",
+            "thank-you": "Objavi zahvalnicu",
+            "photo-wall": "Objavi Photo Wall"
+          },
+
+          "success": {
+            "invitation": "Pozivnica je uspješno objavljena.",
+            "save-the-date": "Save the Date je uspješno objavljen.",
+            "thank-you": "Zahvalnica je uspješno objavljena.",
+            "photo-wall": "Photo Wall je uspješno objavljen."
+          }
+        }
+      },
+
+      "publicLinkCard": {
+        "title": "Javna poveznica",
+
+        "description": {
+          "invitation": "Podijelite javnu poveznicu svoje pozivnice.",
+          "save-the-date": "Podijelite javnu poveznicu svog Save the Datea.",
+          "thank-you": "Podijelite javnu poveznicu svoje zahvalnice.",
+          "photo-wall": "Podijelite javnu poveznicu svog Photo Walla."
+        },
+
+        "active": {
+          "title": "Javna poveznica je aktivna",
+
+          "description": {
+            "invitation": "Svatko s ovom poveznicom može pregledati pozivnicu.",
+            "save-the-date": "Svatko s ovom poveznicom može pregledati Save the Date.",
+            "thank-you": "Svatko s ovom poveznicom može pregledati zahvalnicu.",
+            "photo-wall": "Svatko s ovom poveznicom može pregledati Photo Wall."
+          }
+        },
+
+        "inactive": {
+          "title": "Javna poveznica nije aktivna",
+
+          "description": {
+            "invitation": "Poveznica će postati dostupna gostima nakon objave pozivnice.",
+            "save-the-date": "Poveznica će postati dostupna gostima nakon objave Save the Datea.",
+            "thank-you": "Poveznica će postati dostupna gostima nakon objave zahvalnice.",
+            "photo-wall": "Poveznica će postati dostupna gostima nakon objave Photo Walla."
+          }
+        },
+
+        "actions": {
+          "copy": "Kopiraj poveznicu",
+          "copied": "Kopirano",
+
+          "open": {
+            "invitation": "Otvori pozivnicu",
+            "save-the-date": "Otvori Save the Date",
+            "thank-you": "Otvori zahvalnicu",
+            "photo-wall": "Otvori Photo Wall"
+          }
+        }
+      }
+    }
+  }
+}
