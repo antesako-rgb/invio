@@ -269,26 +269,25 @@ export default async function EventExperienceCard({
         }
         separator
       >
-        <ButtonLink
-          href={
-            `/dashboard/pozivnice/${experience.id}`
-          }
-          variant="outline"
-        >
-          <Settings
-            aria-hidden="true"
-          />
+    <ButtonLink
+  href={
+    `/dashboard/studio/${experience.type}/${experience.id}`
+  }
+  variant="outline"
+>
+  <Settings
+    aria-hidden="true"
+  />
 
-          {t(
-            "actions.manage"
-          )}
-        </ButtonLink>
-
-        <ButtonLink
-          href={
-            `/editor/pozivnice/${experience.id}/uredi`
-          }
-        >
+  {t(
+    "actions.manage"
+  )}
+</ButtonLink>
+     <ButtonLink
+  href={
+    `/editor/${experience.type}/${experience.id}/uredi`
+  }
+>
           <SquarePen
             aria-hidden="true"
           />

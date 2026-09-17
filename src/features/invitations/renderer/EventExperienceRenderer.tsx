@@ -107,11 +107,11 @@ export default function EventExperienceRenderer({
      Template
   ========================================================================== */
 
-const definition =
-  getEventExperienceTemplate(
-    data.type,
-    templateId
-  );
+  const definition =
+    getEventExperienceTemplate(
+      data.type,
+      templateId
+    );
 
   if (
     !definition
@@ -280,6 +280,13 @@ const definition =
             []
         );
 
+  const photoWallNextCursor =
+    mode ===
+      "live"
+      ? data.photoWall?.nextCursor ??
+        null
+      : null;
+
   const photoWall = (
     <PhotoWallExperience
       publicId={
@@ -299,6 +306,9 @@ const definition =
       }
       photos={
         photoWallPhotos
+      }
+      nextCursor={
+        photoWallNextCursor
       }
       onBack={
         handleBackToCard
@@ -503,6 +513,7 @@ const definition =
                               : undefined
                           }
                         />
+
                       )}
 
                       {hasPhotos && (

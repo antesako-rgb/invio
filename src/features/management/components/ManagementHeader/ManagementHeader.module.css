@@ -1,0 +1,200 @@
+/* ==========================================================================
+   Root
+========================================================================== */
+
+.root {
+  display:
+    grid;
+
+  gap:
+    1rem;
+
+  width:
+    100%;
+
+  padding:
+    1.5rem 0;
+
+  border-bottom:
+    1px solid var(--border);
+}
+
+
+/* ==========================================================================
+   Main
+========================================================================== */
+
+.main {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    2rem;
+
+  width:
+    100%;
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.content {
+  display:
+    grid;
+
+  min-width:
+    0;
+
+  gap:
+    0.5rem;
+}
+
+.heading {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  min-width:
+    0;
+
+  gap:
+    0.75rem;
+}
+
+
+/* ==========================================================================
+   Meta
+========================================================================== */
+
+.meta {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    0.375rem;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.875rem;
+
+  line-height:
+    1.4;
+}
+
+
+/* ==========================================================================
+   Actions
+========================================================================== */
+
+.actions {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  flex-shrink:
+    0;
+
+  gap:
+    0.75rem;
+
+  margin-left:
+    auto;
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 767px) {
+
+  .root {
+    gap:
+      1rem;
+  }
+
+  .main {
+    align-items:
+      stretch;
+
+    flex-direction:
+      column;
+
+    gap:
+      1.25rem;
+  }
+
+  .heading {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+
+    gap:
+      0.625rem;
+  }
+
+  .meta {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+
+    gap:
+      0.25rem;
+  }
+
+  .actions {
+    display:
+      grid;
+
+    grid-template-columns:
+      1fr 1fr;
+
+    width:
+      100%;
+
+    margin-left:
+      0;
+  }
+
+  .actions > * {
+    width:
+      100%;
+
+    min-width:
+      0;
+  }
+}
+
+
+/* ==========================================================================
+   Small Mobile
+========================================================================== */
+
+@media (max-width: 479px) {
+
+  .actions {
+    grid-template-columns:
+      1fr;
+  }
+}

@@ -1,21 +1,23 @@
 {
   "EventExperiences": {
     "management": {
+      "backToStudio": "Back to Studio",
+
       "status": {
         "published": "Published",
         "draft": "Draft"
       },
 
-  "actions": {
-  "preview": {
-    "invitation": "Preview invitation",
-    "save-the-date": "Preview Save the Date",
-    "thank-you": "Preview thank you card",
-    "photo-wall": "Preview Photo Wall"
-  },
-  "view": "Open",
-  "edit": "Edit design"
-},
+      "actions": {
+        "preview": {
+          "invitation": "Preview invitation",
+          "save-the-date": "Preview Save the Date",
+          "thank-you": "Preview thank you card",
+          "photo-wall": "Preview Photo Wall"
+        },
+        "view": "Open",
+        "edit": "Edit design"
+      },
 
       "name": {
         "label": "Experience name",
@@ -142,6 +144,69 @@
             "save-the-date": "The Save the Date has been published successfully.",
             "thank-you": "The thank you card has been published successfully.",
             "photo-wall": "The Photo Wall has been published successfully."
+          }
+        }
+      },
+
+      "photoWall": {
+        "photos": {
+          "title": "Photos",
+          "description": "View and manage photos shared on this Photo Wall.",
+
+          "filters": {
+            "all": "All",
+            "favorites": "Favorites"
+          },
+
+          "pagination": {
+            "loadMore": "Load more",
+            "loading": "Loading..."
+          },
+
+          "lightbox": {
+            "close": "Close photo"
+          },
+
+          "empty": "No photos have been shared yet.",
+          "emptyFavorites": "No photos have been marked as favorites yet.",
+
+          "actions": {
+            "addFavorite": "Add to favorites",
+            "removeFavorite": "Remove from favorites",
+
+            "delete": "Delete photo",
+
+            "deleteConfirm": {
+              "title": "Delete photo?",
+              "description": "This photo will be permanently deleted and cannot be restored.",
+              "confirm": "Delete photo"
+            },
+
+            "deleteSuccess": "Photo deleted successfully."
+          }
+        },
+
+        "album": {
+          "actions": {
+            "create": "Create photo album",
+            "edit": "Edit photo album"
+          },
+
+          "create": {
+            "title": "Create photo album",
+            "description": "Create a photo album, then choose the photos you want to add.",
+            "name": "Album name",
+            "namePlaceholder": "e.g. Our Wedding",
+            "cancel": "Cancel",
+            "submit": "Create album",
+            "success": "Photo album created.",
+            "error": "Unable to create the photo album.",
+
+            "photos": {
+              "title": "Add photos",
+              "description": "Select photos from the Photo Wall that you want to add to the album.",
+              "error": "Unable to add photos to the album."
+            }
           }
         }
       },

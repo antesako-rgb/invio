@@ -37,6 +37,10 @@ import type {
   EventExperienceTemplateFeaturesConfig,
 } from "@/features/invitations/types/eventExperienceTemplateConfig.types";
 
+import type {
+  EventExperienceType,
+} from "@/features/invitations/types/eventExperience.types";
+
 import "@/features/invitations/styles/eventExperienceEditor.css";
 
 import "./EventExperienceEditor.css";
@@ -55,6 +59,9 @@ interface EventExperienceEditorProps {
 
   toolbar?:
     ReactNode;
+
+  type:
+    EventExperienceType;
 
   activeStep:
     EventExperienceEditorStep;
@@ -83,16 +90,17 @@ export default function EventExperienceEditor({
   children,
   sidebar,
   toolbar,
+  type,
   activeStep,
   features,
   saveStatus,
   onStepChange,
   onPreview,
 }: EventExperienceEditorProps) {
-const t =
-  useTranslations(
-    "EventExperiences.editor"
-  );
+  const t =
+    useTranslations(
+      "EventExperiences.editor"
+    );
 
 
   /* ==========================================================================
@@ -105,6 +113,9 @@ const t =
       data-event-experience-editor
     >
       <EventExperienceEditorHeader
+        type={
+          type
+        }
         activeStep={
           activeStep
         }

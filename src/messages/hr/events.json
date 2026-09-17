@@ -29,13 +29,13 @@
     "moreActions": "Više akcija"
   },
 
-  "navigation": {
-    "ariaLabel": "Navigacija događaja",
-    "overview": "Pregled",
-    "guests": "Gosti",
-    "invitations": "Pozivnice",
-    "seating": "Raspored stolova"
-  },
+"navigation": {
+  "ariaLabel": "Navigacija događaja",
+  "overview": "Pregled",
+  "guests": "Gosti",
+ "studio": "Studio",
+  "seating": "Raspored stolova"
+},
 
   "create": {
     "backToEvents": "Svi događaji",

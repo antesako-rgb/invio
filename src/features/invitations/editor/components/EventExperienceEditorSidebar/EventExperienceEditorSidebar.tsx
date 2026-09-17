@@ -61,10 +61,10 @@ export default function EventExperienceEditorSidebar({
   onContentChange,
   onRsvpPreviewStateChange,
 }: EventExperienceEditorSidebarProps) {
-const t =
-  useTranslations(
-    "EventExperiences.editor"
-  );
+  const t =
+    useTranslations(
+      "EventExperiences.editor"
+    );
 
 
   /* ==========================================================================

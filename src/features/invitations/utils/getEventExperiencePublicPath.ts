@@ -1,9 +1,18 @@
+import type {
+  EventExperienceType,
+} from "@/features/invitations/types/eventExperience.types";
+
+
 /* ==========================================================================
    Get Event Experience Public Path
 ========================================================================== */
 
 export function getEventExperiencePublicPath(
-  publicId: string
+  type:
+    EventExperienceType,
+
+  publicId:
+    string
 ) {
-  return `/pozivnice/${publicId}`;
+  return `/${type}/${publicId}`;
 }

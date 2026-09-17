@@ -1,6 +1,6 @@
 import type {
   PhotoWallGalleryPhoto,
-} from "@/features/invitations/components/photo-wall-experience/PhotoWallGallery/PhotoWallGallery";
+} from "@/features/invitations/types/photoWallPhoto.types";
 
 
 /* ==========================================================================

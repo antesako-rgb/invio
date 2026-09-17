@@ -1,0 +1,123 @@
+{
+  "management": {
+    "title": "Photo album",
+    "description": "Create a curated photo album from your Photo Wall and share it with your guests.",
+    "backToPhotoWall": "Back to Photo Wall",
+
+    "status": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+
+    "actions": {
+      "view": "View album"
+    },
+
+    "updatedAt": "Last updated: {date}",
+
+    "name": {
+      "label": "Album name",
+      "edit": "Edit name",
+      "save": "Save name",
+      "cancel": "Cancel",
+      "error": "Unable to save the album name."
+    },
+
+    "statusCard": {
+      "title": "Photo album status",
+      "description": "Manage the availability of your photo album.",
+
+      "published": {
+        "title": "Photo album is published",
+        "description": "Guests with access to the link can view the photo album and the photos you have chosen to share.",
+        "action": "Unpublish album",
+        "success": "The photo album is no longer publicly available."
+      },
+
+      "draft": {
+        "title": "Photo album is not published",
+        "description": "Guests cannot access the photo album until you publish it and make it available for sharing.",
+        "action": "Publish album",
+        "success": "The photo album has been published successfully."
+      }
+    },
+
+    "publicLinkCard": {
+      "title": "Public link",
+      "description": "Share the public link to your photo album.",
+
+      "active": {
+        "title": "Public link is active",
+        "description": "Anyone with this link can view the photo album."
+      },
+
+      "inactive": {
+        "title": "Public link is not active",
+        "description": "The link will become available to guests after the photo album is published."
+      },
+
+      "actions": {
+        "copy": "Copy link",
+        "copied": "Copied",
+        "open": "Open album"
+      }
+    },
+
+    "photos": {
+      "title": "Photos",
+      "description": "Manage the photos displayed in this album.",
+
+      "actions": {
+        "add": "Add photos"
+      },
+
+      "empty": {
+        "title": "Your album is empty",
+        "description": "Add photos from your Photo Wall to your photo album."
+      },
+
+    "picker": {
+    "title": "Add photos",
+    "description": "Select photos from the Photo Wall that you want to add to the album.",
+    "error": "Unable to add photos to the album.",
+    "loading": "Loading photos...",
+
+        "filters": {
+          "all": "All",
+          "favorites": "Favorites"
+        },
+
+        "empty": {
+          "all": {
+            "title": "No photos",
+            "description": "There are no photos in the Photo Wall available to add yet."
+          },
+
+          "favorites": {
+            "title": "No favorites",
+            "description": "You haven't marked any photos as favorites yet."
+          }
+        },
+
+        "actions": {
+          "loadMore": "Load more",
+          "cancel": "Cancel",
+          "add": "Add ({count})"
+        }
+      }
+    },
+
+    "delete": {
+      "title": "Delete photo album",
+      "description": "Permanently delete this photo album and its photo selection.",
+      "button": "Delete photo album",
+
+      "confirm": {
+        "title": "Delete photo album?",
+        "description": "This action is permanent and cannot be undone.",
+        "confirm": "Delete photo album",
+        "cancel": "Cancel"
+      }
+    }
+  }
+}

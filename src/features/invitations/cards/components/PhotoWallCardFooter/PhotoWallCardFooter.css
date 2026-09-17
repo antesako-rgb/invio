@@ -1,0 +1,99 @@
+/* ==========================================================================
+   Photo Wall Card Footer
+========================================================================== */
+
+[data-photo-wall-card-footer] {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  gap:
+    var(--photo-wall-card-footer-gap);
+
+  text-align:
+    center;
+
+}
+
+
+/* ==========================================================================
+   Description
+========================================================================== */
+
+[data-photo-wall-card-footer]
+.event-experience-description {
+
+  width:
+    100%;
+
+}
+
+
+/* ==========================================================================
+   Date
+========================================================================== */
+
+.photo-wall-card-footer__date {
+
+  width:
+    100%;
+
+}
+
+
+/* ==========================================================================
+   Date Element
+========================================================================== */
+
+.photo-wall-card-footer__date
+[data-event-experience-date] {
+
+  --event-experience-element-font-size:
+    var(--event-experience-event-size);
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  font-family:
+    var(--event-experience-event-font);
+
+  font-size:
+    var(--event-experience-element-font-size);
+
+  font-style:
+    var(--event-experience-event-style);
+
+  font-weight:
+    var(--event-experience-event-weight);
+
+  line-height:
+    var(--event-experience-event-line-height);
+
+  letter-spacing:
+    var(--event-experience-event-letter-spacing);
+
+  color:
+    var(--event-experience-event-color);
+
+  text-transform:
+    var(--event-experience-event-text-transform);
+
+  text-align:
+    center;
+
+  opacity:
+    var(--event-experience-event-opacity);
+
+}

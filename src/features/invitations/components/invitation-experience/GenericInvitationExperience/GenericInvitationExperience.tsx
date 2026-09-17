@@ -71,17 +71,17 @@ export default function GenericInvitationExperience({
      Render Data
   ========================================================================== */
 
-const renderData:
-  EventExperienceRenderData = {
-    ...data,
+  const renderData:
+    EventExperienceRenderData = {
+      ...data,
 
-    invitation: {
-      guests: [],
+      invitation: {
+        guests: [],
 
-      onSubmitGenericRsvp:
-        handleRsvpSubmit,
-    },
-  };
+        onSubmitGenericRsvp:
+          handleRsvpSubmit,
+      },
+    };
 
 
   /* ==========================================================================

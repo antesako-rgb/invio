@@ -34,15 +34,6 @@ interface PhotoWallPhotoComposerProps {
   previewUrl:
     string;
 
-  primaryName:
-    string | null;
-
-  secondaryName:
-    string | null;
-
-  date:
-    string | null;
-
   description:
     string;
 
@@ -63,9 +54,6 @@ interface PhotoWallPhotoComposerProps {
 
 export default function PhotoWallPhotoComposer({
   previewUrl,
-  primaryName,
-  secondaryName,
-  date,
   description,
   onDescriptionChange,
   onRemove,
@@ -97,15 +85,6 @@ export default function PhotoWallPhotoComposer({
         }
         height={
           PREVIEW_HEIGHT
-        }
-        primaryName={
-          primaryName
-        }
-        secondaryName={
-          secondaryName
-        }
-        date={
-          date
         }
         photoAction={
           <span

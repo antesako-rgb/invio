@@ -227,16 +227,17 @@ export default function InvitationRecipientDetails({
 const personalizedPath =
   row.public_id
     ? getEventExperiencePublicPath(
+        "invitation",
         row.public_id
       )
     : null;
 
-  const personalizedUrl =
-    personalizedPath
-      ? origin
-        ? `${origin}${personalizedPath}`
-        : personalizedPath
-      : null;
+const personalizedUrl =
+  personalizedPath
+    ? origin
+      ? `${origin}${personalizedPath}`
+      : personalizedPath
+    : null;
 
 
   /* ==========================================================================

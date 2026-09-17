@@ -1,10 +1,6 @@
 "use client";
 
 import {
-  useState,
-} from "react";
-
-import {
   useRouter,
 } from "next/navigation";
 
@@ -12,8 +8,8 @@ import {
   useTranslations,
 } from "next-intl";
 
-import DangerZone
-  from "@/components/ui/danger-zone/DangerZone";
+import ManagementDeleteDangerZone
+  from "@/features/management/components/ManagementDeleteDangerZone/ManagementDeleteDangerZone";
 
 import {
   deleteEventExperienceAction,
@@ -68,50 +64,25 @@ export default function EventExperienceDeleteDangerZone({
 
 
   /* ==========================================================================
-     State
-  ========================================================================== */
-
-  const [
-    isDeleting,
-    setIsDeleting,
-  ] =
-    useState(false);
-
-
-  /* ==========================================================================
      Delete
   ========================================================================== */
 
   async function handleDelete() {
-    if (isDeleting) {
+    const result =
+      await deleteEventExperienceAction({
+        experienceId,
+        eventId,
+      });
+
+    if (!result.success) {
       return;
     }
 
-    setIsDeleting(
-      true
+    router.replace(
+      `/dashboard/dogadaji/${eventId}/studio`
     );
 
-    try {
-      const result =
-        await deleteEventExperienceAction({
-          experienceId,
-          eventId,
-        });
-
-      if (!result.success) {
-        return;
-      }
-
-      router.replace(
-        `/dashboard/dogadaji/${eventId}/pozivnice`
-      );
-
-      router.refresh();
-    } finally {
-      setIsDeleting(
-        false
-      );
-    }
+    router.refresh();
   }
 
 
@@ -120,7 +91,7 @@ export default function EventExperienceDeleteDangerZone({
   ========================================================================== */
 
   return (
-    <DangerZone
+    <ManagementDeleteDangerZone
       title={
         t(
           `title.${experienceType}`
@@ -136,7 +107,6 @@ export default function EventExperienceDeleteDangerZone({
           `button.${experienceType}`
         )
       }
-      tone="danger"
       confirmTitle={
         t(
           `confirm.title.${experienceType}`
@@ -157,10 +127,7 @@ export default function EventExperienceDeleteDangerZone({
           "confirm.cancel"
         )
       }
-      loading={
-        isDeleting
-      }
-      onConfirm={
+      onDelete={
         handleDelete
       }
     />

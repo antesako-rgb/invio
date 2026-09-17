@@ -1,0 +1,121 @@
+/* ==========================================================================
+   Actions
+========================================================================== */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+
+/* ==========================================================================
+   Favorite
+========================================================================== */
+
+.favorite {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+
+  color:
+    var(--foreground);
+
+  background:
+    color-mix(
+      in srgb,
+      var(--background) 88%,
+      transparent
+    );
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--border) 80%,
+      transparent
+    );
+
+  border-radius:
+    9999px;
+
+  box-shadow:
+    0 1px 3px
+    rgb(0 0 0 / 0.08);
+
+  backdrop-filter:
+    blur(8px);
+
+  cursor: pointer;
+
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease,
+    opacity 160ms ease;
+}
+
+.favorite:hover:not(:disabled) {
+  background:
+    var(--background);
+
+  transform:
+    scale(1.05);
+}
+
+.favorite[data-active="true"] {
+  color:
+    #e11d48;
+}
+
+.favorite[data-active="true"]:hover:not(:disabled) {
+  color:
+    #be123c;
+}
+
+
+/* ==========================================================================
+   Pending
+========================================================================== */
+
+.favorite:disabled {
+  cursor: default;
+
+  opacity: 0.7;
+}
+
+
+/* ==========================================================================
+   Focus
+========================================================================== */
+
+.favorite:focus-visible {
+  outline:
+    2px solid
+    var(--ring);
+
+  outline-offset:
+    2px;
+}
+
+
+/* ==========================================================================
+   Reduced Motion
+========================================================================== */
+
+@media (
+  prefers-reduced-motion: reduce
+) {
+  .favorite {
+    transition: none;
+  }
+
+  .favorite:hover:not(:disabled) {
+    transform: none;
+  }
+}

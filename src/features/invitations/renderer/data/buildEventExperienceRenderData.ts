@@ -5,7 +5,9 @@ import type {
 import type {
   EventExperienceType,
 } from "@/features/invitations/types/eventExperience.types";
-
+import type {
+  Locale,
+} from "@/i18n/config";
 import type {
   EventExperienceRenderData,
 } from "@/features/invitations/types/eventExperienceRenderer.types";
@@ -30,6 +32,10 @@ import {
   parseEventExperiencePresentation,
 } from "@/features/invitations/renderer/parsers/parseEventExperiencePresentation";
 
+import {
+  buildPublicEventExperienceUrl,
+} from "@/features/invitations/utils/buildPublicEventExperienceUrl";
+
 
 /* ==========================================================================
    Types
@@ -48,7 +54,7 @@ interface BuildEventExperienceRenderDataInput {
   };
 
   locale:
-    string;
+    Locale;
 
   eventTimezone:
     string;
@@ -78,11 +84,22 @@ export function buildEventExperienceRenderData({
       experience.presentation
     );
 
+const publicUrl =
+  publicId
+    ? buildPublicEventExperienceUrl(
+        locale,
+        experience.type,
+        publicId
+      )
+    : undefined;
+
   return {
     type:
       experience.type,
 
     publicId,
+
+    publicUrl,
 
     content,
 

@@ -1,0 +1,123 @@
+{
+  "management": {
+    "title": "Foto album",
+    "description": "Kreirajte odabrani foto album iz svog Photo Walla i podijelite ga s gostima.",
+    "backToPhotoWall": "Natrag na Photo Wall",
+
+    "status": {
+      "published": "Objavljeno",
+      "draft": "Skica"
+    },
+
+    "actions": {
+      "view": "Pregledaj album"
+    },
+
+    "updatedAt": "Posljednje ažuriranje: {date}",
+
+    "name": {
+      "label": "Naziv albuma",
+      "edit": "Uredi naziv",
+      "save": "Spremi naziv",
+      "cancel": "Odustani",
+      "error": "Nije moguće spremiti naziv albuma."
+    },
+
+    "statusCard": {
+      "title": "Status foto albuma",
+      "description": "Upravljajte dostupnošću svog foto albuma.",
+
+      "published": {
+        "title": "Foto album je objavljen",
+        "description": "Gosti s pristupom poveznici mogu pregledati foto album i fotografije koje ste odlučili podijeliti.",
+        "action": "Povuci objavu albuma",
+        "success": "Foto album više nije javno dostupan."
+      },
+
+      "draft": {
+        "title": "Foto album nije objavljen",
+        "description": "Gosti ne mogu pristupiti foto albumu dok ga ne objavite i učinite dostupnim za dijeljenje.",
+        "action": "Objavi album",
+        "success": "Foto album je uspješno objavljen."
+      }
+    },
+
+    "publicLinkCard": {
+      "title": "Javna poveznica",
+      "description": "Podijelite javnu poveznicu svog foto albuma.",
+
+      "active": {
+        "title": "Javna poveznica je aktivna",
+        "description": "Svatko s ovom poveznicom može pregledati foto album."
+      },
+
+      "inactive": {
+        "title": "Javna poveznica nije aktivna",
+        "description": "Poveznica će postati dostupna gostima nakon objave foto albuma."
+      },
+
+      "actions": {
+        "copy": "Kopiraj poveznicu",
+        "copied": "Kopirano",
+        "open": "Otvori album"
+      }
+    },
+
+  "photos": {
+  "title": "Fotografije",
+  "description": "Upravljajte fotografijama koje se prikazuju u ovom albumu.",
+
+  "actions": {
+    "add": "Dodaj fotografije"
+  },
+
+  "empty": {
+    "title": "Album je još prazan",
+    "description": "Dodajte fotografije iz Photo Walla u svoj foto album."
+  },
+
+  "picker": {
+    "title": "Dodaj fotografije",
+    "description": "Odaberite fotografije iz Photo Walla koje želite dodati u album.",
+    "error": "Fotografije nije moguće dodati u album.",
+    "loading": "Učitavanje fotografija...",
+    
+    "filters": {
+      "all": "Sve",
+      "favorites": "Favoriti"
+    },
+
+    "empty": {
+      "all": {
+        "title": "Nema fotografija",
+        "description": "U Photo Wallu još nema fotografija koje možete dodati."
+      },
+
+      "favorites": {
+        "title": "Nema favorita",
+        "description": "Još niste označili nijednu fotografiju kao favorit."
+      }
+    },
+
+    "actions": {
+      "loadMore": "Učitaj još",
+      "cancel": "Odustani",
+      "add": "Dodaj ({count})"
+    }
+  }
+},
+
+    "delete": {
+      "title": "Obriši foto album",
+      "description": "Trajno obrišite ovaj foto album i odabir fotografija u njemu.",
+      "button": "Obriši foto album",
+
+      "confirm": {
+        "title": "Obrisati foto album?",
+        "description": "Ova radnja je trajna i ne može se poništiti.",
+        "confirm": "Obriši foto album",
+        "cancel": "Odustani"
+      }
+    }
+  }
+}

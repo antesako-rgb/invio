@@ -15,11 +15,11 @@
       "heroSubtitle": "With love and gratitude.",
       "description": "Thank you for being part of our special day."
     },
-    "photo-wall": {
-      "heroTitle": "Share Your Photos",
-      "heroSubtitle": "Capture the moments. Share the memories.",
-      "description": "Share your favorite photos from our special day and help us create a collection of memories together."
-    }
+ "photo-wall": {
+  "heroTitle": "Share Your Photos",
+  "heroSubtitle": "Scan the QR code and share your favorite moments with us.",
+  "description": "Thank you for being part of our story."
+}
   },
   "birthday": {
     "heroTitle": "Birthday Celebration",

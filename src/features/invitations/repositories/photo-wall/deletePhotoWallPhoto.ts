@@ -1,5 +1,3 @@
-import "server-only";
-
 import {
   createServerClient,
 } from "@/lib/supabase/server";
@@ -28,26 +26,27 @@ export async function deletePhotoWallPhoto({
     await createServerClient();
 
 
-/* ==========================================================================
-   Get Photo
-========================================================================== */
+  /* ==========================================================================
+     Get Photo
+  ========================================================================== */
 
-const {
-  data: photo,
-  error: photoError,
-} =
-  await supabase
-    .from(
-      "photo_wall_photos"
-    )
-    .select(
-      "id, invitation_id, image_path"
-    )
-    .eq(
-      "id",
-      photoId
-    )
-    .maybeSingle();
+  const {
+    data: photo,
+    error: photoError,
+  } =
+    await supabase
+      .from(
+        "photo_wall_photos"
+      )
+      .select(
+        "id, invitation_id, image_path"
+      )
+      .eq(
+        "id",
+        photoId
+      )
+      .maybeSingle();
+
   if (
     photoError
   ) {
@@ -69,22 +68,23 @@ const {
     );
   }
 
-/* ==========================================================================
-   Validate Bunny Path
-========================================================================== */
 
-const expectedPrefix =
-  `photo-wall/${photo.invitation_id}/`;
+  /* ==========================================================================
+     Validate Bunny Path
+  ========================================================================== */
 
-if (
-  !photo.image_path.startsWith(
-    expectedPrefix
-  )
-) {
-  throw new Error(
-    "Putanja fotografije nije ispravna."
-  );
-}
+  const expectedPrefix =
+    `photo-wall/${photo.invitation_id}/`;
+
+  if (
+    !photo.image_path.startsWith(
+      expectedPrefix
+    )
+  ) {
+    throw new Error(
+      "Putanja fotografije nije ispravna."
+    );
+  }
 
 
   /* ==========================================================================

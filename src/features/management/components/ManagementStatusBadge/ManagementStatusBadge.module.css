@@ -1,0 +1,55 @@
+.status {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  flex-shrink:
+    0;
+
+  gap:
+    0.5rem;
+
+  padding:
+    0.375rem 0.625rem;
+
+  border-radius:
+    999px;
+
+  background:
+    var(--muted);
+
+  font-size:
+    0.75rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1;
+}
+
+.statusDot {
+  width:
+    0.5rem;
+
+  height:
+    0.5rem;
+
+  border-radius:
+    50%;
+
+  background:
+    currentColor;
+}
+
+.status[data-published="true"] {
+  color:
+    var(--success);
+}
+
+.status[data-published="false"] {
+  color:
+    var(--muted-foreground);
+}

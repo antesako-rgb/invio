@@ -1,7 +1,7 @@
 {
   "editor": {
     "navigation": {
-      "label": "Navigacija uređivača iskustva",
+      "label": "Navigacija uređivača iskustva događaja",
       "back": "Natrag",
       "design": "Dizajn",
       "details": "Detalji",
@@ -46,7 +46,7 @@
     "elementLabels": {
       "primaryName": "Uredi prvo ime",
       "secondaryName": "Uredi drugo ime",
-      "title": "Uredi naziv",
+      "title": "Uredi naslov",
       "subtitle": "Uredi podnaslov",
       "initial": "Uredi inicijal",
       "description": "Uredi opis",
@@ -83,16 +83,17 @@
       "addPhotos": "Dodaj fotografije"
     },
 
-    "gallery": {
-      "count": "{count, plural, one {# fotografija} few {# fotografije} other {# fotografija}}",
-      "empty": "Još nema fotografija",
-      "emptyDescription": "Budite prvi koji će podijeliti fotografiju s ovog događaja."
-    },
-
+ "gallery": {
+  "title": "Naši zajednički trenuci",
+  "description": "Pregledajte fotografije i podijelite svoje najdraže trenutke.",
+  "count": "{count, plural, one {# fotografija} few {# fotografije} other {# fotografija}}",
+  "empty": "Još nema fotografija",
+  "emptyDescription": "Budite prvi koji će podijeliti fotografiju s ovog događaja.",
+  "closePhoto": "Zatvori fotografiju",
+  "loadMore": "Učitaj još",
+  "loadingMore": "Učitavanje..."
+},
     "upload": {
-      "title": "Dodaj fotografije",
-      "description": "Odaberite do {count} fotografija. Maksimalna veličina pojedine fotografije je {size} MB.",
-
       "close": "Zatvori",
       "back": "Natrag",
       "addMore": "Dodaj još fotografija",
@@ -100,41 +101,33 @@
 
       "source": {
         "title": "Dodaj fotografije",
-        "description": "Fotografirajte trenutak ili odaberite fotografije sa svog uređaja.",
+        "description": "Zabilježite trenutak ili odaberite fotografije sa svog uređaja.",
 
         "camera": {
           "title": "Fotografiraj",
-          "description": "Snimi novu fotografiju kamerom."
+          "description": "Snimite novu fotografiju kamerom."
         },
 
         "gallery": {
           "title": "Odaberi fotografije",
-          "description": "Odaberi jednu ili više fotografija iz galerije."
+          "description": "Odaberite jednu ili više fotografija iz galerije."
         }
       },
 
-      "dropzone": {
-        "title": "Odaberite fotografije",
-        "description": "Povucite fotografije ovdje ili kliknite za odabir."
-      },
-
-      "selected": "Odabrano {count} od {max}",
-      "remove": "Ukloni fotografiju",
-      "cancel": "Odustani",
-
       "submit": "Dodaj fotografije ({count})",
       "submitting": "Dodavanje...",
+      "preparing": "Priprema fotografija...",
 
       "errors": {
         "invalidFiles": "Neke fotografije nisu podržane ili su prevelike.",
-        "tooManyFiles": "Možete odabrati najviše {count} fotografija.",
+        "tooManyFiles": "Možete dodati najviše {count} fotografija.",
         "upload": "Fotografije nije moguće dodati. Pokušajte ponovno."
       }
     },
 
     "composer": {
       "descriptionLabel": "Opis fotografije",
-      "descriptionPlaceholder": "Dodaj opis...",
+      "descriptionPlaceholder": "Dodajte opis...",
       "remove": "Ukloni fotografiju"
     }
   }

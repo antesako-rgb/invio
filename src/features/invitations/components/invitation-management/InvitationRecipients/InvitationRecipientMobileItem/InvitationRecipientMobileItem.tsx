@@ -104,15 +104,16 @@ export default function InvitationRecipientMobileItem({
      Invitation Link
   ========================================================================== */
 
-  const isPersonalized =
-    row.public_id !==
-    null;
+const isPersonalized =
+  row.public_id !==
+  null;
 
-  const invitationPath =
-    getEventExperiencePublicPath(
-      row.public_id ??
-        invitationPublicId
-    );
+const invitationPath =
+  getEventExperiencePublicPath(
+    "invitation",
+    row.public_id ??
+      invitationPublicId
+  );
 
 
   /* ==========================================================================

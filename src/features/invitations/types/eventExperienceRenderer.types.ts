@@ -26,6 +26,10 @@ import type {
   InvitationRSVPViewState,
 } from "@/features/invitations/types/invitationRsvp.types";
 
+import type {
+  PhotoWallPhotosCursor,
+} from "@/features/invitations/types/photoWallPhoto.types";
+
 
 /* ==========================================================================
    Event Experience Render Mode
@@ -236,6 +240,9 @@ export interface PhotoWallRenderPhoto {
 export interface PhotoWallRenderCapability {
   photos:
     PhotoWallRenderPhoto[];
+
+  nextCursor?:
+    PhotoWallPhotosCursor | null;
 }
 
 
@@ -248,6 +255,9 @@ export interface EventExperienceRenderData {
     EventExperienceType;
 
   publicId?:
+    string;
+
+  publicUrl?:
     string;
 
   content:

@@ -161,7 +161,9 @@ export default function EventExperienceEditorView({
       templateId
     );
 
-  if (!template) {
+  if (
+    !template
+  ) {
     return null;
   }
 
@@ -556,6 +558,12 @@ export default function EventExperienceEditorView({
           type:
             data.type,
 
+          publicId:
+            data.publicId,
+
+          publicUrl:
+            data.publicUrl,
+
           content:
             editorContent,
 
@@ -606,7 +614,14 @@ export default function EventExperienceEditorView({
               : undefined,
 
           photoWall:
-            data.photoWall,
+            data.type ===
+              "photo-wall"
+              ? {
+                  photos:
+                    data.photoWall?.photos ??
+                    [],
+                }
+              : undefined,
         };
       },
       [
@@ -617,6 +632,8 @@ export default function EventExperienceEditorView({
         eventTranslations,
         eventFallback,
         data.type,
+        data.publicId,
+        data.publicUrl,
         data.eventTimezone,
         data.photoWall,
         features.rsvp,
@@ -635,6 +652,12 @@ export default function EventExperienceEditorView({
       () => ({
         type:
           data.type,
+
+        publicId:
+          data.publicId,
+
+        publicUrl:
+          data.publicUrl,
 
         content,
 
@@ -685,13 +708,22 @@ export default function EventExperienceEditorView({
             : undefined,
 
         photoWall:
-          data.photoWall,
+          data.type ===
+            "photo-wall"
+            ? {
+                photos:
+                  data.photoWall?.photos ??
+                  [],
+              }
+            : undefined,
       }),
       [
         content,
         presentation,
         locale,
         data.type,
+        data.publicId,
+        data.publicUrl,
         data.eventTimezone,
         data.photoWall,
         features.rsvp,
@@ -708,6 +740,9 @@ export default function EventExperienceEditorView({
   return (
     <>
       <EventExperienceEditor
+        type={
+          data.type
+        }
         activeStep={
           activeStep
         }

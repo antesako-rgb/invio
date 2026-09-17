@@ -1,8 +1,11 @@
-import EventExperienceDescription
-  from "@/features/invitations/cards/components/EventExperienceDescription/EventExperienceDescription";
+import PhotoWallCardContent
+  from "@/features/invitations/cards/components/PhotoWallCardContent/PhotoWallCardContent";
 
-import EditableText
-  from "@/features/invitations/editor/components/EditableText/EditableText";
+import PhotoWallCardFooter
+  from "@/features/invitations/cards/components/PhotoWallCardFooter/PhotoWallCardFooter";
+
+import EventExperienceQrCode
+  from "@/features/invitations/cards/components/EventExperienceQrCode/EventExperienceQrCode";
 
 import type {
   EventExperienceTemplateProps,
@@ -26,23 +29,6 @@ export default function GardenGracePhotoWallCard({
   mode,
   editor,
 }: EventExperienceTemplateProps) {
-  const {
-    title,
-    primary_name,
-    secondary_name,
-  } =
-    data.content.hero;
-
-  const {
-    description,
-  } =
-    data.content;
-
-
-  /* ==========================================================================
-     Render
-  ========================================================================== */
-
   return (
     <article
       className="garden-grace-photo-wall-card"
@@ -73,89 +59,19 @@ export default function GardenGracePhotoWallCard({
 
 
       {/* ====================================================================
-          Content
+          Layout
       ==================================================================== */}
 
       <div
-        className="garden-grace-photo-wall-card__content"
+        className="garden-grace-photo-wall-card__layout"
       >
         {/* ==================================================================
-            Names
+            Content
         ================================================================== */}
 
-        {(primary_name || secondary_name) && (
-          <div
-            className="garden-grace-photo-wall-card__names"
-          >
-            {primary_name && (
-              <EditableText
-                element="hero.primary_name"
-                mode={
-                  mode
-                }
-                editor={
-                  editor
-                }
-                className="garden-grace-photo-wall-card__name"
-              >
-                {primary_name}
-              </EditableText>
-            )}
-
-            {primary_name && secondary_name && (
-              <span
-                className="garden-grace-photo-wall-card__name-separator"
-                aria-hidden="true"
-              >
-                &
-              </span>
-            )}
-
-            {secondary_name && (
-              <EditableText
-                element="hero.secondary_name"
-                mode={
-                  mode
-                }
-                editor={
-                  editor
-                }
-                className="garden-grace-photo-wall-card__name"
-              >
-                {secondary_name}
-              </EditableText>
-            )}
-          </div>
-        )}
-
-
-        {/* ==================================================================
-            Title
-        ================================================================== */}
-
-        {title && (
-          <EditableText
-            element="hero.title"
-            mode={
-              mode
-            }
-            editor={
-              editor
-            }
-            className="garden-grace-photo-wall-card__title"
-          >
-            {title}
-          </EditableText>
-        )}
-
-
-        {/* ==================================================================
-            Description
-        ================================================================== */}
-
-        <EventExperienceDescription
-          value={
-            description
+        <PhotoWallCardContent
+          data={
+            data
           }
           mode={
             mode
@@ -163,6 +79,64 @@ export default function GardenGracePhotoWallCard({
           editor={
             editor
           }
+          classNames={{
+            content:
+              "garden-grace-photo-wall-card__content",
+
+            names:
+              "garden-grace-photo-wall-card__names",
+
+            name:
+              "garden-grace-photo-wall-card__name",
+
+            nameSeparator:
+              "garden-grace-photo-wall-card__name-separator",
+
+            title:
+              "garden-grace-photo-wall-card__title",
+
+            subtitle:
+              "garden-grace-photo-wall-card__subtitle",
+          }}
+        />
+
+
+        {/* ==================================================================
+            QR
+        ================================================================== */}
+
+        {data.publicUrl && (
+          <div
+            className="garden-grace-photo-wall-card__qr"
+          >
+            <EventExperienceQrCode
+              value={
+                data.publicUrl
+              }
+              ariaLabel="QR kod za Photo Wall"
+            />
+          </div>
+        )}
+
+
+        {/* ==================================================================
+            Footer
+        ================================================================== */}
+
+        <PhotoWallCardFooter
+          description={
+            data.content.description
+          }
+          display={
+            data.display
+          }
+          mode={
+            mode
+          }
+          editor={
+            editor
+          }
+          className="garden-grace-photo-wall-card__footer"
         />
       </div>
     </article>

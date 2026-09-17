@@ -390,9 +390,9 @@ export function useEventExperienceTemplateActions({
         false
       );
 
-      router.push(
-        `/editor/pozivnice/${result.data.id}/uredi`
-      );
+     router.push(
+  `/editor/${experienceType}/${result.data.id}/uredi`
+);
     } catch (error) {
       isCreatingRef.current =
         false;
@@ -556,13 +556,13 @@ export function useEventExperienceTemplateActions({
         return;
       }
 
-      setIsUseDialogOpen(
-        false
-      );
+setIsUseDialogOpen(
+  false
+);
 
-      router.push(
-        `/editor/pozivnice/${result.data.id}/uredi`
-      );
+router.push(
+  `/editor/${experience.type}/${result.data.id}/uredi`
+);
     } catch (error) {
       isUpdatingRef.current =
         false;

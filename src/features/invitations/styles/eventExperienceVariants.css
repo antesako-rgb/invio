@@ -25,8 +25,11 @@
   --event-experience-background:
     #eceae5;
 
-  --event-experience-card-background:
-    #f5efe6;
+--event-experience-card-background:
+  #f5efe6;
+
+--event-experience-card-border:
+  #e4d9ca;
 
 
   /* ========================================================================
@@ -132,8 +135,11 @@
   --event-experience-background:
     #e8ebe4;
 
-  --event-experience-card-background:
-    #f4f5ef;
+--event-experience-card-background:
+  #f4f5ef;
+
+--event-experience-card-border:
+  #dce1d7;
 
 
   /* ========================================================================
@@ -239,13 +245,12 @@
   --event-experience-background:
     #eee6e4;
 
-  --event-experience-card-background:
-    #f8f1ef;
+--event-experience-card-background:
+  #f8f1ef;
 
+--event-experience-card-border:
+  #ffffff;
 
-  /* ========================================================================
-     Actions
-  ======================================================================== */
 
   --event-experience-action-primary:
     #806762;
@@ -254,7 +259,7 @@
     #fffafa;
 
   --event-experience-action-secondary:
-    #eadfdd;
+    #eededd;
 
   --event-experience-action-secondary-foreground:
     var(--event-experience-foreground);

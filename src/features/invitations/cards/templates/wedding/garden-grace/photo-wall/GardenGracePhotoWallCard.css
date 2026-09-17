@@ -8,14 +8,23 @@
      Card Layout
   ======================================================================== */
 
-  --garden-grace-photo-wall-card-content-padding:
+  --garden-grace-photo-wall-card-layout-padding:
     20% 10% 10% 10%;
 
   --garden-grace-photo-wall-names-margin-bottom:
-    10cqw;
+    8cqw;
 
   --garden-grace-photo-wall-title-margin-bottom:
-    10cqw;
+    8cqw;
+
+  --garden-grace-photo-wall-subtitle-margin-bottom:
+    6cqw;
+
+  --garden-grace-photo-wall-qr-margin-bottom:
+    5cqw;
+
+  --garden-grace-photo-wall-footer-gap:
+    2cqw;
 
 
   /* ========================================================================
@@ -55,11 +64,25 @@
 
 
   /* ========================================================================
+     Subtitle
+  ======================================================================== */
+
+  --event-experience-subtitle-size:
+    4cqw;
+
+  --event-experience-subtitle-line-height:
+    1;
+
+  --event-experience-subtitle-text-align:
+    center;
+
+
+  /* ========================================================================
      Description
   ======================================================================== */
 
   --event-experience-description-size:
-    4cqw;
+    3.2cqw;
 
   --event-experience-description-line-height:
     1.2;
@@ -72,6 +95,14 @@
 
   --event-experience-description-margin-top:
     0;
+
+
+  /* ========================================================================
+     Date
+  ======================================================================== */
+
+  --event-experience-event-size:
+    2.8cqw;
 
 
   /* ========================================================================
@@ -180,10 +211,10 @@
 
 
 /* ==========================================================================
-   Content
+   Layout
 ========================================================================== */
 
-.garden-grace-photo-wall-card__content {
+.garden-grace-photo-wall-card__layout {
 
   position:
     relative;
@@ -208,8 +239,32 @@
 
   padding:
     var(
-      --garden-grace-photo-wall-card-content-padding
+      --garden-grace-photo-wall-card-layout-padding
     );
+
+  text-align:
+    center;
+
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.garden-grace-photo-wall-card__content {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  width:
+    100%;
 
   text-align:
     center;
@@ -384,13 +439,129 @@
 
 
 /* ==========================================================================
-   Description
+   Subtitle
 ========================================================================== */
 
-.garden-grace-photo-wall-card
-[data-event-experience-description] {
+.garden-grace-photo-wall-card__subtitle {
+
+  --event-experience-element-font-size:
+    var(--event-experience-subtitle-size);
+
+  display:
+    block;
 
   width:
     100%;
+
+  margin-bottom:
+    var(
+      --garden-grace-photo-wall-subtitle-margin-bottom
+    );
+
+  font-family:
+    var(--event-experience-subtitle-font);
+
+  font-size:
+    var(--event-experience-element-font-size);
+
+  font-style:
+    var(--event-experience-subtitle-style);
+
+  font-weight:
+    var(--event-experience-subtitle-weight);
+
+  line-height:
+    var(--event-experience-subtitle-line-height);
+
+  letter-spacing:
+    var(--event-experience-subtitle-letter-spacing);
+
+  color:
+    var(--event-experience-subtitle-color);
+
+  text-transform:
+    var(--event-experience-subtitle-text-transform);
+
+  text-align:
+    var(--event-experience-subtitle-text-align);
+
+  opacity:
+    var(--event-experience-subtitle-opacity);
+
+  white-space:
+    pre-line;
+
+}
+
+
+/* ==========================================================================
+   QR
+========================================================================== */
+
+.garden-grace-photo-wall-card__qr {
+
+  width:
+    28%;
+
+  max-width:
+    180px;
+
+  margin-bottom:
+    var(
+      --garden-grace-photo-wall-qr-margin-bottom
+    );
+
+  flex:
+    0 0 auto;
+
+}
+
+
+/* ==========================================================================
+   Footer
+========================================================================== */
+
+.garden-grace-photo-wall-card__footer {
+
+  --photo-wall-card-footer-gap:
+    var(--garden-grace-photo-wall-footer-gap);
+
+  width:
+    70%;
+
+  flex:
+    0 0 auto;
+
+}
+
+
+/* ==========================================================================
+   Footer Description
+========================================================================== */
+
+.garden-grace-photo-wall-card__footer
+.event-experience-description {
+
+  width:
+    100%;
+
+  margin:
+    0;
+
+}
+
+
+/* ==========================================================================
+   Footer Date
+========================================================================== */
+
+.garden-grace-photo-wall-card__footer
+.photo-wall-card-footer__date {
+
+  width:
+    100%;
+
+  text-align:
+    center;
 
 }

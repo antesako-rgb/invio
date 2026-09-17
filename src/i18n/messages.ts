@@ -18,6 +18,7 @@ export async function loadMessages(
     dashboard,
     events,
     guests,
+    digitalAlbums,
     eventExperiences,
     eventExperiencesManagement,
     invitations,
@@ -52,6 +53,10 @@ export async function loadMessages(
 
       import(
         `../messages/${locale}/guests.json`
+      ),
+
+      import(
+        `../messages/${locale}/digital-albums.json`
       ),
 
       import(
@@ -100,6 +105,9 @@ export async function loadMessages(
 
     Guests:
       guests.default,
+
+    DigitalAlbums:
+      digitalAlbums.default,
 
     EventExperiences: {
       ...eventExperiences.default,

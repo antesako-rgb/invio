@@ -15,11 +15,11 @@
       "heroSubtitle": "S ljubavlju i zahvalnošću.",
       "description": "Hvala vam što ste bili dio našeg posebnog dana."
     },
-    "photo-wall": {
-      "heroTitle": "Podijelite svoje fotografije",
-      "heroSubtitle": "Zabilježite trenutke. Podijelite uspomene.",
-      "description": "Podijelite svoje omiljene fotografije s našeg posebnog dana i pomozite nam zajedno stvoriti zbirku uspomena."
-    }
+"photo-wall": {
+  "heroTitle": "Podijelite svoje fotografije",
+  "heroSubtitle": "Skenirajte QR kod i podijelite s nama svoje najdraže trenutke.",
+  "description": "Hvala što ste dio naše priče."
+}
   },
   "birthday": {
     "heroTitle": "Proslava rođendana",

@@ -25,13 +25,13 @@ interface PhotoWallPhotoCardProps {
   height:
     number;
 
-  primaryName:
+  primaryName?:
     string | null;
 
-  secondaryName:
+  secondaryName?:
     string | null;
 
-  date:
+  date?:
     string | null;
 
   description?:
@@ -97,81 +97,104 @@ export default function PhotoWallPhotoCard({
 
 
   /* ==========================================================================
-     Content
+     Photo
   ========================================================================== */
 
-  const content = (
-    <>
-      <div
-        className="photo-wall-photo-card__photo"
-      >
-        <Image
-          src={
-            imageUrl
-          }
-          alt={
-            alt
-          }
-          width={
-            width
-          }
-          height={
-            height
-          }
-          sizes="
-            (max-width: 767px) 50vw,
-            (max-width: 1199px) 33vw,
-            320px
-          "
-          unoptimized={
-            imageUrl.startsWith(
-              "blob:"
-            )
-          }
-          className="photo-wall-photo-card__image"
-        />
+  const photo = (
+    <div
+      className="photo-wall-photo-card__photo"
+    >
+      <Image
+        src={
+          imageUrl
+        }
+        alt={
+          alt
+        }
+        width={
+          width
+        }
+        height={
+          height
+        }
+        sizes="
+          (max-width: 767px) 50vw,
+          (max-width: 1199px) 33vw,
+          320px
+        "
+        unoptimized={
+          imageUrl.startsWith(
+            "blob:"
+          )
+        }
+        className="photo-wall-photo-card__image"
+      />
 
 
-        {/* ==================================================================
-            Photo Action
-        ================================================================== */}
+      {/* ==================================================================
+          Metadata
+      ================================================================== */}
 
-        {photoAction && (
-          <div
-            className="photo-wall-photo-card__photo-action"
-          >
-            {photoAction}
-          </div>
-        )}
+      {(initials ||
+        date) && (
+        <div
+          className="photo-wall-photo-card__metadata"
+        >
+          {initials && (
+            <span
+              className="photo-wall-photo-card__initials"
+            >
+              {initials}
+            </span>
+          )}
+
+          {date && (
+            <span
+              className="photo-wall-photo-card__date"
+            >
+              {date}
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  );
 
 
-        {/* ==================================================================
-            Metadata
-        ================================================================== */}
+  /* ==========================================================================
+     Render
+  ========================================================================== */
 
-        {(initials ||
-          date) && (
-          <div
-            className="photo-wall-photo-card__metadata"
-          >
-            {initials && (
-              <span
-                className="photo-wall-photo-card__initials"
-              >
-                {initials}
-              </span>
-            )}
+  return (
+    <article
+      className="photo-wall-photo-card"
+    >
+      {onClick
+        ? (
+            <button
+              type="button"
+              className="photo-wall-photo-card__trigger"
+              onClick={
+                onClick
+              }
+            >
+              {photo}
+            </button>
+          )
+        : photo}
 
-            {date && (
-              <span
-                className="photo-wall-photo-card__date"
-              >
-                {date}
-              </span>
-            )}
-          </div>
-        )}
-      </div>
+
+      {/* ====================================================================
+          Photo Action
+      ==================================================================== */}
+
+      {photoAction && (
+        <div
+          className="photo-wall-photo-card__photo-action"
+        >
+          {photoAction}
+        </div>
+      )}
 
 
       {/* ====================================================================
@@ -195,31 +218,6 @@ export default function PhotoWallPhotoCard({
               </p>
             )
           : null}
-    </>
+    </article>
   );
-
-
-  /* ==========================================================================
-     Render
-  ========================================================================== */
-
-  return onClick
-    ? (
-        <button
-          type="button"
-          className="photo-wall-photo-card"
-          onClick={
-            onClick
-          }
-        >
-          {content}
-        </button>
-      )
-    : (
-        <article
-          className="photo-wall-photo-card"
-        >
-          {content}
-        </article>
-      );
 }

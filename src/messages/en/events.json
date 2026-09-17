@@ -29,13 +29,13 @@
     "moreActions": "More actions"
   },
 
-  "navigation": {
-    "ariaLabel": "Event navigation",
-    "overview": "Overview",
-    "guests": "Guests",
-    "invitations": "Invitations",
-    "seating": "Seating plan"
-  },
+"navigation": {
+  "ariaLabel": "Event navigation",
+  "overview": "Overview",
+  "guests": "Guests",
+ "studio": "Studio",
+  "seating": "Seating plan"
+},
 
   "create": {
     "backToEvents": "All events",

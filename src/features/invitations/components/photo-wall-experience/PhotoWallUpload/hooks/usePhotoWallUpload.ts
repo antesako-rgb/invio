@@ -10,6 +10,14 @@ import {
   uploadPhotoWallPhotoAction,
 } from "@/features/invitations/actions/photo-wall/uploadPhotoWallPhotoAction";
 
+import {
+  createPhotoPreview,
+} from "@/features/invitations/components/photo-wall-experience/PhotoWallUpload/utils/createPhotoPreview";
+
+import type {
+  PhotoWallPhoto,
+} from "@/features/invitations/types/photoWallPhoto.types";
+
 
 /* ==========================================================================
    Constants
@@ -71,7 +79,10 @@ interface UsePhotoWallUploadOptions {
     string;
 
   onSuccess:
-    () => void;
+    (
+      photos:
+        PhotoWallPhoto[]
+    ) => void;
 }
 
 
@@ -129,6 +140,14 @@ export function usePhotoWallUpload({
   ] =
     useState<string | null>(
       null
+    );
+
+  const [
+    isPreparing,
+    setIsPreparing,
+  ] =
+    useState(
+      false
     );
 
   const [
@@ -216,6 +235,10 @@ export function usePhotoWallUpload({
       null
     );
 
+    setIsPreparing(
+      false
+    );
+
     setIsSubmitting(
       false
     );
@@ -226,11 +249,12 @@ export function usePhotoWallUpload({
      Add Files
   ========================================================================== */
 
-  function addFiles(
+  async function addFiles(
     files:
       File[]
   ) {
     if (
+      isPreparing ||
       isSubmitting
     ) {
       return;
@@ -288,38 +312,63 @@ export function usePhotoWallUpload({
       return;
     }
 
-    const nextPhotos =
-      filesToAdd.map(
-        (file) => ({
-          id:
-            createPhotoId(),
+    setIsPreparing(
+      true
+    );
 
-          file,
-
-          previewUrl:
-            URL.createObjectURL(
+    try {
+      const nextPhotos =
+        await Promise.all(
+          filesToAdd.map(
+            async (
               file
-            ),
+            ) => ({
+              id:
+                createPhotoId(),
 
-          description:
-            "",
-        })
+              file,
+
+              previewUrl:
+                await createPhotoPreview(
+                  file
+                ),
+
+              description:
+                "",
+            })
+          )
+        );
+
+      setPhotos(
+        (current) => [
+          ...current,
+          ...nextPhotos,
+        ]
       );
 
-    setPhotos(
-      (current) => [
-        ...current,
-        ...nextPhotos,
-      ]
-    );
+      setActivePhotoId(
+        nextPhotos[0].id
+      );
 
-    setActivePhotoId(
-      nextPhotos[0].id
-    );
+      setStep(
+        "composer"
+      );
+    } catch (
+      prepareError
+    ) {
+      console.error(
+        "createPhotoPreview error:",
+        prepareError
+      );
 
-    setStep(
-      "composer"
-    );
+      setError(
+        invalidFilesError
+      );
+    } finally {
+      setIsPreparing(
+        false
+      );
+    }
   }
 
 
@@ -333,6 +382,7 @@ export function usePhotoWallUpload({
   ) {
     if (
       !activePhoto ||
+      isPreparing ||
       isSubmitting
     ) {
       return;
@@ -362,6 +412,7 @@ export function usePhotoWallUpload({
   function removeActivePhoto() {
     if (
       !activePhoto ||
+      isPreparing ||
       isSubmitting
     ) {
       return;
@@ -409,6 +460,7 @@ export function usePhotoWallUpload({
 
   function backToSource() {
     if (
+      isPreparing ||
       isSubmitting
     ) {
       return;
@@ -428,6 +480,7 @@ export function usePhotoWallUpload({
       string
   ) {
     if (
+      isPreparing ||
       isSubmitting
     ) {
       return;
@@ -443,11 +496,11 @@ export function usePhotoWallUpload({
      Submit
   ========================================================================== */
 
-
   async function submit() {
     if (
       photos.length ===
         0 ||
+      isPreparing ||
       isSubmitting
     ) {
       return;
@@ -468,6 +521,9 @@ export function usePhotoWallUpload({
 
     const uploadedPhotoIds =
       new Set<string>();
+
+    const uploadedPhotos: PhotoWallPhoto[] =
+      [];
 
     try {
       for (
@@ -526,6 +582,10 @@ export function usePhotoWallUpload({
           return;
         }
 
+        uploadedPhotos.push(
+          result.data
+        );
+
         uploadedPhotoIds.add(
           photo.id
         );
@@ -533,8 +593,17 @@ export function usePhotoWallUpload({
 
       reset();
 
-      onSuccess();
-    } catch {
+      onSuccess(
+        uploadedPhotos
+      );
+    } catch (
+      uploadPhotoError
+    ) {
+      console.error(
+        "uploadPhotoWallPhoto error:",
+        uploadPhotoError
+      );
+
       photosToUpload
         .filter(
           (uploadedPhoto) =>
@@ -580,6 +649,7 @@ export function usePhotoWallUpload({
     photos,
     activePhoto,
     error,
+    isPreparing,
     isSubmitting,
 
     addFiles,

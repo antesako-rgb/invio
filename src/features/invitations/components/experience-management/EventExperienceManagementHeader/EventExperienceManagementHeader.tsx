@@ -11,9 +11,13 @@ import {
 import {
   ButtonLink,
 } from "@/components/ui/button-link";
+import ManagementHeader
+  from "@/features/management/components/ManagementHeader/ManagementHeader";
+
+import ManagementStatusBadge
+  from "@/features/management/components/ManagementStatusBadge/ManagementStatusBadge";
 
 import {
-  getEventExperienceTemplateConfig,
   getEventExperienceVariantConfig,
 } from "@/features/invitations/cards/registry/eventExperienceTemplateRegistry.utils";
 
@@ -73,12 +77,6 @@ export default async function EventExperienceManagementHeader({
      Template
   ========================================================================== */
 
-  const template =
-    getEventExperienceTemplateConfig(
-      experience.type,
-      experience.template_id
-    );
-
   const variant =
     getEventExperienceVariantConfig(
       experience.type,
@@ -133,6 +131,7 @@ export default async function EventExperienceManagementHeader({
 
   const publicPath =
     getEventExperiencePublicPath(
+      experience.type,
       experience.public_id
     );
 
@@ -142,71 +141,44 @@ export default async function EventExperienceManagementHeader({
   ========================================================================== */
 
   return (
-    <header
-      className={
-        styles.root
+<ManagementHeader
+  backHref={
+    `/dashboard/dogadaji/${experience.event_id}/studio`
+  }
+  backLabel={
+    t(
+      "backToStudio"
+    )
+  }
+  heading={
+    <EventExperienceNameEdit
+      experienceId={
+        experience.id
       }
-    >
-      <div
-        className={
-          styles.content
-        }
-      >
-        {/* ==================================================================
-            Heading
-        ================================================================== */}
-
-        <div
-          className={
-            styles.heading
+      name={
+        experience.name
+      }
+    />
+  }
+      status={
+        <ManagementStatusBadge
+          isPublished={
+            isPublished
           }
-        >
-          <EventExperienceNameEdit
-            experienceId={
-              experience.id
-            }
-            name={
-              experience.name
-            }
-          />
-
-          <span
-            className={
-              styles.status
-            }
-            data-published={
-              isPublished
-                ? "true"
-                : "false"
-            }
-          >
-            <span
-              className={
-                styles.statusDot
-              }
-              aria-hidden="true"
-            />
-
-            {isPublished
-              ? t(
-                  "status.published"
-                )
-              : t(
-                  "status.draft"
-                )}
-          </span>
-        </div>
-
-
-        {/* ==================================================================
-            Meta
-        ================================================================== */}
-
-        <div
-          className={
-            styles.meta
+          publishedLabel={
+            t(
+              "status.published"
+            )
           }
-        >
+          draftLabel={
+            t(
+              "status.draft"
+            )
+          }
+        />
+      }
+      meta={
+        <>
           <span
             className={
               styles.templateMeta
@@ -248,52 +220,44 @@ export default async function EventExperienceManagementHeader({
               }
             )}
           </span>
-        </div>
-      </div>
+        </>
+      }
+      actions={
+        <>
+          {isPublished && (
+            <ButtonLink
+              href={
+                publicPath
+              }
+              variant="outline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Eye
+                aria-hidden="true"
+              />
 
+              {t(
+                "actions.view"
+              )}
+            </ButtonLink>
+          )}
 
-      {/* ====================================================================
-          Actions
-      ==================================================================== */}
-
-      <div
-        className={
-          styles.actions
-        }
-      >
-        {isPublished && (
           <ButtonLink
             href={
-              publicPath
+              `/editor/${experience.type}/${experience.id}/uredi`
             }
-            variant="outline"
-            target="_blank"
-            rel="noopener noreferrer"
           >
-            <Eye
+            <SquarePen
               aria-hidden="true"
             />
 
             {t(
-              "actions.view"
+              "actions.edit"
             )}
           </ButtonLink>
-        )}
-
-        <ButtonLink
-          href={
-            `/editor/pozivnice/${experience.id}/uredi`
-          }
-        >
-          <SquarePen
-            aria-hidden="true"
-          />
-
-          {t(
-            "actions.edit"
-          )}
-        </ButtonLink>
-      </div>
-    </header>
+        </>
+      }
+    />
   );
 }

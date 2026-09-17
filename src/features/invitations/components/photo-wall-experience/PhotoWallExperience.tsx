@@ -5,14 +5,11 @@ import {
 } from "react";
 
 import {
-  useRouter,
-} from "next/navigation";
-
-import {
   ArrowLeft,
   ImagePlus,
   Images,
 } from "lucide-react";
+
 import {
   useTranslations,
 } from "next-intl";
@@ -24,12 +21,21 @@ import {
 import PhotoWallGallery
   from "@/features/invitations/components/photo-wall-experience/PhotoWallGallery/PhotoWallGallery";
 
-import type {
-  PhotoWallGalleryPhoto,
-} from "@/features/invitations/components/photo-wall-experience/PhotoWallGallery/PhotoWallGallery";
+import {
+  usePublicPhotoWallPhotos,
+} from "@/features/invitations/components/photo-wall-experience/hooks/usePublicPhotoWallPhotos";
+
+import PhotoWallLightbox
+  from "@/features/invitations/components/photo-wall-experience/PhotoWallLightbox/PhotoWallLightbox";
 
 import PhotoWallUpload
   from "@/features/invitations/components/photo-wall-experience/PhotoWallUpload/PhotoWallUpload";
+
+import type {
+  PhotoWallGalleryPhoto,
+  PhotoWallPhoto,
+  PhotoWallPhotosCursor,
+} from "@/features/invitations/types/photoWallPhoto.types";
 
 import "./PhotoWallExperience.css";
 
@@ -37,6 +43,7 @@ import "./PhotoWallExperience.css";
 /* ==========================================================================
    Types
 ========================================================================== */
+
 interface PhotoWallExperienceProps {
   publicId:
     string | null;
@@ -53,6 +60,9 @@ interface PhotoWallExperienceProps {
   photos:
     PhotoWallGalleryPhoto[];
 
+  nextCursor?:
+    PhotoWallPhotosCursor | null;
+
   onBack?:
     () => void;
 }
@@ -67,7 +77,8 @@ export default function PhotoWallExperience({
   primaryName,
   secondaryName,
   date,
-  photos,
+  photos: initialPhotos,
+  nextCursor: initialNextCursor = null,
   onBack,
 }: PhotoWallExperienceProps) {
   /* ==========================================================================
@@ -79,12 +90,28 @@ export default function PhotoWallExperience({
       "EventExperiences.photoWall"
     );
 
+
   /* ==========================================================================
-     Router
+     Photo Wall Photos
   ========================================================================== */
 
-  const router =
-    useRouter();
+  const {
+    photos,
+    hasMore,
+    isLoading,
+    error,
+    loadMore,
+    prependPhotos,
+  } =
+    usePublicPhotoWallPhotos({
+      publicId,
+
+      initialPhotos,
+
+      initialNextCursor,
+    });
+
+
   /* ==========================================================================
      State
   ========================================================================== */
@@ -97,22 +124,44 @@ export default function PhotoWallExperience({
       false
     );
 
+  const [
+    selectedPhoto,
+    setSelectedPhoto,
+  ] =
+    useState<PhotoWallGalleryPhoto | null>(
+      null
+    );
+
 
   /* ==========================================================================
      Data
   ========================================================================== */
 
-  const names =
-    [
-      primaryName,
-      secondaryName,
-    ]
-      .filter(Boolean)
-      .join(" & ");
-
   const hasPhotos =
     photos.length >
     0;
+
+
+  /* ==========================================================================
+     Lightbox
+  ========================================================================== */
+
+  function handlePhotoClick(
+    photo:
+      PhotoWallGalleryPhoto
+  ) {
+    setSelectedPhoto(
+      photo
+    );
+  }
+
+
+  function handleLightboxClose() {
+    setSelectedPhoto(
+      null
+    );
+  }
+
 
   /* ==========================================================================
      Upload
@@ -130,6 +179,7 @@ export default function PhotoWallExperience({
     );
   }
 
+
   function handleUploadOpenChange(
     open:
       boolean
@@ -139,13 +189,20 @@ export default function PhotoWallExperience({
     );
   }
 
-function handleUploadSuccess() {
-  setIsUploadOpen(
-    false
-  );
 
-  router.refresh();
-}
+  function handleUploadSuccess(
+    uploadedPhotos:
+      PhotoWallPhoto[]
+  ) {
+    setIsUploadOpen(
+      false
+    );
+
+    prependPhotos(
+      uploadedPhotos
+    );
+  }
+
 
   /* ==========================================================================
      Render
@@ -188,21 +245,25 @@ function handleUploadSuccess() {
         <header
           className="photo-wall-experience__header"
         >
-          {names && (
+          <div
+            className="photo-wall-experience__intro"
+          >
             <h1
-              className="photo-wall-experience__names"
+              className="photo-wall-experience__title"
             >
-              {names}
+              {t(
+                "gallery.title"
+              )}
             </h1>
-          )}
 
-          {date && (
             <p
-              className="photo-wall-experience__date"
+              className="photo-wall-experience__description"
             >
-              {date}
+              {t(
+                "gallery.description"
+              )}
             </p>
-          )}
+          </div>
 
           {hasPhotos && (
             <button
@@ -256,7 +317,54 @@ function handleUploadSuccess() {
                   date={
                     date
                   }
+                  onPhotoClick={
+                    handlePhotoClick
+                  }
                 />
+
+
+                {/* ==========================================================
+                    Load More
+                ========================================================== */}
+
+                {hasMore && (
+                  <div
+                    className="photo-wall-experience__load-more"
+                  >
+                    <button
+                      type="button"
+                      className="photo-wall-experience__load-more-button"
+                      onClick={
+                        loadMore
+                      }
+                      disabled={
+                        isLoading
+                      }
+                    >
+                      {isLoading
+                        ? t(
+                            "gallery.loadingMore"
+                          )
+                        : t(
+                            "gallery.loadMore"
+                          )}
+                    </button>
+                  </div>
+                )}
+
+
+                {/* ==========================================================
+                    Error
+                ========================================================== */}
+
+                {error && (
+                  <p
+                    className="photo-wall-experience__error"
+                    role="status"
+                  >
+                    {error}
+                  </p>
+                )}
               </>
             )
           : (
@@ -297,6 +405,25 @@ function handleUploadSuccess() {
 
 
       {/* ====================================================================
+          Photo Wall Lightbox
+      ==================================================================== */}
+
+      <PhotoWallLightbox
+        photo={
+          selectedPhoto
+        }
+        onClose={
+          handleLightboxClose
+        }
+        closeLabel={
+          t(
+            "gallery.closePhoto"
+          )
+        }
+      />
+
+
+      {/* ====================================================================
           Photo Wall Upload
       ==================================================================== */}
 
@@ -307,15 +434,6 @@ function handleUploadSuccess() {
           }
           publicId={
             publicId
-          }
-          primaryName={
-            primaryName
-          }
-          secondaryName={
-            secondaryName
-          }
-          date={
-            date
           }
           onOpenChange={
             handleUploadOpenChange

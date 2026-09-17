@@ -1,28 +1,6 @@
 import {
-  ExternalLink,
-  Link2,
-} from "lucide-react";
-
-import {
   getTranslations,
 } from "next-intl/server";
-
-import {
-  ButtonLink,
-} from "@/components/ui/button-link";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from "@/components/ui/card";
-
-import EventExperiencePublicLinkCardMobileToggle
-  from "@/features/invitations/components/experience-management/EventExperiencePublicLinkCard/EventExperiencePublicLinkCardMobileToggle";
-
-import EventExperiencePublicLinkCopy
-  from "@/features/invitations/components/experience-management/EventExperiencePublicLinkCard/EventExperiencePublicLinkCopy/EventExperiencePublicLinkCopy";
 
 import type {
   EventExperience,
@@ -32,8 +10,8 @@ import {
   getEventExperiencePublicPath,
 } from "@/features/invitations/utils/getEventExperiencePublicPath";
 
-import styles
-  from "./EventExperiencePublicLinkCard.module.css";
+import ManagementPublicLinkCard
+  from "@/features/management/components/ManagementPublicLinkCard/ManagementPublicLinkCard";
 
 
 /* ==========================================================================
@@ -75,10 +53,11 @@ export default async function EventExperiencePublicLinkCard({
      Public Path
   ========================================================================== */
 
-  const publicPath =
-    getEventExperiencePublicPath(
-      experience.public_id
-    );
+const publicPath =
+  getEventExperiencePublicPath(
+    experienceType,
+    experience.public_id
+  );
 
 
   /* ==========================================================================
@@ -90,181 +69,62 @@ export default async function EventExperiencePublicLinkCard({
 
 
   /* ==========================================================================
-     Content
-  ========================================================================== */
-
-  const content = (
-    <CardContent
-      className={
-        styles.content
-      }
-    >
-      {/* ==================================================================
-          Header
-      ================================================================== */}
-
-      <div
-        className={
-          styles.header
-        }
-      >
-        <CardTitle>
-          {t(
-            "title"
-          )}
-        </CardTitle>
-
-        <CardDescription>
-          {t(
-            `description.${experienceType}`
-          )}
-        </CardDescription>
-      </div>
-
-
-      {/* ==================================================================
-          Link
-      ================================================================== */}
-
-      <div
-        className={
-          styles.linkBox
-        }
-        data-active={
-          isPublished
-            ? "true"
-            : "false"
-        }
-      >
-        <Link2
-          aria-hidden="true"
-        />
-
-        <div
-          className={
-            styles.linkContent
-          }
-        >
-          <strong>
-            {isPublished
-              ? t(
-                  "active.title"
-                )
-              : t(
-                  "inactive.title"
-                )}
-          </strong>
-
-          <span
-            className={
-              styles.publicLink
-            }
-          >
-            {publicPath}
-          </span>
-
-          <span
-            className={
-              styles.linkDescription
-            }
-          >
-            {isPublished
-              ? t(
-                  `active.description.${experienceType}`
-                )
-              : t(
-                  `inactive.description.${experienceType}`
-                )}
-          </span>
-        </div>
-      </div>
-
-
-      {/* ==================================================================
-          Actions
-      ================================================================== */}
-
-      <div
-        className={
-          styles.actions
-        }
-      >
-        <EventExperiencePublicLinkCopy
-          publicPath={
-            publicPath
-          }
-          disabled={
-            !isPublished
-          }
-        />
-
-        <ButtonLink
-          href={
-            publicPath
-          }
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="outline"
-          aria-disabled={
-            !isPublished
-          }
-          tabIndex={
-            isPublished
-              ? undefined
-              : -1
-          }
-          className={
-            !isPublished
-              ? styles.disabledAction
-              : undefined
-          }
-        >
-          <ExternalLink
-            aria-hidden="true"
-          />
-
-          {t(
-            `actions.open.${experienceType}`
-          )}
-        </ButtonLink>
-      </div>
-    </CardContent>
-  );
-
-
-  /* ==========================================================================
      Render
   ========================================================================== */
 
   return (
-    <Card
-      className={
-        styles.card
+    <ManagementPublicLinkCard
+      title={
+        t(
+          "title"
+        )
       }
-      radius="xl"
-      shadow="xs"
-    >
-      <EventExperiencePublicLinkCardMobileToggle
-        title={
-          t(
-            "title"
-          )
-        }
-        status={
-          isPublished
-            ? t(
-                "active.title"
-              )
-            : t(
-                "inactive.title"
-              )
-        }
-        isActive={
-          isPublished
-        }
-      >
-        {content}
-      </EventExperiencePublicLinkCardMobileToggle>
-    </Card>
+      description={
+        t(
+          `description.${experienceType}`
+        )
+      }
+      publicPath={
+        publicPath
+      }
+      isActive={
+        isPublished
+      }
+      activeTitle={
+        t(
+          "active.title"
+        )
+      }
+      inactiveTitle={
+        t(
+          "inactive.title"
+        )
+      }
+      activeDescription={
+        t(
+          `active.description.${experienceType}`
+        )
+      }
+      inactiveDescription={
+        t(
+          `inactive.description.${experienceType}`
+        )
+      }
+      copyLabel={
+        t(
+          "actions.copy"
+        )
+      }
+      copiedLabel={
+        t(
+          "actions.copied"
+        )
+      }
+      openLabel={
+        t(
+          `actions.open.${experienceType}`
+        )
+      }
+    />
   );
 }

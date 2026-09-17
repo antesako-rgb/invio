@@ -49,23 +49,6 @@ export default async function proxy(
      Supabase
   ========================================================================== */
 
-  console.log(
-    "[proxy env]",
-    {
-      hasSupabaseUrl:
-        Boolean(
-          process.env
-            .NEXT_PUBLIC_SUPABASE_URL
-        ),
-
-      hasSupabasePublishableKey:
-        Boolean(
-          process.env
-            .NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-        ),
-    }
-  );
-
   const supabase =
     createServerClient<Database>(
       process.env

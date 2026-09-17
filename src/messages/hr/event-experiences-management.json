@@ -1,21 +1,23 @@
 {
   "EventExperiences": {
     "management": {
+      "backToStudio": "Natrag na Studio",
+
       "status": {
         "published": "Objavljeno",
         "draft": "Skica"
       },
 
-  "actions": {
-  "preview": {
-    "invitation": "Pregledaj pozivnicu",
-    "save-the-date": "Pregledaj Save the Date",
-    "thank-you": "Pregledaj zahvalnicu",
-    "photo-wall": "Pregledaj Photo Wall"
-  },
-  "view": "Otvori",
-  "edit": "Uredi dizajn"
-},
+      "actions": {
+        "preview": {
+          "invitation": "Pregledaj pozivnicu",
+          "save-the-date": "Pregledaj Save the Date",
+          "thank-you": "Pregledaj zahvalnicu",
+          "photo-wall": "Pregledaj Photo Wall"
+        },
+        "view": "Otvori",
+        "edit": "Uredi dizajn"
+      },
 
       "name": {
         "label": "Naziv iskustva",
@@ -142,6 +144,69 @@
             "save-the-date": "Save the Date je uspješno objavljen.",
             "thank-you": "Zahvalnica je uspješno objavljena.",
             "photo-wall": "Photo Wall je uspješno objavljen."
+          }
+        }
+      },
+
+      "photoWall": {
+        "photos": {
+          "title": "Fotografije",
+          "description": "Pregledajte i upravljajte fotografijama podijeljenima na ovom Photo Wallu.",
+
+          "filters": {
+            "all": "Sve",
+            "favorites": "Favoriti"
+          },
+
+          "pagination": {
+            "loadMore": "Učitaj još",
+            "loading": "Učitavanje..."
+          },
+
+          "lightbox": {
+            "close": "Zatvori fotografiju"
+          },
+
+          "empty": "Još nema podijeljenih fotografija.",
+          "emptyFavorites": "Još nema fotografija označenih kao favoriti.",
+
+          "actions": {
+            "addFavorite": "Dodaj u favorite",
+            "removeFavorite": "Ukloni iz favorita",
+
+            "delete": "Obriši fotografiju",
+
+            "deleteConfirm": {
+              "title": "Obrisati fotografiju?",
+              "description": "Fotografija će biti trajno obrisana i neće je biti moguće vratiti.",
+              "confirm": "Obriši fotografiju"
+            },
+
+            "deleteSuccess": "Fotografija je uspješno obrisana."
+          }
+        },
+
+        "album": {
+          "actions": {
+            "create": "Kreiraj foto album",
+            "edit": "Uredi foto album"
+          },
+
+          "create": {
+            "title": "Kreiraj foto album",
+            "description": "Kreirajte foto album, a zatim odaberite fotografije koje želite dodati.",
+            "name": "Naziv albuma",
+            "namePlaceholder": "Npr. Naše vjenčanje",
+            "cancel": "Odustani",
+            "submit": "Kreiraj album",
+            "success": "Foto album je uspješno kreiran.",
+            "error": "Foto album nije moguće kreirati.",
+
+            "photos": {
+              "title": "Dodaj fotografije",
+              "description": "Odaberite fotografije iz Photo Walla koje želite dodati u album.",
+              "error": "Fotografije nije moguće dodati u album."
+            }
           }
         }
       },

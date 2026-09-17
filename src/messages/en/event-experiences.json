@@ -83,16 +83,18 @@
       "addPhotos": "Add photos"
     },
 
-    "gallery": {
-      "count": "{count, plural, one {# photo} other {# photos}}",
-      "empty": "No photos yet",
-      "emptyDescription": "Be the first to share a photo from this event."
-    },
+"gallery": {
+  "title": "Our shared moments",
+  "description": "Browse the photos and share your favorite moments.",
+  "count": "{count, plural, one {# photo} other {# photos}}",
+  "empty": "No photos yet",
+  "emptyDescription": "Be the first to share a photo from this event.",
+  "closePhoto": "Close photo",
+  "loadMore": "Load more",
+  "loadingMore": "Loading..."
+},
 
     "upload": {
-      "title": "Add photos",
-      "description": "Select up to {count} photos. Each photo can be up to {size} MB.",
-
       "close": "Close",
       "back": "Back",
       "addMore": "Add more photos",
@@ -113,17 +115,9 @@
         }
       },
 
-      "dropzone": {
-        "title": "Choose photos",
-        "description": "Drag photos here or click to choose."
-      },
-
-      "selected": "{count} of {max} selected",
-      "remove": "Remove photo",
-      "cancel": "Cancel",
-
       "submit": "Add photos ({count})",
       "submitting": "Adding...",
+      "preparing": "Preparing photos...",
 
       "errors": {
         "invalidFiles": "Some photos are unsupported or too large.",

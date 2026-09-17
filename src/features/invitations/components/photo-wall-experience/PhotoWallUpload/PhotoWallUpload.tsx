@@ -3,19 +3,18 @@
 import {
   ArrowLeft,
   ImagePlus,
+  Loader2,
 } from "lucide-react";
 
 import {
   useTranslations,
 } from "next-intl";
 
-import {
-  Dialog,
-  DialogContent,
-} from "@/components/ui/dialog/dialog";
-
 import FilePicker
   from "@/components/ui/file-picker/FilePicker";
+
+import PhotoWallDialog
+  from "@/features/invitations/components/photo-wall-experience/PhotoWallDialog/PhotoWallDialog";
 
 import {
   ACCEPTED_IMAGE_TYPES_VALUE,
@@ -28,6 +27,10 @@ import PhotoWallPhotoComposer
 
 import PhotoWallUploadSource
   from "@/features/invitations/components/photo-wall-experience/PhotoWallUpload/PhotoWallUploadSource/PhotoWallUploadSource";
+
+import type {
+  PhotoWallPhoto,
+} from "@/features/invitations/types/photoWallPhoto.types";
 
 import "./PhotoWallUpload.css";
 
@@ -43,15 +46,6 @@ interface PhotoWallUploadProps {
   publicId:
     string;
 
-  primaryName:
-    string | null;
-
-  secondaryName:
-    string | null;
-
-  date:
-    string | null;
-
   onOpenChange:
     (
       open:
@@ -59,7 +53,10 @@ interface PhotoWallUploadProps {
     ) => void;
 
   onSuccess:
-    () => void;
+    (
+      photos:
+        PhotoWallPhoto[]
+    ) => void;
 }
 
 
@@ -70,9 +67,6 @@ interface PhotoWallUploadProps {
 export default function PhotoWallUpload({
   open,
   publicId,
-  primaryName,
-  secondaryName,
-  date,
   onOpenChange,
   onSuccess,
 }: PhotoWallUploadProps) {
@@ -95,6 +89,7 @@ export default function PhotoWallUpload({
     photos,
     activePhoto,
     error,
+    isPreparing,
     isSubmitting,
     addFiles,
     changeDescription,
@@ -131,6 +126,15 @@ export default function PhotoWallUpload({
 
 
   /* ==========================================================================
+     State
+  ========================================================================== */
+
+  const isBusy =
+    isPreparing ||
+    isSubmitting;
+
+
+  /* ==========================================================================
      Open Change
   ========================================================================== */
 
@@ -139,7 +143,7 @@ export default function PhotoWallUpload({
       boolean
   ) {
     if (
-      isSubmitting
+      isBusy
     ) {
       return;
     }
@@ -161,15 +165,23 @@ export default function PhotoWallUpload({
   ========================================================================== */
 
   return (
-    <Dialog
+    <PhotoWallDialog
       open={
         open
       }
       onOpenChange={
         handleOpenChange
       }
+      closeLabel={
+        t(
+          "close"
+        )
+      }
+      disabled={
+        isBusy
+      }
     >
-      <DialogContent
+      <div
         className="photo-wall-upload"
         data-photo-wall-upload
       >
@@ -186,7 +198,7 @@ export default function PhotoWallUpload({
               type="button"
               className="photo-wall-upload__navigation-button"
               disabled={
-                isSubmitting
+                isBusy
               }
               onClick={
                 backToSource
@@ -212,50 +224,73 @@ export default function PhotoWallUpload({
         <div
           className="photo-wall-upload__content"
         >
-          {/* ==================================================================
+          {/* ================================================================
               Source
-          ================================================================== */}
+          ================================================================ */}
 
           {step ===
             "source" && (
-            <FilePicker
-              accept={
-                ACCEPTED_IMAGE_TYPES_VALUE
-              }
-              capture="environment"
-              onSelect={
-                addFiles
-              }
-            >
-              {(openCamera) => (
-                <FilePicker
-                  accept={
-                    ACCEPTED_IMAGE_TYPES_VALUE
-                  }
-                  multiple
-                  onSelect={
-                    addFiles
-                  }
+            <>
+              <FilePicker
+                accept={
+                  ACCEPTED_IMAGE_TYPES_VALUE
+                }
+                capture="environment"
+                onSelect={
+                  addFiles
+                }
+              >
+                {(openCamera) => (
+                  <FilePicker
+                    accept={
+                      ACCEPTED_IMAGE_TYPES_VALUE
+                    }
+                    multiple
+                    onSelect={
+                      addFiles
+                    }
+                  >
+                    {(openGallery) => (
+                      <PhotoWallUploadSource
+                        onCamera={
+                          openCamera
+                        }
+                        onGallery={
+                          openGallery
+                        }
+                        disabled={
+                          isBusy
+                        }
+                      />
+                    )}
+                  </FilePicker>
+                )}
+              </FilePicker>
+
+              {isPreparing && (
+                <div
+                  className="photo-wall-upload__preparing"
+                  role="status"
                 >
-                  {(openGallery) => (
-                    <PhotoWallUploadSource
-                      onCamera={
-                        openCamera
-                      }
-                      onGallery={
-                        openGallery
-                      }
-                    />
-                  )}
-                </FilePicker>
+                  <Loader2
+                    className="photo-wall-upload__preparing-icon"
+                    aria-hidden="true"
+                  />
+
+                  <span>
+                    {t(
+                      "preparing"
+                    )}
+                  </span>
+                </div>
               )}
-            </FilePicker>
+            </>
           )}
 
 
-          {/* ==================================================================
+          {/* ================================================================
               Composer
-          ================================================================== */}
+          ================================================================ */}
 
           {step ===
             "composer" &&
@@ -264,15 +299,6 @@ export default function PhotoWallUpload({
               <PhotoWallPhotoComposer
                 previewUrl={
                   activePhoto.previewUrl
-                }
-                primaryName={
-                  primaryName
-                }
-                secondaryName={
-                  secondaryName
-                }
-                date={
-                  date
                 }
                 description={
                   activePhoto.description
@@ -310,7 +336,7 @@ export default function PhotoWallUpload({
                             : "false"
                         }
                         disabled={
-                          isSubmitting
+                          isBusy
                         }
                         onClick={() =>
                           selectPhoto(
@@ -346,7 +372,7 @@ export default function PhotoWallUpload({
                   type="button"
                   className="photo-wall-upload__add-more"
                   disabled={
-                    isSubmitting
+                    isBusy
                   }
                   onClick={
                     backToSource
@@ -371,31 +397,31 @@ export default function PhotoWallUpload({
                 type="button"
                 className="photo-wall-upload__submit"
                 disabled={
-                  isSubmitting
+                  isBusy
                 }
                 onClick={
                   submit
                 }
               >
-             {isSubmitting
-  ? t(
-      "submitting"
-    )
-  : t(
-      "submit",
-      {
-        count:
-          photos.length,
-      }
-    )}
+                {isSubmitting
+                  ? t(
+                      "submitting"
+                    )
+                  : t(
+                      "submit",
+                      {
+                        count:
+                          photos.length,
+                      }
+                    )}
               </button>
             </>
           )}
 
 
-          {/* ==================================================================
+          {/* ================================================================
               Error
-          ================================================================== */}
+          ================================================================ */}
 
           {error && (
             <p
@@ -406,7 +432,7 @@ export default function PhotoWallUpload({
             </p>
           )}
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </PhotoWallDialog>
   );
 }

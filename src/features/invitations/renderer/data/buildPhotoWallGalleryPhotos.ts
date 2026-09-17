@@ -1,10 +1,10 @@
 import type {
-  PhotoWallGalleryPhoto,
-} from "@/features/invitations/components/photo-wall-experience/PhotoWallGallery/PhotoWallGallery";
-
-import type {
   PhotoWallRenderPhoto,
 } from "@/features/invitations/types/eventExperienceRenderer.types";
+
+import type {
+  PhotoWallGalleryPhoto,
+} from "@/features/invitations/types/photoWallPhoto.types";
 
 
 /* ==========================================================================

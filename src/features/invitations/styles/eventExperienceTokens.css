@@ -48,6 +48,9 @@
   --event-experience-card-background:
     #ffffff;
 
+  --event-experience-card-border:
+    #e9d5d5;
+
   --event-experience-card-background-image:
     none;
 
@@ -463,7 +466,7 @@
 ========================================================================== */
 
 --event-experience-photo-wall-surface-background:
-  var(--event-experience-card-background);
+  var(--event-experience-card-border);
 
 --event-experience-photo-wall-surface-foreground:
   var(--event-experience-foreground);
@@ -475,7 +478,7 @@
   rgba(79, 64, 54, 0.06);
 
 --event-experience-photo-wall-metadata-foreground:
-  var(--event-experience-action-primary-foreground);
+  var(--event-experience-action-primary);
 
 --event-experience-photo-wall-caption-placeholder:
   var(--event-experience-muted);

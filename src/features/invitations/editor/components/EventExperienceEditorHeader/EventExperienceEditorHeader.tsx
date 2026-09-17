@@ -28,6 +28,10 @@ import type {
   EventExperienceTemplateFeaturesConfig,
 } from "@/features/invitations/types/eventExperienceTemplateConfig.types";
 
+import type {
+  EventExperienceType,
+} from "@/features/invitations/types/eventExperience.types";
+
 import "./EventExperienceEditorHeader.css";
 
 
@@ -36,6 +40,9 @@ import "./EventExperienceEditorHeader.css";
 ========================================================================== */
 
 interface EventExperienceEditorHeaderProps {
+  type:
+    EventExperienceType;
+
   activeStep:
     EventExperienceEditorStep;
 
@@ -47,7 +54,8 @@ interface EventExperienceEditorHeaderProps {
 
   onStepChange:
     (
-      step: EventExperienceEditorStep
+      step:
+        EventExperienceEditorStep
     ) => void;
 
   onPreview?:
@@ -60,16 +68,30 @@ interface EventExperienceEditorHeaderProps {
 ========================================================================== */
 
 export default function EventExperienceEditorHeader({
+  type,
   activeStep,
   features,
   saveStatus = "saved",
   onStepChange,
   onPreview,
 }: EventExperienceEditorHeaderProps) {
- const t =
-  useTranslations(
-    "EventExperiences.editor"
-  );
+  const t =
+    useTranslations(
+      "EventExperiences.editor"
+    );
+
+
+  /* ==========================================================================
+     Capabilities
+  ========================================================================== */
+
+  const hasDetails =
+    type === "invitation" &&
+    features.details;
+
+  const hasRsvp =
+    type === "invitation" &&
+    features.rsvp;
 
 
   /* ==========================================================================
@@ -93,7 +115,7 @@ export default function EventExperienceEditorHeader({
         Palette,
     },
 
-    ...(features.details
+    ...(hasDetails
       ? [
           {
             id:
@@ -113,7 +135,7 @@ export default function EventExperienceEditorHeader({
         ]
       : []),
 
-    ...(features.rsvp
+    ...(hasRsvp
       ? [
           {
             id:
@@ -179,7 +201,7 @@ export default function EventExperienceEditorHeader({
 
     if (
       id === "details" &&
-      features.details
+      hasDetails
     ) {
       onStepChange(
         id
@@ -190,7 +212,7 @@ export default function EventExperienceEditorHeader({
 
     if (
       id === "rsvp" &&
-      features.rsvp
+      hasRsvp
     ) {
       onStepChange(
         id

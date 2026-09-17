@@ -1,0 +1,38 @@
+/* ==========================================================================
+   Event Experience QR Code
+========================================================================== */
+
+.event-experience-qr-code {
+
+  display:
+    flex;
+
+  width:
+    100%;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    8%;
+
+  background:
+    #ffffff;
+
+}
+
+.event-experience-qr-code svg {
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    auto;
+
+}

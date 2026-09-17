@@ -32,7 +32,7 @@ export async function createInvitationRecipientAction(
       );
 
     revalidatePath(
-      `/dashboard/pozivnice/${recipient.invitation_id}`
+      `/dashboard/studio/invitation/${recipient.invitation_id}`
     );
 
     return {

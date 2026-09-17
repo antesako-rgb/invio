@@ -1,0 +1,205 @@
+diff --git a/node_modules/@openpageflip/react/dist/index.js b/node_modules/@openpageflip/react/dist/index.js
+index e17d94d..85d12ef 100644
+--- a/node_modules/@openpageflip/react/dist/index.js
++++ b/node_modules/@openpageflip/react/dist/index.js
+@@ -40,14 +40,14 @@ function renderPage(child) {
+ 		children: child
+ 	});
+ }
+-function FlipBook({ ref, children, page, className, style, onInit, onUpdate, onFlip, onChangeState, onChangeOrientation, ...options }) {
++function FlipBook({ ref, children, page, className, style, onInit, onUpdate, onFlip, onFrame, onChangeState, onChangeOrientation, ...options }) {
+ 	const container = useRef(null);
+ 	const bookRef = useRef(null);
+ 	const pagesRef = useRef([]);
+ 	const latest = useRef({
+ 		onInit,
+ 		onUpdate,
+-		onFlip,
++		onFlip,		onFrame,
+ 		onChangeState,
+ 		onChangeOrientation,
+ 		easing: options.easing
+@@ -56,7 +56,7 @@ function FlipBook({ ref, children, page, className, style, onInit, onUpdate, onF
+ 		latest.current = {
+ 			onInit,
+ 			onUpdate,
+-			onFlip,
++			onFlip,			onFrame,
+ 			onChangeState,
+ 			onChangeOrientation,
+ 			easing: options.easing
+@@ -79,6 +79,7 @@ function FlipBook({ ref, children, page, className, style, onInit, onUpdate, onF
+ 		book.on("init", (e) => latest.current.onInit?.(e));
+ 		book.on("update", (e) => latest.current.onUpdate?.(e));
+ 		book.on("flip", (e) => latest.current.onFlip?.(e));
++            book.on("frame", (e) => latest.current.onFrame?.(e));
+ 		book.on("changeState", (e) => latest.current.onChangeState?.(e));
+ 		book.on("changeOrientation", (e) => latest.current.onChangeOrientation?.(e));
+ 		bookRef.current = book;
+diff --git a/node_modules/@openpageflip/react/dist/index.js.backup b/node_modules/@openpageflip/react/dist/index.js.backup
+new file mode 100644
+index 0000000..e17d94d
+--- /dev/null
++++ b/node_modules/@openpageflip/react/dist/index.js.backup
+@@ -0,0 +1,160 @@
++"use client";
++import { FlipCorner, createBook } from "@openpageflip/core";
++import { Children, isValidElement, useEffect, useImperativeHandle, useLayoutEffect, useRef } from "react";
++import { jsx } from "react/jsx-runtime";
++//#region src/Page.tsx
++/**
++* One page of a `FlipBook`. Any child of `FlipBook` becomes a page; `Page` is the way to say
++* which are hard and to put a class or style on the page element itself.
++*/
++function Page({ density, children, ...rest }) {
++	return /* @__PURE__ */ jsx("div", {
++		"data-density": density,
++		...rest,
++		children
++	});
++}
++//#endregion
++//#region src/FlipBook.tsx
++const PAGE_ATTR = "data-opf-page";
++/** Page elements rendered by this component, in order, skipping the core's transient clone. */
++function collectPages(container) {
++	return Array.from(container.querySelectorAll(`:scope > [${PAGE_ATTR}]:not([data-opf-clone])`));
++}
++function sameElements(a, b) {
++	return a.length === b.length && a.every((el, i) => el === b[i]);
++}
++function renderPage(child) {
++	if (child === null || child === void 0 || typeof child === "boolean") return null;
++	if (isValidElement(child) && child.type === Page) {
++		const { density, children, ...rest } = child.props;
++		return /* @__PURE__ */ jsx("div", {
++			...rest,
++			[PAGE_ATTR]: "",
++			"data-density": density,
++			children
++		});
++	}
++	return /* @__PURE__ */ jsx("div", {
++		[PAGE_ATTR]: "",
++		children: child
++	});
++}
++function FlipBook({ ref, children, page, className, style, onInit, onUpdate, onFlip, onChangeState, onChangeOrientation, ...options }) {
++	const container = useRef(null);
++	const bookRef = useRef(null);
++	const pagesRef = useRef([]);
++	const latest = useRef({
++		onInit,
++		onUpdate,
++		onFlip,
++		onChangeState,
++		onChangeOrientation,
++		easing: options.easing
++	});
++	useLayoutEffect(() => {
++		latest.current = {
++			onInit,
++			onUpdate,
++			onFlip,
++			onChangeState,
++			onChangeOrientation,
++			easing: options.easing
++		};
++	});
++	const { easing: _easing, startPage, ...settings } = options;
++	const settingsKey = JSON.stringify(settings);
++	const initialPage = page ?? startPage;
++	useLayoutEffect(() => {
++		const el = container.current;
++		if (el === null) return;
++		const pages = collectPages(el);
++		pagesRef.current = pages;
++		const book = createBook(el, {
++			...settings,
++			easing: (t) => latest.current.easing?.(t) ?? t,
++			pages,
++			startPage: Math.min(bookRef.current?.page ?? initialPage ?? 0, pages.length - 1)
++		});
++		book.on("init", (e) => latest.current.onInit?.(e));
++		book.on("update", (e) => latest.current.onUpdate?.(e));
++		book.on("flip", (e) => latest.current.onFlip?.(e));
++		book.on("changeState", (e) => latest.current.onChangeState?.(e));
++		book.on("changeOrientation", (e) => latest.current.onChangeOrientation?.(e));
++		bookRef.current = book;
++		return () => {
++			book.destroy();
++			bookRef.current = null;
++		};
++	}, [settingsKey]);
++	useLayoutEffect(() => {
++		const book = bookRef.current;
++		const el = container.current;
++		if (book === null || el === null) return;
++		const pages = collectPages(el);
++		if (sameElements(pages, pagesRef.current)) {
++			book.redraw();
++			return;
++		}
++		pagesRef.current = pages;
++		book.setPages(pages);
++	});
++	useEffect(() => {
++		const book = bookRef.current;
++		if (book === null || page === void 0 || page === book.page) return;
++		book.flipTo(page);
++	}, [page]);
++	useImperativeHandle(ref, () => handleFor(bookRef), []);
++	return /* @__PURE__ */ jsx("div", {
++		ref: container,
++		className,
++		style,
++		children: Children.map(children, renderPage)
++	});
++}
++/** A `Book` that always talks to the current instance and says so when there is none. */
++function handleFor(bookRef) {
++	const live = () => {
++		if (bookRef.current === null) throw new Error("@openpageflip/react: FlipBook is not mounted");
++		return bookRef.current;
++	};
++	return {
++		get page() {
++			return live().page;
++		},
++		get pageCount() {
++			return live().pageCount;
++		},
++		get orientation() {
++			return live().orientation;
++		},
++		get state() {
++			return live().state;
++		},
++		get rect() {
++			return live().rect;
++		},
++		on: (name, listener, options) => live().on(name, listener, options),
++		off: (name, listener) => live().off(name, listener),
++		flipNext: (corner = FlipCorner.top) => live().flipNext(corner),
++		flipPrev: (corner = FlipCorner.top) => live().flipPrev(corner),
++		flipTo: (page, corner = FlipCorner.top) => live().flipTo(page, corner),
++		turnTo: (page) => live().turnTo(page),
++		turnNext: () => live().turnNext(),
++		turnPrev: () => live().turnPrev(),
++		setPages: (pages) => live().setPages(pages),
++		update: () => live().update(),
++		redraw: () => live().redraw(),
++		destroy: () => live().destroy()
++	};
++}
++//#endregion
++//#region src/index.ts
++/**
++* React 19 bindings: `FlipBook`, `Page`, and the core types they use.
++* @module @openpageflip/react
++*/
++//#endregion
++export { FlipBook, Page };
++
++//# sourceMappingURL=index.js.map
+\ No newline at end of file
