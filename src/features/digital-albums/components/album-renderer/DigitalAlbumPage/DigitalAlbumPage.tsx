@@ -53,13 +53,7 @@ export default function DigitalAlbumPage({
         pageClassName
       }
     >
-      <div
-        className={
-          styles.content
-        }
-      >
-        {children}
-      </div>
+      {children}
     </Page>
   );
 }

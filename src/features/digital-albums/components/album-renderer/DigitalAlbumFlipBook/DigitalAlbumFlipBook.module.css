@@ -39,13 +39,13 @@
   justify-content: center;
 
   width: 100%;
+
   max-width:
     var(--album-spread-width);
 
   aspect-ratio:
     3 / 2;
 }
-
 
 .book {
   position: relative;
@@ -62,16 +62,13 @@
 
   transform:
     translateX(
-      calc(
-        var(--album-cover-offset) *
-        -1 *
-        (1 - var(--album-cover-progress) / 100)
-      )
+      var(--album-book-offset)
     );
 
   will-change:
     transform;
 }
+
 
 /* ==========================================================================
    Navigation
@@ -80,7 +77,6 @@
 .navigation {
   position: absolute;
   z-index: 20;
-
   top: 50%;
 
   display: flex;
@@ -138,12 +134,26 @@
 
 .navigationPrevious {
   left:
-    1rem;
+    max(
+      1rem,
+      calc(
+        50% -
+        var(--album-spread-width) / 2 -
+        4rem
+      )
+    );
 }
 
 .navigationNext {
   right:
-    1rem;
+    max(
+      1rem,
+      calc(
+        50% -
+        var(--album-spread-width) / 2 -
+        4rem
+      )
+    );
 }
 
 .navigation svg {
@@ -163,7 +173,16 @@
   .stage {
     padding:
       0
-      1rem;
+  }
+
+  .navigationPrevious {
+    left:
+      0.5rem;
+  }
+
+  .navigationNext {
+    right:
+      0.5rem;
   }
 }
 
@@ -172,7 +191,41 @@
     padding: 0;
   }
 
+  .bookStage {
+    width: 100%;
+
+    max-width:
+      var(--album-page-width);
+
+    aspect-ratio:
+      3 / 4;
+  }
+
   .navigation {
-    display: none;
+    display: flex;
+
+    width:
+      2.25rem;
+
+    height:
+      2.25rem;
+  }
+
+  .navigationPrevious {
+    left:
+      0.5rem;
+  }
+
+  .navigationNext {
+    right:
+      0.5rem;
+  }
+
+  .navigation svg {
+    width:
+      1rem;
+
+    height:
+      1rem;
   }
 }

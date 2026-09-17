@@ -32,54 +32,126 @@
 ========================================================================== */
 
 .header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   margin-bottom:
-    2.5rem;
+    2.75rem;
 
   text-align: center;
 }
 
-.header h1 {
-  margin:
-    0.4rem
-    0
-    0;
-
-  font-family:
-    Georgia,
-    serif;
-
-  font-size:
-    2rem;
-
-  font-weight:
-    400;
-}
-
-.header p {
-  margin:
-    0.5rem
-    0
-    0;
-
-  color:
-    #81796f;
-
-  font-size:
-    0.875rem;
-}
-
 .eyebrow {
+  margin-bottom:
+    0.85rem;
+
   color:
-    #998e80;
+    #a29382;
 
   font-size:
-    0.65rem;
+    0.625rem;
 
   font-weight:
     600;
 
+  line-height:
+    1;
+
   letter-spacing:
-    0.22em;
+    0.32em;
+
+  text-transform:
+    uppercase;
+}
+
+.header h1 {
+  margin: 0;
+
+  color:
+    #29231d;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(
+      2rem,
+      3vw,
+      2.6rem
+    );
+
+  font-weight:
+    400;
+
+  line-height:
+    1.05;
+
+  letter-spacing:
+    -0.025em;
+}
+
+.header p {
+  position: relative;
+
+  margin:
+    1rem
+    0
+    0;
+
+  padding:
+    0
+    1.25rem;
+
+  color:
+    #8a7f73;
+
+  font-size:
+    0.8rem;
+
+  font-weight:
+    400;
+
+  line-height:
+    1.4;
+
+  letter-spacing:
+    0.02em;
+}
+
+.header p::before,
+.header p::after {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+
+  width:
+    1.5rem;
+
+  height:
+    1px;
+
+  background:
+    rgba(
+      138,
+      127,
+      115,
+      0.28
+    );
+
+  transform:
+    translateY(-50%);
+}
+
+.header p::before {
+  right: 100%;
+}
+
+.header p::after {
+  left: 100%;
 }
 
 
@@ -128,7 +200,6 @@
 
 .coverImage {
   position: absolute;
-
   inset: 0;
 
   width: 100%;
@@ -139,7 +210,6 @@
 
 .coverOverlay {
   position: absolute;
-
   inset: 0;
 
   background:
@@ -152,7 +222,6 @@
 
 .coverContent {
   position: absolute;
-
   inset: 0;
 
   display: flex;
@@ -600,6 +669,55 @@
 
 
 /* ==========================================================================
+   Outside Back Cover
+========================================================================== */
+
+.outsideBackCover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    4em;
+
+  background:
+    #332d26;
+
+  color:
+    #f5efe7;
+
+  text-align: center;
+}
+
+.outsideBackCover > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.outsideBackCover .smallLabel {
+  color:
+    rgba(255, 255, 255, 0.7);
+}
+
+.outsideBackCover .divider {
+  margin:
+    2em
+    0;
+
+  background:
+    rgba(255, 255, 255, 0.35);
+}
+
+.outsideBackCover .date {
+  margin-top: 0;
+
+  color:
+    rgba(255, 255, 255, 0.55);
+}
+
+
+/* ==========================================================================
    Page Number
 ========================================================================== */
 
@@ -639,6 +757,9 @@
 
   font-size:
     0.75rem;
+
+  letter-spacing:
+    0.01em;
 }
 
 
@@ -655,12 +776,41 @@
 
   .header {
     margin-bottom:
-      1.5rem;
+      1.75rem;
+  }
+
+  .eyebrow {
+    margin-bottom:
+      0.65rem;
+
+    font-size:
+      0.55rem;
+
+    letter-spacing:
+      0.28em;
   }
 
   .header h1 {
     font-size:
-      1.6rem;
+      1.9rem;
+  }
+
+  .header p {
+    margin-top:
+      0.75rem;
+
+    padding:
+      0
+      0.9rem;
+
+    font-size:
+      0.75rem;
+  }
+
+  .header p::before,
+  .header p::after {
+    width:
+      0.75rem;
   }
 
   .hint {
