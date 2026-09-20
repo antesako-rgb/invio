@@ -28,24 +28,12 @@ export async function getPublicDigitalAlbum(
       {
         p_public_id:
           input.publicId,
-
-        ...(input.limit !== undefined
-          ? {
-              p_limit:
-                input.limit,
-            }
-          : {}),
-
-        ...(input.cursorPosition !== undefined
-          ? {
-              p_cursor_position:
-                input.cursorPosition,
-            }
-          : {}),
       }
     );
 
-  if (error) {
+  if (
+    error
+  ) {
     console.error(
       "getPublicDigitalAlbum error:",
       error

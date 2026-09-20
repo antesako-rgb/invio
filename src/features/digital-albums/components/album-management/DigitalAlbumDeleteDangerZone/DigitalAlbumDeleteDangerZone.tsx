@@ -24,7 +24,7 @@ interface DigitalAlbumDeleteDangerZoneProps {
   albumId:
     string;
 
-  photoWallId:
+  eventId:
     string;
 }
 
@@ -35,7 +35,7 @@ interface DigitalAlbumDeleteDangerZoneProps {
 
 export default function DigitalAlbumDeleteDangerZone({
   albumId,
-  photoWallId,
+  eventId,
 }: DigitalAlbumDeleteDangerZoneProps) {
   /* ==========================================================================
      Translations
@@ -65,13 +65,15 @@ export default function DigitalAlbumDeleteDangerZone({
         albumId,
       });
 
-    if (!result.success) {
+    if (
+      !result.success
+    ) {
       return;
     }
 
-    router.replace(
-      `/dashboard/studio/photo-wall/${photoWallId}`
-    );
+ router.replace(
+  `/dashboard/dogadaji/${eventId}/albumi`
+);
 
     router.refresh();
   }

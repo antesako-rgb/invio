@@ -43,6 +43,21 @@ interface DigitalAlbumFlipBookProps {
 
   height?:
     number;
+
+  activePageIndex?:
+    number;
+
+  onPageChange?:
+    (
+      pageIndex:
+        number
+    ) => void;
+
+  onVisiblePagesChange?:
+    (
+      pageIndexes:
+        number[]
+    ) => void;
 }
 
 
@@ -54,6 +69,9 @@ export default function DigitalAlbumFlipBook({
   children,
   width = 480,
   height = 640,
+  activePageIndex,
+  onPageChange,
+  onVisiblePagesChange,
 }: DigitalAlbumFlipBookProps) {
   const {
     bookRef,
@@ -71,7 +89,24 @@ export default function DigitalAlbumFlipBook({
       children,
       width,
       height,
+      onVisiblePagesChange,
     });
+
+
+  /* ==========================================================================
+     Page Change
+  ========================================================================== */
+
+  function handleFlip({
+    page,
+  }: {
+    page:
+      number;
+  }) {
+    onPageChange?.(
+      page
+    );
+  }
 
 
   /* ==========================================================================
@@ -119,6 +154,9 @@ export default function DigitalAlbumFlipBook({
               ref={
                 bookRef
               }
+              page={
+                activePageIndex
+              }
               width={
                 width
               }
@@ -148,6 +186,9 @@ export default function DigitalAlbumFlipBook({
               }
               onUpdate={
                 handleUpdate
+              }
+              onFlip={
+                handleFlip
               }
               onFrame={
                 handleFrame

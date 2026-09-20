@@ -15,12 +15,8 @@ import {
 } from "@base-ui/react/dialog";
 
 import {
-  X,
-} from "lucide-react";
-
-import {
   Dialog,
-  DialogClose,
+  DialogCloseButton,
   DialogOverlay,
   DialogPortal,
 } from "@/components/ui/dialog/dialog";
@@ -163,19 +159,14 @@ export default function PhotoWallDialog({
             className="photo-wall-dialog"
             data-photo-wall-dialog
           >
-            <DialogClose
-              className="photo-wall-dialog__close"
+            <DialogCloseButton
               disabled={
                 disabled
               }
               aria-label={
                 closeLabel
               }
-            >
-              <X
-                aria-hidden="true"
-              />
-            </DialogClose>
+            />
 
             <div
               className="photo-wall-dialog__body"

@@ -22,3 +22,15 @@ export function buildPhotoWallPhotoFileName(
 ) {
   return `photo-wall/${invitationId}/${photoId}.${extension}`;
 }
+
+/* ==========================================================================
+   Digital Album Photo File Name
+========================================================================== */
+
+export function buildDigitalAlbumPhotoFileName(
+  albumId: string,
+  photoId: string,
+  extension = "webp"
+) {
+  return `digital-albums/${albumId}/${photoId}.${extension}`;
+}

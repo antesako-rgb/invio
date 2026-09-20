@@ -2,7 +2,6 @@
 
 import {
   ArrowLeft,
-  ImagePlus,
   Loader2,
 } from "lucide-react";
 
@@ -13,12 +12,13 @@ import {
 import FilePicker
   from "@/components/ui/file-picker/FilePicker";
 
+import IconButton
+  from "@/components/ui/icon-button/IconButton";
+
 import PhotoWallDialog
   from "@/features/invitations/components/photo-wall-experience/PhotoWallDialog/PhotoWallDialog";
 
 import {
-  ACCEPTED_IMAGE_TYPES_VALUE,
-  MAX_FILES,
   usePhotoWallUpload,
 } from "@/features/invitations/components/photo-wall-experience/PhotoWallUpload/hooks/usePhotoWallUpload";
 
@@ -31,6 +31,14 @@ import PhotoWallUploadSource
 import type {
   PhotoWallPhoto,
 } from "@/features/invitations/types/photoWallPhoto.types";
+
+import PhotoUploadControls
+  from "@/features/photo-upload/components/PhotoUploadControls/PhotoUploadControls";
+
+import {
+  ACCEPTED_IMAGE_TYPES_VALUE,
+  MAX_FILES,
+} from "@/features/photo-upload/constants/photoUpload.constants";
 
 import "./PhotoWallUpload.css";
 
@@ -194,9 +202,7 @@ export default function PhotoWallUpload({
           <div
             className="photo-wall-upload__navigation"
           >
-            <button
-              type="button"
-              className="photo-wall-upload__navigation-button"
+            <IconButton
               disabled={
                 isBusy
               }
@@ -212,7 +218,7 @@ export default function PhotoWallUpload({
               <ArrowLeft
                 aria-hidden="true"
               />
-            </button>
+            </IconButton>
           </div>
         )}
 
@@ -311,110 +317,69 @@ export default function PhotoWallUpload({
                 }
               />
 
-
-              {/* ============================================================
-                  Selected Photos
-              ============================================================ */}
-
-              {photos.length >
-                1 && (
-                <div
-                  className="photo-wall-upload__photos"
-                >
-                  {photos.map(
-                    (photo) => (
-                      <button
-                        key={
-                          photo.id
-                        }
-                        type="button"
-                        className="photo-wall-upload__photo"
-                        data-active={
-                          photo.id ===
-                          activePhoto.id
-                            ? "true"
-                            : "false"
-                        }
-                        disabled={
-                          isBusy
-                        }
-                        onClick={() =>
-                          selectPhoto(
-                            photo.id
-                          )
-                        }
-                        aria-label={
-                          t(
-                            "selectPhoto"
-                          )
-                        }
-                      >
-                        <img
-                          src={
-                            photo.previewUrl
-                          }
-                          alt=""
-                        />
-                      </button>
-                    )
-                  )}
-                </div>
-              )}
-
-
-              {/* ============================================================
-                  Add More
-              ============================================================ */}
-
-              {photos.length <
-                MAX_FILES && (
-                <button
-                  type="button"
-                  className="photo-wall-upload__add-more"
-                  disabled={
-                    isBusy
-                  }
-                  onClick={
-                    backToSource
-                  }
-                >
-                  <ImagePlus
-                    aria-hidden="true"
-                  />
-
-                  {t(
-                    "addMore"
-                  )}
-                </button>
-              )}
-
-
-              {/* ============================================================
-                  Submit
-              ============================================================ */}
-
-              <button
-                type="button"
-                className="photo-wall-upload__submit"
-                disabled={
-                  isBusy
+              <FilePicker
+                accept={
+                  ACCEPTED_IMAGE_TYPES_VALUE
                 }
-                onClick={
-                  submit
+                multiple
+                onSelect={
+                  addFiles
                 }
               >
-                {isSubmitting
-                  ? t(
-                      "submitting"
-                    )
-                  : t(
-                      "submit",
-                      {
-                        count:
-                          photos.length,
-                      }
-                    )}
-              </button>
+                {(openGallery) => (
+                  <PhotoUploadControls
+                    photos={
+                      photos
+                    }
+                    activePhotoId={
+                      activePhoto.id
+                    }
+                    disabled={
+                      isBusy
+                    }
+                    isSubmitting={
+                      isSubmitting
+                    }
+                    canAddMore={
+                      photos.length <
+                      MAX_FILES
+                    }
+                    selectPhotoLabel={
+                      t(
+                        "selectPhoto"
+                      )
+                    }
+                    addMoreLabel={
+                      t(
+                        "addMore"
+                      )
+                    }
+                    submitLabel={
+                      t(
+                        "submit",
+                        {
+                          count:
+                            photos.length,
+                        }
+                      )
+                    }
+                    submittingLabel={
+                      t(
+                        "submitting"
+                      )
+                    }
+                    onSelectPhoto={
+                      selectPhoto
+                    }
+                    onAddMore={
+                      openGallery
+                    }
+                    onSubmit={
+                      submit
+                    }
+                  />
+                )}
+              </FilePicker>
             </>
           )}
 

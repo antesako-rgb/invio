@@ -4,6 +4,9 @@ import {
   useTranslations,
 } from "next-intl";
 
+import EditorSidebar
+  from "@/features/editor/components/EditorSidebar/EditorSidebar";
+
 import InvitationRSVPPanel
   from "@/features/invitations/editor/components/EventExperienceEditorSidebar/panels/InvitationRSVPPanel/InvitationRSVPPanel";
 
@@ -18,8 +21,6 @@ import type {
 import type {
   InvitationRSVPViewState,
 } from "@/features/invitations/types/invitationRsvp.types";
-
-import "./EventExperienceEditorSidebar.css";
 
 
 /* ==========================================================================
@@ -151,37 +152,12 @@ export default function EventExperienceEditorSidebar({
   ========================================================================== */
 
   return (
-    <aside
-      className="event-experience-editor-sidebar"
-      data-event-experience-editor-sidebar
-      data-step={
-        activeStep
+    <EditorSidebar
+      title={
+        getTitle()
       }
     >
-      {/* ====================================================================
-          Header
-      ==================================================================== */}
-
-      <div
-        className="event-experience-editor-sidebar__header"
-      >
-        <h2
-          className="event-experience-editor-sidebar__title"
-        >
-          {getTitle()}
-        </h2>
-      </div>
-
-
-      {/* ====================================================================
-          Content
-      ==================================================================== */}
-
-      <div
-        className="event-experience-editor-sidebar__content"
-      >
-        {renderContent()}
-      </div>
-    </aside>
+      {renderContent()}
+    </EditorSidebar>
   );
 }

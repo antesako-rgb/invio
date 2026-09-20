@@ -26,13 +26,13 @@ export async function removeDigitalAlbumPhotoAction(
     RemoveDigitalAlbumPhotoInput
 ): Promise<ActionResult<void>> {
   try {
-    await removeDigitalAlbumPhoto(
-      input
-    );
+await removeDigitalAlbumPhoto(
+  input
+);
 
-    revalidatePath(
-      `/dashboard/digitalni-albumi/${input.albumId}`
-    );
+revalidatePath(
+  `/editor/album/${input.albumId}/uredi`
+);
 
     return {
       success:

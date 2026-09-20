@@ -91,7 +91,7 @@ export default function DeleteButton({
 
   return (
     <>
- <Button
+<Button
   type="button"
   variant={
     display === "icon"
@@ -103,11 +103,21 @@ export default function DeleteButton({
       ? "icon"
       : "sm"
   }
-  className={
-    display === "icon"
-      ? "size-8 border-border bg-background text-destructive hover:border-destructive hover:bg-destructive hover:text-white"
-      : undefined
-  }
+className={
+  display === "icon"
+    ? [
+        "size-8",
+        "border-destructive/20",
+        "bg-white",
+        "text-destructive",
+        "shadow-[0_0.25rem_1rem_rgb(0_0_0/0.12)]",
+        "hover:border-destructive/30",
+       "hover:bg-destructive/10",
+        "hover:text-destructive",
+      ].join(" ")
+    : undefined
+}
+
   disabled={
     disabled ||
     loading

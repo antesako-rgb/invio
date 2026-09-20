@@ -2,15 +2,8 @@ import {
   getTranslations,
 } from "next-intl/server";
 
-import PhotoWallAlbumAction
-  from "@/features/invitations/components/photo-wall-management/PhotoWallAlbumAction/PhotoWallAlbumAction";
-
 import PhotoWallPhotosManagementGallery
   from "@/features/invitations/components/photo-wall-management/PhotoWallPhotosManagementGallery/PhotoWallPhotosManagementGallery";
-
-import {
-  getPhotoWallDigitalAlbums,
-} from "@/features/digital-albums/repositories/album/getPhotoWallDigitalAlbums";
 
 import {
   buildPhotoWallGalleryPhotos,
@@ -56,20 +49,6 @@ export default async function PhotoWallPhotosManagement({
 
 
   /* ==========================================================================
-     Digital Album
-  ========================================================================== */
-
-  const albums =
-    await getPhotoWallDigitalAlbums(
-      invitationId
-    );
-
-  const album =
-    albums[0] ??
-    null;
-
-
-  /* ==========================================================================
      Photos
   ========================================================================== */
 
@@ -102,7 +81,7 @@ export default async function PhotoWallPhotosManagement({
         isFavorite:
           photos[
             index
-          ].is_favorite,
+          ].isFavorite,
       })
     );
 
@@ -147,21 +126,6 @@ export default async function PhotoWallPhotosManagement({
             )}
           </p>
         </div>
-
-
-        {/* ==================================================================
-            Photo Album
-        ================================================================== */}
-
-        <PhotoWallAlbumAction
-          photoWallId={
-            invitationId
-          }
-          albumId={
-            album?.id ??
-            null
-          }
-        />
       </div>
 
 

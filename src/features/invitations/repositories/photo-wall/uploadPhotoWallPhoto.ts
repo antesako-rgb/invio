@@ -10,6 +10,7 @@ import {
   uploadToBunny,
   deleteFromBunny,
 } from "@/lib/upload/bunny";
+
 import {
   buildPhotoWallPhotoFileName,
 } from "@/lib/upload/buildFileName";
@@ -30,6 +31,7 @@ import type {
   PhotoWallPhoto,
   UploadPhotoWallPhotoInput,
 } from "@/features/invitations/types/photoWallPhoto.types";
+
 
 /* ==========================================================================
    Constants
@@ -61,7 +63,9 @@ export async function uploadPhotoWallPhoto({
      Public ID Validation
   ========================================================================== */
 
-  if (!normalizedPublicId) {
+  if (
+    !normalizedPublicId
+  ) {
     throw new Error(
       "Identifikator Photo Walla je obavezan."
     );
@@ -133,7 +137,9 @@ export async function uploadPhotoWallPhoto({
     photoWallError ||
     !photoWall
   ) {
-    if (photoWallError) {
+    if (
+      photoWallError
+    ) {
       console.error(
         "uploadPhotoWallPhoto access error:",
         photoWallError
@@ -174,10 +180,10 @@ export async function uploadPhotoWallPhoto({
 
 
   /* ==========================================================================
-     Photo ID
+     File ID
   ========================================================================== */
 
-  const photoId =
+  const fileId =
     randomUUID();
 
 
@@ -188,7 +194,7 @@ export async function uploadPhotoWallPhoto({
   const path =
     buildPhotoWallPhotoFileName(
       photoWall.id,
-      photoId
+      fileId
     );
 
 
@@ -222,9 +228,9 @@ export async function uploadPhotoWallPhoto({
         normalizedDescription,
     });
   } catch (error) {
-    /* ==========================================================================
+    /* ========================================================================
        Bunny Cleanup
-    ========================================================================== */
+    ======================================================================== */
 
     try {
       await deleteFromBunny(

@@ -1,0 +1,127 @@
+{
+  "navigation": {
+    "back": "Back",
+    "label": "Album editor navigation",
+    "photos": "Photos",
+    "pages": "Pages",
+    "design": "Design",
+    "preview": "Preview"
+  },
+
+  "status": {
+    "saving": "Saving...",
+    "saved": "Saved",
+    "error": "Failed to save"
+  },
+
+  "preview": {
+    "close": "Close preview"
+  },
+
+  "mobile": {
+    "edit": "Edit album"
+  },
+
+"photos": {
+  "add": "Add photos",
+  "count": "{count, plural, one {# photo} other {# photos}}",
+  "selectForPage": "Choose a photo for page {number}",
+  "changeForPage": "Choose another photo for page {number}",
+  "remove": "Remove photo",
+  "removeSuccess": "The photo was removed from the album.",
+
+  "empty": {
+    "title": "No photos yet",
+    "description": "Add photos to start creating your digital album."
+  },
+
+    "removeConfirm": {
+      "title": "Remove photo?",
+      "description": "The photo will be removed from this album.",
+      "confirm": "Remove"
+    },
+
+    "addDialog": {
+      "title": "Add photos",
+      "description": "Choose how you want to add photos to the album.",
+
+      "sources": {
+        "upload": "Upload photos",
+        "uploadDescription": "Upload new photos directly to this album.",
+        "photoWall": "Choose from Photo Wall",
+        "photoWallDescription": "Choose photos that have already been shared on a Photo Wall."
+      },
+
+      "photoWallSelect": {
+        "title": "Choose a Photo Wall",
+        "description": "Choose the Photo Wall you want to add photos from."
+      },
+
+      "photoWall": {
+        "title": "Photos from Photo Wall",
+        "description": "Select the photos you want to add to the album."
+      },
+
+      "actions": {
+        "back": "Back",
+        "close": "Close"
+      }
+    },
+
+    "upload": {
+      "back": "Back",
+      "select": "Choose photos",
+      "preparing": "Preparing photos...",
+      "remove": "Remove photo",
+      "selectPhoto": "Select photo",
+      "addMore": "Add more photos",
+      "submit": "Upload ({count})",
+      "submitting": "Uploading...",
+      "descriptionPlaceholder": "Add a photo description...",
+      "descriptionLabel": "Photo description",
+
+      "errors": {
+        "invalidFiles": "Some files could not be added. Use JPEG, PNG, or WebP images up to 10 MB.",
+        "tooManyFiles": "You can upload up to {count} photos at a time.",
+        "upload": "Unable to upload the photos. Please try again."
+      }
+    },
+
+    "picker": {
+      "title": "Add photos",
+      "description": "Select photos from the Photo Wall that you want to add to the album.",
+      "error": "Unable to add photos to the album.",
+      "loading": "Loading photos...",
+
+      "filters": {
+        "all": "All",
+        "favorites": "Favorites"
+      },
+
+      "empty": {
+        "all": {
+          "title": "No photos",
+          "description": "There are no photos in the Photo Wall available to add yet."
+        },
+
+        "favorites": {
+          "title": "No favorites",
+          "description": "You haven't marked any photos as favorites yet."
+        }
+      },
+
+      "actions": {
+        "loadMore": "Load more",
+        "cancel": "Cancel",
+        "add": "Add ({count})",
+        "adding": "Adding..."
+      }
+    }
+  },
+
+  "pages": {
+    "add": "Add page",
+    "count": "{count, plural, one {# page} other {# pages}}",
+    "page": "Page {number}"
+  }
+}

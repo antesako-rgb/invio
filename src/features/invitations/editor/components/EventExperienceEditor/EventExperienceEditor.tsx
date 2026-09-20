@@ -1,29 +1,24 @@
 "use client";
 
+import {
+  useState,
+} from "react";
+
 import type {
   ReactNode,
 } from "react";
 
-import {
-  SlidersHorizontal,
-} from "lucide-react";
+import EditorMobilePanel
+  from "@/features/editor/components/EditorMobilePanel/EditorMobilePanel";
 
-import {
-  useTranslations,
-} from "next-intl";
-
-import {
-  Button,
-} from "@/components/ui/button";
-
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet/Sheet";
+import EditorShell
+  from "@/features/editor/components/EditorShell/EditorShell";
 
 import EventExperienceEditorHeader
   from "@/features/invitations/editor/components/EventExperienceEditorHeader/EventExperienceEditorHeader";
+
+import EventExperienceEditorMobileNavigation
+  from "@/features/invitations/editor/components/EventExperienceEditorMobileNavigation/EventExperienceEditorMobileNavigation";
 
 import EventExperienceEditorWorkspace
   from "@/features/invitations/editor/components/EventExperienceEditorWorkspace/EventExperienceEditorWorkspace";
@@ -42,8 +37,6 @@ import type {
 } from "@/features/invitations/types/eventExperience.types";
 
 import "@/features/invitations/styles/eventExperienceEditor.css";
-
-import "./EventExperienceEditor.css";
 
 
 /* ==========================================================================
@@ -74,7 +67,8 @@ interface EventExperienceEditorProps {
 
   onStepChange:
     (
-      step: EventExperienceEditorStep
+      step:
+        EventExperienceEditorStep
     ) => void;
 
   onPreview:
@@ -97,10 +91,15 @@ export default function EventExperienceEditor({
   onStepChange,
   onPreview,
 }: EventExperienceEditorProps) {
-  const t =
-    useTranslations(
-      "EventExperiences.editor"
-    );
+  /* ==========================================================================
+     State
+  ========================================================================== */
+
+  const [
+    isMobilePanelOpen,
+    setIsMobilePanelOpen,
+  ] =
+    useState(false);
 
 
   /* ==========================================================================
@@ -108,89 +107,91 @@ export default function EventExperienceEditor({
   ========================================================================== */
 
   return (
-    <div
-      className="event-experience-editor"
-      data-event-experience-editor
-    >
-      <EventExperienceEditorHeader
-        type={
-          type
-        }
-        activeStep={
-          activeStep
-        }
-        features={
-          features
-        }
-        saveStatus={
-          saveStatus
-        }
-        onStepChange={
-          onStepChange
-        }
-        onPreview={
-          onPreview
-        }
-      />
-
-      <main
-        className="event-experience-editor__main"
-      >
-        <EventExperienceEditorWorkspace
-          sidebar={
-            sidebar
+    <EditorShell
+      header={
+        <EventExperienceEditorHeader
+          type={
+            type
           }
-          toolbar={
-            toolbar
+          activeStep={
+            activeStep
           }
-          showMobileToolbar={
-            activeStep === "design"
+          features={
+            features
           }
-        >
-          {children}
-        </EventExperienceEditorWorkspace>
-      </main>
-
-
-      {/* ====================================================================
-          Mobile Editor Controls
-      ==================================================================== */}
-
-      {sidebar && (
-        <div
-          className="event-experience-editor__mobile-controls"
-        >
-          <Sheet>
-            <SheetTrigger
-              render={
-                <Button
-                  type="button"
-                  size="lg"
+          saveStatus={
+            saveStatus
+          }
+          onStepChange={
+            onStepChange
+          }
+          onPreview={
+            onPreview
+          }
+        />
+      }
+      mobileControls={
+        sidebar
+          ? (
+              <>
+                <EventExperienceEditorMobileNavigation
+                  type={
+                    type
+                  }
+                  activeStep={
+                    activeStep
+                  }
+                  features={
+                    features
+                  }
+                  onStepChange={
+                    onStepChange
+                  }
+                  onPreview={
+                    onPreview
+                  }
+                  onOpenPanel={
+                    () =>
+                      setIsMobilePanelOpen(
+                        true
+                      )
+                  }
+                  onClosePanel={
+                    () =>
+                      setIsMobilePanelOpen(
+                        false
+                      )
+                  }
                 />
-              }
-            >
-              <SlidersHorizontal
-                aria-hidden="true"
-              />
 
-              {t(
-                "mobile.edit"
-              )}
-            </SheetTrigger>
-
-            <SheetContent
-              side="bottom"
-              className="event-experience-editor__mobile-sheet"
-            >
-              <div
-                className="event-experience-editor__mobile-sheet-content"
-              >
-                {sidebar}
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      )}
-    </div>
+                <EditorMobilePanel
+                  open={
+                    isMobilePanelOpen
+                  }
+                  onOpenChange={
+                    setIsMobilePanelOpen
+                  }
+                >
+                  {sidebar}
+                </EditorMobilePanel>
+              </>
+            )
+          : undefined
+      }
+    >
+      <EventExperienceEditorWorkspace
+        sidebar={
+          sidebar
+        }
+        toolbar={
+          toolbar
+        }
+        showMobileToolbar={
+          activeStep === "design"
+        }
+      >
+        {children}
+      </EventExperienceEditorWorkspace>
+    </EditorShell>
   );
 }

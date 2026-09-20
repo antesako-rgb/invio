@@ -1,0 +1,151 @@
+/* ==========================================================================
+   Editor Save Status
+========================================================================== */
+
+.root {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    0.4rem;
+
+  min-width:
+    0;
+
+  min-height:
+    2rem;
+
+  padding:
+    0.375rem
+    0.625rem;
+
+  border:
+    1px solid transparent;
+
+  border-radius:
+    var(--radius);
+
+  background:
+    var(--muted);
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  font-weight:
+    500;
+
+  line-height:
+    1;
+
+  white-space:
+    nowrap;
+
+  transition:
+    background-color
+    150ms
+    ease,
+    border-color
+    150ms
+    ease,
+    color
+    150ms
+    ease;
+}
+
+
+/* ==========================================================================
+   Saved
+========================================================================== */
+
+.root[data-status="saved"] {
+  background:
+    color-mix(
+      in srgb,
+      var(--muted) 70%,
+      transparent
+    );
+}
+
+
+/* ==========================================================================
+   Saving
+========================================================================== */
+
+.root[data-status="saving"] {
+  background:
+    color-mix(
+      in srgb,
+      #22c55e 8%,
+      transparent
+    );
+
+  color:
+    #15803d;
+}
+
+/* ==========================================================================
+   Error
+========================================================================== */
+
+.root[data-status="error"] {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--destructive) 20%,
+      transparent
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--destructive) 8%,
+      transparent
+    );
+
+  color:
+    var(--destructive);
+}
+
+
+/* ==========================================================================
+   Icons
+========================================================================== */
+
+.root svg {
+  flex:
+    0 0 auto;
+}
+
+
+/* ==========================================================================
+   Spinner
+========================================================================== */
+
+.spinner {
+  animation:
+    spin
+    0.8s
+    linear
+    infinite;
+}
+
+
+/* ==========================================================================
+   Animations
+========================================================================== */
+
+@keyframes spin {
+  to {
+    transform:
+      rotate(360deg);
+  }
+}

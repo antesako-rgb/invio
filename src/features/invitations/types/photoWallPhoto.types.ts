@@ -5,11 +5,39 @@ import type {
 
 
 /* ==========================================================================
+   Photo Wall Photo Association
+========================================================================== */
+
+export type PhotoWallPhotoAssociation =
+  Tables<"photo_wall_photos">;
+
+
+/* ==========================================================================
    Photo Wall Photo
 ========================================================================== */
 
-export type PhotoWallPhoto =
-  Tables<"photo_wall_photos">;
+export interface PhotoWallPhoto {
+  id:
+    string;
+
+  photoWallId:
+    string;
+
+  imagePath:
+    string;
+
+  fileSize:
+    number;
+
+  description:
+    string | null;
+
+  isFavorite:
+    boolean;
+
+  createdAt:
+    string;
+}
 
 
 /* ==========================================================================
@@ -52,6 +80,9 @@ export interface UploadPhotoWallPhotoInput {
 ========================================================================== */
 
 export interface DeletePhotoWallPhotoInput {
+  invitationId:
+    string;
+
   photoId:
     string;
 }
@@ -94,7 +125,7 @@ export interface GetPhotoWallPhotosPageInput {
     PhotoWallPhotosCursor | null;
 
   excludedPhotoIds?:
-  string[];
+    string[];
 }
 
 
@@ -115,6 +146,7 @@ export interface PhotoWallPhotosPage {
   favoriteCount:
     number;
 }
+
 
 /* ==========================================================================
    Photo Wall Gallery Photo
@@ -139,6 +171,8 @@ export interface PhotoWallGalleryPhoto {
   description:
     string | null;
 }
+
+
 /* ==========================================================================
    Get Public Photo Wall Photos Input
 ========================================================================== */
@@ -166,3 +200,9 @@ export interface PublicPhotoWallPhotosPage {
   nextCursor:
     PhotoWallPhotosCursor | null;
 }
+/* ==========================================================================
+   Photo Wall
+========================================================================== */
+
+export type PhotoWall =
+  Tables<"invitations">;

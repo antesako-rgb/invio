@@ -8,16 +8,15 @@ import {
   setPhotoWallPhotoFavorite,
 } from "@/features/invitations/repositories/photo-wall/setPhotoWallPhotoFavorite";
 
-import type {
-  PhotoWallPhoto,
-} from "@/features/invitations/types/photoWallPhoto.types";
-
 
 /* ==========================================================================
    Types
 ========================================================================== */
 
 interface SetPhotoWallPhotoFavoriteInput {
+  photoWallId:
+    string;
+
   photoId:
     string;
 
@@ -31,22 +30,23 @@ interface SetPhotoWallPhotoFavoriteInput {
 ========================================================================== */
 
 export async function setPhotoWallPhotoFavoriteAction({
+  photoWallId,
   photoId,
   isFavorite,
-}: SetPhotoWallPhotoFavoriteInput): Promise<ActionResult<PhotoWallPhoto>> {
+}: SetPhotoWallPhotoFavoriteInput): Promise<ActionResult<void>> {
   try {
-    const photo =
-      await setPhotoWallPhotoFavorite(
-        photoId,
-        isFavorite
-      );
+    await setPhotoWallPhotoFavorite(
+      photoWallId,
+      photoId,
+      isFavorite
+    );
 
     return {
       success:
         true,
 
       data:
-        photo,
+        undefined,
     };
   } catch (error) {
     return {

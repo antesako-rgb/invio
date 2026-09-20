@@ -24,10 +24,11 @@
       "style": "Style"
     },
 
-    "status": {
-      "saving": "Saving...",
-      "saved": "Saved"
-    },
+  "status": {
+  "saving": "Saving...",
+  "saved": "Saved",
+  "error": "Failed to save"
+},
 
     "preview": {
       "close": "Close preview"
@@ -128,7 +129,7 @@
 
     "composer": {
       "descriptionLabel": "Photo description",
-      "descriptionPlaceholder": "Add a description...",
+      "descriptionPlaceholder": "Add a photo description...",
       "remove": "Remove photo"
     }
   }

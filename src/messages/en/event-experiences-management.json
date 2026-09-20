@@ -184,30 +184,6 @@
 
             "deleteSuccess": "Photo deleted successfully."
           }
-        },
-
-        "album": {
-          "actions": {
-            "create": "Create photo album",
-            "edit": "Edit photo album"
-          },
-
-          "create": {
-            "title": "Create photo album",
-            "description": "Create a photo album, then choose the photos you want to add.",
-            "name": "Album name",
-            "namePlaceholder": "e.g. Our Wedding",
-            "cancel": "Cancel",
-            "submit": "Create album",
-            "success": "Photo album created.",
-            "error": "Unable to create the photo album.",
-
-            "photos": {
-              "title": "Add photos",
-              "description": "Select photos from the Photo Wall that you want to add to the album.",
-              "error": "Unable to add photos to the album."
-            }
-          }
         }
       },
 

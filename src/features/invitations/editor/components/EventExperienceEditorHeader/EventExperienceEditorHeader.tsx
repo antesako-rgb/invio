@@ -1,15 +1,6 @@
 "use client";
 
 import {
-  Check,
-  Eye,
-  FileText,
-  Heart,
-  LoaderCircle,
-  Palette,
-} from "lucide-react";
-
-import {
   useTranslations,
 } from "next-intl";
 
@@ -18,6 +9,16 @@ import BackLink
 
 import SideNavigation
   from "@/components/ui/side-navigation/SideNavigation";
+
+import EditorHeader
+  from "@/features/editor/components/EditorHeader/EditorHeader";
+
+import EditorSaveStatus
+  from "@/features/editor/components/EditorSaveStatus/EditorSaveStatus";
+
+import {
+  getEventExperienceEditorNavigationItems,
+} from "@/features/invitations/editor/navigation/getEventExperienceEditorNavigationItems";
 
 import type {
   EventExperienceEditorSaveStatus,
@@ -31,8 +32,6 @@ import type {
 import type {
   EventExperienceType,
 } from "@/features/invitations/types/eventExperience.types";
-
-import "./EventExperienceEditorHeader.css";
 
 
 /* ==========================================================================
@@ -98,83 +97,18 @@ export default function EventExperienceEditorHeader({
      Navigation
   ========================================================================== */
 
-  const navigationItems = [
-    {
-      id:
-        "design",
-
-      href:
-        "#design",
-
-      label:
-        t(
-          "navigation.design"
-        ),
-
-      icon:
-        Palette,
-    },
-
-    ...(hasDetails
-      ? [
-          {
-            id:
-              "details",
-
-            href:
-              "#details",
-
-            label:
-              t(
-                "navigation.details"
-              ),
-
-            icon:
-              FileText,
-          },
-        ]
-      : []),
-
-    ...(hasRsvp
-      ? [
-          {
-            id:
-              "rsvp",
-
-            href:
-              "#rsvp",
-
-            label:
-              t(
-                "navigation.rsvp"
-              ),
-
-            icon:
-              Heart,
-          },
-        ]
-      : []),
-
-    {
-      id:
-        "preview",
-
-      href:
-        "#preview",
-
-      label:
-        t(
-          "navigation.preview"
-        ),
-
-      icon:
-        Eye,
-    },
-  ];
+  const navigationItems =
+    getEventExperienceEditorNavigationItems(
+      t,
+      {
+        hasDetails,
+        hasRsvp,
+      }
+    );
 
 
   /* ==========================================================================
-     Navigation
+     Handle Navigation
   ========================================================================== */
 
   function handleNavigation(
@@ -226,16 +160,8 @@ export default function EventExperienceEditorHeader({
   ========================================================================== */
 
   return (
-    <header
-      className="event-experience-editor-header"
-    >
-      {/* ====================================================================
-          Back
-      ==================================================================== */}
-
-      <div
-        className="event-experience-editor-header__start"
-      >
+    <EditorHeader
+      start={
         <BackLink
           href="/dashboard/dogadaji"
           label={
@@ -244,16 +170,8 @@ export default function EventExperienceEditorHeader({
             )
           }
         />
-      </div>
-
-
-      {/* ====================================================================
-          Navigation
-      ==================================================================== */}
-
-      <div
-        className="event-experience-editor-header__navigation"
-      >
+      }
+      navigation={
         <SideNavigation
           items={
             navigationItems
@@ -272,49 +190,29 @@ export default function EventExperienceEditorHeader({
             )
           }
         />
-      </div>
-
-
-      {/* ====================================================================
-          Save Status
-      ==================================================================== */}
-
-      <div
-        className="event-experience-editor-header__status"
-        role="status"
-        aria-live="polite"
-      >
-        {saveStatus === "saving"
-          ? (
-            <>
-              <LoaderCircle
-                size={16}
-                className="event-experience-editor-header__status-spinner"
-                aria-hidden="true"
-              />
-
-              <span>
-                {t(
-                  "status.saving"
-                )}
-              </span>
-            </>
-          )
-          : (
-            <>
-              <Check
-                size={16}
-                aria-hidden="true"
-              />
-
-              <span>
-                {t(
-                  "status.saved"
-                )}
-              </span>
-            </>
-          )}
-      </div>
-    </header>
+      }
+      end={
+        <EditorSaveStatus
+          status={
+            saveStatus
+          }
+          savingLabel={
+            t(
+              "status.saving"
+            )
+          }
+          savedLabel={
+            t(
+              "status.saved"
+            )
+          }
+          errorLabel={
+            t(
+              "status.error"
+            )
+          }
+        />
+      }
+    />
   );
 }

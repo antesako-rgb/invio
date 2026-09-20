@@ -32,9 +32,9 @@ export async function publishDigitalAlbumAction(
         input
       );
 
-    revalidatePath(
-      `/dashboard/digitalni-albumi/${input.albumId}`
-    );
+revalidatePath(
+  `/dashboard/albumi/${input.albumId}`
+);
 
     return {
       success:

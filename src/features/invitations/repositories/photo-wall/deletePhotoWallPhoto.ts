@@ -7,8 +7,12 @@ import {
 } from "@/lib/supabase/admin";
 
 import {
-  deleteFromBunny,
-} from "@/lib/upload/bunny";
+  deleteEmptyPhotoWallPhotoDirectory,
+} from "@/features/event-photos/services/deleteEmptyPhotoWallPhotoDirectory";
+
+import {
+  deleteOrphanEventPhoto,
+} from "@/features/event-photos/services/deleteOrphanEventPhoto";
 
 import type {
   DeletePhotoWallPhotoInput,
@@ -20,6 +24,7 @@ import type {
 ========================================================================== */
 
 export async function deletePhotoWallPhoto({
+  invitationId,
   photoId,
 }: DeletePhotoWallPhotoInput): Promise<void> {
   const supabase =
@@ -27,32 +32,41 @@ export async function deletePhotoWallPhoto({
 
 
   /* ==========================================================================
-     Get Photo
+     Get Photo Wall Association
   ========================================================================== */
 
   const {
-    data: photo,
-    error: photoError,
+    data: association,
+    error: associationError,
   } =
     await supabase
       .from(
         "photo_wall_photos"
       )
-      .select(
-        "id, invitation_id, image_path"
+      .select(`
+        photo_wall_id,
+        photo_id,
+        photo:event_photos!photo_wall_photos_photo_id_fkey (
+          id,
+          image_path
+        )
+      `)
+      .eq(
+        "photo_wall_id",
+        invitationId
       )
       .eq(
-        "id",
+        "photo_id",
         photoId
       )
       .maybeSingle();
 
   if (
-    photoError
+    associationError
   ) {
     console.error(
-      "deletePhotoWallPhoto get photo error:",
-      photoError
+      "deletePhotoWallPhoto get association error:",
+      associationError
     );
 
     throw new Error(
@@ -61,7 +75,7 @@ export async function deletePhotoWallPhoto({
   }
 
   if (
-    !photo
+    !association
   ) {
     throw new Error(
       "Fotografija nije pronađena."
@@ -70,41 +84,19 @@ export async function deletePhotoWallPhoto({
 
 
   /* ==========================================================================
-     Validate Bunny Path
-  ========================================================================== */
-
-  const expectedPrefix =
-    `photo-wall/${photo.invitation_id}/`;
-
-  if (
-    !photo.image_path.startsWith(
-      expectedPrefix
-    )
-  ) {
-    throw new Error(
-      "Putanja fotografije nije ispravna."
-    );
-  }
-
-
-  /* ==========================================================================
-     Delete From Bunny
-  ========================================================================== */
-
-  await deleteFromBunny(
-    photo.image_path
-  );
-
-
-  /* ==========================================================================
-     Delete From Database
+     Admin Client
   ========================================================================== */
 
   const admin =
     createAdminClient();
 
+
+  /* ==========================================================================
+     Delete Photo Wall Association
+  ========================================================================== */
+
   const {
-    error: deleteError,
+    error: deleteAssociationError,
   } =
     await admin
       .from(
@@ -112,20 +104,44 @@ export async function deletePhotoWallPhoto({
       )
       .delete()
       .eq(
-        "id",
-        photo.id
+        "photo_wall_id",
+        invitationId
+      )
+      .eq(
+        "photo_id",
+        photoId
       );
 
   if (
-    deleteError
+    deleteAssociationError
   ) {
     console.error(
-      "deletePhotoWallPhoto database error:",
-      deleteError
+      "deletePhotoWallPhoto association delete error:",
+      deleteAssociationError
     );
 
     throw new Error(
-      "Fotografiju nije moguće obrisati."
+      "Fotografiju nije moguće ukloniti iz Photo Walla."
     );
   }
+
+
+  /* ==========================================================================
+     Delete Orphan Event Photo
+  ========================================================================== */
+
+  await deleteOrphanEventPhoto({
+    photoId,
+    imagePath:
+      association.photo.image_path,
+  });
+
+
+  /* ==========================================================================
+     Delete Empty Photo Wall Directory
+  ========================================================================== */
+
+  await deleteEmptyPhotoWallPhotoDirectory(
+    invitationId
+  );
 }

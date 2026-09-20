@@ -1,29 +1,11 @@
 "use client";
 
 import {
-  Camera,
-  Trash2,
-} from "lucide-react";
-
-import {
   useTranslations,
 } from "next-intl";
 
-import PhotoWallPhotoCard
-  from "@/features/invitations/components/photo-wall-experience/PhotoWallPhotoCard/PhotoWallPhotoCard";
-
-import "./PhotoWallPhotoComposer.css";
-
-
-/* ==========================================================================
-   Constants
-========================================================================== */
-
-const PREVIEW_WIDTH =
-  1200;
-
-const PREVIEW_HEIGHT =
-  1200;
+import PhotoUploadComposer
+  from "@/features/photo-upload/components/PhotoUploadComposer/PhotoUploadComposer";
 
 
 /* ==========================================================================
@@ -73,82 +55,34 @@ export default function PhotoWallPhotoComposer({
   ========================================================================== */
 
   return (
-    <div
-      className="photo-wall-photo-composer"
-    >
-      <PhotoWallPhotoCard
-        imageUrl={
-          previewUrl
-        }
-        width={
-          PREVIEW_WIDTH
-        }
-        height={
-          PREVIEW_HEIGHT
-        }
-        photoAction={
-          <span
-            className="photo-wall-photo-composer__camera"
-            aria-hidden="true"
-          >
-            <Camera />
-          </span>
-        }
-        caption={
-          <div
-            className="photo-wall-photo-composer__caption"
-          >
-            <textarea
-              value={
-                description
-              }
-              rows={
-                2
-              }
-              maxLength={
-                300
-              }
-              className="photo-wall-photo-composer__description"
-              placeholder={
-                t(
-                  "descriptionPlaceholder"
-                )
-              }
-              aria-label={
-                t(
-                  "descriptionLabel"
-                )
-              }
-              onChange={(
-                event
-              ) =>
-                onDescriptionChange(
-                  event.target.value
-                )
-              }
-            />
-
-            {onRemove && (
-              <button
-                type="button"
-                className="photo-wall-photo-composer__remove"
-                onClick={
-                  onRemove
-                }
-                aria-label={
-                  t(
-                    "remove"
-                  )
-                }
-              >
-                <Trash2
-                  aria-hidden="true"
-                />
-              </button>
-            )}
-          </div>
-        }
-      />
-    </div>
+    <PhotoUploadComposer
+      previewUrl={
+        previewUrl
+      }
+      description={
+        description
+      }
+      descriptionPlaceholder={
+        t(
+          "descriptionPlaceholder"
+        )
+      }
+      descriptionLabel={
+        t(
+          "descriptionLabel"
+        )
+      }
+      removeLabel={
+        t(
+          "remove"
+        )
+      }
+      onDescriptionChange={
+        onDescriptionChange
+      }
+      onRemove={
+        onRemove
+      }
+    />
   );
 }

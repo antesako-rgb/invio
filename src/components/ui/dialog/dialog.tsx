@@ -2,9 +2,26 @@
 
 import * as React from "react";
 
-import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
+import {
+  Dialog as DialogPrimitive,
+} from "@base-ui/react/dialog";
 
-import { cn } from "@/lib/utils/utils";
+import {
+  X,
+} from "lucide-react";
+
+import {
+  iconButtonClassName,
+} from "@/components/ui/icon-button/IconButton";
+
+import {
+  cn,
+} from "@/lib/utils/utils";
+
+
+/* ==========================================================================
+   Dialog
+========================================================================== */
 
 function Dialog({
   ...props
@@ -17,6 +34,11 @@ function Dialog({
   );
 }
 
+
+/* ==========================================================================
+   Trigger
+========================================================================== */
+
 function DialogTrigger({
   ...props
 }: DialogPrimitive.Trigger.Props) {
@@ -28,6 +50,11 @@ function DialogTrigger({
   );
 }
 
+
+/* ==========================================================================
+   Portal
+========================================================================== */
+
 function DialogPortal({
   ...props
 }: DialogPrimitive.Portal.Props) {
@@ -38,6 +65,11 @@ function DialogPortal({
     />
   );
 }
+
+
+/* ==========================================================================
+   Overlay
+========================================================================== */
 
 function DialogOverlay({
   className,
@@ -58,6 +90,37 @@ function DialogOverlay({
   );
 }
 
+
+/* ==========================================================================
+   Close Button
+========================================================================== */
+
+function DialogCloseButton({
+  className,
+  ...props
+}: DialogPrimitive.Close.Props) {
+  return (
+    <DialogPrimitive.Close
+      data-slot="dialog-close-button"
+      className={cn(
+        iconButtonClassName,
+        "absolute right-4 top-4",
+        className
+      )}
+      {...props}
+    >
+      <X
+        aria-hidden="true"
+      />
+    </DialogPrimitive.Close>
+  );
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
 function DialogContent({
   className,
   children,
@@ -67,63 +130,70 @@ function DialogContent({
     <DialogPortal>
       <DialogOverlay />
 
-<DialogPrimitive.Popup
-  data-slot="dialog-content"
-  className={cn(
-    "fixed left-1/2 top-1/2 z-50",
-    "-translate-x-1/2 -translate-y-1/2",
+      <DialogPrimitive.Popup
+        data-slot="dialog-content"
+        className={cn(
+          "fixed left-1/2 top-1/2 z-[51]",
+          "-translate-x-1/2 -translate-y-1/2",
 
-    "w-[calc(100vw-2rem)]",
-    "max-w-2xl",
+          "w-[calc(100vw-2rem)]",
+          "max-w-2xl",
 
-    "max-h-[90vh]",
-    "overflow-y-auto",
+          "max-h-[90vh]",
+          "overflow-y-auto",
 
-    "rounded-2xl",
+          "rounded-2xl",
 
-    // Surface
-    "bg-dialog",
+          // Surface
+          "bg-dialog",
 
-    // Border
-    "border border-border/70",
+          // Border
+          "border border-border/70",
 
-    // Shadow
-    "shadow-lg",
+          // Shadow
+          "shadow-lg",
 
-    // Ring
-    "ring-1 ring-border/30",
+          // Ring
+          "ring-1 ring-border/30",
 
-    // Blur
-    "backdrop-blur-xl",
+          // Blur
+          "backdrop-blur-xl",
 
-    // Padding
-    "p-4 sm:p-6",
+          // Padding
+          "p-4 sm:p-6",
 
-    // Focus
-    "outline-none",
+          // Focus
+          "outline-none",
 
-    // Animation
-    "data-open:animate-in",
-    "data-open:fade-in-0",
-    "data-open:zoom-in-95",
-    "data-open:duration-200",
+          // Animation
+          "data-open:animate-in",
+          "data-open:fade-in-0",
+          "data-open:zoom-in-95",
+          "data-open:duration-200",
 
-    "data-closed:animate-out",
-    "data-closed:fade-out-0",
-    "data-closed:zoom-out-95",
-    "data-closed:duration-150",
+          "data-closed:animate-out",
+          "data-closed:fade-out-0",
+          "data-closed:zoom-out-95",
+          "data-closed:duration-150",
 
-    className
-  )}
-  {...props}
->
-
-
+          className
+        )}
+        {...props}
+      >
         {children}
+
+        <DialogCloseButton
+          aria-label="Close"
+        />
       </DialogPrimitive.Popup>
     </DialogPortal>
   );
 }
+
+
+/* ==========================================================================
+   Header
+========================================================================== */
 
 function DialogHeader({
   className,
@@ -133,13 +203,18 @@ function DialogHeader({
     <div
       data-slot="dialog-header"
       className={cn(
-        "mb-6 flex flex-col gap-2",
+        "mb-6 flex flex-col gap-2 pr-12",
         className
       )}
       {...props}
     />
   );
 }
+
+
+/* ==========================================================================
+   Title
+========================================================================== */
 
 function DialogTitle({
   className,
@@ -159,6 +234,11 @@ function DialogTitle({
   );
 }
 
+
+/* ==========================================================================
+   Description
+========================================================================== */
+
 function DialogDescription({
   className,
   ...props
@@ -177,6 +257,11 @@ function DialogDescription({
   );
 }
 
+
+/* ==========================================================================
+   Footer
+========================================================================== */
+
 function DialogFooter({
   className,
   ...props
@@ -193,6 +278,11 @@ function DialogFooter({
   );
 }
 
+
+/* ==========================================================================
+   Close
+========================================================================== */
+
 function DialogClose({
   ...props
 }: DialogPrimitive.Close.Props) {
@@ -203,6 +293,11 @@ function DialogClose({
     />
   );
 }
+
+
+/* ==========================================================================
+   Exports
+========================================================================== */
 
 export {
   Dialog,
@@ -215,4 +310,5 @@ export {
   DialogDescription,
   DialogFooter,
   DialogClose,
+  DialogCloseButton,
 };

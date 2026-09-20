@@ -197,7 +197,7 @@ export function usePhotoWallPhotosManagement({
         isFavorite:
           pagePhotos[
             index
-          ].is_favorite,
+          ].isFavorite,
       })
     );
   }
@@ -431,6 +431,9 @@ export function usePhotoWallPhotosManagement({
       async () => {
         const result =
           await setPhotoWallPhotoFavoriteAction({
+            photoWallId:
+              invitationId,
+
             photoId,
 
             isFavorite:
@@ -539,6 +542,8 @@ export function usePhotoWallPhotosManagement({
     try {
       const result =
         await deletePhotoWallPhotoAction({
+          invitationId,
+
           photoId,
         });
 

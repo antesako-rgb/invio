@@ -6,6 +6,10 @@ import type {
   PublicDigitalAlbumPhoto,
 } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
 
+import type {
+  DigitalAlbumDocument,
+} from "@/features/digital-albums/types/digitalAlbumDocument.types";
+
 
 /* ==========================================================================
    Digital Album
@@ -20,7 +24,7 @@ export type DigitalAlbum =
 ========================================================================== */
 
 export interface CreateDigitalAlbumInput {
-  photoWallId:
+  eventId:
     string;
 
   name:
@@ -38,6 +42,22 @@ export interface UpdateDigitalAlbumInput {
 
   name:
     string;
+}
+
+
+/* ==========================================================================
+   Update Digital Album Document Input
+========================================================================== */
+
+export interface UpdateDigitalAlbumDocumentInput {
+  albumId:
+    string;
+
+  document:
+    DigitalAlbumDocument;
+
+  documentVersion:
+    number;
 }
 
 
@@ -78,12 +98,6 @@ export interface DeleteDigitalAlbumInput {
 export interface GetPublicDigitalAlbumInput {
   publicId:
     string;
-
-  limit?:
-    number;
-
-  cursorPosition?:
-    number;
 }
 
 
@@ -101,6 +115,12 @@ export interface PublicDigitalAlbum {
 
     published_at:
       string;
+
+    document:
+      DigitalAlbumDocument;
+
+    document_version:
+      number;
   };
 
   photos:

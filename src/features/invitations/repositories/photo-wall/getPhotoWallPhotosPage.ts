@@ -4,6 +4,7 @@ import {
 
 import type {
   GetPhotoWallPhotosPageInput,
+  PhotoWallPhoto,
   PhotoWallPhotosPage,
 } from "@/features/invitations/types/photoWallPhoto.types";
 
@@ -39,11 +40,20 @@ export async function getPhotoWallPhotosPage({
       .from(
         "photo_wall_photos"
       )
-      .select(
-        "*"
-      )
+      .select(`
+        photo_wall_id,
+        photo_id,
+        description,
+        is_favorite,
+        created_at,
+        photo:event_photos!photo_wall_photos_photo_id_fkey (
+          id,
+          image_path,
+          file_size
+        )
+      `)
       .eq(
-        "invitation_id",
+        "photo_wall_id",
         invitationId
       );
 
@@ -64,7 +74,7 @@ export async function getPhotoWallPhotosPage({
   ) {
     photosQuery =
       photosQuery.not(
-        "id",
+        "photo_id",
         "in",
         `(${excludedPhotoIds.join(",")})`
       );
@@ -75,7 +85,7 @@ export async function getPhotoWallPhotosPage({
   ) {
     photosQuery =
       photosQuery.or(
-        `created_at.lt.${cursor.createdAt},and(created_at.eq.${cursor.createdAt},id.lt.${cursor.id})`
+        `created_at.lt.${cursor.createdAt},and(created_at.eq.${cursor.createdAt},photo_id.lt.${cursor.id})`
       );
   }
 
@@ -89,7 +99,7 @@ export async function getPhotoWallPhotosPage({
         }
       )
       .order(
-        "id",
+        "photo_id",
         {
           ascending:
             false,
@@ -111,7 +121,7 @@ export async function getPhotoWallPhotosPage({
         "photo_wall_photos"
       )
       .select(
-        "id",
+        "photo_id",
         {
           count:
             "exact",
@@ -121,7 +131,7 @@ export async function getPhotoWallPhotosPage({
         }
       )
       .eq(
-        "invitation_id",
+        "photo_wall_id",
         invitationId
       );
 
@@ -131,7 +141,7 @@ export async function getPhotoWallPhotosPage({
         "photo_wall_photos"
       )
       .select(
-        "id",
+        "photo_id",
         {
           count:
             "exact",
@@ -141,7 +151,7 @@ export async function getPhotoWallPhotosPage({
         }
       )
       .eq(
-        "invitation_id",
+        "photo_wall_id",
         invitationId
       )
       .eq(
@@ -158,14 +168,14 @@ export async function getPhotoWallPhotosPage({
 
     totalCountQuery =
       totalCountQuery.not(
-        "id",
+        "photo_id",
         "in",
         excludedIds
       );
 
     favoriteCountQuery =
       favoriteCountQuery.not(
-        "id",
+        "photo_id",
         "in",
         excludedIds
       );
@@ -244,7 +254,7 @@ export async function getPhotoWallPhotosPage({
     rows.length >
     PAGE_SIZE;
 
-  const photos =
+  const pageRows =
     hasMore
       ? rows.slice(
           0,
@@ -254,24 +264,56 @@ export async function getPhotoWallPhotosPage({
 
 
   /* ==========================================================================
+     Photos
+  ========================================================================== */
+
+  const photos:
+    PhotoWallPhoto[] =
+    pageRows.map(
+      (row) => ({
+        id:
+          row.photo.id,
+
+        photoWallId:
+          row.photo_wall_id,
+
+        imagePath:
+          row.photo.image_path,
+
+        fileSize:
+          row.photo.file_size,
+
+        description:
+          row.description,
+
+        isFavorite:
+          row.is_favorite,
+
+        createdAt:
+          row.created_at,
+      })
+    );
+
+
+  /* ==========================================================================
      Next Cursor
   ========================================================================== */
 
-  const lastPhoto =
-    photos[
-      photos.length -
+  const lastRow =
+    pageRows[
+      pageRows.length -
       1
     ];
 
   const nextCursor =
     hasMore &&
-    lastPhoto
+    lastRow
       ? {
           createdAt:
-            lastPhoto.created_at,
+            lastRow.created_at,
 
           id:
-            lastPhoto.id,
+            lastRow.photo_id,
         }
       : null;
 

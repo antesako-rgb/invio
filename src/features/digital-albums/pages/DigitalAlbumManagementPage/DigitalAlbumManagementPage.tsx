@@ -14,9 +14,6 @@ import DigitalAlbumDeleteDangerZone
 import DigitalAlbumManagementHeader
   from "@/features/digital-albums/components/album-management/DigitalAlbumManagementHeader/DigitalAlbumManagementHeader";
 
-import DigitalAlbumPhotos
-  from "@/features/digital-albums/components/album-management/DigitalAlbumPhotos/DigitalAlbumPhotos";
-
 import DigitalAlbumPublicLinkCard
   from "@/features/digital-albums/components/album-management/DigitalAlbumPublicLinkCard/DigitalAlbumPublicLinkCard";
 
@@ -26,10 +23,6 @@ import DigitalAlbumStatusCard
 import {
   getDigitalAlbum,
 } from "@/features/digital-albums/repositories/album/getDigitalAlbum";
-
-import {
-  getDigitalAlbumPhotos,
-} from "@/features/digital-albums/repositories/photos/getDigitalAlbumPhotos";
 
 import styles
   from "./DigitalAlbumManagementPage.module.css";
@@ -61,19 +54,11 @@ export default async function DigitalAlbumManagementPage({
       albumId
     );
 
-  if (!album) {
+  if (
+    !album
+  ) {
     notFound();
   }
-
-
-  /* ==========================================================================
-     Photos
-  ========================================================================== */
-
-  const photos =
-    await getDigitalAlbumPhotos(
-      album.id
-    );
 
 
   /* ==========================================================================
@@ -114,22 +99,6 @@ export default async function DigitalAlbumManagementPage({
 
 
         {/* ==================================================================
-            Photos
-        ================================================================== */}
-
-     <DigitalAlbumPhotos
-  albumId={
-    album.id
-  }
-  photoWallId={
-    album.photo_wall_id
-  }
-  photos={
-    photos
-  }
-/>
-
-        {/* ==================================================================
             Danger Zone
         ================================================================== */}
 
@@ -137,8 +106,8 @@ export default async function DigitalAlbumManagementPage({
           albumId={
             album.id
           }
-          photoWallId={
-            album.photo_wall_id
+          eventId={
+            album.event_id
           }
         />
       </Page>

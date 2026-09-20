@@ -49,6 +49,12 @@ interface UseDigitalAlbumFlipBookProps {
 
   height:
     number;
+
+  onVisiblePagesChange?:
+    (
+      pageIndexes:
+        number[]
+    ) => void;
 }
 
 interface ResponsiveMetrics {
@@ -65,6 +71,7 @@ export default function useDigitalAlbumFlipBook({
   children,
   width,
   height,
+  onVisiblePagesChange,
 }: UseDigitalAlbumFlipBookProps) {
   /* ==========================================================================
      Refs
@@ -75,7 +82,10 @@ export default function useDigitalAlbumFlipBook({
       null
     );
 
-
+const visiblePageIndexesRef =
+  useRef<number[]>(
+    []
+  );
   /* ==========================================================================
      Flip Sound
   ========================================================================== */
@@ -375,10 +385,51 @@ export default function useDigitalAlbumFlipBook({
 
 
     /* ========================================================================
-       Navigation State
+       Stable Page State
     ======================================================================== */
 
     if (!frame.flip) {
+ const visiblePageIndexes = [
+  frame.left,
+  frame.right,
+].filter(
+  (
+    pageIndex
+  ): pageIndex is number =>
+    pageIndex !== null
+);
+
+const previousVisiblePageIndexes =
+  visiblePageIndexesRef.current;
+
+const haveVisiblePagesChanged =
+  previousVisiblePageIndexes.length !==
+    visiblePageIndexes.length ||
+  previousVisiblePageIndexes.some(
+    (
+      pageIndex,
+      index
+    ) =>
+      pageIndex !==
+      visiblePageIndexes[index]
+  );
+
+if (
+  haveVisiblePagesChanged
+) {
+  visiblePageIndexesRef.current =
+    visiblePageIndexes;
+
+  onVisiblePagesChange?.(
+    visiblePageIndexes
+  );
+}
+
+
+      /* ======================================================================
+         Navigation State
+      ====================================================================== */
+
       const isFirstPage =
         frame.left === null &&
         frame.right === 0;

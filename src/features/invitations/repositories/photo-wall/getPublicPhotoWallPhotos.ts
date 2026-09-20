@@ -51,27 +51,27 @@ export async function getPublicPhotoWallPhotos(
      Get Photos
   ========================================================================== */
 
-const {
-  data,
-  error,
-} =
-  await supabase.rpc(
-    "get_public_photo_wall_photos",
-    {
-      p_public_id:
-        publicId,
+  const {
+    data,
+    error,
+  } =
+    await supabase.rpc(
+      "get_public_photo_wall_photos",
+      {
+        p_public_id:
+          publicId,
 
-      p_limit:
-        PAGE_SIZE +
-        1,
+        p_limit:
+          PAGE_SIZE +
+          1,
 
-      p_cursor_created_at:
-        cursor?.createdAt,
+        p_cursor_created_at:
+          cursor?.createdAt,
 
-      p_cursor_id:
-        cursor?.id,
-    }
-  );
+        p_cursor_id:
+          cursor?.id,
+      }
+    );
 
 
   /* ==========================================================================

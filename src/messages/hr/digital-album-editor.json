@@ -1,0 +1,127 @@
+{
+  "navigation": {
+    "back": "Natrag",
+    "label": "Navigacija uređivača albuma",
+    "photos": "Fotografije",
+    "pages": "Stranice",
+    "design": "Dizajn",
+    "preview": "Pregled"
+  },
+
+  "status": {
+    "saving": "Spremanje...",
+    "saved": "Spremljeno",
+    "error": "Spremanje nije uspjelo"
+  },
+
+  "preview": {
+    "close": "Zatvori pregled"
+  },
+
+  "mobile": {
+    "edit": "Uredi album"
+  },
+
+"photos": {
+  "add": "Dodaj fotografije",
+  "count": "{count, plural, one {# fotografija} few {# fotografije} other {# fotografija}}",
+  "selectForPage": "Odaberi fotografiju za stranicu {number}",
+  "changeForPage": "Odaberi drugu fotografiju za stranicu {number}",
+  "remove": "Ukloni fotografiju",
+  "removeSuccess": "Fotografija je uklonjena iz albuma.",
+
+  "empty": {
+    "title": "Još nema fotografija",
+    "description": "Dodajte fotografije kako biste počeli izrađivati svoj digitalni album."
+  },
+
+    "removeConfirm": {
+      "title": "Ukloniti fotografiju?",
+      "description": "Fotografija će biti uklonjena iz ovog albuma.",
+      "confirm": "Ukloni"
+    },
+
+    "addDialog": {
+      "title": "Dodaj fotografije",
+      "description": "Odaberite kako želite dodati fotografije u album.",
+
+      "sources": {
+        "upload": "Prenesi fotografije",
+        "uploadDescription": "Prenesite nove fotografije izravno u ovaj album.",
+        "photoWall": "Odaberi iz Photo Walla",
+        "photoWallDescription": "Odaberite fotografije koje su već podijeljene na Photo Wallu."
+      },
+
+      "photoWallSelect": {
+        "title": "Odaberite Photo Wall",
+        "description": "Odaberite Photo Wall iz kojeg želite dodati fotografije."
+      },
+
+      "photoWall": {
+        "title": "Fotografije iz Photo Walla",
+        "description": "Odaberite fotografije koje želite dodati u album."
+      },
+
+      "actions": {
+        "back": "Natrag",
+        "close": "Zatvori"
+      }
+    },
+
+    "upload": {
+      "back": "Natrag",
+      "select": "Odaberi fotografije",
+      "preparing": "Priprema fotografija...",
+      "remove": "Ukloni fotografiju",
+      "selectPhoto": "Odaberi fotografiju",
+      "addMore": "Dodaj još fotografija",
+      "submit": "Prenesi ({count})",
+      "submitting": "Prijenos...",
+      "descriptionPlaceholder": "Dodajte opis fotografije...",
+      "descriptionLabel": "Opis fotografije",
+
+      "errors": {
+        "invalidFiles": "Neke datoteke nije moguće dodati. Koristite JPEG, PNG ili WebP fotografije do 10 MB.",
+        "tooManyFiles": "Možete prenijeti najviše {count} fotografija odjednom.",
+        "upload": "Fotografije nije moguće prenijeti. Pokušajte ponovno."
+      }
+    },
+
+    "picker": {
+      "title": "Dodaj fotografije",
+      "description": "Odaberite fotografije iz Photo Walla koje želite dodati u album.",
+      "error": "Fotografije nije moguće dodati u album.",
+      "loading": "Učitavanje fotografija...",
+
+      "filters": {
+        "all": "Sve",
+        "favorites": "Favoriti"
+      },
+
+      "empty": {
+        "all": {
+          "title": "Nema fotografija",
+          "description": "Na Photo Wallu još nema fotografija dostupnih za dodavanje."
+        },
+
+        "favorites": {
+          "title": "Nema favorita",
+          "description": "Još niste označili nijednu fotografiju kao favorit."
+        }
+      },
+
+      "actions": {
+        "loadMore": "Učitaj još",
+        "cancel": "Odustani",
+        "add": "Dodaj ({count})",
+        "adding": "Dodavanje..."
+      }
+    }
+  },
+
+  "pages": {
+    "add": "Dodaj stranicu",
+    "count": "{count, plural, one {# stranica} few {# stranice} other {# stranica}}",
+    "page": "Stranica {number}"
+  }
+}

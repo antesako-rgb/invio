@@ -1,5 +1,6 @@
 import {
   Eye,
+  SquarePen,
 } from "lucide-react";
 
 import {
@@ -111,11 +112,11 @@ export default async function DigitalAlbumManagementHeader({
   return (
     <ManagementHeader
       backHref={
-        `/dashboard/studio/photo-wall/${album.photo_wall_id}`
+        `/dashboard/dogadaji/${album.event_id}/albumi`
       }
       backLabel={
         t(
-          "backToPhotoWall"
+          "backToAlbums"
         )
       }
       heading={
@@ -161,26 +162,40 @@ export default async function DigitalAlbumManagementHeader({
         </span>
       }
       actions={
-        isPublished
-          ? (
-              <ButtonLink
-                href={
-                  publicPath
-                }
-                variant="outline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Eye
-                  aria-hidden="true"
-                />
+        <>
+          {isPublished && (
+            <ButtonLink
+              href={
+                publicPath
+              }
+              variant="outline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Eye
+                aria-hidden="true"
+              />
 
-                {t(
-                  "actions.view"
-                )}
-              </ButtonLink>
-            )
-          : undefined
+              {t(
+                "actions.view"
+              )}
+            </ButtonLink>
+          )}
+
+          <ButtonLink
+            href={
+              `/editor/album/${album.id}/uredi`
+            }
+          >
+            <SquarePen
+              aria-hidden="true"
+            />
+
+            {t(
+              "actions.edit"
+            )}
+          </ButtonLink>
+        </>
       }
     />
   );

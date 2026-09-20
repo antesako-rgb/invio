@@ -1,5 +1,9 @@
 "use server";
 
+import {
+  revalidatePath,
+} from "next/cache";
+
 import type {
   ActionResult,
 } from "@/lib/actions/actionResult";
@@ -27,6 +31,10 @@ export async function createDigitalAlbumAction(
       await createDigitalAlbum(
         input
       );
+
+    revalidatePath(
+      `/dashboard/dogadaji/${input.eventId}/albumi`
+    );
 
     return {
       success:

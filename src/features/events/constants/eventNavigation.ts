@@ -6,6 +6,7 @@ export type EventNavigationId =
   | "overview"
   | "guests"
   | "studio"
+  | "albums"
   | "seating";
 
 
@@ -51,6 +52,14 @@ export const eventNavigation: EventNavigationItem[] = [
 
     path:
       "studio",
+  },
+
+  {
+    id:
+      "albums",
+
+    path:
+      "albumi",
   },
 
   {

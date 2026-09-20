@@ -40,6 +40,9 @@ interface PhotoWallPhotoCardProps {
   photoAction?:
     ReactNode;
 
+  photoBottomAction?:
+    ReactNode;
+
   caption?:
     ReactNode;
 
@@ -62,6 +65,7 @@ export default function PhotoWallPhotoCard({
   date,
   description,
   photoAction,
+  photoBottomAction,
   caption,
   onClick,
 }: PhotoWallPhotoCardProps) {
@@ -129,6 +133,19 @@ export default function PhotoWallPhotoCard({
         }
         className="photo-wall-photo-card__image"
       />
+
+
+      {/* ==================================================================
+          Bottom Action
+      ================================================================== */}
+
+      {photoBottomAction && (
+        <div
+          className="photo-wall-photo-card__photo-bottom-action"
+        >
+          {photoBottomAction}
+        </div>
+      )}
 
 
       {/* ==================================================================

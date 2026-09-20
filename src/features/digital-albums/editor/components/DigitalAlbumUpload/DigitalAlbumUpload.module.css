@@ -1,0 +1,112 @@
+/* ==========================================================================
+   Root
+========================================================================== */
+
+.root {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  width:
+    100%;
+
+  gap:
+    1rem;
+}
+
+
+/* ==========================================================================
+   Navigation
+========================================================================== */
+
+.navigation {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+}
+
+
+/* ==========================================================================
+   Preparing
+========================================================================== */
+
+.preparing {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    0.5rem;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.875rem;
+}
+
+.loader {
+  width:
+    1rem;
+
+  height:
+    1rem;
+
+  animation:
+    digital-album-upload-spin
+    0.8s
+    linear
+    infinite;
+}
+
+@keyframes digital-album-upload-spin {
+  to {
+    transform:
+      rotate(
+        360deg
+      );
+  }
+}
+
+
+/* ==========================================================================
+   Error
+========================================================================== */
+
+.error {
+  margin:
+    0;
+
+  color:
+    var(--destructive);
+
+  font-size:
+    0.875rem;
+
+  line-height:
+    1.4;
+}
+
+
+/* ==========================================================================
+   Reduced Motion
+========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .loader {
+    animation:
+      none;
+  }
+}

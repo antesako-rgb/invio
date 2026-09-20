@@ -28,7 +28,7 @@ export async function getDigitalAlbumPhotos(
       )
       .select(`
         *,
-        photo:photo_wall_photos (
+        photo:event_photos!digital_album_photos_photo_id_fkey (
           *
         )
       `)
@@ -44,7 +44,9 @@ export async function getDigitalAlbumPhotos(
         }
       );
 
-  if (error) {
+  if (
+    error
+  ) {
     console.error(
       "getDigitalAlbumPhotos error:",
       error

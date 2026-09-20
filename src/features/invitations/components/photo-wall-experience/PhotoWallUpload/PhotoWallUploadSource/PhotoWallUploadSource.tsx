@@ -9,6 +9,9 @@ import {
   useTranslations,
 } from "next-intl";
 
+import PhotoUploadSource
+  from "@/features/photo-upload/components/PhotoUploadSource/PhotoUploadSource";
+
 import "./PhotoWallUploadSource.css";
 
 
@@ -51,129 +54,72 @@ export default function PhotoWallUploadSource({
      Render
   ========================================================================== */
 
-  return (
-    <div
-      className="photo-wall-upload-source"
-    >
-      {/* ====================================================================
-          Header
-      ==================================================================== */}
+return (
+  <div
+    className="photo-wall-upload-source"
+  >
+    <PhotoUploadSource
+      variant="cards"
+      title={
+        t(
+          "title"
+        )
+      }
+      description={
+        t(
+          "description"
+        )
+      }
+      actions={[
+        {
+          id:
+            "camera",
 
-      <div
-        className="photo-wall-upload-source__header"
-      >
-        <h2
-          className="photo-wall-upload-source__title"
-        >
-          {t(
-            "title"
-          )}
-        </h2>
-
-        <p
-          className="photo-wall-upload-source__description"
-        >
-          {t(
-            "description"
-          )}
-        </p>
-      </div>
-
-
-      {/* ====================================================================
-          Actions
-      ==================================================================== */}
-
-      <div
-        className="photo-wall-upload-source__actions"
-      >
-        {/* ==================================================================
-            Camera
-        ================================================================== */}
-
-        <button
-          type="button"
-          className="photo-wall-upload-source__action"
-          disabled={
-            disabled
-          }
-          onClick={
-            onCamera
-          }
-        >
-          <span
-            className="photo-wall-upload-source__action-icon"
-          >
+          icon:
             <Camera
               aria-hidden="true"
-            />
-          </span>
+            />,
 
-          <span
-            className="photo-wall-upload-source__action-content"
-          >
-            <span
-              className="photo-wall-upload-source__action-title"
-            >
-              {t(
-                "camera.title"
-              )}
-            </span>
+          title:
+            t(
+              "camera.title"
+            ),
 
-            <span
-              className="photo-wall-upload-source__action-description"
-            >
-              {t(
-                "camera.description"
-              )}
-            </span>
-          </span>
-        </button>
+          description:
+            t(
+              "camera.description"
+            ),
 
+          onClick:
+            onCamera,
+        },
+        {
+          id:
+            "gallery",
 
-        {/* ==================================================================
-            Gallery
-        ================================================================== */}
-
-        <button
-          type="button"
-          className="photo-wall-upload-source__action"
-          disabled={
-            disabled
-          }
-          onClick={
-            onGallery
-          }
-        >
-          <span
-            className="photo-wall-upload-source__action-icon"
-          >
+          icon:
             <Images
               aria-hidden="true"
-            />
-          </span>
+            />,
 
-          <span
-            className="photo-wall-upload-source__action-content"
-          >
-            <span
-              className="photo-wall-upload-source__action-title"
-            >
-              {t(
-                "gallery.title"
-              )}
-            </span>
+          title:
+            t(
+              "gallery.title"
+            ),
 
-            <span
-              className="photo-wall-upload-source__action-description"
-            >
-              {t(
-                "gallery.description"
-              )}
-            </span>
-          </span>
-        </button>
-      </div>
-    </div>
-  );
+          description:
+            t(
+              "gallery.description"
+            ),
+
+          onClick:
+            onGallery,
+        },
+      ]}
+      disabled={
+        disabled
+      }
+    />
+  </div>
+);
 }

@@ -20,35 +20,70 @@ function getStorageHost() {
 
 
 /* ==========================================================================
+   Storage Endpoint
+========================================================================== */
+
+function getStorageEndpoint(
+  path:
+    string
+) {
+  const normalizedPath =
+    path
+      .replace(
+        /^\/+/,
+        ""
+      )
+      .replace(
+        /\/+$/,
+        ""
+      );
+
+  return `https://${getStorageHost()}/${STORAGE_ZONE}/${normalizedPath}`;
+}
+
+
+/* ==========================================================================
    Upload To Bunny
 ========================================================================== */
 
 export async function uploadToBunny(
-  file: ArrayBuffer,
-  path: string,
-  contentType: string
+  file:
+    ArrayBuffer,
+
+  path:
+    string,
+
+  contentType:
+    string
 ) {
   const endpoint =
-    `https://${getStorageHost()}/${STORAGE_ZONE}/${path}`;
+    getStorageEndpoint(
+      path
+    );
 
   const response =
-    await fetch(endpoint, {
-      method:
-        "PUT",
+    await fetch(
+      endpoint,
+      {
+        method:
+          "PUT",
 
-      headers: {
-        AccessKey:
-          STORAGE_PASSWORD,
+        headers: {
+          AccessKey:
+            STORAGE_PASSWORD,
 
-        "Content-Type":
-          contentType,
-      },
+          "Content-Type":
+            contentType,
+        },
 
-      body:
-        file,
-    });
+        body:
+          file,
+      }
+    );
 
-  if (!response.ok) {
+  if (
+    !response.ok
+  ) {
     const error =
       await response.text();
 
@@ -66,28 +101,83 @@ export async function uploadToBunny(
 ========================================================================== */
 
 export async function deleteFromBunny(
-  path: string
+  path:
+    string
 ) {
   const endpoint =
-    `https://${getStorageHost()}/${STORAGE_ZONE}/${path}`;
+    getStorageEndpoint(
+      path
+    );
 
   const response =
-    await fetch(endpoint, {
-      method:
-        "DELETE",
+    await fetch(
+      endpoint,
+      {
+        method:
+          "DELETE",
 
-      headers: {
-        AccessKey:
-          STORAGE_PASSWORD,
-      },
-    });
+        headers: {
+          AccessKey:
+            STORAGE_PASSWORD,
+        },
+      }
+    );
 
-  if (!response.ok) {
+  if (
+    !response.ok
+  ) {
     const error =
       await response.text();
 
     throw new Error(
       `Greška prilikom brisanja s Bunny: ${error}`
+    );
+  }
+}
+
+
+/* ==========================================================================
+   Delete Directory From Bunny
+========================================================================== */
+
+export async function deleteDirectoryFromBunny(
+  path:
+    string
+) {
+  const normalizedPath =
+    `${path.replace(
+      /\/+$/,
+      ""
+    )}/`;
+
+  const endpoint =
+    `https://${getStorageHost()}/${STORAGE_ZONE}/${normalizedPath.replace(
+      /^\/+/,
+      ""
+    )}`;
+
+  const response =
+    await fetch(
+      endpoint,
+      {
+        method:
+          "DELETE",
+
+        headers: {
+          AccessKey:
+            STORAGE_PASSWORD,
+        },
+      }
+    );
+
+  if (
+    !response.ok
+  ) {
+    const error =
+      await response.text();
+
+    throw new Error(
+      `Greška prilikom brisanja Bunny direktorija: ${error}`
     );
   }
 }

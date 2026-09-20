@@ -4,7 +4,11 @@ import type {
   ReactNode,
 } from "react";
 
-import "./EventExperienceEditorWorkspace.css";
+import EditorWorkspace
+  from "@/features/editor/components/EditorWorkspace/EditorWorkspace";
+
+import styles
+  from "./EventExperienceEditorWorkspace.module.css";
 
 
 /* ==========================================================================
@@ -36,43 +40,42 @@ export default function EventExperienceEditorWorkspace({
   showMobileToolbar = true,
   children,
 }: EventExperienceEditorWorkspaceProps) {
+  /* ==========================================================================
+     Render
+  ========================================================================== */
+
   return (
-    <div
-      className="event-experience-editor-workspace"
-      data-event-experience-editor-workspace
-      data-mobile-toolbar={
-        showMobileToolbar
-          ? "visible"
-          : "hidden"
+    <EditorWorkspace
+      sidebar={
+        sidebar
       }
     >
-      {sidebar && (
-        <aside
-          className="event-experience-editor-workspace__sidebar"
-        >
-          {sidebar}
-        </aside>
-      )}
-
       <div
-        className="event-experience-editor-workspace__canvas"
+        className={
+          styles.inner
+        }
+        data-mobile-toolbar={
+          showMobileToolbar
+            ? "visible"
+            : "hidden"
+        }
       >
         <div
-          className="event-experience-editor-workspace__canvas-inner"
+          className={
+            styles.toolbar
+          }
         >
-          <div
-            className="event-experience-editor-workspace__toolbar"
-          >
-            {toolbar}
-          </div>
+          {toolbar}
+        </div>
 
-          <div
-            className="event-experience-editor-workspace__document"
-          >
-            {children}
-          </div>
+        <div
+          className={
+            styles.document
+          }
+        >
+          {children}
         </div>
       </div>
-    </div>
+    </EditorWorkspace>
   );
 }

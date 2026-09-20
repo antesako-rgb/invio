@@ -1,0 +1,315 @@
+/* ==========================================================================
+   Root
+========================================================================== */
+
+.root {
+  display:
+    flex;
+
+  justify-content:
+    center;
+
+  width:
+    100%;
+}
+
+.content {
+  width:
+    fit-content;
+
+  max-width:
+    100%;
+}
+
+
+/* ==========================================================================
+   Media
+========================================================================== */
+
+.media {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  min-height:
+    18rem;
+
+  max-height:
+    28rem;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    0.75rem;
+
+  background:
+    var(--muted);
+}
+
+.frame {
+  position:
+    relative;
+
+  display:
+    inline-flex;
+
+  max-width:
+    100%;
+
+  max-height:
+    28rem;
+}
+
+.image {
+  display:
+    block;
+
+  width:
+    auto;
+
+  height:
+    auto;
+
+  max-width:
+    100%;
+
+  max-height:
+    28rem;
+
+  object-fit:
+    contain;
+}
+
+
+/* ==========================================================================
+   Camera
+========================================================================== */
+
+.camera {
+  position:
+    absolute;
+
+  top:
+    0.75rem;
+
+  right:
+    0.75rem;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    2.5rem;
+
+  height:
+    2.5rem;
+
+  border:
+    1px solid
+    rgb(255 255 255 / 0.7);
+
+  border-radius:
+    50%;
+
+  background:
+    rgb(255 255 255 / 0.75);
+
+  color:
+    var(--foreground);
+
+  backdrop-filter:
+    blur(
+      0.35rem
+    );
+
+  box-shadow:
+    0 0.25rem 1rem
+    rgb(0 0 0 / 0.12);
+}
+
+.camera svg {
+  width:
+    1rem;
+
+  height:
+    1rem;
+}
+
+
+/* ==========================================================================
+   Remove
+========================================================================== */
+
+.remove {
+  position:
+    absolute;
+
+  right:
+    0.75rem;
+
+  bottom:
+    0.75rem;
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--destructive) 20%,
+      transparent
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--destructive) 8%,
+      var(--background)
+    );
+
+  color:
+    var(--destructive);
+
+  box-shadow:
+    0 0.25rem 1rem
+    rgb(0 0 0 / 0.12);
+}
+
+.remove:hover {
+  background:
+    color-mix(
+      in srgb,
+      var(--destructive) 14%,
+      var(--background)
+    );
+}
+
+
+/* ==========================================================================
+   Caption
+========================================================================== */
+
+.caption {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  min-height:
+    5rem;
+}
+
+.description {
+  flex:
+    1;
+
+  min-width:
+    0;
+
+  padding:
+    0.75rem
+    0;
+
+  border:
+    0;
+
+  outline:
+    0;
+
+  resize:
+    none;
+
+  background:
+    transparent;
+
+  color:
+    var(--foreground);
+
+  font:
+    inherit;
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    400;
+
+  line-height:
+    1.4;
+}
+
+.description::placeholder {
+  color:
+    var(--muted-foreground);
+
+  font-style:
+    italic;
+}
+
+.description:disabled {
+  cursor:
+    not-allowed;
+
+  opacity:
+    0.6;
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (
+  max-width: 640px
+) {
+  .media {
+    min-height:
+      14rem;
+
+    max-height:
+      22rem;
+  }
+
+  .frame,
+  .image {
+    max-height:
+      22rem;
+  }
+
+  .caption {
+    min-height:
+      4.5rem;
+  }
+
+  .description {
+    font-size:
+      0.8125rem;
+  }
+}
+
+
+/* ==========================================================================
+   Reduced Motion
+========================================================================== */
+
+@media (
+  prefers-reduced-motion: reduce
+) {
+  .remove {
+    transition:
+      none;
+  }
+}

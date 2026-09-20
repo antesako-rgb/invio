@@ -30,9 +30,9 @@ export async function deleteDigitalAlbumAction(
       input
     );
 
-    revalidatePath(
-      `/dashboard/digitalni-albumi/${input.albumId}`
-    );
+revalidatePath(
+  `/dashboard/albumi/${input.albumId}`
+);
 
     return {
       success:

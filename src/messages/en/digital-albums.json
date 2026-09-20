@@ -1,8 +1,32 @@
 {
+  "page": {
+    "title": "Albums",
+    "description": "Create and manage digital albums for your event.",
+    "actions": {
+      "create": "Create album"
+    },
+    "empty": {
+      "title": "No albums yet",
+      "description": "Create your first digital album and start adding photos.",
+      "action": "Create album"
+    }
+  },
+
+  "create": {
+    "title": "Create album",
+    "description": "Enter a name for your new album.",
+    "name": "Album name",
+    "namePlaceholder": "e.g. Our Wedding",
+    "cancel": "Cancel",
+    "submit": "Create album",
+    "success": "Album created successfully.",
+    "error": "Unable to create the album."
+  },
+
   "management": {
     "title": "Photo album",
-    "description": "Create a curated photo album from your Photo Wall and share it with your guests.",
-    "backToPhotoWall": "Back to Photo Wall",
+    "description": "Create and edit your digital photo album and share it with your guests.",
+    "backToAlbums": "Back to albums",
 
     "status": {
       "published": "Published",
@@ -10,7 +34,8 @@
     },
 
     "actions": {
-      "view": "View album"
+      "view": "View album",
+      "edit": "Edit album"
     },
 
     "updatedAt": "Last updated: {date}",
@@ -60,50 +85,6 @@
         "copy": "Copy link",
         "copied": "Copied",
         "open": "Open album"
-      }
-    },
-
-    "photos": {
-      "title": "Photos",
-      "description": "Manage the photos displayed in this album.",
-
-      "actions": {
-        "add": "Add photos"
-      },
-
-      "empty": {
-        "title": "Your album is empty",
-        "description": "Add photos from your Photo Wall to your photo album."
-      },
-
-    "picker": {
-    "title": "Add photos",
-    "description": "Select photos from the Photo Wall that you want to add to the album.",
-    "error": "Unable to add photos to the album.",
-    "loading": "Loading photos...",
-
-        "filters": {
-          "all": "All",
-          "favorites": "Favorites"
-        },
-
-        "empty": {
-          "all": {
-            "title": "No photos",
-            "description": "There are no photos in the Photo Wall available to add yet."
-          },
-
-          "favorites": {
-            "title": "No favorites",
-            "description": "You haven't marked any photos as favorites yet."
-          }
-        },
-
-        "actions": {
-          "loadMore": "Load more",
-          "cancel": "Cancel",
-          "add": "Add ({count})"
-        }
       }
     },
 

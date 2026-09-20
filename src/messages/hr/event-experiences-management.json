@@ -184,30 +184,6 @@
 
             "deleteSuccess": "Fotografija je uspješno obrisana."
           }
-        },
-
-        "album": {
-          "actions": {
-            "create": "Kreiraj foto album",
-            "edit": "Uredi foto album"
-          },
-
-          "create": {
-            "title": "Kreiraj foto album",
-            "description": "Kreirajte foto album, a zatim odaberite fotografije koje želite dodati.",
-            "name": "Naziv albuma",
-            "namePlaceholder": "Npr. Naše vjenčanje",
-            "cancel": "Odustani",
-            "submit": "Kreiraj album",
-            "success": "Foto album je uspješno kreiran.",
-            "error": "Foto album nije moguće kreirati.",
-
-            "photos": {
-              "title": "Dodaj fotografije",
-              "description": "Odaberite fotografije iz Photo Walla koje želite dodati u album.",
-              "error": "Fotografije nije moguće dodati u album."
-            }
-          }
         }
       },
 

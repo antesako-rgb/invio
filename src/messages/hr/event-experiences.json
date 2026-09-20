@@ -24,10 +24,11 @@
       "style": "Stil"
     },
 
-    "status": {
-      "saving": "Spremanje...",
-      "saved": "Spremljeno"
-    },
+"status": {
+  "saving": "Spremanje...",
+  "saved": "Spremljeno",
+  "error": "Spremanje nije uspjelo"
+},
 
     "preview": {
       "close": "Zatvori pregled"
@@ -127,7 +128,7 @@
 
     "composer": {
       "descriptionLabel": "Opis fotografije",
-      "descriptionPlaceholder": "Dodajte opis...",
+      "descriptionPlaceholder": "Dodajte opis fotografije",
       "remove": "Ukloni fotografiju"
     }
   }

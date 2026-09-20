@@ -213,9 +213,9 @@ export function usePublicPhotoWallPhotos({
               firstPhoto,
               secondPhoto
             ) =>
-              secondPhoto.created_at.localeCompare(
-                firstPhoto.created_at
-              )
+             secondPhoto.createdAt.localeCompare(
+  firstPhoto.createdAt
+)
           );
 
         const nextPhotos =

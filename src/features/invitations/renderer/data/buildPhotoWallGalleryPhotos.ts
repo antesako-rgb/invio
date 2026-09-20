@@ -1,9 +1,14 @@
+import {
+  getEventPhotoUrl,
+} from "@/features/event-photos/utils/getEventPhotoUrl";
+
 import type {
   PhotoWallRenderPhoto,
 } from "@/features/invitations/types/eventExperienceRenderer.types";
 
 import type {
   PhotoWallGalleryPhoto,
+  PhotoWallPhoto,
 } from "@/features/invitations/types/photoWallPhoto.types";
 
 
@@ -19,50 +24,50 @@ const DEFAULT_PHOTO_HEIGHT =
 
 
 /* ==========================================================================
+   Types
+========================================================================== */
+
+type PhotoWallGallerySourcePhoto =
+  | PhotoWallRenderPhoto
+  | PhotoWallPhoto;
+
+
+/* ==========================================================================
    Build Photo Wall Gallery Photos
 ========================================================================== */
 
 export function buildPhotoWallGalleryPhotos(
   photos:
-    PhotoWallRenderPhoto[]
+    PhotoWallGallerySourcePhoto[]
 ): PhotoWallGalleryPhoto[] {
-  const cdnUrl =
-    process.env
-      .NEXT_PUBLIC_CDN_URL;
-
-  if (
-    !cdnUrl
-  ) {
-    throw new Error(
-      "CDN URL nije konfiguriran."
-    );
-  }
-
-  const normalizedCdnUrl =
-    cdnUrl.replace(
-      /\/+$/,
-      ""
-    );
-
   return photos.map(
-    (photo) => ({
-      id:
-        photo.id,
+    (photo) => {
+      const imagePath =
+        "imagePath" in photo
+          ? photo.imagePath
+          : photo.image_path;
 
-      imageUrl:
-        `${normalizedCdnUrl}/${photo.image_path}`,
+      return {
+        id:
+          photo.id,
 
-      alt:
-        "",
+        imageUrl:
+          getEventPhotoUrl(
+            imagePath
+          ),
 
-      width:
-        DEFAULT_PHOTO_WIDTH,
+        alt:
+          "",
 
-      height:
-        DEFAULT_PHOTO_HEIGHT,
+        width:
+          DEFAULT_PHOTO_WIDTH,
 
-      description:
-        photo.description,
-    })
+        height:
+          DEFAULT_PHOTO_HEIGHT,
+
+        description:
+          photo.description,
+      };
+    }
   );
 }

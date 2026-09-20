@@ -26,15 +26,17 @@ export async function createDigitalAlbum(
     await supabase.rpc(
       "create_digital_album",
       {
-        p_photo_wall_id:
-          input.photoWallId,
+        p_event_id:
+          input.eventId,
 
         p_name:
           input.name,
       }
     );
 
-  if (error) {
+  if (
+    error
+  ) {
     console.error(
       "createDigitalAlbum error:",
       error
@@ -45,7 +47,9 @@ export async function createDigitalAlbum(
     );
   }
 
-  if (!data) {
+  if (
+    !data
+  ) {
     throw new Error(
       "Digitalni album nije kreiran."
     );

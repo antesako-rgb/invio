@@ -10,37 +10,19 @@ import {
   uploadPhotoWallPhotoAction,
 } from "@/features/invitations/actions/photo-wall/uploadPhotoWallPhotoAction";
 
-import {
-  createPhotoPreview,
-} from "@/features/invitations/components/photo-wall-experience/PhotoWallUpload/utils/createPhotoPreview";
-
 import type {
   PhotoWallPhoto,
 } from "@/features/invitations/types/photoWallPhoto.types";
 
+import {
+  ACCEPTED_IMAGE_TYPES,
+  MAX_FILE_SIZE,
+  MAX_FILES,
+} from "@/features/photo-upload/constants/photoUpload.constants";
 
-/* ==========================================================================
-   Constants
-========================================================================== */
-
-export const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-];
-
-export const ACCEPTED_IMAGE_TYPES_VALUE =
-  ACCEPTED_IMAGE_TYPES.join(
-    ","
-  );
-
-export const MAX_FILE_SIZE =
-  10 *
-  1024 *
-  1024;
-
-export const MAX_FILES =
-  10;
+import {
+  createPhotoPreview,
+} from "@/features/photo-upload/utils/createPhotoPreview";
 
 
 /* ==========================================================================

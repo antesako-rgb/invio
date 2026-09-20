@@ -2,6 +2,14 @@ import {
   createServerClient,
 } from "@/lib/supabase/server";
 
+import {
+  deleteEmptyDigitalAlbumPhotoDirectory,
+} from "@/features/event-photos/services/deleteEmptyDigitalAlbumPhotoDirectory";
+
+import {
+  deleteOrphanEventPhoto,
+} from "@/features/event-photos/services/deleteOrphanEventPhoto";
+
 import type {
   RemoveDigitalAlbumPhotoInput,
 } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
@@ -18,6 +26,54 @@ export async function removeDigitalAlbumPhoto(
   const supabase =
     await createServerClient();
 
+
+  /* ==========================================================================
+     Get Photo
+  ========================================================================== */
+
+  const {
+    data: photo,
+    error: photoError,
+  } =
+    await supabase
+      .from(
+        "event_photos"
+      )
+      .select(
+        "id, image_path"
+      )
+      .eq(
+        "id",
+        input.photoId
+      )
+      .maybeSingle();
+
+  if (
+    photoError
+  ) {
+    console.error(
+      "removeDigitalAlbumPhoto get photo error:",
+      photoError
+    );
+
+    throw new Error(
+      "Fotografiju nije moguće dohvatiti."
+    );
+  }
+
+  if (
+    !photo
+  ) {
+    throw new Error(
+      "Fotografija nije pronađena."
+    );
+  }
+
+
+  /* ==========================================================================
+     Remove Digital Album Association
+  ========================================================================== */
+
   const {
     error,
   } =
@@ -32,7 +88,9 @@ export async function removeDigitalAlbumPhoto(
       }
     );
 
-  if (error) {
+  if (
+    error
+  ) {
     console.error(
       "removeDigitalAlbumPhoto error:",
       error
@@ -42,4 +100,26 @@ export async function removeDigitalAlbumPhoto(
       error.message
     );
   }
+
+
+  /* ==========================================================================
+     Delete Orphan Event Photo
+  ========================================================================== */
+
+  await deleteOrphanEventPhoto({
+    photoId:
+      input.photoId,
+
+    imagePath:
+      photo.image_path,
+  });
+
+
+  /* ==========================================================================
+     Delete Empty Digital Album Directory
+  ========================================================================== */
+
+  await deleteEmptyDigitalAlbumPhotoDirectory(
+    input.albumId
+  );
 }

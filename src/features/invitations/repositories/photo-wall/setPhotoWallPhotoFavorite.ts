@@ -2,21 +2,19 @@ import {
   createServerClient,
 } from "@/lib/supabase/server";
 
-import type {
-  PhotoWallPhoto,
-} from "@/features/invitations/types/photoWallPhoto.types";
-
 
 /* ==========================================================================
    Set Photo Wall Photo Favorite
 ========================================================================== */
 
 export async function setPhotoWallPhotoFavorite(
+  photoWallId:
+    string,
   photoId:
     string,
   isFavorite:
     boolean
-): Promise<PhotoWallPhoto> {
+): Promise<void> {
   const supabase =
     await createServerClient();
 
@@ -32,6 +30,9 @@ export async function setPhotoWallPhotoFavorite(
     await supabase.rpc(
       "set_photo_wall_photo_favorite",
       {
+        p_photo_wall_id:
+          photoWallId,
+
         p_photo_id:
           photoId,
 
@@ -70,6 +71,4 @@ export async function setPhotoWallPhotoFavorite(
       "Fotografija nije pronađena."
     );
   }
-
-  return data;
 }
