@@ -1,6 +1,9 @@
 import Image
   from "next/image";
 
+import DigitalAlbumPhotoSlot
+  from "@/features/digital-albums/components/album-renderer/DigitalAlbumPhotoSlot/DigitalAlbumPhotoSlot";
+
 import styles
   from "./DigitalAlbumFullPhotoLayout.module.css";
 
@@ -10,14 +13,29 @@ import styles
 ========================================================================== */
 
 interface DigitalAlbumFullPhotoLayoutProps {
-  imageUrl:
+  slotId:
     string;
+
+  imageUrl?:
+    string | null;
 
   alt?:
     string;
 
   description?:
     string | null;
+
+  active?:
+    boolean;
+
+  editable?:
+    boolean;
+
+  onSelectPhotoSlot?:
+    (
+      slotId:
+        string
+    ) => void;
 }
 
 
@@ -26,9 +44,13 @@ interface DigitalAlbumFullPhotoLayoutProps {
 ========================================================================== */
 
 export default function DigitalAlbumFullPhotoLayout({
+  slotId,
   imageUrl,
   alt = "",
   description,
+  active = false,
+  editable = false,
+  onSelectPhotoSlot,
 }: DigitalAlbumFullPhotoLayoutProps) {
   return (
     <div
@@ -36,35 +58,57 @@ export default function DigitalAlbumFullPhotoLayout({
         styles.root
       }
     >
-      <Image
-        src={
-          imageUrl
-        }
-        alt={
-          alt
-        }
-        fill
-        sizes="480px"
-        className={
-          styles.image
-        }
-      />
+<DigitalAlbumPhotoSlot
+  slotId={
+    slotId
+  }
+  active={
+    active
+  }
+  editable={
+    editable
+  }
+  empty={
+    !imageUrl
+  }
+  onSelect={
+    onSelectPhotoSlot
+  }
+>
+        {imageUrl && (
+          <>
+            <Image
+              src={
+                imageUrl
+              }
+              alt={
+                alt
+              }
+              fill
+              sizes="480px"
+              className={
+                styles.image
+              }
+            />
 
-      {description && (
-        <div
-          className={
-            styles.caption
-          }
-        >
-          <p
-            className={
-              styles.description
-            }
-          >
-            {description}
-          </p>
-        </div>
-      )}
+            {description && (
+              <div
+                className={
+                  styles.caption
+                }
+              >
+                <p
+                  className={
+                    styles.description
+                  }
+                >
+                  {description}
+                </p>
+              </div>
+            )}
+          </>
+        )}
+      </DigitalAlbumPhotoSlot>
     </div>
   );
 }

@@ -1,6 +1,14 @@
 "use client";
 
 import {
+  useState,
+} from "react";
+
+import type {
+  ComponentProps,
+} from "react";
+
+import {
   Plus,
 } from "lucide-react";
 
@@ -9,14 +17,22 @@ import {
 } from "next-intl";
 
 import {
+  DragDropProvider,
+} from "@dnd-kit/react";
+
+import {
   Button,
 } from "@/components/ui/button";
 
-import DigitalAlbumPagePreview
-  from "@/features/digital-albums/components/album-renderer/DigitalAlbumPagePreview/DigitalAlbumPagePreview";
+import DigitalAlbumAddPageDialog
+  from "@/features/digital-albums/editor/components/DigitalAlbumEditorSidebar/panels/DigitalAlbumPagesPanel/DigitalAlbumAddPageDialog/DigitalAlbumAddPageDialog";
+
+import DigitalAlbumSortablePage
+  from "@/features/digital-albums/editor/components/DigitalAlbumEditorSidebar/panels/DigitalAlbumPagesPanel/DigitalAlbumSortablePage/DigitalAlbumSortablePage";
 
 import type {
   DigitalAlbumDocumentPage,
+  DigitalAlbumPageLayout,
 } from "@/features/digital-albums/types/digitalAlbumDocument.types";
 
 import type {
@@ -51,8 +67,40 @@ interface DigitalAlbumPagesPanelProps {
     ) => void;
 
   onAddPage:
-    () => void;
+    (
+      layout:
+        DigitalAlbumPageLayout
+    ) => void;
+
+  onDuplicatePage:
+    (
+      pageId:
+        string
+    ) => void;
+
+  onDeletePage:
+    (
+      pageId:
+        string
+    ) => void;
+
+  onSwapPages:
+    (
+      sourcePageId:
+        string,
+      targetPageId:
+        string
+    ) => void;
 }
+
+type DragEndEvent =
+  Parameters<
+    NonNullable<
+      ComponentProps<
+        typeof DragDropProvider
+      >["onDragEnd"]
+    >
+  >[0];
 
 
 /* ==========================================================================
@@ -66,6 +114,9 @@ export default function DigitalAlbumPagesPanel({
   visiblePageIndexes,
   onSelectPage,
   onAddPage,
+  onDuplicatePage,
+  onDeletePage,
+  onSwapPages,
 }: DigitalAlbumPagesPanelProps) {
   /* ==========================================================================
      Translations
@@ -75,6 +126,102 @@ export default function DigitalAlbumPagesPanel({
     useTranslations(
       "DigitalAlbumEditor.pages"
     );
+
+
+  /* ==========================================================================
+     State
+  ========================================================================== */
+
+  const [
+    isAddPageOpen,
+    setIsAddPageOpen,
+  ] =
+    useState(
+      false
+    );
+
+
+  /* ==========================================================================
+     Add Page
+  ========================================================================== */
+
+  function handleOpenAddPage() {
+    setIsAddPageOpen(
+      true
+    );
+  }
+
+
+  /* ==========================================================================
+     Drag End
+  ========================================================================== */
+
+  function handleDragEnd(
+    event:
+      DragEndEvent
+  ) {
+    if (
+      event.canceled
+    ) {
+      return;
+    }
+
+    const {
+      source,
+      target,
+    } =
+      event.operation;
+
+    if (
+      !source ||
+      !target
+    ) {
+      return;
+    }
+
+    const sourcePageId =
+      String(
+        source.id
+      );
+
+    const targetPageId =
+      String(
+        target.id
+      );
+
+    if (
+      sourcePageId ===
+      targetPageId
+    ) {
+      return;
+    }
+
+    const sourceExists =
+      pages.some(
+        (page) =>
+          page.id ===
+          sourcePageId
+      );
+
+    const targetExists =
+      pages.some(
+        (page) =>
+          page.id ===
+          targetPageId
+      );
+
+    if (
+      !sourceExists ||
+      !targetExists
+    ) {
+      return;
+    }
+
+    onSwapPages(
+      sourcePageId,
+      targetPageId
+    );
+  }
 
 
   /* ==========================================================================
@@ -114,7 +261,7 @@ export default function DigitalAlbumPagesPanel({
           styles.addButton
         }
         onClick={
-          onAddPage
+          handleOpenAddPage
         }
       >
         <Plus
@@ -126,84 +273,108 @@ export default function DigitalAlbumPagesPanel({
         )}
       </Button>
 
-      <div
-        className={
-          styles.list
+      <DragDropProvider
+        onDragEnd={
+          handleDragEnd
         }
       >
-        {pages.map(
-          (
-            page,
-            index
-          ) => {
-            const isActive =
-              page.id ===
-              activePageId;
+        <div
+          className={
+            styles.list
+          }
+        >
+          {pages.map(
+            (
+              page,
+              index
+            ) => {
+              const isVisible =
+                visiblePageIndexes.includes(
+                  index
+                );
 
-            const isVisible =
-              visiblePageIndexes.includes(
-                index
-              );
-
-            return (
-              <button
-                key={
-                  page.id
-                }
-                type="button"
-                className={
-                  styles.item
-                }
-                data-active={
-                  isActive
-                    ? ""
-                    : undefined
-                }
-                data-visible={
-                  isVisible
-                    ? ""
-                    : undefined
-                }
-                onClick={
-                  () =>
-                    onSelectPage(
-                      page.id
-                    )
-                }
-              >
+              return (
                 <div
+                  key={
+                    page.id
+                  }
                   className={
-                    styles.preview
+                    styles.item
+                  }
+                  data-visible={
+                    isVisible
+                      ? ""
+                      : undefined
                   }
                 >
-                  <DigitalAlbumPagePreview
+                  <DigitalAlbumSortablePage
                     page={
                       page
                     }
                     photos={
                       photos
                     }
-                  />
-                </div>
-
-                <span
-                  className={
-                    styles.label
-                  }
-                >
-                  {t(
-                    "page",
-                    {
-                      number:
-                        index + 1,
+                    pageNumber={
+                      index + 1
                     }
-                  )}
-                </span>
-              </button>
-            );
-          }
-        )}
-      </div>
+                    isActive={
+                      activePageId ===
+                      page.id
+                    }
+                    canDelete={
+                      pages.length > 1
+                    }
+                    onSelect={
+                      () =>
+                        onSelectPage(
+                          page.id
+                        )
+                    }
+                    onDuplicate={
+                      () =>
+                        onDuplicatePage(
+                          page.id
+                        )
+                    }
+                    onDelete={
+                      () =>
+                        onDeletePage(
+                          page.id
+                        )
+                    }
+                  />
+
+                  <span
+                    className={
+                      styles.label
+                    }
+                  >
+                    {t(
+                      "page",
+                      {
+                        number:
+                          index + 1,
+                      }
+                    )}
+                  </span>
+                </div>
+              );
+            }
+          )}
+        </div>
+      </DragDropProvider>
+
+      <DigitalAlbumAddPageDialog
+        open={
+          isAddPageOpen
+        }
+        onOpenChange={
+          setIsAddPageOpen
+        }
+        onAddPage={
+          onAddPage
+        }
+      />
     </div>
   );
 }

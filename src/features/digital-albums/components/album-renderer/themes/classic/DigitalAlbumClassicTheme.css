@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Digital Album Classic Theme
+========================================================================== */
+
+[data-album-theme="classic"] {
+  --album-background:
+    #f7f3ed;
+
+  --album-foreground:
+    #342e29;
+
+  --album-caption-foreground:
+    #ffffff;
+
+  --album-caption-overlay:
+    rgb(0 0 0 / 0.6);
+
+
+  --album-title-font:
+    var(--font-marcellus);
+
+  --album-body-font:
+    var(--font-marcellus);
+
+  --album-script-font:
+    var(--font-allura);
+}

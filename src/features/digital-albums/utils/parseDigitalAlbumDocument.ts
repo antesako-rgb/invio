@@ -2,9 +2,14 @@ import type {
   Json,
 } from "@/lib/supabase/database.types";
 
+import {
+  getDigitalAlbumLayout,
+} from "@/features/digital-albums/config/digitalAlbumLayouts";
+
 import type {
   DigitalAlbumDocument,
   DigitalAlbumDocumentPage,
+  DigitalAlbumPageLayout,
   DigitalAlbumPhotoSlot,
 } from "@/features/digital-albums/types/digitalAlbumDocument.types";
 
@@ -19,12 +24,43 @@ function isRecord(
 ): value is Record<string, unknown> {
   return (
     typeof value ===
-      "object"
-    && value !==
-      null
-    && !Array.isArray(
+      "object" &&
+    value !==
+      null &&
+    !Array.isArray(
       value
     )
+  );
+}
+
+
+/* ==========================================================================
+   Parse Page Layout
+========================================================================== */
+
+function parsePageLayout(
+  value:
+    unknown
+): DigitalAlbumPageLayout {
+  if (
+    value ===
+      "cover" ||
+    value ===
+      "full-photo" ||
+    value ===
+      "two-photos" ||
+    value ===
+      "editorial" ||
+    value ===
+      "story" ||
+    value ===
+      "collage"
+  ) {
+    return value;
+  }
+
+  throw new Error(
+    "Layout stranice digitalnog albuma nije podržan."
   );
 }
 
@@ -49,8 +85,8 @@ function parsePhotoSlot(
 
   if (
     typeof value.id !==
-      "string"
-    || value.id.length ===
+      "string" ||
+    value.id.length ===
       0
   ) {
     throw new Error(
@@ -60,8 +96,8 @@ function parsePhotoSlot(
 
   if (
     value.photoId !==
-      null
-    && typeof value.photoId !==
+      null &&
+    typeof value.photoId !==
       "string"
   ) {
     throw new Error(
@@ -99,8 +135,8 @@ function parsePage(
 
   if (
     typeof value.id !==
-      "string"
-    || value.id.length ===
+      "string" ||
+    value.id.length ===
       0
   ) {
     throw new Error(
@@ -108,14 +144,10 @@ function parsePage(
     );
   }
 
-  if (
-    value.layout !==
-      "full-photo"
-  ) {
-    throw new Error(
-      "Layout stranice digitalnog albuma nije podržan."
+  const layout =
+    parsePageLayout(
+      value.layout
     );
-  }
 
   if (
     !Array.isArray(
@@ -124,6 +156,25 @@ function parsePage(
   ) {
     throw new Error(
       "Fotografije stranice nisu ispravne."
+    );
+  }
+
+  const photos =
+    value.photos.map(
+      parsePhotoSlot
+    );
+
+  const layoutDefinition =
+    getDigitalAlbumLayout(
+      layout
+    );
+
+  if (
+    photos.length !==
+      layoutDefinition.photoSlotCount
+  ) {
+    throw new Error(
+      `Layout "${layout}" mora imati ${layoutDefinition.photoSlotCount} photo slotova.`
     );
   }
 
@@ -145,8 +196,9 @@ function parsePage(
     value.content;
 
   if (
-    title !== undefined
-    && typeof title !==
+    title !==
+      undefined &&
+    typeof title !==
       "string"
   ) {
     throw new Error(
@@ -155,8 +207,9 @@ function parsePage(
   }
 
   if (
-    subtitle !== undefined
-    && typeof subtitle !==
+    subtitle !==
+      undefined &&
+    typeof subtitle !==
       "string"
   ) {
     throw new Error(
@@ -165,8 +218,9 @@ function parsePage(
   }
 
   if (
-    text !== undefined
-    && typeof text !==
+    text !==
+      undefined &&
+    typeof text !==
       "string"
   ) {
     throw new Error(
@@ -178,28 +232,27 @@ function parsePage(
     id:
       value.id,
 
-    layout:
-      value.layout,
+    layout,
 
-    photos:
-      value.photos.map(
-        parsePhotoSlot
-      ),
+    photos,
 
     content: {
-      ...(title !== undefined
+      ...(title !==
+      undefined
         ? {
             title,
           }
         : {}),
 
-      ...(subtitle !== undefined
+      ...(subtitle !==
+      undefined
         ? {
             subtitle,
           }
         : {}),
 
-      ...(text !== undefined
+      ...(text !==
+      undefined
         ? {
             text,
           }

@@ -56,6 +56,7 @@ export default function DigitalAlbumDemo() {
           height={
             640
           }
+          theme="classic"
         >
           {digitalAlbumDemoPages}
         </DigitalAlbumFlipBook>

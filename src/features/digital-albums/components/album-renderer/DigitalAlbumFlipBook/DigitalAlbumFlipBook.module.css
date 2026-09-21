@@ -3,8 +3,18 @@
 ========================================================================== */
 
 .root {
-  width: 100%;
-  overflow: hidden;
+  position:
+    relative;
+  display:
+    flex;
+  align-items:
+    center;
+  justify-content:
+    center;
+  width:
+    100%;
+  overflow:
+    hidden;
 }
 
 
@@ -13,58 +23,46 @@
 ========================================================================== */
 
 .stage {
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-
+  position:
+    relative;
+  display:
+    flex;
+  align-items:
+    center;
+  justify-content:
+    center;
+  width:
+    100%;
   padding:
-    0
-    5rem;
+    0;
 }
 
 
 /* ==========================================================================
-   Book Stage
+   Book
 ========================================================================== */
 
-.bookStage {
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-
+.book {
+  position:
+    relative;
+  display:
+    flex;
+  align-items:
+    center;
+  justify-content:
+    center;
+  width:
+    100%;
   max-width:
     var(--album-spread-width);
-
   aspect-ratio:
     3 / 2;
-}
-
-.book {
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 100%;
-
   opacity:
     var(--album-initialized);
-
   transform:
     translateX(
       var(--album-book-offset)
     );
-
   will-change:
     transform;
 }
@@ -74,92 +72,82 @@
    Navigation
 ========================================================================== */
 
-.navigation {
-  position: absolute;
-  z-index: 20;
-  top: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+.previous,
+.next {
+  position:
+    absolute;
+  z-index:
+    20;
+  top:
+    50%;
+  display:
+    flex;
+  align-items:
+    center;
+  justify-content:
+    center;
   width:
     3rem;
-
   height:
     3rem;
-
-  padding: 0;
-
+  padding:
+    0;
   border:
     1px solid
     rgba(60, 50, 40, 0.1);
-
   border-radius:
     999px;
-
   background:
     rgba(255, 255, 255, 0.9);
-
   color:
     #3c352d;
-
-  cursor: pointer;
-
+  cursor:
+    pointer;
   box-shadow:
     0 8px 24px
     rgba(0, 0, 0, 0.08);
-
   transform:
     translateY(-50%);
-
   transition:
     transform 150ms ease,
     background 150ms ease,
     box-shadow 150ms ease;
 }
 
-.navigation:hover {
+.previous {
+  left:
+    1rem;
+}
+
+.next {
+  right:
+    1rem;
+}
+
+.previous:hover:not(:disabled),
+.next:hover:not(:disabled) {
   background:
     #ffffff;
-
   box-shadow:
     0 10px 28px
     rgba(0, 0, 0, 0.12);
-
   transform:
     translateY(-50%)
     scale(1.05);
 }
 
-.navigationPrevious {
-  left:
-    max(
-      1rem,
-      calc(
-        50% -
-        var(--album-spread-width) / 2 -
-        4rem
-      )
-    );
+.previous:disabled,
+.next:disabled {
+  opacity:
+    0.35;
+  cursor:
+    default;
 }
 
-.navigationNext {
-  right:
-    max(
-      1rem,
-      calc(
-        50% -
-        var(--album-spread-width) / 2 -
-        4rem
-      )
-    );
-}
-
-.navigation svg {
+.previous svg,
+.next svg {
   width:
     1.25rem;
-
   height:
     1.25rem;
 }
@@ -169,62 +157,52 @@
    Responsive
 ========================================================================== */
 
-@media (max-width: 1100px) {
-  .stage {
-    padding:
-      0
-  }
-
-  .navigationPrevious {
+@media (
+  max-width: 1100px
+) {
+  .previous {
     left:
       0.5rem;
   }
 
-  .navigationNext {
+  .next {
     right:
       0.5rem;
   }
 }
 
-@media (max-width: 768px) {
-  .stage {
-    padding: 0;
-  }
-
-  .bookStage {
-    width: 100%;
-
+@media (
+  max-width: 768px
+) {
+  .book {
     max-width:
       var(--album-page-width);
-
     aspect-ratio:
       3 / 4;
   }
 
-  .navigation {
-    display: flex;
-
+  .previous,
+  .next {
     width:
       2.25rem;
-
     height:
       2.25rem;
   }
 
-  .navigationPrevious {
+  .previous {
     left:
-      0.5rem;
+      0.25rem;
   }
 
-  .navigationNext {
+  .next {
     right:
-      0.5rem;
+      0.25rem;
   }
 
-  .navigation svg {
+  .previous svg,
+  .next svg {
     width:
       1rem;
-
     height:
       1rem;
   }

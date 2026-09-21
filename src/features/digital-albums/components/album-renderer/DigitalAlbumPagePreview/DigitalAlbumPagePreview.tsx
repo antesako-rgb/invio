@@ -1,5 +1,9 @@
-import DigitalAlbumFullPhotoLayout
-  from "@/features/digital-albums/components/album-renderer/layouts/DigitalAlbumFullPhotoLayout/DigitalAlbumFullPhotoLayout";
+import DigitalAlbumPageRenderer
+  from "@/features/digital-albums/components/album-renderer/DigitalAlbumPageRenderer/DigitalAlbumPageRenderer";
+
+import type {
+  DigitalAlbumRendererPhoto,
+} from "@/features/digital-albums/components/album-renderer/types/digitalAlbumRenderer.types";
 
 import type {
   DigitalAlbumDocumentPage,
@@ -8,10 +12,6 @@ import type {
 import type {
   DigitalAlbumPhotoWithPhoto,
 } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
-
-import {
-  getEventPhotoUrl,
-} from "@/features/event-photos/utils/getEventPhotoUrl";
 
 import styles
   from "./DigitalAlbumPagePreview.module.css";
@@ -39,72 +39,23 @@ export default function DigitalAlbumPagePreview({
   photos,
 }: DigitalAlbumPagePreviewProps) {
   /* ==========================================================================
-     Photo
+     Renderer Photos
   ========================================================================== */
 
-  const photoId =
-    page.photos[0]?.photoId ??
-    null;
+  const rendererPhotos:
+    DigitalAlbumRendererPhoto[] =
+      photos.map(
+        (albumPhoto) => ({
+          id:
+            albumPhoto.photo_id,
 
-  const albumPhoto =
-    photoId
-      ? photos.find(
-          (photo) =>
-            photo.photo_id ===
-            photoId
-        )
-      : null;
+          imagePath:
+            albumPhoto.photo.image_path,
 
-  const imageUrl =
-    albumPhoto
-      ? getEventPhotoUrl(
-          albumPhoto.photo.image_path
-        )
-      : null;
-
-
-  /* ==========================================================================
-     Layout
-  ========================================================================== */
-
-  function renderLayout() {
-    switch (
-      page.layout
-    ) {
-      case "full-photo":
-        if (
-          !imageUrl
-        ) {
-          return (
-            <div
-              className={
-                styles.empty
-              }
-            />
-          );
-        }
-
-        return (
-          <DigitalAlbumFullPhotoLayout
-            imageUrl={
-              imageUrl
-            }
-            description={
-              page.content.text
-            }
-          />
-        );
-
-      default:
-        return (
-          <div
-            className={
-              styles.empty
-            }
-          />
-        );
-    }
-  }
+          description:
+            albumPhoto.description,
+        })
+      );
 
 
   /* ==========================================================================
@@ -116,8 +67,16 @@ export default function DigitalAlbumPagePreview({
       className={
         styles.root
       }
+      data-album-theme="classic"
     >
-      {renderLayout()}
+      <DigitalAlbumPageRenderer
+        page={
+          page
+        }
+        photos={
+          rendererPhotos
+        }
+      />
     </div>
   );
 }

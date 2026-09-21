@@ -3,8 +3,12 @@
 ========================================================================== */
 
 export type DigitalAlbumPageLayout =
-  | "full-photo";
-
+  | "cover"
+  | "full-photo"
+  | "two-photos"
+  | "editorial"
+  | "story"
+  | "collage";
 
 /* ==========================================================================
    Theme

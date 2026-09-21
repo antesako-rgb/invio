@@ -22,18 +22,20 @@
     "edit": "Edit album"
   },
 
-"photos": {
-  "add": "Add photos",
-  "count": "{count, plural, one {# photo} other {# photos}}",
-  "selectForPage": "Choose a photo for page {number}",
-  "changeForPage": "Choose another photo for page {number}",
-  "remove": "Remove photo",
-  "removeSuccess": "The photo was removed from the album.",
+  "photos": {
+    "add": "Add photos",
+    "count": "{count, plural, one {# photo} other {# photos}}",
+    "selectForPage": "Choose a photo for page {number}",
+    "changeForPage": "Choose another photo for page {number}",
+    "remove": "Remove photo",
+    "removeFromPage": "Remove from page",
+    "removeSuccess": "The photo was removed from the album.",
+    "removeError": "The photo could not be removed from the album.",
 
-  "empty": {
-    "title": "No photos yet",
-    "description": "Add photos to start creating your digital album."
-  },
+    "empty": {
+      "title": "No photos yet",
+      "description": "Add photos to start creating your digital album."
+    },
 
     "removeConfirm": {
       "title": "Remove photo?",
@@ -119,9 +121,38 @@
     }
   },
 
-  "pages": {
-    "add": "Add page",
-    "count": "{count, plural, one {# page} other {# pages}}",
-    "page": "Page {number}"
+"pages": {
+  "add": "Add page",
+  "count": "{count, plural, one {# page} other {# pages}}",
+  "page": "Page {number}",
+  "actions": "Page actions",
+  "duplicate": "Duplicate",
+  "delete": "Delete",
+
+  "addDialog": {
+    "title": "Add page",
+    "description": "Choose a layout for the new page."
   }
+},
+"photoSlot": {
+  "addPhoto": "Add photo",
+  "selectPhoto": "Select photo position"
+},
+"design": {
+  "tabs": {
+    "page": "Page",
+    "theme": "Theme"
+  },
+  "layouts": {
+    "cover": "Cover",
+    "full-photo": "One photo",
+    "two-photos": "Two photos",
+    "editorial": "Photo and story",
+    "story": "Story",
+    "collage": "Collage"
+  },
+  "themes": {
+    "classic": "Classic"
+  }
+}
 }

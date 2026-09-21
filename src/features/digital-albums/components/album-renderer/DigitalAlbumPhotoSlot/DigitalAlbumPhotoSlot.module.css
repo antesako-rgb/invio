@@ -1,0 +1,152 @@
+/* ==========================================================================
+   Root
+========================================================================== */
+
+.root {
+  position:
+    relative;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  min-width:
+    0;
+
+  min-height:
+    0;
+}
+
+
+/* ==========================================================================
+   Editor Overlay
+========================================================================== */
+
+.editorOverlay {
+  position:
+    absolute;
+
+  top:
+    0;
+
+  right:
+    48px;
+
+  bottom:
+    0;
+
+  left:
+    48px;
+
+  z-index:
+    10;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    0;
+
+  border:
+    2px solid transparent;
+
+  background:
+    transparent;
+
+  cursor:
+    pointer;
+}
+
+
+/* ==========================================================================
+   Hover
+========================================================================== */
+
+.root[data-editable="true"]:hover
+  .editorOverlay {
+  border-color:
+    rgb(99 102 241 / 0.45);
+}
+
+
+/* ==========================================================================
+   Active
+========================================================================== */
+
+.root[data-active="true"]
+  .editorOverlay {
+  border-color:
+    rgb(99 102 241);
+}
+
+
+/* ==========================================================================
+   Empty
+========================================================================== */
+
+.root[data-editable="true"][data-empty="true"]
+  .editorOverlay {
+  background:
+    rgb(255 255 255 / 0.08);
+}
+
+
+/* ==========================================================================
+   Empty State
+========================================================================== */
+
+.emptyState {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    0.5rem;
+
+  color:
+    var(--album-foreground);
+
+  font-family:
+    var(--album-body-font);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    500;
+
+  line-height:
+    1.25;
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================================================
+   Empty Icon
+========================================================================== */
+
+.emptyIcon {
+  width:
+    1.5rem;
+
+  height:
+    1.5rem;
+}

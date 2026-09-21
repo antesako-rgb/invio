@@ -3,27 +3,25 @@
 import DigitalAlbumFlipBook
   from "@/features/digital-albums/components/album-renderer/DigitalAlbumFlipBook/DigitalAlbumFlipBook";
 
-import DigitalAlbumFullPhotoLayout
-  from "@/features/digital-albums/components/album-renderer/layouts/DigitalAlbumFullPhotoLayout/DigitalAlbumFullPhotoLayout";
-
 import DigitalAlbumPage
   from "@/features/digital-albums/components/album-renderer/DigitalAlbumPage/DigitalAlbumPage";
 
-import {
-  getEventPhotoUrl,
-} from "@/features/event-photos/utils/getEventPhotoUrl";
+import DigitalAlbumPageRenderer
+  from "@/features/digital-albums/components/album-renderer/DigitalAlbumPageRenderer/DigitalAlbumPageRenderer";
 
 import type {
-  DigitalAlbumPhotoWithPhoto,
-} from "@/features/digital-albums/types/digitalAlbumPhoto.types";
+  DigitalAlbumRendererPhoto,
+} from "@/features/digital-albums/components/album-renderer/types/digitalAlbumRenderer.types";
 
 import type {
   DigitalAlbumDocument,
-  DigitalAlbumDocumentPage,
+  DigitalAlbumPageContent,
 } from "@/features/digital-albums/types/digitalAlbumDocument.types";
 
 import styles
   from "./DigitalAlbumRenderer.module.css";
+
+import "@/features/digital-albums/components/album-renderer/themes/classic/DigitalAlbumClassicTheme.css";
 
 
 /* ==========================================================================
@@ -46,10 +44,32 @@ interface DigitalAlbumRendererProps {
     DigitalAlbumDocument;
 
   photos:
-    DigitalAlbumPhotoWithPhoto[];
+    DigitalAlbumRendererPhoto[];
 
   activePageIndex?:
     number;
+
+  activePhotoSlotId?:
+    string | null;
+
+  visiblePageIndexes?:
+    number[];
+
+  onSelectPhotoSlot?:
+    (
+      pageId:
+        string,
+      photoSlotId:
+        string
+    ) => void;
+
+  onPageContentChange?:
+    (
+      pageId:
+        string,
+      content:
+        Partial<DigitalAlbumPageContent>
+    ) => void;
 
   onPageChange?:
     (
@@ -73,141 +93,13 @@ export default function DigitalAlbumRenderer({
   document,
   photos,
   activePageIndex,
+  activePhotoSlotId,
+  visiblePageIndexes = [],
+  onSelectPhotoSlot,
+  onPageContentChange,
   onPageChange,
   onVisiblePagesChange,
 }: DigitalAlbumRendererProps) {
-  /* ==========================================================================
-     Photo
-  ========================================================================== */
-
-  function getPhotoUrl(
-    photoId:
-      string | null
-  ): string | null {
-    if (
-      !photoId
-    ) {
-      return null;
-    }
-
-    const albumPhoto =
-      photos.find(
-        (item) =>
-          item.photo_id ===
-          photoId
-      );
-
-    if (
-      !albumPhoto
-    ) {
-      return null;
-    }
-
-    return getEventPhotoUrl(
-      albumPhoto.photo.image_path
-    );
-  }
-
-
-  /* ==========================================================================
-     Page Content
-  ========================================================================== */
-
-  function renderPageContent(
-    page:
-      DigitalAlbumDocumentPage
-  ) {
-    if (
-      page.layout ===
-        "full-photo"
-    ) {
-      const imageUrl =
-        getPhotoUrl(
-          page.photos[0]?.photoId ??
-          null
-        );
-
-      if (
-        imageUrl
-      ) {
-        return (
-          <DigitalAlbumFullPhotoLayout
-            imageUrl={
-              imageUrl
-            }
-            description={
-              page.content.text
-            }
-          />
-        );
-      }
-    }
-
-    return (
-      <div
-        className={
-          styles.page
-        }
-        data-album-page-layout={
-          page.layout
-        }
-      >
-        {page.content.subtitle && (
-          <span
-            className={
-              styles.subtitle
-            }
-          >
-            {page.content.subtitle}
-          </span>
-        )}
-
-        {page.content.title && (
-          <h2
-            className={
-              styles.title
-            }
-          >
-            {page.content.title}
-          </h2>
-        )}
-
-        {page.content.text && (
-          <p
-            className={
-              styles.text
-            }
-          >
-            {page.content.text}
-          </p>
-        )}
-      </div>
-    );
-  }
-
-
-  /* ==========================================================================
-     Page
-  ========================================================================== */
-
-  function renderPage(
-    page:
-      DigitalAlbumDocumentPage
-  ) {
-    return (
-      <DigitalAlbumPage
-        key={
-          page.id
-        }
-      >
-        {renderPageContent(
-          page
-        )}
-      </DigitalAlbumPage>
-    );
-  }
-
-
   /* ==========================================================================
      Empty Document
   ========================================================================== */
@@ -232,6 +124,9 @@ export default function DigitalAlbumRenderer({
 
   return (
     <DigitalAlbumFlipBook
+      theme={
+        document.theme
+      }
       width={
         PAGE_WIDTH
       }
@@ -249,7 +144,65 @@ export default function DigitalAlbumRenderer({
       }
     >
       {document.pages.map(
-        renderPage
+        (
+          page,
+          pageIndex
+        ) => {
+          const isActivePage =
+            pageIndex ===
+            activePageIndex;
+
+          const isVisiblePage =
+            visiblePageIndexes.includes(
+              pageIndex
+            );
+
+          return (
+            <DigitalAlbumPage
+              key={
+                page.id
+              }
+            >
+              <DigitalAlbumPageRenderer
+                page={
+                  page
+                }
+                photos={
+                  photos
+                }
+                activePhotoSlotId={
+                  isActivePage
+                    ? activePhotoSlotId
+                    : null
+                }
+                onSelectPhotoSlot={
+                  isVisiblePage &&
+                  onSelectPhotoSlot
+                    ? (
+                        photoSlotId
+                      ) =>
+                        onSelectPhotoSlot(
+                          page.id,
+                          photoSlotId
+                        )
+                    : undefined
+                }
+                onPageContentChange={
+                  isVisiblePage &&
+                  onPageContentChange
+                    ? (
+                        content
+                      ) =>
+                        onPageContentChange(
+                          page.id,
+                          content
+                        )
+                    : undefined
+                }
+              />
+            </DigitalAlbumPage>
+          );
+        }
       )}
     </DigitalAlbumFlipBook>
   );

@@ -16,7 +16,7 @@
     hidden;
 
   background:
-    var(--background);
+    var(--album-background);
 }
 
 
@@ -57,7 +57,7 @@
     linear-gradient(
       to bottom,
       transparent,
-      rgb(0 0 0 / 0.6)
+      var(--album-caption-overlay)
     );
 
   pointer-events:
@@ -77,10 +77,13 @@
     0;
 
   color:
-    white;
+    var(--album-caption-foreground);
+
+  font-family:
+    var(--album-script-font);
 
   font-size:
-    0.875rem;
+    1rem;
 
   font-weight:
     400;

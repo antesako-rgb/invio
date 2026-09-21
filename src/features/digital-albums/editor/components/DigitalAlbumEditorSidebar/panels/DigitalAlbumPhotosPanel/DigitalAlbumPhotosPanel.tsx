@@ -85,6 +85,9 @@ interface DigitalAlbumPhotosPanelProps {
       photoId:
         string
     ) => void;
+
+  onRemovePhotoFromPage:
+    () => void;
 }
 
 
@@ -99,6 +102,7 @@ export default function DigitalAlbumPhotosPanel({
   activePageNumber,
   selectedPhotoId,
   onSelectPhoto,
+  onRemovePhotoFromPage,
 }: DigitalAlbumPhotosPanelProps) {
   /* ==========================================================================
      Router
@@ -220,7 +224,9 @@ export default function DigitalAlbumPhotosPanel({
       !result.success
     ) {
       toast.error(
-        result.message
+        t(
+          "removeError"
+        )
       );
 
       setRemovingPhotoId(
@@ -337,27 +343,50 @@ export default function DigitalAlbumPhotosPanel({
                   </span>
                 </div>
 
-                <Button
-                  type="button"
-                  variant="outline"
-                  className={
-                    styles.addButton
-                  }
-                  onClick={
-                    () =>
-                      setIsAddPhotosOpen(
-                        true
-                      )
-                  }
-                >
-                  <Plus
-                    aria-hidden="true"
-                  />
+<div
+  className={
+    styles.actions
+  }
+>
+  {selectedPhotoId && (
+    <Button
+      type="button"
+      variant="outline"
+      className={
+        styles.actionButton
+      }
+      onClick={
+        onRemovePhotoFromPage
+      }
+    >
+      {t(
+        "removeFromPage"
+      )}
+    </Button>
+  )}
 
-                  {t(
-                    "add"
-                  )}
-                </Button>
+  <Button
+    type="button"
+    variant="outline"
+    className={
+      styles.actionButton
+    }
+    onClick={
+      () =>
+        setIsAddPhotosOpen(
+          true
+        )
+    }
+  >
+    <Plus
+      aria-hidden="true"
+    />
+
+    {t(
+      "add"
+    )}
+  </Button>
+</div>
 
                 <div
                   className={

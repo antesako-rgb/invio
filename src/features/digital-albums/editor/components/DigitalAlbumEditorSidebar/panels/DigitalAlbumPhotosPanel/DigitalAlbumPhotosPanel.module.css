@@ -60,14 +60,41 @@
 
 
 /* ==========================================================================
-   Add
+   Actions
 ========================================================================== */
+
+.actions {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    0.5rem;
+
+  width:
+    100%;
+}
+
+.actionButton {
+  flex:
+    0 0 auto;
+
+  min-width:
+    0;
+
+  padding-inline:
+    0.55rem;
+
+  font-size:
+    0.8125rem;
+}
 
 .addButton {
   width:
     100%;
 }
-
 
 /* ==========================================================================
    Grid
@@ -251,4 +278,20 @@
 .removeButton:focus-within {
   opacity:
     1;
+}
+@media (
+  max-width: 320px
+) {
+  .actions {
+    flex-direction:
+      column;
+
+    align-items:
+      stretch;
+  }
+
+  .actionButton {
+    width:
+      100%;
+  }
 }

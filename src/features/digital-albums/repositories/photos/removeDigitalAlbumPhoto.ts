@@ -14,7 +14,6 @@ import type {
   RemoveDigitalAlbumPhotoInput,
 } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
 
-
 /* ==========================================================================
    Remove Digital Album Photo
 ========================================================================== */
@@ -25,7 +24,6 @@ export async function removeDigitalAlbumPhoto(
 ): Promise<void> {
   const supabase =
     await createServerClient();
-
 
   /* ==========================================================================
      Get Photo
@@ -40,7 +38,7 @@ export async function removeDigitalAlbumPhoto(
         "event_photos"
       )
       .select(
-        "id, image_path"
+        "id, image_path, source_type"
       )
       .eq(
         "id",
@@ -68,7 +66,6 @@ export async function removeDigitalAlbumPhoto(
       "Fotografija nije pronađena."
     );
   }
-
 
   /* ==========================================================================
      Remove Digital Album Association
@@ -101,6 +98,16 @@ export async function removeDigitalAlbumPhoto(
     );
   }
 
+  /* ==========================================================================
+     Keep Photo Wall Source
+  ========================================================================== */
+
+  if (
+    photo.source_type ===
+    "photo-wall"
+  ) {
+    return;
+  }
 
   /* ==========================================================================
      Delete Orphan Event Photo
@@ -113,7 +120,6 @@ export async function removeDigitalAlbumPhoto(
     imagePath:
       photo.image_path,
   });
-
 
   /* ==========================================================================
      Delete Empty Digital Album Directory

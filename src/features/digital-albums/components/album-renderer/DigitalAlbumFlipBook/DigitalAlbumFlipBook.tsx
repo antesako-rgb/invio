@@ -33,10 +33,12 @@ const FLIP_DURATION =
 /* ==========================================================================
    Types
 ========================================================================== */
-
 interface DigitalAlbumFlipBookProps {
   children:
     ReactNode;
+
+  theme:
+    string;
 
   width?:
     number;
@@ -64,16 +66,21 @@ interface DigitalAlbumFlipBookProps {
 /* ==========================================================================
    Digital Album Flip Book
 ========================================================================== */
-
 export default function DigitalAlbumFlipBook({
   children,
+  theme,
   width = 480,
   height = 640,
   activePageIndex,
   onPageChange,
   onVisiblePagesChange,
 }: DigitalAlbumFlipBookProps) {
+  /* ==========================================================================
+     Flip Book
+  ========================================================================== */
+
   const {
+    rootRef,
     bookRef,
     isMobile,
     stageStyle,
@@ -89,12 +96,13 @@ export default function DigitalAlbumFlipBook({
       children,
       width,
       height,
+      activePageIndex,
       onVisiblePagesChange,
     });
 
 
   /* ==========================================================================
-     Page Change
+     Flip
   ========================================================================== */
 
   function handleFlip({
@@ -114,104 +122,111 @@ export default function DigitalAlbumFlipBook({
   ========================================================================== */
 
   return (
-    <div
-      className={
-        styles.root
-      }
-      style={
-        stageStyle
-      }
-    >
+<div
+  ref={
+    rootRef
+  }
+  className={
+    styles.root
+  }
+  style={
+    stageStyle
+  }
+  data-album-theme={
+    theme
+  }
+>
+      <button
+        type="button"
+        className={
+          styles.previous
+        }
+        disabled={
+          !canGoPrevious
+        }
+        aria-label="Previous page"
+        onClick={
+          handlePrevious
+        }
+      >
+        <ChevronLeft
+          aria-hidden="true"
+        />
+      </button>
+
       <div
         className={
           styles.stage
         }
       >
-        {canGoPrevious && (
-          <button
-            type="button"
-            className={`${styles.navigation} ${styles.navigationPrevious}`}
-            aria-label="Prethodna stranica"
-            onClick={
-              handlePrevious
-            }
-          >
-            <ChevronLeft />
-          </button>
-        )}
-
         <div
           className={
-            styles.bookStage
+            styles.book
           }
         >
-          <div
-            className={
-              styles.book
+          <FlipBook
+            ref={
+              bookRef
+            }
+            width={
+              width
+            }
+            height={
+              height
+            }
+            size="stretch"
+            layout={
+              isMobile
+                ? "single"
+                : "spread"
+            }
+            cover={
+              !isMobile
+            }
+            flipDuration={
+              FLIP_DURATION
+            }
+            shadows={
+              false
+            }
+            hoverCorners={
+              false
+            }
+            onInit={
+              handleInit
+            }
+            onUpdate={
+              handleUpdate
+            }
+            onFlip={
+              handleFlip
+            }
+            onFrame={
+              handleFrame
             }
           >
-            <FlipBook
-              ref={
-                bookRef
-              }
-              page={
-                activePageIndex
-              }
-              width={
-                width
-              }
-              height={
-                height
-              }
-              size="stretch"
-              layout={
-                isMobile
-                  ? "single"
-                  : "spread"
-              }
-              cover={
-                !isMobile
-              }
-              flipDuration={
-                FLIP_DURATION
-              }
-              shadows={
-                false
-              }
-              hoverCorners={
-                false
-              }
-              onInit={
-                handleInit
-              }
-              onUpdate={
-                handleUpdate
-              }
-              onFlip={
-                handleFlip
-              }
-              onFrame={
-                handleFrame
-              }
-            >
-              {children}
-            </FlipBook>
-          </div>
+            {children}
+          </FlipBook>
         </div>
-
-        {canGoNext && (
-          <button
-            type="button"
-            className={`${styles.navigation} ${styles.navigationNext}`}
-            aria-label="Sljedeća stranica"
-            onClick={
-              handleNext
-            }
-          >
-            <ChevronRight />
-          </button>
-        )}
       </div>
+
+      <button
+        type="button"
+        className={
+          styles.next
+        }
+        disabled={
+          !canGoNext
+        }
+        aria-label="Next page"
+        onClick={
+          handleNext
+        }
+      >
+        <ChevronRight
+          aria-hidden="true"
+        />
+      </button>
     </div>
   );
 }

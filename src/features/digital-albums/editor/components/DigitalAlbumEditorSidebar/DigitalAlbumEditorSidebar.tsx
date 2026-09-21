@@ -4,6 +4,9 @@ import {
   useTranslations,
 } from "next-intl";
 
+import DigitalAlbumDesignPanel
+  from "@/features/digital-albums/editor/components/DigitalAlbumEditorSidebar/panels/DigitalAlbumDesignPanel/DigitalAlbumDesignPanel";
+
 import DigitalAlbumPagesPanel
   from "@/features/digital-albums/editor/components/DigitalAlbumEditorSidebar/panels/DigitalAlbumPagesPanel/DigitalAlbumPagesPanel";
 
@@ -16,6 +19,8 @@ import type {
 
 import type {
   DigitalAlbumDocumentPage,
+  DigitalAlbumPageLayout,
+  DigitalAlbumTheme,
 } from "@/features/digital-albums/types/digitalAlbumDocument.types";
 
 import type {
@@ -50,11 +55,17 @@ interface DigitalAlbumEditorSidebarProps {
   pages:
     DigitalAlbumDocumentPage[];
 
+  theme:
+    DigitalAlbumTheme;
+
   activePageId:
     string | null;
 
   activePageNumber:
     number | null;
+
+  activePageLayout:
+    DigitalAlbumPageLayout | null;
 
   visiblePageIndexes:
     number[];
@@ -68,14 +79,54 @@ interface DigitalAlbumEditorSidebarProps {
         string
     ) => void;
 
+  onRemovePhotoFromPage:
+    () => void;
+
   onSelectPage:
     (
       pageId:
         string
     ) => void;
 
+  onChangePageLayout:
+    (
+      pageId:
+        string,
+      layout:
+        DigitalAlbumPageLayout
+    ) => void;
+
+  onChangeTheme:
+    (
+      theme:
+        DigitalAlbumTheme
+    ) => void;
+
   onAddPage:
-    () => void;
+    (
+      layout:
+        DigitalAlbumPageLayout
+    ) => void;
+
+  onDuplicatePage:
+    (
+      pageId:
+        string
+    ) => void;
+
+  onDeletePage:
+    (
+      pageId:
+        string
+    ) => void;
+
+  onSwapPages:
+    (
+      sourcePageId:
+        string,
+      targetPageId:
+        string
+    ) => void;
 }
 
 
@@ -89,13 +140,21 @@ export default function DigitalAlbumEditorSidebar({
   photos,
   photoWalls,
   pages,
+  theme,
   activePageId,
   activePageNumber,
+  activePageLayout,
   visiblePageIndexes,
   selectedPhotoId,
   onSelectPhoto,
+  onRemovePhotoFromPage,
   onSelectPage,
+  onChangePageLayout,
+  onChangeTheme,
   onAddPage,
+  onDuplicatePage,
+  onDeletePage,
+  onSwapPages,
 }: DigitalAlbumEditorSidebarProps) {
   /* ==========================================================================
      Translations
@@ -163,6 +222,9 @@ export default function DigitalAlbumEditorSidebar({
             onSelectPhoto={
               onSelectPhoto
             }
+            onRemovePhotoFromPage={
+              onRemovePhotoFromPage
+            }
           />
         );
 
@@ -187,10 +249,39 @@ export default function DigitalAlbumEditorSidebar({
             onAddPage={
               onAddPage
             }
+            onDuplicatePage={
+              onDuplicatePage
+            }
+            onDeletePage={
+              onDeletePage
+            }
+            onSwapPages={
+              onSwapPages
+            }
           />
         );
 
       case "design":
+        return (
+          <DigitalAlbumDesignPanel
+            theme={
+              theme
+            }
+            activePageId={
+              activePageId
+            }
+            activePageLayout={
+              activePageLayout
+            }
+            onChangePageLayout={
+              onChangePageLayout
+            }
+            onChangeTheme={
+              onChangeTheme
+            }
+          />
+        );
+
       default:
         return null;
     }

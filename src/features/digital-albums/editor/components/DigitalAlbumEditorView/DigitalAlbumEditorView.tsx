@@ -4,12 +4,12 @@ import {
   useState,
 } from "react";
 
-import {
-  updateDigitalAlbumDocumentAction,
-} from "@/features/digital-albums/actions/album/updateDigitalAlbumDocumentAction";
-
 import DigitalAlbumRenderer
   from "@/features/digital-albums/components/album-renderer/DigitalAlbumRenderer/DigitalAlbumRenderer";
+
+import type {
+  DigitalAlbumRendererPhoto,
+} from "@/features/digital-albums/components/album-renderer/types/digitalAlbumRenderer.types";
 
 import DigitalAlbumEditor
   from "@/features/digital-albums/editor/components/DigitalAlbumEditor/DigitalAlbumEditor";
@@ -17,14 +17,18 @@ import DigitalAlbumEditor
 import DigitalAlbumEditorSidebar
   from "@/features/digital-albums/editor/components/DigitalAlbumEditorSidebar/DigitalAlbumEditorSidebar";
 
+import useDigitalAlbumEditor
+  from "@/features/digital-albums/editor/hooks/album-editor/useDigitalAlbumEditor";
+
 import type {
   DigitalAlbumEditorStep,
 } from "@/features/digital-albums/editor/types/digitalAlbumEditor.types";
 
 import type {
   DigitalAlbumDocument,
+  DigitalAlbumPageContent,
+  DigitalAlbumPageLayout,
 } from "@/features/digital-albums/types/digitalAlbumDocument.types";
-
 import type {
   DigitalAlbumPhotoWithPhoto,
 } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
@@ -69,19 +73,6 @@ export default function DigitalAlbumEditorView({
   photoWalls,
 }: DigitalAlbumEditorViewProps) {
   /* ==========================================================================
-     Document
-  ========================================================================== */
-
-  const [
-    document,
-    setDocument,
-  ] =
-    useState<DigitalAlbumDocument>(
-      initialDocument
-    );
-
-
-  /* ==========================================================================
      State
   ========================================================================== */
 
@@ -93,119 +84,128 @@ export default function DigitalAlbumEditorView({
       "photos"
     );
 
-  const [
-    activePageId,
-    setActivePageId,
-  ] =
-    useState<string | null>(
-      () =>
-        initialDocument.pages[0]?.id ??
-        null
-    );
 
-  const [
-    visiblePageIndexes,
-    setVisiblePageIndexes,
-  ] =
-    useState<number[]>(
-      () =>
-        initialDocument.pages.length > 0
-          ? [0]
-          : []
-    );
+  /* ==========================================================================
+     Editor
+  ========================================================================== */
 
-  const [
-    isSaving,
-    setIsSaving,
-  ] =
-    useState(
-      false
-    );
+  const editor =
+    useDigitalAlbumEditor({
+      albumId,
+      initialDocument,
+      documentVersion,
+    });
+
+
+  /* ==========================================================================
+     Renderer Photos
+  ========================================================================== */
+
+  const rendererPhotos:
+    DigitalAlbumRendererPhoto[] =
+      photos.map(
+        (albumPhoto) => ({
+          id:
+            albumPhoto.photo_id,
+
+          imagePath:
+            albumPhoto.photo.image_path,
+
+          description:
+            albumPhoto.description,
+        })
+      );
 
 
   /* ==========================================================================
      Active Page
   ========================================================================== */
 
-  const activePageIndex =
-    document.pages.findIndex(
-      (page) =>
-        page.id ===
-        activePageId
-    );
-
   const activePage =
-    activePageIndex >= 0
-      ? document.pages[
-          activePageIndex
+    editor.activePageIndex >= 0
+      ? editor.document.pages[
+          editor.activePageIndex
         ]
       : undefined;
 
-  const activePageNumber =
-    activePageIndex >= 0
-      ? activePageIndex + 1
-      : null;
-
-  const selectedPhotoId =
-    activePage?.photos[0]?.photoId ??
+  const activePageLayout =
+    activePage?.layout ??
     null;
 
 
-  /* ==========================================================================
-     Save Document
-  ========================================================================== */
+/* ==========================================================================
+   Add Page
+========================================================================== */
 
-  async function saveDocument(
-    nextDocument:
-      DigitalAlbumDocument
-  ) {
-    setIsSaving(
-      true
+async function handleAddPage(
+  layout:
+    DigitalAlbumPageLayout
+) {
+  await editor.addPage(
+    layout
+  );
+
+  setActiveStep(
+    "photos"
+  );
+}
+
+
+/* ==========================================================================
+   Select Photo Slot
+========================================================================== */
+
+function handleSelectPhotoSlot(
+  pageId:
+    string,
+  photoSlotId:
+    string
+) {
+  editor.selectPhotoSlot(
+    pageId,
+    photoSlotId
+  );
+
+  const page =
+    editor.document.pages.find(
+      (item) =>
+        item.id ===
+        pageId
     );
 
-    try {
-      const result =
-        await updateDigitalAlbumDocumentAction({
-          albumId,
+  const photoSlot =
+    page?.photos.find(
+      (item) =>
+        item.id ===
+        photoSlotId
+    );
 
-          document:
-            nextDocument,
-
-          documentVersion,
-        });
-
-      if (
-        !result.success
-      ) {
-        console.error(
-          "Digital album document save error:",
-          result.message
-        );
-      }
-    } finally {
-      setIsSaving(
-        false
-      );
-    }
-  }
-
-
-  /* ==========================================================================
-     Step
-  ========================================================================== */
-
-  function handleStepChange(
-    step:
-      DigitalAlbumEditorStep
+  if (
+    !photoSlot?.photoId
   ) {
     setActiveStep(
-      step
+      "photos"
     );
   }
+}
 
+/* ==========================================================================
+   Page Content
+========================================================================== */
 
+async function handlePageContentChange(
+  pageId:
+    string,
+  content:
+    Partial<DigitalAlbumPageContent>
+) {
+  await editor.updatePageContent(
+    pageId,
+    content
+  );
+}
   /* ==========================================================================
-     Photo
+     Photo Actions
   ========================================================================== */
 
   async function handleSelectPhoto(
@@ -213,193 +213,26 @@ export default function DigitalAlbumEditorView({
       string
   ) {
     if (
-      !activePageId
+      !editor.activePhotoSlotId
     ) {
       return;
     }
 
-    const nextDocument:
-      DigitalAlbumDocument = {
-        ...document,
-
-        pages:
-          document.pages.map(
-            (page) => {
-              if (
-                page.id !==
-                  activePageId
-              ) {
-                return page;
-              }
-
-              const photoSlot =
-                page.photos[0];
-
-              if (
-                !photoSlot
-              ) {
-                return page;
-              }
-
-              return {
-                ...page,
-
-                photos: [
-                  {
-                    ...photoSlot,
-
-                    photoId,
-                  },
-
-                  ...page.photos.slice(
-                    1
-                  ),
-                ],
-              };
-            }
-          ),
-      };
-
-    setDocument(
-      nextDocument
-    );
-
-    await saveDocument(
-      nextDocument
+    await editor.selectPhoto(
+      editor.activePhotoSlotId,
+      photoId
     );
   }
 
-
-  /* ==========================================================================
-     Page
-  ========================================================================== */
-
-  function handleSelectPage(
-    pageId:
-      string
-  ) {
-    setActivePageId(
-      pageId
-    );
-
-    const page =
-      document.pages.find(
-        (item) =>
-          item.id ===
-          pageId
-      );
-
-    const photoId =
-      page?.photos[0]?.photoId ??
-      null;
-
+  async function handleRemovePhotoFromPage() {
     if (
-      !photoId
-    ) {
-      setActiveStep(
-        "photos"
-      );
-    }
-  }
-
-  function handleFlipBookPageChange(
-    pageIndex:
-      number
-  ) {
-    const page =
-      document.pages[
-        pageIndex
-      ];
-
-    if (
-      !page
+      !editor.activePhotoSlotId
     ) {
       return;
     }
 
-    setActivePageId(
-      page.id
-    );
-  }
-
-function handleVisiblePagesChange(
-  pageIndexes:
-    number[]
-) {
-setVisiblePageIndexes(
-  (currentPageIndexes) => {
-    const isSame =
-      currentPageIndexes.length ===
-        pageIndexes.length &&
-      currentPageIndexes.every(
-        (
-          pageIndex,
-          index
-        ) =>
-          pageIndex ===
-          pageIndexes[index]
-      );
-
-    if (
-      isSame
-    ) {
-      return currentPageIndexes;
-    }
-
-    return pageIndexes;
-  }
-);
-}
-
-  async function handleAddPage() {
-    const pageId =
-      crypto.randomUUID();
-
-    const photoSlotId =
-      crypto.randomUUID();
-
-    const nextDocument:
-      DigitalAlbumDocument = {
-        ...document,
-
-        pages: [
-          ...document.pages,
-          {
-            id:
-              pageId,
-
-            layout:
-              "full-photo",
-
-            photos: [
-              {
-                id:
-                  photoSlotId,
-
-                photoId:
-                  null,
-              },
-            ],
-
-            content: {},
-          },
-        ],
-      };
-
-    setDocument(
-      nextDocument
-    );
-
-    setActivePageId(
-      pageId
-    );
-
-    setActiveStep(
-      "photos"
-    );
-
-    await saveDocument(
-      nextDocument
+    await editor.removePhotoFromPage(
+      editor.activePhotoSlotId
     );
   }
 
@@ -414,10 +247,10 @@ setVisiblePageIndexes(
         activeStep
       }
       onStepChange={
-        handleStepChange
+        setActiveStep
       }
       sidebar={
-       <DigitalAlbumEditorSidebar
+  <DigitalAlbumEditorSidebar
   albumId={
     albumId
   }
@@ -431,51 +264,87 @@ setVisiblePageIndexes(
     photoWalls
   }
   pages={
-    document.pages
+    editor.document.pages
+  }
+  theme={
+    editor.document.theme
   }
   activePageId={
-    activePageId
+    editor.activePageId
   }
   activePageNumber={
-    activePageNumber
+    editor.activePageNumber
+  }
+  activePageLayout={
+    activePageLayout
   }
   visiblePageIndexes={
-    visiblePageIndexes
+    editor.visiblePageIndexes
   }
   selectedPhotoId={
-    selectedPhotoId
+    editor.selectedPhotoId
   }
   onSelectPhoto={
     handleSelectPhoto
   }
+  onRemovePhotoFromPage={
+    handleRemovePhotoFromPage
+  }
   onSelectPage={
-    handleSelectPage
+    editor.selectPage
+  }
+  onChangePageLayout={
+    editor.changePageLayout
+  }
+  onChangeTheme={
+    editor.changeTheme
   }
   onAddPage={
     handleAddPage
   }
+  onDuplicatePage={
+    editor.duplicatePage
+  }
+  onDeletePage={
+    editor.deletePage
+  }
+  onSwapPages={
+    editor.swapPages
+  }
 />
       }
     >
-      <DigitalAlbumRenderer
-        document={
-          document
-        }
-        photos={
-          photos
-        }
-        activePageIndex={
-          activePageIndex >= 0
-            ? activePageIndex
-            : undefined
-        }
-        onPageChange={
-          handleFlipBookPageChange
-        }
-        onVisiblePagesChange={
-          handleVisiblePagesChange
-        }
-      />
+<DigitalAlbumRenderer
+  document={
+    editor.document
+  }
+  photos={
+    rendererPhotos
+  }
+  activePageIndex={
+    editor.activePageIndex >= 0
+      ? editor.activePageIndex
+      : undefined
+  }
+  activePhotoSlotId={
+    editor.activePhotoSlotId
+  }
+  visiblePageIndexes={
+    editor.visiblePageIndexes
+  }
+  onSelectPhotoSlot={
+    handleSelectPhotoSlot
+  }
+  onPageContentChange={
+    handlePageContentChange
+  }
+  onPageChange={
+    editor.handleFlipBookPageChange
+  }
+  onVisiblePagesChange={
+    editor.handleVisiblePagesChange
+  }
+/>
     </DigitalAlbumEditor>
   );
 }

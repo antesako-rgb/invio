@@ -8,6 +8,7 @@
 
   width:
     100%;
+
   height:
     100%;
 
@@ -15,20 +16,8 @@
     hidden;
 
   background:
-    var(--background);
-}
+    var(--album-background);
 
-
-/* ==========================================================================
-   Empty
-========================================================================== */
-
-.empty {
-  width:
-    100%;
-  height:
-    100%;
-
-  background:
-    var(--muted);
+  --album-design-font-size:
+    4px;
 }

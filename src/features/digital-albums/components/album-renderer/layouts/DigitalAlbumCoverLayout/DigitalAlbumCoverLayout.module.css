@@ -1,0 +1,160 @@
+/* ==========================================================================
+   Root
+========================================================================== */
+
+.root {
+  position:
+    relative;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  overflow:
+    hidden;
+
+  background:
+    var(--album-background);
+}
+
+
+/* ==========================================================================
+   Image
+========================================================================== */
+
+.image {
+  object-fit:
+    cover;
+}
+
+
+/* ==========================================================================
+   Overlay
+========================================================================== */
+
+.overlay {
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    1;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 35%,
+      rgb(0 0 0 / 0.15) 55%,
+      rgb(0 0 0 / 0.72) 100%
+    );
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.content {
+  position:
+    absolute;
+  right:
+    2rem;
+  bottom:
+    3rem;
+  left:
+    2rem;
+  z-index:
+    20;
+  display:
+    flex;
+  flex-direction:
+    column;
+  align-items:
+    center;
+  text-align:
+    center;
+  color:
+    var(--album-caption-foreground);
+}
+
+
+/* ==========================================================================
+   Text
+========================================================================== */
+
+.text {
+  margin:
+    0 0 0.75rem;
+
+  font-family:
+    var(--album-body-font);
+
+  font-size:
+    0.7rem;
+
+  font-weight:
+    400;
+
+  line-height:
+    1.4;
+
+  letter-spacing:
+    0.18em;
+
+  text-transform:
+    uppercase;
+}
+
+
+/* ==========================================================================
+   Title
+========================================================================== */
+
+.title {
+  margin:
+    0;
+
+  font-family:
+    var(--album-title-font);
+
+  font-size:
+    2.5rem;
+
+  font-weight:
+    400;
+
+  line-height:
+    1.05;
+
+  text-wrap:
+    balance;
+}
+
+
+/* ==========================================================================
+   Subtitle
+========================================================================== */
+
+.subtitle {
+  margin:
+    0.75rem 0 0;
+
+  font-family:
+    var(--album-script-font);
+
+  font-size:
+    1.75rem;
+
+  font-weight:
+    400;
+
+  line-height:
+    1.1;
+}

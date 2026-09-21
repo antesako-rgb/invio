@@ -50,6 +50,9 @@ interface UseDigitalAlbumFlipBookProps {
   height:
     number;
 
+  activePageIndex?:
+    number;
+
   onVisiblePagesChange?:
     (
       pageIndexes:
@@ -71,21 +74,44 @@ export default function useDigitalAlbumFlipBook({
   children,
   width,
   height,
+  activePageIndex,
   onVisiblePagesChange,
 }: UseDigitalAlbumFlipBookProps) {
   /* ==========================================================================
      Refs
   ========================================================================== */
 
+  const rootRef =
+    useRef<HTMLDivElement>(
+      null
+    );
+
   const bookRef =
     useRef<Book>(
       null
     );
 
-const visiblePageIndexesRef =
-  useRef<number[]>(
-    []
-  );
+  const pageWidthRef =
+    useRef(
+      width
+    );
+
+  const visiblePageIndexesRef =
+    useRef<number[]>(
+      []
+    );
+
+  const isFlippingRef =
+    useRef(
+      false
+    );
+
+  const currentPageIndexRef =
+    useRef(
+      0
+    );
+
+
   /* ==========================================================================
      Flip Sound
   ========================================================================== */
@@ -112,14 +138,6 @@ const visiblePageIndexesRef =
   /* ==========================================================================
      State
   ========================================================================== */
-
-  const [
-    bookOffsetProgress,
-    setBookOffsetProgress,
-  ] =
-    useState(
-      -1
-    );
 
   const [
     responsiveMetrics,
@@ -159,8 +177,37 @@ const visiblePageIndexesRef =
     setCanGoNext,
   ] =
     useState(
-      true
+      pageCount > 1
     );
+
+
+  /* ==========================================================================
+     Book Offset
+  ========================================================================== */
+
+  function setBookOffset(
+    progress:
+      number
+  ) {
+    const root =
+      rootRef.current;
+
+    if (!root) {
+      return;
+    }
+
+    const offset =
+      (
+        pageWidthRef.current /
+        2
+      ) *
+      progress;
+
+    root.style.setProperty(
+      "--album-book-offset",
+      `${offset}px`
+    );
+  }
 
 
   /* ==========================================================================
@@ -175,9 +222,20 @@ const visiblePageIndexesRef =
         );
 
       function handleChange() {
+        const nextIsMobile =
+          mediaQuery.matches;
+
         setIsMobile(
-          mediaQuery.matches
+          nextIsMobile
         );
+
+        if (
+          nextIsMobile
+        ) {
+          setBookOffset(
+            0
+          );
+        }
       }
 
       handleChange();
@@ -202,22 +260,10 @@ const visiblePageIndexesRef =
      Dimensions
   ========================================================================== */
 
-  const actualPageWidth =
-    responsiveMetrics.pageWidth;
-
-  const bookOffset =
-    isMobile
-      ? 0
-      : (
-          actualPageWidth /
-          2
-        ) *
-        bookOffsetProgress;
-
   const designFontSize =
     BASE_FONT_SIZE *
     (
-      actualPageWidth /
+      responsiveMetrics.pageWidth /
       width
     );
 
@@ -232,7 +278,7 @@ const visiblePageIndexesRef =
       `${width * 2}px`,
 
     "--album-book-offset":
-      `${bookOffset}px`,
+      "0px",
 
     "--album-design-font-size":
       `${designFontSize}px`,
@@ -261,25 +307,23 @@ const visiblePageIndexesRef =
       return;
     }
 
-    setResponsiveMetrics(
-      (currentMetrics) => {
-        const hasWidthChanged =
-          Math.abs(
-            currentMetrics.pageWidth -
-            nextPageWidth
-          ) >=
-          GEOMETRY_EPSILON;
+    if (
+      Math.abs(
+        pageWidthRef.current -
+        nextPageWidth
+      ) <
+      GEOMETRY_EPSILON
+    ) {
+      return;
+    }
 
-        if (!hasWidthChanged) {
-          return currentMetrics;
-        }
+    pageWidthRef.current =
+      nextPageWidth;
 
-        return {
-          pageWidth:
-            nextPageWidth,
-        };
-      }
-    );
+    setResponsiveMetrics({
+      pageWidth:
+        nextPageWidth,
+    });
   }
 
   function updateResponsiveGeometry() {
@@ -301,24 +345,27 @@ const visiblePageIndexesRef =
   ========================================================================== */
 
   function handleInit() {
-    updateResponsiveGeometry();
-
     const book =
       bookRef.current;
 
-    if (
-      book &&
-      !isMobile
-    ) {
-      setBookOffsetProgress(
-        book.page === 0
-          ? -1
-          : 0
-      );
+    if (!book) {
+      return;
     }
 
+    updateResponsiveGeometry();
+
+    currentPageIndexRef.current =
+      book.page;
+
+    setBookOffset(
+      !isMobile &&
+      book.page === 0
+        ? -1
+        : 0
+    );
+
     setCanGoPrevious(
-      false
+      book.page > 0
     );
 
     setCanGoNext(
@@ -336,15 +383,124 @@ const visiblePageIndexesRef =
 
 
   /* ==========================================================================
+     Requested Page
+  ========================================================================== */
+
+  useEffect(
+    () => {
+      if (
+        !isInitialized ||
+        activePageIndex ===
+          undefined
+      ) {
+        return;
+      }
+
+      const book =
+        bookRef.current;
+
+      if (
+        !book ||
+        isFlippingRef.current ||
+        currentPageIndexRef.current ===
+          activePageIndex
+      ) {
+        return;
+      }
+
+      isFlippingRef.current =
+        true;
+
+      void book
+        .flipTo(
+          activePageIndex
+        )
+        .then(
+          (didFlip) => {
+            if (
+              !didFlip
+            ) {
+              isFlippingRef.current =
+                false;
+            }
+          }
+        )
+        .catch(
+          () => {
+            isFlippingRef.current =
+              false;
+          }
+        );
+    },
+    [
+      activePageIndex,
+      isInitialized,
+    ]
+  );
+
+
+  /* ==========================================================================
      Navigation
   ========================================================================== */
 
   function handlePrevious() {
-    void bookRef.current?.flipPrev();
+    if (
+      isFlippingRef.current
+    ) {
+      return;
+    }
+
+    isFlippingRef.current =
+      true;
+
+    void bookRef.current
+      ?.flipPrev()
+      .then(
+        (didFlip) => {
+          if (
+            !didFlip
+          ) {
+            isFlippingRef.current =
+              false;
+          }
+        }
+      )
+      .catch(
+        () => {
+          isFlippingRef.current =
+            false;
+        }
+      );
   }
 
   function handleNext() {
-    void bookRef.current?.flipNext();
+    if (
+      isFlippingRef.current
+    ) {
+      return;
+    }
+
+    isFlippingRef.current =
+      true;
+
+    void bookRef.current
+      ?.flipNext()
+      .then(
+        (didFlip) => {
+          if (
+            !didFlip
+          ) {
+            isFlippingRef.current =
+              false;
+          }
+        }
+      )
+      .catch(
+        () => {
+          isFlippingRef.current =
+            false;
+        }
+      );
   }
 
 
@@ -365,19 +521,9 @@ const visiblePageIndexesRef =
       return;
     }
 
-
-    /* ========================================================================
-       Flip Sound
-    ======================================================================== */
-
     handleFlipSoundFrame(
       frame
     );
-
-
-    /* ========================================================================
-       Responsive Geometry
-    ======================================================================== */
 
     setPageWidth(
       frame.rect.pageWidth
@@ -385,50 +531,51 @@ const visiblePageIndexesRef =
 
 
     /* ========================================================================
-       Stable Page State
+       Stable Frame
     ======================================================================== */
 
     if (!frame.flip) {
- const visiblePageIndexes = [
-  frame.left,
-  frame.right,
-].filter(
-  (
-    pageIndex
-  ): pageIndex is number =>
-    pageIndex !== null
-);
+      isFlippingRef.current =
+        false;
 
-const previousVisiblePageIndexes =
-  visiblePageIndexesRef.current;
+      currentPageIndexRef.current =
+        book.page;
 
-const haveVisiblePagesChanged =
-  previousVisiblePageIndexes.length !==
-    visiblePageIndexes.length ||
-  previousVisiblePageIndexes.some(
-    (
-      pageIndex,
-      index
-    ) =>
-      pageIndex !==
-      visiblePageIndexes[index]
-  );
+      const visiblePageIndexes = [
+        frame.left,
+        frame.right,
+      ].filter(
+        (
+          pageIndex
+        ): pageIndex is number =>
+          pageIndex !== null
+      );
 
-if (
-  haveVisiblePagesChanged
-) {
-  visiblePageIndexesRef.current =
-    visiblePageIndexes;
+      const previousVisiblePageIndexes =
+        visiblePageIndexesRef.current;
 
-  onVisiblePagesChange?.(
-    visiblePageIndexes
-  );
-}
+      const haveVisiblePagesChanged =
+        previousVisiblePageIndexes.length !==
+          visiblePageIndexes.length ||
+        previousVisiblePageIndexes.some(
+          (
+            pageIndex,
+            index
+          ) =>
+            pageIndex !==
+            visiblePageIndexes[index]
+        );
 
+      if (
+        haveVisiblePagesChanged
+      ) {
+        visiblePageIndexesRef.current =
+          visiblePageIndexes;
 
-      /* ======================================================================
-         Navigation State
-      ====================================================================== */
+        onVisiblePagesChange?.(
+          visiblePageIndexes
+        );
+      }
 
       const isFirstPage =
         frame.left === null &&
@@ -461,6 +608,10 @@ if (
     ======================================================================== */
 
     if (isMobile) {
+      setBookOffset(
+        0
+      );
+
       return;
     }
 
@@ -482,19 +633,12 @@ if (
           lastPageIndex &&
         frame.right === null;
 
-      const nextOffsetProgress =
+      setBookOffset(
         isFrontCover
           ? -1
           : isBackCover
             ? 1
-            : 0;
-
-      setBookOffsetProgress(
-        (currentProgress) =>
-          currentProgress ===
-          nextOffsetProgress
-            ? currentProgress
-            : nextOffsetProgress
+            : 0
       );
 
       return;
@@ -510,24 +654,21 @@ if (
       ) /
       100;
 
-
-    /* ========================================================================
-       Front Cover
-    ======================================================================== */
-
     const isOpeningFrontCover =
       book.page === 0 &&
-      flip.direction === "forward";
+      flip.direction ===
+        "forward";
 
     const isClosingFrontCover =
       book.page <= 2 &&
-      flip.direction === "back";
+      flip.direction ===
+        "back";
 
     if (
       isOpeningFrontCover ||
       isClosingFrontCover
     ) {
-      setBookOffsetProgress(
+      setBookOffset(
         isOpeningFrontCover
           ? -1 + progress
           : -progress
@@ -535,11 +676,6 @@ if (
 
       return;
     }
-
-
-    /* ========================================================================
-       Back Cover
-    ======================================================================== */
 
     const isClosingBackCover =
       flip.direction ===
@@ -557,16 +693,11 @@ if (
       isClosingBackCover ||
       isOpeningBackCover
     ) {
-      const nextOffsetProgress =
+      setBookOffset(
         isClosingBackCover
           ? progress
-          : 1 - progress;
-
-      setBookOffsetProgress(
-        nextOffsetProgress
+          : 1 - progress
       );
-
-      return;
     }
   }
 
@@ -576,6 +707,7 @@ if (
   ========================================================================== */
 
   return {
+    rootRef,
     bookRef,
     isMobile,
     stageStyle,
