@@ -29,7 +29,7 @@ import "@/features/digital-albums/components/album-renderer/themes/classic/Digit
 ========================================================================== */
 
 const PAGE_WIDTH =
-  480;
+  440;
 
 const PAGE_HEIGHT =
   640;

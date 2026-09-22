@@ -69,7 +69,7 @@ interface DigitalAlbumFlipBookProps {
 export default function DigitalAlbumFlipBook({
   children,
   theme,
-  width = 480,
+  width = 440,
   height = 640,
   activePageIndex,
   onPageChange,
