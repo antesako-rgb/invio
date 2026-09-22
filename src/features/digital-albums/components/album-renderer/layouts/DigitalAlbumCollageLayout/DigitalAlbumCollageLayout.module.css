@@ -24,6 +24,20 @@
   overflow:
     hidden;
 
+  background-image:
+    var(
+      --album-collage-background-image,
+      var(--album-page-background-image)
+    );
+
+  background-size:
+    cover;
+
+  background-position:
+    center;
+
+  background-repeat:
+    no-repeat;
 
   color:
     var(--album-foreground);
@@ -118,7 +132,7 @@
     7.5cqw;
 
   background:
-    var(--album-background);
+    transparent;
 }
 
 

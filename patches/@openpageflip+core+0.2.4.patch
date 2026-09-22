@@ -330,10 +330,29 @@ index 0000000..854c1b3
 +//# sourceMappingURL=index.d.ts.map
 \ No newline at end of file
 diff --git a/node_modules/@openpageflip/core/dist/index.js b/node_modules/@openpageflip/core/dist/index.js
-index 2b6b10e..d04b405 100644
+index 2b6b10e..0ce8b9f 100644
 --- a/node_modules/@openpageflip/core/dist/index.js
 +++ b/node_modules/@openpageflip/core/dist/index.js
-@@ -1500,7 +1500,7 @@ function createBook(container, userOptions) {
+@@ -713,7 +713,7 @@ var FlipController = class {
+ 		if (session === null || session.fold === null) return Promise.resolve(false);
+ 		const pos = session.fold.position;
+ 		const y = session.corner === FlipCorner.bottom ? session.pageHeight : 0;
+-		return pos.x <= 0 ? this.animateTo(pos, {
++		return pos.x <= session.pageWidth * 0.8 ? this.animateTo(pos, {
+ 			x: -session.pageWidth,
+ 			y
+ 		}, true, true) : this.animateTo(pos, {
+@@ -1268,8 +1268,7 @@ var DomRenderer = class {
+ 		if (flip.shadow === null) this.hideShadows();
+ 		else if (flippingHard) {
+ 			this.hideSoftShadows();
+-			const landing = flip.direction === FlipDirection.forward ? frame.left : frame.right;
+-			this.drawHardShadows(flip.shadow, rect, landing !== null);
++			this.hideHardShadows();
+ 		} else {
+ 			this.hideHardShadows();
+ 			this.drawSoftShadows(flip.shadow, flip.fold.rect, rect);
+@@ -1500,7 +1499,7 @@ function createBook(container, userOptions) {
  			return reducedMotion.matches ? 0 : options.flipDuration;
  		}
  	}, clock, {
