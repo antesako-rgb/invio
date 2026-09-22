@@ -55,8 +55,6 @@
     100%;
   max-width:
     var(--album-spread-width);
-  aspect-ratio:
-    3 / 2;
   opacity:
     var(--album-initialized);
   transform:
@@ -66,7 +64,6 @@
   will-change:
     transform;
 }
-
 
 /* ==========================================================================
    Navigation
@@ -116,12 +113,26 @@
 
 .previous {
   left:
-    1rem;
+    max(
+      1rem,
+      calc(
+        50% -
+        var(--album-spread-width) / 2 -
+        4rem
+      )
+    );
 }
 
 .next {
   right:
-    1rem;
+    max(
+      1rem,
+      calc(
+        50% -
+        var(--album-spread-width) / 2 -
+        4rem
+      )
+    );
 }
 
 .previous:hover:not(:disabled),
@@ -177,8 +188,7 @@
   .book {
     max-width:
       var(--album-page-width);
-    aspect-ratio:
-      3 / 4;
+
   }
 
   .previous,

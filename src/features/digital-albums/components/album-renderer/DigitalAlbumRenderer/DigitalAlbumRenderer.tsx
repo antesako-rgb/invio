@@ -32,7 +32,7 @@ const PAGE_WIDTH =
   480;
 
 const PAGE_HEIGHT =
-  640;
+  680;
 
 
 /* ==========================================================================
@@ -157,12 +157,17 @@ export default function DigitalAlbumRenderer({
               pageIndex
             );
 
-          return (
-            <DigitalAlbumPage
-              key={
-                page.id
-              }
-            >
+       return (
+  <DigitalAlbumPage
+    key={
+      page.id
+    }
+    hard={
+      pageIndex === 0 ||
+      pageIndex ===
+        document.pages.length - 1
+    }
+  >
               <DigitalAlbumPageRenderer
                 page={
                   page

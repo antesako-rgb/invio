@@ -23,6 +23,12 @@
     inherit;
   min-width:
     1px;
+  max-width:
+    100%;
+  white-space:
+    pre-wrap;
+  overflow-wrap:
+    break-word;
   outline:
     none;
 }
@@ -88,7 +94,3 @@
    Placeholder
 ========================================================================== */
 
-.root[data-placeholder="true"] {
-  opacity:
-    0.65;
-}

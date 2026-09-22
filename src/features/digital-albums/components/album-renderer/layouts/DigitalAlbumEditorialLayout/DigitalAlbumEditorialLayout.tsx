@@ -12,14 +12,14 @@ import type {
 } from "@/features/digital-albums/types/digitalAlbumDocument.types";
 
 import styles
-  from "./DigitalAlbumCoverLayout.module.css";
+  from "./DigitalAlbumEditorialLayout.module.css";
 
 
 /* ==========================================================================
    Types
 ========================================================================== */
 
-interface DigitalAlbumCoverLayoutProps {
+interface DigitalAlbumEditorialLayoutProps {
   photoSlotId:
     string;
 
@@ -30,9 +30,6 @@ interface DigitalAlbumCoverLayoutProps {
     string;
 
   title?:
-    string;
-
-  subtitle?:
     string;
 
   text?:
@@ -62,74 +59,66 @@ interface DigitalAlbumCoverLayoutProps {
 
 
 /* ==========================================================================
-   Digital Album Cover Layout
+   Digital Album Editorial Layout
 ========================================================================== */
 
-export default function DigitalAlbumCoverLayout({
+export default function DigitalAlbumEditorialLayout({
   photoSlotId,
   imageUrl,
   alt = "",
   title,
-  subtitle,
   text,
   active = false,
   photoEditable = false,
   contentEditable = false,
   onSelectPhotoSlot,
   onContentChange,
-}: DigitalAlbumCoverLayoutProps) {
+}: DigitalAlbumEditorialLayoutProps) {
   return (
-   <div
-  className={
-    styles.root
-  }
-  data-has-image={
-    imageUrl
-      ? "true"
-      : "false"
-  }
->
-      <DigitalAlbumPhotoSlot
-        slotId={
-          photoSlotId
-        }
-        active={
-          active
-        }
-        editable={
-          photoEditable
-        }
-        empty={
-          !imageUrl
-        }
-        onSelect={
-          onSelectPhotoSlot
+    <div
+      className={
+        styles.root
+      }
+    >
+      <div
+        className={
+          styles.photo
         }
       >
-        {imageUrl && (
-          <Image
-            src={
-              imageUrl
-            }
-            alt={
-              alt
-            }
-            fill
-            sizes="480px"
-            className={
-              styles.image
-            }
-          />
-        )}
-      </DigitalAlbumPhotoSlot>
-
-      {imageUrl && (
-        <div
-          className={
-            styles.overlay
+        <DigitalAlbumPhotoSlot
+          slotId={
+            photoSlotId
           }
-        />
-      )}
+          active={
+            active
+          }
+          editable={
+            photoEditable
+          }
+          empty={
+            !imageUrl
+          }
+          onSelect={
+            onSelectPhotoSlot
+          }
+        >
+          {imageUrl && (
+            <Image
+              src={
+                imageUrl
+              }
+              alt={
+                alt
+              }
+              fill
+              sizes="480px"
+              className={
+                styles.image
+              }
+            />
+          )}
+        </DigitalAlbumPhotoSlot>
+      </div>
 
       <div
         className={
@@ -138,29 +127,9 @@ export default function DigitalAlbumCoverLayout({
       >
         <DigitalAlbumEditableText
           value={
-            text
-          }
-          placeholder="15 · 06 · 2027"
-          editable={
-            contentEditable
-          }
-          className={
-            styles.text
-          }
-          onChange={
-            (value) =>
-              onContentChange?.({
-                text:
-                  value,
-              })
-          }
-        />
-
-        <DigitalAlbumEditableText
-          value={
             title
           }
-          placeholder="Ana & Marko"
+          placeholder="Naš poseban dan"
           editable={
             contentEditable
           }
@@ -178,19 +147,19 @@ export default function DigitalAlbumCoverLayout({
 
         <DigitalAlbumEditableText
           value={
-            subtitle
+            text
           }
-          placeholder="Naše uspomene"
+          placeholder="Ovdje napišite priču koja prati ovu fotografiju..."
           editable={
             contentEditable
           }
           className={
-            styles.subtitle
+            styles.text
           }
           onChange={
             (value) =>
               onContentChange?.({
-                subtitle:
+                text:
                   value,
               })
           }

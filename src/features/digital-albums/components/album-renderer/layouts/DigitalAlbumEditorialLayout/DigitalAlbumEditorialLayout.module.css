@@ -6,6 +6,12 @@
   position:
     relative;
 
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
   width:
     100%;
 
@@ -17,6 +23,28 @@
 
   background:
     var(--album-background);
+
+  color:
+    var(--album-foreground);
+}
+
+
+/* ==========================================================================
+   Photo
+========================================================================== */
+
+.photo {
+  position:
+    relative;
+
+  flex:
+    0 0 60%;
+
+  width:
+    100%;
+
+  overflow:
+    hidden;
 }
 
 
@@ -31,99 +59,27 @@
 
 
 /* ==========================================================================
-   Overlay
-========================================================================== */
-
-.overlay {
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  z-index:
-    1;
-
-  background:
-    linear-gradient(
-      to bottom,
-      transparent 35%,
-      rgb(0 0 0 / 0.15) 55%,
-      rgb(0 0 0 / 0.72) 100%
-    );
-
-  pointer-events:
-    none;
-}
-
-
-/* ==========================================================================
    Content
 ========================================================================== */
 
 .content {
-  position:
-    absolute;
-
-  right:
-    6.67cqw;
-
-  bottom:
-    10cqw;
-
-  left:
-    6.67cqw;
-
-  z-index:
-    20;
-
   display:
     flex;
+
+  flex:
+    1;
 
   flex-direction:
     column;
 
-  align-items:
+  justify-content:
     center;
 
-  text-align:
-    center;
+  width:
+    100%;
 
-  color:
-    var(--album-caption-foreground);
-}
-
-.root[data-has-image="false"] .content {
-  color:
-    var(--album-foreground);
-}
-
-
-/* ==========================================================================
-   Text
-========================================================================== */
-
-.text {
-  margin:
-    0 0 2.5cqw;
-
-  font-family:
-    var(--album-body-font);
-
-  font-size:
-    2.33cqw;
-
-  font-weight:
-    400;
-
-  line-height:
-    1.4;
-
-  letter-spacing:
-    0.18em;
-
-  text-transform:
-    uppercase;
+  padding:
+    6.67cqw 8.33cqw;
 }
 
 
@@ -139,7 +95,7 @@
     var(--album-title-font);
 
   font-size:
-    8.33cqw;
+    6.67cqw;
 
   font-weight:
     400;
@@ -147,28 +103,37 @@
   line-height:
     1.05;
 
+  text-align:
+    center;
+
   text-wrap:
     balance;
 }
 
 
 /* ==========================================================================
-   Subtitle
+   Text
 ========================================================================== */
 
-.subtitle {
+.text {
+  max-width:
+    75cqw;
+
   margin:
-    2.5cqw 0 0;
+    3.33cqw auto 0;
 
   font-family:
-    var(--album-script-font);
+    var(--album-body-font);
 
   font-size:
-    5.83cqw;
+    2.7cqw;
 
   font-weight:
     400;
 
   line-height:
-    1.1;
+    1.6;
+
+  text-align:
+    center;
 }

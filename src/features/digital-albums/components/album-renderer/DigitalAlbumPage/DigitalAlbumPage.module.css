@@ -3,12 +3,20 @@
 ========================================================================== */
 
 .page {
-  position: relative;
+  position:
+    relative;
 
-  width: 100%;
-  height: 100%;
+  width:
+    100%;
 
-  overflow: hidden;
+  height:
+    100%;
+
+  container-type:
+    inline-size;
+
+  overflow:
+    hidden;
 
   background:
     var(--album-background);
@@ -18,7 +26,24 @@
 
   box-shadow:
     inset 0 0 2rem
-    rgba(55, 43, 30, 0.04);
+    rgb(55 43 30 / 0.04);
+}
+
+
+/* ==========================================================================
+   Hard Cover
+========================================================================== */
+
+.hard {
+  border:
+    1px solid
+    rgb(52 46 41 / 0.08);
+
+  box-shadow:
+    0 3px 8px
+    rgb(0 0 0 / 0.12),
+    inset -2px 0 4px
+    rgb(0 0 0 / 0.06);
 }
 
 
@@ -27,10 +52,14 @@
 ========================================================================== */
 
 .content {
-  position: relative;
+  position:
+    relative;
 
-  width: 100%;
-  height: 100%;
+  width:
+    100%;
+
+  height:
+    100%;
 
   font-size:
     var(

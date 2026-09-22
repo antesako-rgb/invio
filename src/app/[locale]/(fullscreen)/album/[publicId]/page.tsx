@@ -9,12 +9,12 @@ import type {
   DigitalAlbumRendererPhoto,
 } from "@/features/digital-albums/components/album-renderer/types/digitalAlbumRenderer.types";
 
+import DigitalAlbumViewer
+  from "@/features/digital-albums/components/album-renderer/DigitalAlbumViewer/DigitalAlbumViewer";
+
 import {
   getPublicDigitalAlbum,
 } from "@/features/digital-albums/repositories/album/getPublicDigitalAlbum";
-
-import styles
-  from "./PublicDigitalAlbumPage.module.css";
 
 
 /* ==========================================================================
@@ -88,11 +88,7 @@ export default async function PublicDigitalAlbumPage({
   ========================================================================== */
 
   return (
-    <main
-      className={
-        styles.root
-      }
-    >
+    <DigitalAlbumViewer>
       <DigitalAlbumRenderer
         document={
           publicAlbum.album.document
@@ -101,6 +97,6 @@ export default async function PublicDigitalAlbumPage({
           rendererPhotos
         }
       />
-    </main>
+    </DigitalAlbumViewer>
   );
 }

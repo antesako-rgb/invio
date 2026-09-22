@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -59,6 +60,11 @@ export default function DigitalAlbumEditableText({
       null
     );
 
+  const originalValueRef =
+    useRef(
+      value ?? ""
+    );
+
 
   /* ==========================================================================
      State
@@ -69,11 +75,6 @@ export default function DigitalAlbumEditableText({
     setIsEditing,
   ] =
     useState(false);
-
-  const originalValueRef =
-    useRef(
-      value ?? ""
-    );
 
 
   /* ==========================================================================
@@ -94,10 +95,138 @@ export default function DigitalAlbumEditableText({
 
 
   /* ==========================================================================
+     Outside Interaction
+  ========================================================================== */
+
+  useEffect(
+    () => {
+      if (
+        !isEditing
+      ) {
+        return;
+      }
+
+      function handlePointerDown(
+        event:
+          PointerEvent
+      ) {
+        const element =
+          elementRef.current;
+
+        if (
+          !element ||
+          element.contains(
+            event.target as Node
+          )
+        ) {
+          return;
+        }
+
+        element.blur();
+      }
+
+      document.addEventListener(
+        "pointerdown",
+        handlePointerDown,
+        true
+      );
+
+      return () => {
+        document.removeEventListener(
+          "pointerdown",
+          handlePointerDown,
+          true
+        );
+      };
+    },
+    [
+      isEditing,
+    ]
+  );
+
+
+  /* ==========================================================================
+     Caret
+  ========================================================================== */
+
+  function placeCaretAtPoint(
+    x:
+      number,
+    y:
+      number
+  ) {
+    const element =
+      elementRef.current;
+
+    if (!element) {
+      return;
+    }
+
+    const selection =
+      window.getSelection();
+
+    if (!selection) {
+      return;
+    }
+
+    let range:
+      Range | null =
+        null;
+
+    if (
+      document.caretRangeFromPoint
+    ) {
+      range =
+        document.caretRangeFromPoint(
+          x,
+          y
+        );
+    }
+
+    if (
+      range &&
+      element.contains(
+        range.startContainer
+      )
+    ) {
+      selection.removeAllRanges();
+
+      selection.addRange(
+        range
+      );
+
+      return;
+    }
+
+    const fallbackRange =
+      document.createRange();
+
+    fallbackRange.selectNodeContents(
+      element
+    );
+
+    fallbackRange.collapse(
+      false
+    );
+
+    selection.removeAllRanges();
+
+    selection.addRange(
+      fallbackRange
+    );
+  }
+
+
+  /* ==========================================================================
      Start Editing
   ========================================================================== */
 
-  function startEditing() {
+  function startEditing(
+    x:
+      number,
+    y:
+      number
+  ) {
     if (
       !editable ||
       isEditing
@@ -126,28 +255,9 @@ export default function DigitalAlbumEditableText({
 
         element.focus();
 
-        const selection =
-          window.getSelection();
-
-        if (!selection) {
-          return;
-        }
-
-        const range =
-          document.createRange();
-
-        range.selectNodeContents(
-          element
-        );
-
-        range.collapse(
-          false
-        );
-
-        selection.removeAllRanges();
-
-        selection.addRange(
-          range
+        placeCaretAtPoint(
+          x,
+          y
         );
       }
     );
@@ -167,7 +277,7 @@ export default function DigitalAlbumEditableText({
 
     const nextValue =
       elementRef.current
-        ?.textContent
+        ?.innerText
         ?.trim() ??
       "";
 
@@ -223,9 +333,13 @@ export default function DigitalAlbumEditableText({
       MouseEvent<HTMLButtonElement>
   ) {
     event.preventDefault();
+
     event.stopPropagation();
 
-    startEditing();
+    startEditing(
+      event.clientX,
+      event.clientY
+    );
   }
 
 
@@ -237,17 +351,6 @@ export default function DigitalAlbumEditableText({
     event:
       KeyboardEvent<HTMLSpanElement>
   ) {
-    if (
-      event.key ===
-        "Enter"
-    ) {
-      event.preventDefault();
-
-      elementRef.current?.blur();
-
-      return;
-    }
-
     if (
       event.key ===
         "Escape"
@@ -264,30 +367,44 @@ export default function DigitalAlbumEditableText({
   ========================================================================== */
 
   return (
-    <span
-      className={[
-        styles.root,
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")
-      }
-      data-editable={
-        editable
-          ? "true"
-          : undefined
-      }
-      data-editing={
-        isEditing
-          ? "true"
-          : undefined
-      }
-      data-placeholder={
-        !hasValue
-          ? "true"
-          : undefined
-      }
-    >
+<span
+  className={[
+    styles.root,
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ")
+  }
+  data-editable={
+    editable
+      ? "true"
+      : undefined
+  }
+  data-editing={
+    isEditing
+      ? "true"
+      : undefined
+  }
+  data-placeholder={
+    !hasValue
+      ? "true"
+      : undefined
+  }
+  onPointerDownCapture={
+    isEditing
+      ? (event) => {
+          event.stopPropagation();
+        }
+      : undefined
+  }
+  onMouseDownCapture={
+    isEditing
+      ? (event) => {
+          event.stopPropagation();
+        }
+      : undefined
+  }
+>
       <span
         ref={
           elementRef
@@ -364,12 +481,14 @@ export default function DigitalAlbumEditableText({
             onPointerDown={
               (event) => {
                 event.preventDefault();
+
                 event.stopPropagation();
               }
             }
             onMouseDown={
               (event) => {
                 event.preventDefault();
+
                 event.stopPropagation();
               }
             }

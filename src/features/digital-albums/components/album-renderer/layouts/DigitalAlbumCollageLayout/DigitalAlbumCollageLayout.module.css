@@ -6,6 +6,15 @@
   position:
     relative;
 
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  grid-template-rows:
+    1fr 1fr;
+
   width:
     100%;
 
@@ -17,6 +26,54 @@
 
   background:
     var(--album-background);
+
+  color:
+    var(--album-foreground);
+}
+
+
+/* ==========================================================================
+   Photos
+========================================================================== */
+
+.firstPhoto,
+.secondPhoto,
+.thirdPhoto {
+  position:
+    relative;
+
+  min-width:
+    0;
+
+  min-height:
+    0;
+
+  overflow:
+    hidden;
+}
+
+.firstPhoto {
+  grid-column:
+    1;
+
+  grid-row:
+    1;
+}
+
+.secondPhoto {
+  grid-column:
+    2;
+
+  grid-row:
+    1;
+}
+
+.thirdPhoto {
+  grid-column:
+    1;
+
+  grid-row:
+    2;
 }
 
 
@@ -31,99 +88,70 @@
 
 
 /* ==========================================================================
-   Overlay
-========================================================================== */
-
-.overlay {
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  z-index:
-    1;
-
-  background:
-    linear-gradient(
-      to bottom,
-      transparent 35%,
-      rgb(0 0 0 / 0.15) 55%,
-      rgb(0 0 0 / 0.72) 100%
-    );
-
-  pointer-events:
-    none;
-}
-
-
-/* ==========================================================================
    Content
 ========================================================================== */
 
 .content {
-  position:
-    absolute;
-
-  right:
-    6.67cqw;
-
-  bottom:
-    10cqw;
-
-  left:
-    6.67cqw;
-
-  z-index:
-    20;
-
   display:
     flex;
+
+  grid-column:
+    2;
+
+  grid-row:
+    2;
 
   flex-direction:
     column;
 
   align-items:
+    flex-start;
+
+  justify-content:
     center;
 
-  text-align:
-    center;
+  min-width:
+    0;
 
-  color:
-    var(--album-caption-foreground);
-}
+  min-height:
+    0;
 
-.root[data-has-image="false"] .content {
-  color:
-    var(--album-foreground);
+  padding:
+    7.5cqw;
+
+  background:
+    var(--album-background);
 }
 
 
 /* ==========================================================================
-   Text
+   Number
 ========================================================================== */
 
-.text {
+.number {
   margin:
-    0 0 2.5cqw;
+    0 0 5cqw;
 
   font-family:
     var(--album-body-font);
 
   font-size:
-    2.33cqw;
+    2.1cqw;
 
   font-weight:
     400;
 
   line-height:
-    1.4;
+    1;
 
   letter-spacing:
-    0.18em;
+    0.25em;
 
   text-transform:
     uppercase;
+
+  opacity:
+    0.55;
 }
 
 
@@ -139,36 +167,17 @@
     var(--album-title-font);
 
   font-size:
-    8.33cqw;
+    6.25cqw;
 
   font-weight:
     400;
 
   line-height:
-    1.05;
+    1.25;
+
+  text-align:
+    left;
 
   text-wrap:
     balance;
-}
-
-
-/* ==========================================================================
-   Subtitle
-========================================================================== */
-
-.subtitle {
-  margin:
-    2.5cqw 0 0;
-
-  font-family:
-    var(--album-script-font);
-
-  font-size:
-    5.83cqw;
-
-  font-weight:
-    400;
-
-  line-height:
-    1.1;
 }

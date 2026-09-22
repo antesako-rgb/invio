@@ -1,8 +1,84 @@
 /* ==========================================================================
-   Inner
+/* ==========================================================================
+   Event Experience Editor Workspace
 ========================================================================== */
 
-.inner {
+.event-experience-editor-workspace {
+  display:
+    flex;
+
+  flex:
+    1;
+
+  width:
+    100%;
+
+  min-width:
+    0;
+
+  min-height:
+    0;
+
+  background:
+    var(--background);
+}
+
+
+/* ==========================================================================
+   Sidebar
+========================================================================== */
+
+.event-experience-editor-workspace__sidebar {
+  flex:
+    0 0 320px;
+
+  width:
+    320px;
+
+  min-width:
+    0;
+
+  overflow-y:
+    auto;
+
+  border-right:
+    1px solid var(--border);
+
+  background:
+    var(--card);
+}
+
+
+/* ==========================================================================
+   Canvas
+========================================================================== */
+
+.event-experience-editor-workspace__canvas {
+  display:
+    flex;
+
+  flex:
+    1;
+
+  min-width:
+    0;
+
+  min-height:
+    0;
+
+  overflow:
+    auto;
+
+  background:
+    var(--muted);
+}
+
+
+/* ==========================================================================
+   Canvas Inner
+========================================================================== */
+
+.event-experience-editor-workspace__canvas-inner {
   display:
     flex;
 
@@ -33,7 +109,7 @@
    Toolbar
 ========================================================================== */
 
-.toolbar {
+.event-experience-editor-workspace__toolbar {
   display:
     flex;
 
@@ -58,7 +134,7 @@
    Document
 ========================================================================== */
 
-.document {
+.event-experience-editor-workspace__document {
   flex:
     0 0 auto;
 
@@ -74,7 +150,7 @@
 @media (
   min-width: 1200px
 ) {
-  .inner {
+  .event-experience-editor-workspace__canvas-inner {
     padding:
       1rem
       calc(1rem + 310px)
@@ -91,7 +167,22 @@
 @media (
   max-width: 767px
 ) {
-  .inner {
+  .event-experience-editor-workspace {
+    position:
+      relative;
+
+    flex-direction:
+      column;
+  }
+
+
+  .event-experience-editor-workspace__sidebar {
+    display:
+      none;
+  }
+
+
+  .event-experience-editor-workspace__canvas-inner {
     align-items:
       center;
 
@@ -112,10 +203,10 @@
 
 
   /* ========================================================================
-     Toolbar
+     Mobile Toolbar
   ======================================================================== */
 
-  .toolbar {
+  .event-experience-editor-workspace__toolbar {
     position:
       sticky;
 
@@ -148,28 +239,30 @@
       var(--muted);
   }
 
-  .inner[
+
+  .event-experience-editor-workspace[
     data-mobile-toolbar="hidden"
   ]
-  .toolbar {
+  .event-experience-editor-workspace__toolbar {
     display:
       none;
   }
 
 
   /* ========================================================================
-     Document
+     Mobile Document
   ======================================================================== */
 
-  .document {
+  .event-experience-editor-workspace__document {
     width:
       min(100%, 520px);
   }
 
-  .inner[
+
+  .event-experience-editor-workspace[
     data-mobile-toolbar="hidden"
   ]
-  .document {
+  .event-experience-editor-workspace__document {
     padding-top:
       0.75rem;
   }

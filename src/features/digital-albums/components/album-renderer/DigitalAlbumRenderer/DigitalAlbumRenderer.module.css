@@ -1,86 +1,10 @@
 /* ==========================================================================
-   Page
+   Empty Page
 ========================================================================== */
 
 .page {
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
   width:
     100%;
-
   height:
     100%;
-
-  padding:
-    3rem;
-
-  background:
-    var(--background);
-
-  color:
-    var(--foreground);
-
-  text-align:
-    center;
-}
-
-
-/* ==========================================================================
-   Content
-========================================================================== */
-
-.subtitle {
-  margin-bottom:
-    1rem;
-
-  font-size:
-    0.75rem;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.12em;
-
-  text-transform:
-    uppercase;
-}
-
-
-.title {
-  margin:
-    0;
-
-  font-size:
-    2.5rem;
-
-  line-height:
-    1.1;
-}
-
-
-.text {
-  max-width:
-    22rem;
-
-  margin:
-    1.5rem
-    0
-    0;
-
-  font-size:
-    1rem;
-
-  line-height:
-    1.6;
 }

@@ -187,10 +187,10 @@ export default function DigitalAlbumFlipBook({
               FLIP_DURATION
             }
             shadows={
-              false
+              true
             }
             hoverCorners={
-              false
+             false
             }
             onInit={
               handleInit

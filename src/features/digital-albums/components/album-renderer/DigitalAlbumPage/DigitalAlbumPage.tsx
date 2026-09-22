@@ -37,6 +37,9 @@ export default function DigitalAlbumPage({
 }: DigitalAlbumPageProps) {
   const pageClassName = [
     styles.page,
+    hard
+      ? styles.hard
+      : undefined,
     className,
   ]
     .filter(Boolean)
