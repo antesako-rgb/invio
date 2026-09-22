@@ -24,8 +24,6 @@
   overflow:
     hidden;
 
-  background:
-    var(--album-background);
 
   color:
     var(--album-foreground);

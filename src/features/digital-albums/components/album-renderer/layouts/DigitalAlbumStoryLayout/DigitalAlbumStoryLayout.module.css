@@ -15,8 +15,20 @@
   overflow:
     hidden;
 
-  background:
-    var(--album-background);
+  background-image:
+    var(
+      --album-story-background-image,
+      var(--album-page-background-image)
+    );
+
+  background-size:
+    cover;
+
+  background-position:
+    center;
+
+  background-repeat:
+    no-repeat;
 
   color:
     var(--album-foreground);
