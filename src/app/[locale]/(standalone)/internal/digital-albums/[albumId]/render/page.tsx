@@ -1,6 +1,13 @@
 import {
   notFound,
 } from "next/navigation";
+import { z } from "zod";
+import { createServerClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { getDigitalAlbumPrintUrl } from "@/features/digital-albums/server/pdf/getDigitalAlbumPrintUrl";
+import { PDF_RENDER_HEADER, verifyPdfRenderToken } from "@/features/digital-albums/server/pdf/pdfRenderAuthorization";
+
+export const dynamic = "force-dynamic";
 
 import DigitalAlbumPrintRenderer
   from "@/features/digital-albums/components/album-renderer/DigitalAlbumPrintRenderer/DigitalAlbumPrintRenderer";
@@ -46,6 +53,22 @@ export default async function DigitalAlbumPrintPage({
     albumId,
   } =
     await params;
+
+  if (!z.string().uuid().safeParse(albumId).success) notFound();
+  const requestHeaders = await headers();
+  const token = requestHeaders.get(PDF_RENDER_HEADER);
+  if (!token) notFound();
+  // Production uses trusted deployment configuration. Host is only used for
+  // the existing loopback-only development origin resolution.
+  let origin: string;
+  try {
+    origin = getDigitalAlbumPrintUrl(`http://${requestHeaders.get("host") ?? "invalid"}`, albumId).origin;
+  } catch { notFound(); }
+  const claims = verifyPdfRenderToken(token, { albumId, origin });
+  if (!claims) notFound();
+  const supabase = await createServerClient();
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data.user || data.user.id !== claims.userId) notFound();
 
 
   /* ==========================================================================

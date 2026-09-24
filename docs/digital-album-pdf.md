@@ -4,7 +4,7 @@
 
 The export button POSTs `/api/digital-albums/[albumId]/pdf`, reads a PDF blob and
 downloads `digital-album.pdf`. The API checks album access using the user-scoped
-Supabase client, opens `/editor/album/[albumId]/print` with that user's session,
+Supabase client, opens `/internal/digital-albums/[albumId]/render` with that user's session,
 and uses Puppeteer's `page.pdf()`. The print route repeats the album/RLS query,
 loads photos, parses `DigitalAlbumDocument`, and uses `DigitalAlbumPrintRenderer`
 and the existing six page layouts. No page-flip engine is involved.
@@ -99,7 +99,13 @@ on Vercel, as must cold-start performance.
    under Settings → Deployment Protection and expose its generated
    `VERCEL_AUTOMATION_BYPASS_SECRET` to the corresponding deployment environment.
    Do not use a `NEXT_PUBLIC_` prefix or commit the value.
-5. No new custom variable is mandatory for an unprotected Vercel deployment.
+5. Set **PDF_RENDER_SECRET** to 32 cryptographically random bytes encoded as exactly
+   64 hexadecimal characters. Set it locally and in Preview/Production; use separate
+   values per environment, shared by all functions in that deployment. Generate with
+   `node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"`.
+   Never commit it or prefix it with `NEXT_PUBLIC_`. Missing/invalid configuration
+   fails export before launching Chromium. This is separate from Supabase keys and
+   the Vercel automation bypass secret.
    Optional `PDF_CHROMIUM_PACK_URL` may point at a trusted immutable HTTPS mirror of
    the exact 153.0.0 pack for the deployed architecture. Do not use expiring URLs,
    an arbitrary browser version, or a user-controlled source. A mirror is useful
@@ -107,7 +113,34 @@ on Vercel, as must cold-start performance.
 6. Do not set `PDF_BROWSER_EXECUTABLE_PATH` on Vercel. No new Supabase secret, bucket,
    policy or schema migration is required. Other existing app env vars stay as-is.
 
-## Verification
+## Internal render authorization
+
+The old `/editor/album/[albumId]/print` page is removed without a redirect. The new
+render page requires both a short-lived capability and the existing Supabase
+session/RLS authorization. A signed-in browser visiting it directly receives 404.
+
+After API authentication/access checks and Chromium startup, the server signs an
+HMAC-SHA256 token with `PDF_RENDER_SECRET`, binding album ID, authenticated user ID,
+trusted deployment origin, purpose `digital-album-pdf-render`, issued-at time and
+a 120-second expiry. The render page verifies the signature and claims, matches
+the Supabase user, and repeats the existing user-scoped album query. No service-role
+access, database token table or shared process state is involved.
+
+Puppeteer sends the token only in `X-Invio-Pdf-Render` on the initial GET main-frame
+navigation to the exact render URL. Interception strips it from all other requests,
+including assets, CDN, fetches, iframes and redirects. It is never placed in a URL,
+cookie, client prop or log. Existing request allowlists and Vercel bypass scoping
+remain in place. Any future request tracing must redact this header.
+
+Tokens are not single-use: within their short lifetime they also require the bound
+user's valid session and album access. Rotating the secret invalidates outstanding
+tokens. The renderer, document model and layout/theme implementation are unchanged.
+
+The API/security script checks missing, invalid, tampered, expired and mismatched
+tokens, session/access rejection, authorized rendering, request-header isolation
+and removal of the old page. Session/RLS are isolated doubles, not deployed policies.
+
+## Local verification
 
 Run `node scripts/test-digital-album-pdf.mjs` with local Chrome installed (Node 24+).
 It uses the actual generator and isolated HTTP fixtures, with fake cookies only:
@@ -122,7 +155,59 @@ a >4.5 MB PDF, cold/warm runs, and an album the user cannot access. Confirm font
 photo fidelity, page count, HTTP headers, cleanup, function memory and timing.
 The fixture test does not prove the deployed Supabase session/RLS or font/CDN setup.
 
-## Sources
+## Final hardening audit
+
+Deployment functionality (local/Preview/Production), rendering, automation bypass
+and Supabase authorization were confirmed by the project owner. The following
+hardening retains that setup:
+
+- API and print route reject invalid UUIDs before querying the database. API
+  explicitly rejects cross-site browser requests via Fetch Metadata (this is
+  supplementary browser protection, not authentication or a rate limiter).
+- Print now explicitly verifies a signed-in user and is force-dynamic; both routes
+  still use the existing user-scoped album/RLS checks. No owner-only restriction was
+  added that might break legitimate collaborators. Deployed RLS policy SQL is not
+  present in this repository, so this audit cannot independently prove its rules.
+- Browser requests are confined to the print origin, configured HTTPS CDN origin,
+  and embedded data/blob assets. Cross-origin frame navigations are blocked; cookies,
+  Authorization and automation bypass credentials are not forwarded to CDN requests.
+- Cleanup cannot replace the original outcome if process termination throws.
+  Returning PDF bytes no longer allocates a second full PDF copy.
+- The export button has a synchronous in-flight guard and handles 429/503 with
+  translated messages and a Retry-After cooldown. Retries remain user-initiated.
+
+### Distributed rate limit: not implemented
+
+No shared limiter, Redis dependency, rate-limit table or RPC exists in the checked-in
+code/generated schema. The two-export cap is per warm instance only. Browser
+cooldown and Fetch Metadata checks are not distributed abuse protection.
+
+Recommended next change: a small table and atomic Postgres RPC in the **existing
+Supabase project**, keyed by verified `auth.uid()`, shared across all album exports
+for that user. A starting policy to review is 5 requests/minute and 30/hour, counting
+admitted attempts before Chromium starts, with 429 and Retry-After computed from
+database time. The RPC must serialize updates atomically, reject anonymous calls,
+prevent direct counter edits, fix search_path if using SECURITY DEFINER, and clean
+up expired rows. Storage errors should fail closed with 503, never silently disable
+the limiter. See [Supabase database functions](https://supabase.com/docs/guides/database/functions).
+
+This needs an approved schema migration and API integration; neither is added or
+applied by this hardening audit. No Redis/Upstash is necessary. Until then, a signed-in
+user can still spread requests across serverless instances and incur Chromium cost.
+
+Real remaining resource limits: decoded images and the final PDF are held in memory;
+very large albums can exceed available memory or the function deadline. No arbitrary
+file-size cap was introduced. A client disconnect does not immediately cancel an
+in-progress export; existing stage timeouts/cleanup still apply. Cold pack extraction
+may continue after the 75-second wait expires, under the library's own download timeout.
+
+Additional isolated checks:
+`node scripts/test-digital-album-pdf-api.mjs` covers route validation, auth/access
+denial, headers, safe errors and 503 Retry-After using doubles. The real-Chrome smoke
+test also covers blocked external requests, the two-export cap and counter recovery.
+These do not substitute for a cross-account RLS test against the deployed database.
+
+## Reference links
 
 - [Sparticuz min package and caching](https://github.com/Sparticuz/chromium#-min-package)
 - [Pinned Chromium release](https://github.com/Sparticuz/chromium/releases/tag/v153.0.0)

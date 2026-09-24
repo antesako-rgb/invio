@@ -1,6 +1,8 @@
 "use client";
 
 import {
+  useEffect,
+  useRef,
   useState,
 } from "react";
 
@@ -62,6 +64,14 @@ export default function DigitalAlbumPdfExportAction({
       null
     );
 
+  const exportInFlight = useRef(false);
+  const [retryDelay, setRetryDelay] = useState(0);
+  useEffect(() => {
+    if (!retryDelay) return;
+    const timer = setTimeout(() => setRetryDelay(0), retryDelay * 1000);
+    return () => clearTimeout(timer);
+  }, [retryDelay]);
+
 
   /* ==========================================================================
      Export
@@ -69,11 +79,12 @@ export default function DigitalAlbumPdfExportAction({
 
   async function handleExport() {
     if (
-      isExporting
+      exportInFlight.current || retryDelay > 0
     ) {
       return;
     }
 
+    exportInFlight.current = true;
     setIsExporting(
       true
     );
@@ -91,6 +102,19 @@ export default function DigitalAlbumPdfExportAction({
               "POST",
           }
         );
+
+      if (response.status === 429 || response.status === 503) {
+        const header = response.headers.get("Retry-After");
+        const seconds = header && /^\d+$/.test(header)
+          ? Number(header)
+          : header ? Math.ceil((Date.parse(header) - Date.now()) / 1000) : NaN;
+        const delay = Number.isFinite(seconds) && seconds > 0
+          ? Math.min(seconds, 3600)
+          : 10;
+        setRetryDelay(delay);
+        setError(t(response.status === 429 ? "pdfExport.rateLimited" : "pdfExport.busy", { seconds: delay }));
+        return;
+      }
 
       if (
         !response.ok
@@ -158,6 +182,7 @@ export default function DigitalAlbumPdfExportAction({
         )
       );
     } finally {
+      exportInFlight.current = false;
       setIsExporting(
         false
       );
@@ -181,7 +206,7 @@ export default function DigitalAlbumPdfExportAction({
           styles.button
         }
         disabled={
-          isExporting
+          isExporting || retryDelay > 0
         }
         onClick={
           handleExport

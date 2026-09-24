@@ -156,6 +156,8 @@
   }
 },
 "pdfExport": {
+  "rateLimited": "Too many PDF requests. Please try again in {seconds} seconds.",
+  "busy": "PDF generation is busy. Please try again in {seconds} seconds.",
   "action": "Export PDF",
   "exporting": "Generating PDF...",
   "error": "The PDF could not be generated. Please try again."

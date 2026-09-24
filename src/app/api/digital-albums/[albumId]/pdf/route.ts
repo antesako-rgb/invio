@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { z } from "zod";
 
 import { getDigitalAlbum } from "@/features/digital-albums/repositories/album/getDigitalAlbum";
 import { DigitalAlbumPdfError, generateDigitalAlbumPdf } from "@/features/digital-albums/server/pdf/generateDigitalAlbumPdf";
@@ -14,7 +15,18 @@ interface DigitalAlbumPdfRouteProps {
 }
 
 export async function POST(request: Request, { params }: DigitalAlbumPdfRouteProps) {
+  // Reject browser requests initiated by another site before doing expensive work.
+  if (request.headers.get("sec-fetch-site") === "cross-site") {
+    return NextResponse.json({ error: "Forbidden." }, {
+      status: 403, headers: { "Cache-Control": "private, no-store" },
+    });
+  }
   const { albumId } = await params;
+  if (!z.string().uuid().safeParse(albumId).success) {
+    return NextResponse.json({ error: "Invalid album ID." }, {
+      status: 400, headers: { "Cache-Control": "private, no-store" },
+    });
+  }
   let stage = "authorization";
   try {
     const supabase = await createServerClient();
@@ -48,7 +60,10 @@ export async function POST(request: Request, { params }: DigitalAlbumPdfRoutePro
         sameSite: "Lax" as const,
       }));
 
+    stage = "generation";
     const pdf = await generateDigitalAlbumPdf({
+      albumId: album.id,
+      userId: data.user.id,
       printUrl: printUrl.href,
       cookies: browserCookies,
     });

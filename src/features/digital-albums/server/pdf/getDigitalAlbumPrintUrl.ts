@@ -21,5 +21,5 @@ export function getDigitalAlbumPrintUrl(requestUrl: string, albumId: string) {
   if (process.env.NODE_ENV !== "production" && process.env.VERCEL !== "1" && !loopback) {
     throw new Error("Local PDF requests must use a loopback origin.");
   }
-  return new URL(`/editor/album/${encodeURIComponent(albumId)}/print`, url.origin);
+  return new URL(`/internal/digital-albums/${encodeURIComponent(albumId)}/render`, url.origin);
 }

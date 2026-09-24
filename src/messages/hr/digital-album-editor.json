@@ -156,6 +156,8 @@
   }
 },
     "pdfExport": {
+  "rateLimited": "Previše zahtjeva za PDF. Pokušajte ponovno za {seconds} sekundi.",
+  "busy": "Generiranje PDF-a trenutačno je zauzeto. Pokušajte ponovno za {seconds} sekundi.",
   "action": "Izvezi u PDF",
   "exporting": "Generiranje PDF-a...",
   "error": "PDF nije moguće generirati. Pokušajte ponovno."
