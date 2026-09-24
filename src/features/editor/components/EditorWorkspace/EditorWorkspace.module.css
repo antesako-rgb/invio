@@ -27,6 +27,16 @@
    Sidebar
 ========================================================================== */
 
+.toolRail {
+  flex: 0 0 80px;
+  width: 80px;
+  min-height: 0;
+  padding: 1rem 0.25rem;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  background: var(--card);
+}
+
 .sidebar {
   flex:
     0 0 320px;
@@ -88,6 +98,7 @@
       column;
   }
 
+  .toolRail,
   .sidebar {
     display:
       none;

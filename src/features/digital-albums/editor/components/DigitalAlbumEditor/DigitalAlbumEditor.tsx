@@ -17,6 +17,9 @@ import DigitalAlbumEditorMobileNavigation
 import DigitalAlbumEditorWorkspace
   from "@/features/digital-albums/editor/components/DigitalAlbumEditorWorkspace/DigitalAlbumEditorWorkspace";
 
+import DigitalAlbumEditorToolRail
+  from "@/features/digital-albums/editor/components/DigitalAlbumEditorToolRail/DigitalAlbumEditorToolRail";
+
 import type {
   DigitalAlbumEditorStep,
 } from "@/features/digital-albums/editor/types/digitalAlbumEditor.types";
@@ -81,17 +84,9 @@ export default function DigitalAlbumEditor({
   return (
     <EditorShell
       header={
-      <DigitalAlbumEditorHeader
-  albumId={
-    albumId
-  }
-  activeStep={
-    activeStep
-  }
-  onStepChange={
-    onStepChange
-  }
-/>
+        <DigitalAlbumEditorHeader
+          albumId={albumId}
+        />
       }
       mobileControls={
         sidebar
@@ -128,6 +123,12 @@ export default function DigitalAlbumEditor({
       }
     >
       <DigitalAlbumEditorWorkspace
+        toolRail={
+          <DigitalAlbumEditorToolRail
+            activeStep={activeStep}
+            onStepChange={onStepChange}
+          />
+        }
         sidebar={
           sidebar
         }

@@ -14,6 +14,9 @@ import styles
 ========================================================================== */
 
 interface DigitalAlbumEditorWorkspaceProps {
+  toolRail?:
+    ReactNode;
+
   sidebar?:
     ReactNode;
 
@@ -27,6 +30,7 @@ interface DigitalAlbumEditorWorkspaceProps {
 ========================================================================== */
 
 export default function DigitalAlbumEditorWorkspace({
+  toolRail,
   sidebar,
   children,
 }: DigitalAlbumEditorWorkspaceProps) {
@@ -36,6 +40,7 @@ export default function DigitalAlbumEditorWorkspace({
 
   return (
     <EditorWorkspace
+      toolRail={toolRail}
       sidebar={
         sidebar
       }

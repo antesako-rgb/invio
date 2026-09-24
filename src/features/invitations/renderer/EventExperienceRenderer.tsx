@@ -40,9 +40,6 @@ import {
   previewPhotoWallPhotos,
 } from "@/features/invitations/components/photo-wall-experience/preview/previewPhotoWallPhotos";
 
-import EventExperienceEditorPreviewContainer
-  from "@/features/invitations/editor/components/EventExperienceEditorPreviewContainer/EventExperienceEditorPreviewContainer";
-
 import InvitationRSVPPreviewMode
   from "@/features/invitations/editor/components/InvitationRSVPPreviewMode/InvitationRSVPPreviewMode";
 
@@ -333,13 +330,11 @@ export default function EventExperienceRenderer({
         }
 
         return (
-          <EventExperienceEditorPreviewContainer>
-            <InvitationDetailsView
-              data={
-                data
-              }
-            />
-          </EventExperienceEditorPreviewContainer>
+          <InvitationDetailsView
+            data={
+              data
+            }
+          />
         );
 
       case "rsvp":
@@ -351,7 +346,7 @@ export default function EventExperienceRenderer({
         }
 
         return (
-          <EventExperienceEditorPreviewContainer>
+          <>
             {data.content.rsvp.allow_generic_responses &&
               invitation.onRsvpPreviewModeChange && (
                 <InvitationRSVPPreviewMode
@@ -384,7 +379,7 @@ export default function EventExperienceRenderer({
                 invitation.onSubmitGenericRsvp
               }
             />
-          </EventExperienceEditorPreviewContainer>
+          </>
         );
 
       case "design":
@@ -513,7 +508,6 @@ export default function EventExperienceRenderer({
                               : undefined
                           }
                         />
-
                       )}
 
                       {hasPhotos && (

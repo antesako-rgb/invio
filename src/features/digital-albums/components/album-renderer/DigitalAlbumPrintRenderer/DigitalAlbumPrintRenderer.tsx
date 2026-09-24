@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 import DigitalAlbumPageRenderer
   from "@/features/digital-albums/components/album-renderer/DigitalAlbumPageRenderer/DigitalAlbumPageRenderer";
 
@@ -38,8 +40,16 @@ export default function DigitalAlbumPrintRenderer({
   document,
   photos,
 }: DigitalAlbumPrintRendererProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const root = rootRef.current;
+    if (root) root.dataset.albumPrintHydrated = "true";
+    return () => { if (root) delete root.dataset.albumPrintHydrated; };
+  }, [document, photos]);
+
   return (
     <div
+      ref={rootRef}
       className={
         styles.root
       }

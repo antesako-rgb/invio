@@ -16,6 +16,9 @@ import styles
 ========================================================================== */
 
 interface EventExperienceEditorWorkspaceProps {
+  toolRail?:
+    ReactNode;
+
   sidebar?:
     ReactNode;
 
@@ -35,6 +38,7 @@ interface EventExperienceEditorWorkspaceProps {
 ========================================================================== */
 
 export default function EventExperienceEditorWorkspace({
+  toolRail,
   sidebar,
   toolbar,
   showMobileToolbar = true,
@@ -46,6 +50,9 @@ export default function EventExperienceEditorWorkspace({
 
   return (
     <EditorWorkspace
+      toolRail={
+        toolRail
+      }
       sidebar={
         sidebar
       }

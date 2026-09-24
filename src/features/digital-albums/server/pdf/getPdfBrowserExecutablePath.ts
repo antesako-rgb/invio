@@ -1,3 +1,5 @@
+import "server-only";
+
 import {
   existsSync,
 } from "node:fs";
@@ -18,13 +20,21 @@ const WINDOWS_CHROME_PATHS = [
 ========================================================================== */
 
 export function getPdfBrowserExecutablePath() {
+  const configuredPath = process.env.PDF_BROWSER_EXECUTABLE_PATH;
+  if (configuredPath) {
+    if (!existsSync(/* turbopackIgnore: true */ configuredPath)) {
+      throw new Error("PDF_BROWSER_EXECUTABLE_PATH does not exist.");
+    }
+    return configuredPath;
+  }
+
   for (
     const executablePath
     of WINDOWS_CHROME_PATHS
   ) {
     if (
       existsSync(
-        executablePath
+        /* turbopackIgnore: true */ executablePath
       )
     ) {
       return executablePath;

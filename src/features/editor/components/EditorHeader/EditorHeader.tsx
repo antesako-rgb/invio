@@ -50,13 +50,15 @@ export default function EditorHeader({
         {start}
       </div>
 
-      <div
-        className={
-          styles.navigation
-        }
-      >
-        {navigation}
-      </div>
+      {navigation != null && (
+        <div
+          className={
+            styles.navigation
+          }
+        >
+          {navigation}
+        </div>
+      )}
 
       <div
         className={

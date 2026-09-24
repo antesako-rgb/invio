@@ -678,7 +678,13 @@
 @media (max-width: 767px) {
   .event-experience-editor-toolbar {
     width:
+      max-content;
+
+    max-width:
       100%;
+
+    margin-inline:
+      auto;
 
     overflow-x:
       auto;
@@ -696,12 +702,10 @@
       pan-x;
   }
 
-
   .event-experience-editor-toolbar::-webkit-scrollbar {
     display:
       none;
   }
-
 
   .event-experience-editor-toolbar__font {
     flex:
@@ -711,15 +715,19 @@
       8rem;
   }
 
-
   .event-experience-editor-font-popover {
     width:
-      min(16.25rem, calc(100vw - 2rem));
+      min(
+        16.25rem,
+        calc(100vw - 2rem)
+      );
   }
-
 
   .event-experience-editor-color-popover {
     width:
-      min(17rem, calc(100vw - 2rem));
+      min(
+        17rem,
+        calc(100vw - 2rem)
+      );
   }
 }

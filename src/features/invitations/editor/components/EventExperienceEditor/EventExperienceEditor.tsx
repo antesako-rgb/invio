@@ -23,6 +23,9 @@ import EventExperienceEditorMobileNavigation
 import EventExperienceEditorWorkspace
   from "@/features/invitations/editor/components/EventExperienceEditorWorkspace/EventExperienceEditorWorkspace";
 
+import EventExperienceEditorToolRail
+  from "@/features/invitations/editor/components/EventExperienceEditorToolRail/EventExperienceEditorToolRail";
+
 import type {
   EventExperienceEditorSaveStatus,
   EventExperienceEditorStep,
@@ -110,20 +113,8 @@ export default function EventExperienceEditor({
     <EditorShell
       header={
         <EventExperienceEditorHeader
-          type={
-            type
-          }
-          activeStep={
-            activeStep
-          }
-          features={
-            features
-          }
           saveStatus={
             saveStatus
-          }
-          onStepChange={
-            onStepChange
           }
           onPreview={
             onPreview
@@ -180,6 +171,14 @@ export default function EventExperienceEditor({
       }
     >
       <EventExperienceEditorWorkspace
+        toolRail={
+          <EventExperienceEditorToolRail
+            type={type}
+            features={features}
+            activeStep={activeStep}
+            onStepChange={onStepChange}
+          />
+        }
         sidebar={
           sidebar
         }

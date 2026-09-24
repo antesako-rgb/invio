@@ -115,6 +115,9 @@ export default function SideNavigation({
       className={cn(
         styles.nav,
 
+        appearance === "rail" &&
+          styles.rail,
+
         isHorizontal &&
           styles.horizontal,
 

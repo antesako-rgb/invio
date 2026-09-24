@@ -44,6 +44,7 @@ export interface SideNavigationProps {
   appearance?:
     | "default"
     | "tabs"
+    | "rail"
     | "underline";
 
   activeId?:

@@ -11,6 +11,9 @@ import styles
 ========================================================================== */
 
 interface EditorWorkspaceProps {
+  toolRail?:
+    ReactNode;
+
   sidebar?:
     ReactNode;
 
@@ -24,6 +27,7 @@ interface EditorWorkspaceProps {
 ========================================================================== */
 
 export default function EditorWorkspace({
+  toolRail,
   sidebar,
   children,
 }: EditorWorkspaceProps) {
@@ -38,6 +42,12 @@ export default function EditorWorkspace({
       }
       data-editor-workspace
     >
+      {toolRail && (
+        <div className={styles.toolRail}>
+          {toolRail}
+        </div>
+      )}
+
       {sidebar && (
         <aside
           className={

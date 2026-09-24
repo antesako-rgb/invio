@@ -7,19 +7,8 @@ import {
 import BackLink
   from "@/components/ui/back-link/BackLink";
 
-import SideNavigation
-  from "@/components/ui/side-navigation/SideNavigation";
-
 import DigitalAlbumPdfExportAction
   from "@/features/digital-albums/editor/components/DigitalAlbumPdfExportAction/DigitalAlbumPdfExportAction";
-
-import {
-  getDigitalAlbumEditorNavigationItems,
-} from "@/features/digital-albums/editor/navigation/getDigitalAlbumEditorNavigationItems";
-
-import type {
-  DigitalAlbumEditorStep,
-} from "@/features/digital-albums/editor/types/digitalAlbumEditor.types";
 
 import EditorHeader
   from "@/features/editor/components/EditorHeader/EditorHeader";
@@ -36,14 +25,6 @@ interface DigitalAlbumEditorHeaderProps {
   albumId:
     string;
 
-  activeStep:
-    DigitalAlbumEditorStep;
-
-  onStepChange:
-    (
-      step:
-        DigitalAlbumEditorStep
-    ) => void;
 }
 
 
@@ -53,8 +34,6 @@ interface DigitalAlbumEditorHeaderProps {
 
 export default function DigitalAlbumEditorHeader({
   albumId,
-  activeStep,
-  onStepChange,
 }: DigitalAlbumEditorHeaderProps) {
   /* ==========================================================================
      Translations
@@ -64,36 +43,6 @@ export default function DigitalAlbumEditorHeader({
     useTranslations(
       "DigitalAlbumEditor"
     );
-
-
-  /* ==========================================================================
-     Navigation
-  ========================================================================== */
-
-  const navigationItems =
-    getDigitalAlbumEditorNavigationItems(
-      t
-    );
-
-
-  /* ==========================================================================
-     Handle Navigation
-  ========================================================================== */
-
-  function handleNavigation(
-    id:
-      string
-  ) {
-    if (
-      id === "photos" ||
-      id === "pages" ||
-      id === "design"
-    ) {
-      onStepChange(
-        id
-      );
-    }
-  }
 
 
   /* ==========================================================================
@@ -108,26 +57,6 @@ export default function DigitalAlbumEditorHeader({
           label={
             t(
               "navigation.back"
-            )
-          }
-        />
-      }
-      navigation={
-        <SideNavigation
-          items={
-            navigationItems
-          }
-          variant="controlled"
-          appearance="underline"
-          activeId={
-            activeStep
-          }
-          onControlledNavigate={
-            handleNavigation
-          }
-          ariaLabel={
-            t(
-              "navigation.label"
             )
           }
         />
