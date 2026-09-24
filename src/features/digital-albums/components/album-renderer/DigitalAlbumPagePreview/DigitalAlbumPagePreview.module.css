@@ -19,7 +19,7 @@
     hidden;
 
   background:
-    var(--album-background);
+    var(--album-paper);
 
   --album-design-font-size:
     4px;

@@ -1,69 +1,45 @@
 "use client";
 
-import {
-  ArrowLeft,
-  Loader2,
-} from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 
-import {
-  useEffect,
-  useRef,
-} from "react";
+import { useEffect, useRef } from "react";
 
-import {
-  useTranslations,
-} from "next-intl";
+import { useTranslations } from "next-intl";
 
-import FilePicker
-  from "@/components/ui/file-picker/FilePicker";
+import FilePicker from "@/components/ui/file-picker/FilePicker";
 
-import IconButton
-  from "@/components/ui/icon-button/IconButton";
+import IconButton from "@/components/ui/icon-button/IconButton";
 
-import {
-  useDigitalAlbumUpload,
-} from "@/features/digital-albums/editor/hooks/useDigitalAlbumUpload";
+import { useDigitalAlbumUpload } from "@/features/digital-albums/editor/hooks/useDigitalAlbumUpload";
 
-import type {
-  DigitalAlbumPhoto,
-} from "@/features/digital-albums/types/digitalAlbumPhoto.types";
+import type { DigitalAlbumPhoto } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
 
-import PhotoUploadComposer
-  from "@/features/photo-upload/components/PhotoUploadComposer/PhotoUploadComposer";
+import PhotoUploadComposer from "@/features/photo-upload/components/PhotoUploadComposer/PhotoUploadComposer";
 
-import PhotoUploadControls
-  from "@/features/photo-upload/components/PhotoUploadControls/PhotoUploadControls";
+import PhotoUploadControls from "@/features/photo-upload/components/PhotoUploadControls/PhotoUploadControls";
 
 import {
   ACCEPTED_IMAGE_TYPES_VALUE,
   MAX_FILES,
 } from "@/features/photo-upload/constants/photoUpload.constants";
 
-import styles
-  from "./DigitalAlbumUpload.module.css";
-
+import styles from "./DigitalAlbumUpload.module.css";
 
 /* ==========================================================================
    Types
 ========================================================================== */
 
 interface DigitalAlbumUploadProps {
-  albumId:
-    string;
+  onBusyChange?: (busy: boolean) => void;
+  onProgress?: (photos: DigitalAlbumPhoto[]) => void;
+  albumId: string;
 
-  initialFiles:
-    File[];
+  initialFiles: File[];
 
-  onSuccess:
-    (
-      photos:
-        DigitalAlbumPhoto[]
-    ) => void;
+  onSuccess: (photos: DigitalAlbumPhoto[]) => void;
 
-  onBack:
-    () => void;
+  onBack: () => void;
 }
-
 
 /* ==========================================================================
    Digital Album Upload
@@ -74,16 +50,14 @@ export default function DigitalAlbumUpload({
   initialFiles,
   onSuccess,
   onBack,
+  onBusyChange,
+  onProgress,
 }: DigitalAlbumUploadProps) {
   /* ==========================================================================
      Translation
   ========================================================================== */
 
-  const t =
-    useTranslations(
-      "DigitalAlbumEditor.photos.upload"
-    );
-
+  const t = useTranslations("DigitalAlbumEditor.photos.upload");
 
   /* ==========================================================================
      Upload
@@ -95,286 +69,153 @@ export default function DigitalAlbumUpload({
     error,
     isPreparing,
     isSubmitting,
+    isUncertain,
     addFiles,
     removeActivePhoto,
     selectPhoto,
     setActivePhotoDescription,
     submit,
-  } =
-useDigitalAlbumUpload({
-  albumId,
+  } = useDigitalAlbumUpload({
+    albumId,
 
-  invalidFilesError:
-    t(
-      "errors.invalidFiles"
-    ),
+    invalidFilesError: t("errors.invalidFiles"),
 
-  tooManyFilesError:
-    t(
-      "errors.tooManyFiles",
-      {
-        count:
-          MAX_FILES,
-      }
-    ),
+    tooManyFilesError: t("errors.tooManyFiles", {
+      count: MAX_FILES,
+    }),
 
-  uploadError:
-    t(
-      "errors.upload"
-    ),
+    uncertainError: t("errors.uncertain"),
+    uploadError: t("errors.upload"),
 
-  onSuccess,
+    onSuccess,
+    onProgress,
 
-  onEmpty:
-    onBack,
-});
-
+    onEmpty: onBack,
+  });
 
   /* ==========================================================================
      Refs
   ========================================================================== */
 
-  const initialFilesHandledRef =
-    useRef(
-      false
-    );
-
+  const initialFilesHandledRef = useRef(false);
 
   /* ==========================================================================
      Initial Files
   ========================================================================== */
 
-  useEffect(
-    () => {
-      if (
-        initialFilesHandledRef.current ||
-        initialFiles.length === 0
-      ) {
-        return;
-      }
+  useEffect(() => {
+    if (initialFilesHandledRef.current || initialFiles.length === 0) {
+      return;
+    }
 
-      initialFilesHandledRef.current =
-        true;
+    initialFilesHandledRef.current = true;
 
-      void addFiles(
-        initialFiles
-      );
-    },
-    [
-      initialFiles,
-      addFiles,
-    ]
-  );
-
+    void addFiles(initialFiles);
+  }, [initialFiles, addFiles]);
 
   /* ==========================================================================
      State
   ========================================================================== */
 
-  const isBusy =
-    isPreparing ||
-    isSubmitting;
-
+  useEffect(() => {
+    onBusyChange?.(isPreparing || isSubmitting);
+  }, [isPreparing, isSubmitting, onBusyChange]);
+  const isBusy = isPreparing || isSubmitting;
 
   /* ==========================================================================
      Back
   ========================================================================== */
 
   function handleBack() {
-    if (
-      isBusy
-    ) {
+    if (isBusy) {
       return;
     }
 
     onBack();
   }
 
-
   /* ==========================================================================
      Render
   ========================================================================== */
 
   return (
-    <div
-      className={
-        styles.root
-      }
-    >
+    <div className={styles.root}>
       {/* ====================================================================
           Navigation
       ==================================================================== */}
 
-      <div
-        className={
-          styles.navigation
-        }
-      >
+      <div className={styles.navigation}>
         <IconButton
-          disabled={
-            isBusy
-          }
-          onClick={
-            handleBack
-          }
-          aria-label={
-            t(
-              "back"
-            )
-          }
+          disabled={isBusy}
+          onClick={handleBack}
+          aria-label={t("back")}
         >
-          <ArrowLeft
-            aria-hidden="true"
-          />
+          <ArrowLeft aria-hidden="true" />
         </IconButton>
       </div>
-
 
       {/* ====================================================================
           Preparing
       ==================================================================== */}
 
       {isPreparing && (
-        <div
-          className={
-            styles.preparing
-          }
-          role="status"
-        >
-          <Loader2
-            className={
-              styles.loader
-            }
-            aria-hidden="true"
-          />
+        <div className={styles.preparing} role="status">
+          <Loader2 className={styles.loader} aria-hidden="true" />
 
-          <span>
-            {t(
-              "preparing"
-            )}
-          </span>
+          <span>{t("preparing")}</span>
         </div>
       )}
-
 
       {/* ====================================================================
           Composer
       ==================================================================== */}
 
-      {!isPreparing &&
-        activePhoto && (
+      {!isPreparing && activePhoto && (
         <>
           <PhotoUploadComposer
-            previewUrl={
-              activePhoto.previewUrl
-            }
-            description={
-              activePhoto.description
-            }
-            descriptionPlaceholder={
-              t(
-                "descriptionPlaceholder"
-              )
-            }
-            descriptionLabel={
-              t(
-                "descriptionLabel"
-              )
-            }
-            removeLabel={
-              t(
-                "remove"
-              )
-            }
-            disabled={
-              isBusy
-            }
-            onDescriptionChange={
-              setActivePhotoDescription
-            }
-            onRemove={
-              removeActivePhoto
-            }
+            previewUrl={activePhoto.previewUrl}
+            description={activePhoto.description}
+            descriptionPlaceholder={t("descriptionPlaceholder")}
+            descriptionLabel={t("descriptionLabel")}
+            removeLabel={t("remove")}
+            disabled={isBusy}
+            onDescriptionChange={setActivePhotoDescription}
+            onRemove={removeActivePhoto}
           />
 
           <FilePicker
-            accept={
-              ACCEPTED_IMAGE_TYPES_VALUE
-            }
+            accept={ACCEPTED_IMAGE_TYPES_VALUE}
             multiple
-            onSelect={
-              addFiles
-            }
+            onSelect={addFiles}
           >
             {(openGallery) => (
               <PhotoUploadControls
-                photos={
-                  photos
-                }
-                activePhotoId={
-                  activePhoto.id
-                }
-                disabled={
-                  isBusy
-                }
-                isSubmitting={
-                  isSubmitting
-                }
-                canAddMore={
-                  photos.length <
-                  MAX_FILES
-                }
-                selectPhotoLabel={
-                  t(
-                    "selectPhoto"
-                  )
-                }
-                addMoreLabel={
-                  t(
-                    "addMore"
-                  )
-                }
-                submitLabel={
-                  t(
-                    "submit",
-                    {
-                      count:
-                        photos.length,
-                    }
-                  )
-                }
-                submittingLabel={
-                  t(
-                    "submitting"
-                  )
-                }
-                onSelectPhoto={
-                  selectPhoto
-                }
-                onAddMore={
-                  openGallery
-                }
-                onSubmit={
-                  submit
-                }
+                photos={photos}
+                activePhotoId={activePhoto.id}
+                disabled={isBusy || isUncertain}
+                isSubmitting={isSubmitting}
+                canAddMore={photos.length < MAX_FILES}
+                selectPhotoLabel={t("selectPhoto")}
+                addMoreLabel={t("addMore")}
+                submitLabel={t("submit", {
+                  count: photos.length,
+                })}
+                submittingLabel={t("submitting")}
+                onSelectPhoto={selectPhoto}
+                onAddMore={openGallery}
+                onSubmit={submit}
               />
             )}
           </FilePicker>
         </>
       )}
 
-
       {/* ====================================================================
           Error
       ==================================================================== */}
 
       {error && (
-        <p
-          role="alert"
-          className={
-            styles.error
-          }
-        >
+        <p role="alert" className={styles.error}>
           {error}
         </p>
       )}

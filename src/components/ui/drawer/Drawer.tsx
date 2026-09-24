@@ -1,147 +1,80 @@
 "use client";
 
-import type {
-  ComponentProps,
-  ReactNode,
-} from "react";
+import type { ComponentProps, ReactNode } from "react";
 
-import {
-  Drawer as DrawerPrimitive,
-} from "@base-ui/react/drawer";
+import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
 
-import {
-  X,
-} from "lucide-react";
+import { X } from "lucide-react";
 
-import {
-  cn,
-} from "@/lib/utils/utils";
+import { cn } from "@/lib/utils/utils";
 
-import styles
-  from "./Drawer.module.css";
-
+import styles from "./Drawer.module.css";
 
 /* ==========================================================================
    Drawer
 ========================================================================== */
 
-function Drawer(
-  props:
-    ComponentProps<
-      typeof DrawerPrimitive.Root
-    >
-) {
-  return (
-    <DrawerPrimitive.Root
-      {...props}
-    />
-  );
+function Drawer(props: ComponentProps<typeof DrawerPrimitive.Root>) {
+  return <DrawerPrimitive.Root {...props} />;
 }
-
 
 /* ==========================================================================
    Drawer Trigger
 ========================================================================== */
 
-function DrawerTrigger(
-  props:
-    ComponentProps<
-      typeof DrawerPrimitive.Trigger
-    >
-) {
-  return (
-    <DrawerPrimitive.Trigger
-      {...props}
-    />
-  );
+function DrawerTrigger(props: ComponentProps<typeof DrawerPrimitive.Trigger>) {
+  return <DrawerPrimitive.Trigger {...props} />;
 }
-
 
 /* ==========================================================================
    Drawer Close
 ========================================================================== */
 
-function DrawerClose(
-  props:
-    ComponentProps<
-      typeof DrawerPrimitive.Close
-    >
-) {
-  return (
-    <DrawerPrimitive.Close
-      {...props}
-    />
-  );
+function DrawerClose(props: ComponentProps<typeof DrawerPrimitive.Close>) {
+  return <DrawerPrimitive.Close {...props} />;
 }
-
 
 /* ==========================================================================
    Drawer Content
 ========================================================================== */
 
 interface DrawerContentProps
-  extends ComponentProps<
-    typeof DrawerPrimitive.Popup
-  > {
-  children:
-    ReactNode;
+  extends ComponentProps<typeof DrawerPrimitive.Popup> {
+  children: ReactNode;
 
-  showCloseButton?:
-    boolean;
+  handleOnly?: boolean;
+
+  showCloseButton?: boolean;
 }
 
 function DrawerContent({
   className,
   children,
   showCloseButton = true,
+  handleOnly = false,
   ...props
 }: DrawerContentProps) {
   return (
     <DrawerPrimitive.Portal>
-      <DrawerPrimitive.Viewport
-        className={
-          styles.viewport
-        }
-      >
+      <DrawerPrimitive.Viewport className={styles.viewport}>
         <DrawerPrimitive.Popup
-          className={cn(
-            styles.popup,
-            className
-          )}
+          className={cn(styles.popup, className)}
           {...props}
         >
-          <div
-            className={
-              styles.dragArea
-            }
-          >
-            <div
-              className={
-                styles.handle
-              }
-              aria-hidden="true"
-            />
+          <div className={styles.dragArea}>
+            <div className={styles.handle} aria-hidden="true" />
           </div>
 
           <DrawerPrimitive.Content
-            className={
-              styles.content
-            }
+            data-base-ui-swipe-ignore={handleOnly ? "" : undefined}
+            className={styles.content}
           >
             {children}
           </DrawerPrimitive.Content>
 
           {showCloseButton && (
-            <DrawerPrimitive.Close
-              className={
-                styles.close
-              }
-              aria-label="Close"
-            >
-              <X
-                size={20}
-                aria-hidden="true"
-              />
+            <DrawerPrimitive.Close className={styles.close} aria-label="Close">
+              <X size={20} aria-hidden="true" />
             </DrawerPrimitive.Close>
           )}
         </DrawerPrimitive.Popup>
@@ -150,64 +83,33 @@ function DrawerContent({
   );
 }
 
-
 /* ==========================================================================
    Drawer Header
 ========================================================================== */
 
 interface DrawerHeaderProps {
-  children:
-    ReactNode;
+  children: ReactNode;
 
-  className?:
-    string;
+  className?: string;
 }
 
-function DrawerHeader({
-  children,
-  className,
-}: DrawerHeaderProps) {
-  return (
-    <div
-      className={cn(
-        styles.header,
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
+function DrawerHeader({ children, className }: DrawerHeaderProps) {
+  return <div className={cn(styles.header, className)}>{children}</div>;
 }
-
 
 /* ==========================================================================
    Drawer Footer
 ========================================================================== */
 
 interface DrawerFooterProps {
-  children:
-    ReactNode;
+  children: ReactNode;
 
-  className?:
-    string;
+  className?: string;
 }
 
-function DrawerFooter({
-  children,
-  className,
-}: DrawerFooterProps) {
-  return (
-    <div
-      className={cn(
-        styles.footer,
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
+function DrawerFooter({ children, className }: DrawerFooterProps) {
+  return <div className={cn(styles.footer, className)}>{children}</div>;
 }
-
 
 /* ==========================================================================
    Drawer Title
@@ -216,20 +118,11 @@ function DrawerFooter({
 function DrawerTitle({
   className,
   ...props
-}: ComponentProps<
-  typeof DrawerPrimitive.Title
->) {
+}: ComponentProps<typeof DrawerPrimitive.Title>) {
   return (
-    <DrawerPrimitive.Title
-      className={cn(
-        styles.title,
-        className
-      )}
-      {...props}
-    />
+    <DrawerPrimitive.Title className={cn(styles.title, className)} {...props} />
   );
 }
-
 
 /* ==========================================================================
    Drawer Description
@@ -238,20 +131,14 @@ function DrawerTitle({
 function DrawerDescription({
   className,
   ...props
-}: ComponentProps<
-  typeof DrawerPrimitive.Description
->) {
+}: ComponentProps<typeof DrawerPrimitive.Description>) {
   return (
     <DrawerPrimitive.Description
-      className={cn(
-        styles.description,
-        className
-      )}
+      className={cn(styles.description, className)}
       {...props}
     />
   );
 }
-
 
 /* ==========================================================================
    Exports

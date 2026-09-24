@@ -3,94 +3,104 @@
 ========================================================================== */
 
 .root {
-  position:
-    relative;
-  display:
-    inline-block;
+  position: relative;
+  display: inline-block;
 }
-
 
 /* ==========================================================================
    Value
 ========================================================================== */
 
 .value {
-  position:
-    relative;
-  z-index:
-    1;
-  display:
-    inherit;
-  min-width:
-    1px;
-  max-width:
-    100%;
-  white-space:
-    pre-wrap;
-  overflow-wrap:
-    break-word;
-  outline:
-    none;
+  position: relative;
+  z-index: 1;
+  display: inherit;
+  min-width: 1px;
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  outline: none;
 }
-
 
 /* ==========================================================================
    Interaction
 ========================================================================== */
 
 .interaction {
-  position:
-    absolute;
-  inset:
-    -0.25rem;
-  z-index:
-    2;
-  padding:
-    0;
-  border:
-    0;
-  background:
-    transparent;
-  cursor:
-    text;
+  position: absolute;
+  inset: -0.25rem;
+  z-index: 2;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: text;
 }
-
 
 /* ==========================================================================
    Editable
 ========================================================================== */
 
 .root[data-editable="true"] {
-  outline:
-    1px solid transparent;
-  outline-offset:
-    0.25rem;
-  transition:
-    outline-color 150ms ease;
+  outline: 1px solid transparent;
+  outline-offset: 0.25rem;
+  transition: outline-color 150ms ease;
 }
-
 
 /* ==========================================================================
    Hover
 ========================================================================== */
 
 .root[data-editable="true"]:hover {
-  outline-color:
-    rgb(99 102 241 / 0.45);
+  outline-color: var(--border);
 }
-
 
 /* ==========================================================================
    Editing
 ========================================================================== */
 
 .root[data-editing="true"] {
-  outline-color:
-    rgb(99 102 241);
+  outline-color: var(--primary);
 }
 
 
 /* ==========================================================================
-   Placeholder
+   Mobile Dialog
 ========================================================================== */
 
+.mobileDialog {
+  width: calc(100% - 2rem);
+  max-width: 28rem;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 1.5rem;
+}
+
+
+/* ==========================================================================
+   Mobile Input
+========================================================================== */
+
+.mobileInput {
+  width: 100%;
+  min-height: 8rem;
+  max-height: 40dvh;
+  resize: vertical;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   Mobile Actions
+========================================================================== */
+
+.mobileActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.mobileActions > * {
+  min-width: 6.5rem;
+}

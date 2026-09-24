@@ -1,21 +1,14 @@
 "use client";
 
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useTranslations } from "next-intl";
 
-import {
-  toast,
-} from "sonner";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import {
-  getPhotoWallPhotosPageAction,
-} from "@/features/invitations/actions/photo-wall/getPhotoWallPhotosPageAction";
+import { toast } from "sonner";
 
-import {
-  buildPhotoWallGalleryPhotos,
-} from "@/features/invitations/renderer/data/buildPhotoWallGalleryPhotos";
+import { getPhotoWallPhotosPageAction } from "@/features/invitations/actions/photo-wall/getPhotoWallPhotosPageAction";
+
+import { buildPhotoWallGalleryPhotos } from "@/features/invitations/renderer/data/buildPhotoWallGalleryPhotos";
 
 import type {
   PhotoWallGalleryPhoto,
@@ -23,19 +16,15 @@ import type {
   PhotoWallPhotosManagementFilter,
 } from "@/features/invitations/types/photoWallPhoto.types";
 
-
 /* ==========================================================================
    Types
 ========================================================================== */
 
 interface UseDigitalAlbumPhotoPickerInput {
-  photoWallId:
-    string;
+  photoWallId: string;
 
-  excludedPhotoIds?:
-    string[];
+  excludedPhotoIds?: string[];
 }
-
 
 /* ==========================================================================
    Use Digital Album Photo Picker
@@ -45,364 +34,245 @@ export function useDigitalAlbumPhotoPicker({
   photoWallId,
   excludedPhotoIds,
 }: UseDigitalAlbumPhotoPickerInput) {
+  const t = useTranslations("DigitalAlbumEditor.photos.picker");
   /* ==========================================================================
      Excluded Photos
   ========================================================================== */
 
-  const excludedPhotoIdsKey =
-    excludedPhotoIds
-      ? [...excludedPhotoIds]
-          .sort()
-          .join("|")
-      : "";
+  const excludedPhotoIdsKey = excludedPhotoIds
+    ? [...excludedPhotoIds].sort().join("|")
+    : "";
 
-  const stableExcludedPhotoIds =
-    excludedPhotoIdsKey
-      ? excludedPhotoIdsKey.split(
-          "|"
-        )
-      : undefined;
-
+  const stableExcludedPhotoIds = useMemo(
+    () => (excludedPhotoIdsKey ? excludedPhotoIdsKey.split("|") : undefined),
+    [excludedPhotoIdsKey],
+  );
 
   /* ==========================================================================
      State
   ========================================================================== */
 
-  const [
-    filter,
-    setFilter,
-  ] =
-    useState<PhotoWallPhotosManagementFilter>(
-      "all"
-    );
+  const requestId = useRef<symbol | null>(null);
+  const requestBusy = useRef(false);
 
-  const [
-    galleryPhotos,
-    setGalleryPhotos,
-  ] =
-    useState<PhotoWallGalleryPhoto[]>(
-      []
-    );
+  const [filter, setFilter] = useState<PhotoWallPhotosManagementFilter>("all");
 
-  const [
-    currentCursor,
-    setCurrentCursor,
-  ] =
-    useState<PhotoWallPhotosCursor | null>(
-      null
-    );
+  const [galleryPhotos, setGalleryPhotos] = useState<PhotoWallGalleryPhoto[]>(
+    [],
+  );
 
-  const [
-    currentTotalCount,
-    setCurrentTotalCount,
-  ] =
-    useState(
-      0
-    );
+  const [currentCursor, setCurrentCursor] =
+    useState<PhotoWallPhotosCursor | null>(null);
 
-  const [
-    currentFavoriteCount,
-    setCurrentFavoriteCount,
-  ] =
-    useState(
-      0
-    );
+  const [currentTotalCount, setCurrentTotalCount] = useState(0);
 
-  const [
-    selectedPhotoIds,
-    setSelectedPhotoIds,
-  ] =
-    useState<Set<string>>(
-      new Set()
-    );
+  const [currentFavoriteCount, setCurrentFavoriteCount] = useState(0);
 
-  const [
-    isLoadingPage,
-    setIsLoadingPage,
-  ] =
-    useState(
-      true
-    );
+  const [selectedPhotoIds, setSelectedPhotoIds] = useState<Set<string>>(
+    new Set(),
+  );
 
+  const [isLoadingPage, setIsLoadingPage] = useState(true);
 
   /* ==========================================================================
      Initial Load
   ========================================================================== */
 
-  useEffect(
-    () => {
-      let isActive =
-        true;
+  useEffect(() => {
+    let isActive = true;
+    const currentRequest = Symbol();
+    requestId.current = currentRequest;
+    requestBusy.current = true;
 
-      async function loadInitialPage() {
-        setIsLoadingPage(
-          true
-        );
+    async function loadInitialPage() {
+      setIsLoadingPage(true);
+      setGalleryPhotos([]);
+      setSelectedPhotoIds(new Set());
+      setCurrentCursor(null);
+      setCurrentTotalCount(0);
+      setCurrentFavoriteCount(0);
 
-        try {
-          const result =
-            await getPhotoWallPhotosPageAction({
-              invitationId:
-                photoWallId,
+      try {
+        const result = await getPhotoWallPhotosPageAction({
+          invitationId: photoWallId,
 
-              filter:
-                "all",
+          filter: "all",
 
-              excludedPhotoIds:
-                stableExcludedPhotoIds,
-            });
+          excludedPhotoIds: stableExcludedPhotoIds,
+        });
 
-          if (!isActive) {
-            return;
-          }
+        if (!isActive || currentRequest !== requestId.current) {
+          return;
+        }
 
-          if (!result.success) {
-            toast.error(
-              result.message
-            );
+        if (!result.success) {
+          toast.error(t("error"));
 
-            return;
-          }
+          return;
+        }
 
-          setFilter(
-            "all"
-          );
+        setFilter("all");
 
-          setGalleryPhotos(
-            buildPhotoWallGalleryPhotos(
-              result.data.photos
-            )
-          );
+        setGalleryPhotos(buildPhotoWallGalleryPhotos(result.data.photos));
 
-          setCurrentCursor(
-            result.data.nextCursor
-          );
+        setCurrentCursor(result.data.nextCursor);
 
-          setCurrentTotalCount(
-            result.data.totalCount
-          );
+        setCurrentTotalCount(result.data.totalCount);
 
-          setCurrentFavoriteCount(
-            result.data.favoriteCount
-          );
+        setCurrentFavoriteCount(result.data.favoriteCount);
 
-          setSelectedPhotoIds(
-            new Set()
-          );
-        } finally {
-          if (isActive) {
-            setIsLoadingPage(
-              false
-            );
-          }
+        setSelectedPhotoIds(new Set());
+      } catch {
+        if (isActive && currentRequest === requestId.current)
+          toast.error(t("error"));
+      } finally {
+        if (isActive && currentRequest === requestId.current) {
+          requestBusy.current = false;
+          setIsLoadingPage(false);
         }
       }
+    }
 
-      loadInitialPage();
+    loadInitialPage();
 
-      return () => {
-        isActive =
-          false;
-      };
-    },
-    [
-      photoWallId,
-      excludedPhotoIdsKey,
-    ]
-  );
-
+    return () => {
+      isActive = false;
+      requestId.current = null;
+      requestBusy.current = false;
+    };
+  }, [photoWallId, stableExcludedPhotoIds, t]);
 
   /* ==========================================================================
      Filter Change
   ========================================================================== */
 
-  async function handleFilterChange(
-    value:
-      string
-  ) {
-    if (
-      value !== "all" &&
-      value !== "favorites"
-    ) {
+  async function handleFilterChange(value: string) {
+    if (value !== "all" && value !== "favorites") {
       return;
     }
 
-    if (
-      value === filter ||
-      isLoadingPage
-    ) {
+    if (value === filter || requestBusy.current || isLoadingPage) {
       return;
     }
 
-    setIsLoadingPage(
-      true
-    );
+    requestBusy.current = true;
+    const currentRequest = Symbol();
+    requestId.current = currentRequest;
+    setIsLoadingPage(true);
 
     try {
-      const result =
-        await getPhotoWallPhotosPageAction({
-          invitationId:
-            photoWallId,
+      const result = await getPhotoWallPhotosPageAction({
+        invitationId: photoWallId,
 
-          filter:
-            value,
+        filter: value,
 
-          excludedPhotoIds:
-            stableExcludedPhotoIds,
-        });
+        excludedPhotoIds: stableExcludedPhotoIds,
+      });
+
+      if (currentRequest !== requestId.current) return;
 
       if (!result.success) {
-        toast.error(
-          result.message
-        );
+        toast.error(t("error"));
 
         return;
       }
 
-      setFilter(
-        value
-      );
+      setFilter(value);
 
-      setGalleryPhotos(
-        buildPhotoWallGalleryPhotos(
-          result.data.photos
-        )
-      );
+      setGalleryPhotos(buildPhotoWallGalleryPhotos(result.data.photos));
 
-      setCurrentCursor(
-        result.data.nextCursor
-      );
+      setCurrentCursor(result.data.nextCursor);
 
-      setCurrentTotalCount(
-        result.data.totalCount
-      );
+      setCurrentTotalCount(result.data.totalCount);
 
-      setCurrentFavoriteCount(
-        result.data.favoriteCount
-      );
+      setCurrentFavoriteCount(result.data.favoriteCount);
+    } catch {
+      if (currentRequest === requestId.current) toast.error(t("error"));
     } finally {
-      setIsLoadingPage(
-        false
-      );
+      if (currentRequest === requestId.current) {
+        requestBusy.current = false;
+        setIsLoadingPage(false);
+      }
     }
   }
-
 
   /* ==========================================================================
      Load More
   ========================================================================== */
 
   async function handleLoadMore() {
-    if (
-      !currentCursor ||
-      isLoadingPage
-    ) {
+    if (!currentCursor || requestBusy.current || isLoadingPage) {
       return;
     }
 
-    setIsLoadingPage(
-      true
-    );
+    requestBusy.current = true;
+    const currentRequest = Symbol();
+    requestId.current = currentRequest;
+    setIsLoadingPage(true);
 
     try {
-      const result =
-        await getPhotoWallPhotosPageAction({
-          invitationId:
-            photoWallId,
+      const result = await getPhotoWallPhotosPageAction({
+        invitationId: photoWallId,
 
-          filter,
+        filter,
 
-          cursor:
-            currentCursor,
+        cursor: currentCursor,
 
-          excludedPhotoIds:
-            stableExcludedPhotoIds,
-        });
+        excludedPhotoIds: stableExcludedPhotoIds,
+      });
+
+      if (currentRequest !== requestId.current) return;
 
       if (!result.success) {
-        toast.error(
-          result.message
-        );
+        toast.error(t("error"));
 
         return;
       }
 
-      const nextPhotos =
-        buildPhotoWallGalleryPhotos(
-          result.data.photos
-        );
+      const nextPhotos = buildPhotoWallGalleryPhotos(result.data.photos);
 
-      setGalleryPhotos(
-        (currentPhotos) => [
-          ...currentPhotos,
-          ...nextPhotos,
-        ]
-      );
+      setGalleryPhotos((currentPhotos) => [...currentPhotos, ...nextPhotos]);
 
-      setCurrentCursor(
-        result.data.nextCursor
-      );
+      setCurrentCursor(result.data.nextCursor);
 
-      setCurrentTotalCount(
-        result.data.totalCount
-      );
+      setCurrentTotalCount(result.data.totalCount);
 
-      setCurrentFavoriteCount(
-        result.data.favoriteCount
-      );
+      setCurrentFavoriteCount(result.data.favoriteCount);
+    } catch {
+      if (currentRequest === requestId.current) toast.error(t("error"));
     } finally {
-      setIsLoadingPage(
-        false
-      );
+      if (currentRequest === requestId.current) {
+        requestBusy.current = false;
+        setIsLoadingPage(false);
+      }
     }
   }
-
 
   /* ==========================================================================
      Selection
   ========================================================================== */
 
-  function handlePhotoToggle(
-    photoId:
-      string
-  ) {
-    setSelectedPhotoIds(
-      (currentIds) => {
-        const nextIds =
-          new Set(
-            currentIds
-          );
+  function handlePhotoToggle(photoId: string) {
+    setSelectedPhotoIds((currentIds) => {
+      const nextIds = new Set(currentIds);
 
-        if (
-          nextIds.has(
-            photoId
-          )
-        ) {
-          nextIds.delete(
-            photoId
-          );
-        } else {
-          nextIds.add(
-            photoId
-          );
-        }
-
-        return nextIds;
+      if (nextIds.has(photoId)) {
+        nextIds.delete(photoId);
+      } else {
+        nextIds.add(photoId);
       }
-    );
-  }
 
+      return nextIds;
+    });
+  }
 
   /* ==========================================================================
      Clear Selection
   ========================================================================== */
 
   function clearSelection() {
-    setSelectedPhotoIds(
-      new Set()
-    );
+    setSelectedPhotoIds(new Set());
   }
-
 
   /* ==========================================================================
      Result
@@ -415,18 +285,13 @@ export function useDigitalAlbumPhotoPicker({
 
     selectedPhotoIds,
 
-    selectedCount:
-      selectedPhotoIds.size,
+    selectedCount: selectedPhotoIds.size,
 
-    totalCount:
-      currentTotalCount,
+    totalCount: currentTotalCount,
 
-    favoriteCount:
-      currentFavoriteCount,
+    favoriteCount: currentFavoriteCount,
 
-    hasMore:
-      currentCursor !==
-      null,
+    hasMore: currentCursor !== null,
 
     isLoadingPage,
 

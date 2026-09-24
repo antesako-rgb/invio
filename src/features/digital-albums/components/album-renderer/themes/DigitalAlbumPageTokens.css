@@ -1,0 +1,23 @@
+[data-album-theme] {
+  --album-margin-sm: 6cqw;
+  --album-margin: 9cqw;
+  --album-margin-lg: 13cqw;
+  --album-gutter: 3.5cqw;
+  --album-caption-gap: 2.5cqw;
+
+  --album-type-body: 3.1cqw;
+  --album-type-caption: 2.6cqw;
+  --album-type-title: 8cqw;
+
+  --album-paper: #faf8f3;
+  --album-ink: #36372f;
+  --album-muted-ink: #77796c;
+
+  --album-title-font: serif;
+  --album-body-font: serif;
+  --album-script-font: cursive;
+
+  --album-collage-background-image: none;
+  --album-editorial-background-image: none;
+  --album-story-background-image: none;
+}

@@ -7,6 +7,7 @@ import createMiddleware
 
 import {
   NextRequest,
+  NextResponse,
 } from "next/server";
 
 import type {
@@ -16,6 +17,10 @@ import type {
 import {
   routing,
 } from "@/i18n/routing";
+
+import {
+  locales,
+} from "@/i18n/config";
 
 
 /* ==========================================================================
@@ -33,7 +38,8 @@ const handleI18nRouting =
 ========================================================================== */
 
 export default async function proxy(
-  request: NextRequest
+  request:
+    NextRequest
 ) {
   /* ==========================================================================
      Internationalization
@@ -101,7 +107,75 @@ export default async function proxy(
      Session
   ========================================================================== */
 
-  await supabase.auth.getClaims();
+  const {
+    data,
+  } =
+    await supabase.auth.getClaims();
+
+
+  /* ==========================================================================
+     Pathname
+  ========================================================================== */
+
+  const pathname =
+    request.nextUrl.pathname;
+
+  const segments =
+    pathname
+      .split("/")
+      .filter(
+        Boolean
+      );
+
+  const hasLocalePrefix =
+    locales.includes(
+      segments[0] as typeof locales[number]
+    );
+
+  const pathnameWithoutLocale =
+    hasLocalePrefix
+      ? `/${segments.slice(1).join("/")}`
+      : pathname;
+
+
+  /* ==========================================================================
+     Protected Routes
+  ========================================================================== */
+
+  const isProtectedRoute =
+    pathnameWithoutLocale === "/dashboard" ||
+    pathnameWithoutLocale.startsWith(
+      "/dashboard/"
+    ) ||
+    pathnameWithoutLocale === "/editor" ||
+    pathnameWithoutLocale.startsWith(
+      "/editor/"
+    );
+
+  if (
+    isProtectedRoute &&
+    !data?.claims
+  ) {
+    const loginUrl =
+      request.nextUrl.clone();
+
+    loginUrl.pathname =
+      hasLocalePrefix
+        ? `/${segments[0]}/prijava`
+        : "/prijava";
+
+    loginUrl.search =
+      "";
+
+    loginUrl.searchParams.set(
+      "next",
+      `${request.nextUrl.pathname}${request.nextUrl.search}`
+    );
+
+    return NextResponse.redirect(
+      loginUrl
+    );
+  }
 
 
   /* ==========================================================================

@@ -3,19 +3,19 @@
 ========================================================================== */
 
 [data-album-theme="classic"] {
-  --album-background:
-    #fff8f8;
+  --album-paper:
+    #f1e9e9;
 
-  --album-foreground:
+  --album-ink:
     #342e29;
 
-  --album-caption-foreground:
-    #ffffff;
-
-  --album-caption-overlay:
-    rgb(0 0 0 / 0.6);
+  --album-muted-ink:
+    #77796c;
 
 
+  /* ==========================================================================
+     Background Images
+  ========================================================================== */
 
   --album-collage-background-image:
     url("/digital-albums/themes/classic/collage-background.png");

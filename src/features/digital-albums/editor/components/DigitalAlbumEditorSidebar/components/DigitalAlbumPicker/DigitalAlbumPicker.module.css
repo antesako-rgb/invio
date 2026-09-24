@@ -1,7 +1,6 @@
 .root {
   display: grid;
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
 }
 
@@ -21,15 +20,11 @@
 .preview {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 11 / 16;
   overflow: hidden;
-  border:
-    1px solid
-    var(--border);
-  border-radius:
-    0.625rem;
-  background:
-    var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+  background: var(--muted);
 
   transition:
     border-color 150ms ease,
@@ -37,17 +32,13 @@
 }
 
 .card:hover .preview {
-  border-color:
-    var(--foreground);
+  border-color: var(--foreground);
 }
 
 .card[data-active] .preview {
-  border-color:
-    var(--primary);
+  border-color: var(--primary);
 
-  box-shadow:
-    0 0 0 1px
-    var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
 }
 
 .previewImage {
@@ -58,12 +49,24 @@
 }
 
 .label {
-  font-size:
-    0.8125rem;
+  font-size: 0.8125rem;
 
-  font-weight:
-    500;
+  font-weight: 500;
 
-  line-height:
-    1.25;
+  line-height: 1.25;
+}
+.filter {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+}
+.filter select {
+  border: 1px solid var(--border);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+.meta {
+  font-size: 0.7rem;
+  color: var(--muted-foreground);
 }

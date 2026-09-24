@@ -6,11 +6,10 @@
   position: relative;
   width: 100%;
   min-width: 0;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 11 / 16;
   overflow: hidden;
   border-radius: 0.5rem;
 }
-
 
 /* ==========================================================================
    Drop Target
@@ -27,19 +26,11 @@
   position: absolute;
   inset: 0;
   z-index: 30;
-  border:
-    3px solid
-    var(--primary);
+  border: 3px solid var(--primary);
   border-radius: 0.5rem;
-  background:
-    color-mix(
-      in srgb,
-      var(--primary) 8%,
-      transparent
-    );
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
   pointer-events: none;
 }
-
 
 /* ==========================================================================
    Page
@@ -60,7 +51,6 @@
   cursor: pointer;
 }
 
-
 /* ==========================================================================
    Hover
 ========================================================================== */
@@ -70,13 +60,10 @@
   position: absolute;
   inset: 0;
   z-index: 10;
-  border:
-    1px solid
-    var(--primary);
+  border: 1px solid var(--primary);
   border-radius: 0.5rem;
   pointer-events: none;
 }
-
 
 /* ==========================================================================
    Active
@@ -87,13 +74,10 @@
   position: absolute;
   inset: 0;
   z-index: 10;
-  border:
-    2px solid
-    var(--primary);
+  border: 2px solid var(--primary);
   border-radius: 0.5rem;
   pointer-events: none;
 }
-
 
 /* ==========================================================================
    Drag Handle
@@ -110,17 +94,12 @@
   width: 1.75rem;
   height: 1.75rem;
   padding: 0;
-  border:
-    1px solid
-    rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 0.375rem;
-  background:
-    rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--foreground);
   cursor: grab;
-  box-shadow:
-    0 2px 8px
-    rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   opacity: 0;
   transition:
     opacity 150ms ease,
@@ -140,9 +119,7 @@
 
 .dragHandle:hover {
   background: #ffffff;
-  box-shadow:
-    0 3px 10px
-    rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
 }
 
 .dragHandle:active {
@@ -150,12 +127,9 @@
 }
 
 .dragHandle:focus-visible {
-  outline:
-    2px solid
-    var(--ring);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
-
 
 /* ==========================================================================
    Dragging
@@ -164,7 +138,6 @@
 .root[data-dragging] {
   opacity: 0.6;
 }
-
 
 /* ==========================================================================
    Page Actions
@@ -184,17 +157,12 @@
   width: 1.75rem;
   height: 1.75rem;
   padding: 0;
-  border:
-    1px solid
-    rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 0.375rem;
-  background:
-    rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--foreground);
   cursor: pointer;
-  box-shadow:
-    0 2px 8px
-    rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   opacity: 0;
   transition:
     opacity 150ms ease,
@@ -215,24 +183,23 @@
 
 .actionsTrigger:hover {
   background: #ffffff;
-  box-shadow:
-    0 3px 10px
-    rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
 }
 
 .actionsTrigger:focus-visible {
-  outline:
-    2px solid
-    var(--ring);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
-
 
 /* ==========================================================================
    Mobile
 ========================================================================== */
 
 @media (max-width: 767px) {
+  .dragHandle {
+    touch-action: none;
+  }
+
   .actionsTrigger,
   .dragHandle {
     opacity: 1;

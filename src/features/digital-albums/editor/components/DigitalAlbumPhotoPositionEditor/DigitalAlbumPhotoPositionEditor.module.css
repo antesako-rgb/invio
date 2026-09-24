@@ -1,0 +1,88 @@
+.root {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+.root p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+.viewport {
+  --crop-height: min(32dvh, 18rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--crop-height);
+  min-width: 0;
+  overflow: hidden;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+.preview {
+  width: min(100%, calc(var(--crop-height) * var(--crop-ratio)));
+  aspect-ratio: var(--crop-ratio);
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+}
+.preview[data-movable="true"] {
+  cursor: grab;
+}
+.preview[data-movable="true"]:active {
+  cursor: grabbing;
+}
+.preview img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+}
+.controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.axis,
+.caption {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.axis[data-disabled="true"] {
+  opacity: 0.5;
+}
+.axis input {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  accent-color: var(--primary);
+}
+.axis input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.fit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+.actions > :first-child {
+  margin-right: auto;
+}
+@media (max-width: 480px) {
+  .actions > :first-child {
+    flex-basis: 100%;
+    margin-right: 0;
+  }
+}

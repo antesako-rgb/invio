@@ -3,6 +3,18 @@ import {
 } from "@/lib/supabase/server";
 
 import {
+  getDigitalAlbum,
+} from "@/features/digital-albums/repositories/album/getDigitalAlbum";
+
+import {
+  albumPhotoUsage,
+} from "@/features/digital-albums/utils/digitalAlbumDocumentOperations";
+
+import {
+  parseDigitalAlbumDocument,
+} from "@/features/digital-albums/utils/parseDigitalAlbumDocument";
+
+import {
   deleteEmptyDigitalAlbumPhotoDirectory,
 } from "@/features/event-photos/services/deleteEmptyDigitalAlbumPhotoDirectory";
 
@@ -14,6 +26,7 @@ import type {
   RemoveDigitalAlbumPhotoInput,
 } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
 
+
 /* ==========================================================================
    Remove Digital Album Photo
 ========================================================================== */
@@ -22,8 +35,43 @@ export async function removeDigitalAlbumPhoto(
   input:
     RemoveDigitalAlbumPhotoInput
 ): Promise<void> {
+  const album =
+    await getDigitalAlbum(
+      input.albumId
+    );
+
+  if (
+    !album
+  ) {
+    throw new Error(
+      "Digital album not found."
+    );
+  }
+
+  const document =
+    parseDigitalAlbumDocument(
+      album.document
+    );
+
+  if (
+    albumPhotoUsage(
+      document,
+      input.photoId
+    ).length > 0
+  ) {
+    throw new Error(
+      "Photo is still referenced by the album document."
+    );
+  }
+
+
+  /* ==========================================================================
+     Supabase
+  ========================================================================== */
+
   const supabase =
     await createServerClient();
+
 
   /* ==========================================================================
      Get Photo
@@ -55,7 +103,7 @@ export async function removeDigitalAlbumPhoto(
     );
 
     throw new Error(
-      "Fotografiju nije moguće dohvatiti."
+      "Unable to load photo."
     );
   }
 
@@ -63,9 +111,10 @@ export async function removeDigitalAlbumPhoto(
     !photo
   ) {
     throw new Error(
-      "Fotografija nije pronađena."
+      "Photo not found."
     );
   }
+
 
   /* ==========================================================================
      Remove Digital Album Association
@@ -98,6 +147,7 @@ export async function removeDigitalAlbumPhoto(
     );
   }
 
+
   /* ==========================================================================
      Keep Photo Wall Source
   ========================================================================== */
@@ -108,6 +158,7 @@ export async function removeDigitalAlbumPhoto(
   ) {
     return;
   }
+
 
   /* ==========================================================================
      Delete Orphan Event Photo
@@ -120,6 +171,7 @@ export async function removeDigitalAlbumPhoto(
     imagePath:
       photo.image_path,
   });
+
 
   /* ==========================================================================
      Delete Empty Digital Album Directory

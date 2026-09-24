@@ -3,65 +3,36 @@
 ========================================================================== */
 
 .inner {
-  display:
-    flex;
-  align-items:
-    center;
-  justify-content:
-    center;
-  width:
-    100%;
-  min-height:
-    100%;
-  padding:
-    2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 2rem;
 }
-
 
 /* ==========================================================================
    Document
 ========================================================================== */
 
 .document {
-  display:
-    flex;
-  align-items:
-    center;
-  justify-content:
-    center;
-  width:
-    100%;
-  min-width:
-    0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
 }
-
 
 /* ==========================================================================
    Desktop
 ========================================================================== */
 
-@media (
-  min-width: 1400px
-) {
-  .inner {
-    padding:
-      2rem
-      calc(2rem + 310px)
-      2rem
-      2rem;
-  }
-}
-
-
 /* ==========================================================================
    Mobile
 ========================================================================== */
 
-@media (
-  max-width: 767px
-) {
+@media (max-width: 767px) {
   .inner {
-    padding:
-      0.5rem 0;
+    padding: 0.5rem 0;
   }
 }

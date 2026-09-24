@@ -1,5 +1,7 @@
 {
   "navigation": {
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
     "back": "Back",
     "label": "Album editor navigation",
     "photos": "Photos",
@@ -7,21 +9,17 @@
     "design": "Design",
     "preview": "Preview"
   },
-
   "status": {
     "saving": "Saving...",
     "saved": "Saved",
     "error": "Failed to save"
   },
-
   "preview": {
     "close": "Close preview"
   },
-
   "mobile": {
     "edit": "Edit album"
   },
-
   "photos": {
     "add": "Add photos",
     "count": "{count, plural, one {# photo} other {# photos}}",
@@ -31,45 +29,38 @@
     "removeFromPage": "Remove from page",
     "removeSuccess": "The photo was removed from the album.",
     "removeError": "The photo could not be removed from the album.",
-
     "empty": {
       "title": "No photos yet",
       "description": "Add photos to start creating your digital album."
     },
-
     "removeConfirm": {
       "title": "Remove photo?",
       "description": "The photo will be removed from this album.",
       "confirm": "Remove"
     },
-
     "addDialog": {
       "title": "Add photos",
       "description": "Choose how you want to add photos to the album.",
-
       "sources": {
         "upload": "Upload photos",
         "uploadDescription": "Upload new photos directly to this album.",
         "photoWall": "Choose from Photo Wall",
         "photoWallDescription": "Choose photos that have already been shared on a Photo Wall."
       },
-
       "photoWallSelect": {
         "title": "Choose a Photo Wall",
         "description": "Choose the Photo Wall you want to add photos from."
       },
-
       "photoWall": {
         "title": "Photos from Photo Wall",
         "description": "Select the photos you want to add to the album."
       },
-
       "actions": {
         "back": "Back",
         "close": "Close"
-      }
+      },
+      "addError": "Unable to add photos. Please try again."
     },
-
     "upload": {
       "back": "Back",
       "select": "Choose photos",
@@ -81,37 +72,32 @@
       "submitting": "Uploading...",
       "descriptionPlaceholder": "Add a photo description...",
       "descriptionLabel": "Photo description",
-
       "errors": {
         "invalidFiles": "Some files could not be added. Use JPEG, PNG, or WebP images up to 10 MB.",
         "tooManyFiles": "You can upload up to {count} photos at a time.",
-        "upload": "Unable to upload the photos. Please try again."
+        "upload": "Unable to upload the photos. Please try again.",
+        "uncertain": "Connection interrupted; the last upload outcome is unknown. Close this dialog and check the album before adding files again."
       }
     },
-
     "picker": {
       "title": "Add photos",
       "description": "Select photos from the Photo Wall that you want to add to the album.",
       "error": "Unable to add photos to the album.",
       "loading": "Loading photos...",
-
       "filters": {
         "all": "All",
         "favorites": "Favorites"
       },
-
       "empty": {
         "all": {
           "title": "No photos",
           "description": "There are no photos in the Photo Wall available to add yet."
         },
-
         "favorites": {
           "title": "No favorites",
           "description": "You haven't marked any photos as favorites yet."
         }
       },
-
       "actions": {
         "loadMore": "Load more",
         "cancel": "Cancel",
@@ -120,46 +106,102 @@
       }
     }
   },
-
-"pages": {
-  "add": "Add page",
-  "count": "{count, plural, one {# page} other {# pages}}",
-  "page": "Page {number}",
-  "actions": "Page actions",
-  "duplicate": "Duplicate",
-  "delete": "Delete",
-
-  "addDialog": {
-    "title": "Add page",
-    "description": "Choose a layout for the new page."
-  }
-},
-"photoSlot": {
-  "addPhoto": "Add photo",
-  "selectPhoto": "Select photo position"
-},
-"design": {
-  "tabs": {
-    "page": "Page",
-    "theme": "Theme"
+  "pages": {
+    "add": "Add page",
+    "count": "{count, plural, one {# page} other {# pages}}",
+    "page": "Page {number}",
+    "actions": "Page actions",
+    "duplicate": "Duplicate",
+    "delete": "Delete",
+    "addDialog": {
+      "title": "Add page",
+      "description": "Choose a layout for the new page."
+    },
+    "move": "Move page {number}"
   },
-  "layouts": {
-    "cover": "Cover",
-    "full-photo": "One photo",
-    "two-photos": "Two photos",
-    "editorial": "Photo and story",
-    "story": "Story",
-    "collage": "Collage"
+  "photoSlot": {
+    "addPhoto": "Add photo",
+    "selectPhoto": "Select photo position"
   },
-  "themes": {
-    "classic": "Classic"
+  "design": {
+    "tabs": {
+      "page": "Page",
+      "theme": "Theme"
+    },
+    "layouts": {
+      "cover": "Cover",
+      "full-photo": "One photo",
+      "two-photos": "Two photos",
+      "editorial": "Photo and story",
+      "story": "Story",
+      "collage": "Collage",
+      "portrait-plate": "Portrait plate",
+      "landscape-plate": "Landscape plate",
+      "portrait-diptych": "Portrait diptych",
+      "mixed-pair": "Mixed pair",
+      "hero-detail": "Hero + detail",
+      "quote": "Quote",
+      "closing": "Closing"
+    },
+    "themes": {
+      "classic": "Classic"
+    }
+  },
+  "pdfExport": {
+    "rateLimited": "Too many PDF requests. Please try again in {seconds} seconds.",
+    "busy": "PDF generation is busy. Please try again in {seconds} seconds.",
+    "action": "Export PDF",
+    "exporting": "Generating PDF...",
+    "error": "The PDF could not be generated. Please try again."
+  },
+  "upgrade": {
+    "undo": "Undo",
+    "retry": "Retry",
+    "apply": "Apply",
+    "cancel": "Cancel",
+    "reset": "Reset framing",
+    "editText": "Edit text",
+    "position": "Adjust framing",
+    "positionHelp": "Drag the photo or use the sliders. Framing and caption apply to this photo on this page.",
+    "horizontal": "Horizontal",
+    "vertical": "Vertical",
+    "contain": "Show entire photo",
+    "caption": "Caption on this page",
+    "leaveUnsaved": "There are unsaved changes. Leave the editor?",
+    "exportNotReady": "Save changes and resolve page warnings before exporting.",
+    "overflow": "Some text does not fit on the page. Shorten it or choose another layout.",
+    "saveError": "Changes could not be saved. They remain in this editor; retry before leaving.",
+    "photoInUse": "This photo is on a page or retained for another layout. Remove it from those places first.",
+    "layoutPreview": "Layout preview ? this change has not been saved.",
+    "pageContext": "Page {number}",
+    "frontCover": "front cover",
+    "backCover": "back cover",
+    "slot": "Photo {number}",
+    "noSlots": "This page has no photo slots.",
+    "unplaced": "Photos kept for this page: {count}. They return when you choose a layout with more photo spaces.",
+    "coverChange": "This changes the front or back cover of the album. Continue?",
+    "category": "Layout category",
+    "categories": {
+      "all": "All layouts",
+      "single": "Single photo",
+      "pairs": "Two photos",
+      "sequence": "Multiple photos",
+      "text": "Text and chapters"
+    },
+    "photoCount": "{count, plural, =0 {No photos} one {# photo} other {# photos}}",
+    "moveBefore": "Move earlier",
+    "moveAfter": "Move later",
+    "fields": {
+      "title": "Title",
+      "subtitle": "Subtitle",
+      "text": "Text",
+      "date": "Date"
+    },
+    "removeRetained": "Remove retained photo",
+    "photoError": "This photo could not be loaded.",
+    "saveConflict": "The album changed in another tab or device. Your local edits are retained, but cannot overwrite the newer version. Preserve them before reloading this page.",
+    "redo": "Redo",
+    "confirm": "Continue",
+    "coverChangeTitle": "Change album covers"
   }
-},
-"pdfExport": {
-  "rateLimited": "Too many PDF requests. Please try again in {seconds} seconds.",
-  "busy": "PDF generation is busy. Please try again in {seconds} seconds.",
-  "action": "Export PDF",
-  "exporting": "Generating PDF...",
-  "error": "The PDF could not be generated. Please try again."
-}
 }

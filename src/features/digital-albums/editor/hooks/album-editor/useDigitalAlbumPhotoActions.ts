@@ -1,174 +1,42 @@
 import type {
-  Dispatch,
-  SetStateAction,
-} from "react";
-
-import type {
   DigitalAlbumDocument,
-} from "@/features/digital-albums/types/digitalAlbumDocument.types";
-
-
-/* ==========================================================================
-   Types
-========================================================================== */
-
-interface UseDigitalAlbumPhotoActionsOptions {
-  document:
-    DigitalAlbumDocument;
-
-  activePageId:
-    string | null;
-
-  setDocument:
-    Dispatch<
-      SetStateAction<
-        DigitalAlbumDocument
-      >
-    >;
-
-  saveDocument:
-    (
-      document:
-        DigitalAlbumDocument
-    ) => Promise<void>;
+  DigitalAlbumPhotoSlot,
+} from "../../../types/digitalAlbumDocument.types";
+interface Options {
+  activePageId: string | null;
+  commit: (
+    update: (document: DigitalAlbumDocument) => DigitalAlbumDocument,
+  ) => void;
 }
-
-
-/* ==========================================================================
-   Use Digital Album Photo Actions
-========================================================================== */
-
 export default function useDigitalAlbumPhotoActions({
-  document,
   activePageId,
-  setDocument,
-  saveDocument,
-}: UseDigitalAlbumPhotoActionsOptions) {
-  /* ==========================================================================
-     Select Photo
-  ========================================================================== */
-
-  async function selectPhoto(
-    photoSlotId:
-      string,
-    photoId:
-      string
+  commit,
+}: Options) {
+  function updateSlot(
+    slotId: string,
+    update: (slot: DigitalAlbumPhotoSlot) => DigitalAlbumPhotoSlot,
+    pageId = activePageId,
   ) {
-    if (
-      !activePageId
-    ) {
-      return;
-    }
-
-    const nextDocument:
-      DigitalAlbumDocument = {
-        ...document,
-
-        pages:
-          document.pages.map(
-            (page) => {
-              if (
-                page.id !==
-                  activePageId
-              ) {
-                return page;
-              }
-
-              return {
-                ...page,
-
-                photos:
-                  page.photos.map(
-                    (photoSlot) =>
-                      photoSlot.id ===
-                        photoSlotId
-                        ? {
-                            ...photoSlot,
-
-                            photoId,
-                          }
-                        : photoSlot
-                  ),
-              };
-            }
-          ),
-      };
-
-    setDocument(
-      nextDocument
-    );
-
-    await saveDocument(
-      nextDocument
+    commit((document) => ({
+      ...document,
+      pages: document.pages.map((p) =>
+        p.id !== pageId
+          ? p
+          : {
+              ...p,
+              photos: p.photos.map((s) => (s.id === slotId ? update(s) : s)),
+            },
+      ),
+    }));
+  }
+  // Framing and caption describe this photo placement, not a future replacement.
+  function selectPhoto(slotId: string, photoId: string) {
+    updateSlot(slotId, (slot) =>
+      slot.photoId === photoId ? slot : { id: slot.id, photoId },
     );
   }
-
-
-  /* ==========================================================================
-     Remove Photo
-  ========================================================================== */
-
-  async function removePhotoFromPage(
-    photoSlotId:
-      string
-  ) {
-    if (
-      !activePageId
-    ) {
-      return;
-    }
-
-    const nextDocument:
-      DigitalAlbumDocument = {
-        ...document,
-
-        pages:
-          document.pages.map(
-            (page) => {
-              if (
-                page.id !==
-                  activePageId
-              ) {
-                return page;
-              }
-
-              return {
-                ...page,
-
-                photos:
-                  page.photos.map(
-                    (photoSlot) =>
-                      photoSlot.id ===
-                        photoSlotId
-                        ? {
-                            ...photoSlot,
-
-                            photoId:
-                              null,
-                          }
-                        : photoSlot
-                  ),
-              };
-            }
-          ),
-      };
-
-    setDocument(
-      nextDocument
-    );
-
-    await saveDocument(
-      nextDocument
-    );
+  function removePhotoFromPage(slotId: string) {
+    updateSlot(slotId, (s) => ({ id: s.id, photoId: null }));
   }
-
-
-  /* ==========================================================================
-     Return
-  ========================================================================== */
-
-  return {
-    selectPhoto,
-    removePhotoFromPage,
-  };
+  return { selectPhoto, removePhotoFromPage, updateSlot };
 }

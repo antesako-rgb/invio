@@ -3,6 +3,18 @@ import {
 } from "@/lib/supabase/server";
 
 import type {
+  Json,
+} from "@/lib/supabase/database.types";
+
+import {
+  assertDigitalAlbumRevision,
+} from "@/features/digital-albums/utils/digitalAlbumRevision";
+
+import {
+  parseDigitalAlbumDocument,
+} from "@/features/digital-albums/utils/parseDigitalAlbumDocument";
+
+import type {
   DigitalAlbum,
 } from "@/features/digital-albums/types/digitalAlbum.types";
 
@@ -35,7 +47,9 @@ export async function getDigitalAlbum(
       )
       .maybeSingle();
 
-  if (error) {
+  if (
+    error
+  ) {
     console.error(
       "getDigitalAlbum error:",
       error
@@ -46,5 +60,25 @@ export async function getDigitalAlbum(
     );
   }
 
-  return data;
+  if (
+    !data
+  ) {
+    return null;
+  }
+
+  assertDigitalAlbumRevision(
+    data.document_revision
+  );
+
+  const document =
+    parseDigitalAlbumDocument(
+      data.document
+    );
+
+  return {
+    ...data,
+
+    document:
+      document as unknown as Json,
+  };
 }

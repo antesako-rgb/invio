@@ -1,5 +1,7 @@
 {
   "navigation": {
+    "previousPage": "Prethodna stranica",
+    "nextPage": "Sljedeća stranica",
     "back": "Natrag",
     "label": "Navigacija uređivača albuma",
     "photos": "Fotografije",
@@ -7,21 +9,17 @@
     "design": "Dizajn",
     "preview": "Pregled"
   },
-
   "status": {
     "saving": "Spremanje...",
     "saved": "Spremljeno",
     "error": "Spremanje nije uspjelo"
   },
-
   "preview": {
     "close": "Zatvori pregled"
   },
-
   "mobile": {
     "edit": "Uredi album"
   },
-
   "photos": {
     "add": "Dodaj fotografije",
     "count": "{count, plural, one {# fotografija} few {# fotografije} other {# fotografija}}",
@@ -31,45 +29,38 @@
     "removeFromPage": "Ukloni sa stranice",
     "removeSuccess": "Fotografija je uklonjena iz albuma.",
     "removeError": "Fotografiju nije moguće ukloniti iz albuma.",
-
     "empty": {
       "title": "Još nema fotografija",
       "description": "Dodaj fotografije kako bi započeo s izradom digitalnog albuma."
     },
-
     "removeConfirm": {
       "title": "Ukloniti fotografiju?",
       "description": "Fotografija će biti uklonjena iz ovog albuma.",
       "confirm": "Ukloni"
     },
-
     "addDialog": {
       "title": "Dodaj fotografije",
       "description": "Odaberi kako želiš dodati fotografije u album.",
-
       "sources": {
         "upload": "Prenesi fotografije",
         "uploadDescription": "Prenesi nove fotografije izravno u ovaj album.",
         "photoWall": "Odaberi iz Photo Walla",
         "photoWallDescription": "Odaberi fotografije koje su već podijeljene na Photo Wallu."
       },
-
       "photoWallSelect": {
         "title": "Odaberi Photo Wall",
         "description": "Odaberi Photo Wall iz kojeg želiš dodati fotografije."
       },
-
       "photoWall": {
         "title": "Fotografije iz Photo Walla",
         "description": "Odaberi fotografije koje želiš dodati u album."
       },
-
       "actions": {
         "back": "Natrag",
         "close": "Zatvori"
-      }
+      },
+      "addError": "Fotografije nije moguće dodati. Pokušajte ponovno."
     },
-
     "upload": {
       "back": "Natrag",
       "select": "Odaberi fotografije",
@@ -81,37 +72,32 @@
       "submitting": "Prijenos...",
       "descriptionPlaceholder": "Dodaj opis fotografije...",
       "descriptionLabel": "Opis fotografije",
-
       "errors": {
         "invalidFiles": "Neke datoteke nije moguće dodati. Koristi JPEG, PNG ili WebP slike do 10 MB.",
         "tooManyFiles": "Odjednom možeš prenijeti najviše {count} fotografija.",
-        "upload": "Fotografije nije moguće prenijeti. Pokušaj ponovno."
+        "upload": "Fotografije nije moguće prenijeti. Pokušaj ponovno.",
+        "uncertain": "Veza je prekinuta i ne možemo potvrditi zadnji upload. Zatvorite dijalog i provjerite fotografije u albumu prije ponovnog dodavanja."
       }
     },
-
     "picker": {
       "title": "Dodaj fotografije",
       "description": "Odaberi fotografije iz Photo Walla koje želiš dodati u album.",
       "error": "Fotografije nije moguće dodati u album.",
       "loading": "Učitavanje fotografija...",
-
       "filters": {
         "all": "Sve",
         "favorites": "Favoriti"
       },
-
       "empty": {
         "all": {
           "title": "Nema fotografija",
           "description": "Na Photo Wallu još nema fotografija dostupnih za dodavanje."
         },
-
         "favorites": {
           "title": "Nema favorita",
           "description": "Još nisi označio nijednu fotografiju kao favorit."
         }
       },
-
       "actions": {
         "loadMore": "Učitaj još",
         "cancel": "Odustani",
@@ -120,46 +106,102 @@
       }
     }
   },
-
-"pages": {
-  "add": "Dodaj stranicu",
-  "count": "{count, plural, one {# stranica} few {# stranice} other {# stranica}}",
-  "page": "Stranica {number}",
-  "actions": "Radnje stranice",
-  "duplicate": "Dupliciraj",
-  "delete": "Izbriši",
-
-  "addDialog": {
-    "title": "Dodaj stranicu",
-    "description": "Odaberi izgled nove stranice."
-  }
-},
-"photoSlot": {
-  "addPhoto": "Dodaj fotografiju",
-  "selectPhoto": "Odaberi poziciju fotografije"
-},
-"design": {
-  "tabs": {
-    "page": "Stranica",
-    "theme": "Tema"
+  "pages": {
+    "add": "Dodaj stranicu",
+    "count": "{count, plural, one {# stranica} few {# stranice} other {# stranica}}",
+    "page": "Stranica {number}",
+    "actions": "Radnje stranice",
+    "duplicate": "Dupliciraj",
+    "delete": "Izbriši",
+    "addDialog": {
+      "title": "Dodaj stranicu",
+      "description": "Odaberi izgled nove stranice."
+    },
+    "move": "Premjesti stranicu {number}"
   },
-  "layouts": {
-    "cover": "Naslovnica",
-    "full-photo": "Jedna fotografija",
-    "two-photos": "Dvije fotografije",
-    "editorial": "Fotografija i priča",
-    "story": "Priča",
-    "collage": "Kolaž"
+  "photoSlot": {
+    "addPhoto": "Dodaj fotografiju",
+    "selectPhoto": "Odaberi fotografiju"
   },
-  "themes": {
-    "classic": "Klasična"
+  "design": {
+    "tabs": {
+      "page": "Stranica",
+      "theme": "Tema"
+    },
+    "layouts": {
+      "cover": "Naslovnica",
+      "full-photo": "Jedna fotografija",
+      "two-photos": "Dvije fotografije",
+      "editorial": "Fotografija i priča",
+      "story": "Priča",
+      "collage": "Kolaž",
+      "portrait-plate": "Portret na papiru",
+      "landscape-plate": "Horizontalna fotografija",
+      "portrait-diptych": "Dva portreta",
+      "mixed-pair": "Portret i trenutak",
+      "hero-detail": "Veliki kadar i detalj",
+      "quote": "Citat",
+      "closing": "Završna riječ"
+    },
+    "themes": {
+      "classic": "Klasična"
+    }
+  },
+  "pdfExport": {
+    "rateLimited": "Previše zahtjeva za PDF. Pokušajte ponovno za {seconds} sekundi.",
+    "busy": "Generiranje PDF-a trenutačno je zauzeto. Pokušajte ponovno za {seconds} sekundi.",
+    "action": "Izvezi u PDF",
+    "exporting": "Generiranje PDF-a...",
+    "error": "PDF nije moguće generirati. Pokušajte ponovno."
+  },
+  "upgrade": {
+    "undo": "Poništi",
+    "retry": "Pokušaj ponovno",
+    "apply": "Primijeni",
+    "cancel": "Odustani",
+    "reset": "Vrati izvorni kadar",
+    "editText": "Uredi tekst",
+    "position": "Namjesti kadar",
+    "positionHelp": "Povucite fotografiju ili koristite klizače. Kadar i opis vrijede za ovu fotografiju na ovoj stranici.",
+    "horizontal": "Vodoravno",
+    "vertical": "Okomito",
+    "contain": "Prikaži cijelu fotografiju",
+    "caption": "Opis na ovoj stranici",
+    "leaveUnsaved": "Postoje nespremljene izmjene. Želite li napustiti editor?",
+    "exportNotReady": "Prvo spremite izmjene i riješite upozorenja na stranicama.",
+    "overflow": "Dio teksta ne stane na stranicu. Skratite tekst ili odaberite drugi raspored.",
+    "saveError": "Izmjene nisu spremljene. Ostaju u ovom editoru; pokušajte ponovno prije odlaska.",
+    "photoInUse": "Fotografija je na stranici ili je sačuvana za drugi raspored. Prvo je uklonite s tih mjesta.",
+    "layoutPreview": "Pregled novog rasporeda — promjena još nije spremljena.",
+    "pageContext": "Stranica {number}",
+    "frontCover": "prednja korica",
+    "backCover": "stražnja korica",
+    "slot": "Fotografija {number}",
+    "noSlots": "Ova stranica nema mjesta za fotografije.",
+    "unplaced": "Fotografije sačuvane za ovu stranicu: {count}. Vratit će se kada odaberete raspored s više mjesta za fotografije.",
+    "coverChange": "Ova promjena mijenja prednju ili stražnju koricu albuma. Želite li nastaviti?",
+    "category": "Vrsta rasporeda",
+    "categories": {
+      "all": "Svi rasporedi",
+      "single": "Jedna fotografija",
+      "pairs": "Dvije fotografije",
+      "sequence": "Više fotografija",
+      "text": "Tekst i poglavlja"
+    },
+    "photoCount": "{count, plural, =0 {Bez fotografija} one {# fotografija} few {# fotografije} other {# fotografija}}",
+    "moveBefore": "Pomakni prije",
+    "moveAfter": "Pomakni poslije",
+    "fields": {
+      "title": "Naslov",
+      "subtitle": "Podnaslov",
+      "text": "Tekst",
+      "date": "Datum"
+    },
+    "removeRetained": "Ukloni sačuvanu fotografiju",
+    "photoError": "Fotografiju nije moguće učitati.",
+    "saveConflict": "Album je izmijenjen u drugom tabu ili uređaju. Lokalne izmjene nisu izgubljene, ali ih ne možemo spremiti preko novije verzije. Sačuvajte ih prije ponovnog učitavanja stranice.",
+    "redo": "Ponovi",
+    "confirm": "Nastavi",
+    "coverChangeTitle": "Promjena korica"
   }
-},
-    "pdfExport": {
-  "rateLimited": "Previše zahtjeva za PDF. Pokušajte ponovno za {seconds} sekundi.",
-  "busy": "Generiranje PDF-a trenutačno je zauzeto. Pokušajte ponovno za {seconds} sekundi.",
-  "action": "Izvezi u PDF",
-  "exporting": "Generiranje PDF-a...",
-  "error": "PDF nije moguće generirati. Pokušajte ponovno."
-}
 }

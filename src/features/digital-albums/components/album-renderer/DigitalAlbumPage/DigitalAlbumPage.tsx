@@ -1,30 +1,20 @@
-import type {
-  ReactNode,
-} from "react";
+import type { ReactNode } from "react";
 
-import {
-  Page,
-} from "@openpageflip/react";
+import { Page } from "@openpageflip/react";
 
-import styles
-  from "./DigitalAlbumPage.module.css";
-
+import styles from "./DigitalAlbumPage.module.css";
 
 /* ==========================================================================
    Types
 ========================================================================== */
 
 interface DigitalAlbumPageProps {
-  children:
-    ReactNode;
+  children: ReactNode;
 
-  hard?:
-    boolean;
+  hard?: boolean;
 
-  className?:
-    string;
+  className?: string;
 }
-
 
 /* ==========================================================================
    Digital Album Page
@@ -35,26 +25,15 @@ export default function DigitalAlbumPage({
   hard = false,
   className,
 }: DigitalAlbumPageProps) {
-  const pageClassName = [
-    styles.page,
-    hard
-      ? styles.hard
-      : undefined,
-    className,
-  ]
+  const pageClassName = [styles.page, hard ? styles.hard : undefined, className]
     .filter(Boolean)
     .join(" ");
 
   return (
     <Page
-      density={
-        hard
-          ? "hard"
-          : "soft"
-      }
-      className={
-        pageClassName
-      }
+      data-album-page="book"
+      density={hard ? "hard" : "soft"}
+      className={pageClassName}
     >
       {children}
     </Page>

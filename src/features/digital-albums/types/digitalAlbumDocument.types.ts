@@ -1,26 +1,22 @@
-/* ==========================================================================
-   Page Layout
-========================================================================== */
-
 export type DigitalAlbumPageLayout =
   | "cover"
   | "full-photo"
   | "two-photos"
   | "editorial"
   | "story"
-  | "collage";
+  | "collage"
+  | "portrait-plate"
+  | "landscape-plate"
+  | "portrait-diptych"
+  | "mixed-pair"
+  | "hero-detail"
+  | "quote"
+  | "closing";
 
-/* ==========================================================================
-   Theme
-========================================================================== */
 
 export type DigitalAlbumTheme =
-  | "classic";
+  "classic";
 
-
-/* ==========================================================================
-   Photo Slot
-========================================================================== */
 
 export interface DigitalAlbumPhotoSlot {
   id:
@@ -28,12 +24,31 @@ export interface DigitalAlbumPhotoSlot {
 
   photoId:
     string | null;
+
+  /**
+   * Normalized CSS object-position,
+   * not a source crop rectangle.
+   */
+  position?: {
+    x:
+      number;
+
+    y:
+      number;
+  };
+
+  fit?:
+    | "cover"
+    | "contain";
+
+  /**
+   * Undefined inherits description;
+   * empty string explicitly hides it.
+   */
+  caption?:
+    string;
 }
 
-
-/* ==========================================================================
-   Page Content
-========================================================================== */
 
 export interface DigitalAlbumPageContent {
   title?:
@@ -44,12 +59,11 @@ export interface DigitalAlbumPageContent {
 
   text?:
     string;
+
+  date?:
+    string;
 }
 
-
-/* ==========================================================================
-   Page
-========================================================================== */
 
 export interface DigitalAlbumDocumentPage {
   id:
@@ -58,17 +72,23 @@ export interface DigitalAlbumDocumentPage {
   layout:
     DigitalAlbumPageLayout;
 
+  /**
+   * Missing means legacy.
+   * Upgrades are explicit.
+   */
+  layoutVersion?:
+    1 | 2;
+
   photos:
+    DigitalAlbumPhotoSlot[];
+
+  unplacedPhotos?:
     DigitalAlbumPhotoSlot[];
 
   content:
     DigitalAlbumPageContent;
 }
 
-
-/* ==========================================================================
-   Document
-========================================================================== */
 
 export interface DigitalAlbumDocument {
   theme:

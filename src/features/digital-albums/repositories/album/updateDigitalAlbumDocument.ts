@@ -6,6 +6,19 @@ import type {
   Json,
 } from "@/lib/supabase/database.types";
 
+import {
+  albumDocumentsEqual,
+} from "@/features/digital-albums/utils/digitalAlbumDocumentOperations";
+
+import {
+  assertDigitalAlbumRevision,
+  DigitalAlbumSaveConflict,
+} from "@/features/digital-albums/utils/digitalAlbumRevision";
+
+import {
+  parseDigitalAlbumDocument,
+} from "@/features/digital-albums/utils/parseDigitalAlbumDocument";
+
 import type {
   DigitalAlbum,
   UpdateDigitalAlbumDocumentInput,
@@ -20,6 +33,20 @@ export async function updateDigitalAlbumDocument(
   input:
     UpdateDigitalAlbumDocumentInput
 ): Promise<DigitalAlbum> {
+  assertDigitalAlbumRevision(
+    input.documentRevision
+  );
+
+  const document =
+    parseDigitalAlbumDocument(
+      input.document
+    );
+
+
+  /* ==========================================================================
+     Supabase
+  ========================================================================== */
+
   const supabase =
     await createServerClient();
 
@@ -34,16 +61,30 @@ export async function updateDigitalAlbumDocument(
           input.albumId,
 
         p_document:
-          input.document as unknown as Json,
+          document as unknown as Json,
 
         p_document_version:
           input.documentVersion,
+
+        p_expected_revision:
+          input.documentRevision,
       }
     );
+
+
+  /* ==========================================================================
+     Error
+  ========================================================================== */
 
   if (
     error
   ) {
+    if (
+      error.code === "PT409"
+    ) {
+      throw new DigitalAlbumSaveConflict();
+    }
+
     console.error(
       "updateDigitalAlbumDocument error:",
       error
@@ -58,7 +99,41 @@ export async function updateDigitalAlbumDocument(
     !data
   ) {
     throw new Error(
-      "Dokument digitalnog albuma nije spremljen."
+      "Digital album document was not saved."
+    );
+  }
+
+
+  /* ==========================================================================
+     Validate Saved Document
+  ========================================================================== */
+
+  assertDigitalAlbumRevision(
+    data.document_revision
+  );
+
+  if (
+    data.document_revision !==
+    input.documentRevision + 1
+  ) {
+    throw new Error(
+      "Unexpected album revision after save."
+    );
+  }
+
+  const savedDocument =
+    parseDigitalAlbumDocument(
+      data.document
+    );
+
+  if (
+    !albumDocumentsEqual(
+      savedDocument,
+      document
+    )
+  ) {
+    throw new Error(
+      "Saved album document does not match the requested document."
     );
   }
 

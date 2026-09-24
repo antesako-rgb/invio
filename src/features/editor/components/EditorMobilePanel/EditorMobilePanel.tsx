@@ -1,46 +1,35 @@
 "use client";
 
-import type {
-  ReactNode,
-} from "react";
+import type { ReactNode } from "react";
 
-import {
-  Drawer,
-  DrawerContent,
-} from "@/components/ui/drawer/Drawer";
-
+import { Drawer, DrawerContent } from "@/components/ui/drawer/Drawer";
 
 /* ==========================================================================
    Constants
 ========================================================================== */
 
+export const EDITOR_MOBILE_DEFAULT_SNAP_POINT = 0.23;
+export const EDITOR_MOBILE_FULL_SNAP_POINT = 1;
+
 const EDITOR_MOBILE_SNAP_POINTS = [
-  0.23,
-  0.90,
+  EDITOR_MOBILE_DEFAULT_SNAP_POINT,
+  EDITOR_MOBILE_FULL_SNAP_POINT,
 ];
-
-const EDITOR_MOBILE_DEFAULT_SNAP_POINT =
-  0.23;
-
 
 /* ==========================================================================
    Types
 ========================================================================== */
 
 interface EditorMobilePanelProps {
-  open:
-    boolean;
+  snapPoint?: number;
+  onSnapPointChange?: (snapPoint: number) => void;
+  handleOnly?: boolean;
+  open: boolean;
 
-  children:
-    ReactNode;
+  children: ReactNode;
 
-  onOpenChange:
-    (
-      open:
-        boolean
-    ) => void;
+  onOpenChange: (open: boolean) => void;
 }
-
 
 /* ==========================================================================
    Editor Mobile Panel
@@ -50,30 +39,28 @@ export default function EditorMobilePanel({
   open,
   children,
   onOpenChange,
+  snapPoint,
+  onSnapPointChange,
+  handleOnly,
 }: EditorMobilePanelProps) {
   /* ==========================================================================
      Render
   ========================================================================== */
 
   return (
-    <Drawer
-      open={
-        open
-      }
-      onOpenChange={
-        onOpenChange
-      }
-      modal={false}
-      snapPoints={
-        EDITOR_MOBILE_SNAP_POINTS
-      }
-      defaultSnapPoint={
-        EDITOR_MOBILE_DEFAULT_SNAP_POINT
-      }
-    >
-      <DrawerContent>
-        {children}
-      </DrawerContent>
+<Drawer
+  open={open}
+  onOpenChange={onOpenChange}
+  modal={false}
+  snapPoint={snapPoint}
+  onSnapPointChange={(point) => {
+    if (typeof point === "number") {
+      onSnapPointChange?.(point);
+    }
+  }}
+  snapPoints={EDITOR_MOBILE_SNAP_POINTS}
+>
+      <DrawerContent handleOnly={handleOnly}>{children}</DrawerContent>
     </Drawer>
   );
 }

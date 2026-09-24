@@ -1,0 +1,3 @@
+export const DIGITAL_ALBUM_PAGE_WIDTH = 440;
+export const DIGITAL_ALBUM_PAGE_HEIGHT = 640;
+export const DIGITAL_ALBUM_PAGE_RATIO = "11 / 16";

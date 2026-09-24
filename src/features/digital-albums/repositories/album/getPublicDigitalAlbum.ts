@@ -2,6 +2,10 @@ import {
   createServerClient,
 } from "@/lib/supabase/server";
 
+import {
+  parseDigitalAlbumDocument,
+} from "@/features/digital-albums/utils/parseDigitalAlbumDocument";
+
 import type {
   GetPublicDigitalAlbumInput,
   PublicDigitalAlbum,
@@ -45,17 +49,24 @@ export async function getPublicDigitalAlbum(
   }
 
   if (
-    !data
-    || typeof data !==
-      "object"
-    || Array.isArray(
+    !data ||
+    typeof data !== "object" ||
+    Array.isArray(
       data
     )
   ) {
     throw new Error(
-      "Digitalni album nije pronađen."
+      "Digital album not found."
     );
   }
 
-  return data as unknown as PublicDigitalAlbum;
+  const result =
+    data as unknown as PublicDigitalAlbum;
+
+  result.album.document =
+    parseDigitalAlbumDocument(
+      result.album.document
+    );
+
+  return result;
 }

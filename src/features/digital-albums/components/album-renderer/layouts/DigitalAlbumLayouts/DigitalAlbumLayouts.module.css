@@ -1,0 +1,312 @@
+.page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--album-paper);
+  color: var(--album-ink);
+  font-family: var(--album-body-font);
+}
+.figure {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+}
+.image {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.caption {
+  flex: 0 0 auto;
+  padding-top: var(--album-caption-gap);
+  font-size: var(--album-type-caption);
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--album-muted-ink);
+}
+.title {
+  display: block;
+  font-family: var(--album-title-font);
+  font-size: var(--album-type-title);
+  line-height: 1.15;
+  font-weight: 400;
+  text-wrap: balance;
+}
+.subtitle,
+.date {
+  display: block;
+  font-size: 2.6cqw;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+}
+.subtitle {
+  text-transform: uppercase;
+}
+.text {
+  display: block;
+  font-size: var(--album-type-body);
+  line-height: 1.7;
+}
+.rule {
+  display: block;
+  width: 9cqw;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+  margin: 6cqw auto;
+}
+.page[data-composition="cover"] {
+  background: var(--album-ink);
+  color: var(--album-paper);
+}
+.coverShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 42%, rgb(0 0 0 / 0.52));
+  pointer-events: none;
+}
+.coverText {
+  position: absolute;
+  bottom: 12cqw;
+  left: var(--album-margin);
+  right: var(--album-margin);
+  text-align: center;
+  display: grid;
+  gap: 3cqw;
+}
+.coverText .title {
+  font-size: 10cqw;
+}
+.coverText .subtitle {
+  font-family: var(--album-script-font);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 5.5cqw;
+}
+.page[data-composition="full-photo"] > .figure > .caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10cqw 6cqw 6cqw;
+  color: white;
+  background: linear-gradient(transparent, rgb(0 0 0 / 0.5));
+}
+.stack {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 6cqw;
+  height: 100%;
+  padding: 12cqw 8cqw;
+}
+.page[data-composition="editorial"] {
+  padding: 10cqw var(--album-margin);
+  display: flex;
+  flex-direction: column;
+  gap: 6cqw;
+}
+.page[data-composition="editorial"] > .title {
+  font-size: 7cqw;
+  max-width: 75%;
+}
+.essayPhoto {
+  height: 62cqw;
+  flex: 0 0 auto;
+}
+.essayText {
+  margin-left: 16cqw;
+}
+.essayText .text {
+  font-size: 3cqw;
+}
+.chapterHeading {
+  max-height: 75cqw;
+  position: absolute;
+  top: 30cqw;
+  left: 12cqw;
+  right: 12cqw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3cqw;
+}
+.chapterHeading .title {
+  font-size: 12cqw;
+}
+.chapterNote {
+  max-height: 23cqw;
+  position: absolute;
+  bottom: 20cqw;
+  left: 18cqw;
+  right: 18cqw;
+  text-align: center;
+  font-style: italic;
+}
+.collageGrid {
+  height: 100%;
+  padding: 8cqw;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: var(--album-gutter);
+}
+.collageGrid > div {
+  min-width: 0;
+  min-height: 0;
+}
+.collageLead {
+  grid-row: 1 / 3;
+}
+.collageText {
+  position: absolute;
+  bottom: 11cqw;
+  left: 11cqw;
+  width: 30cqw;
+  padding: 4cqw;
+  background: var(--album-paper);
+}
+.collageText .title {
+  font-size: 4.8cqw;
+  margin-top: 2cqw;
+}
+.collageText .subtitle {
+  font-size: 2cqw;
+}
+.portraitPlate {
+  position: absolute;
+  top: 16cqw;
+  left: 15cqw;
+  width: 70cqw;
+  height: 108cqw;
+}
+.landscapePlate {
+  position: absolute;
+  top: 38cqw;
+  left: 9cqw;
+  width: 82cqw;
+  height: 63cqw;
+}
+.diptych {
+  position: absolute;
+  top: 30cqw;
+  left: 7cqw;
+  right: 7cqw;
+  height: 76cqw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4cqw;
+}
+.mixedPortrait {
+  position: absolute;
+  top: 13cqw;
+  left: 9cqw;
+  width: 48cqw;
+  height: 76cqw;
+}
+.mixedLandscape {
+  position: absolute;
+  bottom: 12cqw;
+  right: 9cqw;
+  width: 62cqw;
+  height: 42cqw;
+}
+.hero {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 84cqw;
+  height: 104cqw;
+}
+.detail {
+  position: absolute;
+  right: 9cqw;
+  bottom: 9cqw;
+  width: 32cqw;
+  height: 33cqw;
+}
+.quoteBlock {
+  position: absolute;
+  top: 30cqw;
+  left: 15cqw;
+  right: 15cqw;
+  text-align: center;
+}
+.quoteMark {
+  display: block;
+  font-size: 20cqw;
+  line-height: 1;
+  font-family: var(--album-title-font);
+  opacity: 0.4;
+}
+.quoteBlock .text {
+  font-family: var(--album-title-font);
+  font-size: 6.5cqw;
+  line-height: 1.4;
+}
+.closingBlock {
+  position: absolute;
+  bottom: 23cqw;
+  left: 18cqw;
+  right: 18cqw;
+  text-align: center;
+  display: grid;
+  gap: 5cqw;
+}
+.closingBlock .title {
+  font-size: 5cqw;
+}
+.closingBlock .text {
+  font-size: 3cqw;
+}
+.closingBlock .date {
+  margin-top: 4cqw;
+  font-size: 2.3cqw;
+}
+.page :is(.text, .title, .subtitle, .date):empty {
+  display: none;
+}
+/* ==========================================================================
+   Theme Backgrounds
+========================================================================== */
+
+.page[data-composition="collage"] {
+  background-image:
+    var(
+      --album-collage-background-image,
+      none
+    );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.page[data-composition="editorial"] {
+  background-image:
+    var(
+      --album-editorial-background-image,
+      none
+    );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.page[data-composition="story"] {
+  background-image:
+    var(
+      --album-story-background-image,
+      none
+    );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+

@@ -58,6 +58,8 @@ export interface UpdateDigitalAlbumDocumentInput {
 
   documentVersion:
     number;
+
+  documentRevision: number;
 }
 
 

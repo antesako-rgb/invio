@@ -1,18 +1,10 @@
 "use client";
 
-import {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 
-import {
-  uploadDigitalAlbumPhotoAction,
-} from "@/features/digital-albums/actions/photos/uploadDigitalAlbumPhotoAction";
+import { uploadDigitalAlbumPhotoAction } from "@/features/digital-albums/actions/photos/uploadDigitalAlbumPhotoAction";
 
-import type {
-  DigitalAlbumPhoto,
-} from "@/features/digital-albums/types/digitalAlbumPhoto.types";
+import type { DigitalAlbumPhoto } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
 
 import {
   ACCEPTED_IMAGE_TYPES,
@@ -20,50 +12,36 @@ import {
   MAX_FILES,
 } from "@/features/photo-upload/constants/photoUpload.constants";
 
-import {
-  createPhotoPreview,
-} from "@/features/photo-upload/utils/createPhotoPreview";
-
+import { createPhotoPreview } from "@/features/photo-upload/utils/createPhotoPreview";
 
 /* ==========================================================================
    Types
 ========================================================================== */
 
 export interface SelectedDigitalAlbumPhoto {
-  id:
-    string;
+  id: string;
 
-  file:
-    File;
+  file: File;
 
-  previewUrl:
-    string;
+  previewUrl: string;
 
-  description:
-    string;
+  description: string;
 }
 
 interface UseDigitalAlbumUploadOptions {
-  albumId:
-    string;
+  albumId: string;
 
-  invalidFilesError:
-    string;
+  invalidFilesError: string;
 
-  tooManyFilesError:
-    string;
+  tooManyFilesError: string;
 
-  uploadError:
-    string;
+  uploadError: string;
+  uncertainError: string;
 
-  onSuccess:
-    (
-      photos:
-        DigitalAlbumPhoto[]
-    ) => void;
+  onSuccess: (photos: DigitalAlbumPhoto[]) => void;
 
-  onEmpty?:
-    () => void;
+  onProgress?: (photos: DigitalAlbumPhoto[]) => void;
+  onEmpty?: () => void;
 }
 
 /* ==========================================================================
@@ -74,7 +52,6 @@ function createPhotoId() {
   return crypto.randomUUID();
 }
 
-
 /* ==========================================================================
    Use Digital Album Upload
 ========================================================================== */
@@ -83,500 +60,295 @@ export function useDigitalAlbumUpload({
   invalidFilesError,
   tooManyFilesError,
   uploadError,
+  uncertainError,
   onSuccess,
   onEmpty,
+  onProgress,
 }: UseDigitalAlbumUploadOptions) {
   /* ==========================================================================
      State
   ========================================================================== */
 
-  const [
-    photos,
-    setPhotos,
-  ] =
-    useState<SelectedDigitalAlbumPhoto[]>(
-      []
-    );
+  const [photos, setPhotos] = useState<SelectedDigitalAlbumPhoto[]>([]);
 
-  const [
-    activePhotoId,
-    setActivePhotoId,
-  ] =
-    useState<string | null>(
-      null
-    );
+  const [activePhotoId, setActivePhotoId] = useState<string | null>(null);
 
-  const [
-    error,
-    setError,
-  ] =
-    useState<string | null>(
-      null
-    );
+  const [error, setError] = useState<string | null>(null);
 
-  const [
-    isPreparing,
-    setIsPreparing,
-  ] =
-    useState(
-      false
-    );
+  const [isPreparing, setIsPreparing] = useState(false);
 
-  const [
-    isSubmitting,
-    setIsSubmitting,
-  ] =
-    useState(
-      false
-    );
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   /* ==========================================================================
      Refs
   ========================================================================== */
 
-  const photosRef =
-    useRef<SelectedDigitalAlbumPhoto[]>(
-      []
-    );
+  const busyRef = useRef(false);
+  const mountedRef = useRef(true);
+  const uncertainRef = useRef(false);
+  const [isUncertain, setIsUncertain] = useState(false);
+  const photosRef = useRef<SelectedDigitalAlbumPhoto[]>([]);
 
-  photosRef.current =
-    photos;
-
+  useEffect(() => {
+    photosRef.current = photos;
+  }, [photos]);
 
   /* ==========================================================================
      Data
   ========================================================================== */
 
   const activePhoto =
-    photos.find(
-      (photo) =>
-        photo.id ===
-        activePhotoId
-    ) ??
-    photos[0] ??
-    null;
-
+    photos.find((photo) => photo.id === activePhotoId) ?? photos[0] ?? null;
 
   /* ==========================================================================
      Cleanup
   ========================================================================== */
 
-  useEffect(
-    () => {
-      return () => {
-        photosRef.current.forEach(
-          (photo) => {
-            URL.revokeObjectURL(
-              photo.previewUrl
-            );
-          }
-        );
-      };
-    },
-    []
-  );
-
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+      photosRef.current.forEach((photo) => {
+        URL.revokeObjectURL(photo.previewUrl);
+      });
+    };
+  }, []);
 
   /* ==========================================================================
      Reset
   ========================================================================== */
 
   function reset() {
-    photos.forEach(
-      (photo) => {
-        URL.revokeObjectURL(
-          photo.previewUrl
-        );
-      }
-    );
+    uncertainRef.current = false;
+    setIsUncertain(false);
+    photosRef.current.forEach((photo) => {
+      URL.revokeObjectURL(photo.previewUrl);
+    });
 
-    setPhotos(
-      []
-    );
+    setPhotos([]);
 
-    setActivePhotoId(
-      null
-    );
+    setActivePhotoId(null);
 
-    setError(
-      null
-    );
+    setError(null);
 
-    setIsPreparing(
-      false
-    );
+    setIsPreparing(false);
 
-    setIsSubmitting(
-      false
-    );
+    setIsSubmitting(false);
   }
-
 
   /* ==========================================================================
      Add Files
   ========================================================================== */
 
-  async function addFiles(
-    files:
-      File[]
-  ) {
-    if (
-      isPreparing ||
-      isSubmitting
-    ) {
+  async function addFiles(files: File[]) {
+    if (busyRef.current || isPreparing || isSubmitting) {
       return;
     }
 
-    setError(
-      null
+    setError(null);
+
+    const validFiles = files.filter(
+      (file) =>
+        ACCEPTED_IMAGE_TYPES.includes(file.type) && file.size <= MAX_FILE_SIZE,
     );
 
-    const validFiles =
-      files.filter(
-        (file) =>
-          ACCEPTED_IMAGE_TYPES.includes(
-            file.type
-          ) &&
-          file.size <=
-            MAX_FILE_SIZE
-      );
-
-    if (
-      validFiles.length !==
-      files.length
-    ) {
-      setError(
-        invalidFilesError
-      );
+    if (validFiles.length !== files.length) {
+      setError(invalidFilesError);
     }
 
-    const availableSlots =
-      Math.max(
-        0,
-        MAX_FILES -
-          photos.length
-      );
+    const availableSlots = Math.max(0, MAX_FILES - photos.length);
 
-    const filesToAdd =
-      validFiles.slice(
-        0,
-        availableSlots
-      );
+    const filesToAdd = validFiles.slice(0, availableSlots);
 
-    if (
-      validFiles.length >
-      availableSlots
-    ) {
-      setError(
-        tooManyFilesError
-      );
+    if (validFiles.length > availableSlots) {
+      setError(tooManyFilesError);
     }
 
-    if (
-      filesToAdd.length ===
-      0
-    ) {
+    if (filesToAdd.length === 0) {
       return;
     }
 
-    setIsPreparing(
-      true
-    );
+    busyRef.current = true;
+    setIsPreparing(true);
 
     try {
-      const nextPhotos =
-        await Promise.all(
-          filesToAdd.map(
-            async (
-              file
-            ) => ({
-              id:
-                createPhotoId(),
+      const prepared = await Promise.allSettled(
+        filesToAdd.map(async (file) => ({
+          id: createPhotoId(),
 
-              file,
+          file,
 
-              previewUrl:
-                await createPhotoPreview(
-                  file
-                ),
+          previewUrl: await createPhotoPreview(file),
 
-              description:
-                "",
-            })
-          )
-        );
-
-      setPhotos(
-        (current) => [
-          ...current,
-          ...nextPhotos,
-        ]
+          description: "",
+        })),
       );
 
-      setActivePhotoId(
-        nextPhotos[0].id
+      const nextPhotos = prepared.flatMap((result) =>
+        result.status === "fulfilled" ? [result.value] : [],
       );
-    } catch (
-      prepareError
-    ) {
-      console.error(
-        "createPhotoPreview error:",
-        prepareError
-      );
+      if (prepared.some((result) => result.status === "rejected"))
+        setError(invalidFilesError);
+      if (!mountedRef.current) {
+        nextPhotos.forEach((p) => URL.revokeObjectURL(p.previewUrl));
+        return;
+      }
+      if (!nextPhotos.length) return;
+      setPhotos((current) => [...current, ...nextPhotos]);
 
-      setError(
-        invalidFilesError
-      );
+      setActivePhotoId(nextPhotos[0].id);
+    } catch (prepareError) {
+      console.error("createPhotoPreview error:", prepareError);
+
+      setError(invalidFilesError);
     } finally {
-      setIsPreparing(
-        false
-      );
+      busyRef.current = false;
+      setIsPreparing(false);
     }
   }
 
-
-/* ==========================================================================
+  /* ==========================================================================
    Remove
 ========================================================================== */
 
-function removeActivePhoto() {
-  if (
-    !activePhoto ||
-    isPreparing ||
-    isSubmitting
-  ) {
-    return;
-  }
+  function removeActivePhoto() {
+    if (!activePhoto || isPreparing || isSubmitting) {
+      return;
+    }
 
-  URL.revokeObjectURL(
-    activePhoto.previewUrl
-  );
+    URL.revokeObjectURL(activePhoto.previewUrl);
 
-  const remainingPhotos =
-    photos.filter(
-      (photo) =>
-        photo.id !==
-        activePhoto.id
+    const remainingPhotos = photos.filter(
+      (photo) => photo.id !== activePhoto.id,
     );
 
-  setPhotos(
-    remainingPhotos
-  );
+    setPhotos(remainingPhotos);
 
-  if (
-    remainingPhotos.length ===
-    0
-  ) {
-    setActivePhotoId(
-      null
-    );
+    if (remainingPhotos.length === 0) {
+      setActivePhotoId(null);
 
-    onEmpty?.();
+      onEmpty?.();
 
-    return;
+      return;
+    }
+
+    setActivePhotoId(remainingPhotos[0].id);
   }
-
-  setActivePhotoId(
-    remainingPhotos[0].id
-  );
-}
-
 
   /* ==========================================================================
      Select Photo
   ========================================================================== */
 
-  function selectPhoto(
-    id:
-      string
-  ) {
-    if (
-      isPreparing ||
-      isSubmitting
-    ) {
+  function selectPhoto(id: string) {
+    if (busyRef.current || isPreparing || isSubmitting) {
       return;
     }
 
-    setActivePhotoId(
-      id
-    );
+    setActivePhotoId(id);
   }
-
 
   /* ==========================================================================
      Description
   ========================================================================== */
 
-  function setActivePhotoDescription(
-    description:
-      string
-  ) {
-    if (
-      !activePhoto ||
-      isPreparing ||
-      isSubmitting
-    ) {
+  function setActivePhotoDescription(description: string) {
+    if (!activePhoto || busyRef.current || isPreparing || isSubmitting) {
       return;
     }
 
-    setPhotos(
-      (current) =>
-        current.map(
-          (photo) =>
-            photo.id ===
-            activePhoto.id
-              ? {
-                  ...photo,
-                  description,
-                }
-              : photo
-        )
+    setPhotos((current) =>
+      current.map((photo) =>
+        photo.id === activePhoto.id
+          ? {
+              ...photo,
+              description,
+            }
+          : photo,
+      ),
     );
   }
-
 
   /* ==========================================================================
      Submit
   ========================================================================== */
 
   async function submit() {
-    if (
-      photos.length === 0 ||
-      isPreparing ||
-      isSubmitting
-    ) {
+    if (uncertainRef.current) return;
+    if (photos.length === 0 || busyRef.current || isPreparing || isSubmitting) {
       return;
     }
 
-    setError(
-      null
-    );
+    setError(null);
 
-    setIsSubmitting(
-      true
-    );
+    busyRef.current = true;
+    setIsSubmitting(true);
 
-    const photosToUpload =
-      [
-        ...photos,
-      ];
+    const photosToUpload = [...photos];
 
-    const uploadedPhotoIds =
-      new Set<string>();
+    const uploadedPhotoIds = new Set<string>();
 
-    const uploadedPhotos: DigitalAlbumPhoto[] =
-      [];
+    const uploadedPhotos: DigitalAlbumPhoto[] = [];
 
     try {
-      for (
-        const photo
-        of photosToUpload
-      ) {
-        const result =
-          await uploadDigitalAlbumPhotoAction(
-            albumId,
-            photo.file,
-            photo.description
-          );
+      for (const photo of photosToUpload) {
+        const result = await uploadDigitalAlbumPhotoAction(
+          albumId,
+          photo.file,
+          photo.description,
+        );
 
-        if (
-          !result.success
-        ) {
+        if (!result.success) {
           photosToUpload
-            .filter(
-              (uploadedPhoto) =>
-                uploadedPhotoIds.has(
-                  uploadedPhoto.id
-                )
-            )
-            .forEach(
-              (uploadedPhoto) => {
-                URL.revokeObjectURL(
-                  uploadedPhoto.previewUrl
-                );
-              }
-            );
+            .filter((uploadedPhoto) => uploadedPhotoIds.has(uploadedPhoto.id))
+            .forEach((uploadedPhoto) => {
+              URL.revokeObjectURL(uploadedPhoto.previewUrl);
+            });
 
-          setPhotos(
-            (current) =>
-              current.filter(
-                (currentPhoto) =>
-                  !uploadedPhotoIds.has(
-                    currentPhoto.id
-                  )
-              )
+          setPhotos((current) =>
+            current.filter(
+              (currentPhoto) => !uploadedPhotoIds.has(currentPhoto.id),
+            ),
           );
 
-          setActivePhotoId(
-            photo.id
-          );
+          setActivePhotoId(photo.id);
 
-          setError(
-            result.message ||
-              uploadError
-          );
+          setError(uploadError);
 
           return;
         }
 
-        uploadedPhotos.push(
-          result.data
-        );
+        onProgress?.([result.data]);
+        uploadedPhotos.push(result.data);
 
-        uploadedPhotoIds.add(
-          photo.id
-        );
+        uploadedPhotoIds.add(photo.id);
       }
 
       reset();
 
-      onSuccess(
-        uploadedPhotos
-      );
-    } catch (
-      uploadPhotoError
-    ) {
-      console.error(
-        "uploadDigitalAlbumPhoto error:",
-        uploadPhotoError
-      );
+      onSuccess(uploadedPhotos);
+    } catch (uploadPhotoError) {
+      uncertainRef.current = true;
+      setIsUncertain(true);
+      console.error("uploadDigitalAlbumPhoto error:", uploadPhotoError);
 
       photosToUpload
-        .filter(
-          (uploadedPhoto) =>
-            uploadedPhotoIds.has(
-              uploadedPhoto.id
-            )
-        )
-        .forEach(
-          (uploadedPhoto) => {
-            URL.revokeObjectURL(
-              uploadedPhoto.previewUrl
-            );
-          }
-        );
+        .filter((uploadedPhoto) => uploadedPhotoIds.has(uploadedPhoto.id))
+        .forEach((uploadedPhoto) => {
+          URL.revokeObjectURL(uploadedPhoto.previewUrl);
+        });
 
-      setPhotos(
-        (current) =>
-          current.filter(
-            (currentPhoto) =>
-              !uploadedPhotoIds.has(
-                currentPhoto.id
-              )
-          )
+      setPhotos((current) =>
+        current.filter(
+          (currentPhoto) => !uploadedPhotoIds.has(currentPhoto.id),
+        ),
       );
 
-      setError(
-        uploadError
-      );
+      setError(uncertainError);
     } finally {
-      setIsSubmitting(
-        false
-      );
+      busyRef.current = false;
+      setIsSubmitting(false);
     }
   }
-
 
   /* ==========================================================================
      Return
@@ -588,6 +360,7 @@ function removeActivePhoto() {
     error,
     isPreparing,
     isSubmitting,
+    isUncertain,
 
     addFiles,
     removeActivePhoto,

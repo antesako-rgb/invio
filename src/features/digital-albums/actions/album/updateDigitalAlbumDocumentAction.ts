@@ -12,10 +12,30 @@ import {
   updateDigitalAlbumDocument,
 } from "@/features/digital-albums/repositories/album/updateDigitalAlbumDocument";
 
+import {
+  DigitalAlbumSaveConflict,
+} from "@/features/digital-albums/utils/digitalAlbumRevision";
+
 import type {
   DigitalAlbum,
   UpdateDigitalAlbumDocumentInput,
 } from "@/features/digital-albums/types/digitalAlbum.types";
+
+
+/* ==========================================================================
+   Types
+========================================================================== */
+
+interface DigitalAlbumConflictResult {
+  success:
+    false;
+
+  code:
+    "CONFLICT";
+
+  message:
+    string;
+}
 
 
 /* ==========================================================================
@@ -25,7 +45,10 @@ import type {
 export async function updateDigitalAlbumDocumentAction(
   input:
     UpdateDigitalAlbumDocumentInput
-): Promise<ActionResult<DigitalAlbum>> {
+): Promise<
+  | ActionResult<DigitalAlbum>
+  | DigitalAlbumConflictResult
+> {
   try {
     const album =
       await updateDigitalAlbumDocument(
@@ -48,6 +71,22 @@ export async function updateDigitalAlbumDocumentAction(
         album,
     };
   } catch (error) {
+    if (
+      error instanceof
+        DigitalAlbumSaveConflict
+    ) {
+      return {
+        success:
+          false,
+
+        code:
+          "CONFLICT",
+
+        message:
+          error.message,
+      };
+    }
+
     console.error(
       "updateDigitalAlbumDocumentAction error:",
       error
@@ -58,9 +97,7 @@ export async function updateDigitalAlbumDocumentAction(
         false,
 
       message:
-        error instanceof Error
-          ? error.message
-          : "Nije moguće spremiti digitalni album.",
+        "Unable to save digital album.",
     };
   }
 }

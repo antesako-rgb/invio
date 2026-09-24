@@ -1,502 +1,186 @@
 "use client";
-
+import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-
-import type {
-  KeyboardEvent,
-  MouseEvent,
-} from "react";
-
-import styles
-  from "./DigitalAlbumEditableText.module.css";
-
-
-/* ==========================================================================
-   Types
-========================================================================== */
-
-interface DigitalAlbumEditableTextProps {
-  value?:
-    string;
-
-  placeholder:
-    string;
-
-  editable?:
-    boolean;
-
-  className?:
-    string;
-
-  onChange?:
-    (
-      value:
-        string
-    ) => void;
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog/dialog";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import styles from "./DigitalAlbumEditableText.module.css";
+interface Props {
+  value?: string;
+  placeholder: string;
+  editable?: boolean;
+  className?: string;
+  onChange?: (value: string) => void;
 }
-
-
-/* ==========================================================================
-   Digital Album Editable Text
-========================================================================== */
-
 export default function DigitalAlbumEditableText({
   value,
   placeholder,
   editable = false,
   className,
   onChange,
-}: DigitalAlbumEditableTextProps) {
-  /* ==========================================================================
-     Ref
-  ========================================================================== */
-
-  const elementRef =
-    useRef<HTMLSpanElement>(
-      null
-    );
-
-  const originalValueRef =
-    useRef(
-      value ?? ""
-    );
-
-
-  /* ==========================================================================
-     State
-  ========================================================================== */
-
-  const [
-    isEditing,
-    setIsEditing,
-  ] =
-    useState(false);
-
-
-  /* ==========================================================================
-     Value
-  ========================================================================== */
-
-  const hasValue =
-    Boolean(
-      value?.trim()
-    );
-
-  const displayValue =
-    hasValue
-      ? value
-      : editable
-        ? placeholder
-        : "";
-
-
-  /* ==========================================================================
-     Outside Interaction
-  ========================================================================== */
-
-  useEffect(
-    () => {
-      if (
-        !isEditing
-      ) {
-        return;
-      }
-
-      function handlePointerDown(
-        event:
-          PointerEvent
-      ) {
-        const element =
-          elementRef.current;
-
-        if (
-          !element ||
-          element.contains(
-            event.target as Node
-          )
-        ) {
-          return;
-        }
-
-        element.blur();
-      }
-
-      document.addEventListener(
-        "pointerdown",
-        handlePointerDown,
-        true
-      );
-
-      return () => {
-        document.removeEventListener(
-          "pointerdown",
-          handlePointerDown,
-          true
-        );
-      };
-    },
-    [
-      isEditing,
-    ]
-  );
-
-
-  /* ==========================================================================
-     Caret
-  ========================================================================== */
-
-  function placeCaretAtPoint(
-    x:
-      number,
-    y:
-      number
-  ) {
-    const element =
-      elementRef.current;
-
-    if (!element) {
-      return;
-    }
-
-    const selection =
-      window.getSelection();
-
-    if (!selection) {
-      return;
-    }
-
-    let range:
-      Range | null =
-        null;
-
-    if (
-      document.caretRangeFromPoint
-    ) {
-      range =
-        document.caretRangeFromPoint(
-          x,
-          y
-        );
-    }
-
-    if (
-      range &&
-      element.contains(
-        range.startContainer
-      )
-    ) {
-      selection.removeAllRanges();
-
-      selection.addRange(
-        range
-      );
-
-      return;
-    }
-
-    const fallbackRange =
-      document.createRange();
-
-    fallbackRange.selectNodeContents(
-      element
-    );
-
-    fallbackRange.collapse(
-      false
-    );
-
-    selection.removeAllRanges();
-
-    selection.addRange(
-      fallbackRange
-    );
+}: Props) {
+  const t = useTranslations("DigitalAlbumEditor.upgrade");
+  const ref = useRef<HTMLSpanElement>(null);
+  const editingRef = useRef(false);
+  const [editing, setEditing] = useState(false);
+  const [mobile, setMobile] = useState(false);
+  const [draft, setDraft] = useState("");
+  function finish(cancel = false) {
+    if (!editingRef.current) return;
+    editingRef.current = false;
+    const next = cancel ? (value ?? "") : (ref.current?.innerText.trim() ?? "");
+    setEditing(false);
+    if (ref.current)
+      ref.current.textContent = next || (editable ? placeholder : "");
+    if (!cancel && next !== (value ?? "")) onChange?.(next);
   }
-
-
-  /* ==========================================================================
-     Start Editing
-  ========================================================================== */
-
-  function startEditing(
-    x:
-      number,
-    y:
-      number
-  ) {
-    if (
-      !editable ||
-      isEditing
-    ) {
+  useEffect(() => {
+    if (!editing) return;
+    const blurOutside = (event: PointerEvent) => {
+      if (!ref.current?.parentElement?.contains(event.target as Node))
+        ref.current?.blur();
+    };
+    document.addEventListener("pointerdown", blurOutside, true);
+    return () => document.removeEventListener("pointerdown", blurOutside, true);
+  }, [editing]);
+  function start() {
+    if (window.matchMedia("(max-width: 768px)").matches) {
+      setDraft(value ?? "");
+      setMobile(true);
       return;
     }
-
-    originalValueRef.current =
-      value ?? "";
-
-    setIsEditing(
-      true
-    );
-
-    requestAnimationFrame(
-      () => {
-        const element =
-          elementRef.current;
-
-        if (!element) {
-          return;
-        }
-
-        element.textContent =
-          value ?? "";
-
-        element.focus();
-
-        placeCaretAtPoint(
-          x,
-          y
-        );
-      }
-    );
+    editingRef.current = true;
+    setEditing(true);
+    requestAnimationFrame(() => {
+      if (!ref.current) return;
+      ref.current.textContent = value ?? "";
+      ref.current.focus();
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(ref.current);
+      range.collapse(false);
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+    });
   }
-
-
-  /* ==========================================================================
-     Finish Editing
-  ========================================================================== */
-
-  function finishEditing() {
-    if (
-      !isEditing
-    ) {
-      return;
-    }
-
-    const nextValue =
-      elementRef.current
-        ?.innerText
-        ?.trim() ??
-      "";
-
-    setIsEditing(
-      false
-    );
-
-    if (
-      nextValue ===
-        (value ?? "")
-    ) {
-      return;
-    }
-
-    onChange?.(
-      nextValue
-    );
-  }
-
-
-  /* ==========================================================================
-     Cancel Editing
-  ========================================================================== */
-
-  function cancelEditing() {
-    if (
-      !isEditing
-    ) {
-      return;
-    }
-
-    if (
-      elementRef.current
-    ) {
-      elementRef.current.textContent =
-        originalValueRef.current;
-    }
-
-    setIsEditing(
-      false
-    );
-
-    elementRef.current?.blur();
-  }
-
-
-  /* ==========================================================================
-     Interaction
-  ========================================================================== */
-
-  function handleInteraction(
-    event:
-      MouseEvent<HTMLButtonElement>
-  ) {
-    event.preventDefault();
-
-    event.stopPropagation();
-
-    startEditing(
-      event.clientX,
-      event.clientY
-    );
-  }
-
-
-  /* ==========================================================================
-     Key Down
-  ========================================================================== */
-
-  function handleKeyDown(
-    event:
-      KeyboardEvent<HTMLSpanElement>
-  ) {
-    if (
-      event.key ===
-        "Escape"
-    ) {
-      event.preventDefault();
-
-      cancelEditing();
-    }
-  }
-
-
-  /* ==========================================================================
-     Render
-  ========================================================================== */
-
   return (
-<span
-  className={[
-    styles.root,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ")
-  }
-  data-editable={
-    editable
-      ? "true"
-      : undefined
-  }
-  data-editing={
-    isEditing
-      ? "true"
-      : undefined
-  }
-  data-placeholder={
-    !hasValue
-      ? "true"
-      : undefined
-  }
-  onPointerDownCapture={
-    isEditing
-      ? (event) => {
-          event.stopPropagation();
-        }
-      : undefined
-  }
-  onMouseDownCapture={
-    isEditing
-      ? (event) => {
-          event.stopPropagation();
-        }
-      : undefined
-  }
->
+    <>
       <span
-        ref={
-          elementRef
-        }
-        className={
-          styles.value
-        }
-        tabIndex={
-          isEditing
-            ? 0
-            : undefined
-        }
-        contentEditable={
-          isEditing
-            ? true
-            : undefined
-        }
-        suppressContentEditableWarning={
-          isEditing
-        }
-        spellCheck={
-          isEditing
-            ? false
-            : undefined
-        }
-        onPointerDown={
-          isEditing
-            ? (event) => {
-                event.stopPropagation();
-              }
-            : undefined
-        }
-        onMouseDown={
-          isEditing
-            ? (event) => {
-                event.stopPropagation();
-              }
-            : undefined
-        }
-        onClick={
-          isEditing
-            ? (event) => {
-                event.stopPropagation();
-              }
-            : undefined
-        }
-        onBlur={
-          isEditing
-            ? finishEditing
-            : undefined
-        }
-        onKeyDown={
-          isEditing
-            ? handleKeyDown
-            : undefined
-        }
+        className={[styles.root, className].filter(Boolean).join(" ")}
+        data-album-text
+        data-opf-no-flip={editable || undefined}
+        data-editable={editable || undefined}
+        data-editing={editing || undefined}
+        data-placeholder={!value?.trim() || undefined}
       >
-        {isEditing
-          ? null
-          : displayValue}
-      </span>
-
-      {editable &&
-        !isEditing && (
+        <span
+          ref={ref}
+          data-album-text-value
+          className={styles.value}
+          contentEditable={editing}
+          suppressContentEditableWarning
+          tabIndex={editing ? 0 : undefined}
+          onBlur={() => finish()}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              event.preventDefault();
+              finish(true);
+            }
+            if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+              event.preventDefault();
+              ref.current?.blur();
+            }
+          }}
+          onPointerDown={(event) => {
+            if (editing) event.stopPropagation();
+          }}
+          onMouseDown={(event) => {
+            if (editing) event.stopPropagation();
+          }}
+        >
+          {editing ? null : value?.trim() ? value : editable ? placeholder : ""}
+        </span>
+        {editable && !editing && (
           <button
             type="button"
-            className={
-              styles.interaction
-            }
-            aria-label={
-              displayValue ||
-              placeholder
-            }
-            onPointerDown={
-              (event) => {
-                event.preventDefault();
-
-                event.stopPropagation();
-              }
-            }
-            onMouseDown={
-              (event) => {
-                event.preventDefault();
-
-                event.stopPropagation();
-              }
-            }
-            onClick={
-              handleInteraction
-            }
+            className={styles.interaction}
+            aria-label={value || placeholder}
+            onPointerDown={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+            }}
+            onMouseDown={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+            }}
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              start();
+            }}
           />
         )}
-    </span>
+      </span>
+    <Dialog
+  open={mobile}
+  onOpenChange={setMobile}
+>
+  <DialogContent
+    className={styles.mobileDialog}
+  >
+    <DialogHeader>
+      <DialogTitle>
+        {t("editText")}
+      </DialogTitle>
+    </DialogHeader>
+
+    <Textarea
+      autoFocus
+      className={styles.mobileInput}
+      aria-label={t("editText")}
+      value={draft}
+      onChange={(event) =>
+        setDraft(event.target.value)
+      }
+    />
+
+    <div className={styles.mobileActions}>
+      <Button
+        type="button"
+        variant="outline"
+        onClick={() =>
+          setMobile(false)
+        }
+      >
+        {t("cancel")}
+      </Button>
+
+      <Button
+        type="button"
+        onClick={() => {
+          const next =
+            draft.trim();
+
+          if (
+            next !==
+            (value ?? "")
+          ) {
+            onChange?.(next);
+          }
+
+          setMobile(false);
+        }}
+      >
+        {t("apply")}
+      </Button>
+    </div>
+  </DialogContent>
+</Dialog>
+    </>
   );
 }

@@ -1,3 +1,4 @@
+import { getDigitalAlbumTextOverflow } from "../../utils/getDigitalAlbumTextOverflow";
 import "server-only";
 
 import type { Page } from "puppeteer-core";
@@ -51,4 +52,6 @@ export async function waitForDigitalAlbumPrintReady(page: Page) {
       clearTimeout(timer);
     }
   });
+  const overflow = await page.evaluate(getDigitalAlbumTextOverflow, await page.$('[data-album-print-hydrated="true"]'));
+  if (overflow.length) throw new Error("Album text exceeds the page boundaries.");
 }

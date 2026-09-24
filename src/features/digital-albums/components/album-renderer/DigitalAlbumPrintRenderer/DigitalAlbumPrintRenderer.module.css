@@ -41,10 +41,10 @@
     hidden;
 
   background:
-    var(--album-background);
+    var(--album-paper);
 
   color:
-    var(--album-foreground);
+    var(--album-ink);
 }
 
 

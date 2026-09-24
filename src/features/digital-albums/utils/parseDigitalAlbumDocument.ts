@@ -1,265 +1,240 @@
-import type {
-  Json,
-} from "@/lib/supabase/database.types";
+import {
+  z,
+} from "zod";
 
 import {
+  DIGITAL_ALBUM_LAYOUT_IDS,
   getDigitalAlbumLayout,
-} from "@/features/digital-albums/config/digitalAlbumLayouts";
+} from "../config/digitalAlbumLayouts";
 
 import type {
   DigitalAlbumDocument,
-  DigitalAlbumDocumentPage,
   DigitalAlbumPageLayout,
-  DigitalAlbumPhotoSlot,
-} from "@/features/digital-albums/types/digitalAlbumDocument.types";
+} from "../types/digitalAlbumDocument.types";
 
 
 /* ==========================================================================
-   Helpers
+   Schemas
 ========================================================================== */
 
-function isRecord(
-  value:
-    unknown
-): value is Record<string, unknown> {
-  return (
-    typeof value ===
-      "object" &&
-    value !==
-      null &&
-    !Array.isArray(
-      value
-    )
-  );
-}
+const id =
+  z
+    .string()
+    .min(1);
 
 
-/* ==========================================================================
-   Parse Page Layout
-========================================================================== */
+const slot =
+  z
+    .object({
+      id,
 
-function parsePageLayout(
-  value:
-    unknown
-): DigitalAlbumPageLayout {
-  if (
-    value ===
-      "cover" ||
-    value ===
-      "full-photo" ||
-    value ===
-      "two-photos" ||
-    value ===
-      "editorial" ||
-    value ===
-      "story" ||
-    value ===
-      "collage"
-  ) {
-    return value;
-  }
+      photoId:
+        z
+          .string()
+          .nullable(),
 
-  throw new Error(
-    "Layout stranice digitalnog albuma nije podržan."
-  );
-}
+      position:
+        z
+          .object({
+            x:
+              z
+                .number()
+                .finite()
+                .min(0)
+                .max(1),
+
+            y:
+              z
+                .number()
+                .finite()
+                .min(0)
+                .max(1),
+          })
+          .strict()
+          .optional(),
+
+      fit:
+        z
+          .enum([
+            "cover",
+            "contain",
+          ])
+          .optional(),
+
+      caption:
+        z
+          .string()
+          .optional(),
+    })
+    .strict();
 
 
-/* ==========================================================================
-   Parse Photo Slot
-========================================================================== */
+const page =
+  z
+    .object({
+      id,
 
-function parsePhotoSlot(
-  value:
-    unknown
-): DigitalAlbumPhotoSlot {
-  if (
-    !isRecord(
-      value
-    )
-  ) {
-    throw new Error(
-      "Neispravan photo slot u dokumentu digitalnog albuma."
+      layout:
+        z.custom<DigitalAlbumPageLayout>(
+          (value) =>
+            DIGITAL_ALBUM_LAYOUT_IDS.includes(
+              value as DigitalAlbumPageLayout
+            )
+        ),
+
+      layoutVersion:
+        z
+          .union([
+            z.literal(1),
+            z.literal(2),
+          ])
+          .optional(),
+
+      photos:
+        z.array(
+          slot
+        ),
+
+      unplacedPhotos:
+        z
+          .array(
+            slot
+          )
+          .optional(),
+
+      content:
+        z
+          .object({
+            title:
+              z
+                .string()
+                .optional(),
+
+            subtitle:
+              z
+                .string()
+                .optional(),
+
+            text:
+              z
+                .string()
+                .optional(),
+
+            date:
+              z
+                .string()
+                .optional(),
+          })
+          .strict(),
+    })
+    .strict()
+    .superRefine(
+      (
+        value,
+        ctx
+      ) => {
+        const definition =
+          getDigitalAlbumLayout(
+            value.layout
+          );
+
+        if (!definition) {
+          return;
+        }
+
+        if (
+          value.photos.length !==
+          definition.photoSlotCount
+        ) {
+          ctx.addIssue({
+            code:
+              "custom",
+
+            message:
+              "Incorrect photo slot count",
+          });
+        }
+
+        if (
+          !definition.legacy &&
+          value.layoutVersion !== 2
+        ) {
+          ctx.addIssue({
+            code:
+              "custom",
+
+            message:
+              "Unsupported layout version",
+          });
+        }
+
+        const ids = [
+          ...value.photos,
+          ...(value.unplacedPhotos ?? []),
+        ].map(
+          (photo) =>
+            photo.id
+        );
+
+        if (
+          new Set(
+            ids
+          ).size !==
+          ids.length
+        ) {
+          ctx.addIssue({
+            code:
+              "custom",
+
+            message:
+              "Duplicate slot IDs",
+          });
+        }
+      }
     );
-  }
 
-  if (
-    typeof value.id !==
-      "string" ||
-    value.id.length ===
-      0
-  ) {
-    throw new Error(
-      "Photo slot nema ispravan ID."
+
+const schema =
+  z
+    .object({
+      theme:
+        z.literal(
+          "classic"
+        ),
+
+      pages:
+        z.array(
+          page
+        ),
+    })
+    .strict()
+    .superRefine(
+      (
+        value,
+        ctx
+      ) => {
+        const pageIds =
+          value.pages.map(
+            (page) =>
+              page.id
+          );
+
+        if (
+          new Set(
+            pageIds
+          ).size !==
+          pageIds.length
+        ) {
+          ctx.addIssue({
+            code:
+              "custom",
+
+            message:
+              "Duplicate page IDs",
+          });
+        }
+      }
     );
-  }
-
-  if (
-    value.photoId !==
-      null &&
-    typeof value.photoId !==
-      "string"
-  ) {
-    throw new Error(
-      "Photo slot nema ispravan photoId."
-    );
-  }
-
-  return {
-    id:
-      value.id,
-
-    photoId:
-      value.photoId,
-  };
-}
-
-
-/* ==========================================================================
-   Parse Page
-========================================================================== */
-
-function parsePage(
-  value:
-    unknown
-): DigitalAlbumDocumentPage {
-  if (
-    !isRecord(
-      value
-    )
-  ) {
-    throw new Error(
-      "Neispravna stranica u dokumentu digitalnog albuma."
-    );
-  }
-
-  if (
-    typeof value.id !==
-      "string" ||
-    value.id.length ===
-      0
-  ) {
-    throw new Error(
-      "Stranica nema ispravan ID."
-    );
-  }
-
-  const layout =
-    parsePageLayout(
-      value.layout
-    );
-
-  if (
-    !Array.isArray(
-      value.photos
-    )
-  ) {
-    throw new Error(
-      "Fotografije stranice nisu ispravne."
-    );
-  }
-
-  const photos =
-    value.photos.map(
-      parsePhotoSlot
-    );
-
-  const layoutDefinition =
-    getDigitalAlbumLayout(
-      layout
-    );
-
-  if (
-    photos.length !==
-      layoutDefinition.photoSlotCount
-  ) {
-    throw new Error(
-      `Layout "${layout}" mora imati ${layoutDefinition.photoSlotCount} photo slotova.`
-    );
-  }
-
-  if (
-    !isRecord(
-      value.content
-    )
-  ) {
-    throw new Error(
-      "Sadržaj stranice nije ispravan."
-    );
-  }
-
-  const {
-    title,
-    subtitle,
-    text,
-  } =
-    value.content;
-
-  if (
-    title !==
-      undefined &&
-    typeof title !==
-      "string"
-  ) {
-    throw new Error(
-      "Naslov stranice nije ispravan."
-    );
-  }
-
-  if (
-    subtitle !==
-      undefined &&
-    typeof subtitle !==
-      "string"
-  ) {
-    throw new Error(
-      "Podnaslov stranice nije ispravan."
-    );
-  }
-
-  if (
-    text !==
-      undefined &&
-    typeof text !==
-      "string"
-  ) {
-    throw new Error(
-      "Tekst stranice nije ispravan."
-    );
-  }
-
-  return {
-    id:
-      value.id,
-
-    layout,
-
-    photos,
-
-    content: {
-      ...(title !==
-      undefined
-        ? {
-            title,
-          }
-        : {}),
-
-      ...(subtitle !==
-      undefined
-        ? {
-            subtitle,
-          }
-        : {}),
-
-      ...(text !==
-      undefined
-        ? {
-            text,
-          }
-        : {}),
-    },
-  };
-}
 
 
 /* ==========================================================================
@@ -268,44 +243,9 @@ function parsePage(
 
 export function parseDigitalAlbumDocument(
   value:
-    Json
+    unknown
 ): DigitalAlbumDocument {
-  if (
-    !isRecord(
-      value
-    )
-  ) {
-    throw new Error(
-      "Dokument digitalnog albuma nije ispravan."
-    );
-  }
-
-  if (
-    value.theme !==
-      "classic"
-  ) {
-    throw new Error(
-      "Tema digitalnog albuma nije podržana."
-    );
-  }
-
-  if (
-    !Array.isArray(
-      value.pages
-    )
-  ) {
-    throw new Error(
-      "Stranice digitalnog albuma nisu ispravne."
-    );
-  }
-
-  return {
-    theme:
-      value.theme,
-
-    pages:
-      value.pages.map(
-        parsePage
-      ),
-  };
+  return schema.parse(
+    value
+  );
 }

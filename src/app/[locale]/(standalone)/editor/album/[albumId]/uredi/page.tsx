@@ -105,6 +105,9 @@ export default async function DigitalAlbumEditorPage({
       document={
         document
       }
+      documentRevision={
+        album.document_revision
+      }
       documentVersion={
         album.document_version
       }
