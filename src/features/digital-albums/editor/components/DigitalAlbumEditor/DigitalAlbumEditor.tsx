@@ -33,6 +33,9 @@ import EditorShell
 ========================================================================== */
 
 interface DigitalAlbumEditorProps {
+  albumId:
+    string;
+
   activeStep:
     DigitalAlbumEditorStep;
 
@@ -53,8 +56,8 @@ interface DigitalAlbumEditorProps {
 /* ==========================================================================
    Digital Album Editor
 ========================================================================== */
-
 export default function DigitalAlbumEditor({
+  albumId,
   activeStep,
   sidebar,
   children,
@@ -78,14 +81,17 @@ export default function DigitalAlbumEditor({
   return (
     <EditorShell
       header={
-        <DigitalAlbumEditorHeader
-          activeStep={
-            activeStep
-          }
-          onStepChange={
-            onStepChange
-          }
-        />
+      <DigitalAlbumEditorHeader
+  albumId={
+    albumId
+  }
+  activeStep={
+    activeStep
+  }
+  onStepChange={
+    onStepChange
+  }
+/>
       }
       mobileControls={
         sidebar

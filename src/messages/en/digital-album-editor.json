@@ -154,5 +154,10 @@
   "themes": {
     "classic": "Classic"
   }
+},
+"pdfExport": {
+  "action": "Export PDF",
+  "exporting": "Generating PDF...",
+  "error": "The PDF could not be generated. Please try again."
 }
 }

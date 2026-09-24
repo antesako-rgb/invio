@@ -10,6 +10,9 @@ import BackLink
 import SideNavigation
   from "@/components/ui/side-navigation/SideNavigation";
 
+import DigitalAlbumPdfExportAction
+  from "@/features/digital-albums/editor/components/DigitalAlbumPdfExportAction/DigitalAlbumPdfExportAction";
+
 import {
   getDigitalAlbumEditorNavigationItems,
 } from "@/features/digital-albums/editor/navigation/getDigitalAlbumEditorNavigationItems";
@@ -30,6 +33,9 @@ import EditorSaveStatus
 ========================================================================== */
 
 interface DigitalAlbumEditorHeaderProps {
+  albumId:
+    string;
+
   activeStep:
     DigitalAlbumEditorStep;
 
@@ -46,6 +52,7 @@ interface DigitalAlbumEditorHeaderProps {
 ========================================================================== */
 
 export default function DigitalAlbumEditorHeader({
+  albumId,
   activeStep,
   onStepChange,
 }: DigitalAlbumEditorHeaderProps) {
@@ -126,24 +133,32 @@ export default function DigitalAlbumEditorHeader({
         />
       }
       end={
-        <EditorSaveStatus
-          status="saved"
-          savingLabel={
-            t(
-              "status.saving"
-            )
-          }
-          savedLabel={
-            t(
-              "status.saved"
-            )
-          }
-          errorLabel={
-            t(
-              "status.error"
-            )
-          }
-        />
+        <>
+          <EditorSaveStatus
+            status="saved"
+            savingLabel={
+              t(
+                "status.saving"
+              )
+            }
+            savedLabel={
+              t(
+                "status.saved"
+              )
+            }
+            errorLabel={
+              t(
+                "status.error"
+              )
+            }
+          />
+
+          <DigitalAlbumPdfExportAction
+            albumId={
+              albumId
+            }
+          />
+        </>
       }
     />
   );

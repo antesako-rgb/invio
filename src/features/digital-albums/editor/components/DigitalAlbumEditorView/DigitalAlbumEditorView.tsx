@@ -243,6 +243,9 @@ async function handlePageContentChange(
 
   return (
     <DigitalAlbumEditor
+     albumId={
+    albumId
+  }
       activeStep={
         activeStep
       }

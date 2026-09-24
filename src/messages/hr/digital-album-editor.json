@@ -154,5 +154,10 @@
   "themes": {
     "classic": "Klasična"
   }
+},
+    "pdfExport": {
+  "action": "Izvezi u PDF",
+  "exporting": "Generiranje PDF-a...",
+  "error": "PDF nije moguće generirati. Pokušajte ponovno."
 }
 }
