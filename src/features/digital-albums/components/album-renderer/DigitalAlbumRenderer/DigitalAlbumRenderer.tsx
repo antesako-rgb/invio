@@ -52,6 +52,8 @@ interface DigitalAlbumRendererProps {
   onPageChange?: (pageIndex: number) => void;
 
   onVisiblePagesChange?: (pageIndexes: number[]) => void;
+
+  onTurnStart?: () => void;
 }
 
 /* ==========================================================================
@@ -69,6 +71,7 @@ export default function DigitalAlbumRenderer({
   onPageContentChange,
   onPageChange,
   onVisiblePagesChange,
+  onTurnStart,
 }: DigitalAlbumRendererProps) {
   /* ==========================================================================
      Empty Document
@@ -91,6 +94,7 @@ export default function DigitalAlbumRenderer({
       activePageIndex={activePageIndex}
       onPageChange={onPageChange}
       onVisiblePagesChange={onVisiblePagesChange}
+      onTurnStart={onTurnStart}
     >
       {document.pages.map((page, pageIndex) => {
         const isActivePage = pageIndex === activePageIndex;

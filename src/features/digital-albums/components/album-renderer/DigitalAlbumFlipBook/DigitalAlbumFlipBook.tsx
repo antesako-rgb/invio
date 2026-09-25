@@ -38,6 +38,8 @@ interface DigitalAlbumFlipBookProps {
   onPageChange?: (pageIndex: number) => void;
 
   onVisiblePagesChange?: (pageIndexes: number[]) => void;
+
+  onTurnStart?: () => void;
 }
 
 /* ==========================================================================
@@ -52,6 +54,7 @@ export default function DigitalAlbumFlipBook({
   activePageIndex,
   onPageChange,
   onVisiblePagesChange,
+  onTurnStart,
 }: DigitalAlbumFlipBookProps) {
   const t = useTranslations("DigitalAlbumEditor.navigation");
   /* ==========================================================================
@@ -76,6 +79,7 @@ export default function DigitalAlbumFlipBook({
     height,
     activePageIndex,
     onVisiblePagesChange,
+    onTurnStart,
   });
 
   /* ==========================================================================

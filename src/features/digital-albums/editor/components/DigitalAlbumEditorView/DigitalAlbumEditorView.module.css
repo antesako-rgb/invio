@@ -53,3 +53,10 @@
   width: min(32rem, calc(100vw - 2rem));
   max-width: calc(100vw - 2rem);
 }
+
+@media (max-width: 767px) {
+  .tools,
+  .fieldset {
+    flex-shrink: 0;
+  }
+}

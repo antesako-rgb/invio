@@ -1,23 +1,17 @@
-import type {
-  ReactNode,
-} from "react";
+import type { ReactNode } from "react";
 
-import styles
-  from "./EditorSidebar.module.css";
-
+import styles from "./EditorSidebar.module.css";
 
 /* ==========================================================================
    Types
 ========================================================================== */
 
 interface EditorSidebarProps {
-  title:
-    ReactNode;
+  mobileScrollOwner?: "sidebar" | "parent";
+  title: ReactNode;
 
-  children:
-    ReactNode;
+  children: ReactNode;
 }
-
 
 /* ==========================================================================
    Editor Sidebar
@@ -26,6 +20,7 @@ interface EditorSidebarProps {
 export default function EditorSidebar({
   title,
   children,
+  mobileScrollOwner = "sidebar",
 }: EditorSidebarProps) {
   /* ==========================================================================
      Render
@@ -33,41 +28,23 @@ export default function EditorSidebar({
 
   return (
     <aside
-      className={
-        styles.root
-      }
+      className={styles.root}
+      data-mobile-scroll-owner={mobileScrollOwner}
       data-editor-sidebar
     >
       {/* ====================================================================
           Header
       ==================================================================== */}
 
-      <div
-        className={
-          styles.header
-        }
-      >
-        <h2
-          className={
-            styles.title
-          }
-        >
-          {title}
-        </h2>
+      <div className={styles.header}>
+        <h2 className={styles.title}>{title}</h2>
       </div>
-
 
       {/* ====================================================================
           Content
       ==================================================================== */}
 
-      <div
-        className={
-          styles.content
-        }
-      >
-        {children}
-      </div>
+      <div className={styles.content}>{children}</div>
     </aside>
   );
 }

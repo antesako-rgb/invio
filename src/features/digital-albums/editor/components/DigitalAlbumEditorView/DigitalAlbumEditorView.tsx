@@ -66,16 +66,12 @@ export default function DigitalAlbumEditorView({
   const [mobileSnapPoint, setMobileSnapPoint] = useState(
     EDITOR_MOBILE_DEFAULT_SNAP_POINT,
   );
-  const pendingMobileSlot = useRef<{ pageId: string; slotId: string } | null>(
-    null,
-  );
 
   useEffect(() => {
     const mobile = window.matchMedia("(max-width: 767px)");
     function handleViewportChange() {
       if (!mobile.matches) {
         setMobilePanelOpen(false);
-        pendingMobileSlot.current = null;
       }
     }
     mobile.addEventListener("change", handleViewportChange);
@@ -98,7 +94,6 @@ export default function DigitalAlbumEditorView({
       return;
     }
     setMobilePanelOpen(open);
-    if (!open) pendingMobileSlot.current = null;
   }
 
   const [preview, setPreview] = useState<DigitalAlbumDocumentPage | null>(null);
@@ -428,14 +423,12 @@ export default function DigitalAlbumEditorView({
                   if (editingLocked || assetLock.current) return;
                   if (activeSlot) {
                     editor.selectPhoto(activeSlot.id, id);
-                    const pending = pendingMobileSlot.current;
                     const placed = editor
                       .getDocument()
-                      .pages.find((page) => page.id === pending?.pageId)
-                      ?.photos.find((slot) => slot.id === pending?.slotId);
-                    if (pending && placed?.photoId === id) {
+                      .pages.find((page) => page.id === activePage.id)
+                      ?.photos.find((slot) => slot.id === activeSlot.id);
+                    if (placed?.photoId === id) {
                       setMobileSnapPoint(EDITOR_MOBILE_DEFAULT_SNAP_POINT);
-                      pendingMobileSlot.current = null;
                     }
                   } else toast.info(t("noSlots"));
                 }}
@@ -520,9 +513,6 @@ export default function DigitalAlbumEditorView({
                       window.matchMedia("(max-width: 767px)").matches &&
                       selected
                     ) {
-                      pendingMobileSlot.current = selected.photoId
-                        ? null
-                        : { pageId: page, slotId: slot };
                       setMobileSnapPoint(
                         selected.photoId
                           ? EDITOR_MOBILE_DEFAULT_SNAP_POINT
@@ -536,7 +526,22 @@ export default function DigitalAlbumEditorView({
               editingLocked ? undefined : editor.updatePageContent
             }
             onPageChange={editor.handleFlipBookPageChange}
-            onVisiblePagesChange={editor.handleVisiblePagesChange}
+            onTurnStart={() => changeMobilePanelOpen(false)}
+            onVisiblePagesChange={(indexes) => {
+              editor.handleVisiblePagesChange(indexes);
+              const lastIndex = editor.getDocument().pages.length - 1;
+              if (
+                lastIndex > 0 &&
+                indexes.includes(lastIndex) &&
+                !editor.visiblePageIndexes.includes(lastIndex)
+              ) {
+                setActiveStep("pages");
+                if (window.matchMedia("(max-width: 767px)").matches) {
+                  setMobileSnapPoint(EDITOR_MOBILE_DEFAULT_SNAP_POINT);
+                  setMobilePanelOpen(true);
+                }
+              }
+            }}
           />
         </div>
       </DigitalAlbumEditor>

@@ -178,5 +178,9 @@ export default function DigitalAlbumEditorSidebar({
      Render
   ========================================================================== */
 
-  return <EditorSidebar title={getTitle()}>{renderContent()}</EditorSidebar>;
+  return (
+    <EditorSidebar title={getTitle()} mobileScrollOwner="parent">
+      {renderContent()}
+    </EditorSidebar>
+  );
 }

@@ -121,6 +121,12 @@ function add(id) {
   return id;
 }
 const entries = {
+  Sidebar: add(
+    resolve(
+      project,
+      "src/features/editor/components/EditorSidebar/EditorSidebar.tsx",
+    ),
+  ),
   PagesPanel: add(
     resolve(
       base,
@@ -210,12 +216,13 @@ function EdgeBook(){
  return R.createElement(Book,{key:count,document:{theme:"classic",pages:pages.slice(0,count)},photos,activePageIndex:active,onPageChange:setActive,onVisiblePagesChange:setVisible});
 }
 const PagesPanel=req(${JSON.stringify(entries.PagesPanel)}).default;
+const Sidebar=req(${JSON.stringify(entries.Sidebar)}).default;
 const Panel=req(${JSON.stringify(entries.Panel)}).default;
 function DrawerFixture(){
  const [open,setOpen]=R.useState(true),[snap,setSnap]=R.useState(.23),[tab,setTab]=R.useState("photos"),[items,setItems]=R.useState(pages.slice(0,6));
  R.useEffect(()=>{window.drawerFixture={open,snap,setOpen,setSnap,tab,setTab,items};});
  return R.createElement(Panel,{open,onOpenChange:setOpen,snapPoint:snap,onSnapPointChange:setSnap,handleOnly:true},
- tab==="pages"?R.createElement(PagesPanel,{pages:items,photos:[],activePageId:items[0].id,visiblePageIndexes:[0],onSelectPage:()=>{},onAddPage:()=>{},onDuplicatePage:()=>{},onDeletePage:()=>{},onSwapPages:(a,b)=>setItems(current=>{const next=[...current],i=next.findIndex(p=>p.id===a),j=next.findIndex(p=>p.id===b);[next[i],next[j]]=[next[j],next[i]];return next;})}):R.createElement("div",{id:"drawer-scroll-content"},Array.from({length:50},(_,i)=>R.createElement("p",{key:i},"Content "+i))));
+ tab==="pages"?R.createElement(PagesPanel,{pages:items,photos:[],activePageId:items[0].id,visiblePageIndexes:[0],onSelectPage:()=>{},onAddPage:()=>{},onDuplicatePage:()=>{},onDeletePage:()=>{},onSwapPages:(a,b)=>setItems(current=>{const next=[...current],i=next.findIndex(p=>p.id===a),j=next.findIndex(p=>p.id===b);[next[i],next[j]]=[next[j],next[i]];return next;})}):R.createElement(Sidebar,{title:tab,mobileScrollOwner:"parent"},R.createElement("div",{id:"drawer-scroll-content"},Array.from({length:50},(_,i)=>R.createElement("p",{key:i},"Content "+i)))));
 }
 function App(){
  const [mode,setMode]=R.useState("gallery"),[crop,setCrop]=R.useState(false),[cropOptions,setCropOptions]=R.useState({ratio:.5,image:0});
@@ -373,7 +380,14 @@ try {
         photos: original.photos.map((s) => ({ ...s, photoId: null })),
       };
       window.savedAlbum = {
-        document: { theme: "classic", pages: [empty] },
+        document: {
+          theme: "classic",
+          pages: Array.from({ length: 4 }, (_, i) => ({
+            ...empty,
+            id: empty.id + "-" + i,
+            photos: empty.photos.map((s) => ({ ...s, id: s.id + "-" + i })),
+          })),
+        },
         document_revision: 1,
       };
       window.harness.setMode("view");
@@ -444,9 +458,76 @@ try {
         { open: true, snap: 0.23 },
       );
     }
+    // Replacing an already filled slot also collapses a manually expanded panel.
+    await page.evaluate(() => window.viewMobile.onMobileSnapPointChange(1));
+    await new Promise((r) => setTimeout(r, 350));
+    await page.tap("#assign-mobile-photo");
+    await page.waitForFunction(
+      () => window.viewMobile.mobileSnapPoint === 0.23,
+    );
+    await new Promise((r) => setTimeout(r, 400));
+    // Arrow navigation closes at the first animated frame, not after completion.
+    await page.click(
+      'button[aria-label="' + messages.navigation.nextPage + '"]',
+    );
+    await page.waitForFunction(() => !window.viewMobile.mobilePanelOpen, {
+      timeout: 700,
+    });
+    await page.waitForFunction(
+      () => window.viewSidebar.activePageId === window.viewSidebar.pages[1].id,
+    );
+    await new Promise((r) => setTimeout(r, 1100));
+    await page.evaluate(() => {
+      window.viewMobile.onMobileSnapPointChange(0.23);
+      window.viewMobile.onMobilePanelOpenChange(true);
+    });
+    await new Promise((r) => setTimeout(r, 350));
+    const dragBounds = await page.$eval("[data-album-photo-select]", (el) => {
+      const r = el.getBoundingClientRect();
+      return { x: r.right - 20, y: r.top + 40, left: r.left + 20 };
+    });
+    await page.mouse.move(dragBounds.x, dragBounds.y);
+    await page.mouse.down();
+    await page.mouse.move(dragBounds.left, dragBounds.y, { steps: 12 });
+    await page.waitForFunction(() => !window.viewMobile.mobilePanelOpen, {
+      timeout: 700,
+    });
+    await page.mouse.up();
+    await new Promise((r) => setTimeout(r, 1200));
+    await page.evaluate(() =>
+      window.viewSidebar.onSelectPage(window.viewSidebar.pages.at(-1).id),
+    );
+    await page.waitForFunction(
+      () =>
+        window.viewMobile.mobilePanelOpen &&
+        window.viewMobile.mobileSnapPoint === 0.23 &&
+        window.viewMobile.activeStep === "pages",
+    );
+    await page.setViewport({
+      width: 1100,
+      height: 900,
+      isMobile: true,
+      hasTouch: true,
+    });
+    await page.evaluate(() =>
+      window.viewSidebar.onSelectPage(window.viewSidebar.pages[0].id),
+    );
+    await page.waitForFunction(() =>
+      window.viewSidebar.visiblePageIndexes.includes(0),
+    );
+    await new Promise((r) => setTimeout(r, 1100));
+    await page.evaluate(() => {
+      window.viewMobile.onStepChange("photos");
+      window.viewSidebar.onSelectPage(window.viewSidebar.pages.at(-1).id);
+    });
+    await page.waitForFunction(() => window.viewMobile.activeStep === "pages");
+    assert.equal(
+      await page.evaluate(() => window.viewMobile.mobilePanelOpen),
+      false,
+    );
     assert.deepEqual(errors, []);
     console.log(
-      `PASS: repeated ${process.argv.includes("--mouse") ? "mouse" : "touch"} empty/filled slots; full -> assignment -> default; explicit close/reopen`,
+      `PASS: repeated ${process.argv.includes("--mouse") ? "mouse" : "touch"} empty/filled slots; full -> assignment -> default; explicit close/reopen; replacement collapse; arrow/drag closes; last-page Pages tab mobile/desktop`,
     );
   } else {
     assert.equal(
@@ -1308,6 +1389,18 @@ try {
           (el) => el.scrollTop > 0,
         ),
         "Content must scroll without swiping Drawer",
+      );
+      const scrolled = await page.$eval(
+        "[data-base-ui-swipe-ignore]",
+        (el) => el.scrollTop,
+      );
+      await swipe(180, 160, 650);
+      assert.ok(
+        (await page.$eval(
+          "[data-base-ui-swipe-ignore]",
+          (el) => el.scrollTop,
+        )) < scrolled,
+        "Scroll back up over nested sidebar content must work",
       );
     }
     await page.evaluate(() => {

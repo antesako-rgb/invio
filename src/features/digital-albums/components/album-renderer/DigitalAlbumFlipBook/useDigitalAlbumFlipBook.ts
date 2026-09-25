@@ -32,6 +32,8 @@ interface UseDigitalAlbumFlipBookProps {
   activePageIndex?: number;
 
   onVisiblePagesChange?: (pageIndexes: number[]) => void;
+
+  onTurnStart?: () => void;
 }
 
 interface ResponsiveMetrics {
@@ -48,6 +50,7 @@ export default function useDigitalAlbumFlipBook({
   height,
   activePageIndex,
   onVisiblePagesChange,
+  onTurnStart,
 }: UseDigitalAlbumFlipBookProps) {
   /* ==========================================================================
      Refs
@@ -62,6 +65,7 @@ export default function useDigitalAlbumFlipBook({
   const visiblePageIndexesRef = useRef<number[]>([]);
 
   const isFlippingRef = useRef(false);
+  const turnStartedRef = useRef(false);
 
   const currentPageIndexRef = useRef(0);
 
@@ -297,6 +301,13 @@ export default function useDigitalAlbumFlipBook({
 
     if (!book) {
       return;
+    }
+
+    if (frame.flip && !turnStartedRef.current) {
+      turnStartedRef.current = true;
+      onTurnStart?.();
+    } else if (!frame.flip) {
+      turnStartedRef.current = false;
     }
 
     handleFlipSoundFrame(frame);
