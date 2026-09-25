@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 
 import { Drawer, DrawerContent } from "@/components/ui/drawer/Drawer";
 
@@ -20,6 +20,10 @@ const EDITOR_MOBILE_SNAP_POINTS = [
    Types
 ========================================================================== */
 
+export type EditorMobilePanelChangeDetails = Parameters<
+  NonNullable<ComponentProps<typeof Drawer>["onOpenChange"]>
+>[1];
+
 interface EditorMobilePanelProps {
   snapPoint?: number;
   onSnapPointChange?: (snapPoint: number) => void;
@@ -28,7 +32,7 @@ interface EditorMobilePanelProps {
 
   children: ReactNode;
 
-  onOpenChange: (open: boolean) => void;
+  onOpenChange: ComponentProps<typeof Drawer>["onOpenChange"];
 }
 
 /* ==========================================================================
@@ -48,18 +52,18 @@ export default function EditorMobilePanel({
   ========================================================================== */
 
   return (
-<Drawer
-  open={open}
-  onOpenChange={onOpenChange}
-  modal={false}
-  snapPoint={snapPoint}
-  onSnapPointChange={(point) => {
-    if (typeof point === "number") {
-      onSnapPointChange?.(point);
-    }
-  }}
-  snapPoints={EDITOR_MOBILE_SNAP_POINTS}
->
+    <Drawer
+      open={open}
+      onOpenChange={onOpenChange}
+      modal={false}
+      snapPoint={snapPoint}
+      onSnapPointChange={(point) => {
+        if (typeof point === "number") {
+          onSnapPointChange?.(point);
+        }
+      }}
+      snapPoints={EDITOR_MOBILE_SNAP_POINTS}
+    >
       <DrawerContent handleOnly={handleOnly}>{children}</DrawerContent>
     </Drawer>
   );

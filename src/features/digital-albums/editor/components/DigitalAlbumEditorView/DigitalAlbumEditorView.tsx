@@ -32,6 +32,7 @@ import type {
 import type { DigitalAlbumPhotoWithPhoto } from "../../../types/digitalAlbumPhoto.types";
 import type { PhotoWall } from "@/features/invitations/types/photoWallPhoto.types";
 import {
+  type EditorMobilePanelChangeDetails,
   EDITOR_MOBILE_DEFAULT_SNAP_POINT,
   EDITOR_MOBILE_FULL_SNAP_POINT,
 } from "@/features/editor/components/EditorMobilePanel/EditorMobilePanel";
@@ -81,7 +82,21 @@ export default function DigitalAlbumEditorView({
     return () => mobile.removeEventListener("change", handleViewportChange);
   }, []);
 
-  function changeMobilePanelOpen(open: boolean) {
+  function changeMobilePanelOpen(
+    open: boolean,
+    details?: EditorMobilePanelChangeDetails,
+  ) {
+    // This is a non-modal editing panel: interacting with the canvas must not
+    // dismiss it. OpenPageFlip can retarget the slot's pointer release to the
+    // book, so checking the event target cannot reliably identify that gesture.
+    // Explicit close, Escape and handle swipe still close the panel.
+    if (
+      !open &&
+      (details?.reason === "outside-press" || details?.reason === "focus-out")
+    ) {
+      details.cancel();
+      return;
+    }
     setMobilePanelOpen(open);
     if (!open) pendingMobileSlot.current = null;
   }
@@ -503,14 +518,16 @@ export default function DigitalAlbumEditorView({
                       ?.photos.find((item) => item.id === slot);
                     if (
                       window.matchMedia("(max-width: 767px)").matches &&
-                      selected &&
-                      !selected.photoId
+                      selected
                     ) {
-                      pendingMobileSlot.current = {
-                        pageId: page,
-                        slotId: slot,
-                      };
-                      setMobileSnapPoint(EDITOR_MOBILE_FULL_SNAP_POINT);
+                      pendingMobileSlot.current = selected.photoId
+                        ? null
+                        : { pageId: page, slotId: slot };
+                      setMobileSnapPoint(
+                        selected.photoId
+                          ? EDITOR_MOBILE_DEFAULT_SNAP_POINT
+                          : EDITOR_MOBILE_FULL_SNAP_POINT,
+                      );
                       setMobilePanelOpen(true);
                     }
                   }

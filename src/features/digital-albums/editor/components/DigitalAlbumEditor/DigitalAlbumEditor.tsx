@@ -12,7 +12,9 @@ import DigitalAlbumEditorToolRail from "@/features/digital-albums/editor/compone
 
 import type { DigitalAlbumEditorStep } from "@/features/digital-albums/editor/types/digitalAlbumEditor.types";
 
-import EditorMobilePanel from "@/features/editor/components/EditorMobilePanel/EditorMobilePanel";
+import EditorMobilePanel, {
+  type EditorMobilePanelChangeDetails,
+} from "@/features/editor/components/EditorMobilePanel/EditorMobilePanel";
 
 import EditorShell from "@/features/editor/components/EditorShell/EditorShell";
 
@@ -22,7 +24,10 @@ import EditorShell from "@/features/editor/components/EditorShell/EditorShell";
 
 interface DigitalAlbumEditorProps {
   mobilePanelOpen: boolean;
-  onMobilePanelOpenChange: (open: boolean) => void;
+  onMobilePanelOpenChange: (
+    open: boolean,
+    details?: EditorMobilePanelChangeDetails,
+  ) => void;
   mobileSnapPoint: number;
   onMobileSnapPointChange: (snapPoint: number) => void;
   headerProps?: Omit<
