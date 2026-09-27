@@ -977,7 +977,7 @@ test("PDF readiness rejects unresolved photo references before rendering", async
   const previous = globalThis.document;
   globalThis.document = { querySelector: () => ({ children: [{}], querySelector: () => ({}) }) };
   try {
-    await assert.rejects(ready({ waitForSelector: async () => {}, evaluate: async (fn) => fn() }), /photo reference/);
+    await assert.rejects(ready({ waitForSelector: async () => {}, evaluate: async (fn) => fn() }), (error) => error.stage === "assets:photos" && error.details.reason === "unresolved-photo-reference");
   } finally {
     if (previous === undefined) delete globalThis.document; else globalThis.document = previous;
   }

@@ -101,6 +101,7 @@ export async function POST(request: Request, { params }: DigitalAlbumPdfRoutePro
     console.error("Digital album PDF export failed.", {
       stage: error instanceof DigitalAlbumPdfError ? error.stage : stage,
       status,
+      ...(error instanceof DigitalAlbumPdfError && error.diagnostics ? { diagnostics: error.diagnostics } : {}),
     });
     return NextResponse.json({ error: "Digital album PDF export failed." }, {
       status,

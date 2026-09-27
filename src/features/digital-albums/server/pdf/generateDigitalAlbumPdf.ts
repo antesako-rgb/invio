@@ -1,8 +1,9 @@
 import "server-only";
+import { createHash } from "node:crypto";
 
 import puppeteer, { type Browser, type CookieData } from "puppeteer-core";
 import { getPdfBrowserLaunchOptions } from "./getPdfBrowserLaunchOptions";
-import { waitForDigitalAlbumPrintReady } from "./waitForDigitalAlbumPrintReady";
+import { PdfAssetError, waitForDigitalAlbumPrintReady } from "./waitForDigitalAlbumPrintReady";
 import { assertPdfRenderConfiguration, createPdfRenderToken, PDF_RENDER_HEADER } from "./pdfRenderAuthorization";
 
 interface GenerateDigitalAlbumPdfOptions {
@@ -16,7 +17,7 @@ interface GenerateDigitalAlbumPdfOptions {
 let activeExports = 0;
 
 export class DigitalAlbumPdfError extends Error {
-  constructor(public readonly stage: string, public readonly status = 500) {
+  constructor(public readonly stage: string, public readonly status = 500, public readonly diagnostics?: Record<string, unknown>) {
     super("Digital album PDF export failed.");
   }
 }
@@ -31,6 +32,7 @@ export async function generateDigitalAlbumPdf({
   activeExports++;
   let browser: Browser | undefined;
   let stage = "configuration";
+  const responses = new Map<string, number>();
   try {
     assertPdfRenderConfiguration();
     const origin = new URL(printUrl).origin;
@@ -45,6 +47,9 @@ export async function generateDigitalAlbumPdf({
     stage = "browser";
     browser = await puppeteer.launch(await getPdfBrowserLaunchOptions());
     const page = await browser.newPage();
+    page.on("response", (response) => {
+      if (responses.size < 1000) responses.set(response.url(), response.status());
+    });
     page.setDefaultTimeout(45_000);
     page.setDefaultNavigationTimeout(45_000);
     await browser.defaultBrowserContext().setCookie(...cookies);
@@ -107,7 +112,19 @@ export async function generateDigitalAlbumPdf({
     if (!pdf.length) throw new Error("Empty PDF.");
     // Retain the PDF bytes without allocating a second full-sized copy.
     return Buffer.from(pdf.buffer, pdf.byteOffset, pdf.byteLength);
-  } catch {
+  } catch (error) {
+    if (error instanceof PdfAssetError) {
+      const { url, ...safeDetails } = error.details;
+      if (typeof url === "string") {
+        try {
+          const asset = new URL(url);
+          safeDetails.assetId = createHash("sha256").update(asset.pathname).digest("hex").slice(0, 16);
+          safeDetails.optimizedImage = asset.pathname === "/_next/image";
+          safeDetails.httpStatus = responses.get(url) ?? null;
+        } catch { safeDetails.assetId = "unavailable"; }
+      }
+      throw new DigitalAlbumPdfError(error.stage, 500, safeDetails);
+    }
     // Do not propagate browser errors containing URLs, cookies or signed assets.
     throw new DigitalAlbumPdfError(stage);
   } finally {
