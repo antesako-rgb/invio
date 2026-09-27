@@ -1,4 +1,7 @@
 "use client";
+import { useMemo, type Ref } from "react";
+import type { DigitalAlbumNavigation } from "../DigitalAlbumFlipBook/DigitalAlbumFlipBook";
+import { indexDigitalAlbumPhotos } from "../utils/indexDigitalAlbumPhotos";
 import {
   DIGITAL_ALBUM_PAGE_WIDTH as PAGE_WIDTH,
   DIGITAL_ALBUM_PAGE_HEIGHT as PAGE_HEIGHT,
@@ -17,8 +20,7 @@ import type {
   DigitalAlbumPageContent,
 } from "@/features/digital-albums/types/digitalAlbumDocument.types";
 
-import "@/features/digital-albums/components/album-renderer/themes/DigitalAlbumPageTokens.css";
-import "@/features/digital-albums/components/album-renderer/themes/classic/DigitalAlbumClassicTheme.css";
+import "@/features/digital-albums/components/album-renderer/themes/DigitalAlbumThemes.css";
 
 import styles from "./DigitalAlbumRenderer.module.css";
 
@@ -31,7 +33,10 @@ import styles from "./DigitalAlbumRenderer.module.css";
 ========================================================================== */
 
 interface DigitalAlbumRendererProps {
+  navigationRef?: Ref<DigitalAlbumNavigation>;
+  soundEnabled?: boolean;
   editable?: boolean;
+  showTextPlaceholders?: boolean;
   document: DigitalAlbumDocument;
 
   photos: DigitalAlbumRendererPhoto[];
@@ -62,8 +67,11 @@ interface DigitalAlbumRendererProps {
 
 export default function DigitalAlbumRenderer({
   document,
+  soundEnabled = true,
   photos,
+  navigationRef,
   editable,
+  showTextPlaceholders = false,
   activePageIndex,
   activePhotoSlotId,
   visiblePageIndexes = [],
@@ -73,6 +81,9 @@ export default function DigitalAlbumRenderer({
   onVisiblePagesChange,
   onTurnStart,
 }: DigitalAlbumRendererProps) {
+  const isEditor = editable ?? Boolean(onSelectPhotoSlot || onPageContentChange);
+  const photosById = useMemo(() => indexDigitalAlbumPhotos(photos), [photos]);
+
   /* ==========================================================================
      Empty Document
   ========================================================================== */
@@ -87,8 +98,10 @@ export default function DigitalAlbumRenderer({
 
   return (
     <DigitalAlbumFlipBook
+      soundEnabled={soundEnabled}
+      navigationRef={navigationRef}
       theme={document.theme}
-      editable={editable ?? Boolean(onSelectPhotoSlot || onPageContentChange)}
+      editable={isEditor}
       width={PAGE_WIDTH}
       height={PAGE_HEIGHT}
       activePageIndex={activePageIndex}
@@ -105,10 +118,16 @@ export default function DigitalAlbumRenderer({
           <DigitalAlbumPage
             key={page.id}
             hard={pageIndex === 0 || pageIndex === document.pages.length - 1}
+            coverSide={pageIndex === 0 ? "front" : pageIndex === document.pages.length - 1 ? "back" : undefined}
           >
             <DigitalAlbumPageRenderer
               page={page}
+              // Incoming pages must have the same text geometry before and after
+              // a turn. Visibility gates interaction, not editor presentation.
+              showTextPlaceholders={isEditor || showTextPlaceholders}
+              showPhotoPlaceholders={isEditor}
               photos={photos}
+              photosById={photosById}
               activePhotoSlotId={isActivePage ? activePhotoSlotId : null}
               onSelectPhotoSlot={
                 isVisiblePage && onSelectPhotoSlot

@@ -1,8 +1,10 @@
 "use client";
 
 import {
+  useLocale,
   useTranslations,
 } from "next-intl";
+import { formatDigitalAlbumDate } from "../../../../utils/formatDigitalAlbumDate";
 
 import type {
   ReactNode,
@@ -28,535 +30,76 @@ import styles
   from "./DigitalAlbumLayouts.module.css";
 
 
-/* ==========================================================================
-   Types
-========================================================================== */
-
-interface Parts {
-  photo:
-    (
-      index: number,
-      caption?: boolean,
-    ) => ReactNode;
-
-  text:
-    (
-      field: keyof DigitalAlbumPageContent,
-    ) => ReactNode;
-}
-
-
-/* ==========================================================================
-   Cover
-========================================================================== */
-
-function Cover({
-  photo,
-  text,
-}: Parts) {
-  return (
-    <>
-      {photo(
-        0,
-        false,
-      )}
-
-      <div
-        className={
-          styles.coverShade
-        }
-      />
-
-      <div
-        className={
-          styles.coverText
-        }
-      >
-        {text(
-          "date"
-        )}
-
-        {text(
-          "title"
-        )}
-
-        {text(
-          "subtitle"
-        )}
-      </div>
-    </>
-  );
-}
-
-
-/* ==========================================================================
-   Full Photo
-========================================================================== */
-
-function FullPhoto({
-  photo,
-}: Parts) {
-  return (
-    <>
-      {photo(
-        0
-      )}
-    </>
-  );
-}
-
-
-/* ==========================================================================
-   Two Photos
-========================================================================== */
-
-function TwoPhotos({
-  photo,
-}: Parts) {
-  return (
-    <div
-      className={
-        styles.stack
-      }
-    >
-      {photo(
-        0
-      )}
-
-      {photo(
-        1
-      )}
-    </div>
-  );
-}
-
-
-/* ==========================================================================
-   Editorial
-========================================================================== */
-
-function Editorial({
-  photo,
-  text,
-}: Parts) {
-  return (
-    <>
-      {text(
-        "title"
-      )}
-
-      <div
-        className={
-          styles.essayPhoto
-        }
-      >
-        {photo(
-          0,
-          false,
-        )}
-      </div>
-
-      <div
-        className={
-          styles.essayText
-        }
-      >
-        {text(
-          "text"
-        )}
-      </div>
-    </>
-  );
-}
-
-
-/* ==========================================================================
-   Story
-========================================================================== */
-
-function Story({
-  text,
-}: Parts) {
-  return (
-    <>
-      <div
-        data-album-text-area
-        className={
-          styles.chapterHeading
-        }
-      >
-        {text(
-          "subtitle"
-        )}
-
-        {text(
-          "title"
-        )}
-
-        <span
-          className={
-            styles.rule
-          }
-        />
-
-        {text(
-          "date"
-        )}
-      </div>
-
-      <div
-        data-album-text-area
-        className={
-          styles.chapterNote
-        }
-      >
-        {text(
-          "text"
-        )}
-      </div>
-    </>
-  );
-}
-
-
-/* ==========================================================================
-   Collage
-========================================================================== */
-
-function Collage({
-  photo,
-  text,
-}: Parts) {
-  return (
-    <div
-      className={
-        styles.collageGrid
-      }
-    >
-      <div
-        className={
-          styles.collageLead
-        }
-      >
-        {photo(
-          0,
-          false,
-        )}
-      </div>
-
-      <div>
-        {photo(
-          1,
-          false,
-        )}
-      </div>
-
-      <div>
-        {photo(
-          2,
-          false,
-        )}
-      </div>
-
-      <div
-        className={
-          styles.collageText
-        }
-      >
-        {text(
-          "subtitle"
-        )}
-
-        {text(
-          "title"
-        )}
-      </div>
-    </div>
-  );
-}
-
-
-/* ==========================================================================
-   Portrait Plate
-========================================================================== */
-
-function PortraitPlate({
-  photo,
-}: Parts) {
-  return (
-    <div
-      className={
-        styles.portraitPlate
-      }
-    >
-      {photo(
-        0
-      )}
-    </div>
-  );
-}
-
-
-/* ==========================================================================
-   Landscape Plate
-========================================================================== */
-
-function LandscapePlate({
-  photo,
-}: Parts) {
-  return (
-    <div
-      className={
-        styles.landscapePlate
-      }
-    >
-      {photo(
-        0
-      )}
-    </div>
-  );
-}
-
-
-/* ==========================================================================
-   Portrait Diptych
-========================================================================== */
-
-function PortraitDiptych({
-  photo,
-}: Parts) {
-  return (
-    <div
-      className={
-        styles.diptych
-      }
-    >
-      {photo(
-        0
-      )}
-
-      {photo(
-        1
-      )}
-    </div>
-  );
-}
-
-
-/* ==========================================================================
-   Mixed Pair
-========================================================================== */
-
-function MixedPair({
-  photo,
-}: Parts) {
-  return (
-    <>
-      <div
-        className={
-          styles.mixedPortrait
-        }
-      >
-        {photo(
-          0
-        )}
-      </div>
-
-      <div
-        className={
-          styles.mixedLandscape
-        }
-      >
-        {photo(
-          1
-        )}
-      </div>
-    </>
-  );
-}
-
-
-/* ==========================================================================
-   Hero Detail
-========================================================================== */
-
-function HeroDetail({
-  photo,
-}: Parts) {
-  return (
-    <>
-      <div
-        className={
-          styles.hero
-        }
-      >
-        {photo(
-          0,
-          false,
-        )}
-      </div>
-
-      <div
-        className={
-          styles.detail
-        }
-      >
-        {photo(
-          1
-        )}
-      </div>
-    </>
-  );
-}
-
-
-/* ==========================================================================
-   Quote
-========================================================================== */
-
-function Quote({
-  text,
-}: Parts) {
-  return (
-    <div
-      className={
-        styles.quoteBlock
-      }
-    >
-      <span
-        className={
-          styles.quoteMark
-        }
-        aria-hidden="true"
-      >
-        &#8220;
-      </span>
-
-      {text(
-        "text"
-      )}
-
-      <span
-        className={
-          styles.rule
-        }
-      />
-
-      {text(
-        "subtitle"
-      )}
-    </div>
-  );
-}
-
-
-/* ==========================================================================
-   Closing
-========================================================================== */
-
-function Closing({
-  text,
-}: Parts) {
-  return (
-    <div
-      className={
-        styles.closingBlock
-      }
-    >
-      <span
-        className={
-          styles.rule
-        }
-      />
-
-      {text(
-        "title"
-      )}
-
-      {text(
-        "text"
-      )}
-
-      {text(
-        "date"
-      )}
-    </div>
-  );
-}
-
-
-/* ==========================================================================
-   Layouts
-========================================================================== */
-
-const layouts:
-  Record<
-    DigitalAlbumPageLayout,
-    (parts: Parts) => ReactNode
-  > = {
-    cover:
-      Cover,
-
-    "full-photo":
-      FullPhoto,
-
-    "two-photos":
-      TwoPhotos,
-
-    editorial:
-      Editorial,
-
-    story:
-      Story,
-
-    collage:
-      Collage,
-
-    "portrait-plate":
-      PortraitPlate,
-
-    "landscape-plate":
-      LandscapePlate,
-
-    "portrait-diptych":
-      PortraitDiptych,
-
-    "mixed-pair":
-      MixedPair,
-
-    "hero-detail":
-      HeroDetail,
-
-    quote:
-      Quote,
-
-    closing:
-      Closing,
-  };
-
-
-/* ==========================================================================
-   Digital Album Layouts
-========================================================================== */
+import type { Parts } from "./types";
+import compositionStyles from "./DigitalAlbumCompositions.module.css";
+import CoverLayout from "./compositions/CoverLayout";
+import FullPhotoLayout from "./compositions/FullPhotoLayout";
+import TwoPhotosLayout from "./compositions/TwoPhotosLayout";
+import EditorialLayout from "./compositions/EditorialLayout";
+import StoryLayout from "./compositions/StoryLayout";
+import CollageLayout from "./compositions/CollageLayout";
+import PortraitPlateLayout from "./compositions/PortraitPlateLayout";
+import LandscapePlateLayout from "./compositions/LandscapePlateLayout";
+import PortraitDiptychLayout from "./compositions/PortraitDiptychLayout";
+import MixedPairLayout from "./compositions/MixedPairLayout";
+import HeroDetailLayout from "./compositions/HeroDetailLayout";
+import QuoteLayout from "./compositions/QuoteLayout";
+import ClosingLayout from "./compositions/ClosingLayout";
+
+import SplitLayout from "./compositions/SplitLayout";
+import ThreeGridLayout from "./compositions/ThreeGridLayout";
+import FourGridLayout from "./compositions/FourGridLayout";
+import HeroTextLayout from "./compositions/HeroTextLayout";
+import PortraitPairTextLayout from "./compositions/PortraitPairTextLayout";
+import MosaicLayout from "./compositions/MosaicLayout";
+
+const layouts: Record<DigitalAlbumPageLayout, (parts: Parts) => ReactNode> = {
+  "closing": ClosingLayout,
+  "collage": CollageLayout,
+  "cover": CoverLayout,
+  "editorial": EditorialLayout,
+  "four-grid": FourGridLayout,
+  "full-photo": FullPhotoLayout,
+  "hero-detail": HeroDetailLayout,
+  "hero-text": HeroTextLayout,
+  "landscape-plate": LandscapePlateLayout,
+  "mixed-pair": MixedPairLayout,
+  "mosaic": MosaicLayout,
+  "portrait-diptych": PortraitDiptychLayout,
+  "portrait-pair-text": PortraitPairTextLayout,
+  "portrait-plate": PortraitPlateLayout,
+  "quote": QuoteLayout,
+  "split": SplitLayout,
+  "story": StoryLayout,
+  "three-grid": ThreeGridLayout,
+  "two-photos": TwoPhotosLayout,
+};
 
 export default function DigitalAlbumLayouts({
   page,
   photos,
+  photosById,
   activePhotoSlotId,
   onSelectPhotoSlot,
   onPageContentChange,
+  showTextPlaceholders,
+  showPhotoPlaceholders,
 }: {
   page:
     DigitalAlbumDocumentPage;
 
   photos:
     DigitalAlbumRendererPhoto[];
+  photosById?: ReadonlyMap<string, DigitalAlbumRendererPhoto>;
 
   activePhotoSlotId?:
     string | null;
 
   onSelectPhotoSlot?:
     (id: string) => void;
+
+  showTextPlaceholders?: boolean;
+  showPhotoPlaceholders?: boolean;
 
   onPageContentChange?:
     (
@@ -573,6 +116,7 @@ export default function DigitalAlbumLayouts({
     layouts[
       page.layout
     ];
+  const locale = useLocale();
 
 
   /* ==========================================================================
@@ -592,8 +136,9 @@ export default function DigitalAlbumLayouts({
       return null;
     }
 
-    const asset =
-      photos.find(
+    const asset = photosById
+      ? slot.photoId == null ? undefined : photosById.get(slot.photoId)
+      : photos.find(
         (photo) =>
           photo.id ===
           slot.photoId
@@ -605,6 +150,7 @@ export default function DigitalAlbumLayouts({
 
     return (
       <figure
+        data-album-photo-figure
         className={
           styles.figure
         }
@@ -615,6 +161,7 @@ export default function DigitalAlbumLayouts({
           }
         >
           <DigitalAlbumPhoto
+            showPlaceholder={showPhotoPlaceholders}
             slot={
               slot
             }
@@ -635,6 +182,8 @@ export default function DigitalAlbumLayouts({
           caption &&
           description && (
             <figcaption
+              data-album-text-area
+              data-album-caption
               data-album-text
               className={
                 styles.caption
@@ -661,6 +210,9 @@ export default function DigitalAlbumLayouts({
   ) {
     return (
       <DigitalAlbumEditableText
+        field={field}
+        showPlaceholder={showTextPlaceholders || Boolean(onPageContentChange)}
+        displayValue={field === "date" ? formatDigitalAlbumDate(page.content.date, locale) : undefined}
         value={
           page.content[
             field
@@ -701,7 +253,7 @@ export default function DigitalAlbumLayouts({
   return (
     <div
       className={
-        styles.page
+        [styles.page, compositionStyles.composition].join(" ")
       }
       data-album-page={
         page.id

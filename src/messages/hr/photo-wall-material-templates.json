@@ -1,0 +1,17 @@
+{
+  "PhotoWallMaterialTemplates": {
+    "variantSelector": "Odaberite boju",
+    "useTemplate": "Izradi materijal",
+    "creating": "Izrada…",
+    "templates": {
+      "garden-grace": {
+        "name": "Garden Grace",
+        "description": "Elegantna kartica s nježnim okvirom i toplom tipografijom."
+      },
+      "minimal": {
+        "name": "Minimal",
+        "description": "Uspravna kartica s jasnim naslovom i velikim QR kodom."
+      }
+    }
+  }
+}

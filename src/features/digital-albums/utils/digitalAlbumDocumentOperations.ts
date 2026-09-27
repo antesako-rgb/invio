@@ -6,7 +6,6 @@ import type {
   DigitalAlbumDocument,
   DigitalAlbumDocumentPage,
   DigitalAlbumPageLayout,
-  DigitalAlbumPhotoSlot,
 } from "../types/digitalAlbumDocument.types";
 
 
@@ -26,10 +25,21 @@ export function changeDigitalAlbumPageLayout(
       layout
     ).photoSlotCount;
 
-  const available = [
-    ...page.photos,
+  // Keep occupied visible positions, then restore overflow in its saved order.
+  // Empty slots are not retained photographs and must not block restoration.
+  const retained = [
+    ...page.photos.slice(count),
     ...(page.unplacedPhotos ?? []),
-  ];
+  ].filter((slot) => slot.photoId);
+  let restored = 0;
+  const photos = Array.from({ length: count }, (_, index) => {
+    const existing = page.photos[index];
+    if (existing?.photoId) return existing;
+    return retained[restored++] ?? existing ?? {
+      id: crypto.randomUUID(),
+      photoId: null,
+    };
+  });
 
   const content = {
     ...page.content,
@@ -75,29 +85,9 @@ export function changeDigitalAlbumPageLayout(
 
     content,
 
-    photos:
-      Array.from(
-        {
-          length:
-            count,
-        },
-        (
-          _,
-          index
-        ) =>
-          available[index] ?? {
-            id:
-              crypto.randomUUID(),
+    photos,
 
-            photoId:
-              null,
-          }
-      ),
-
-    unplacedPhotos:
-      available.slice(
-        count
-      ),
+    unplacedPhotos: retained.slice(restored),
   };
 }
 
@@ -197,58 +187,6 @@ export function albumPhotoUsage(
           slot.photoId === photoId
       )
   );
-}
-
-
-/* ==========================================================================
-   Remove Album Photo References
-========================================================================== */
-
-export function removeAlbumPhotoReferences(
-  document:
-    DigitalAlbumDocument,
-
-  photoId:
-    string
-): DigitalAlbumDocument {
-  const clear = (
-    slot:
-      DigitalAlbumPhotoSlot
-  ): DigitalAlbumPhotoSlot =>
-    slot.photoId === photoId
-      ? {
-          id:
-            slot.id,
-
-          photoId:
-            null,
-        }
-      : slot;
-
-  return {
-    ...document,
-
-    pages:
-      document.pages.map(
-        (page) => ({
-          ...page,
-
-          photos:
-            page.photos.map(
-              clear
-            ),
-
-          ...(page.unplacedPhotos
-            ? {
-                unplacedPhotos:
-                  page.unplacedPhotos.map(
-                    clear
-                  ),
-              }
-            : {}),
-        })
-      ),
-  };
 }
 
 

@@ -1,0 +1,165 @@
+/* ==========================================================================
+   Photo Wall Gallery
+========================================================================== */
+
+.gallery {
+
+  width:
+    100%;
+
+  margin:
+    0;
+
+  padding:
+    0;
+
+  columns:
+    3;
+
+  column-gap:
+    16px;
+
+  list-style:
+    none;
+
+}
+
+
+/* ==========================================================================
+   Item
+========================================================================== */
+
+.item {
+
+  width:
+    100%;
+
+  margin:
+    0 0 16px;
+
+  break-inside:
+    avoid;
+
+  opacity:
+    0;
+
+  transform:
+    translateY(
+      14px
+    )
+    scale(
+      0.992
+    );
+
+  transform-origin:
+    center bottom;
+
+  transition:
+    opacity 420ms
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    ),
+    transform 520ms
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+
+  will-change:
+    opacity,
+    transform;
+
+}
+
+
+.item[data-visible="true"] {
+
+  opacity:
+    1;
+
+  transform:
+    translateY(
+      0
+    )
+    scale(
+      1
+    );
+
+  will-change:
+    auto;
+
+}
+
+
+/* ==========================================================================
+   Reduced Motion
+========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .item {
+
+    opacity:
+      1;
+
+    transform:
+      none;
+
+    transition:
+      none;
+
+  }
+
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (max-width: 767px) {
+
+  .gallery {
+
+    columns:
+      2;
+
+    column-gap:
+      8px;
+
+  }
+
+
+  .item {
+
+    margin-bottom:
+      8px;
+
+  }
+
+}
+
+
+/* A small collection should feel complete rather than leave empty columns. */
+.gallery:has(> :only-child) {
+  columns: 1;
+  max-width: 640px;
+  margin-inline: auto;
+}
+@media (max-width: 359px) {
+
+  .gallery { columns: 1; }
+}
+@media (min-width: 768px) {
+
+  .gallery:has(> :nth-child(2):last-child) {
+    columns: 2;
+    max-width: 880px;
+    margin-inline: auto;
+  }
+}

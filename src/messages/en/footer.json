@@ -1,23 +1,19 @@
 {
-  "description": "Create invitations, manage guests and organize your events in one place.",
-
+  "description": "Share photos and preserve memories from your events in one place.",
   "platform": {
     "title": "Platform",
     "home": "Home"
   },
-
   "account": {
     "title": "Account",
     "login": "Sign in",
     "register": "Sign up"
   },
-
   "legal": {
     "title": "Legal",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "cookies": "Cookies"
   },
-
-  "copyright": "© {year} Invio. All rights reserved."
+  "copyright": "© {year} Memiva. All rights reserved."
 }

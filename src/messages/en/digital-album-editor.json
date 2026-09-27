@@ -14,19 +14,13 @@
     "saved": "Saved",
     "error": "Failed to save"
   },
-  "preview": {
-    "close": "Close preview"
-  },
   "mobile": {
     "edit": "Edit album"
   },
   "photos": {
     "add": "Add photos",
     "count": "{count, plural, one {# photo} other {# photos}}",
-    "selectForPage": "Choose a photo for page {number}",
-    "changeForPage": "Choose another photo for page {number}",
     "remove": "Remove photo",
-    "removeFromPage": "Remove from page",
     "removeSuccess": "The photo was removed from the album.",
     "removeError": "The photo could not be removed from the album.",
     "empty": {
@@ -82,7 +76,7 @@
     "picker": {
       "title": "Add photos",
       "description": "Select photos from the Photo Wall that you want to add to the album.",
-      "error": "Unable to add photos to the album.",
+      "error": "Unable to load photos. Please try again.",
       "loading": "Loading photos...",
       "filters": {
         "all": "All",
@@ -102,9 +96,20 @@
         "loadMore": "Load more",
         "cancel": "Cancel",
         "add": "Add ({count})",
-        "adding": "Adding..."
+        "adding": "Adding...",
+        "retry": "Try again"
       }
-    }
+    },
+    "selectPhoto": "Select photo {number}",
+    "libraryCount": "{count, plural, one {# photo} other {# photos}} · {used} used",
+    "replaceTitle": "Replace photo",
+    "addTitle": "Add photo",
+    "replaceHelp": "Choose the photo to replace it with.",
+    "addHelp": "Choose a photo for the empty slot.",
+    "usedTimes": "Used {count} times",
+    "backToPhoto": "Back to photo",
+    "showUsage": "See where this photo is used",
+    "retainedBadge": "Retained"
   },
   "pages": {
     "add": "Add page",
@@ -125,7 +130,7 @@
   },
   "design": {
     "tabs": {
-      "page": "Page",
+      "page": "Layout",
       "theme": "Theme"
     },
     "layouts": {
@@ -141,10 +146,18 @@
       "mixed-pair": "Mixed pair",
       "hero-detail": "Hero + detail",
       "quote": "Quote",
-      "closing": "Closing"
+      "closing": "Closing",
+      "split": "Photo and text",
+      "three-grid": "Three-photo grid",
+      "four-grid": "Four-photo grid",
+      "hero-text": "Hero and story",
+      "portrait-pair-text": "Portraits and title",
+      "mosaic": "Mosaic"
     },
     "themes": {
-      "classic": "Classic"
+      "classic": "Classic",
+      "modern": "Modern",
+      "editorial": "Editorial"
     }
   },
   "pdfExport": {
@@ -171,22 +184,22 @@
     "exportNotReady": "Save changes and resolve page warnings before exporting.",
     "overflow": "Some text does not fit on the page. Shorten it or choose another layout.",
     "saveError": "Changes could not be saved. They remain in this editor; retry before leaving.",
-    "photoInUse": "This photo is on a page or retained for another layout. Remove it from those places first.",
-    "layoutPreview": "Layout preview ? this change has not been saved.",
+    "layoutConfirmTitle": "Apply the new layout?",
+    "layoutConfirmRetained": "{count, plural, one {# photo remains saved outside the layout.} other {# photos remain saved outside the layout.}}",
     "pageContext": "Page {number}",
     "frontCover": "front cover",
     "backCover": "back cover",
     "slot": "Photo {number}",
     "noSlots": "This page has no photo slots.",
-    "unplaced": "Photos kept for this page: {count}. They return when you choose a layout with more photo spaces.",
+    "unplaced": "Saved photos · {count}",
     "coverChange": "This changes the front or back cover of the album. Continue?",
     "category": "Layout category",
     "categories": {
-      "all": "All layouts",
-      "single": "Single photo",
-      "pairs": "Two photos",
-      "sequence": "Multiple photos",
-      "text": "Text and chapters"
+      "all": "All",
+      "single": "1 photo",
+      "pairs": "2 photos",
+      "sequence": "More",
+      "text": "Text"
     },
     "photoCount": "{count, plural, =0 {No photos} one {# photo} other {# photos}}",
     "moveBefore": "Move earlier",
@@ -202,6 +215,34 @@
     "saveConflict": "The album changed in another tab or device. Your local edits are retained, but cannot overwrite the newer version. Preserve them before reloading this page.",
     "redo": "Redo",
     "confirm": "Continue",
-    "coverChangeTitle": "Change album covers"
+    "coverChangeTitle": "Change album covers",
+    "deletePageTitle": "Delete this page?",
+    "deletePageDescription": "The page, its text and photo placements will be removed. Album photos remain available. Deleting the first or last page changes the album cover. You can undo this change.",
+    "deletePageConfirm": "Delete page",
+    "spreadContext": "Pages {from}–{to}",
+    "layoutTarget": "Choose the page to lay out"
+  },
+  "photoContext": {
+    "slot": "Photo {number}",
+    "replace": "Replace photo",
+    "crop": "Adjust framing",
+    "remove": "Remove from page",
+    "swap": "Swap with…",
+    "back": "Back to photos",
+    "missing": "Photo unavailable.",
+    "selectedPhoto": "Selected photo"
+  },
+  "photoUsage": {
+    "title": "This photo is used in the album",
+    "description": "This photo is used in {count} places. Remove those placements before deleting it.",
+    "locations": "Used on:",
+    "page": "Page {number}",
+    "retained": "Retained for another layout",
+    "cancel": "Cancel",
+    "removeAll": "Remove from all pages and delete",
+    "confirmTitle": "Delete this photo from the album?",
+    "confirmDescription": "The photo will be removed from all {count} placements, including those retained for another layout, then from this album's library. Page slots will be empty. This action cannot be undone.",
+    "confirm": "Remove from all pages and delete",
+    "infoDescription": "This photo is used in {count} places. Select a location to view its page."
   }
 }

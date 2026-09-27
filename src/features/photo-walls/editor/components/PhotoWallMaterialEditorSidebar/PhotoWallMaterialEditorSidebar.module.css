@@ -1,0 +1,17 @@
+.panel { display: flex; flex-direction: column; gap: 1.25rem; padding-bottom: 1rem; }
+.hint { margin: 0; color: var(--muted-foreground); font-size: .82rem; line-height: 1.6; }
+.field { display: flex; flex-direction: column; gap: .5rem; font-size: .82rem; font-weight: 500; }
+.field input, .field textarea, .field select { width: 100%; min-height: 42px; border: 1px solid var(--border); border-radius: 8px; padding: .65rem .75rem; background: var(--background); color: var(--foreground); font: inherit; font-weight: 400; }
+.field textarea { resize: vertical; line-height: 1.5; }
+.field input[type="range"] { padding: 0; accent-color: var(--primary); }
+.field input:focus-visible, .field textarea:focus-visible, .field select:focus-visible, .template:focus-visible, .reset:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+.templates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
+.template { display: flex; flex-direction: column; gap: .5rem; padding: .55rem; border: 1px solid var(--border); border-radius: 10px; text-align: left; cursor: pointer; color: var(--foreground); background: var(--background); font-size: .78rem; }
+.template[aria-pressed="true"] { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+.template small { color: var(--muted-foreground); font-size: .65rem; }
+.thumbnail { width: 100%; aspect-ratio: 2 / 3; display: flex; align-items: center; overflow: hidden; pointer-events: none; }
+.reset { align-self: flex-start; padding: .5rem 0; color: var(--primary); font-size: .8rem; cursor: pointer; }
+.destination { display: flex; flex-direction: column; gap: .7rem; padding: 1rem; background: var(--muted); border-radius: 10px; font-size: .82rem; }
+.destination code { overflow-wrap: anywhere; font-size: .75rem; line-height: 1.6; }
+.availability { margin: 0; border-left: 3px solid var(--primary); padding-left: .8rem; font-size: .82rem; line-height: 1.6; }
+@media (max-width: 767px) { .field input, .field textarea, .field select { font-size: 16px; } }

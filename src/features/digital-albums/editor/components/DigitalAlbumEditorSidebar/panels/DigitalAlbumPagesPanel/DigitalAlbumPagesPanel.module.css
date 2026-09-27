@@ -73,6 +73,8 @@
 
 .item[data-visible] {
   color: var(--foreground);
+  background: color-mix(in srgb, var(--primary) 7%, transparent);
+  border-radius: 0.5rem;
 }
 
 

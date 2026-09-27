@@ -33,7 +33,7 @@ export async function unpublishDigitalAlbumAction(
       );
 
 revalidatePath(
-  `/dashboard/albumi/${input.albumId}`
+  `/dashboard/dogadaji/${album.event_id}/albumi`
 );
 
     return {

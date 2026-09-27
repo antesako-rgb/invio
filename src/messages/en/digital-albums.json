@@ -1,45 +1,31 @@
 {
-  "page": {
-    "title": "Albums",
-    "description": "Create and manage digital albums for your event.",
-    "actions": {
-      "create": "Create album"
-    },
-    "empty": {
-      "title": "No albums yet",
-      "description": "Create your first digital album and start adding photos.",
-      "action": "Create album"
-    }
-  },
+  "viewer": {
+    "sound": "Page-turn sound",
+    "mute": "Mute sound",
+    "unmute": "Enable sound",
 
-  "create": {
-    "title": "Create album",
-    "description": "Enter a name for your new album.",
-    "name": "Album name",
-    "namePlaceholder": "e.g. Our Wedding",
-    "cancel": "Cancel",
-    "submit": "Create album",
-    "success": "Album created successfully.",
-    "error": "Unable to create the album."
+    "navigation": "Album navigation",
+    "pages": "Pages",
+    "previous": "Previous page",
+    "next": "Next page",
+    "fullscreen": "Fullscreen",
+    "exitFullscreen": "Exit fullscreen",
+    "close": "Close",
+    "page": "Page {number}",
+    "fullscreenError": "Fullscreen is not available."
   },
-
   "management": {
     "title": "Photo album",
     "description": "Create and edit your digital photo album and share it with your guests.",
-    "backToAlbums": "Back to albums",
-
     "status": {
       "published": "Published",
       "draft": "Draft"
     },
-
     "actions": {
       "view": "View album",
       "edit": "Edit album"
     },
-
     "updatedAt": "Last updated: {date}",
-
     "name": {
       "label": "Album name",
       "edit": "Edit name",
@@ -47,57 +33,38 @@
       "cancel": "Cancel",
       "error": "Unable to save the album name."
     },
-
     "statusCard": {
       "title": "Photo album status",
       "description": "Manage the availability of your photo album.",
-
       "published": {
         "title": "Photo album is published",
         "description": "Guests with access to the link can view the photo album and the photos you have chosen to share.",
         "action": "Unpublish album",
         "success": "The photo album is no longer publicly available."
       },
-
       "draft": {
         "title": "Photo album is not published",
         "description": "Guests cannot access the photo album until you publish it and make it available for sharing.",
         "action": "Publish album",
         "success": "The photo album has been published successfully."
-      }
+      },
+      "error": "Unable to change publication status. Please try again."
     },
-
     "publicLinkCard": {
       "title": "Public link",
       "description": "Share the public link to your photo album.",
-
       "active": {
         "title": "Public link is active",
         "description": "Anyone with this link can view the photo album."
       },
-
       "inactive": {
         "title": "Public link is not active",
         "description": "The link will become available to guests after the photo album is published."
       },
-
       "actions": {
         "copy": "Copy link",
         "copied": "Copied",
         "open": "Open album"
-      }
-    },
-
-    "delete": {
-      "title": "Delete photo album",
-      "description": "Permanently delete this photo album and its photo selection.",
-      "button": "Delete photo album",
-
-      "confirm": {
-        "title": "Delete photo album?",
-        "description": "This action is permanent and cannot be undone.",
-        "confirm": "Delete photo album",
-        "cancel": "Cancel"
       }
     }
   }

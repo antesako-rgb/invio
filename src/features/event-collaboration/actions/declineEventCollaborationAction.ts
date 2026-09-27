@@ -5,11 +5,11 @@ import type {
 } from "@/lib/actions/actionResult";
 
 import {
-  declineEventCollaborationInvitation,
-} from "@/features/event-collaboration/repositories/declineEventCollaborationInvitation";
+  declineEventCollaborationInvite,
+} from "@/features/event-collaboration/repositories/declineEventCollaborationInvite";
 
 import type {
-  DeclineEventCollaborationInvitationInput,
+  DeclineEventCollaborationInviteInput,
 } from "@/features/event-collaboration/types/eventCollaboration.types";
 
 
@@ -18,11 +18,11 @@ import type {
 ========================================================================== */
 
 export async function declineEventCollaborationAction(
-  input: DeclineEventCollaborationInvitationInput
+  input: DeclineEventCollaborationInviteInput
 ): Promise<ActionResult<string>> {
   try {
     const eventId =
-      await declineEventCollaborationInvitation(
+      await declineEventCollaborationInvite(
         input
       );
 

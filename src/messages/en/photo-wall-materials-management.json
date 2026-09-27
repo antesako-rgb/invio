@@ -1,0 +1,155 @@
+{
+  "PhotoWalls": {
+    "management": {
+      "status": {
+        "published": "Published",
+        "draft": "Draft"
+      },
+      "actions": {
+        "preview": {
+          "photo-wall": "Preview Photo Wall"
+        },
+        "view": "Open",
+        "edit": "Edit design"
+      },
+      "name": {
+        "label": "Experience name",
+        "edit": "Edit name",
+        "save": "Save name",
+        "cancel": "Cancel",
+        "error": "Unable to save the experience name."
+      },
+      "updatedAt": "Last updated: {date}",
+      "delete": {
+        "title": {
+          "photo-wall": "Delete Photo Wall"
+        },
+        "description": {
+          "photo-wall": "Permanently delete this Photo Wall and all data associated with it."
+        },
+        "button": {
+          "photo-wall": "Delete Photo Wall"
+        },
+        "confirm": {
+          "title": {
+            "photo-wall": "Delete Photo Wall?"
+          },
+          "description": "This action is permanent and cannot be undone.",
+          "confirm": {
+            "photo-wall": "Delete Photo Wall"
+          },
+          "cancel": "Cancel"
+        }
+      },
+      "statusCard": {
+        "title": {
+          "photo-wall": "Photo Wall status"
+        },
+        "description": {
+          "photo-wall": "Manage the availability of your Photo Wall."
+        },
+        "published": {
+          "title": {
+            "photo-wall": "Photo Wall is published"
+          },
+          "description": {
+            "photo-wall": "Guests with access to the link can view the Photo Wall and the content you have chosen to share."
+          },
+          "action": {
+            "photo-wall": "Unpublish Photo Wall"
+          },
+          "success": {
+            "photo-wall": "The Photo Wall has been unpublished successfully."
+          }
+        },
+        "draft": {
+          "title": {
+            "photo-wall": "Photo Wall is not published"
+          },
+          "description": {
+            "photo-wall": "Guests cannot access or view the Photo Wall until you publish it and make it available for sharing."
+          },
+          "action": {
+            "photo-wall": "Publish Photo Wall"
+          },
+          "success": {
+            "photo-wall": "The Photo Wall has been published successfully."
+          }
+        }
+      },
+      "photoWall": {
+        "photos": {
+          "title": "Photos",
+          "description": "View and manage photos shared on this Photo Wall.",
+          "filters": {
+            "all": "All",
+            "favorites": "Favorites"
+          },
+          "pagination": {
+            "loadMore": "Load more",
+            "loading": "Loading..."
+          },
+          "lightbox": {
+            "close": "Close photo"
+          },
+          "empty": "No photos have been shared yet.",
+          "emptyFavorites": "No photos have been marked as favorites yet.",
+          "actions": {
+            "addFavorite": "Add to favorites",
+            "removeFavorite": "Remove from favorites",
+            "delete": "Delete photo",
+            "deleteConfirm": {
+              "title": "Delete photo?",
+              "description": "This photo will be permanently deleted and cannot be restored.",
+              "confirm": "Delete photo"
+            },
+            "deleteSuccess": "Photo deleted successfully."
+          }
+        }
+      },
+      "publicLinkCard": {
+        "title": "Public link",
+        "description": {
+          "photo-wall": "Share the public link to your Photo Wall."
+        },
+        "active": {
+          "title": "Public link is active",
+          "description": {
+            "photo-wall": "Anyone with this link can view the Photo Wall."
+          }
+        },
+        "inactive": {
+          "title": "Public link is not active",
+          "description": {
+            "photo-wall": "The link will become available to guests after the Photo Wall is published."
+          }
+        },
+        "actions": {
+          "copy": "Copy link",
+          "copied": "Copied",
+          "open": {
+            "photo-wall": "Open Photo Wall"
+          }
+        }
+      },
+      "settings": {
+        "appearance": {
+          "error": "The appearance could not be saved.",
+          "color": {
+            "title": "Color",
+            "description": "Choose the Photo Wall color that best suits your event.",
+            "options": {
+              "memiva": "Memiva",
+              "warm": "Warm",
+              "sage": "Sage",
+              "rose": "Rose",
+              "blue": "Blue",
+              "lavender": "Lavender",
+              "charcoal": "Charcoal"
+            }
+          }
+        }
+      }
+    }
+  }
+}

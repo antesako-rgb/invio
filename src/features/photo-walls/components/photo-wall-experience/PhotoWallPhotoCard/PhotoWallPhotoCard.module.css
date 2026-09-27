@@ -1,0 +1,420 @@
+/* ==========================================================================
+   Photo Wall Photo Card
+========================================================================== */
+
+.card {
+
+  position:
+    relative;
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  margin:
+    0;
+
+  padding:
+    10px 10px 14px;
+
+  border:
+    1px solid
+    var(--photo-wall-border);
+
+  border-radius:
+    2px;
+
+  background:
+    var(--photo-wall-surface);
+
+  color:
+    var(--photo-wall-foreground);
+
+  font:
+    inherit;
+
+  text-align:
+    left;
+
+  box-shadow:
+    0 6px 20px
+    rgba(
+      0,
+      0,
+      0,
+      0.07
+    );
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+
+}
+
+
+/* ==========================================================================
+   Trigger
+========================================================================== */
+
+.trigger {
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  margin:
+    0;
+
+  padding:
+    0;
+
+  border:
+    0;
+
+  background:
+    transparent;
+
+  color:
+    inherit;
+
+  font:
+    inherit;
+
+  text-align:
+    inherit;
+
+  cursor:
+    pointer;
+
+}
+
+
+.card:has(
+  .trigger:hover
+) {
+
+  transform:
+    translateY(
+      -2px
+    );
+
+  box-shadow:
+    0 10px 28px
+    rgba(
+      0,
+      0,
+      0,
+      0.10
+    );
+
+}
+
+
+.card:has(
+  .trigger:active
+) {
+
+  transform:
+    translateY(
+      0
+    );
+
+}
+
+
+.trigger:focus-visible {
+
+  outline:
+    2px solid
+    var(--photo-wall-accent);
+
+  outline-offset:
+    3px;
+
+}
+
+
+/* ==========================================================================
+   Photo
+========================================================================== */
+
+.photo {
+
+  position:
+    relative;
+
+  width:
+    100%;
+
+  overflow:
+    hidden;
+
+  background:
+    var(--photo-wall-background);
+
+}
+
+
+.image {
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    auto;
+
+  object-fit:
+    cover;
+
+}
+
+
+/* ==========================================================================
+   Photo Action
+========================================================================== */
+
+.photoAction {
+
+  position:
+    absolute;
+
+  top:
+    12px;
+
+  right:
+    12px;
+
+  z-index:
+    2;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+}
+
+
+/* ==========================================================================
+   Photo Bottom Action
+========================================================================== */
+
+.photoBottomAction {
+
+  position:
+    absolute;
+
+  right:
+    12px;
+
+  bottom:
+    12px;
+
+  z-index:
+    2;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+}
+
+
+/* ==========================================================================
+   Caption
+========================================================================== */
+
+.caption {
+
+  width:
+    100%;
+
+  padding:
+    14px 8px 4px;
+
+}
+
+
+.description {
+
+  margin:
+    0;
+
+  padding:
+    14px 8px 4px;
+
+  color:
+    var(--photo-wall-muted);
+
+  font:
+    inherit;
+
+  font-size:
+    0.85rem;
+
+  font-style:
+    italic;
+
+  font-weight:
+    400;
+
+  line-height:
+    1.45;
+
+  overflow-wrap:
+    anywhere;
+
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (
+  max-width: 767px
+) {
+
+  .card {
+
+    padding:
+      6px 6px 10px;
+
+  }
+
+
+  .photoAction {
+
+    top:
+      8px;
+
+    right:
+      8px;
+
+  }
+
+
+  .photoBottomAction {
+
+    right:
+      8px;
+
+    bottom:
+      8px;
+
+  }
+
+
+  .caption,
+  .description {
+
+    padding:
+      10px 5px 2px;
+
+  }
+
+
+  .description {
+
+    font-size:
+      0.75rem;
+
+  }
+
+}
+
+
+/* ==========================================================================
+   Reduced Motion
+========================================================================== */
+
+@media (
+  prefers-reduced-motion: reduce
+) {
+
+  .card {
+
+    transition:
+      none;
+
+  }
+
+}
+
+
+/* Scoped here because the same photo card also serves management screens. */
+.card[data-variant="public"] {
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  box-shadow: none;
+}
+
+
+.card[data-variant="public"] .photo {
+  border-radius: 10px;
+  background: var(--photo-wall-surface);
+}
+
+
+.card[data-variant="public"] .trigger {
+  border-radius: 10px;
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+
+.card[data-variant="public"] .trigger:focus-visible {
+  outline: 2px solid var(--photo-wall-accent);
+  outline-offset: 4px;
+}
+
+
+.card[data-variant="public"] .description {
+  padding: 10px 2px 2px;
+  font-style: normal;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+
+.card[data-variant="public"]:has(.trigger:hover) {
+  transform: none;
+  box-shadow: none;
+}
+@media (hover: hover) and (pointer: fine) {
+
+
+  .card[data-variant="public"]:has(.trigger:hover) {
+    transform: translateY(-2px);
+    box-shadow: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+
+  .card[data-variant="public"],
+  .card[data-variant="public"]:has(.trigger:hover) {
+    transform: none;
+    transition: none;
+  }
+}
+
+.card[data-variant="management"] .photo { aspect-ratio: 1 / 1; }
+.card[data-variant="management"] .image { height: 100%; }

@@ -24,8 +24,10 @@ interface DigitalAlbumPhotoSlotProps {
   active?: boolean;
 
   editable?: boolean;
+  showPlaceholder?: boolean;
 
   empty?: boolean;
+  missing?: boolean;
 
   onSelect?: (slotId: string) => void;
 }
@@ -39,7 +41,9 @@ export default function DigitalAlbumPhotoSlot({
   children,
   active = false,
   editable = false,
+  showPlaceholder = editable,
   empty = false,
+  missing = false,
   onSelect,
 }: DigitalAlbumPhotoSlotProps) {
   const select = useRef(onSelect);
@@ -112,17 +116,26 @@ export default function DigitalAlbumPhotoSlot({
     <div
       className={styles.root}
       data-album-slot={slotId}
+      data-album-missing-photo={missing || undefined}
       data-editable={editable ? "true" : undefined}
       data-active={active ? "true" : undefined}
       data-empty={empty ? "true" : undefined}
     >
       {children}
 
+      {empty && showPlaceholder && (
+        <span className={styles.emptyState} data-album-photo-placeholder aria-hidden="true">
+          <Plus className={styles.emptyIcon} aria-hidden="true" />
+          <span>{t("addPhoto")}</span>
+        </span>
+      )}
+
       {editable && (
         <button
           type="button"
           className={styles.editorOverlay}
           aria-label={empty ? t("addPhoto") : t("selectPhoto")}
+          aria-pressed={active}
           data-album-photo-select
           onPointerDownCapture={(event) => {
             if (!event.isPrimary || event.button !== 0) return;
@@ -135,13 +148,6 @@ export default function DigitalAlbumPhotoSlot({
           }}
           onClick={handleSelect}
         >
-          {empty && (
-            <span className={styles.emptyState}>
-              <Plus className={styles.emptyIcon} aria-hidden="true" />
-
-              <span>{t("addPhoto")}</span>
-            </span>
-          )}
         </button>
       )}
     </div>

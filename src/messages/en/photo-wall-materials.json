@@ -1,0 +1,185 @@
+{
+  "editor": {
+    "navigation": {
+      "label": "Material editor",
+      "back": "Back",
+      "content": "Content",
+      "design": "Design",
+      "qr": "QR code"
+    },
+    "mobile": {
+      "description": "Edit the content and design of your material."
+    },
+    "actions": {
+      "save": "Save"
+    },
+    "status": {
+      "saving": "Saving…",
+      "saved": "Saved",
+      "error": "Save failed",
+      "unsaved": "Unsaved changes"
+    },
+    "fields": {
+      "materialName": "Material name",
+      "title": "Heading",
+      "subtitle": "Short message",
+      "description": "Instructions",
+      "primaryName": "Event or first name",
+      "secondaryName": "Second name",
+      "firstInitial": "First initial",
+      "secondInitial": "Second initial",
+      "date": "Date",
+      "time": "Time",
+      "location": "Venue",
+      "address": "Address"
+    },
+    "contentHint": "Empty fields are hidden. Your content stays with you when you change designs.",
+    "designHint": "Choose a composition and colour. The layout is already taken care of.",
+    "template": "Design",
+    "variant": "Colour",
+    "titleScale": "Heading size",
+    "resetTitle": "Reset heading style",
+    "qr": {
+      "label": "Scan to share photos on the event Photo Wall",
+      "sample": "Your QR code",
+      "description": "This QR code is generated automatically from your event’s Photo Wall.",
+      "destination": "Destination",
+      "public": "The Photo Wall is public and ready for guests.",
+      "private": "The Photo Wall is not public yet. Guests can use this code after you publish the Photo Wall.",
+      "fixed": "The destination belongs to the Photo Wall and cannot be changed here.",
+      "catalog": "Template sample. Your Photo Wall QR code is added when you create a material."
+    },
+    "preview": {
+      "title": "Material preview"
+    },
+    "errors": {
+      "VALIDATION": "Check the material name, text lengths, date and style values before saving.",
+      "CONFLICT": "This material changed in another session. Your changes are still here. Reload to get the saved version before editing again.",
+      "SAVE_FAILED": "We could not save your changes. Check your connection and access, then try Save again.",
+      "CREATE_FAILED": "We could not create the material. Check your connection and event ownership, then try again."
+    },
+    "overflow": "Some text exceeds the space in this design. Shorten it or reduce the heading size before exporting.",
+    "leave": {
+      "title": "Leave with unsaved changes?",
+      "description": "Your latest changes have not been saved.",
+      "stay": "Keep editing",
+      "discard": "Leave without saving"
+    }
+  },
+  "experience": {
+    "countdown": {
+      "days": "{count, plural, one {day} other {days}}"
+    }
+  },
+  "photoWall": {
+    "back": "Back",
+    "actions": {
+      "viewPhotos": "View photos",
+      "addPhotos": "Add photos"
+    },
+    "gallery": {
+      "title": "Our shared moments",
+      "description": "Browse the photos and share your favorite moments.",
+      "count": "{count, plural, one {# photo} other {# photos}}",
+      "empty": "No photos yet",
+      "emptyDescription": "Photos from this event will appear here.",
+      "closePhoto": "Close photo",
+      "loadMore": "Load more",
+      "loadingMore": "Loading...",
+      "photoLabel": "Photo {number}",
+      "photoTitle": "Photo preview"
+    },
+    "upload": {
+      "close": "Close",
+      "back": "Back",
+      "addMore": "Add more photos",
+      "selectPhoto": "Select photo",
+      "source": {
+        "title": "Add photos",
+        "description": "Capture the moment or choose photos from your device.",
+        "camera": {
+          "title": "Take a photo",
+          "description": "Capture a new photo with your camera."
+        },
+        "gallery": {
+          "title": "Choose photos",
+          "description": "Choose one or more photos from your gallery."
+        }
+      },
+      "submit": "Add photos ({count})",
+      "submitting": "Adding...",
+      "preparing": "Preparing photos...",
+      "errors": {
+        "invalidFiles": "Some photos are unsupported or too large.",
+        "tooManyFiles": "You can add up to {count} photos.",
+        "upload": "Photos could not be added. Please try again."
+      }
+    },
+    "composer": {
+      "descriptionLabel": "Photo description",
+      "descriptionPlaceholder": "Add a photo description...",
+      "remove": "Remove photo"
+    },
+    "uploadUnavailable": "Photo uploads are currently unavailable.",
+    "deleteUnavailable": "Photo deletion is currently unavailable.",
+    "materialsUnavailable": "Additional materials are not available yet.",
+    "qrLabel": "Photo Wall QR code",
+    "lightboxActions": {
+      "label": "Photo actions",
+      "download": "Download photo",
+      "share": "Share photo",
+      "copyLink": "Copy photo link",
+      "linkCopied": "Photo link copied.",
+      "downloadFailed": "The photo could not be downloaded. Please try again.",
+      "shareFailed": "The photo could not be shared. Please try again.",
+      "shareReady": "Photo ready. Tap Share again to open sharing.",
+      "sharePrepared": "Share prepared photo"
+    }
+  },
+  "page": {
+    "title": "Photo Wall",
+    "description": "Guests’ photos and sharing materials belong to this event’s Photo Wall.",
+    "actions": {
+      "create": "Set up Photo Wall",
+      "manage": "Manage",
+      "edit": "Edit design"
+    },
+    "status": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+    "publishedAt": "Published {date}",
+    "notPublished": "Not published yet",
+    "empty": {
+      "title": "Photo Wall not set up",
+      "description": "Choose a design and prepare the Photo Wall for this event.",
+      "action": "Set up Photo Wall"
+    }
+  },
+  "errors": {
+    "invalidDesign": "The selected design or variant is unavailable.",
+    "invalidInput": "Please check the entered information."
+  },
+  "productNavigation": {
+    "label": "Photo Wall navigation",
+    "overview": "Overview",
+    "photos": "Photos",
+    "materials": "Materials",
+    "settings": "Settings"
+  },
+  "productSettings": {
+    "title": "Photo Wall settings",
+    "description": "Manage Photo Wall availability. Edit its name in the header.",
+    "edit": "Edit content and design"
+  },
+  "materials": {
+    "title": "Materials",
+    "description": "Materials belong to this Photo Wall. Their QR code takes guests to its public page.",
+    "availability": "Materials point to this Photo Wall. Creating and saving materials is not yet available. The editor provides a local preview only.",
+    "existing": "Existing materials",
+    "existingReadOnly": "Saved material. Editing is not available yet.",
+    "preview": "Edit material",
+    "templates": "Material templates",
+    "unsupported": "This design is currently unavailable."
+  }
+}

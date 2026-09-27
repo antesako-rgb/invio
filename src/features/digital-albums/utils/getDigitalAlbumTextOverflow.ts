@@ -57,12 +57,20 @@ export function getDigitalAlbumTextOverflow(
 
     let parent:
       HTMLElement | null =
-        text.parentElement;
+        text;
 
+    const contentStyle = getComputedStyle(content);
+    const clipsContent = ["hidden", "clip", "auto", "scroll"].includes(contentStyle.overflow);
+    const maxHeight = Number.parseFloat(contentStyle.maxHeight);
+
+    // Font ink can extend beyond a natural line box (notably Playfair Display).
+    // scrollHeight alone therefore does not mean the text exceeds its layout.
+    // Check scroll extents only against real constraints; natural text is
+    // checked against its composition and page bounds below.
     let overflow =
-      content.clientWidth > 0 &&
-      content.scrollWidth >
-        content.clientWidth + 2;
+      (clipsContent && content.clientWidth > 0 && content.scrollWidth > content.clientWidth + 2) ||
+      (clipsContent && content.clientHeight > 0 && content.scrollHeight > content.clientHeight + 2) ||
+      (Number.isFinite(maxHeight) && content.scrollHeight > maxHeight + 2);
 
 
     /* ==========================================================================

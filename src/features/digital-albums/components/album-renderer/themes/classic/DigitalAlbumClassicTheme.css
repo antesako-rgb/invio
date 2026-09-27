@@ -3,14 +3,17 @@
 ========================================================================== */
 
 [data-album-theme="classic"] {
-  --album-paper:
-    #f1e9e9;
+  --album-paper: #f1e9e9;
+  --album-ink: #342e29;
+  --album-muted-ink: #6b6159;
 
-  --album-ink:
-    #342e29;
+  --album-type-cover-title: 10cqw;
+  --album-type-cover-subtitle: 5.5cqw;
+  --album-type-quote-text: 6.5cqw;
 
-  --album-muted-ink:
-    #77796c;
+  --album-title-font: var(--font-allura);
+  --album-body-font: var(--font-marcellus);
+  --album-script-font: var(--font-allura);
 
 
   /* ==========================================================================
@@ -27,16 +30,4 @@
     url("/digital-albums/themes/classic/story-background.avif");
 
 
-  /* ==========================================================================
-     Typography
-  ========================================================================== */
-
-  --album-title-font:
-    var(--font-marcellus);
-
-  --album-body-font:
-    var(--font-marcellus);
-
-  --album-script-font:
-    var(--font-allura);
 }

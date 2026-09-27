@@ -80,6 +80,8 @@ const t =
   ========================================================================== */
 
   const {
+    initialLoadFailed,
+    retryInitialLoad,
     filter,
 
     galleryPhotos,
@@ -229,7 +231,14 @@ const t =
               }
             />
           )
-        : galleryPhotos.length === 0
+        : initialLoadFailed ? (
+            <div role="alert">
+              <p>{t("error")}</p>
+              <Button type="button" variant="outline" onClick={retryInitialLoad} disabled={isBusy}>
+                {t("actions.retry")}
+              </Button>
+            </div>
+          ) : galleryPhotos.length === 0
           ? (
               <EmptyState
                 icon={
@@ -296,6 +305,8 @@ const t =
                         }
                       >
                         <img
+                          loading="lazy"
+                          decoding="async"
                           src={
                             photo.imageUrl
                           }

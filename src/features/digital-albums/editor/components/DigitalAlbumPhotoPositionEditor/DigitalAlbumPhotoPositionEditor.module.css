@@ -86,3 +86,5 @@
     margin-right: 0;
   }
 }
+
+@media (pointer: coarse) { .axis input { min-height: 2.75rem; } }

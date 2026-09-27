@@ -133,3 +133,8 @@
       rotate(360deg);
   }
 }
+@media (max-width: 767px) {
+  .button { min-width: 2.75rem; min-height: 2.75rem; padding-inline: 0.5rem; }
+  .button span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } .button { transition: none; } }

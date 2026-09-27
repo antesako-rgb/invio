@@ -1,6 +1,7 @@
 import "server-only";
+import { defaultLocale, type Locale } from "@/i18n/config";
 
-export function getDigitalAlbumPrintUrl(requestUrl: string, albumId: string) {
+export function getDigitalAlbumPrintUrl(requestUrl: string, albumId: string, locale: Locale = defaultLocale) {
   const incoming = new URL(requestUrl);
   const localRequest = ["localhost", "127.0.0.1", "[::1]"].includes(incoming.hostname);
   // Never forward session cookies to a host supplied in an incoming header.
@@ -21,5 +22,6 @@ export function getDigitalAlbumPrintUrl(requestUrl: string, albumId: string) {
   if (process.env.NODE_ENV !== "production" && process.env.VERCEL !== "1" && !loopback) {
     throw new Error("Local PDF requests must use a loopback origin.");
   }
-  return new URL(`/internal/digital-albums/${encodeURIComponent(albumId)}/render`, url.origin);
+  const prefix = locale === defaultLocale ? "" : `/${locale}`;
+  return new URL(`${prefix}/internal/digital-albums/${encodeURIComponent(albumId)}/render`, url.origin);
 }

@@ -1,4 +1,5 @@
 "use client";
+import type { DigitalAlbumTheme } from "@/features/digital-albums/types/digitalAlbumDocument.types";
 
 import { Copy, GripVertical, MoreHorizontal, Trash2 } from "lucide-react";
 
@@ -27,6 +28,7 @@ import styles from "./DigitalAlbumSortablePage.module.css";
 ========================================================================== */
 
 interface DigitalAlbumSortablePageProps {
+  theme: DigitalAlbumTheme;
   onMoveBefore?: () => void;
   onMoveAfter?: () => void;
   page: DigitalAlbumDocumentPage;
@@ -51,6 +53,7 @@ interface DigitalAlbumSortablePageProps {
 ========================================================================== */
 
 export default function DigitalAlbumSortablePage({
+  theme,
   page,
   onMoveBefore,
   onMoveAfter,
@@ -114,12 +117,13 @@ export default function DigitalAlbumSortablePage({
           type="button"
           className={styles.page}
           data-active={isActive ? "" : undefined}
+          aria-pressed={isActive}
           onClick={onSelect}
           aria-label={t("page", {
             number: pageNumber,
           })}
         >
-          <DigitalAlbumPagePreview page={page} photos={photos} />
+          <DigitalAlbumPagePreview theme={theme} page={page} photos={photos} />
         </button>
 
         <button

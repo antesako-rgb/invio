@@ -18,12 +18,4 @@ export const publicNavigation = [
     label:
       "howItWorks",
   },
-
-  {
-    href:
-      "/cijene",
-
-    label:
-      "pricing",
-  },
 ] as const;

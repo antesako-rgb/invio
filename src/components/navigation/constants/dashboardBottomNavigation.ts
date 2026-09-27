@@ -4,10 +4,10 @@ import type {
 
 import {
   CalendarDays,
-  Compass,
+  Plus,
   LayoutDashboard,
   MoreHorizontal,
-  Store,
+
 } from "lucide-react";
 
 
@@ -87,37 +87,11 @@ export const dashboardBottomNavigation:
       href:
         "/dashboard/dogadaji",
 
-      icon:
-        CalendarDays,
+      icon: CalendarDays,
+      exact: true,
     },
 
-    {
-      id:
-        "explore",
-
-      label:
-        "explore",
-
-      href:
-        "/dashboard/istrazi",
-
-      icon:
-        Compass,
-    },
-
-    {
-      id:
-        "business",
-
-      label:
-        "business",
-
-      href:
-        "/dashboard/poslovanje",
-
-      icon:
-        Store,
-    },
+    { id: "newEvent", label: "newEvent", href: "/dashboard/dogadaji/novi", icon: Plus, exact: true },
 
     {
       id:

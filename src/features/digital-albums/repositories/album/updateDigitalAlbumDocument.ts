@@ -2,10 +2,6 @@ import {
   createServerClient,
 } from "@/lib/supabase/server";
 
-import type {
-  Json,
-} from "@/lib/supabase/database.types";
-
 import {
   albumDocumentsEqual,
 } from "@/features/digital-albums/utils/digitalAlbumDocumentOperations";
@@ -61,7 +57,7 @@ export async function updateDigitalAlbumDocument(
           input.albumId,
 
         p_document:
-          document as unknown as Json,
+          document,
 
         p_document_version:
           input.documentVersion,

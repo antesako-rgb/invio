@@ -1,0 +1,17 @@
+{
+  "PhotoWallMaterialTemplates": {
+    "variantSelector": "Choose a colour",
+    "useTemplate": "Create material",
+    "creating": "Creating…",
+    "templates": {
+      "garden-grace": {
+        "name": "Garden Grace",
+        "description": "An elegant card with a delicate frame and warm typography."
+      },
+      "minimal": {
+        "name": "Minimal",
+        "description": "A portrait card with a bold heading and a generous QR code."
+      }
+    }
+  }
+}

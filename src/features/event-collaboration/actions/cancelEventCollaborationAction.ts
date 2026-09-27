@@ -5,11 +5,11 @@ import type {
 } from "@/lib/actions/actionResult";
 
 import {
-  cancelEventCollaborationInvitation,
-} from "@/features/event-collaboration/repositories/cancelEventCollaborationInvitation";
+  cancelEventCollaborationInvite,
+} from "@/features/event-collaboration/repositories/cancelEventCollaborationInvite";
 
 import type {
-  CancelEventCollaborationInvitationInput,
+  CancelEventCollaborationInviteInput,
 } from "@/features/event-collaboration/types/eventCollaboration.types";
 
 
@@ -18,11 +18,11 @@ import type {
 ========================================================================== */
 
 export async function cancelEventCollaborationAction(
-  input: CancelEventCollaborationInvitationInput
+  input: CancelEventCollaborationInviteInput
 ): Promise<ActionResult<string>> {
   try {
     const eventId =
-      await cancelEventCollaborationInvitation(
+      await cancelEventCollaborationInvite(
         input
       );
 

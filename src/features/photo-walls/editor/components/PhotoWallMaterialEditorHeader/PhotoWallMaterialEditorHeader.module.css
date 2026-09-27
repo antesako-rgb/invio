@@ -1,0 +1,4 @@
+.start, .actions { display: flex; align-items: center; gap: .75rem; min-width: 0; }
+.name { max-width: 28vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .9rem; font-weight: 600; }
+.status { color: var(--muted-foreground); font-size: .8rem; }
+@media (max-width: 600px) { .status { display: none; } .name { max-width: 36vw; } }

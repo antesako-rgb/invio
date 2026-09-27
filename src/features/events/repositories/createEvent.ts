@@ -1,4 +1,12 @@
 import {
+  createDefaultDigitalAlbumDocument,
+} from "@/features/digital-albums/document/createDefaultDigitalAlbumDocument";
+
+import type {
+  Json,
+} from "@/lib/supabase/database.types";
+
+import {
   createServerClient,
 } from "@/lib/supabase/server";
 
@@ -7,16 +15,49 @@ import type {
   Event,
 } from "../types/event.types";
 
+import {
+  mapEvent,
+} from "./mapEvent";
+
 
 /* ==========================================================================
    Create Event
 ========================================================================== */
 
 export async function createEvent(
-  input: CreateEventInput
+  input:
+    CreateEventInput
 ): Promise<Event> {
+
   const supabase =
     await createServerClient();
+
+
+  /* ==========================================================================
+     Digital Album
+  ========================================================================== */
+
+  const digitalAlbumDocument =
+    createDefaultDigitalAlbumDocument({
+      eventName:
+        input.p_name,
+
+      eventDate:
+        input.p_start_date,
+    });
+
+
+  const digitalAlbumDocumentJson =
+    JSON.parse(
+      JSON.stringify(
+        digitalAlbumDocument
+      )
+    ) as Json;
+
+
+  /* ==========================================================================
+     Create
+  ========================================================================== */
 
   const {
     data,
@@ -24,25 +65,35 @@ export async function createEvent(
   } =
     await supabase.rpc(
       "create_event",
-      input
+      {
+        ...input,
+
+        p_digital_album_document:
+          digitalAlbumDocumentJson,
+      }
     );
 
-  if (error) {
-    console.error(
-      "createEvent error:",
-      error
-    );
 
+  if (
+    error
+  ) {
     throw new Error(
       error.message
     );
   }
 
-  if (!data) {
+
+  if (
+    !data
+  ) {
     throw new Error(
-      "Događaj nije kreiran."
+      "Event RPC returned no event."
     );
   }
 
-  return data;
+
+  return mapEvent(
+    data
+  );
+
 }

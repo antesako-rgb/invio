@@ -1,0 +1,10 @@
+.preview { display: block; height: 100%; width: 100%; container-type: inline-size; background: var(--album-paper); color: var(--album-ink); }
+.image { display: block; width: 100%; height: 100%; object-fit: contain; }
+.sample { display: flex; height: 100%; padding: 12%; flex-direction: column; justify-content: center; align-items: center; gap: 8cqw; }
+.type { font-family: var(--album-title-font); font-weight: var(--album-title-weight); font-size: 30cqw; line-height: 1.2; }
+.name { font-family: var(--album-body-font); font-size: 8cqw; }
+.rule { width: 24%; height: 1px; background: currentColor; opacity: var(--album-rule-opacity); }
+.swatches { display: flex; gap: 4cqw; }
+.swatches span { width: 12cqw; height: 12cqw; border-radius: 50%; background: var(--album-ink); }
+.swatches span:nth-child(2) { background: var(--album-muted-ink); }
+.swatches span:nth-child(3) { background: var(--album-paper); border: 1px solid var(--album-muted-ink); }

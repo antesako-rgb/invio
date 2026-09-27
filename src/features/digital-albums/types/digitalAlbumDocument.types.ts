@@ -1,3 +1,5 @@
+import type { AlbumThemeId } from "../config/digitalAlbumThemes";
+
 export type DigitalAlbumPageLayout =
   | "cover"
   | "full-photo"
@@ -11,11 +13,16 @@ export type DigitalAlbumPageLayout =
   | "mixed-pair"
   | "hero-detail"
   | "quote"
-  | "closing";
+  | "closing"
+  | "split"
+  | "three-grid"
+  | "four-grid"
+  | "hero-text"
+  | "portrait-pair-text"
+  | "mosaic";
 
 
-export type DigitalAlbumTheme =
-  "classic";
+export type DigitalAlbumTheme = AlbumThemeId;
 
 
 export interface DigitalAlbumPhotoSlot {

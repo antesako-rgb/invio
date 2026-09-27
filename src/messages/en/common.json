@@ -1,25 +1,18 @@
 {
-  "appName": "Invio",
-
+  "appName": "Memiva",
   "loading": "Loading...",
-
   "backToTop": "Back to top",
-
   "showPassword": "Show password",
-
   "hidePassword": "Hide password",
-
   "save": "Save",
-
   "datePicker": {
     "clear": "Clear date"
   },
-
   "timePicker": {
     "clear": "Clear time"
   },
-
   "filePicker": {
     "select": "Choose photo"
-  }
+  },
+  "metaDescription": "Memiva ? share photos and preserve memories from your events."
 }

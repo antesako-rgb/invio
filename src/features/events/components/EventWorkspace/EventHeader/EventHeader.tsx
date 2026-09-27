@@ -1,8 +1,6 @@
 import {
   CalendarDays,
   Clock3,
-  Ellipsis,
-  Globe2,
   MapPin,
   Pencil,
 } from "lucide-react";
@@ -12,9 +10,8 @@ import {
   getTranslations,
 } from "next-intl/server";
 
-import {
-  Button,
-} from "@/components/ui/button";
+import BackLink
+  from "@/components/ui/back-link/BackLink";
 
 import {
   ButtonLink,
@@ -33,24 +30,15 @@ import styles from "./EventHeader.module.css";
 
 
 /* ==========================================================================
-   Constants
-========================================================================== */
-
-const CUSTOM_EVENT_TYPES =
-  new Set<string>([
-    "other_private",
-    "other_business",
-    "other_social",
-  ]);
-
-
-/* ==========================================================================
    Types
 ========================================================================== */
 
 interface EventHeaderProps {
   event:
     Event;
+
+  backHref?:
+    string;
 }
 
 
@@ -60,19 +48,24 @@ interface EventHeaderProps {
 
 export default async function EventHeader({
   event,
+  backHref,
 }: EventHeaderProps) {
-  const t =
-    await getTranslations(
-      "Events.header"
-    );
+  const [
+    t,
+    tTypes,
+    locale,
+  ] =
+    await Promise.all([
+      getTranslations(
+        "Events.header"
+      ),
 
-  const tTypes =
-    await getTranslations(
-      "Events.types"
-    );
+      getTranslations(
+        "Events.types"
+      ),
 
-  const locale =
-    await getLocale();
+      getLocale(),
+    ]);
 
 
   /* ==========================================================================
@@ -80,9 +73,7 @@ export default async function EventHeader({
   ========================================================================== */
 
   const eventType =
-    CUSTOM_EVENT_TYPES.has(
-      event.type
-    ) &&
+    event.type === "other" &&
     event.custom_type
       ? event.custom_type
       : tTypes(
@@ -111,6 +102,19 @@ export default async function EventHeader({
         styles.header
       }
     >
+      {backHref && (
+        <BackLink
+          href={
+            backHref
+          }
+          label={
+            t(
+              "back"
+            )
+          }
+        />
+      )}
+
       <div
         className={
           styles.main
@@ -206,22 +210,6 @@ export default async function EventHeader({
                 </span>
               </div>
             )}
-
-            {event.timezone && (
-              <div
-                className={
-                  styles.metaItem
-                }
-              >
-                <Globe2
-                  aria-hidden="true"
-                />
-
-                <span>
-                  {event.timezone}
-                </span>
-              </div>
-            )}
           </div>
         </div>
 
@@ -232,7 +220,7 @@ export default async function EventHeader({
         >
           <ButtonLink
             href={`/dashboard/dogadaji/${event.id}/uredi`}
-            variant="outline"
+            variant="default"
           >
             <Pencil
               aria-hidden="true"
@@ -242,21 +230,6 @@ export default async function EventHeader({
               "edit"
             )}
           </ButtonLink>
-
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            aria-label={
-              t(
-                "moreActions"
-              )
-            }
-          >
-            <Ellipsis
-              aria-hidden="true"
-            />
-          </Button>
         </div>
       </div>
     </header>

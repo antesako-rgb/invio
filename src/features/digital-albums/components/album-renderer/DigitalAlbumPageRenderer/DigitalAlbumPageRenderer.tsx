@@ -16,6 +16,9 @@ import type {
 ========================================================================== */
 
 interface DigitalAlbumPageRendererProps {
+  photosById?: ReadonlyMap<string, DigitalAlbumRendererPhoto>;
+  showTextPlaceholders?: boolean;
+  showPhotoPlaceholders?: boolean;
   page:
     DigitalAlbumDocumentPage;
 

@@ -1,0 +1,12 @@
+.text {
+  display: block;
+  min-width: 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  font-family: var(--text-font, var(--material-font, inherit));
+  font-size: calc(var(--material-text-size, 3cqw) * var(--text-scale, 1));
+  font-style: var(--text-style, inherit);
+  font-weight: var(--text-weight, var(--material-weight, inherit));
+  color: var(--text-color, inherit);
+  text-align: var(--text-align, inherit);
+}

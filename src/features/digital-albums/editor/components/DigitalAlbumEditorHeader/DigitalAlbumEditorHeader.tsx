@@ -9,6 +9,7 @@ import DigitalAlbumPdfExportAction from "../DigitalAlbumPdfExportAction/DigitalA
 import type { AlbumSaveStatus } from "../../state/DigitalAlbumSession";
 export interface DigitalAlbumEditorHeaderProps {
   albumId: string;
+  eventId?: string;
   saveConflict?: boolean;
   saveStatus?: AlbumSaveStatus;
   canUndo?: boolean;
@@ -22,6 +23,7 @@ export interface DigitalAlbumEditorHeaderProps {
 }
 export default function DigitalAlbumEditorHeader({
   albumId,
+  eventId,
   saveStatus = "saved",
   saveConflict,
   canUndo,
@@ -46,7 +48,7 @@ export default function DigitalAlbumEditorHeader({
               event.preventDefault();
           }}
         >
-          <BackLink href="/dashboard/dogadaji" label={t("navigation.back")} />
+          <BackLink href={eventId ? `/dashboard/dogadaji/${eventId}/albumi` : "/dashboard/dogadaji"} label={t("navigation.back")} />
         </span>
       }
       end={

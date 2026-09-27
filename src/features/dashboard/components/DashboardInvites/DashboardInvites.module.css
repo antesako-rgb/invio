@@ -1,0 +1,136 @@
+/* ==========================================================================
+   Card
+========================================================================== */
+
+.card {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    1.25rem;
+
+  padding:
+    1.25rem;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--primary) 4%,
+      var(--card)
+    );
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--primary) 20%,
+      var(--border)
+    );
+}
+
+
+/* ==========================================================================
+   Icon
+========================================================================== */
+
+.icon {
+  width:
+    1.75rem;
+
+  height:
+    1.75rem;
+
+  flex-shrink:
+    0;
+
+  color:
+    var(--primary);
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.content {
+  flex:
+    1;
+
+  min-width:
+    0;
+
+  overflow-wrap:
+    anywhere;
+}
+
+.content h2 {
+  margin:
+    0;
+
+  font-size:
+    1rem;
+
+  font-weight:
+    600;
+}
+
+.content p {
+  margin:
+    0.25rem 0 0;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.875rem;
+}
+
+.content .name {
+  color:
+    var(--foreground);
+
+  font-weight:
+    500;
+}
+
+
+/* ==========================================================================
+   Responsive
+========================================================================== */
+
+@media (max-width: 600px) {
+  .card {
+    flex-wrap:
+      wrap;
+
+    gap:
+      0.75rem;
+
+    padding:
+      1rem;
+  }
+
+  .content {
+    flex-basis:
+      calc(100% - 2.5rem);
+  }
+
+  .card > a {
+    width:
+      100%;
+
+    min-height:
+      44px;
+
+    height:
+      auto;
+
+    padding-block:
+      0.625rem;
+
+    white-space:
+      normal;
+  }
+}

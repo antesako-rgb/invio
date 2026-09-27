@@ -50,6 +50,7 @@ interface DigitalAlbumManagementHeaderProps {
 export default async function DigitalAlbumManagementHeader({
   album,
 }: DigitalAlbumManagementHeaderProps) {
+
   /* ==========================================================================
      Translation
   ========================================================================== */
@@ -62,6 +63,7 @@ export default async function DigitalAlbumManagementHeader({
       getTranslations(
         "DigitalAlbums.management"
       ),
+
       getLocale(),
     ]);
 
@@ -111,14 +113,6 @@ export default async function DigitalAlbumManagementHeader({
 
   return (
     <ManagementHeader
-      backHref={
-        `/dashboard/dogadaji/${album.event_id}/albumi`
-      }
-      backLabel={
-        t(
-          "backToAlbums"
-        )
-      }
       heading={
         <DigitalAlbumNameEdit
           albumId={
@@ -199,4 +193,5 @@ export default async function DigitalAlbumManagementHeader({
       }
     />
   );
+
 }

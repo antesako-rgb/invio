@@ -1,0 +1,511 @@
+.rule {
+  display: block;
+
+  width:
+    var(--album-rule-width);
+
+  height: 1px;
+
+  margin:
+    var(--album-rule-margin) auto;
+
+  background:
+    currentColor;
+
+  opacity: var(--album-rule-opacity);
+}
+
+
+/* ==========================================================================
+   Cover
+========================================================================== */
+
+.composition[data-composition="cover"] {
+  background-color:
+    var(--album-ink);
+
+  color:
+    var(--album-paper);
+}
+
+/* Keep a thin paper rim on the compositions that previously ran edge-to-edge.
+   Existing framed layouts already have larger margins and need no extra inset. */
+.composition[data-composition="full-photo"] {
+  box-sizing: border-box;
+  padding: 2cqw;
+}
+
+.composition[data-composition="full-photo"] > [data-album-photo-figure] {
+  position: relative;
+}
+
+
+.coverShade {
+  position: absolute;
+  inset: 0;
+
+  background:
+    var(--album-cover-shade);
+
+  pointer-events: none;
+}
+
+
+.coverText {
+  position: absolute;
+
+  bottom: 12cqw;
+
+  left:
+    var(--album-margin);
+
+  right:
+    var(--album-margin);
+
+  display: grid;
+  gap: 3cqw;
+
+  text-align: center;
+}
+
+
+.coverText [data-album-field="title"] {
+  font-size:
+    var(--album-type-cover-title);
+}
+
+
+.coverText [data-album-field="subtitle"] {
+  font-family:
+    var(--album-script-font);
+
+  font-size:
+    var(--album-type-cover-subtitle);
+
+  text-transform: none;
+
+  letter-spacing: 0;
+}
+
+
+/* ==========================================================================
+   Full Photo
+========================================================================== */
+
+.composition[data-composition="full-photo"] > [data-album-photo-figure] > [data-album-caption] {
+  position: absolute;
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding:
+    10cqw 6cqw 6cqw;
+
+  color:
+    var(--album-photo-ink);
+
+  background:
+    var(--album-photo-caption-shade);
+}
+
+
+/* ==========================================================================
+   Two Photos
+========================================================================== */
+
+.stack {
+  display: grid;
+
+  grid-template-rows:
+    1fr 1fr;
+
+  gap: 6cqw;
+
+  height: 100%;
+
+  padding:
+    12cqw 8cqw;
+}
+
+
+/* ==========================================================================
+   Editorial
+========================================================================== */
+
+.composition[data-composition="editorial"] {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6cqw;
+
+  padding:
+    10cqw var(--album-margin);
+}
+
+
+.composition[data-composition="editorial"] > [data-album-field="title"] {
+  max-width: 75%;
+
+  font-size:
+    var(--album-type-editorial-title);
+}
+
+
+.essayPhoto {
+  flex: 0 0 auto;
+
+  height: 62cqw;
+}
+
+
+.essayText {
+  margin-left: 16cqw;
+}
+
+
+.essayText [data-album-field="text"] {
+  font-size:
+    var(--album-type-editorial-text);
+}
+
+
+/* ==========================================================================
+   Story
+========================================================================== */
+
+.chapterHeading {
+  position: absolute;
+
+  top: 30cqw;
+  left: 12cqw;
+  right: 12cqw;
+
+  max-height: 75cqw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 3cqw;
+
+  text-align: center;
+}
+
+
+.chapterHeading [data-album-field="title"] {
+  font-size:
+    var(--album-type-story-title);
+}
+
+
+.chapterNote {
+  position: absolute;
+
+  bottom: 20cqw;
+  left: 18cqw;
+  right: 18cqw;
+
+  max-height: 23cqw;
+
+  text-align: center;
+  font-style: var(--album-note-style);
+}
+
+
+/* ==========================================================================
+   Collage
+========================================================================== */
+
+.collageGrid {
+  height: 100%;
+
+  padding: 8cqw;
+
+  display: grid;
+
+  grid-template-columns:
+    1.25fr 1fr;
+
+  grid-template-rows:
+    1fr 1fr;
+
+  gap:
+    var(--album-gutter);
+}
+
+
+.collageGrid > div {
+  min-width: 0;
+  min-height: 0;
+}
+
+
+.collageLead {
+  grid-row:
+    1 / 3;
+}
+
+
+.collageText {
+  position: absolute;
+
+  bottom: 11cqw;
+  left: 11cqw;
+
+  width: 30cqw;
+
+  padding: 4cqw;
+
+  background:
+    var(--album-paper);
+}
+
+
+.collageText [data-album-field="title"] {
+  margin-top: 2cqw;
+
+  font-size:
+    var(--album-type-collage-title);
+}
+
+
+.collageText [data-album-field="subtitle"] {
+  font-size:
+    var(--album-type-collage-subtitle);
+}
+
+
+/* ==========================================================================
+   Portrait Plate
+========================================================================== */
+
+.portraitPlate {
+  position: absolute;
+
+  top: 16cqw;
+  left: 15cqw;
+
+  width: 70cqw;
+  height: 108cqw;
+}
+
+
+/* ==========================================================================
+   Landscape Plate
+========================================================================== */
+
+.landscapePlate {
+  position: absolute;
+
+  top: 38cqw;
+  left: 9cqw;
+
+  width: 82cqw;
+  height: 63cqw;
+}
+
+
+/* ==========================================================================
+   Portrait Diptych
+========================================================================== */
+
+.diptych {
+  position: absolute;
+
+  top: 30cqw;
+  left: 7cqw;
+  right: 7cqw;
+
+  height: 76cqw;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 4cqw;
+}
+
+
+/* ==========================================================================
+   Mixed Pair
+========================================================================== */
+
+.mixedPortrait {
+  position: absolute;
+
+  top: 13cqw;
+  left: 9cqw;
+
+  width: 48cqw;
+  height: 76cqw;
+}
+
+
+.mixedLandscape {
+  position: absolute;
+
+  bottom: 12cqw;
+  right: 9cqw;
+
+  width: 62cqw;
+  height: 42cqw;
+}
+
+
+/* ==========================================================================
+   Hero Detail
+========================================================================== */
+
+.hero {
+  position: absolute;
+
+  top: 2cqw;
+  left: 2cqw;
+
+  width: 82cqw;
+  height: 102cqw;
+}
+
+
+.detail {
+  position: absolute;
+
+  right: 9cqw;
+  bottom: 9cqw;
+
+  width: 32cqw;
+  height: 33cqw;
+}
+
+
+/* ==========================================================================
+   Quote
+========================================================================== */
+
+.quoteBlock {
+  position: absolute;
+
+  top: 30cqw;
+  left: 15cqw;
+  right: 15cqw;
+
+  text-align: center;
+}
+
+
+.quoteMark {
+  display: block;
+
+  font-family:
+    var(--album-title-font);
+
+  font-size:
+    var(--album-type-quote-mark);
+
+  line-height: 1;
+
+  opacity: var(--album-quote-opacity);
+}
+
+
+.quoteBlock [data-album-field="text"] {
+  font-family:
+    var(--album-title-font);
+
+  font-size:
+    var(--album-type-quote-text);
+
+  line-height: var(--album-quote-line-height);
+}
+
+
+/* ==========================================================================
+   Closing
+========================================================================== */
+
+.closingBlock {
+  position: absolute;
+
+  bottom: 23cqw;
+  left: 18cqw;
+  right: 18cqw;
+
+  display: grid;
+
+  gap: 5cqw;
+
+  text-align: center;
+}
+
+
+.closingBlock [data-album-field="title"] {
+  font-size:
+    var(--album-type-closing-title);
+}
+
+
+.closingBlock [data-album-field="text"] {
+  font-size:
+    var(--album-type-closing-text);
+}
+
+
+.closingBlock [data-album-field="date"] {
+  margin-top: 4cqw;
+
+  font-size:
+    var(--album-type-closing-date);
+}
+
+
+/* ==========================================================================
+   Empty Content
+========================================================================== */
+
+.composition :is(
+  [data-album-field="text"],
+  [data-album-field="title"],
+  [data-album-field="subtitle"],
+  [data-album-field="date"]
+):empty {
+  display: none;
+}
+
+
+/* Keep geometry bounds; editor/PDF validation reports overflowing text. */
+.coverText { max-height: calc(100% - 24cqw); overflow: visible; }
+.composition[data-composition="editorial"] > [data-album-field="title"] { flex-shrink: 0; max-height: 24cqw; overflow: visible; }
+.essayText { flex: 1; min-height: 0; overflow: visible; }
+.chapterHeading { max-height: 64cqw; overflow: visible; }
+.chapterNote { overflow: visible; }
+.collageText { max-height: 55cqw; overflow: visible; }
+.collageText:empty { display: none; }
+.quoteBlock { max-height: calc(100% - 45cqw); overflow: visible; }
+.closingBlock { max-height: calc(100% - 38cqw); overflow: visible; }
+
+/* Geometry only: colors, fonts and typography come from the album theme. */
+.composition { isolation: isolate; }
+.split, .threeGrid, .fourGrid, .heroText, .pairText, .mosaic {
+  display: grid;
+  height: 100%;
+  padding: 10cqw 8cqw;
+  gap: 4cqw;
+}
+.split > *, .threeGrid > *, .fourGrid > *, .heroText > *, .pairText > *, .mosaic > * { min-width: 0; min-height: 0; }
+.split { grid-template-columns: 1fr 1fr; padding-block: 18cqw; }
+.copy { display: flex; flex-direction: column; gap: 4cqw; overflow: visible; min-width: 0; min-height: 0; }
+.copy > * { flex-shrink: 0; }
+.split .copy { justify-content: safe center; }
+.threeGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: 1fr 1fr; padding-block: 17cqw; }
+.wide { grid-column: 1 / -1; }
+.fourGrid { grid-template: repeat(2, minmax(0, 1fr)) / repeat(2, minmax(0, 1fr)); }
+.heroText { grid-template-rows: 68cqw minmax(0, 1fr); padding: 0 0 10cqw; gap: 7cqw; }
+.heroText > :first-child { margin: 2cqw 2cqw 0; }
+.heroText .copy { margin-inline: 10cqw; }
+.pairText { grid-template-rows: minmax(0, 1fr) 80cqw; padding-block: 14cqw; gap: 8cqw; }
+.pairText .copy { text-align: center; justify-content: safe center; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4cqw; min-height: 0; }
+.mosaic { grid-template: repeat(3, minmax(0, 1fr)) / repeat(2, minmax(0, 1fr)); gap: 3cqw; padding: 8cqw; }
+.lead { grid-row: span 2; }

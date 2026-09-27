@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { defaultLocale, locales } from "@/i18n/config";
 
 import { getDigitalAlbum } from "@/features/digital-albums/repositories/album/getDigitalAlbum";
 import { DigitalAlbumPdfError, generateDigitalAlbumPdf } from "@/features/digital-albums/server/pdf/generateDigitalAlbumPdf";
@@ -22,6 +23,10 @@ export async function POST(request: Request, { params }: DigitalAlbumPdfRoutePro
     });
   }
   const { albumId } = await params;
+  const locale = z.enum(locales).safeParse(new URL(request.url).searchParams.get("locale") ?? defaultLocale);
+  if (!locale.success) {
+    return NextResponse.json({ error: "Invalid locale." }, { status: 400 });
+  }
   if (!z.string().uuid().safeParse(albumId).success) {
     return NextResponse.json({ error: "Invalid album ID." }, {
       status: 400, headers: { "Cache-Control": "private, no-store" },
@@ -45,7 +50,7 @@ export async function POST(request: Request, { params }: DigitalAlbumPdfRoutePro
     }
 
     stage = "configuration";
-    const printUrl = getDigitalAlbumPrintUrl(request.url, album.id);
+    const printUrl = getDigitalAlbumPrintUrl(request.url, album.id, locale.data);
     const cookieStore = await cookies();
     const browserCookies = cookieStore.getAll()
       // Includes chunked Supabase session cookies; omit unrelated app cookies.

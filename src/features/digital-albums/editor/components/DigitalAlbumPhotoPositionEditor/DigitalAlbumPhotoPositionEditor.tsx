@@ -102,6 +102,9 @@ export default function DigitalAlbumPhotoPositionEditor({
           onPointerCancel={() => {
             drag.current = null;
           }}
+          onLostPointerCapture={() => {
+            drag.current = null;
+          }}
           onPointerMove={(event) => {
             const initial = drag.current;
             if (!initial || !canPosition) return;

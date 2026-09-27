@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 
 import DigitalAlbumDesignPanel from "@/features/digital-albums/editor/components/DigitalAlbumEditorSidebar/panels/DigitalAlbumDesignPanel/DigitalAlbumDesignPanel";
@@ -20,15 +21,17 @@ import type { DigitalAlbumPhotoWithPhoto } from "@/features/digital-albums/types
 
 import EditorSidebar from "@/features/editor/components/EditorSidebar/EditorSidebar";
 
-import type { PhotoWall } from "@/features/invitations/types/photoWallPhoto.types";
+import type { PhotoWall } from "@/features/photo-walls/types/photoWall.types";
 
 /* ==========================================================================
    Types
 ========================================================================== */
 
 interface DigitalAlbumEditorSidebarProps {
-  beforeRemovePhoto?: (id: string) => Promise<boolean>;
-  afterRemovePhoto?: () => void;
+  photoContext?: ReactNode;
+  designPageControls?: ReactNode;
+  pickerPageLabel?: string;
+  onRequestDeletePhoto: (id: string) => void;
   albumId: string;
 
   activeStep: DigitalAlbumEditorStep;
@@ -43,7 +46,10 @@ interface DigitalAlbumEditorSidebarProps {
 
   activePageId: string | null;
 
-  activePageNumber: number | null;
+  pickerTargetId: string | null;
+  photoUsage: Record<string, number>;
+  retainedPhotoIds: ReadonlySet<string>;
+  onCancelPicker: () => void;
 
   activePageLayout: DigitalAlbumPageLayout | null;
 
@@ -53,7 +59,6 @@ interface DigitalAlbumEditorSidebarProps {
 
   onSelectPhoto: (photoId: string) => void;
 
-  onRemovePhotoFromPage: () => void;
 
   onSelectPage: (pageId: string) => void;
 
@@ -76,20 +81,24 @@ interface DigitalAlbumEditorSidebarProps {
 
 export default function DigitalAlbumEditorSidebar({
   albumId,
-  beforeRemovePhoto,
-  afterRemovePhoto,
+  photoContext,
+  designPageControls,
+  pickerPageLabel,
+  onRequestDeletePhoto,
   activeStep,
   photos,
   photoWalls,
   pages,
   theme,
   activePageId,
-  activePageNumber,
+  pickerTargetId,
+  photoUsage,
+  retainedPhotoIds,
+  onCancelPicker,
   activePageLayout,
   visiblePageIndexes,
   selectedPhotoId,
   onSelectPhoto,
-  onRemovePhotoFromPage,
   onSelectPage,
   onChangePageLayout,
   onChangeTheme,
@@ -129,23 +138,26 @@ export default function DigitalAlbumEditorSidebar({
   function renderContent() {
     switch (activeStep) {
       case "photos":
-        return (
+        return photoContext ?? (
           <DigitalAlbumPhotosPanel
-            beforeRemovePhoto={beforeRemovePhoto}
-            afterRemovePhoto={afterRemovePhoto}
+            pageLabel={pickerPageLabel}
+            onRequestDeletePhoto={onRequestDeletePhoto}
             albumId={albumId}
             photos={photos}
             photoWalls={photoWalls}
-            activePageNumber={activePageNumber}
+            pickerTargetId={pickerTargetId}
+            photoUsage={photoUsage}
+            retainedPhotoIds={retainedPhotoIds}
+            onCancelPicker={onCancelPicker}
             selectedPhotoId={selectedPhotoId}
             onSelectPhoto={onSelectPhoto}
-            onRemovePhotoFromPage={onRemovePhotoFromPage}
           />
         );
 
       case "pages":
         return (
           <DigitalAlbumPagesPanel
+            theme={theme}
             pages={pages}
             photos={photos}
             activePageId={activePageId}
@@ -161,6 +173,7 @@ export default function DigitalAlbumEditorSidebar({
       case "design":
         return (
           <DigitalAlbumDesignPanel
+            pageControls={designPageControls}
             theme={theme}
             activePageId={activePageId}
             activePageLayout={activePageLayout}

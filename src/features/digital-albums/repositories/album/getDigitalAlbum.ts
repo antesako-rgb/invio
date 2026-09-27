@@ -2,10 +2,6 @@ import {
   createServerClient,
 } from "@/lib/supabase/server";
 
-import type {
-  Json,
-} from "@/lib/supabase/database.types";
-
 import {
   assertDigitalAlbumRevision,
 } from "@/features/digital-albums/utils/digitalAlbumRevision";
@@ -70,15 +66,6 @@ export async function getDigitalAlbum(
     data.document_revision
   );
 
-  const document =
-    parseDigitalAlbumDocument(
-      data.document
-    );
-
-  return {
-    ...data,
-
-    document:
-      document as unknown as Json,
-  };
+  parseDigitalAlbumDocument(data.document);
+  return data;
 }

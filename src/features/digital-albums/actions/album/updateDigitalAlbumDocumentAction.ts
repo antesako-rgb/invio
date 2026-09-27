@@ -60,7 +60,7 @@ export async function updateDigitalAlbumDocumentAction(
     );
 
     revalidatePath(
-      `/dashboard/albumi/${input.albumId}`
+      `/dashboard/dogadaji/${album.event_id}/albumi`
     );
 
     return {

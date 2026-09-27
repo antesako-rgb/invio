@@ -205,3 +205,9 @@
     opacity: 1;
   }
 }
+
+.page:focus-visible { outline: 2px solid var(--ring); outline-offset: -3px; }
+@media (pointer: coarse) {
+  .dragHandle, .actionsTrigger { width: 2.75rem; height: 2.75rem; opacity: 1; }
+  .dragHandle { touch-action: none; }
+}

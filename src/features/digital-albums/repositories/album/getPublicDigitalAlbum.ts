@@ -1,6 +1,7 @@
 import {
   createServerClient,
 } from "@/lib/supabase/server";
+import { z } from "zod";
 
 import {
   parseDigitalAlbumDocument,
@@ -11,6 +12,22 @@ import type {
   PublicDigitalAlbum,
 } from "@/features/digital-albums/types/digitalAlbum.types";
 
+// The generated RPC return type is Json, not a typed table row.
+// Validate the fields consumed by the public renderer at this boundary.
+const publicAlbumSchema = z.object({
+  album: z.object({
+    public_id: z.string().min(1),
+    name: z.string(),
+    published_at: z.string().nullable(),
+    document: z.unknown().transform(parseDigitalAlbumDocument),
+    document_version: z.number().int().nonnegative(),
+  }),
+  photos: z.array(z.object({
+    id: z.string().min(1),
+    image_path: z.string().min(1),
+    description: z.string().nullable(),
+  })),
+});
 
 /* ==========================================================================
    Get Public Digital Album
@@ -60,13 +77,5 @@ export async function getPublicDigitalAlbum(
     );
   }
 
-  const result =
-    data as unknown as PublicDigitalAlbum;
-
-  result.album.document =
-    parseDigitalAlbumDocument(
-      result.album.document
-    );
-
-  return result;
+  return publicAlbumSchema.parse(data);
 }

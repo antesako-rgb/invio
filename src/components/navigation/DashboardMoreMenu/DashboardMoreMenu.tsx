@@ -1,10 +1,11 @@
 "use client";
 
 import {
-  CircleHelp,
+  CalendarDays,
+  LayoutDashboard,
   LogOut,
-  Settings,
-  User,
+  Plus,
+  UsersRound,
 } from "lucide-react";
 
 import {
@@ -13,6 +14,7 @@ import {
 
 import {
   Link,
+  usePathname,
   useRouter,
 } from "@/i18n/navigation";
 
@@ -61,6 +63,11 @@ export default function DashboardMoreMenu({
       "Navigation.dashboard"
     );
 
+  const eventText =
+    useTranslations(
+      "Events.header"
+    );
+
   const {
     signOut,
   } =
@@ -68,6 +75,14 @@ export default function DashboardMoreMenu({
 
   const router =
     useRouter();
+
+  const pathname =
+    usePathname();
+
+  const eventId =
+    pathname.match(
+      /^\/dashboard\/dogadaji\/([0-9a-f]{8}-[0-9a-f-]{27})(?:\/|$)/i
+    )?.[1];
 
 
   /* ==========================================================================
@@ -164,7 +179,7 @@ export default function DashboardMoreMenu({
               }
             >
               {t(
-                "account"
+                "organize"
               )}
             </span>
 
@@ -174,12 +189,12 @@ export default function DashboardMoreMenu({
               }
               aria-label={
                 t(
-                  "account"
+                  "organize"
                 )
               }
             >
               <Link
-                href="/dashboard/profil"
+                href="/dashboard/dogadaji"
                 className={
                   styles.item
                 }
@@ -187,20 +202,22 @@ export default function DashboardMoreMenu({
                   handleNavigate
                 }
               >
-                <User
-                  size={20}
+                <CalendarDays
+                  size={
+                    20
+                  }
                   aria-hidden="true"
                 />
 
                 <span>
                   {t(
-                    "profile"
+                    "events"
                   )}
                 </span>
               </Link>
 
               <Link
-                href="/dashboard/postavke"
+                href="/dashboard/dogadaji/novi"
                 className={
                   styles.item
                 }
@@ -208,40 +225,96 @@ export default function DashboardMoreMenu({
                   handleNavigate
                 }
               >
-                <Settings
-                  size={20}
+                <Plus
+                  size={
+                    20
+                  }
                   aria-hidden="true"
                 />
 
                 <span>
                   {t(
-                    "settings"
-                  )}
-                </span>
-              </Link>
-
-              <Link
-                href="/pomoc"
-                className={
-                  styles.item
-                }
-                onClick={
-                  handleNavigate
-                }
-              >
-                <CircleHelp
-                  size={20}
-                  aria-hidden="true"
-                />
-
-                <span>
-                  {t(
-                    "support"
+                    "newEvent"
                   )}
                 </span>
               </Link>
             </nav>
           </section>
+
+          {eventId && (
+            <section
+              className={
+                styles.section
+              }
+            >
+              <span
+                className={
+                  styles.sectionLabel
+                }
+              >
+                 {eventText(
+    "workspace"
+                )}
+              </span>
+
+              <nav
+                className={
+                  styles.menu
+                }
+                aria-label={
+                  eventText(
+                   "workspace"
+                  )
+                }
+              >
+                <Link
+                  href={`/dashboard/dogadaji/${eventId}`}
+                  className={
+                    styles.item
+                  }
+                  onClick={
+                    handleNavigate
+                  }
+                >
+                  <LayoutDashboard
+                    size={
+                      20
+                    }
+                    aria-hidden="true"
+                  />
+
+                  <span>
+                    {eventText(
+                      "overview"
+                    )}
+                  </span>
+                </Link>
+
+                <Link
+                  href={`/dashboard/dogadaji/${eventId}/suradnici`}
+                  className={
+                    styles.item
+                  }
+                  onClick={
+                    handleNavigate
+                  }
+                >
+                  <UsersRound
+                    size={
+                      20
+                    }
+                    aria-hidden="true"
+                  />
+
+                  <span>
+                    {eventText(
+                      "collaborators"
+                    )}
+                  </span>
+                </Link>
+              </nav>
+            </section>
+          )}
 
           <section
             className={
@@ -259,52 +332,14 @@ export default function DashboardMoreMenu({
               }
             >
               <LogOut
-                size={20}
+                size={
+                  20
+                }
                 aria-hidden="true"
               />
 
               {t(
                 "logout"
-              )}
-            </Button>
-          </section>
-
-          <section
-            className={
-              styles.premium
-            }
-          >
-            <div
-              className={
-                styles.premiumContent
-              }
-            >
-              <span
-                className={
-                  styles.premiumTitle
-                }
-              >
-                Invio Premium
-              </span>
-
-              <p
-                className={
-                  styles.premiumText
-                }
-              >
-                {t(
-                  "premiumDescription"
-                )}
-              </p>
-            </div>
-
-            <Button
-              className={
-                styles.premiumButton
-              }
-            >
-              {t(
-                "premiumAction"
               )}
             </Button>
           </section>

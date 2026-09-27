@@ -36,13 +36,15 @@ export async function getDigitalAlbumPhotos(
         "album_id",
         albumId
       )
+      // Stable asset-picker order only; book composition lives in document.
       .order(
-        "position",
+        "created_at",
         {
           ascending:
             true,
         }
-      );
+      )
+      .order("photo_id", { ascending: true });
 
   if (
     error

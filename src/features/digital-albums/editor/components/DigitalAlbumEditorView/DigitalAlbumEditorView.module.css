@@ -13,17 +13,7 @@
 .tools [role="alert"] {
   color: var(--destructive);
 }
-.slots,
-.previewActions {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-.slots p,
-.previewActions p {
-  flex-basis: 100%;
-}
-.slots button[aria-pressed="true"] {
+.pageSelector button[aria-pressed="true"] {
   background: var(--primary);
   color: var(--primary-foreground);
 }
@@ -38,16 +28,56 @@
 }
 
 .retained {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  margin-block: 0.75rem;
 }
-.retained img {
-  width: 3rem;
-  height: 3rem;
+.retainedTitle {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.retainedPhotos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.retainedPhoto {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  background: var(--muted);
+}
+.retainedPhoto img {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
   object-fit: cover;
 }
+.removeRetained {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--background);
+  color: var(--foreground);
+  cursor: pointer;
+}
+.removeRetained:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.removeRetained:disabled { cursor: default; opacity: 0.5; }
 
 .cropDialog {
   width: min(32rem, calc(100vw - 2rem));
@@ -60,3 +90,7 @@
     flex-shrink: 0;
   }
 }
+
+.cropDialog { max-height: calc(100dvh - 2rem); overflow-y: auto; overscroll-behavior: contain; }
+.pageSelector { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.pageSelector button { min-height: 2.75rem; }

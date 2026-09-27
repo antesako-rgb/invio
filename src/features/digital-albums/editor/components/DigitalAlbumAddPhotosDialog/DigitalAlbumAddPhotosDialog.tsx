@@ -24,7 +24,7 @@ import DigitalAlbumUpload from "@/features/digital-albums/editor/components/Digi
 
 import type { DigitalAlbumPhoto } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
 
-import type { PhotoWall } from "@/features/invitations/types/photoWallPhoto.types";
+import type { PhotoWall } from "@/features/photo-walls/types/photoWall.types";
 
 import PhotoUploadDialog from "@/features/photo-upload/components/PhotoUploadDialog/PhotoUploadDialog";
 

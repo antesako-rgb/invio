@@ -12,8 +12,8 @@ import {
 } from "next-intl";
 
 import {
-  getEventPhotoUrl,
-} from "@/features/event-photos/utils/getEventPhotoUrl";
+  getDigitalAlbumPhotoUrl,
+} from "../utils/getDigitalAlbumPhotoUrl";
 
 import type {
   DigitalAlbumPhotoSlot as Slot,
@@ -39,6 +39,7 @@ import styles
 ========================================================================== */
 
 interface DigitalAlbumPhotoProps {
+  showPlaceholder?: boolean;
   slot:
     Slot;
 
@@ -61,6 +62,7 @@ export default function DigitalAlbumPhoto({
   slot,
   photo,
   active,
+  showPlaceholder,
   onSelect,
 }: DigitalAlbumPhotoProps) {
   const t =
@@ -83,6 +85,8 @@ export default function DigitalAlbumPhoto({
 
   return (
     <DigitalAlbumPhotoSlot
+      showPlaceholder={showPlaceholder}
+      missing={Boolean(slot.photoId && !photo)}
       slotId={
         slot.id
       }
@@ -102,8 +106,8 @@ export default function DigitalAlbumPhoto({
       {photo && (
         <Image
           src={
-            getEventPhotoUrl(
-              photo.imagePath
+            getDigitalAlbumPhotoUrl(
+              photo
             )
           }
           alt={
@@ -126,9 +130,7 @@ export default function DigitalAlbumPhoto({
         />
       )}
 
-      {photo &&
-        failed ===
-          photo.imagePath && (
+      {onSelect && ((slot.photoId && !photo) || (photo && failed === photo.imagePath)) && (
           <span
             className={
               styles.error

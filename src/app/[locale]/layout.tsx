@@ -5,6 +5,7 @@ import {
 
 import {
   setRequestLocale,
+  getTranslations,
 } from "next-intl/server";
 
 import {
@@ -24,6 +25,13 @@ import {
 import {
   routing,
 } from "@/i18n/routing";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  const t = await getTranslations({ locale, namespace: "Common" });
+  return { description: t("metaDescription") };
+}
 
 
 /* ==========================================================================

@@ -2,9 +2,6 @@ import {
   notFound,
 } from "next/navigation";
 
-import DigitalAlbumRenderer
-  from "@/features/digital-albums/components/album-renderer/DigitalAlbumRenderer/DigitalAlbumRenderer";
-
 import type {
   DigitalAlbumRendererPhoto,
 } from "@/features/digital-albums/components/album-renderer/types/digitalAlbumRenderer.types";
@@ -88,15 +85,9 @@ export default async function PublicDigitalAlbumPage({
   ========================================================================== */
 
   return (
-    <DigitalAlbumViewer>
-      <DigitalAlbumRenderer
-        document={
-          publicAlbum.album.document
-        }
-        photos={
-          rendererPhotos
-        }
-      />
-    </DigitalAlbumViewer>
+    <DigitalAlbumViewer
+      document={publicAlbum.album.document}
+      photos={rendererPhotos}
+    />
   );
 }

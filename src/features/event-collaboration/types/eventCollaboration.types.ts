@@ -24,15 +24,15 @@ export type EventCollaborator =
    Event Collaboration Invitation
 ========================================================================== */
 
-export type EventCollaborationInvitation =
-  Tables<"event_collaboration_invitations">;
+export type EventCollaborationInvite =
+  Tables<"event_collaboration_invites">;
 
 
 /* ==========================================================================
    Event Collaboration Invitation Status
 ========================================================================== */
 
-export type EventCollaborationInvitationStatus =
+export type EventCollaborationInviteStatus =
   | "pending"
   | "accepted"
   | "declined"
@@ -54,24 +54,24 @@ export type InviteEventCollaboratorResult =
    Accept Event Collaboration Invitation
 ========================================================================== */
 
-export type AcceptEventCollaborationInvitationInput =
-  Database["public"]["Functions"]["accept_event_collaboration_invitation"]["Args"];
+export type AcceptEventCollaborationInviteInput =
+  Database["public"]["Functions"]["accept_event_collaboration_invite"]["Args"];
 
 
 /* ==========================================================================
    Decline Event Collaboration Invitation
 ========================================================================== */
 
-export type DeclineEventCollaborationInvitationInput =
-  Database["public"]["Functions"]["decline_event_collaboration_invitation"]["Args"];
+export type DeclineEventCollaborationInviteInput =
+  Database["public"]["Functions"]["decline_event_collaboration_invite"]["Args"];
 
 
 /* ==========================================================================
    Cancel Event Collaboration Invitation
 ========================================================================== */
 
-export type CancelEventCollaborationInvitationInput =
-  Database["public"]["Functions"]["cancel_event_collaboration_invitation"]["Args"];
+export type CancelEventCollaborationInviteInput =
+  Database["public"]["Functions"]["cancel_event_collaboration_invite"]["Args"];
 
 
 /* ==========================================================================

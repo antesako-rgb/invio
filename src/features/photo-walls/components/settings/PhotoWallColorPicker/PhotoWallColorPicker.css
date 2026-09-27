@@ -1,0 +1,341 @@
+/* ==========================================================================
+   Photo Wall Color Picker
+========================================================================== */
+
+.photo-wall-color-picker {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    20px;
+
+}
+
+
+/* ==========================================================================
+   Header
+========================================================================== */
+
+.photo-wall-color-picker__header {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    6px;
+
+}
+
+
+.photo-wall-color-picker__title {
+
+  margin:
+    0;
+
+  font-size:
+    1rem;
+
+  font-weight:
+    600;
+
+  color:
+    var(--foreground);
+
+}
+
+
+.photo-wall-color-picker__description {
+
+  margin:
+    0;
+
+  font-size:
+    0.875rem;
+
+  line-height:
+    1.5;
+
+  color:
+    var(--muted-foreground);
+
+}
+
+
+/* ==========================================================================
+   Colors
+========================================================================== */
+
+.photo-wall-color-picker__colors {
+
+  display:
+    flex;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    16px;
+
+}
+
+
+/* ==========================================================================
+   Option
+========================================================================== */
+
+.photo-wall-color-picker__option {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  gap:
+    8px;
+
+  padding:
+    0;
+
+  border:
+    0;
+
+  background:
+    transparent;
+
+  color:
+    var(--foreground);
+
+  font:
+    inherit;
+
+  cursor:
+    pointer;
+
+}
+
+
+.photo-wall-color-picker__option:disabled {
+
+  cursor:
+    not-allowed;
+
+  opacity:
+    0.5;
+
+}
+
+
+/* ==========================================================================
+   Swatch
+========================================================================== */
+
+.photo-wall-color-picker__swatch {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    48px;
+
+  height:
+    48px;
+
+  border:
+    2px solid
+    transparent;
+
+  border-radius:
+    50%;
+
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+
+}
+
+
+.photo-wall-color-picker__swatch svg {
+
+  width:
+    18px;
+
+  height:
+    18px;
+
+}
+
+
+.photo-wall-color-picker__option:hover
+.photo-wall-color-picker__swatch {
+
+  transform:
+    scale(1.05);
+
+}
+
+
+.photo-wall-color-picker__option[data-selected="true"]
+.photo-wall-color-picker__swatch {
+
+  border-color:
+    var(--foreground);
+
+  box-shadow:
+    0 0 0 3px
+    var(--background);
+
+}
+
+
+.photo-wall-color-picker__option:focus-visible {
+
+  outline:
+    none;
+
+}
+
+
+.photo-wall-color-picker__option:focus-visible
+.photo-wall-color-picker__swatch {
+
+  outline:
+    2px solid
+    var(--ring);
+
+  outline-offset:
+    3px;
+
+}
+
+
+/* ==========================================================================
+   Color Values
+========================================================================== */
+
+.photo-wall-color-picker__option[data-color="memiva"]
+.photo-wall-color-picker__swatch {
+
+  background:
+    var(--primary);
+
+  color:
+    var(--primary-foreground);
+
+}
+
+
+.photo-wall-color-picker__option[data-color="warm"]
+.photo-wall-color-picker__swatch {
+
+  background:
+    #9a7257;
+
+  color:
+    #ffffff;
+
+}
+
+
+.photo-wall-color-picker__option[data-color="sage"]
+.photo-wall-color-picker__swatch {
+
+  background:
+    #66786b;
+
+  color:
+    #ffffff;
+
+}
+
+
+.photo-wall-color-picker__option[data-color="rose"]
+.photo-wall-color-picker__swatch {
+
+  background:
+    #9b6c77;
+
+  color:
+    #ffffff;
+
+}
+
+
+.photo-wall-color-picker__option[data-color="blue"]
+.photo-wall-color-picker__swatch {
+
+  background:
+    #607b8c;
+
+  color:
+    #ffffff;
+
+}
+
+
+.photo-wall-color-picker__option[data-color="lavender"]
+.photo-wall-color-picker__swatch {
+
+  background:
+    #786b88;
+
+  color:
+    #ffffff;
+
+}
+
+
+.photo-wall-color-picker__option[data-color="charcoal"]
+.photo-wall-color-picker__swatch {
+
+  background:
+    #242424;
+
+  color:
+    #ffffff;
+
+}
+
+
+/* ==========================================================================
+   Label
+========================================================================== */
+
+.photo-wall-color-picker__label {
+
+  font-size:
+    0.8125rem;
+
+  color:
+    var(--muted-foreground);
+
+}
+
+
+.photo-wall-color-picker__option[data-selected="true"]
+.photo-wall-color-picker__label {
+
+  color:
+    var(--foreground);
+
+  font-weight:
+    600;
+
+}

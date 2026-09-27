@@ -1,4 +1,6 @@
 "use server";
+import { revalidatePath } from "next/cache";
+
 
 import type {
   ActionResult,
@@ -26,6 +28,8 @@ export async function updateEventAction(
       await updateEvent(
         input
       );
+
+    revalidatePath("/[locale]/dashboard", "layout");
 
     return {
       success: true,

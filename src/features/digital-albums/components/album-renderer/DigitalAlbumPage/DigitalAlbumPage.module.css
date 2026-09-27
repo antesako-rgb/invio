@@ -67,3 +67,30 @@
       16px
     );
 }
+
+/* Surface finish on the physical cover, not a cast shadow from the engine.
+   Lives on the page face so it follows the existing turn transform and clipping.
+   Print and thumbnails do not use this book-page shell. */
+.hard[data-album-cover]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  box-shadow:
+    inset 0 1px rgb(255 255 255 / 0.2),
+    inset 0 -1px rgb(0 0 0 / 0.2);
+  background: linear-gradient(
+    var(--album-cover-binding-direction),
+    rgb(0 0 0 / 0.2) 0%,
+    rgb(0 0 0 / 0.06) 0.8%,
+    rgb(255 255 255 / 0.12) 1.3%,
+    transparent 2%,
+    rgb(0 0 0 / 0.13) 3%,
+    rgb(255 255 255 / 0.08) 3.5%,
+    transparent 4.5%
+  );
+}
+
+.hard[data-album-cover="front"] { --album-cover-binding-direction: to right; }
+.hard[data-album-cover="back"] { --album-cover-binding-direction: to left; }

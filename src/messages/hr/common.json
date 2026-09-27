@@ -1,25 +1,18 @@
 {
-  "appName": "Invio",
-
+  "appName": "Memiva",
   "loading": "Učitavanje...",
-
   "backToTop": "Natrag na vrh",
-
   "showPassword": "Prikaži lozinku",
-
   "hidePassword": "Sakrij lozinku",
-
   "save": "Spremi",
-
   "datePicker": {
     "clear": "Očisti datum"
   },
-
   "timePicker": {
     "clear": "Očisti vrijeme"
   },
-
   "filePicker": {
     "select": "Odaberi fotografiju"
-  }
+  },
+  "metaDescription": "Memiva ? podijelite fotografije i sa?uvajte uspomene sa svojih doga?aja."
 }

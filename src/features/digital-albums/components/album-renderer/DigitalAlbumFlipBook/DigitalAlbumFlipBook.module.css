@@ -17,6 +17,15 @@
     hidden;
 }
 
+/* Paint-only room for the turning sheet, without resizing the book or changing
+   pointer coordinates. Older browsers retain the existing hidden overflow. */
+@supports (overflow: clip) and (overflow-clip-margin: 1px) {
+  .root {
+    overflow: clip;
+    overflow-clip-margin: clamp(8px, 2vw, 24px);
+  }
+}
+
 
 /* ==========================================================================
    Stage
@@ -135,8 +144,9 @@
     );
 }
 
-.previous:hover:not(:disabled),
-.next:hover:not(:disabled) {
+@media (hover: hover) and (pointer: fine) {
+  .previous:hover:not(:disabled),
+  .next:hover:not(:disabled) {
   background:
     #ffffff;
   box-shadow:
@@ -145,6 +155,7 @@
   transform:
     translateY(-50%)
     scale(1.05);
+  }
 }
 
 .previous:disabled,
@@ -216,4 +227,33 @@
     height:
       1rem;
   }
+}
+.previous:focus-visible, .next:focus-visible { outline: 2px solid var(--ring); outline-offset: -2px; }
+@media (pointer: coarse) { .previous, .next { width: 2.75rem; height: 2.75rem; } }
+@media (prefers-reduced-motion: reduce) { .previous, .next { transition: none; } }
+
+/* Paper-face shading follows the engine's existing transforms and clipping.
+   Do not gate on --flat: incoming pages also use drawSoft during a turn.
+   Hard covers keep the engine's existing lighting unchanged.
+   No filters, animated paint properties, dimensions or extra frame work. */
+@media (min-width: 769px) {
+  .book :global(.opf-page--soft)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    box-shadow: inset 0 1px rgb(255 255 255 / 0.16),
+      inset 0 -1px rgb(35 29 24 / 0.07);
+    background: linear-gradient(
+      var(--album-binding-direction),
+      rgb(35 29 24 / 0.11),
+      rgb(35 29 24 / 0.045) 0.8%,
+      rgb(35 29 24 / 0.012) 2.8%,
+      transparent 5%
+    );
+  }
+
+  .book :global(.opf-page--left) { --album-binding-direction: to left; }
+  .book :global(.opf-page--right) { --album-binding-direction: to right; }
 }

@@ -49,7 +49,7 @@ export default async function Footer() {
                 styles.logo
               }
             >
-              Invio
+              Memiva
             </Link>
 
             <p

@@ -1,4 +1,5 @@
 "use client";
+import type { DigitalAlbumTheme } from "@/features/digital-albums/types/digitalAlbumDocument.types";
 
 import { useState } from "react";
 
@@ -30,6 +31,7 @@ import styles from "./DigitalAlbumPagesPanel.module.css";
 ========================================================================== */
 
 interface DigitalAlbumPagesPanelProps {
+  theme: DigitalAlbumTheme;
   pages: DigitalAlbumDocumentPage[];
 
   photos: DigitalAlbumPhotoWithPhoto[];
@@ -58,6 +60,7 @@ type DragEndEvent = Parameters<
 ========================================================================== */
 
 export default function DigitalAlbumPagesPanel({
+  theme,
   pages,
   photos,
   activePageId,
@@ -159,6 +162,7 @@ export default function DigitalAlbumPagesPanel({
                 data-visible={isVisible ? "" : undefined}
               >
                 <DigitalAlbumSortablePage
+                  theme={theme}
                   onMoveBefore={
                     index > 0
                       ? () => onSwapPages(page.id, pages[index - 1].id)
@@ -172,7 +176,7 @@ export default function DigitalAlbumPagesPanel({
                   page={page}
                   photos={photos}
                   pageNumber={index + 1}
-                  isActive={activePageId === page.id}
+                  isActive={isVisible || activePageId === page.id}
                   canDelete={pages.length > 1}
                   onSelect={() => onSelectPage(page.id)}
                   onDuplicate={() => onDuplicatePage(page.id)}
@@ -180,9 +184,7 @@ export default function DigitalAlbumPagesPanel({
                 />
 
                 <span className={styles.label}>
-                  {t("page", {
-                    number: index + 1,
-                  })}
+                  {index + 1}
                 </span>
               </div>
             );

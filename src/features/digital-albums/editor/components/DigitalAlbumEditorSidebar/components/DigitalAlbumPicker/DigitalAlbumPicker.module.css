@@ -41,12 +41,7 @@
   box-shadow: 0 0 0 1px var(--primary);
 }
 
-.previewImage {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+
 
 .label {
   font-size: 0.8125rem;
@@ -55,18 +50,10 @@
 
   line-height: 1.25;
 }
-.filter {
-  display: grid;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  font-size: 0.85rem;
-}
-.filter select {
-  border: 1px solid var(--border);
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-}
 .meta {
   font-size: 0.7rem;
   color: var(--muted-foreground);
 }
+
+.card:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; border-radius: 0.625rem; }
+@media (prefers-reduced-motion: reduce) { .preview { transition: none; } }

@@ -31,10 +31,7 @@ export async function addDigitalAlbumPhotosAction(
       await addDigitalAlbumPhotos(
         input
       );
-
-  revalidatePath(
-  `/dashboard/albumi/${input.albumId}`
-);
+    revalidatePath(`/editor/album/${input.albumId}/uredi`);
     return {
       success:
         true,

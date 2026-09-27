@@ -1,9 +1,0 @@
-.previewAction {
-  margin-left: 0.5rem;
-}
-
-@media (max-width: 767px) {
-  .previewAction {
-    display: none;
-  }
-}

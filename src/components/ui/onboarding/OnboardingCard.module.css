@@ -294,3 +294,11 @@
     width: 100%;
   }
 }
+@media (max-width: 480px) {
+  .steps { flex-direction: column; gap: 16px; }
+  .step { flex-direction: row; gap: 12px; text-align: left; width: 100%; }
+  .pending, .active, .completed { flex-shrink: 0; }
+  .stepLabel { margin: 0; padding: 0; font-size: 0.875rem; }
+  .line, .lineCompleted { display: none; }
+  .actions > * { width: 100%; min-height: 44px; height: auto; white-space: normal; padding-block: 10px; }
+}

@@ -6,6 +6,11 @@ import type {
   Event,
 } from "../types/event.types";
 
+import {
+  EVENT_COLUMNS,
+  mapEvent,
+} from "./mapEvent";
+
 
 /* ==========================================================================
    Get Events
@@ -21,7 +26,7 @@ export async function getEvents(): Promise<Event[]> {
   } =
     await supabase
       .from("events")
-      .select("*")
+      .select(EVENT_COLUMNS)
       .order(
         "start_date",
         {
@@ -33,5 +38,7 @@ export async function getEvents(): Promise<Event[]> {
     throw error;
   }
 
-  return data;
+  return (data ?? []).map(
+    mapEvent
+  );
 }

@@ -8,6 +8,9 @@ export async function waitForDigitalAlbumPrintReady(page: Page) {
   await page.evaluate(async () => {
     const root = document.querySelector('[data-album-print-hydrated="true"]');
     if (!root || !root.children.length) throw new Error("Print album is empty.");
+    if (root.querySelector('[data-album-missing-photo="true"]')) {
+      throw new Error("An album photo reference could not be resolved.");
+    }
 
     let timer: ReturnType<typeof setTimeout> | undefined;
     try {

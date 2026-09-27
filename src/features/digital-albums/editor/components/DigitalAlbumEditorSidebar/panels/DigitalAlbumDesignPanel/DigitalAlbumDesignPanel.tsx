@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import {
   useState,
 } from "react";
@@ -35,6 +36,7 @@ type DigitalAlbumDesignSection =
   | "theme";
 
 interface DigitalAlbumDesignPanelProps {
+  pageControls?: ReactNode;
   theme:
     DigitalAlbumTheme;
 
@@ -66,6 +68,7 @@ interface DigitalAlbumDesignPanelProps {
 
 export default function DigitalAlbumDesignPanel({
   theme,
+  pageControls,
   activePageId,
   activePageLayout,
   onChangePageLayout,
@@ -128,10 +131,7 @@ export default function DigitalAlbumDesignPanel({
     value:
       string
   ) {
-    setSection(
-      value as
-        DigitalAlbumDesignSection
-    );
+    if (value === "page" || value === "theme") setSection(value);
   }
 
 
@@ -181,6 +181,9 @@ export default function DigitalAlbumDesignPanel({
 
       {section ===
         "page" && (
+        <>
+        {pageControls}
+        <h3 className={styles.title}>{t("tabs.page")}</h3>
         <DigitalAlbumLayoutPicker
           value={
             activePageLayout
@@ -189,6 +192,7 @@ export default function DigitalAlbumDesignPanel({
             handleChangeLayout
           }
         />
+        </>
       )}
 
       {section ===

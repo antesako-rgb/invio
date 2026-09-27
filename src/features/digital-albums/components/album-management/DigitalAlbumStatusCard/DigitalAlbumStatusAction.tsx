@@ -121,6 +121,8 @@ export default function DigitalAlbumStatusAction({
       );
 
       router.refresh();
+    } catch {
+      toast.error(t("error"));
     } finally {
       setIsPending(
         false

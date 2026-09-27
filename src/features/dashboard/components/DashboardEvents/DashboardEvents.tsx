@@ -13,9 +13,19 @@ import {
   ButtonLink,
 } from "@/components/ui/button-link";
 
+import {
+  EmptyState,
+} from "@/components/ui/empty-state/EmptyState";
+
 import type {
   Event,
 } from "@/features/events/types/event.types";
+
+import {
+  getDashboardProducts,
+} from "../../repositories/getDashboardProducts";
+
+import DashboardProductSummary from "./DashboardProductSummary";
 
 import styles from "./DashboardEvents.module.css";
 
@@ -25,6 +35,8 @@ import styles from "./DashboardEvents.module.css";
 ========================================================================== */
 
 interface DashboardEventsProps {
+  limit?: number | null;
+
   events:
     Event[];
 }
@@ -36,19 +48,34 @@ interface DashboardEventsProps {
 
 export default async function DashboardEvents({
   events,
+  limit = 3,
 }: DashboardEventsProps) {
-  const t =
-    await getTranslations(
-      "Dashboard.overview.events"
-    );
+  const [
+    t,
+    locale,
+  ] =
+    await Promise.all([
+      getTranslations(
+        "Dashboard.overview.events"
+      ),
 
-  const locale =
-    await getLocale();
+      getLocale(),
+    ]);
 
   const visibleEvents =
-    events.slice(
-      0,
-      3
+    limit === null
+      ? events
+      : events.slice(
+          0,
+          limit
+        );
+
+  const products =
+    await getDashboardProducts(
+      visibleEvents.map(
+        (event) =>
+          event.id
+      )
     );
 
 
@@ -73,7 +100,9 @@ export default async function DashboardEvents({
               styles.title
             }
           >
-            {t("title")}
+            {t(
+              "title"
+            )}
           </h2>
 
           <p
@@ -100,6 +129,38 @@ export default async function DashboardEvents({
         </ButtonLink>
       </div>
 
+{events.length === 0 && (
+  <EmptyState
+    variant="card"
+    icon={
+      CalendarDays
+    }
+    title={
+      t(
+        "empty.title"
+      )
+    }
+    description={
+      t(
+        "empty.description"
+      )
+    }
+    action={
+      <ButtonLink
+        href="/dashboard/dogadaji/novi"
+      >
+        <Plus
+          aria-hidden="true"
+        />
+
+        {t(
+          "empty.action"
+        )}
+      </ButtonLink>
+    }
+  />
+)}
+
       <div
         className={
           styles.list
@@ -116,7 +177,8 @@ export default async function DashboardEvents({
               new Intl.DateTimeFormat(
                 locale,
                 {
-                  day: "2-digit",
+                  day:
+                    "2-digit",
                 }
               ).format(
                 startDate
@@ -126,7 +188,8 @@ export default async function DashboardEvents({
               new Intl.DateTimeFormat(
                 locale,
                 {
-                  month: "short",
+                  month:
+                    "short",
                 }
               )
                 .format(
@@ -142,9 +205,14 @@ export default async function DashboardEvents({
               new Intl.DateTimeFormat(
                 locale,
                 {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
+                  day:
+                    "numeric",
+
+                  month:
+                    "long",
+
+                  year:
+                    "numeric",
                 }
               ).format(
                 startDate
@@ -158,7 +226,23 @@ export default async function DashboardEvents({
                 .filter(
                   Boolean
                 )
-                .join(", ");
+                .join(
+                  ", "
+                );
+
+            const photoWall =
+              products.walls.find(
+                (wall) =>
+                  wall.event_id ===
+                  event.id
+              ) ?? null;
+
+            const album =
+              products.albums.find(
+                (item) =>
+                  item.event_id ===
+                  event.id
+              ) ?? null;
 
             return (
               <article
@@ -215,7 +299,10 @@ export default async function DashboardEvents({
                           styles.eventType
                         }
                       >
-                        {event.custom_type ??
+                        {(event.type ===
+                        "other"
+                          ? event.custom_type
+                          : null) ??
                           t(
                             `types.${event.type}`
                           )}
@@ -264,55 +351,64 @@ export default async function DashboardEvents({
                       </div>
                     )}
                   </div>
-
-                  {event.planned_guests !==
-                    null && (
-                    <p
-                      className={
-                        styles.guests
-                      }
-                    >
-                      {t(
-                        "plannedGuests",
-                        {
-                          count:
-                            event.planned_guests,
-                        }
-                      )}
-                    </p>
-                  )}
                 </div>
 
-                <ButtonLink
-                  href={`/dashboard/dogadaji/${event.id}`}
-                  variant="outline"
-                >
-                  {t(
-                    "openEvent"
-                  )}
-                </ButtonLink>
+                <DashboardProductSummary
+                  kind="photoWall"
+                  eventId={
+                    event.id
+                  }
+                  product={
+                    photoWall
+                  }
+                />
+
+                <DashboardProductSummary
+                  kind="album"
+                  eventId={
+                    event.id
+                  }
+                  product={
+                    album
+                  }
+                />
+
+<ButtonLink
+  className={
+    styles.openEvent
+  }
+  size="lg"
+  href={`/dashboard/dogadaji/${event.id}`}
+  variant="outline"
+>
+  {t(
+    "openEvent"
+  )}
+</ButtonLink>
               </article>
             );
           }
         )}
       </div>
 
-      {events.length > 3 && (
-        <div
-          className={
-            styles.footer
-          }
-        >
-          <ButtonLink
-            href="/dashboard/dogadaji"
-            variant="ghost"
+      {limit !== null &&
+        events.length >
+          limit && (
+          <div
+            className={
+              styles.footer
+            }
           >
-            {t(
-              "viewAll"
-            )}
-          </ButtonLink>
-        </div>
-      )}
+            <ButtonLink
+              href="/dashboard/dogadaji"
+              variant="ghost"
+            >
+              {t(
+                "viewAll"
+              )}
+            </ButtonLink>
+          </div>
+        )}
     </section>
   );
 }

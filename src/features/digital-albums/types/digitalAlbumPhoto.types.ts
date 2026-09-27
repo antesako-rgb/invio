@@ -53,19 +53,6 @@ export interface RemoveDigitalAlbumPhotoInput {
 
 
 /* ==========================================================================
-   Reorder Digital Album Photos Input
-========================================================================== */
-
-export interface ReorderDigitalAlbumPhotosInput {
-  albumId:
-    string;
-
-  photoIds:
-    string[];
-}
-
-
-/* ==========================================================================
    Public Digital Album Photo
 ========================================================================== */
 
@@ -78,7 +65,4 @@ export interface PublicDigitalAlbumPhoto {
 
   description:
     string | null;
-
-  position:
-    number;
 }

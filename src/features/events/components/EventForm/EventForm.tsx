@@ -38,8 +38,6 @@ import {
 
 import EventBasicInformationSection from "./EventBasicInformationSection/EventBasicInformationSection";
 
-import EventPlanningSection from "./EventPlanningSection/EventPlanningSection";
-
 import EventScheduleSection from "./EventScheduleSection/EventScheduleSection";
 
 import styles from "./EventForm.module.css";
@@ -196,16 +194,6 @@ export default function EventForm({
       />
 
       <EventScheduleSection
-        form={form}
-        disabled={
-          isSubmitting
-        }
-        setField={
-          setField
-        }
-      />
-
-      <EventPlanningSection
         form={form}
         disabled={
           isSubmitting

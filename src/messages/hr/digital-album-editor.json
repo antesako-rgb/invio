@@ -14,19 +14,13 @@
     "saved": "Spremljeno",
     "error": "Spremanje nije uspjelo"
   },
-  "preview": {
-    "close": "Zatvori pregled"
-  },
   "mobile": {
     "edit": "Uredi album"
   },
   "photos": {
     "add": "Dodaj fotografije",
     "count": "{count, plural, one {# fotografija} few {# fotografije} other {# fotografija}}",
-    "selectForPage": "Odaberi fotografiju za stranicu {number}",
-    "changeForPage": "Odaberi drugu fotografiju za stranicu {number}",
     "remove": "Ukloni fotografiju",
-    "removeFromPage": "Ukloni sa stranice",
     "removeSuccess": "Fotografija je uklonjena iz albuma.",
     "removeError": "Fotografiju nije moguće ukloniti iz albuma.",
     "empty": {
@@ -82,7 +76,7 @@
     "picker": {
       "title": "Dodaj fotografije",
       "description": "Odaberi fotografije iz Photo Walla koje želiš dodati u album.",
-      "error": "Fotografije nije moguće dodati u album.",
+      "error": "Fotografije nije moguće učitati. Pokušajte ponovno.",
       "loading": "Učitavanje fotografija...",
       "filters": {
         "all": "Sve",
@@ -102,9 +96,20 @@
         "loadMore": "Učitaj još",
         "cancel": "Odustani",
         "add": "Dodaj ({count})",
-        "adding": "Dodavanje..."
+        "adding": "Dodavanje...",
+        "retry": "Pokušaj ponovno"
       }
-    }
+    },
+    "selectPhoto": "Odaberi fotografiju {number}",
+    "libraryCount": "{count, plural, one {# fotografija} few {# fotografije} other {# fotografija}} · {used} korišteno",
+    "replaceTitle": "Zamijeni fotografiju",
+    "addTitle": "Dodaj fotografiju",
+    "replaceHelp": "Odaberite fotografiju koja će je zamijeniti.",
+    "addHelp": "Odaberite fotografiju za prazno mjesto.",
+    "usedTimes": "Korišteno {count}×",
+    "backToPhoto": "Natrag na fotografiju",
+    "showUsage": "Pogledaj gdje se fotografija koristi",
+    "retainedBadge": "Sačuvano"
   },
   "pages": {
     "add": "Dodaj stranicu",
@@ -125,7 +130,7 @@
   },
   "design": {
     "tabs": {
-      "page": "Stranica",
+      "page": "Raspored",
       "theme": "Tema"
     },
     "layouts": {
@@ -141,10 +146,18 @@
       "mixed-pair": "Portret i trenutak",
       "hero-detail": "Veliki kadar i detalj",
       "quote": "Citat",
-      "closing": "Završna riječ"
+      "closing": "Završna riječ",
+      "split": "Fotografija i tekst",
+      "three-grid": "Tri fotografije",
+      "four-grid": "Četiri fotografije",
+      "hero-text": "Fotografija i priča",
+      "portrait-pair-text": "Portreti i naslov",
+      "mosaic": "Mozaik"
     },
     "themes": {
-      "classic": "Klasična"
+      "classic": "Klasična",
+      "modern": "Modern",
+      "editorial": "Editorial"
     }
   },
   "pdfExport": {
@@ -171,22 +184,22 @@
     "exportNotReady": "Prvo spremite izmjene i riješite upozorenja na stranicama.",
     "overflow": "Dio teksta ne stane na stranicu. Skratite tekst ili odaberite drugi raspored.",
     "saveError": "Izmjene nisu spremljene. Ostaju u ovom editoru; pokušajte ponovno prije odlaska.",
-    "photoInUse": "Fotografija je na stranici ili je sačuvana za drugi raspored. Prvo je uklonite s tih mjesta.",
-    "layoutPreview": "Pregled novog rasporeda — promjena još nije spremljena.",
+    "layoutConfirmTitle": "Primijeniti novi raspored?",
+    "layoutConfirmRetained": "{count, plural, one {# fotografija ostaje sačuvana izvan rasporeda.} few {# fotografije ostaju sačuvane izvan rasporeda.} other {# fotografija ostaje sačuvano izvan rasporeda.}}",
     "pageContext": "Stranica {number}",
     "frontCover": "prednja korica",
     "backCover": "stražnja korica",
     "slot": "Fotografija {number}",
     "noSlots": "Ova stranica nema mjesta za fotografije.",
-    "unplaced": "Fotografije sačuvane za ovu stranicu: {count}. Vratit će se kada odaberete raspored s više mjesta za fotografije.",
+    "unplaced": "Sačuvane fotografije · {count}",
     "coverChange": "Ova promjena mijenja prednju ili stražnju koricu albuma. Želite li nastaviti?",
     "category": "Vrsta rasporeda",
     "categories": {
-      "all": "Svi rasporedi",
-      "single": "Jedna fotografija",
-      "pairs": "Dvije fotografije",
-      "sequence": "Više fotografija",
-      "text": "Tekst i poglavlja"
+      "all": "Sve",
+      "single": "1 foto",
+      "pairs": "2 foto",
+      "sequence": "Više",
+      "text": "Tekst"
     },
     "photoCount": "{count, plural, =0 {Bez fotografija} one {# fotografija} few {# fotografije} other {# fotografija}}",
     "moveBefore": "Pomakni prije",
@@ -202,6 +215,34 @@
     "saveConflict": "Album je izmijenjen u drugom tabu ili uređaju. Lokalne izmjene nisu izgubljene, ali ih ne možemo spremiti preko novije verzije. Sačuvajte ih prije ponovnog učitavanja stranice.",
     "redo": "Ponovi",
     "confirm": "Nastavi",
-    "coverChangeTitle": "Promjena korica"
+    "coverChangeTitle": "Promjena korica",
+    "deletePageTitle": "Obrisati ovu stranicu?",
+    "deletePageDescription": "Stranica, njezin tekst i raspored fotografija bit će uklonjeni. Fotografije ostaju u albumu. Brisanje prve ili zadnje stranice mijenja korice albuma. Promjenu možete poništiti.",
+    "deletePageConfirm": "Obriši stranicu",
+    "spreadContext": "Stranice {from}–{to}",
+    "layoutTarget": "Odaberite stranicu za raspored"
+  },
+  "photoContext": {
+    "slot": "Fotografija {number}",
+    "replace": "Zamijeni fotografiju",
+    "crop": "Namjesti kadar",
+    "remove": "Ukloni sa stranice",
+    "swap": "Zamijeni mjesto s…",
+    "back": "Sve fotografije",
+    "missing": "Fotografija nije dostupna.",
+    "selectedPhoto": "Odabrana fotografija"
+  },
+  "photoUsage": {
+    "title": "Fotografija se koristi u albumu",
+    "description": "Ova fotografija koristi se na {count} mjesta. Prije brisanja uklonite je s tih mjesta.",
+    "locations": "Koristi se na:",
+    "page": "Stranica {number}",
+    "retained": "Sačuvano za drugi raspored",
+    "cancel": "Odustani",
+    "removeAll": "Ukloni sa svih stranica i izbriši",
+    "confirmTitle": "Izbrisati fotografiju iz albuma?",
+    "confirmDescription": "Fotografija će biti uklonjena sa svih {count} mjesta, uključujući mjesta sačuvana za drugi raspored, a zatim iz biblioteke ovog albuma. Mjesta na stranicama ostat će prazna. Ovu radnju nije moguće poništiti.",
+    "confirm": "Ukloni sa svih stranica i izbriši",
+    "infoDescription": "Ova fotografija koristi se na {count} mjesta. Odaberite mjesto za prikaz stranice."
   }
 }

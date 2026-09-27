@@ -1,0 +1,284 @@
+/* Public Photo Wall: one continuous, photography-first surface. */
+.experience {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  background: var(--photo-wall-background);
+  color: var(--photo-wall-foreground);
+}
+
+/* Hero: mobile first; no showcase space is reserved for an empty wall. */
+.hero {
+  position: relative;
+  width: min(100%, 1160px);
+  margin: 0 auto;
+  padding: 36px 20px 28px;
+  text-align: center;
+}
+
+.hero:has(.back) {
+  padding-top: 76px;
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  min-width: 0;
+}
+
+.eventName {
+  margin: 0;
+  max-width: 100%;
+  color: var(--photo-wall-foreground);
+  font-family: inherit;
+  font-size: clamp(2rem, 7vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.date {
+  margin: 10px 0 0;
+  color: var(--photo-wall-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.intro {
+  width: 100%;
+  margin: 24px 0 0;
+}
+
+.slideshow + .intro {
+  margin-top: 12px;
+}
+
+.title {
+  margin: 0;
+  font: inherit;
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.description {
+  max-width: 38ch;
+  margin: 8px auto 0;
+  color: var(--photo-wall-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* Local buttons keep their existing actions and comfortable touch targets. */
+.add,
+.loadMoreButton,
+.back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.add {
+  gap: 9px;
+  max-width: 100%;
+  margin-top: 20px;
+  padding: 12px 24px;
+  border: 0;
+  background: var(--photo-wall-accent);
+  color: var(--photo-wall-accent-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  touch-action: manipulation;
+}
+
+.add svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.back {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  z-index: 2;
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid var(--photo-wall-border);
+  background: var(--photo-wall-surface);
+  color: var(--photo-wall-foreground);
+}
+
+.back svg { width: 20px; height: 20px; }
+
+.add:focus-visible,
+.back:focus-visible,
+.loadMoreButton:focus-visible {
+  outline: 2px solid var(--photo-wall-accent);
+  outline-offset: 4px;
+}
+
+.add:active,
+.back:active,
+.loadMoreButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* Gallery begins on the same background; a quiet rule anchors the count. */
+.content {
+  width: min(100%, 1160px);
+  margin: 0 auto;
+  padding: 8px 16px max(48px, env(safe-area-inset-bottom));
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 18px;
+  color: var(--photo-wall-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+.count::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--photo-wall-border);
+}
+
+/* Intentional empty state, with the single upload CTA remaining in the hero. */
+.experience .empty {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 28px 20px;
+  border: 1px solid var(--photo-wall-border);
+  border-radius: 16px;
+  background: var(--photo-wall-surface);
+  color: var(--photo-wall-foreground);
+  box-shadow: none;
+}
+
+.empty > div {
+  background: var(--photo-wall-background);
+  color: var(--photo-wall-accent);
+}
+
+.empty > h2 { font-size: 1.125rem; }
+.empty > p { color: var(--photo-wall-muted); }
+
+.loadMore {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.loadMoreButton {
+  padding: 10px 24px;
+  border: 1px solid var(--photo-wall-border);
+  background: var(--photo-wall-surface);
+  color: var(--photo-wall-foreground);
+  font-size: 0.875rem;
+  min-width: 180px;
+  touch-action: manipulation;
+}
+
+.loadMoreButton:disabled { opacity: 0.6; cursor: default; }
+
+.error {
+  max-width: 420px;
+  margin: 24px auto 0;
+  color: var(--photo-wall-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .add:hover {
+    background: color-mix(in srgb, var(--photo-wall-accent) 94%, var(--photo-wall-foreground));
+    box-shadow: 0 4px 12px -6px var(--photo-wall-accent);
+  }
+  .back:hover,
+  .loadMoreButton:hover:not(:disabled) {
+    border-color: var(--photo-wall-accent);
+  }
+}
+
+@media (max-width: 767px) {
+  .heroContent > .add {
+    width: min(100%, 320px);
+  }
+}
+
+@media (max-width: 359px) {
+  .hero { padding-inline: 16px; }
+  .eventName { font-size: 1.875rem; }
+}
+
+@media (min-width: 768px) {
+  .hero { padding: 48px 32px 36px; }
+  .content { padding: 12px 32px 72px; }
+  .count { margin-bottom: 24px; }
+  .empty { padding: 40px 32px; }
+  .loadMore { margin-top: 32px; }
+}
+
+/* Editorial desktop composition, using the existing hero children. */
+@media (min-width: 960px) {
+  .hero { padding-block: 64px 48px; }
+  .heroContent:has(.slideshow) {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-areas: "name photos" "date photos" "intro photos" "action photos";
+    column-gap: 36px;
+    max-width: none;
+    align-items: start;
+    text-align: left;
+  }
+  .eventName { font-size: clamp(2.75rem, 4vw, 3.75rem); }
+  .heroContent > .eventName { grid-area: name; }
+  .heroContent > .date { grid-area: date; }
+  .heroContent > .slideshow { grid-area: photos; }
+  .heroContent > .intro { grid-area: intro; }
+  .heroContent > .add { grid-area: action; justify-self: start; }
+  .slideshow + .intro { margin-top: 28px; }
+  .heroContent:has(.slideshow) .description {
+    margin-inline: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .add,
+  .back,
+  .loadMoreButton { transition: none; }
+}
+
+@media (min-width: 960px) {
+  .heroContent > .slideshow {
+    margin: 0;
+    align-self: center;
+    justify-self: end;
+  }
+}

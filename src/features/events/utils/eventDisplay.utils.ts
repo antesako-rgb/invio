@@ -5,7 +5,7 @@
 export function formatEventDate(
   date: string,
   locale: string
-) {
+): string {
   return new Intl.DateTimeFormat(
     locale,
     {
@@ -27,7 +27,7 @@ export function formatEventDate(
 
 export function formatEventTime(
   time: string
-) {
+): string {
   return time.slice(
     0,
     5

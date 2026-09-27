@@ -1,0 +1,23 @@
+[data-album-theme="editorial"] {
+  --album-paper: #f5f0e5;
+  --album-ink: #25231f;
+  --album-muted-ink: #68604f;
+  --album-title-font: var(--font-playfair-display), serif;
+  --album-body-font: var(--font-inter), sans-serif;
+  --album-script-font: var(--font-playfair-display), serif;
+  --album-title-weight: 400;
+  --album-title-line-height: 1.12;
+  --album-body-line-height: 1.75;
+  --album-meta-letter-spacing: 0.16em;
+  --album-type-cover-title: 9cqw;
+  --album-type-cover-subtitle: 3.8cqw;
+  --album-type-story-title: 10cqw;
+  --album-type-editorial-title: 8cqw;
+  --album-type-quote-text: 5.6cqw;
+  --album-type-collage-title: 4.4cqw;
+  --album-note-style: normal;
+  --album-rule-opacity: 0.7;
+  --album-quote-opacity: 0.65;
+  --album-quote-line-height: 1.35;
+  --album-cover-shade: linear-gradient(transparent 25%, rgb(24 20 14 / 0.68));
+}

@@ -18,8 +18,8 @@ import {
 } from "@/features/digital-albums/utils/parseDigitalAlbumDocument";
 
 import {
-  getEventPhotoWalls,
-} from "@/features/invitations/repositories/photo-wall/getEventPhotoWalls";
+  getEventPhotoWall,
+} from "@/features/photo-walls/repositories/photo-wall/getEventPhotoWall";
 
 
 /* ==========================================================================
@@ -42,6 +42,7 @@ interface DigitalAlbumEditorPageProps {
 export default async function DigitalAlbumEditorPage({
   params,
 }: DigitalAlbumEditorPageProps) {
+
   const {
     albumId,
   } =
@@ -56,6 +57,7 @@ export default async function DigitalAlbumEditorPage({
     await getDigitalAlbum(
       albumId
     );
+
 
   if (
     !album
@@ -80,14 +82,14 @@ export default async function DigitalAlbumEditorPage({
 
   const [
     photos,
-    photoWalls,
+    photoWall,
   ] =
     await Promise.all([
       getDigitalAlbumPhotos(
         album.id
       ),
 
-      getEventPhotoWalls(
+      getEventPhotoWall(
         album.event_id
       ),
     ]);
@@ -99,6 +101,7 @@ export default async function DigitalAlbumEditorPage({
 
   return (
     <DigitalAlbumEditorView
+      eventId={album.event_id}
       albumId={
         album.id
       }
@@ -115,8 +118,13 @@ export default async function DigitalAlbumEditorPage({
         photos
       }
       photoWalls={
-        photoWalls
+        photoWall
+          ? [
+              photoWall,
+            ]
+          : []
       }
     />
   );
+
 }

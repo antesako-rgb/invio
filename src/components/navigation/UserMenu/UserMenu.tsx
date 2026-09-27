@@ -4,7 +4,6 @@ import {
   ChevronDown,
   LayoutDashboard,
   LogOut,
-  Settings,
 } from "lucide-react";
 
 import {
@@ -266,22 +265,7 @@ export default function UserMenu({
           )}
         </DropdownMenuItem>
 
-        <DropdownMenuItem
-          render={
-            <Link
-              href="/dashboard/postavke"
-            />
-          }
-        >
-          <Settings
-            size={16}
-            aria-hidden="true"
-          />
 
-          {t(
-            "settings"
-          )}
-        </DropdownMenuItem>
 
         <DropdownMenuSeparator />
 

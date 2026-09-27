@@ -1,15 +1,6 @@
 import type {
-  Database,
   Tables,
 } from "@/lib/supabase/database.types";
-
-
-/* ==========================================================================
-   Event
-========================================================================== */
-
-export type Event =
-  Tables<"events">;
 
 
 /* ==========================================================================
@@ -18,58 +9,87 @@ export type Event =
 
 export const EVENT_TYPES = [
   "wedding",
-  "confirmation",
+  "birthday",
   "baptism",
   "communion",
-  "birthday",
-  "other_private",
-  "conference",
-  "seminar",
-  "team_building",
-  "reception",
-  "gala_dinner",
-  "other_business",
-  "festival",
-  "charity",
-  "sports",
-  "cultural",
-  "music",
-  "other_social",
+  "confirmation",
+  "business",
+  "other",
 ] as const;
 
-
-/* ==========================================================================
-   Event Type
-========================================================================== */
-
 export type EventType =
-  typeof EVENT_TYPES[number];
-
-
-/* ==========================================================================
-   Event Type Guard
-========================================================================== */
+  (typeof EVENT_TYPES)[number];
 
 export function isEventType(
-  value:
-    string
+  value: string
 ): value is EventType {
   return EVENT_TYPES.some(
-    (eventType) =>
-      eventType === value
+    (type) =>
+      type === value
   );
 }
 
 
 /* ==========================================================================
-   Event RPC Inputs
+   Event
 ========================================================================== */
 
-export type CreateEventInput =
-  Database["public"]["Functions"]["create_event"]["Args"];
+export type Event =
+  Pick<
+    Tables<"events">,
+    | "id"
+    | "owner_id"
+    | "name"
+    | "custom_type"
+    | "start_date"
+    | "start_time"
+    | "location_name"
+    | "location_address"
+    | "created_at"
+    | "updated_at"
+  > & {
+    type: EventType;
+  };
 
-export type UpdateEventInput =
-  Database["public"]["Functions"]["update_event"]["Args"];
 
-export type DeleteEventInput =
-  Database["public"]["Functions"]["delete_event"]["Args"];
+/* ==========================================================================
+   Create Event Input
+========================================================================== */
+
+export interface CreateEventInput {
+  p_name: string;
+  p_type: EventType;
+  p_start_date: string;
+
+  p_custom_type?: string;
+  p_start_time?: string;
+  p_location_name?: string;
+  p_location_address?: string;
+}
+
+
+/* ==========================================================================
+   Update Event Input
+========================================================================== */
+
+export interface UpdateEventInput {
+  p_event_id: string;
+
+  p_name: string;
+  p_type: EventType;
+  p_start_date: string;
+
+  p_custom_type: string | null;
+  p_start_time: string | null;
+  p_location_name: string | null;
+  p_location_address: string | null;
+}
+
+
+/* ==========================================================================
+   Delete Event Input
+========================================================================== */
+
+export interface DeleteEventInput {
+  p_event_id: string;
+}

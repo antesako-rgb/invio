@@ -1,0 +1,12 @@
+.card { position: absolute; inset: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto minmax(0, .55fr); gap: 3cqw; padding: 7cqw 10cqw; text-align: center; font-family: var(--font-dm-sans), sans-serif; }
+.frame { position: absolute; inset: 3cqw; border: 1px solid var(--material-accent); border-radius: 42% 42% 0 0 / 25% 25% 0 0; pointer-events: none; opacity: .7; }
+.top, .bottom { position: relative; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 2cqw; }
+.ornament { font-size: 5cqw; color: var(--material-accent); line-height: 1; }
+.title { --material-text-size: 8cqw; --material-font: var(--font-cormorant-garamond), Georgia, serif; line-height: 1.04; letter-spacing: -.025em; }
+.subtitle { --material-text-size: 2.6cqw; line-height: 1.45; letter-spacing: .06em; }
+.description { --material-text-size: 2.8cqw; line-height: 1.5; }
+.qr { position: relative; width: 39cqw; justify-self: center; padding: 1cqw; border: 1px solid var(--material-accent); background: #fff; }
+.names { display: flex; justify-content: center; align-items: center; gap: 1.5cqw; }
+.name { --material-text-size: 4.7cqw; --material-font: var(--font-cormorant-garamond), Georgia, serif; line-height: 1.1; }
+.ampersand { font: italic 3.5cqw Georgia, serif; color: var(--material-accent); }
+.date { --material-text-size: 2.3cqw; line-height: 1.4; letter-spacing: .09em; }

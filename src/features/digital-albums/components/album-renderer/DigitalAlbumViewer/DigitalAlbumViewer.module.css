@@ -1,36 +1,57 @@
-/* ==========================================================================
-   Digital Album Viewer
-========================================================================== */
-
 .root {
-  display:
-    flex;
-  align-items:
-    center;
-  justify-content:
-    center;
-  width:
-    100%;
-  min-height:
-    100dvh;
-  padding:
-    1rem;
-  box-sizing:
-    border-box;
-  overflow:
-    hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  min-height: 100dvh;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.root:fullscreen { background: var(--background, #faf8f3); height: 100dvh; }
+.workspace { display: flex; align-items: center; width: min(100%, calc((100dvh - 7rem) * 1.375)); max-width: 880px; }
+.album { width: 100%; min-width: 0; position: relative; z-index: 0; }
+.sidePanelHost { display: none; }
+.workspace[data-docked] { width: min(100%, calc((100dvh - 7rem) * 1.375 + 21rem)); max-width: calc(880px + 21rem); gap: 1rem; }
+.workspace[data-docked] .album { flex: 1; }
+.workspace[data-docked] .sidePanelHost { display: block; width: 20rem; flex: 0 0 20rem; }
+.panel.dockedPanel { position: relative; top: auto; left: auto; transform: none; width: 100%; max-height: min(640px, calc(100dvh - 7rem)); }
+.dockedPanel .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem .5rem; padding: .5rem 1rem 1rem; }
+.controls {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .25rem .5rem;
+  border: 1px solid rgb(60 50 40 / 10%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 95%);
+  color: #3c352d;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 6%);
+}
+.control { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-width: 44px; min-height: 44px; padding: .5rem; border-radius: 999px; font-size: .8rem; cursor: pointer; }
+.control svg { width: 18px; height: 18px; }
+.control:hover:not(:disabled) { background: rgb(60 50 40 / 6%); }
+.control:disabled { opacity: .35; cursor: default; }
+.control:focus-visible, .page:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.count { min-width: 4rem; text-align: center; font-size: .8rem; font-variant-numeric: tabular-nums; }
+.panel { position: fixed; z-index: 51; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(40rem, calc(100vw - 2rem)); max-height: 85dvh; display: flex; flex-direction: column; background: var(--dialog, white); border: 1px solid var(--border); border-radius: 1rem; box-shadow: 0 16px 60px rgb(0 0 0 / 18%); }
+.heading { position: relative; padding: 1.25rem 4rem 1rem 1.25rem; }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem .75rem; padding: .5rem 1.25rem 1.25rem; overflow-y: auto; overscroll-behavior: contain; }
+.page { min-width: 0; display: flex; flex-direction: column; gap: .4rem; align-items: center; border-radius: .35rem; font-size: .75rem; cursor: pointer; }
+.thumbnail { display: block; width: 100%; aspect-ratio: 11 / 16; background: #f1efeb; border: 2px solid transparent; border-radius: .35rem; overflow: hidden; pointer-events: none; }
+.page[aria-current="page"] .thumbnail { border-color: var(--primary); }
+.page:hover .thumbnail { box-shadow: 0 0 0 1px var(--border); }
+.error { font-size: .8rem; }
+@media (max-width: 768px) {
+  .root { padding: .5rem; gap: .5rem; padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
+  .workspace { width: min(100%, calc((100dvh - 6rem) * .6875)); }
+  .label { display: none; }
+  .panel { top: auto; bottom: 0; left: 0; transform: none; width: 100%; max-height: 82dvh; border-radius: 1rem 1rem 0 0; padding-bottom: env(safe-area-inset-bottom); }
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
-
-/* ==========================================================================
-   Mobile
-========================================================================== */
-
-@media (
-  max-width: 768px
-) {
-  .root {
-    padding:
-      0.5rem 0;
-  }
-}
+.mobileDrawer { height: 82dvh; }

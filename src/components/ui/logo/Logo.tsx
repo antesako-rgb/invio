@@ -36,7 +36,7 @@ export default function Logo({
       className={
         styles.logo
       }
-      aria-label="Invio"
+      aria-label="Memiva"
     >
       <span
         className={
@@ -56,7 +56,7 @@ export default function Logo({
             styles.text
           }
         >
-          Invio
+          Memiva
         </span>
       )}
     </Link>

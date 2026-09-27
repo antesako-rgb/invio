@@ -9,6 +9,7 @@ import type {
 } from "../types/event.types";
 
 import {
+  setEventFormField,
   getEventDefaultValues,
   getEventFormValues,
 } from "../utils/eventForm.utils";
@@ -59,12 +60,7 @@ export function useEventForm({
     value: EventFormValues[K]
   ) {
     setForm(
-      (current) => ({
-        ...current,
-
-        [key]:
-          value,
-      })
+      (current) => setEventFormField(current, key, value)
     );
   }
 

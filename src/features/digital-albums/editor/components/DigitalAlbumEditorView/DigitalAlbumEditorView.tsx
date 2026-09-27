@@ -1,4 +1,5 @@
 "use client";
+import { X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -15,10 +16,11 @@ import DigitalAlbumEditor from "../DigitalAlbumEditor/DigitalAlbumEditor";
 import DigitalAlbumEditorSidebar from "../DigitalAlbumEditorSidebar/DigitalAlbumEditorSidebar";
 import DigitalAlbumPhotoPositionEditor from "../DigitalAlbumPhotoPositionEditor/DigitalAlbumPhotoPositionEditor";
 import useDigitalAlbumEditor from "../../hooks/album-editor/useDigitalAlbumEditor";
+import useDigitalAlbumMobilePanel from "../../hooks/useDigitalAlbumMobilePanel";
+import useDigitalAlbumPhotoLibrary from "../../hooks/useDigitalAlbumPhotoLibrary";
 import { getDigitalAlbumLayout } from "../../../config/digitalAlbumLayouts";
 import {
   changeDigitalAlbumPageLayout,
-  albumPhotoUsage,
 } from "../../../utils/digitalAlbumDocumentOperations";
 import { getDigitalAlbumTextOverflow } from "../../../utils/getDigitalAlbumTextOverflow";
 import { getEventPhotoUrl } from "@/features/event-photos/utils/getEventPhotoUrl";
@@ -30,14 +32,18 @@ import type {
   DigitalAlbumPhotoSlot,
 } from "../../../types/digitalAlbumDocument.types";
 import type { DigitalAlbumPhotoWithPhoto } from "../../../types/digitalAlbumPhoto.types";
-import type { PhotoWall } from "@/features/invitations/types/photoWallPhoto.types";
+import type { PhotoWall } from "@/features/photo-walls/types/photoWall.types";
 import {
-  type EditorMobilePanelChangeDetails,
   EDITOR_MOBILE_DEFAULT_SNAP_POINT,
   EDITOR_MOBILE_FULL_SNAP_POINT,
 } from "@/features/editor/components/EditorMobilePanel/EditorMobilePanel";
+import { resolveDigitalAlbumPhotoView, type DigitalAlbumPhotoView } from "../../utils/resolveDigitalAlbumPhotoView";
+import DigitalAlbumPhotoContext from "../DigitalAlbumPhotoContext/DigitalAlbumPhotoContext";
+import { getAlbumVisibleIndexes, getAlbumPhotoUsage } from "../../../utils/digitalAlbumPhotoContext";
+import DigitalAlbumPhotoUsageDialog from "../DigitalAlbumPhotoUsageDialog/DigitalAlbumPhotoUsageDialog";
 import styles from "./DigitalAlbumEditorView.module.css";
 interface Props {
+  eventId: string;
   albumId: string;
   document: DigitalAlbumDocument;
   documentVersion: number;
@@ -46,14 +52,16 @@ interface Props {
   photoWalls: PhotoWall[];
 }
 export default function DigitalAlbumEditorView({
+  eventId,
   albumId,
   document: initialDocument,
   documentVersion,
   documentRevision,
-  photos,
+  photos: suppliedPhotos,
   photoWalls,
 }: Props) {
   const t = useTranslations("DigitalAlbumEditor.upgrade");
+  const photosT = useTranslations("DigitalAlbumEditor.photos");
   const [activeStep, setActiveStep] =
     useState<DigitalAlbumEditorStep>("photos");
   const editor = useDigitalAlbumEditor({
@@ -62,40 +70,8 @@ export default function DigitalAlbumEditorView({
     documentVersion,
     documentRevision,
   });
-  const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
-  const [mobileSnapPoint, setMobileSnapPoint] = useState(
-    EDITOR_MOBILE_DEFAULT_SNAP_POINT,
-  );
-
-  useEffect(() => {
-    const mobile = window.matchMedia("(max-width: 767px)");
-    function handleViewportChange() {
-      if (!mobile.matches) {
-        setMobilePanelOpen(false);
-      }
-    }
-    mobile.addEventListener("change", handleViewportChange);
-    return () => mobile.removeEventListener("change", handleViewportChange);
-  }, []);
-
-  function changeMobilePanelOpen(
-    open: boolean,
-    details?: EditorMobilePanelChangeDetails,
-  ) {
-    // This is a non-modal editing panel: interacting with the canvas must not
-    // dismiss it. OpenPageFlip can retarget the slot's pointer release to the
-    // book, so checking the event target cannot reliably identify that gesture.
-    // Explicit close, Escape and handle swipe still close the panel.
-    if (
-      !open &&
-      (details?.reason === "outside-press" || details?.reason === "focus-out")
-    ) {
-      details.cancel();
-      return;
-    }
-    setMobilePanelOpen(open);
-  }
-
+  const { mobilePanelOpen, setMobilePanelOpen, mobileSnapPoint, setMobileSnapPoint, changeMobilePanelOpen } = useDigitalAlbumMobilePanel();
+  const [photoView, setPhotoView] = useState<DigitalAlbumPhotoView>(null);
   const [preview, setPreview] = useState<DigitalAlbumDocumentPage | null>(null);
   const [crop, setCrop] = useState<{
     pageId: string;
@@ -105,15 +81,17 @@ export default function DigitalAlbumEditorView({
     ratio: number;
     caption: string | null;
   } | null>(null);
-  const [overflow, setOverflow] = useState<string[]>([]);
   const [exportBusy, setExportBusy] = useState(false);
-  const [assetBusy, setAssetBusy] = useState(false);
   const canvas = useRef<HTMLDivElement>(null);
-  const assetLock = useRef(false);
+  const { photos, photoDialog, usagePhotoId, usagePhoto, usageReferences,
+    assetBusy, assetLock, requestPhotoDelete, closePhotoDialog, deleteLibraryPhoto } = useDigitalAlbumPhotoLibrary({
+      albumId, suppliedPhotos, editor, exportBusy, onDeleted: () => setPhotoView(null),
+    });
   const [confirmCover, setConfirmCover] = useState(false);
+  const [deletePageId, setDeletePageId] = useState<string | null>(null);
   const coverAction = useRef<(() => void) | null>(null);
   const editingLocked = Boolean(
-    preview || crop || confirmCover || assetBusy || exportBusy,
+    preview || crop || confirmCover || deletePageId || usagePhotoId || assetBusy || exportBusy,
   );
 
   function requestCoverChange(action: () => void) {
@@ -161,16 +139,60 @@ export default function DigitalAlbumEditorView({
     }
     window.addEventListener("keydown", handleHistory);
     return () => window.removeEventListener("keydown", handleHistory);
-  }, [editingLocked, redo, undo]);
+  }, [editingLocked, assetLock, redo, undo]);
   const activePage = editor.document.pages[editor.activePageIndex];
+  const retainedSlots = activePage?.unplacedPhotos?.filter((slot) => slot.photoId) ?? [];
   const activeSlot = activePage?.photos.find(
     (s) => s.id === editor.activePhotoSlotId,
   );
-  const rendererPhotos = photos.map((p) => ({
+  const contextIndexes = getAlbumVisibleIndexes(editor.visiblePageIndexes, editor.activePageIndex, editor.document.pages.length);
+  const pageLabel = contextIndexes.length > 1
+    ? t("spreadContext", { from: contextIndexes[0] + 1, to: contextIndexes[contextIndexes.length - 1] + 1 })
+    : t("pageContext", { number: (contextIndexes[0] ?? 0) + 1 });
+  const contextSlots = contextIndexes.flatMap((index) => {
+    const page = editor.document.pages[index];
+    return page.photos.map((slot) => ({ pageId: page.id, slot }));
+  });
+  const photoMode = resolveDigitalAlbumPhotoView(photoView, activeSlot, editor.visiblePageIndexes.includes(editor.activePageIndex));
+  const choosingPhoto = photoMode === "pick";
+  const activePhoto = photos.find((photo) => photo.photo_id === activeSlot?.photoId);
+  const retainedPhotoIds = useMemo(() => new Set(editor.document.pages.flatMap((page) =>
+    (page.unplacedPhotos ?? []).flatMap((slot) => slot.photoId ? [slot.photoId] : []))), [editor.document.pages]);
+  const photoUsage = useMemo(() => getAlbumPhotoUsage(editor.document.pages), [editor.document.pages]);
+  function choosePhoto() {
+    if (editingLocked || assetLock.current || !activeSlot) return;
+    setPhotoView({ slotId: activeSlot.id, mode: "pick" });
+    setMobileSnapPoint(EDITOR_MOBILE_FULL_SNAP_POINT);
+  }
+  function selectPhotoSlot(pageId: string, slotId: string) {
+    if (editingLocked || assetLock.current) return;
+    const pages = editor.getDocument().pages;
+    const index = pages.findIndex((page) => page.id === pageId);
+    const slot = pages[index]?.photos.find((item) => item.id === slotId);
+    if (!slot || !editor.visiblePageIndexes.includes(index)) return;
+    editor.selectPhotoSlot(pageId, slotId);
+    // An empty slot is already an explicit request to add a photo.
+    setPhotoView({ slotId: slot.id, mode: slot.photoId ? "context" : "pick" });
+    setActiveStep("photos");
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      setMobileSnapPoint(slot.photoId
+        ? EDITOR_MOBILE_DEFAULT_SNAP_POINT
+        : EDITOR_MOBILE_FULL_SNAP_POINT);
+      setMobilePanelOpen(true);
+    }
+  }
+  function finishChoosingPhoto() {
+    const slot = editor.getDocument().pages
+      .find((page) => page.id === activePage?.id)?.photos
+      .find((item) => item.id === activeSlot?.id);
+    setPhotoView(slot?.photoId ? { slotId: slot.id, mode: "context" } : null);
+    setMobileSnapPoint(EDITOR_MOBILE_DEFAULT_SNAP_POINT);
+  }
+  const rendererPhotos = useMemo(() => photos.map((p) => ({
     id: p.photo_id,
     imagePath: p.photo.image_path,
     description: p.description,
-  }));
+  })), [photos]);
   const displayDocument = useMemo(
     () =>
       preview
@@ -183,42 +205,14 @@ export default function DigitalAlbumEditorView({
         : editor.document,
     [preview, editor.document],
   );
-  useEffect(() => {
-    const root = canvas.current;
-    if (!root) return;
-    let frame = 0;
-    let disposed = false;
-    const check = () => {
-      if (disposed) return;
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const next = getDigitalAlbumTextOverflow(root);
-        setOverflow((previous) =>
-          previous.join() === next.join() ? previous : next,
-        );
-      });
-    };
-    const resize = new ResizeObserver(check);
-    resize.observe(root);
-    const mutation = new MutationObserver(check);
-    mutation.observe(root, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-    });
-    void document.fonts.ready.then(check);
-    check();
-    return () => {
-      disposed = true;
-      resize.disconnect();
-      mutation.disconnect();
-      cancelAnimationFrame(frame);
-    };
-  }, [displayDocument, editor.visiblePageIndexes]);
   async function beforeExport() {
-    if (preview || crop || confirmCover || assetLock.current) return false;
+    if (preview || crop || confirmCover || deletePageId || usagePhotoId || assetLock.current) return false;
     (document.activeElement as HTMLElement | null)?.blur();
     await new Promise((resolve) => setTimeout(resolve, 0));
+    if (canvas.current?.querySelector('[data-album-missing-photo="true"]')) {
+      toast.error(t("photoError"));
+      return false;
+    }
     if (canvas.current && getDigitalAlbumTextOverflow(canvas.current).length) {
       toast.error(t("overflow"));
       return false;
@@ -226,29 +220,6 @@ export default function DigitalAlbumEditorView({
     const saved = await editor.flush();
     if (!saved) toast.error(t("saveError"));
     return saved;
-  }
-  async function beforeRemovePhoto(photoId: string) {
-    if (assetLock.current || editingLocked) return false;
-    assetLock.current = true;
-    setAssetBusy(true);
-    if (albumPhotoUsage(editor.getDocument(), photoId).length) {
-      toast.error(t("photoInUse"));
-      assetLock.current = false;
-      setAssetBusy(false);
-      return false;
-    }
-    if (!(await editor.flush())) {
-      toast.error(t("saveError"));
-      assetLock.current = false;
-      setAssetBusy(false);
-      return false;
-    }
-    editor.clearHistory();
-    return true;
-  }
-  function afterRemovePhoto() {
-    assetLock.current = false;
-    setAssetBusy(false);
   }
   function startCrop() {
     if (!activeSlot?.photoId) return;
@@ -278,8 +249,9 @@ export default function DigitalAlbumEditorView({
         onMobileSnapPointChange={setMobileSnapPoint}
         albumId={albumId}
         activeStep={activeStep}
-        onStepChange={setActiveStep}
+        onStepChange={(step) => { if (assetLock.current) return; closePhotoDialog(); setPhotoView(null); setActiveStep(step); }}
         headerProps={{
+          eventId,
           onExportBusy: setExportBusy,
           saveStatus: editor.saveStatus,
           saveConflict: editor.saveConflict,
@@ -295,117 +267,83 @@ export default function DigitalAlbumEditorView({
         }}
         sidebar={
           <>
-            <div className={styles.tools}>
+            <div className={styles.tools} hidden={editor.saveStatus !== "error"}>
               {editor.saveStatus === "error" && (
                 <p role="alert">
                   {t(editor.saveConflict ? "saveConflict" : "saveError")}
                 </p>
               )}
-              {!!overflow.length && <p role="alert">{t("overflow")}</p>}
-              {preview ? (
-                <div className={styles.previewActions}>
-                  <p>{t("layoutPreview")}</p>
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      void editor.changePageLayout(preview.id, preview.layout);
-                      setPreview(null);
-                    }}
-                  >
-                    {t("apply")}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setPreview(null)}
-                  >
-                    {t("cancel")}
-                  </Button>
-                </div>
-              ) : (
-                <>
-                  {activePage && (
-                    <p>
-                      {t("pageContext", {
-                        number: editor.activePageNumber ?? 1,
-                      })}
-                      {editor.activePageIndex === 0
-                        ? ` \u00b7 ${t("frontCover")}`
-                        : editor.activePageIndex ===
-                            editor.document.pages.length - 1
-                          ? ` \u00b7 ${t("backCover")}`
-                          : ""}
-                    </p>
-                  )}
-                  {activeStep === "photos" && activePage && (
-                    <div className={styles.slots}>
-                      {activePage.photos.map((slot, index) => (
-                        <Button
-                          key={slot.id}
-                          type="button"
-                          size="sm"
-                          variant="outline"
-                          disabled={editingLocked}
-                          aria-pressed={slot.id === editor.activePhotoSlotId}
-                          onClick={() =>
-                            editor.selectPhotoSlot(activePage.id, slot.id)
-                          }
-                        >
-                          {t("slot", { number: index + 1 })}
-                        </Button>
-                      ))}
-                      {!activePage.photos.length && <p>{t("noSlots")}</p>}
-                      {activeSlot?.photoId && (
-                        <Button
-                          type="button"
-                          disabled={editingLocked}
-                          onClick={startCrop}
-                        >
-                          {t("position")}
-                        </Button>
-                      )}
-                      {activePage.unplacedPhotos
-                        ?.filter((s) => s.photoId)
-                        .map((slot) => {
-                          const photo = photos.find(
-                            (p) => p.photo_id === slot.photoId,
-                          );
-                          return (
-                            <div key={slot.id} className={styles.retained}>
-                              {photo && (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
-                                  src={getEventPhotoUrl(photo.photo.image_path)}
-                                  alt=""
-                                />
-                              )}
-                              <Button
-                                type="button"
-                                disabled={editingLocked}
-                                onClick={() => editor.removeUnplaced(slot.id)}
-                              >
-                                {t("removeRetained")}
-                              </Button>
-                            </div>
-                          );
-                        })}
-                      {!!activePage.unplacedPhotos?.filter((s) => s.photoId)
-                        .length && (
-                        <p>
-                          {t("unplaced", {
-                            count: activePage.unplacedPhotos.filter(
-                              (s) => s.photoId,
-                            ).length,
-                          })}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </>
-              )}
+
             </div>
             <fieldset disabled={editingLocked} className={styles.fieldset}>
               <DigitalAlbumEditorSidebar
+                designPageControls={<>
+                  {contextIndexes.length > 1 && (
+                    <div className={styles.pageSelector} aria-label={t("layoutTarget")}>
+                      {contextIndexes.map((index) => <Button key={editor.document.pages[index].id}
+                        type="button" variant="outline" aria-pressed={index === editor.activePageIndex}
+                        onClick={() => editor.selectPage(editor.document.pages[index].id)}>
+                        {t("pageContext", { number: index + 1 })}
+                      </Button>)}
+                    </div>
+                  )}
+                  {retainedSlots.length > 0 && (
+                    <section className={styles.retained} aria-label={t("unplaced", { count: retainedSlots.length })}>
+                      <p className={styles.retainedTitle}>
+                        {t("unplaced", { count: retainedSlots.length })}
+                      </p>
+                      <ul className={styles.retainedPhotos}>
+                        {retainedSlots.map((slot, index) => {
+                          const photo = photos.find((p) => p.photo_id === slot.photoId);
+                          const removeLabel = `${t("removeRetained")} ${index + 1}`;
+                          return (
+                            <li key={slot.id} className={styles.retainedPhoto}>
+                              {photo && (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img src={getEventPhotoUrl(photo.photo.image_path)} alt="" loading="lazy" />
+                              )}
+                              <button
+                                type="button"
+                                className={styles.removeRetained}
+                                disabled={editingLocked}
+                                aria-label={removeLabel}
+                                title={removeLabel}
+                                onClick={() => editor.removeUnplaced(slot.id)}
+                              >
+                                <X size={14} aria-hidden="true" />
+                              </button>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </section>
+                  )}
+                </>}
+                photoContext={photoMode === "context" && activeSlot ? (
+                  <DigitalAlbumPhotoContext
+                    key={activeSlot.id}
+                    label={pageLabel}
+                    imageUrl={activePhoto ? getEventPhotoUrl(activePhoto.photo.image_path) : undefined}
+                    slots={contextSlots.map(({ slot }, index) => ({ slot, number: index + 1 }))}
+                    activeSlotId={activeSlot.id}
+                    disabled={editingLocked}
+                    canCrop={Boolean(activePhoto)}
+                    onBack={() => setPhotoView(null)}
+                    onChoose={choosePhoto}
+                    onCrop={startCrop}
+                    onRemove={() => {
+                      if (editingLocked || assetLock.current) return;
+                      editor.removePhotoFromPage(activeSlot.id);
+                      setPhotoView(null);
+                    }}
+                    onSwap={(targetId) => {
+                      if (editingLocked || assetLock.current) return;
+                      const target = contextSlots.find(({ slot }) => slot.id === targetId)?.slot;
+                      if (target?.photoId) editor.swapPhotoSlots(activeSlot.id, targetId);
+                    }}
+                  />
+                ) : undefined}
+                pickerPageLabel={choosingPhoto ? pageLabel : undefined}
                 albumId={albumId}
                 activeStep={activeStep}
                 photos={photos}
@@ -413,38 +351,46 @@ export default function DigitalAlbumEditorView({
                 pages={editor.document.pages}
                 theme={editor.document.theme}
                 activePageId={editor.activePageId}
-                activePageNumber={editor.activePageNumber}
+                pickerTargetId={choosingPhoto ? activeSlot?.id ?? null : null}
+                photoUsage={photoUsage}
+                retainedPhotoIds={retainedPhotoIds}
+                onCancelPicker={finishChoosingPhoto}
                 activePageLayout={activePage?.layout ?? null}
                 visiblePageIndexes={editor.visiblePageIndexes}
-                selectedPhotoId={editor.selectedPhotoId}
-                beforeRemovePhoto={beforeRemovePhoto}
-                afterRemovePhoto={afterRemovePhoto}
+                selectedPhotoId={choosingPhoto ? editor.selectedPhotoId : null}
+                onRequestDeletePhoto={(id) => {
+                  if (!editingLocked && !assetLock.current) requestPhotoDelete(id);
+                }}
                 onSelectPhoto={(id) => {
                   if (editingLocked || assetLock.current) return;
-                  if (activeSlot) {
+                  if (activeSlot && choosingPhoto) {
                     editor.selectPhoto(activeSlot.id, id);
                     const placed = editor
                       .getDocument()
                       .pages.find((page) => page.id === activePage.id)
                       ?.photos.find((slot) => slot.id === activeSlot.id);
                     if (placed?.photoId === id) {
+                      finishChoosingPhoto();
                       setMobileSnapPoint(EDITOR_MOBILE_DEFAULT_SNAP_POINT);
                     }
                   } else toast.info(t("noSlots"));
                 }}
-                onRemovePhotoFromPage={() => {
-                  if (editingLocked || assetLock.current) return;
-                  if (activeSlot)
-                    void editor.removePhotoFromPage(activeSlot.id);
-                }}
-                onSelectPage={editor.selectPage}
+                onSelectPage={(id) => { if (assetLock.current) return; closePhotoDialog(); setPhotoView(null); editor.selectPage(id); }}
                 onChangePageLayout={(id, layout) => {
                   if (editingLocked || assetLock.current) return;
                   const page = editor
                     .getDocument()
                     .pages.find((p) => p.id === id);
-                  if (page)
-                    setPreview(changeDigitalAlbumPageLayout(page, layout));
+                  if (page && page.layout !== layout) {
+                    setPhotoView(null);
+                    const nextSlots = getDigitalAlbumLayout(layout).photoSlotCount;
+                    const currentSlots = getDigitalAlbumLayout(page.layout).photoSlotCount;
+                    if (nextSlots < currentSlots) {
+                      setPreview(changeDigitalAlbumPageLayout(page, layout));
+                    } else {
+                      void editor.changePageLayout(page.id, layout);
+                    }
+                  }
                 }}
                 onChangeTheme={editor.changeTheme}
                 onAddPage={async (layout: DigitalAlbumPageLayout) => {
@@ -465,12 +411,7 @@ export default function DigitalAlbumEditorView({
                   const pages = editor.getDocument().pages;
                   const index = pages.findIndex((page) => page.id === id);
                   if (index < 0 || pages.length <= 1) return;
-                  const remove = () => {
-                    void editor.deletePage(id);
-                  };
-                  if (index === 0 || index === pages.length - 1)
-                    requestCoverChange(remove);
-                  else remove();
+                  setDeletePageId(id);
                 }}
                 onSwapPages={(source, target) => {
                   if (editingLocked || assetLock.current || source === target)
@@ -497,36 +438,19 @@ export default function DigitalAlbumEditorView({
             activePageIndex={
               editor.activePageIndex >= 0 ? editor.activePageIndex : undefined
             }
-            activePhotoSlotId={editor.activePhotoSlotId}
+            activePhotoSlotId={activeStep === "photos" && photoMode !== "library" ? editor.activePhotoSlotId : null}
             visiblePageIndexes={editor.visiblePageIndexes}
             onSelectPhotoSlot={
-              editingLocked
-                ? undefined
-                : (page, slot) => {
-                    editor.selectPhotoSlot(page, slot);
-                    setActiveStep("photos");
-                    const selected = editor
-                      .getDocument()
-                      .pages.find((item) => item.id === page)
-                      ?.photos.find((item) => item.id === slot);
-                    if (
-                      window.matchMedia("(max-width: 767px)").matches &&
-                      selected
-                    ) {
-                      setMobileSnapPoint(
-                        selected.photoId
-                          ? EDITOR_MOBILE_DEFAULT_SNAP_POINT
-                          : EDITOR_MOBILE_FULL_SNAP_POINT,
-                      );
-                      setMobilePanelOpen(true);
-                    }
-                  }
+              editingLocked ? undefined : selectPhotoSlot
             }
             onPageContentChange={
               editingLocked ? undefined : editor.updatePageContent
             }
             onPageChange={editor.handleFlipBookPageChange}
-            onTurnStart={() => changeMobilePanelOpen(false)}
+            onTurnStart={() => {
+              setPhotoView(null);
+              changeMobilePanelOpen(false);
+            }}
             onVisiblePagesChange={(indexes) => {
               editor.handleVisiblePagesChange(indexes);
               const lastIndex = editor.getDocument().pages.length - 1;
@@ -545,6 +469,62 @@ export default function DigitalAlbumEditorView({
           />
         </div>
       </DigitalAlbumEditor>
+      {photoDialog?.used && (
+        <DigitalAlbumPhotoUsageDialog key={photoDialog.photoId}
+          imageUrl={usagePhoto ? getEventPhotoUrl(usagePhoto.photo.image_path) : undefined}
+          references={usageReferences}
+          onClose={closePhotoDialog}
+          onNavigate={(reference) => {
+            closePhotoDialog();
+            setPhotoView(null);
+            editor.selectPage(reference.pageId);
+            setActiveStep(reference.retained ? "design" : "photos");
+            setMobilePanelOpen(false);
+          }}
+          deleting
+          busy={assetBusy}
+          onDelete={deleteLibraryPhoto}
+        />
+      )}
+      <ConfirmDialog
+        open={Boolean(photoDialog && !photoDialog.used)}
+        variant="danger" loading={assetBusy}
+        title={photosT("removeConfirm.title")}
+        description={photosT("removeConfirm.description")}
+        confirmText={photosT("removeConfirm.confirm")} cancelText={t("cancel")}
+        onClose={closePhotoDialog}
+        onConfirm={async () => { await deleteLibraryPhoto(); }}
+      />
+      <ConfirmDialog
+        open={preview !== null}
+        title={t("layoutConfirmTitle")}
+        description={preview?.unplacedPhotos?.some((slot) => slot.photoId)
+          ? t("layoutConfirmRetained", { count: preview.unplacedPhotos.filter((slot) => slot.photoId).length })
+          : undefined}
+        confirmText={t("apply")}
+        cancelText={t("cancel")}
+        onClose={() => setPreview(null)}
+        onConfirm={() => {
+          if (!preview) return;
+          void editor.changePageLayout(preview.id, preview.layout);
+          setPreview(null);
+        }}
+      />
+      <ConfirmDialog
+        open={deletePageId !== null}
+        variant="danger"
+        title={t("deletePageTitle")}
+        description={t("deletePageDescription")}
+        confirmText={t("deletePageConfirm")}
+        cancelText={t("cancel")}
+        onClose={() => setDeletePageId(null)}
+        onConfirm={() => {
+          if (deletePageId && !assetLock.current && !exportBusy) {
+            void editor.deletePage(deletePageId);
+          }
+          setDeletePageId(null);
+        }}
+      />
       <ConfirmDialog
         open={confirmCover}
         title={t("coverChangeTitle")}

@@ -6,15 +6,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { toast } from "sonner";
 
-import { getPhotoWallPhotosPageAction } from "@/features/invitations/actions/photo-wall/getPhotoWallPhotosPageAction";
+import { getPhotoWallPhotosPageAction } from "@/features/photo-walls/actions/photos/getPhotoWallPhotosPageAction";
 
-import { buildPhotoWallGalleryPhotos } from "@/features/invitations/renderer/data/buildPhotoWallGalleryPhotos";
+import { buildPhotoWallGalleryPhotos } from "@/features/photo-walls/renderer/data/buildPhotoWallGalleryPhotos";
 
 import type {
   PhotoWallGalleryPhoto,
   PhotoWallPhotosCursor,
   PhotoWallPhotosManagementFilter,
-} from "@/features/invitations/types/photoWallPhoto.types";
+} from "@/features/photo-walls/types/photoWallPhoto.types";
 
 /* ==========================================================================
    Types
@@ -73,6 +73,8 @@ export function useDigitalAlbumPhotoPicker({
   );
 
   const [isLoadingPage, setIsLoadingPage] = useState(true);
+  const [initialLoadFailed, setInitialLoadFailed] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
 
   /* ==========================================================================
      Initial Load
@@ -86,6 +88,7 @@ export function useDigitalAlbumPhotoPicker({
 
     async function loadInitialPage() {
       setIsLoadingPage(true);
+      setInitialLoadFailed(false);
       setGalleryPhotos([]);
       setSelectedPhotoIds(new Set());
       setCurrentCursor(null);
@@ -94,7 +97,7 @@ export function useDigitalAlbumPhotoPicker({
 
       try {
         const result = await getPhotoWallPhotosPageAction({
-          invitationId: photoWallId,
+          photoWallId: photoWallId,
 
           filter: "all",
 
@@ -106,6 +109,7 @@ export function useDigitalAlbumPhotoPicker({
         }
 
         if (!result.success) {
+          setInitialLoadFailed(true);
           toast.error(t("error"));
 
           return;
@@ -123,8 +127,10 @@ export function useDigitalAlbumPhotoPicker({
 
         setSelectedPhotoIds(new Set());
       } catch {
-        if (isActive && currentRequest === requestId.current)
+        if (isActive && currentRequest === requestId.current) {
+          setInitialLoadFailed(true);
           toast.error(t("error"));
+        }
       } finally {
         if (isActive && currentRequest === requestId.current) {
           requestBusy.current = false;
@@ -140,7 +146,7 @@ export function useDigitalAlbumPhotoPicker({
       requestId.current = null;
       requestBusy.current = false;
     };
-  }, [photoWallId, stableExcludedPhotoIds, t]);
+  }, [photoWallId, stableExcludedPhotoIds, t, retryKey]);
 
   /* ==========================================================================
      Filter Change
@@ -162,7 +168,7 @@ export function useDigitalAlbumPhotoPicker({
 
     try {
       const result = await getPhotoWallPhotosPageAction({
-        invitationId: photoWallId,
+        photoWallId: photoWallId,
 
         filter: value,
 
@@ -212,7 +218,7 @@ export function useDigitalAlbumPhotoPicker({
 
     try {
       const result = await getPhotoWallPhotosPageAction({
-        invitationId: photoWallId,
+        photoWallId: photoWallId,
 
         filter,
 
@@ -267,18 +273,14 @@ export function useDigitalAlbumPhotoPicker({
   }
 
   /* ==========================================================================
-     Clear Selection
-  ========================================================================== */
-
-  function clearSelection() {
-    setSelectedPhotoIds(new Set());
-  }
-
-  /* ==========================================================================
      Result
   ========================================================================== */
 
   return {
+    initialLoadFailed,
+    retryInitialLoad: () => {
+      if (!requestBusy.current) setRetryKey((key) => key + 1);
+    },
     filter,
 
     galleryPhotos,
@@ -301,6 +303,5 @@ export function useDigitalAlbumPhotoPicker({
 
     handlePhotoToggle,
 
-    clearSelection,
   };
 }

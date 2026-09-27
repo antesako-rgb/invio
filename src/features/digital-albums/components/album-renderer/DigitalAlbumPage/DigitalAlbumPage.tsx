@@ -12,6 +12,7 @@ interface DigitalAlbumPageProps {
   children: ReactNode;
 
   hard?: boolean;
+  coverSide?: "front" | "back";
 
   className?: string;
 }
@@ -23,6 +24,7 @@ interface DigitalAlbumPageProps {
 export default function DigitalAlbumPage({
   children,
   hard = false,
+  coverSide,
   className,
 }: DigitalAlbumPageProps) {
   const pageClassName = [styles.page, hard ? styles.hard : undefined, className]
@@ -32,6 +34,7 @@ export default function DigitalAlbumPage({
   return (
     <Page
       data-album-page="book"
+      data-album-cover={hard ? coverSide : undefined}
       density={hard ? "hard" : "soft"}
       className={pageClassName}
     >

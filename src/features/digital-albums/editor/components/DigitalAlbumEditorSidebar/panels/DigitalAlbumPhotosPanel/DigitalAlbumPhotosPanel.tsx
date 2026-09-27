@@ -1,24 +1,21 @@
 "use client";
 
-import { Images, Plus } from "lucide-react";
+import { ArrowLeft, Images, Plus } from "lucide-react";
 
 import { useTranslations } from "next-intl";
 
 import { useRouter } from "next/navigation";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 
-import DeleteButton from "@/components/ui/common/DeleteButton";
 
 import { EmptyState } from "@/components/ui/empty-state/EmptyState";
 
 import { addDigitalAlbumPhotosAction } from "@/features/digital-albums/actions/photos/addDigitalAlbumPhotosAction";
 
-import { removeDigitalAlbumPhotoAction } from "@/features/digital-albums/actions/photos/removeDigitalAlbumPhotoAction";
 
 import DigitalAlbumAddPhotosDialog from "@/features/digital-albums/editor/components/DigitalAlbumAddPhotosDialog/DigitalAlbumAddPhotosDialog";
 
@@ -26,8 +23,9 @@ import type { DigitalAlbumPhotoWithPhoto } from "@/features/digital-albums/types
 
 import { getEventPhotoUrl } from "@/features/event-photos/utils/getEventPhotoUrl";
 
-import type { PhotoWall } from "@/features/invitations/types/photoWallPhoto.types";
+import type { PhotoWall } from "@/features/photo-walls/types/photoWall.types";
 
+import DigitalAlbumLibraryPhoto from "./DigitalAlbumLibraryPhoto";
 import styles from "./DigitalAlbumPhotosPanel.module.css";
 
 /* ==========================================================================
@@ -35,21 +33,23 @@ import styles from "./DigitalAlbumPhotosPanel.module.css";
 ========================================================================== */
 
 interface DigitalAlbumPhotosPanelProps {
-  beforeRemovePhoto?: (id: string) => Promise<boolean>;
-  afterRemovePhoto?: () => void;
+  pageLabel?: string;
+  onRequestDeletePhoto: (id: string) => void;
   albumId: string;
 
   photos: DigitalAlbumPhotoWithPhoto[];
 
   photoWalls: PhotoWall[];
 
-  activePageNumber: number | null;
+  pickerTargetId: string | null;
+  photoUsage: Record<string, number>;
+  retainedPhotoIds: ReadonlySet<string>;
+  onCancelPicker: () => void;
 
   selectedPhotoId: string | null;
 
   onSelectPhoto: (photoId: string) => void;
 
-  onRemovePhotoFromPage: () => void;
 }
 
 /* ==========================================================================
@@ -58,14 +58,16 @@ interface DigitalAlbumPhotosPanelProps {
 
 export default function DigitalAlbumPhotosPanel({
   albumId,
-  beforeRemovePhoto,
-  afterRemovePhoto,
+  pageLabel,
+  onRequestDeletePhoto,
   photos,
   photoWalls,
-  activePageNumber,
+  pickerTargetId,
+  photoUsage,
+  retainedPhotoIds,
+  onCancelPicker,
   selectedPhotoId,
   onSelectPhoto,
-  onRemovePhotoFromPage,
 }: DigitalAlbumPhotosPanelProps) {
   /* ==========================================================================
      Router
@@ -85,7 +87,16 @@ export default function DigitalAlbumPhotosPanel({
 
   const [isAddPhotosOpen, setIsAddPhotosOpen] = useState(false);
 
-  const [removingPhotoId, setRemovingPhotoId] = useState<string | null>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    // A page turn can return to the library. Only an explicit slot picker
+    // should move focus; browsing must not steal it from the book controls.
+    if (pickerTargetId === null) return;
+    const button = panel.current?.querySelector<HTMLButtonElement>("button:not(:disabled)");
+    if (!button?.getClientRects().length) return;
+    button.focus({ preventScroll: true });
+    button.scrollIntoView({ block: "nearest" });
+  }, [pickerTargetId]);
 
   /* ==========================================================================
      Existing Photos
@@ -122,45 +133,23 @@ export default function DigitalAlbumPhotosPanel({
      Remove Photo
   ========================================================================== */
 
-  async function handleRemovePhoto(photoId: string) {
-    if (removingPhotoId) {
-      return;
-    }
-
-    if (beforeRemovePhoto && !(await beforeRemovePhoto(photoId))) return;
-    setRemovingPhotoId(photoId);
-    try {
-      const result = await removeDigitalAlbumPhotoAction({
-        albumId,
-        photoId,
-      });
-
-      if (!result.success) {
-        toast.error(t("removeError"));
-
-        setRemovingPhotoId(null);
-
-        return;
-      }
-
-      toast.success(t("removeSuccess"));
-
-      router.refresh();
-    } catch {
-      toast.error(t("removeError"));
-    } finally {
-      setRemovingPhotoId(null);
-      afterRemovePhoto?.();
-    }
-  }
-
   /* ==========================================================================
      Render
   ========================================================================== */
 
   return (
     <>
-      <div className={styles.root}>
+      <div ref={panel} className={styles.root}>
+        <div className={styles.header} aria-live="polite">
+          {pickerTargetId !== null && selectedPhotoId && <Button type="button" variant="ghost" onClick={onCancelPicker}>
+            <ArrowLeft aria-hidden="true" />{t("backToPhoto")}
+          </Button>}
+          {pageLabel && <p className={styles.count}>{pageLabel}</p>}
+          <p className={pickerTargetId !== null ? styles.context : styles.count}>{pickerTargetId !== null
+            ? t(selectedPhotoId ? "replaceTitle" : "addTitle")
+            : t("libraryCount", { count: photos.length, used: photos.filter((photo) => photoUsage[photo.photo_id]).length })}</p>
+          {pickerTargetId !== null && <span className={styles.count}>{t(selectedPhotoId ? "replaceHelp" : "addHelp")}</span>}
+        </div>
         {photos.length === 0 ? (
           <>
             <EmptyState
@@ -181,34 +170,7 @@ export default function DigitalAlbumPhotosPanel({
           </>
         ) : (
           <>
-            <div className={styles.header}>
-              {activePageNumber !== null && (
-                <p className={styles.context}>
-                  {t(selectedPhotoId ? "changeForPage" : "selectForPage", {
-                    number: activePageNumber,
-                  })}
-                </p>
-              )}
-
-              <span className={styles.count}>
-                {t("count", {
-                  count: photos.length,
-                })}
-              </span>
-            </div>
-
             <div className={styles.actions}>
-              {selectedPhotoId && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  className={styles.actionButton}
-                  onClick={onRemovePhotoFromPage}
-                >
-                  {t("removeFromPage")}
-                </Button>
-              )}
-
               <Button
                 type="button"
                 variant="outline"
@@ -222,36 +184,19 @@ export default function DigitalAlbumPhotosPanel({
             </div>
 
             <div className={styles.grid}>
-              {photos.map((albumPhoto) => {
-                const isRemoving = removingPhotoId === albumPhoto.photo_id;
+              {photos.map((albumPhoto, index) => {
+                const uses = photoUsage[albumPhoto.photo_id] ?? 0;
+                const isUsed = uses > 0 || retainedPhotoIds.has(albumPhoto.photo_id);
 
                 return (
-                  <div key={albumPhoto.photo_id} className={styles.photo}>
-                    <button
-                      type="button"
-                      className={styles.selectButton}
-                      data-selected={selectedPhotoId === albumPhoto.photo_id}
-                      onClick={() => onSelectPhoto(albumPhoto.photo_id)}
-                    >
-                      <img
-                        src={getEventPhotoUrl(albumPhoto.photo.image_path)}
-                        alt=""
-                        className={styles.image}
-                      />
-                    </button>
-
-                    <div className={styles.removeButton}>
-                      <DeleteButton
-                        display="icon"
-                        ariaLabel={t("remove")}
-                        title={t("removeConfirm.title")}
-                        description={t("removeConfirm.description")}
-                        confirmText={t("removeConfirm.confirm")}
-                        loading={isRemoving}
-                        onDelete={() => handleRemovePhoto(albumPhoto.photo_id)}
-                      />
-                    </div>
-                  </div>
+                  <DigitalAlbumLibraryPhoto key={albumPhoto.photo_id}
+                    selectable={pickerTargetId !== null} selected={selectedPhotoId === albumPhoto.photo_id}
+                    isUsed={isUsed} imageUrl={getEventPhotoUrl(albumPhoto.photo.image_path)}
+                    selectLabel={t("selectPhoto", { number: index + 1 }) + (uses ? ". " + t("usedTimes", { count: uses }) : "")}
+                    deleteLabel={t("remove")}
+                    usageBadge={uses ? (uses === 1 ? "\u2713" : `${uses}\u00d7`) : t("retainedBadge")}
+                    onSelect={() => onSelectPhoto(albumPhoto.photo_id)}
+                    onDelete={() => onRequestDeletePhoto(albumPhoto.photo_id)} />
                 );
               })}
             </div>

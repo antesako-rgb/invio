@@ -5,14 +5,24 @@ import {
 } from "react";
 
 import {
+  LayoutDashboard,
   LogOut,
   PanelLeftClose,
   PanelLeftOpen,
-  Sparkles,
+  UsersRound,
 } from "lucide-react";
+
 import {
   useTranslations,
 } from "next-intl";
+
+import {
+  dashboardNavigation,
+} from "@/components/navigation/constants/dashboardNavigation";
+
+import {
+  Button,
+} from "@/components/ui/button";
 
 import Logo
   from "@/components/ui/logo/Logo";
@@ -21,18 +31,11 @@ import SideNavigation
   from "@/components/ui/side-navigation/SideNavigation";
 
 import {
-  Button,
-} from "@/components/ui/button";
-
-import {
-  dashboardNavigation,
-} from "@/components/navigation/constants/dashboardNavigation";
-
-import {
   useAuth,
 } from "@/features/auth/hooks/useAuth";
 
 import {
+  usePathname,
   useRouter,
 } from "@/i18n/navigation";
 
@@ -53,6 +56,11 @@ export default function DashboardSidebar() {
       "Navigation.dashboard"
     );
 
+  const eventText =
+    useTranslations(
+      "Events.header"
+    );
+
   const {
     signOut,
   } =
@@ -61,11 +69,21 @@ export default function DashboardSidebar() {
   const router =
     useRouter();
 
+  const pathname =
+    usePathname();
+
+  const eventId =
+    pathname.match(
+      /^\/dashboard\/dogadaji\/([0-9a-f]{8}-[0-9a-f-]{27})(?:\/|$)/i
+    )?.[1];
+
   const [
     collapsed,
     setCollapsed,
   ] =
-    useState(false);
+    useState(
+      false
+    );
 
 
   /* ==========================================================================
@@ -130,11 +148,17 @@ export default function DashboardSidebar() {
         >
           {collapsed ? (
             <PanelLeftOpen
-              size={20}
+              size={
+                20
+              }
+              aria-hidden="true"
             />
           ) : (
             <PanelLeftClose
-              size={20}
+              size={
+                20
+              }
+              aria-hidden="true"
             />
           )}
         </button>
@@ -202,6 +226,76 @@ export default function DashboardSidebar() {
             );
           }
         )}
+
+        {eventId && (
+          <div
+            className={
+              styles.group
+            }
+          >
+            {!collapsed && (
+              <span
+                className={
+                  styles.groupLabel
+                }
+              >
+                {eventText(
+                  "workspace"
+                )}
+              </span>
+            )}
+
+            <SideNavigation
+              items={[
+                {
+                  id:
+                    "eventOverview",
+
+                  label:
+                    eventText(
+                      "overview"
+                    ),
+
+                  href:
+                    `/dashboard/dogadaji/${eventId}`,
+
+                  icon:
+                    LayoutDashboard,
+
+                  exact:
+                    true,
+                },
+
+                {
+                  id:
+                    "collaborators",
+
+                  label:
+                    eventText(
+                      "collaborators"
+                    ),
+
+                  href:
+                    `/dashboard/dogadaji/${eventId}/suradnici`,
+
+                  icon:
+                    UsersRound,
+
+                  exact:
+                    true,
+                },
+              ]}
+              collapsed={
+                collapsed
+              }
+              ariaLabel={
+                eventText(
+                  "workspace"
+                )
+              }
+            />
+          </div>
+        )}
       </div>
 
       <div
@@ -209,57 +303,6 @@ export default function DashboardSidebar() {
           styles.footer
         }
       >
-        {!collapsed && (
-        <div
-  className={
-    styles.premium
-  }
->
-  <div
-    className={
-      styles.premiumHeader
-    }
-  >
-    <div
-      className={
-        styles.premiumIcon
-      }
-    >
-      <Sparkles
-        size={18}
-        aria-hidden="true"
-      />
-    </div>
-
-    <span
-      className={
-        styles.premiumTitle
-      }
-    >
-      Invio Premium
-    </span>
-  </div>
-
-  <span
-    className={
-      styles.premiumText
-    }
-  >
-    {t(
-      "premiumDescription"
-    )}
-  </span>
-
-  <Button
-    size="sm"
-  >
-    {t(
-      "premiumAction"
-    )}
-  </Button>
-</div>
-        )}
-
         <Button
           type="button"
           variant="ghost"
@@ -271,7 +314,10 @@ export default function DashboardSidebar() {
           }
         >
           <LogOut
-            size={18}
+            size={
+              18
+            }
+            aria-hidden="true"
           />
 
           {!collapsed &&

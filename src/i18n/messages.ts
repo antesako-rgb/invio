@@ -17,15 +17,12 @@ export async function loadMessages(
     navigation,
     dashboard,
     events,
-    guests,
     digitalAlbums,
     digitalAlbumEditor,
-    eventExperiences,
-    eventExperiencesManagement,
-    invitations,
-    invitationManagement,
-    eventExperienceContent,
-    eventExperienceTemplates,
+    photoWalls,
+    photoWallsManagement,
+    photoWallMaterialContent,
+    photoWallMaterialTemplates,
   ] =
     await Promise.all([
       import(
@@ -53,10 +50,6 @@ export async function loadMessages(
       ),
 
       import(
-        `../messages/${locale}/guests.json`
-      ),
-
-      import(
         `../messages/${locale}/digital-albums.json`
       ),
 
@@ -65,27 +58,19 @@ export async function loadMessages(
       ),
 
       import(
-        `../messages/${locale}/event-experiences.json`
+        `../messages/${locale}/photo-wall-materials.json`
       ),
 
       import(
-        `../messages/${locale}/event-experiences-management.json`
+        `../messages/${locale}/photo-wall-materials-management.json`
       ),
 
       import(
-        `../messages/${locale}/invitations.json`
+        `../messages/${locale}/photo-wall-material-content.json`
       ),
 
       import(
-        `../messages/${locale}/invitation-management.json`
-      ),
-
-      import(
-        `../messages/${locale}/event-experience-content.json`
-      ),
-
-      import(
-        `../messages/${locale}/event-experience-templates.json`
+        `../messages/${locale}/photo-wall-material-templates.json`
       ),
     ]);
 
@@ -108,34 +93,24 @@ export async function loadMessages(
     Events:
       events.default,
 
-    Guests:
-      guests.default,
-
     DigitalAlbums:
       digitalAlbums.default,
 
     DigitalAlbumEditor:
       digitalAlbumEditor.default,
 
-    EventExperiences: {
-      ...eventExperiences.default,
+    PhotoWalls: {
+      ...photoWalls.default,
 
-      ...eventExperiencesManagement.default
-        .EventExperiences,
+      ...photoWallsManagement.default
+        .PhotoWalls,
     },
 
-    Invitations: {
-      ...invitations.default,
+    PhotoWallMaterialContent:
+      photoWallMaterialContent.default,
 
-      ...invitationManagement.default
-        .Invitations,
-    },
-
-    EventExperienceContent:
-      eventExperienceContent.default,
-
-    EventExperienceTemplates:
-      eventExperienceTemplates.default
-        .EventExperienceTemplates,
+    PhotoWallMaterialTemplates:
+      photoWallMaterialTemplates.default
+        .PhotoWallMaterialTemplates,
   };
 }

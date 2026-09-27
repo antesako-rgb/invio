@@ -11,8 +11,8 @@ import {
 } from "sonner";
 
 import {
-  eventExperienceFonts,
-} from "@/features/invitations/editor/fonts/eventExperienceFonts";
+  photoWallMaterialFonts,
+} from "@/features/photo-walls/editor/fonts/photoWallMaterialFonts";
 
 import "./globals.css";
 
@@ -39,14 +39,14 @@ const inter =
 export const metadata: Metadata = {
   title: {
     default:
-      "Invio",
+      "Memiva",
 
     template:
-      "%s | Invio",
+      "%s | Memiva",
   },
 
   description:
-    "Kreirajte pozivnice, upravljajte gostima i organizirajte svoje događaje.",
+    "Memiva — podijelite fotografije i sačuvajte uspomene sa svojih događaja.",
 };
 
 
@@ -63,7 +63,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`
         ${inter.variable}
-        ${eventExperienceFonts}
+        ${photoWallMaterialFonts}
         h-full
         antialiased
       `}

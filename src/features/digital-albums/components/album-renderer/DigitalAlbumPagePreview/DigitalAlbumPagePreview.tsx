@@ -2,12 +2,11 @@ import DigitalAlbumPageRenderer from "@/features/digital-albums/components/album
 
 import type { DigitalAlbumRendererPhoto } from "@/features/digital-albums/components/album-renderer/types/digitalAlbumRenderer.types";
 
-import type { DigitalAlbumDocumentPage } from "@/features/digital-albums/types/digitalAlbumDocument.types";
+import type { DigitalAlbumDocumentPage, DigitalAlbumTheme } from "@/features/digital-albums/types/digitalAlbumDocument.types";
 
 import type { DigitalAlbumPhotoWithPhoto } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
 
-import "@/features/digital-albums/components/album-renderer/themes/DigitalAlbumPageTokens.css";
-import "@/features/digital-albums/components/album-renderer/themes/classic/DigitalAlbumClassicTheme.css";
+import "@/features/digital-albums/components/album-renderer/themes/DigitalAlbumThemes.css";
 
 import styles from "./DigitalAlbumPagePreview.module.css";
 
@@ -17,8 +16,11 @@ import styles from "./DigitalAlbumPagePreview.module.css";
 
 interface DigitalAlbumPagePreviewProps {
   page: DigitalAlbumDocumentPage;
+  theme: DigitalAlbumTheme;
 
-  photos: DigitalAlbumPhotoWithPhoto[];
+  photos?: DigitalAlbumPhotoWithPhoto[];
+  rendererPhotos?: DigitalAlbumRendererPhoto[];
+  photosById?: ReadonlyMap<string, DigitalAlbumRendererPhoto>;
 }
 
 /* ==========================================================================
@@ -27,13 +29,16 @@ interface DigitalAlbumPagePreviewProps {
 
 export default function DigitalAlbumPagePreview({
   page,
-  photos,
+  theme,
+  photos = [],
+  rendererPhotos: suppliedRendererPhotos,
+  photosById,
 }: DigitalAlbumPagePreviewProps) {
   /* ==========================================================================
      Renderer Photos
   ========================================================================== */
 
-  const rendererPhotos: DigitalAlbumRendererPhoto[] = photos.map(
+  const rendererPhotos: DigitalAlbumRendererPhoto[] = suppliedRendererPhotos ?? photos.map(
     (albumPhoto) => ({
       id: albumPhoto.photo_id,
 
@@ -48,8 +53,8 @@ export default function DigitalAlbumPagePreview({
   ========================================================================== */
 
   return (
-    <div className={styles.root} data-album-theme="classic">
-      <DigitalAlbumPageRenderer page={page} photos={rendererPhotos} />
+    <div className={styles.root} data-album-theme={theme}>
+      <DigitalAlbumPageRenderer page={page} photos={rendererPhotos} photosById={photosById} />
     </div>
   );
 }

@@ -1,4 +1,9 @@
 "use client";
+import { useState } from "react";
+import Image from "next/image";
+import { DIGITAL_ALBUM_THEMES, DIGITAL_ALBUM_THEME_IDS } from "@/features/digital-albums/config/digitalAlbumThemes";
+import "@/features/digital-albums/components/album-renderer/themes/DigitalAlbumThemes.css";
+import styles from "./DigitalAlbumThemePicker.module.css";
 
 import {
   useTranslations,
@@ -32,12 +37,6 @@ interface DigitalAlbumThemePickerProps {
    Themes
 ========================================================================== */
 
-const themes:
-  DigitalAlbumTheme[] = [
-    "classic",
-  ];
-
-
 /* ==========================================================================
    Digital Album Theme Picker
 ========================================================================== */
@@ -52,7 +51,7 @@ export default function DigitalAlbumThemePicker({
     );
 
   const items =
-    themes.map(
+    DIGITAL_ALBUM_THEME_IDS.map(
       (theme) => ({
         value:
           theme,
@@ -62,8 +61,7 @@ export default function DigitalAlbumThemePicker({
             theme
           ),
 
-        imageSrc:
-          `/digital-albums/theme-preview/${theme}.png`,
+        preview: <ThemePreview theme={theme} label={t(theme)} />,
       })
     );
 
@@ -80,4 +78,16 @@ export default function DigitalAlbumThemePicker({
       }
     />
   );
+}
+function ThemePreview({ theme, label }: { theme: DigitalAlbumTheme; label: string }) {
+  const [failed, setFailed] = useState(false);
+  return <span className={styles.preview} data-album-theme={theme} aria-hidden="true">
+    {failed ? <span className={styles.sample}>
+      <span className={styles.type}>Aa</span>
+      <span className={styles.name}>{label}</span>
+      <span className={styles.rule} />
+      <span className={styles.swatches}><span /><span /><span /></span>
+    </span> : <Image src={DIGITAL_ALBUM_THEMES[theme].preview} alt="" width={440} height={640}
+      loading="lazy" unoptimized className={styles.image} onError={() => setFailed(true)} />}
+  </span>;
 }

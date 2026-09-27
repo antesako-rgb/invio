@@ -93,6 +93,8 @@ interface OnboardingCardProps {
   secondaryAction?:
     OnboardingCardAction;
 
+  additionalAction?: ReactNode;
+
   variant?:
     | "default"
     | "compact";
@@ -181,6 +183,7 @@ export default function OnboardingCard({
   steps,
   action,
   secondaryAction,
+  additionalAction,
   variant = "default",
   className,
 }: OnboardingCardProps) {
@@ -323,6 +326,7 @@ export default function OnboardingCard({
               secondary
             />
           )}
+          {additionalAction}
         </div>
       </div>
     </section>

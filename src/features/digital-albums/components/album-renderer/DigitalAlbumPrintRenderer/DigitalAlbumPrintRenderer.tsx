@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
+import { indexDigitalAlbumPhotos } from "../utils/indexDigitalAlbumPhotos";
 
 import DigitalAlbumPageRenderer from "@/features/digital-albums/components/album-renderer/DigitalAlbumPageRenderer/DigitalAlbumPageRenderer";
 
@@ -8,8 +9,7 @@ import type { DigitalAlbumRendererPhoto } from "@/features/digital-albums/compon
 
 import type { DigitalAlbumDocument } from "@/features/digital-albums/types/digitalAlbumDocument.types";
 
-import "@/features/digital-albums/components/album-renderer/themes/DigitalAlbumPageTokens.css";
-import "@/features/digital-albums/components/album-renderer/themes/classic/DigitalAlbumClassicTheme.css";
+import "@/features/digital-albums/components/album-renderer/themes/DigitalAlbumThemes.css";
 
 import styles from "./DigitalAlbumPrintRenderer.module.css";
 
@@ -34,6 +34,7 @@ export default function DigitalAlbumPrintRenderer({
   photos,
 }: DigitalAlbumPrintRendererProps) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const photosById = useMemo(() => indexDigitalAlbumPhotos(photos), [photos]);
   useEffect(() => {
     const root = rootRef.current;
     if (root) root.dataset.albumPrintHydrated = "true";
@@ -50,7 +51,7 @@ export default function DigitalAlbumPrintRenderer({
     >
       {document.pages.map((page) => (
         <div data-album-page={page.id} key={page.id} className={styles.page}>
-          <DigitalAlbumPageRenderer page={page} photos={photos} />
+          <DigitalAlbumPageRenderer page={page} photos={photos} photosById={photosById} />
         </div>
       ))}
     </div>

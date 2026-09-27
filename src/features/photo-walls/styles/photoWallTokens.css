@@ -1,0 +1,249 @@
+/* ==========================================================================
+   Photo Wall Tokens
+========================================================================== */
+
+[data-photo-wall-experience] {
+
+  /* Background */
+
+  --photo-wall-background:
+    var(--background);
+
+  --photo-wall-surface:
+    var(--card);
+
+
+  /* Text */
+
+  --photo-wall-foreground:
+    var(--foreground);
+
+  --photo-wall-muted:
+    var(--muted-foreground);
+
+
+  /* Accent */
+
+  --photo-wall-accent:
+    color-mix(in oklch, var(--primary) 92%, var(--foreground));
+
+  --photo-wall-accent-foreground:
+    var(--primary-foreground);
+
+
+  /* Border */
+
+  --photo-wall-border:
+    var(--border);
+
+}
+
+
+/* ==========================================================================
+   Warm
+========================================================================== */
+
+[data-photo-wall-experience][data-color="warm"] {
+
+  --photo-wall-background:
+    #f8f3ed;
+
+  --photo-wall-surface:
+    #fffaf5;
+
+  --photo-wall-foreground:
+    #493b32;
+
+  --photo-wall-muted:
+    #736255;
+
+  --photo-wall-accent:
+    #886044;
+
+  --photo-wall-accent-foreground:
+    #ffffff;
+
+  --photo-wall-border:
+    rgba(
+      73,
+      59,
+      50,
+      0.12
+    );
+
+}
+
+
+/* ==========================================================================
+   Sage
+========================================================================== */
+
+[data-photo-wall-experience][data-color="sage"] {
+
+  --photo-wall-background:
+    #f1f4ef;
+
+  --photo-wall-surface:
+    #fafcf9;
+
+  --photo-wall-foreground:
+    #344039;
+
+  --photo-wall-muted:
+    #59695e;
+
+  --photo-wall-accent:
+    #536b59;
+
+  --photo-wall-accent-foreground:
+    #ffffff;
+
+  --photo-wall-border:
+    rgba(
+      52,
+      64,
+      57,
+      0.12
+    );
+
+}
+
+
+/* ==========================================================================
+   Rose
+========================================================================== */
+
+[data-photo-wall-experience][data-color="rose"] {
+
+  --photo-wall-background:
+    #f8f1f2;
+
+  --photo-wall-surface:
+    #fffafb;
+
+  --photo-wall-foreground:
+    #49383c;
+
+  --photo-wall-muted:
+    #775e65;
+
+  --photo-wall-accent:
+    #895762;
+
+  --photo-wall-accent-foreground:
+    #ffffff;
+
+  --photo-wall-border:
+    rgba(
+      73,
+      56,
+      60,
+      0.12
+    );
+
+}
+
+
+/* ==========================================================================
+   Blue
+========================================================================== */
+
+[data-photo-wall-experience][data-color="blue"] {
+
+  --photo-wall-background:
+    #f0f4f7;
+
+  --photo-wall-surface:
+    #fafcfd;
+
+  --photo-wall-foreground:
+    #34414a;
+
+  --photo-wall-muted:
+    #596b78;
+
+  --photo-wall-accent:
+    #4e697c;
+
+  --photo-wall-accent-foreground:
+    #ffffff;
+
+  --photo-wall-border:
+    rgba(
+      52,
+      65,
+      74,
+      0.12
+    );
+
+}
+
+
+/* ==========================================================================
+   Lavender
+========================================================================== */
+
+[data-photo-wall-experience][data-color="lavender"] {
+
+  --photo-wall-background:
+    #f2eef7;
+
+  --photo-wall-surface:
+    #fcfafd;
+
+  --photo-wall-foreground:
+    #403949;
+
+  --photo-wall-muted:
+    #6c5f78;
+
+  --photo-wall-accent:
+    #6c597f;
+
+  --photo-wall-accent-foreground:
+    #ffffff;
+
+  --photo-wall-border:
+    rgba(
+      64,
+      57,
+      73,
+      0.12
+    );
+
+}
+
+
+/* ==========================================================================
+   Charcoal
+========================================================================== */
+
+[data-photo-wall-experience][data-color="charcoal"] {
+
+  --photo-wall-background:
+    #242424;
+
+  --photo-wall-surface:
+    #2d2d2d;
+
+  --photo-wall-foreground:
+    #f7f5f2;
+
+  --photo-wall-muted:
+    #b5b0aa;
+
+  --photo-wall-accent:
+    #e5ddd4;
+
+  --photo-wall-accent-foreground:
+    #292524;
+
+  --photo-wall-border:
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
+
+}

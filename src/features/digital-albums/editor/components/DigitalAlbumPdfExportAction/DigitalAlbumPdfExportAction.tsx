@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { Download, LoaderCircle } from "lucide-react";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import styles from "./DigitalAlbumPdfExportAction.module.css";
 
@@ -34,6 +34,7 @@ export default function DigitalAlbumPdfExportAction({
   ========================================================================== */
 
   const t = useTranslations("DigitalAlbumEditor");
+  const locale = useLocale();
 
   /* ==========================================================================
      State
@@ -71,7 +72,7 @@ export default function DigitalAlbumPdfExportAction({
         setError(t("upgrade.exportNotReady"));
         return;
       }
-      const response = await fetch(`/api/digital-albums/${albumId}/pdf`, {
+      const response = await fetch(`/api/digital-albums/${albumId}/pdf?locale=${encodeURIComponent(locale)}`, {
         method: "POST",
       });
 
@@ -146,6 +147,8 @@ export default function DigitalAlbumPdfExportAction({
       <button
         type="button"
         className={styles.button}
+        aria-label={isExporting ? t("pdfExport.exporting") : t("pdfExport.action")}
+        aria-busy={isExporting}
         disabled={disabled || isExporting || retryDelay > 0}
         onClick={handleExport}
       >

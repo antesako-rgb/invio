@@ -1,0 +1,23 @@
+[data-album-theme="modern"] {
+  --album-paper: #f7f8fa;
+  --album-ink: #202830;
+  --album-muted-ink: #596570;
+  --album-title-font: var(--font-inter), sans-serif;
+  --album-body-font: var(--font-inter), sans-serif;
+  --album-script-font: var(--font-inter), sans-serif;
+  --album-title-weight: 500;
+  --album-title-line-height: 1.15;
+  --album-body-line-height: 1.65;
+  --album-meta-letter-spacing: 0.06em;
+  --album-meta-transform: none;
+  --album-note-style: normal;
+  --album-type-cover-title: 8cqw;
+  --album-type-cover-subtitle: 3.2cqw;
+  --album-type-story-title: 8cqw;
+  --album-type-editorial-title: 6cqw;
+  --album-type-quote-text: 5cqw;
+  --album-type-collage-title: 4cqw;
+  --album-rule-opacity: 0.2;
+  --album-quote-opacity: 0.2;
+  --album-cover-shade: linear-gradient(transparent 30%, rgb(10 20 30 / 0.72));
+}

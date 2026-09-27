@@ -1,0 +1,185 @@
+{
+  "editor": {
+    "navigation": {
+      "label": "Uređivač materijala",
+      "back": "Natrag",
+      "content": "Sadržaj",
+      "design": "Dizajn",
+      "qr": "QR kod"
+    },
+    "mobile": {
+      "description": "Uredite sadržaj i izgled svojeg materijala."
+    },
+    "actions": {
+      "save": "Spremi"
+    },
+    "status": {
+      "saving": "Spremanje…",
+      "saved": "Spremljeno",
+      "error": "Spremanje nije uspjelo",
+      "unsaved": "Nespremljene promjene"
+    },
+    "fields": {
+      "materialName": "Naziv materijala",
+      "title": "Naslov",
+      "subtitle": "Kratka poruka",
+      "description": "Uputa",
+      "primaryName": "Naziv događaja ili prvo ime",
+      "secondaryName": "Drugo ime",
+      "firstInitial": "Prvi inicijal",
+      "secondInitial": "Drugi inicijal",
+      "date": "Datum",
+      "time": "Vrijeme",
+      "location": "Mjesto",
+      "address": "Adresa"
+    },
+    "contentHint": "Prazna polja se ne prikazuju. Sadržaj ostaje sačuvan kada promijenite dizajn.",
+    "designHint": "Odaberite kompoziciju i boju. Raspored elemenata već je pripremljen.",
+    "template": "Dizajn",
+    "variant": "Boja",
+    "titleScale": "Veličina naslova",
+    "resetTitle": "Vrati zadani stil naslova",
+    "qr": {
+      "label": "Skenirajte za dijeljenje fotografija na Photo Wallu događaja",
+      "sample": "Vaš QR kod",
+      "description": "QR kod automatski se generira iz Photo Walla vašeg događaja.",
+      "destination": "Odredište",
+      "public": "Photo Wall je javan i spreman za goste.",
+      "private": "Photo Wall još nije javan. Gosti mogu koristiti ovaj kod nakon što objavite Photo Wall.",
+      "fixed": "Odredište pripada Photo Wallu i ovdje se ne može mijenjati.",
+      "catalog": "Primjer predloška. QR kod vašeg Photo Walla dodaje se pri izradi materijala."
+    },
+    "preview": {
+      "title": "Pregled materijala"
+    },
+    "errors": {
+      "VALIDATION": "Prije spremanja provjerite naziv materijala, duljinu teksta, datum i postavke izgleda.",
+      "CONFLICT": "Materijal je promijenjen u drugoj sesiji. Vaše su promjene još ovdje. Osvježite stranicu za spremljenu verziju prije daljnjeg uređivanja.",
+      "SAVE_FAILED": "Promjene nisu spremljene. Provjerite vezu i pristup pa ponovno odaberite Spremi.",
+      "CREATE_FAILED": "Materijal nije izrađen. Provjerite vezu i vlasništvo događaja pa pokušajte ponovno."
+    },
+    "overflow": "Dio teksta prelazi prostor predviđen ovim dizajnom. Skratite tekst ili smanjite naslov prije izvoza.",
+    "leave": {
+      "title": "Otići bez spremanja?",
+      "description": "Posljednje promjene još nisu spremljene.",
+      "stay": "Nastavi uređivati",
+      "discard": "Otiđi bez spremanja"
+    }
+  },
+  "experience": {
+    "countdown": {
+      "days": "{count, plural, one {dan} few {dana} other {dana}}"
+    }
+  },
+  "photoWall": {
+    "back": "Natrag",
+    "actions": {
+      "viewPhotos": "Pogledaj fotografije",
+      "addPhotos": "Dodaj fotografije"
+    },
+    "gallery": {
+      "title": "Naši zajednički trenuci",
+      "description": "Pregledajte fotografije i podijelite svoje najdraže trenutke.",
+      "count": "{count, plural, one {# fotografija} few {# fotografije} other {# fotografija}}",
+      "empty": "Još nema fotografija",
+      "emptyDescription": "Fotografije ovog događaja pojavit će se ovdje.",
+      "closePhoto": "Zatvori fotografiju",
+      "loadMore": "Učitaj još",
+      "loadingMore": "Učitavanje...",
+      "photoLabel": "Fotografija {number}",
+      "photoTitle": "Pregled fotografije"
+    },
+    "upload": {
+      "close": "Zatvori",
+      "back": "Natrag",
+      "addMore": "Dodaj još fotografija",
+      "selectPhoto": "Odaberi fotografiju",
+      "source": {
+        "title": "Dodaj fotografije",
+        "description": "Zabilježite trenutak ili odaberite fotografije sa svog uređaja.",
+        "camera": {
+          "title": "Fotografiraj",
+          "description": "Snimite novu fotografiju kamerom."
+        },
+        "gallery": {
+          "title": "Odaberi fotografije",
+          "description": "Odaberite jednu ili više fotografija iz galerije."
+        }
+      },
+      "submit": "Dodaj fotografije ({count})",
+      "submitting": "Dodavanje...",
+      "preparing": "Priprema fotografija...",
+      "errors": {
+        "invalidFiles": "Neke fotografije nisu podržane ili su prevelike.",
+        "tooManyFiles": "Možete dodati najviše {count} fotografija.",
+        "upload": "Fotografije nije moguće dodati. Pokušajte ponovno."
+      }
+    },
+    "composer": {
+      "descriptionLabel": "Opis fotografije",
+      "descriptionPlaceholder": "Dodajte opis fotografije",
+      "remove": "Ukloni fotografiju"
+    },
+    "uploadUnavailable": "Dodavanje fotografija trenutačno nije dostupno.",
+    "deleteUnavailable": "Brisanje fotografija trenutačno nije dostupno.",
+    "materialsUnavailable": "Dodatni materijali još nisu dostupni.",
+    "qrLabel": "QR kod za Photo Wall",
+    "lightboxActions": {
+      "label": "Radnje fotografije",
+      "download": "Preuzmi fotografiju",
+      "share": "Podijeli fotografiju",
+      "copyLink": "Kopiraj poveznicu fotografije",
+      "linkCopied": "Poveznica fotografije je kopirana.",
+      "downloadFailed": "Fotografiju nije moguće preuzeti. Pokušajte ponovno.",
+      "shareFailed": "Fotografiju nije moguće podijeliti. Pokušajte ponovno.",
+      "shareReady": "Fotografija je spremna. Ponovno dodirnite Podijeli.",
+      "sharePrepared": "Podijeli pripremljenu fotografiju"
+    }
+  },
+  "page": {
+    "title": "Photo Wall",
+    "description": "Fotografije gostiju i materijali za dijeljenje pripadaju Photo Wallu ovog događaja.",
+    "actions": {
+      "create": "Postavi Photo Wall",
+      "manage": "Upravljaj",
+      "edit": "Uredi dizajn"
+    },
+    "status": {
+      "published": "Objavljeno",
+      "draft": "Skica"
+    },
+    "publishedAt": "Objavljeno {date}",
+    "notPublished": "Još nije objavljeno",
+    "empty": {
+      "title": "Photo Wall nije postavljen",
+      "description": "Odaberi dizajn i pripremi Photo Wall za ovaj događaj.",
+      "action": "Postavi Photo Wall"
+    }
+  },
+  "errors": {
+    "invalidDesign": "Odabrani dizajn ili varijanta nisu dostupni.",
+    "invalidInput": "Provjerite unesene podatke."
+  },
+  "productNavigation": {
+    "label": "Navigacija Photo Walla",
+    "overview": "Pregled",
+    "photos": "Fotografije",
+    "materials": "Materijali",
+    "settings": "Postavke"
+  },
+  "productSettings": {
+    "title": "Postavke Photo Walla",
+    "description": "Upravljaj dostupnošću Photo Walla. Naziv možeš urediti u zaglavlju.",
+    "edit": "Uredi sadržaj i izgled"
+  },
+  "materials": {
+    "title": "Materijali",
+    "description": "Materijali pripadaju ovom Photo Wallu. Njihov QR kod vodi goste na njegovu javnu stranicu.",
+    "availability": "Materijali vode na ovaj Photo Wall. Izrada i spremanje materijala još nisu dostupni. Uređivač služi samo za lokalni pregled.",
+    "existing": "Postojeći materijali",
+    "existingReadOnly": "Spremljeni materijal. Uređivanje još nije dostupno.",
+    "preview": "Uredi materijal",
+    "templates": "Predlošci materijala",
+    "unsupported": "Ovaj dizajn trenutačno nije dostupan."
+  }
+}

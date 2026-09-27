@@ -3,7 +3,8 @@
 ========================================================================== */
 
 .header {
-  width: 100%;
+  width:
+    100%;
 }
 
 
@@ -12,13 +13,20 @@
 ========================================================================== */
 
 .main {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display:
+    flex;
 
-  gap: 32px;
+  align-items:
+    flex-start;
 
-  padding: 8px 0 28px;
+  justify-content:
+    space-between;
+
+  gap:
+    2rem;
+
+  padding:
+    0.5rem 0 1.75rem;
 }
 
 
@@ -27,13 +35,20 @@
 ========================================================================== */
 
 .content {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+  display:
+    flex;
 
-  min-width: 0;
+  flex:
+    1;
 
-  gap: 18px;
+  flex-direction:
+    column;
+
+  min-width:
+    0;
+
+  gap:
+    1.125rem;
 }
 
 
@@ -42,26 +57,38 @@
 ========================================================================== */
 
 .heading {
-  display: flex;
-  flex-direction: column;
+  display:
+    flex;
 
-  gap: 8px;
+  flex-direction:
+    column;
+
+  gap:
+    0.5rem;
 }
 
 .title {
-  margin: 0;
+  margin:
+    0;
 
-  color: var(--foreground);
+  color:
+    var(--foreground);
 
-  font-size: clamp(
-    1.75rem,
-    3vw,
-    2.25rem
-  );
+  font-size:
+    clamp(
+      1.75rem,
+      3vw,
+      2.25rem
+    );
 
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.035em;
+  font-weight:
+    700;
+
+  line-height:
+    1.15;
+
+  letter-spacing:
+    -0.035em;
 }
 
 
@@ -70,27 +97,43 @@
 ========================================================================== */
 
 .type {
-  display: flex;
-  align-items: center;
+  display:
+    flex;
 
-  width: fit-content;
+  align-items:
+    center;
 
-  gap: 7px;
+  width:
+    fit-content;
 
-  color: var(--muted-foreground);
+  gap:
+    0.4375rem;
 
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.4;
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    500;
+
+  line-height:
+    1.4;
 }
 
 .typeIndicator {
-  width: 7px;
-  height: 7px;
+  width:
+    0.4375rem;
 
-  flex-shrink: 0;
+  height:
+    0.4375rem;
 
-  border-radius: 999px;
+  flex-shrink:
+    0;
+
+  border-radius:
+    999px;
 
   background:
     var(--primary);
@@ -102,34 +145,54 @@
 ========================================================================== */
 
 .meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  display:
+    flex;
 
-  gap: 10px 24px;
+  flex-wrap:
+    wrap;
+
+  align-items:
+    center;
+
+  gap:
+    0.625rem 1.5rem;
 }
 
 .metaItem {
-  display: inline-flex;
-  align-items: center;
+  display:
+    inline-flex;
 
-  min-width: 0;
+  align-items:
+    center;
 
-  gap: 7px;
+  min-width:
+    0;
 
-  color: var(--muted-foreground);
+  gap:
+    0.4375rem;
 
-  font-size: 0.875rem;
-  line-height: 1.4;
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.875rem;
+
+  line-height:
+    1.4;
 }
 
 .metaItem svg {
-  width: 16px;
-  height: 16px;
+  width:
+    1rem;
 
-  flex-shrink: 0;
+  height:
+    1rem;
 
-  color: var(--primary);
+  flex-shrink:
+    0;
+
+  color:
+    var(--primary);
 }
 
 
@@ -138,103 +201,122 @@
 ========================================================================== */
 
 .actions {
-  display: flex;
-  align-items: center;
+  display:
+    flex;
 
-  flex-shrink: 0;
+  align-items:
+    center;
 
-  gap: 8px;
+  flex-shrink:
+    0;
+
+  gap:
+    0.5rem;
 }
 
 
 /* ==========================================================================
-   Responsive
+   Tablet
 ========================================================================== */
 
 @media (max-width: 768px) {
   .main {
-    flex-direction: column;
+    flex-direction:
+      column;
 
-    gap: 16px;
+    gap:
+      1rem;
 
     padding:
-      4px 0
-      18px;
+      0.25rem 0 1.125rem;
   }
 
   .content {
-    width: 100%;
+    width:
+      100%;
 
-    gap: 12px;
+    gap:
+      0.75rem;
   }
 
   .heading {
-    gap: 5px;
+    gap:
+      0.3125rem;
   }
 
   .title {
-    font-size: 1.75rem;
+    font-size:
+      1.75rem;
   }
 
   .meta {
-    flex-wrap: wrap;
-    align-items: center;
-
     gap:
-      8px
-      16px;
+      0.5rem 1rem;
   }
 
   .actions {
-    width: 100%;
+    width:
+      100%;
   }
 
-  .actions > :first-child {
-    flex: 1;
+  .actions > * {
+    flex:
+      1;
   }
 }
 
 
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
 @media (max-width: 480px) {
   .main {
-    gap: 14px;
+    gap:
+      0.875rem;
 
-    padding-bottom: 16px;
+    padding-bottom:
+      1rem;
   }
 
   .content {
-    gap: 10px;
+    gap:
+      0.625rem;
   }
 
   .title {
-    font-size: 1.625rem;
+    font-size:
+      1.625rem;
   }
 
   .type {
-    font-size: 0.8125rem;
+    font-size:
+      0.8125rem;
   }
 
   .meta {
-    flex-direction: row;
-    align-items: center;
-
     gap:
-      7px
-      14px;
+      0.4375rem 0.875rem;
   }
 
   .metaItem {
-    gap: 5px;
+    gap:
+      0.3125rem;
 
-    font-size: 0.8125rem;
+    font-size:
+      0.8125rem;
   }
 
   .metaItem svg {
-    width: 15px;
-    height: 15px;
+    width:
+      0.9375rem;
+
+    height:
+      0.9375rem;
   }
 
   .actions {
-    gap: 6px;
+    gap:
+      0.5rem;
   }
 }

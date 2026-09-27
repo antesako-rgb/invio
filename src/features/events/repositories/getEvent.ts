@@ -6,6 +6,11 @@ import type {
   Event,
 } from "../types/event.types";
 
+import {
+  EVENT_COLUMNS,
+  mapEvent,
+} from "./mapEvent";
+
 
 /* ==========================================================================
    Get Event
@@ -23,7 +28,7 @@ export async function getEvent(
   } =
     await supabase
       .from("events")
-      .select("*")
+      .select(EVENT_COLUMNS)
       .eq(
         "id",
         eventId
@@ -34,5 +39,7 @@ export async function getEvent(
     throw error;
   }
 
-  return data;
+  return data
+    ? mapEvent(data)
+    : null;
 }

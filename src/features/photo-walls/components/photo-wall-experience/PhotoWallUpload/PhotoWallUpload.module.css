@@ -1,0 +1,244 @@
+/* ==========================================================================
+   Photo Wall Upload
+========================================================================== */
+
+.upload {
+
+  display:
+    flex;
+
+  flex:
+    1 1 auto;
+
+  flex-direction:
+    column;
+
+  width:
+    100%;
+
+  min-width:
+    0;
+
+  min-height:
+    0;
+
+  overflow:
+    hidden;
+
+  color:
+    var(--photo-wall-foreground);
+
+}
+
+
+/* ==========================================================================
+   Navigation
+========================================================================== */
+
+.navigation {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  width:
+    100%;
+
+  margin-bottom:
+    20px;
+
+}
+
+
+/* ==========================================================================
+   Content
+========================================================================== */
+
+.content {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  width:
+    100%;
+
+  min-height:
+    0;
+
+  overflow-y:
+    auto;
+
+  overscroll-behavior:
+    contain;
+
+  scrollbar-gutter:
+    stable;
+
+}
+
+
+/* ==========================================================================
+   Preparing
+========================================================================== */
+
+.preparing {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    8px;
+
+  width:
+    100%;
+
+  margin-top:
+    16px;
+
+  color:
+    var(--photo-wall-muted);
+
+  font:
+    inherit;
+
+  font-size:
+    0.875rem;
+
+  line-height:
+    1.4;
+
+}
+
+
+.preparingIcon {
+
+  width:
+    18px;
+
+  height:
+    18px;
+
+  flex:
+    0 0 auto;
+
+  animation:
+    photo-wall-upload-spin
+    0.8s
+    linear
+    infinite;
+
+}
+
+
+@keyframes photo-wall-upload-spin {
+
+  to {
+
+    transform:
+      rotate(
+        360deg
+      );
+
+  }
+
+}
+
+
+/* ==========================================================================
+   Error
+========================================================================== */
+
+.error {
+
+  width:
+    100%;
+
+  margin:
+    16px 0 0;
+
+  padding:
+    10px 12px;
+
+  border:
+    1px solid
+    rgba(
+      185,
+      28,
+      28,
+      0.16
+    );
+
+  border-radius:
+    10px;
+
+  background:
+    rgba(
+      185,
+      28,
+      28,
+      0.06
+    );
+
+  color:
+    #991b1b;
+
+  font:
+    inherit;
+
+  font-size:
+    0.8rem;
+
+  font-weight:
+    500;
+
+  line-height:
+    1.4;
+
+}
+
+
+/* ==========================================================================
+   Mobile
+========================================================================== */
+
+@media (
+  max-width: 767px
+) {
+
+  .navigation {
+
+    margin-bottom:
+      16px;
+
+  }
+
+}
+
+
+/* ==========================================================================
+   Reduced Motion
+========================================================================== */
+
+@media (
+  prefers-reduced-motion: reduce
+) {
+
+  .preparingIcon {
+
+    animation:
+      none;
+
+  }
+
+}

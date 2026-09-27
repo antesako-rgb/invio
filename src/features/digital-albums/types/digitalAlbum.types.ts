@@ -20,19 +20,6 @@ export type DigitalAlbum =
 
 
 /* ==========================================================================
-   Create Digital Album Input
-========================================================================== */
-
-export interface CreateDigitalAlbumInput {
-  eventId:
-    string;
-
-  name:
-    string;
-}
-
-
-/* ==========================================================================
    Update Digital Album Input
 ========================================================================== */
 
@@ -59,7 +46,8 @@ export interface UpdateDigitalAlbumDocumentInput {
   documentVersion:
     number;
 
-  documentRevision: number;
+  documentRevision:
+    number;
 }
 
 
@@ -78,16 +66,6 @@ export interface PublishDigitalAlbumInput {
 ========================================================================== */
 
 export interface UnpublishDigitalAlbumInput {
-  albumId:
-    string;
-}
-
-
-/* ==========================================================================
-   Delete Digital Album Input
-========================================================================== */
-
-export interface DeleteDigitalAlbumInput {
   albumId:
     string;
 }
@@ -116,7 +94,7 @@ export interface PublicDigitalAlbum {
       string;
 
     published_at:
-      string;
+      DigitalAlbum["published_at"];
 
     document:
       DigitalAlbumDocument;

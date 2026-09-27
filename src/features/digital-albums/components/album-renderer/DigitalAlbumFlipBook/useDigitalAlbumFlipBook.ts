@@ -23,6 +23,7 @@ const MOBILE_BREAKPOINT = 768;
 ========================================================================== */
 
 interface UseDigitalAlbumFlipBookProps {
+  soundEnabled?: boolean;
   children: ReactNode;
 
   width: number;
@@ -46,6 +47,7 @@ interface ResponsiveMetrics {
 
 export default function useDigitalAlbumFlipBook({
   children,
+  soundEnabled = true,
   width,
   height,
   activePageIndex,
@@ -67,13 +69,12 @@ export default function useDigitalAlbumFlipBook({
   const isFlippingRef = useRef(false);
   const turnStartedRef = useRef(false);
 
-  const currentPageIndexRef = useRef(0);
 
   /* ==========================================================================
      Flip Sound
   ========================================================================== */
 
-  const { handleFlipSoundFrame } = useDigitalAlbumFlipSound();
+  const { handleFlipSoundFrame } = useDigitalAlbumFlipSound({ enabled: soundEnabled });
 
   /* ==========================================================================
      Pages
@@ -206,7 +207,6 @@ export default function useDigitalAlbumFlipBook({
 
     updateResponsiveGeometry();
 
-    currentPageIndexRef.current = book.page;
 
     setBookOffset(!isMobile && book.page === 0 ? -1 : 0);
 
@@ -254,8 +254,18 @@ export default function useDigitalAlbumFlipBook({
      Navigation
   ========================================================================== */
 
+  function handleGoTo(pageIndex: number) {
+    const book = bookRef.current;
+    if (!book || isFlippingRef.current || !Number.isInteger(pageIndex) ||
+        pageIndex < 0 || pageIndex >= pageCount) return;
+    isFlippingRef.current = true;
+    void book.flipTo(pageIndex).then((didFlip) => {
+      if (!didFlip) isFlippingRef.current = false;
+    }).catch(() => { isFlippingRef.current = false; });
+  }
+
   function handlePrevious() {
-    if (isFlippingRef.current) {
+    if (!bookRef.current || isFlippingRef.current) {
       return;
     }
 
@@ -274,7 +284,7 @@ export default function useDigitalAlbumFlipBook({
   }
 
   function handleNext() {
-    if (isFlippingRef.current) {
+    if (!bookRef.current || isFlippingRef.current) {
       return;
     }
 
@@ -321,7 +331,6 @@ export default function useDigitalAlbumFlipBook({
     if (!frame.flip) {
       isFlippingRef.current = false;
 
-      currentPageIndexRef.current = book.page;
 
       const visiblePageIndexes = [frame.left, frame.right].filter(
         (pageIndex): pageIndex is number => pageIndex !== null,
@@ -416,5 +425,6 @@ export default function useDigitalAlbumFlipBook({
     handleFrame,
     handlePrevious,
     handleNext,
+    handleGoTo,
   };
 }

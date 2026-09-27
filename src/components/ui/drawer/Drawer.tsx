@@ -42,6 +42,8 @@ interface DrawerContentProps
   extends ComponentProps<typeof DrawerPrimitive.Popup> {
   children: ReactNode;
 
+  portalContainer?: ComponentProps<typeof DrawerPrimitive.Portal>["container"];
+
   handleOnly?: boolean;
 
   showCloseButton?: boolean;
@@ -52,10 +54,11 @@ function DrawerContent({
   children,
   showCloseButton = true,
   handleOnly = false,
+  portalContainer,
   ...props
 }: DrawerContentProps) {
   return (
-    <DrawerPrimitive.Portal>
+    <DrawerPrimitive.Portal container={portalContainer}>
       <DrawerPrimitive.Viewport className={styles.viewport}>
         <DrawerPrimitive.Popup
           className={cn(styles.popup, className)}

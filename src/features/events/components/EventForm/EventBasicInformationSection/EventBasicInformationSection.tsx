@@ -2,6 +2,7 @@
 
 import {
   FileText,
+  MapPin,
 } from "lucide-react";
 
 import {
@@ -24,49 +25,14 @@ import {
   Select,
 } from "@/components/ui/select";
 
-import type {
-  EventType,
+import {
+  EVENT_TYPES,
+  isEventType,
 } from "../../../types/event.types";
 
 import type {
   EventFormValues,
 } from "../../../validation/event.schema";
-
-
-/* ==========================================================================
-   Constants
-========================================================================== */
-
-const EVENT_TYPES = [
-  "wedding",
-  "confirmation",
-  "baptism",
-  "communion",
-  "birthday",
-  "other_private",
-
-  "conference",
-  "seminar",
-  "team_building",
-  "reception",
-  "gala_dinner",
-  "other_business",
-
-  "festival",
-  "charity",
-  "sports",
-  "cultural",
-  "music",
-  "other_social",
-] as const satisfies readonly EventType[];
-
-
-const CUSTOM_EVENT_TYPES =
-  new Set<EventType>([
-    "other_private",
-    "other_business",
-    "other_social",
-  ]);
 
 
 /* ==========================================================================
@@ -121,9 +87,7 @@ export default function EventBasicInformationSection({
     );
 
   const hasCustomType =
-    CUSTOM_EVENT_TYPES.has(
-      form.type
-    );
+    form.type === "other";
 
 
   /* ==========================================================================
@@ -133,24 +97,14 @@ export default function EventBasicInformationSection({
   function handleTypeChange(
     value: string
   ) {
-    const type =
-      value as EventType;
+    if (!isEventType(value)) {
+      return;
+    }
 
     setField(
       "type",
-      type
+      value
     );
-
-    if (
-      !CUSTOM_EVENT_TYPES.has(
-        type
-      )
-    ) {
-      setField(
-        "custom_type",
-        ""
-      );
-    }
   }
 
 
@@ -159,103 +113,47 @@ export default function EventBasicInformationSection({
   ========================================================================== */
 
   return (
-    <Section
-      id="osnovno"
-      title={t("title")}
-      description={
-        t("description")
-      }
-      icon={FileText}
-    >
-      <Field
-        id="name"
-        label={
+    <>
+      <Section
+        id="osnovno"
+        title={
           t(
-            "name.label"
+            "title"
           )
         }
-        required
-      >
-        <Input
-          id="name"
-          name="name"
-          value={
-            form.name
-          }
-          onChange={(event) =>
-            setField(
-              "name",
-              event.target.value
-            )
-          }
-          placeholder={
-            t(
-              "name.placeholder"
-            )
-          }
-          disabled={disabled}
-        />
-      </Field>
-
-      <Field
-        id="type"
-        label={
+        description={
           t(
-            "type.label"
+            "description"
           )
         }
-        required
+        icon={
+          FileText
+        }
       >
-        <Select
-          id="type"
-          value={
-            form.type
-          }
-          onValueChange={
-            handleTypeChange
-          }
-          placeholder={
-            t(
-              "type.placeholder"
-            )
-          }
-          options={
-            typeOptions
-          }
-          disabled={disabled}
-        />
-      </Field>
-
-      {hasCustomType && (
         <Field
-          id="custom_type"
+          id="name"
           label={
             t(
-              "customType.label"
-            )
-          }
-          description={
-            t(
-              "customType.description"
+              "name.label"
             )
           }
           required
         >
           <Input
-            id="custom_type"
-            name="custom_type"
+            id="name"
+            name="name"
             value={
-              form.custom_type
+              form.name
             }
             onChange={(event) =>
               setField(
-                "custom_type",
+                "name",
                 event.target.value
               )
             }
             placeholder={
               t(
-                "customType.placeholder"
+                "name.placeholder"
               )
             }
             disabled={
@@ -263,67 +161,153 @@ export default function EventBasicInformationSection({
             }
           />
         </Field>
-      )}
 
-      <Field
-        id="location_name"
-        label={
+        <Field
+          id="type"
+          label={
+            t(
+              "type.label"
+            )
+          }
+          required
+        >
+          <Select
+            id="type"
+            value={
+              form.type
+            }
+            onValueChange={
+              handleTypeChange
+            }
+            placeholder={
+              t(
+                "type.placeholder"
+              )
+            }
+            options={
+              typeOptions
+            }
+            disabled={
+              disabled
+            }
+          />
+        </Field>
+
+        {hasCustomType && (
+          <Field
+            id="custom_type"
+            label={
+              t(
+                "customType.label"
+              )
+            }
+            description={
+              t(
+                "customType.description"
+              )
+            }
+            required
+          >
+            <Input
+              id="custom_type"
+              name="custom_type"
+              value={
+                form.custom_type
+              }
+              onChange={(event) =>
+                setField(
+                  "custom_type",
+                  event.target.value
+                )
+              }
+              placeholder={
+                t(
+                  "customType.placeholder"
+                )
+              }
+              disabled={
+                disabled
+              }
+            />
+          </Field>
+        )}
+      </Section>
+
+      <Section
+        id="location"
+        icon={
+          MapPin
+        }
+        title={
           t(
-            "locationName.label"
+            "location.title"
           )
         }
       >
-        <Input
+        <Field
           id="location_name"
-          name="location_name"
-          value={
-            form.location_name
-          }
-          onChange={(event) =>
-            setField(
-              "location_name",
-              event.target.value
-            )
-          }
-          placeholder={
+          label={
             t(
-              "locationName.placeholder"
+              "locationName.label"
             )
           }
-          autoComplete="organization"
-          disabled={disabled}
-        />
-      </Field>
+        >
+          <Input
+            id="location_name"
+            name="location_name"
+            value={
+              form.location_name
+            }
+            onChange={(event) =>
+              setField(
+                "location_name",
+                event.target.value
+              )
+            }
+            placeholder={
+              t(
+                "locationName.placeholder"
+              )
+            }
+            autoComplete="organization"
+            disabled={
+              disabled
+            }
+          />
+        </Field>
 
-      <Field
-        id="location_address"
-        label={
-          t(
-            "locationAddress.label"
-          )
-        }
-      >
-        <Input
+        <Field
           id="location_address"
-          name="location_address"
-          value={
-            form.location_address
-          }
-          onChange={(event) =>
-            setField(
-              "location_address",
-              event.target.value
-            )
-          }
-          placeholder={
+          label={
             t(
-              "locationAddress.placeholder"
+              "locationAddress.label"
             )
           }
-          autoComplete="street-address"
-          disabled={disabled}
-        />
-      </Field>
-    </Section>
+        >
+          <Input
+            id="location_address"
+            name="location_address"
+            value={
+              form.location_address
+            }
+            onChange={(event) =>
+              setField(
+                "location_address",
+                event.target.value
+              )
+            }
+            placeholder={
+              t(
+                "locationAddress.placeholder"
+              )
+            }
+            autoComplete="street-address"
+            disabled={
+              disabled
+            }
+          />
+        </Field>
+      </Section>
+    </>
   );
 }

@@ -1,0 +1,18 @@
+.dialog { width: min(42rem, calc(100vw - 2rem)); max-width: calc(100vw - 2rem); max-height: calc(100dvh - 2rem); overflow-y: auto; overscroll-behavior: contain; }
+.content { display: flex; gap: 1rem; min-height: 0; }
+.preview { position: relative; flex: 0 0 40%; min-height: 12rem; background: var(--muted); border-radius: 0.75rem; overflow: hidden; }
+.preview img { object-fit: contain; }
+.locations { flex: 1; min-width: 0; }
+.label { margin: 0 0 0.5rem; font-size: 0.875rem; font-weight: 600; }
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; max-height: 18rem; overflow-y: auto; overscroll-behavior: contain; }
+.location { width: 100%; min-height: 2.75rem; height: auto; justify-content: space-between; text-align: left; background: var(--muted); }
+.location span { white-space: normal; }
+.location small { display: block; color: var(--muted-foreground); font-weight: 400; }
+.actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 0.5rem; }
+.actions button { min-height: 2.75rem; }
+@media (max-width: 600px) {
+  .content { flex-direction: column; }
+  .preview { flex-basis: auto; width: 6rem; height: 6rem; min-height: 0; }
+  .list { max-height: 32dvh; }
+  .actions { flex-direction: column-reverse; }
+}

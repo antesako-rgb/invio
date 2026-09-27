@@ -3,9 +3,17 @@ import {
 } from "@/lib/supabase/server";
 
 import type {
+  Database,
+} from "@/lib/supabase/database.types";
+
+import type {
   Event,
   UpdateEventInput,
 } from "../types/event.types";
+
+import {
+  mapEvent,
+} from "./mapEvent";
 
 
 /* ==========================================================================
@@ -24,12 +32,22 @@ export async function updateEvent(
   } =
     await supabase.rpc(
       "update_event",
-      input
+      input as unknown as Database["public"]["Functions"]["update_event"]["Args"]
     );
 
   if (error) {
-    throw error;
+    throw new Error(
+      error.message
+    );
   }
 
-  return data;
+  if (!data) {
+    throw new Error(
+      "Event RPC returned no event."
+    );
+  }
+
+  return mapEvent(
+    data
+  );
 }

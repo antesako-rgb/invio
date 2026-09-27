@@ -38,10 +38,6 @@ export async function uploadDigitalAlbumPhotoAction(
       });
 
     revalidatePath(
-      `/dashboard/albumi/${albumId}`
-    );
-
-    revalidatePath(
       `/editor/album/${albumId}/uredi`
     );
 

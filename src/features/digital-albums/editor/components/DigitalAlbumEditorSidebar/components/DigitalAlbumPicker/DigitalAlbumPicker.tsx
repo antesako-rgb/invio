@@ -1,4 +1,5 @@
 "use client";
+import type { ReactNode } from "react";
 
 import styles
   from "./DigitalAlbumPicker.module.css";
@@ -8,7 +9,7 @@ import styles
    Types
 ========================================================================== */
 
-export interface DigitalAlbumPickerItem<
+interface DigitalAlbumPickerItem<
   TValue extends string
 > {
   value:
@@ -17,8 +18,7 @@ export interface DigitalAlbumPickerItem<
   label:
     string;
 
-  imageSrc:
-    string;
+  preview: ReactNode;
 }
 
 interface DigitalAlbumPickerProps<
@@ -67,6 +67,7 @@ export default function DigitalAlbumPicker<
                 item.value
               }
               type="button"
+              aria-pressed={isActive}
               className={
                 styles.card
               }
@@ -87,15 +88,7 @@ export default function DigitalAlbumPicker<
                   styles.preview
                 }
               >
-                <img
-                  src={
-                    item.imageSrc
-                  }
-                  alt=""
-                  className={
-                    styles.previewImage
-                  }
-                />
+                {item.preview}
               </span>
 
               <span

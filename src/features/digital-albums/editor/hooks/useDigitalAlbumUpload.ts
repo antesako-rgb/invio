@@ -18,7 +18,7 @@ import { createPhotoPreview } from "@/features/photo-upload/utils/createPhotoPre
    Types
 ========================================================================== */
 
-export interface SelectedDigitalAlbumPhoto {
+interface SelectedDigitalAlbumPhoto {
   id: string;
 
   file: File;

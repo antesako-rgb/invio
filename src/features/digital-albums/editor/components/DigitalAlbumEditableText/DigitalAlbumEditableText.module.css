@@ -5,6 +5,12 @@
 .root {
   position: relative;
   display: inline-block;
+  /* Keep the resting outline stable when page visibility enables editing.
+     Otherwise the global outline color transitions to transparent while the
+     newly enabled solid outline is briefly visible. */
+  outline: 1px solid transparent;
+  outline-offset: 0.25rem;
+  transition: outline-color 150ms ease;
 }
 
 /* ==========================================================================
@@ -37,20 +43,10 @@
 }
 
 /* ==========================================================================
-   Editable
+   Keyboard Interaction
 ========================================================================== */
 
-.root[data-editable="true"] {
-  outline: 1px solid transparent;
-  outline-offset: 0.25rem;
-  transition: outline-color 150ms ease;
-}
-
-/* ==========================================================================
-   Hover
-========================================================================== */
-
-.root[data-editable="true"]:hover {
+.root[data-editable="true"]:has(.interaction:focus-visible) {
   outline-color: var(--border);
 }
 
@@ -104,3 +100,6 @@
 .mobileActions > * {
   min-width: 6.5rem;
 }
+.interaction:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.mobileDialog { max-height: calc(100dvh - 2rem); overflow-y: auto; overscroll-behavior: contain; }
+@media (prefers-reduced-motion: reduce) { .root { transition: none; } }

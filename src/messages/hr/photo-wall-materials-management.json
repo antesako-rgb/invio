@@ -1,0 +1,155 @@
+{
+  "PhotoWalls": {
+    "management": {
+      "status": {
+        "published": "Objavljeno",
+        "draft": "Skica"
+      },
+      "actions": {
+        "preview": {
+          "photo-wall": "Pregledaj Photo Wall"
+        },
+        "view": "Otvori",
+        "edit": "Uredi dizajn"
+      },
+      "name": {
+        "label": "Naziv iskustva",
+        "edit": "Uredi naziv",
+        "save": "Spremi naziv",
+        "cancel": "Odustani",
+        "error": "Nije moguće spremiti naziv iskustva."
+      },
+      "updatedAt": "Zadnje ažuriranje: {date}",
+      "delete": {
+        "title": {
+          "photo-wall": "Obriši Photo Wall"
+        },
+        "description": {
+          "photo-wall": "Trajno obrišite ovaj Photo Wall i sve podatke povezane s njim."
+        },
+        "button": {
+          "photo-wall": "Obriši Photo Wall"
+        },
+        "confirm": {
+          "title": {
+            "photo-wall": "Obrisati Photo Wall?"
+          },
+          "description": "Ova radnja je trajna i ne može se poništiti.",
+          "confirm": {
+            "photo-wall": "Obriši Photo Wall"
+          },
+          "cancel": "Odustani"
+        }
+      },
+      "statusCard": {
+        "title": {
+          "photo-wall": "Status Photo Walla"
+        },
+        "description": {
+          "photo-wall": "Upravljajte dostupnošću svog Photo Walla."
+        },
+        "published": {
+          "title": {
+            "photo-wall": "Photo Wall je objavljen"
+          },
+          "description": {
+            "photo-wall": "Gosti koji imaju pristup poveznici mogu pregledavati Photo Wall i sadržaj koji ste odlučili podijeliti."
+          },
+          "action": {
+            "photo-wall": "Poništi objavu Photo Walla"
+          },
+          "success": {
+            "photo-wall": "Objava Photo Walla uspješno je poništena."
+          }
+        },
+        "draft": {
+          "title": {
+            "photo-wall": "Photo Wall nije objavljen"
+          },
+          "description": {
+            "photo-wall": "Gosti ne mogu pristupiti Photo Wallu niti ga pregledavati dok ga ne objavite i omogućite za dijeljenje."
+          },
+          "action": {
+            "photo-wall": "Objavi Photo Wall"
+          },
+          "success": {
+            "photo-wall": "Photo Wall uspješno je objavljen."
+          }
+        }
+      },
+      "photoWall": {
+        "photos": {
+          "title": "Fotografije",
+          "description": "Pregledajte i upravljajte fotografijama podijeljenima na ovom Photo Wallu.",
+          "filters": {
+            "all": "Sve",
+            "favorites": "Favoriti"
+          },
+          "pagination": {
+            "loadMore": "Učitaj još",
+            "loading": "Učitavanje..."
+          },
+          "lightbox": {
+            "close": "Zatvori fotografiju"
+          },
+          "empty": "Još nema podijeljenih fotografija.",
+          "emptyFavorites": "Još nijedna fotografija nije označena kao favorit.",
+          "actions": {
+            "addFavorite": "Dodaj u favorite",
+            "removeFavorite": "Ukloni iz favorita",
+            "delete": "Obriši fotografiju",
+            "deleteConfirm": {
+              "title": "Obrisati fotografiju?",
+              "description": "Ova fotografija bit će trajno obrisana i neće se moći vratiti.",
+              "confirm": "Obriši fotografiju"
+            },
+            "deleteSuccess": "Fotografija je uspješno obrisana."
+          }
+        }
+      },
+      "publicLinkCard": {
+        "title": "Javna poveznica",
+        "description": {
+          "photo-wall": "Podijelite javnu poveznicu svog Photo Walla."
+        },
+        "active": {
+          "title": "Javna poveznica je aktivna",
+          "description": {
+            "photo-wall": "Svatko tko ima ovu poveznicu može pregledavati Photo Wall."
+          }
+        },
+        "inactive": {
+          "title": "Javna poveznica nije aktivna",
+          "description": {
+            "photo-wall": "Poveznica će postati dostupna gostima nakon što objavite Photo Wall."
+          }
+        },
+        "actions": {
+          "copy": "Kopiraj poveznicu",
+          "copied": "Kopirano",
+          "open": {
+            "photo-wall": "Otvori Photo Wall"
+          }
+        }
+      },
+      "settings": {
+        "appearance": {
+          "error": "Promjenu izgleda nije moguće spremiti.",
+          "color": {
+            "title": "Boja",
+            "description": "Odaberite boju Photo Walla koja najbolje odgovara vašem događaju.",
+            "options": {
+              "memiva": "Memiva",
+              "warm": "Topla",
+              "sage": "Kadulja",
+              "rose": "Ružičasta",
+              "blue": "Plava",
+              "lavender": "Lavanda",
+              "charcoal": "Tamna"
+            }
+          }
+        }
+      }
+    }
+  }
+}

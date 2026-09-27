@@ -2,7 +2,13 @@
 
 import { useTranslations } from "next-intl";
 
-import type { ReactNode } from "react";
+import { useImperativeHandle, type ReactNode, type Ref } from "react";
+
+export interface DigitalAlbumNavigation {
+  previous: () => void;
+  next: () => void;
+  goTo: (pageIndex: number) => void;
+}
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -24,6 +30,8 @@ const FLIP_DURATION = 1000;
    Types
 ========================================================================== */
 interface DigitalAlbumFlipBookProps {
+  navigationRef?: Ref<DigitalAlbumNavigation>;
+  soundEnabled?: boolean;
   editable?: boolean;
   children: ReactNode;
 
@@ -47,6 +55,8 @@ interface DigitalAlbumFlipBookProps {
 ========================================================================== */
 export default function DigitalAlbumFlipBook({
   children,
+  soundEnabled = true,
+  navigationRef,
   theme,
   editable = false,
   width = 440,
@@ -73,7 +83,9 @@ export default function DigitalAlbumFlipBook({
     handleFrame,
     handlePrevious,
     handleNext,
+    handleGoTo,
   } = useDigitalAlbumFlipBook({
+    soundEnabled,
     children,
     width,
     height,
@@ -81,6 +93,12 @@ export default function DigitalAlbumFlipBook({
     onVisiblePagesChange,
     onTurnStart,
   });
+
+  useImperativeHandle(navigationRef, () => ({
+    previous: handlePrevious,
+    next: handleNext,
+    goTo: handleGoTo,
+  }));
 
   /* ==========================================================================
      Flip

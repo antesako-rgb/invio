@@ -1,3 +1,5 @@
+import { isDigitalAlbumTheme } from "../config/digitalAlbumThemes";
+import type { DigitalAlbumTheme } from "../types/digitalAlbumDocument.types";
 import {
   z,
 } from "zod";
@@ -8,7 +10,6 @@ import {
 } from "../config/digitalAlbumLayouts";
 
 import type {
-  DigitalAlbumDocument,
   DigitalAlbumPageLayout,
 } from "../types/digitalAlbumDocument.types";
 
@@ -77,8 +78,8 @@ const page =
       layout:
         z.custom<DigitalAlbumPageLayout>(
           (value) =>
-            DIGITAL_ALBUM_LAYOUT_IDS.includes(
-              value as DigitalAlbumPageLayout
+            DIGITAL_ALBUM_LAYOUT_IDS.some(
+              (layout) => layout === value
             )
         ),
 
@@ -198,9 +199,7 @@ const schema =
   z
     .object({
       theme:
-        z.literal(
-          "classic"
-        ),
+        z.custom<DigitalAlbumTheme>(isDigitalAlbumTheme),
 
       pages:
         z.array(
@@ -244,7 +243,7 @@ const schema =
 export function parseDigitalAlbumDocument(
   value:
     unknown
-): DigitalAlbumDocument {
+) {
   return schema.parse(
     value
   );

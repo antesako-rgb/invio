@@ -1,0 +1,24 @@
+.paper {
+  --material-ink: #4a3b30;
+  --material-paper: #fbf6ed;
+  --material-accent: #ad9162;
+  width: 100%;
+  aspect-ratio: var(--material-ratio);
+  container-type: inline-size;
+  position: relative;
+  background: var(--material-paper);
+  color: var(--material-ink);
+  isolation: isolate;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+.paper[data-variant="sage"] {
+  --material-ink: #2e4338;
+  --material-paper: #f2f5ef;
+  --material-accent: #82977e;
+}
+.paper[data-variant="dusty-rose"] {
+  --material-ink: #53353f;
+  --material-paper: #fbf1f2;
+  --material-accent: #b58b94;
+}

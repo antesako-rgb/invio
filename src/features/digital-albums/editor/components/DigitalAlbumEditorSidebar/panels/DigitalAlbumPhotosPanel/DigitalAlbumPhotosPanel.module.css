@@ -192,8 +192,27 @@
     var(--ring);
 
   outline-offset:
-    2px;
+    -3px;
 }
+
+.selectButton:disabled { cursor: default; }
+.selectButton:disabled:hover { transform: none; border-color: transparent; }
+.usage {
+  position: absolute;
+  bottom: 0.35rem;
+  left: 0.35rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.35rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 0;
+  min-width: 2rem;
+  min-height: 2rem;
+  pointer-events: none;
+}
+.usedRemove { color: var(--destructive); background: var(--background); }
 
 .selectButton[data-selected="true"] {
   border-color:
@@ -269,15 +288,17 @@
 
   opacity:
     0;
+  pointer-events: none;
 
   transition:
     opacity 150ms ease;
 }
 
 .photo:hover .removeButton,
-.removeButton:focus-within {
+.photo:focus-within .removeButton {
   opacity:
     1;
+  pointer-events: auto;
 }
 @media (
   max-width: 320px
@@ -294,4 +315,10 @@
     width:
       100%;
   }
+}
+@media (hover: none) {
+  .removeButton { opacity: 1; pointer-events: auto; }
+}
+@media (pointer: coarse) {
+  .removeButton button { min-width: 2.75rem; min-height: 2.75rem; }
 }

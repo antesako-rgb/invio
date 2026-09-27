@@ -1,3 +1,5 @@
+import { swapAlbumPhotoSlots } from "../../../utils/digitalAlbumPhotoContext";
+import { removeDigitalAlbumPhotoReferences } from "../../../utils/digitalAlbumPhotoReferences";
 import type {
   DigitalAlbumDocument,
   DigitalAlbumPhotoSlot,
@@ -38,5 +40,11 @@ export default function useDigitalAlbumPhotoActions({
   function removePhotoFromPage(slotId: string) {
     updateSlot(slotId, (s) => ({ id: s.id, photoId: null }));
   }
-  return { selectPhoto, removePhotoFromPage, updateSlot };
+  function swapPhotoSlots(sourceId: string, targetId: string) {
+    commit((document) => swapAlbumPhotoSlots(document, sourceId, targetId));
+  }
+  function removePhotoEverywhere(photoId: string) {
+    commit((document) => removeDigitalAlbumPhotoReferences(document, photoId));
+  }
+  return { selectPhoto, removePhotoFromPage, updateSlot, swapPhotoSlots, removePhotoEverywhere };
 }

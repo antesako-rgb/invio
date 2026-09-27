@@ -11,16 +11,22 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import styles from "./DigitalAlbumEditableText.module.css";
 interface Props {
+  field?: string;
   value?: string;
+  displayValue?: string;
   placeholder: string;
   editable?: boolean;
+  showPlaceholder?: boolean;
   className?: string;
   onChange?: (value: string) => void;
 }
 export default function DigitalAlbumEditableText({
   value,
+  field,
+  displayValue,
   placeholder,
   editable = false,
+  showPlaceholder = editable,
   className,
   onChange,
 }: Props) {
@@ -36,7 +42,7 @@ export default function DigitalAlbumEditableText({
     const next = cancel ? (value ?? "") : (ref.current?.innerText.trim() ?? "");
     setEditing(false);
     if (ref.current)
-      ref.current.textContent = next || (editable ? placeholder : "");
+      ref.current.textContent = next || (showPlaceholder ? placeholder : "");
     if (!cancel && next !== (value ?? "")) onChange?.(next);
   }
   useEffect(() => {
@@ -68,11 +74,16 @@ export default function DigitalAlbumEditableText({
       selection?.addRange(range);
     });
   }
+  // Empty editor prompts must not reserve space in public/print layouts.
+  if (!editable && !showPlaceholder && !value?.trim()) return null;
+
   return (
     <>
       <span
         className={[styles.root, className].filter(Boolean).join(" ")}
         data-album-text
+        data-album-text-area
+        data-album-field={field}
         data-opf-no-flip={editable || undefined}
         data-editable={editable || undefined}
         data-editing={editing || undefined}
@@ -83,6 +94,9 @@ export default function DigitalAlbumEditableText({
           data-album-text-value
           className={styles.value}
           contentEditable={editing}
+          role={editing ? "textbox" : undefined}
+          aria-label={editing ? placeholder : undefined}
+          aria-multiline={editing || undefined}
           suppressContentEditableWarning
           tabIndex={editing ? 0 : undefined}
           onBlur={() => finish()}
@@ -103,13 +117,13 @@ export default function DigitalAlbumEditableText({
             if (editing) event.stopPropagation();
           }}
         >
-          {editing ? null : value?.trim() ? value : editable ? placeholder : ""}
+          {editing ? null : value?.trim() ? (displayValue ?? value) : showPlaceholder ? placeholder : ""}
         </span>
         {editable && !editing && (
           <button
             type="button"
             className={styles.interaction}
-            aria-label={value || placeholder}
+            aria-label={`${t("editText")}: ${placeholder}`}
             onPointerDown={(event) => {
               event.preventDefault();
               event.stopPropagation();
@@ -142,7 +156,7 @@ export default function DigitalAlbumEditableText({
     <Textarea
       autoFocus
       className={styles.mobileInput}
-      aria-label={t("editText")}
+      aria-label={placeholder}
       value={draft}
       onChange={(event) =>
         setDraft(event.target.value)

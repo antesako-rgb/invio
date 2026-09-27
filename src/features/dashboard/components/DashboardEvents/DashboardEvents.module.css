@@ -3,9 +3,14 @@
 ========================================================================== */
 
 .section {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    1.5rem;
 }
 
 
@@ -14,29 +19,48 @@
 ========================================================================== */
 
 .header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
+  display:
+    flex;
+
+  align-items:
+    flex-end;
+
+  justify-content:
+    space-between;
+
+  gap:
+    1.5rem;
 }
 
 .title {
-  margin: 0;
+  margin:
+    0;
 
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.3;
+  color:
+    var(--foreground);
 
-  color: var(--foreground);
+  font-size:
+    1.25rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.3;
 }
 
 .description {
-  margin: 6px 0 0;
+  margin:
+    0.375rem 0 0;
 
-  font-size: 14px;
-  line-height: 1.5;
+  color:
+    var(--muted-foreground);
 
-  color: var(--muted-foreground);
+  font-size:
+    0.875rem;
+
+  line-height:
+    1.5;
 }
 
 
@@ -45,9 +69,14 @@
 ========================================================================== */
 
 .list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    0.75rem;
 }
 
 
@@ -56,20 +85,33 @@
 ========================================================================== */
 
 .card {
-  display: grid;
+  display:
+    grid;
+
   grid-template-columns:
-    72px
-    minmax(0, 1fr)
+    3.75rem
+    minmax(9.375rem, 1.4fr)
+    repeat(
+      2,
+      minmax(10rem, 1fr)
+    )
     auto;
 
-  align-items: center;
+  align-items:
+    center;
 
-  gap: 24px;
+  gap:
+    1.25rem;
 
-  padding: 20px;
+  padding:
+    1.25rem;
 
-  border: 1px solid var(--border);
-  border-radius: 16px;
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    1rem;
 
   background:
     var(--card);
@@ -89,7 +131,7 @@
     );
 
   box-shadow:
-    0 6px 24px
+    0 0.375rem 1.5rem
     rgb(0 0 0 / 5%);
 }
 
@@ -99,44 +141,69 @@
 ========================================================================== */
 
 .date {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display:
+    flex;
 
-  width: 72px;
-  height: 72px;
+  flex-direction:
+    column;
 
-  border-radius: 14px;
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    3.75rem;
+
+  height:
+    4rem;
+
+  border-radius:
+    0.875rem;
 
   background:
     var(--muted);
 
-  text-align: center;
+  text-align:
+    center;
 }
 
 .dateDay {
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1;
-
-  letter-spacing: -0.03em;
-
   color:
     var(--foreground);
+
+  font-size:
+    1.625rem;
+
+  font-weight:
+    700;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    -0.03em;
 }
 
 .dateMonth {
-  margin-top: 6px;
-
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1;
-
-  letter-spacing: 0.08em;
+  margin-top:
+    0.375rem;
 
   color:
     var(--muted-foreground);
+
+  font-size:
+    0.6875rem;
+
+  font-weight:
+    700;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    0.08em;
 }
 
 
@@ -145,43 +212,59 @@
 ========================================================================== */
 
 .content {
-  min-width: 0;
+  min-width:
+    0;
 }
 
 .eventHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display:
+    flex;
 
-  gap: 16px;
+  align-items:
+    flex-start;
+
+  justify-content:
+    space-between;
+
+  gap:
+    1rem;
 }
 
 .eventName {
-  margin: 0;
+  margin:
+    0;
 
-  overflow: hidden;
-
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.35;
+  overflow-wrap:
+    anywhere;
 
   color:
     var(--foreground);
 
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size:
+    1.0625rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.35;
 }
 
 .eventType {
-  display: block;
+  display:
+    block;
 
-  margin-top: 3px;
-
-  font-size: 13px;
-  line-height: 1.4;
+  margin-top:
+    0.1875rem;
 
   color:
     var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.4;
 }
 
 
@@ -190,57 +273,174 @@
 ========================================================================== */
 
 .meta {
-  display: flex;
-  flex-wrap: wrap;
+  display:
+    flex;
 
-  gap: 6px 18px;
+  flex-wrap:
+    wrap;
 
-  margin-top: 12px;
+  gap:
+    0.375rem 1.125rem;
+
+  margin-top:
+    0.75rem;
 }
 
 .metaItem {
-  display: flex;
-  align-items: center;
+  display:
+    flex;
 
-  gap: 7px;
+  align-items:
+    center;
 
-  min-width: 0;
+  gap:
+    0.4375rem;
 
-  font-size: 13px;
-  line-height: 1.4;
+  min-width:
+    0;
 
   color:
     var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.4;
 }
 
 .metaItem svg {
-  width: 15px;
-  height: 15px;
+  width:
+    0.9375rem;
 
-  flex-shrink: 0;
+  height:
+    0.9375rem;
+
+  flex-shrink:
+    0;
 }
 
 .metaItem span {
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap:
+    anywhere;
 }
 
 
 /* ==========================================================================
-   Guests
+   Product
 ========================================================================== */
 
-.guests {
-  margin: 10px 0 0;
+.product {
+  display:
+    flex;
 
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.4;
+  flex-direction:
+    column;
+
+  align-items:
+    flex-start;
+
+  gap:
+    0.75rem;
+
+  min-width:
+    0;
+
+  height:
+    100%;
+
+  padding-left:
+    1.25rem;
+
+  border-left:
+    1px solid
+    var(--border);
+}
+
+.productHeading {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    0.5rem;
+}
+
+.productHeading svg {
+  width:
+    1.25rem;
+
+  height:
+    1.25rem;
+
+  flex-shrink:
+    0;
 
   color:
-    var(--foreground);
+    var(--primary);
+}
+
+.productHeading h4 {
+  margin:
+    0;
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+}
+
+.summary {
+  margin:
+    0;
+
+  color:
+    var(--muted-foreground);
+
+  font-size:
+    0.8125rem;
+
+  line-height:
+    1.5;
+}
+
+.productAction {
+  width:
+    100%;
+
+  min-height:
+    44px;
+
+  height:
+    auto;
+
+  margin-top:
+    auto;
+
+  padding:
+    0.5rem 0.75rem;
+
+  white-space:
+    normal;
+
+  text-align:
+    center;
+}
+
+
+/* ==========================================================================
+   Open Event
+========================================================================== */
+
+.openEvent {
+  white-space:
+    normal;
+
+  text-align:
+    center;
 }
 
 
@@ -249,103 +449,147 @@
 ========================================================================== */
 
 .footer {
-  display: flex;
-  justify-content: flex-end;
+  display:
+    flex;
 
-  margin-top: -4px;
+  justify-content:
+    flex-end;
+
+  margin-top:
+    -0.25rem;
+}
+
+.emptyAction {
+  width: auto;
+  align-self: center;
+}
+/* ==========================================================================
+   Tablet
+========================================================================== */
+
+@media (max-width: 1200px) {
+  .card {
+    grid-template-columns:
+      3.75rem
+      minmax(0, 1fr);
+
+    gap:
+      1.25rem;
+  }
+
+  .product {
+    grid-column:
+      1 / -1;
+
+    padding:
+      1rem 0 0;
+
+    border-top:
+      1px solid
+      var(--border);
+
+    border-left:
+      0;
+  }
+
+  .productAction {
+    width:
+      auto;
+
+    min-width:
+      11.25rem;
+  }
+
+  .openEvent {
+    grid-column:
+      1 / -1;
+
+    justify-self:
+      end;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  .card {
+    grid-template-columns:
+      3.75rem
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+  }
+
+  .content {
+    grid-column:
+      2 / -1;
+  }
+
+  .product {
+    grid-column:
+      1 / 3;
+  }
+
+  .product + .product {
+    grid-column:
+      3;
+  }
+
+  .productAction {
+    min-width:
+      0;
+  }
 }
 
 
 /* ==========================================================================
-   Responsive
+   Mobile
 ========================================================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .header {
-    align-items: flex-start;
-  }
+    flex-direction:
+      column;
 
-  .card {
-    grid-template-columns:
-      60px
-      minmax(0, 1fr);
+    align-items:
+      stretch;
 
-    gap: 16px;
-
-    padding: 16px;
-  }
-
-  .date {
-    width: 60px;
-    height: 60px;
-
-    border-radius: 12px;
-  }
-
-  .dateDay {
-    font-size: 22px;
-  }
-
-  .card > :last-child {
-    grid-column: 2;
-
-    justify-self: flex-start;
-  }
-}
-
-
-@media (max-width: 560px) {
-  .header {
-    flex-direction: column;
+    gap:
+      1rem;
   }
 
   .header > :last-child {
-    width: 100%;
+    width:
+      100%;
+
+    min-height:
+      44px;
   }
 
   .card {
-    grid-template-columns:
-      52px
-      minmax(0, 1fr);
+    gap:
+      1rem;
 
-    align-items: flex-start;
-
-    gap: 14px;
-  }
-
-  .date {
-    width: 52px;
-    height: 52px;
-  }
-
-  .dateDay {
-    font-size: 20px;
-  }
-
-  .dateMonth {
-    margin-top: 4px;
-
-    font-size: 10px;
+    padding:
+      1rem;
   }
 
   .meta {
-    flex-direction: column;
+    flex-direction:
+      column;
 
-    gap: 6px;
+    gap:
+      0.5rem;
   }
 
-  .card > :last-child {
-    grid-column:
-      1 / -1;
-
-    width: 100%;
-  }
-
-  .footer {
-    justify-content: stretch;
+  .productAction,
+  .openEvent {
+    width:
+      100%;
   }
 
   .footer > * {
-    width: 100%;
+    width:
+      100%;
+
+    min-height:
+      44px;
   }
 }
