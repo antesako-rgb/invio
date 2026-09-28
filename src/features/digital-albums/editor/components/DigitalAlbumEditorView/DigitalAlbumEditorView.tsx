@@ -1,4 +1,6 @@
 "use client";
+import { DIGITAL_ALBUM_MOBILE_DEFAULT_SNAP_POINT as EDITOR_MOBILE_DEFAULT_SNAP_POINT } from "../../hooks/useDigitalAlbumMobilePanel";
+import DigitalAlbumReaderFrame from "../../../components/album-renderer/DigitalAlbumViewer/DigitalAlbumReaderFrame";
 import { X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -34,7 +36,6 @@ import type {
 import type { DigitalAlbumPhotoWithPhoto } from "../../../types/digitalAlbumPhoto.types";
 import type { PhotoWall } from "@/features/photo-walls/types/photoWall.types";
 import {
-  EDITOR_MOBILE_DEFAULT_SNAP_POINT,
   EDITOR_MOBILE_FULL_SNAP_POINT,
 } from "@/features/editor/components/EditorMobilePanel/EditorMobilePanel";
 import { resolveDigitalAlbumPhotoView, type DigitalAlbumPhotoView } from "../../utils/resolveDigitalAlbumPhotoView";
@@ -249,7 +250,7 @@ export default function DigitalAlbumEditorView({
         onMobileSnapPointChange={setMobileSnapPoint}
         albumId={albumId}
         activeStep={activeStep}
-        onStepChange={(step) => { if (assetLock.current) return; closePhotoDialog(); setPhotoView(null); setActiveStep(step); }}
+        onStepChange={(step) => { if (assetLock.current) return; closePhotoDialog(); setPhotoView(null); setMobileSnapPoint(EDITOR_MOBILE_DEFAULT_SNAP_POINT); setActiveStep(step); }}
         headerProps={{
           eventId,
           onExportBusy: setExportBusy,
@@ -335,11 +336,15 @@ export default function DigitalAlbumEditorView({
                       if (editingLocked || assetLock.current) return;
                       editor.removePhotoFromPage(activeSlot.id);
                       setPhotoView(null);
+                      setMobileSnapPoint(EDITOR_MOBILE_DEFAULT_SNAP_POINT);
                     }}
                     onSwap={(targetId) => {
                       if (editingLocked || assetLock.current) return;
                       const target = contextSlots.find(({ slot }) => slot.id === targetId)?.slot;
-                      if (target?.photoId) editor.swapPhotoSlots(activeSlot.id, targetId);
+                      if (target?.photoId) {
+                        editor.swapPhotoSlots(activeSlot.id, targetId);
+                        setMobileSnapPoint(EDITOR_MOBILE_DEFAULT_SNAP_POINT);
+                      }
                     }}
                   />
                 ) : undefined}
@@ -430,8 +435,12 @@ export default function DigitalAlbumEditorView({
           </>
         }
       >
-        <div ref={canvas} className={styles.canvas}>
-          <DigitalAlbumRenderer
+        <div className={styles.canvas}>
+          <DigitalAlbumReaderFrame document={displayDocument} photos={rendererPhotos}
+            editorMode disabled={editingLocked} visiblePageIndexes={editor.visiblePageIndexes}>
+          {({ navigationRef, soundEnabled }) => <div ref={canvas} className={styles.canvas}><DigitalAlbumRenderer
+            navigationRef={navigationRef}
+            soundEnabled={soundEnabled}
             editable
             document={displayDocument}
             photos={rendererPhotos}
@@ -466,7 +475,8 @@ export default function DigitalAlbumEditorView({
                 }
               }
             }}
-          />
+          /></div>}
+          </DigitalAlbumReaderFrame>
         </div>
       </DigitalAlbumEditor>
       {photoDialog?.used && (
@@ -556,6 +566,7 @@ export default function DigitalAlbumEditorView({
               onApply={(slot) => {
                 void editor.updateSlot(slot.id, () => slot, crop.pageId);
                 setCrop(null);
+                setMobileSnapPoint(EDITOR_MOBILE_DEFAULT_SNAP_POINT);
               }}
             />
           )}

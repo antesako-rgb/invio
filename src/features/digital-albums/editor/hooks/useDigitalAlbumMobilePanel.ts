@@ -3,14 +3,15 @@
 import { useEffect, useState } from "react";
 import {
   type EditorMobilePanelChangeDetails,
-  EDITOR_MOBILE_DEFAULT_SNAP_POINT,
 } from "@/features/editor/components/EditorMobilePanel/EditorMobilePanel";
+
+export const DIGITAL_ALBUM_MOBILE_DEFAULT_SNAP_POINT = 0.35;
 
 // Album-specific policy: the non-modal sheet stays open while using the canvas.
 // The shared drawer still handles Escape, explicit close and handle swipes.
 export default function useDigitalAlbumMobilePanel() {
   const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
-  const [mobileSnapPoint, setMobileSnapPoint] = useState(EDITOR_MOBILE_DEFAULT_SNAP_POINT);
+  const [mobileSnapPoint, setMobileSnapPoint] = useState(DIGITAL_ALBUM_MOBILE_DEFAULT_SNAP_POINT);
 
   useEffect(() => {
     const mobile = window.matchMedia("(max-width: 767px)");

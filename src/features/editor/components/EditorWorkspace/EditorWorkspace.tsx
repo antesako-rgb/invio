@@ -11,6 +11,7 @@ import styles
 ========================================================================== */
 
 interface EditorWorkspaceProps {
+  sidebarCollapsed?: boolean;
   toolRail?:
     ReactNode;
 
@@ -27,6 +28,7 @@ interface EditorWorkspaceProps {
 ========================================================================== */
 
 export default function EditorWorkspace({
+  sidebarCollapsed = false,
   toolRail,
   sidebar,
   children,
@@ -50,6 +52,7 @@ export default function EditorWorkspace({
 
       {sidebar && (
         <aside
+          hidden={sidebarCollapsed}
           className={
             styles.sidebar
           }

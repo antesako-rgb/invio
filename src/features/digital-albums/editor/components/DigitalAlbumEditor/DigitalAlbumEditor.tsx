@@ -1,6 +1,10 @@
 "use client";
+import { DIGITAL_ALBUM_MOBILE_DEFAULT_SNAP_POINT } from "../../hooks/useDigitalAlbumMobilePanel";
 
-import type { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
+import { useTranslations } from "next-intl";
+import { PanelLeftOpen, PanelLeftClose } from "lucide-react";
+import IconButton from "@/components/ui/icon-button/IconButton";
 
 import DigitalAlbumEditorHeader from "@/features/digital-albums/editor/components/DigitalAlbumEditorHeader/DigitalAlbumEditorHeader";
 
@@ -60,6 +64,8 @@ export default function DigitalAlbumEditor({
   mobileSnapPoint,
   onMobileSnapPointChange,
 }: DigitalAlbumEditorProps) {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const navigationT = useTranslations("Navigation.dashboard");
   /* ==========================================================================
      Render
   ========================================================================== */
@@ -77,6 +83,8 @@ export default function DigitalAlbumEditor({
             />
 
             <EditorMobilePanel
+              defaultSnapPoint={DIGITAL_ALBUM_MOBILE_DEFAULT_SNAP_POINT}
+              scrollResetKey={`${activeStep}:${mobileSnapPoint}`}
               open={mobilePanelOpen}
               onOpenChange={onMobilePanelOpenChange}
               snapPoint={mobileSnapPoint}
@@ -90,11 +98,23 @@ export default function DigitalAlbumEditor({
       }
     >
       <DigitalAlbumEditorWorkspace
+        sidebarCollapsed={sidebarCollapsed}
         toolRail={
+          <>
+          <IconButton
+            className="mx-auto mb-3 flex"
+            aria-label={navigationT(sidebarCollapsed ? "expand" : "collapse")}
+            title={navigationT(sidebarCollapsed ? "expand" : "collapse")}
+            aria-expanded={!sidebarCollapsed}
+            onClick={() => setSidebarCollapsed((value) => !value)}
+          >
+            {sidebarCollapsed ? <PanelLeftOpen aria-hidden="true" /> : <PanelLeftClose aria-hidden="true" />}
+          </IconButton>
           <DigitalAlbumEditorToolRail
             activeStep={activeStep}
-            onStepChange={onStepChange}
+            onStepChange={(step) => { onStepChange(step); setSidebarCollapsed(false); }}
           />
+          </>
         }
         sidebar={sidebar}
       >

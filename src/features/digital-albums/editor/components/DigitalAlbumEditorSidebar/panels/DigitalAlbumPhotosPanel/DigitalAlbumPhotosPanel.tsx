@@ -94,6 +94,7 @@ export default function DigitalAlbumPhotosPanel({
     if (pickerTargetId === null) return;
     const button = panel.current?.querySelector<HTMLButtonElement>("button:not(:disabled)");
     if (!button?.getClientRects().length) return;
+    if (window.matchMedia("(max-width: 767px)").matches) return;
     button.focus({ preventScroll: true });
     button.scrollIntoView({ block: "nearest" });
   }, [pickerTargetId]);

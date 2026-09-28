@@ -16,7 +16,7 @@ const BASE_FONT_SIZE = 16;
 
 const GEOMETRY_EPSILON = 0.5;
 
-const MOBILE_BREAKPOINT = 768;
+const MOBILE_BREAKPOINT = 900;
 
 /* ==========================================================================
    Types

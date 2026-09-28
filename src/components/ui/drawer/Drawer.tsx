@@ -41,6 +41,7 @@ function DrawerClose(props: ComponentProps<typeof DrawerPrimitive.Close>) {
 interface DrawerContentProps
   extends ComponentProps<typeof DrawerPrimitive.Popup> {
   children: ReactNode;
+  contentRef?: ComponentProps<typeof DrawerPrimitive.Content>["ref"];
 
   portalContainer?: ComponentProps<typeof DrawerPrimitive.Portal>["container"];
 
@@ -55,6 +56,7 @@ function DrawerContent({
   showCloseButton = true,
   handleOnly = false,
   portalContainer,
+  contentRef,
   ...props
 }: DrawerContentProps) {
   return (
@@ -69,6 +71,7 @@ function DrawerContent({
           </div>
 
           <DrawerPrimitive.Content
+            ref={contentRef}
             data-base-ui-swipe-ignore={handleOnly ? "" : undefined}
             className={styles.content}
           >

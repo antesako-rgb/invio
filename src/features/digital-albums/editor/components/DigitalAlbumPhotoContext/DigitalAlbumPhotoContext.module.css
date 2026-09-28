@@ -37,5 +37,8 @@
   color: var(--accent-foreground);
 }
 @media (max-width: 767px) {
+  .root { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: 0.75rem; }
+  .back, .label { grid-column: 1 / -1; }
   .thumbnail { max-width: 5rem; aspect-ratio: 1; }
+  .actions { min-width: 0; }
 }

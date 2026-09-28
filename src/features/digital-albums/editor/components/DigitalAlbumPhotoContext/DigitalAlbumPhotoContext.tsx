@@ -30,6 +30,7 @@ export default function DigitalAlbumPhotoContext({ label, imageUrl, slots, activ
   useEffect(() => {
     const element = backButton.current;
     if (!element?.getClientRects().length) return;
+    if (window.matchMedia("(max-width: 767px)").matches) return;
     element.focus({ preventScroll: true });
     element.scrollIntoView({ block: "nearest" });
   }, [activeSlotId]);

@@ -659,6 +659,7 @@ test("album mobile panel preserves canvas interaction, closes explicitly/on desk
   try {
     const usePanel = album("editor/hooks/useDigitalAlbumMobilePanel").default;
     const panel = usePanel();
+    assert.equal(panel.mobileSnapPoint, 0.35);
     const cleanup = effects[0]();
     panel.changeMobilePanelOpen(true);
     for (const reason of ["outside-press", "focus-out"]) {
@@ -1177,4 +1178,19 @@ test("album font scope is shared by print, flipbook and previews; Materials keep
   const catalog = read("features/photo-walls/editor/fonts/photoWallMaterialFonts.ts");
   for (const name of ["allura", "marcellus", "playfairDisplay"]) assert.ok(catalog.includes(`${name}.variable`));
   assert.doesNotMatch(catalog, /Allura\(|Marcellus\(|Playfair_Display\(/);
+});
+
+
+test("collapsing the editor sidebar hides its panel without removing workspace children", () => {
+  const Workspace = load(resolve(root, "src/features/editor/components/EditorWorkspace/EditorWorkspace.tsx")).default;
+  const render = (sidebarCollapsed) => renderToStaticMarkup(React.createElement(Workspace, {
+    sidebarCollapsed, toolRail: "rail", sidebar: React.createElement("input", { defaultValue: "active tool draft" }),
+  }, React.createElement("div", { "data-book": true }, "same album")));
+  const open = render(false);
+  const closed = render(true);
+  assert.doesNotMatch(open, /<aside[^>]*hidden/);
+  assert.match(closed, /<aside[^>]*hidden/);
+  assert.match(closed, /active tool draft/);
+  assert.match(closed, /same album/);
+  assert.match(closed, /rail/);
 });

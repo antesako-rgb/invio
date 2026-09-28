@@ -194,7 +194,7 @@
 }
 
 @media (
-  max-width: 768px
+  max-width: 900px
 ) {
   .book {
     max-width:
@@ -236,7 +236,7 @@
    Do not gate on --flat: incoming pages also use drawSoft during a turn.
    Hard covers keep the engine's existing lighting unchanged.
    No filters, animated paint properties, dimensions or extra frame work. */
-@media (min-width: 769px) {
+@media (min-width: 901px) {
   .book :global(.opf-page--soft)::after {
     content: "";
     position: absolute;

@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComponentProps, ReactNode } from "react";
+import { useLayoutEffect, useMemo, useRef, type ComponentProps, type ReactNode } from "react";
 
 import { Drawer, DrawerContent } from "@/components/ui/drawer/Drawer";
 
@@ -11,11 +11,6 @@ import { Drawer, DrawerContent } from "@/components/ui/drawer/Drawer";
 export const EDITOR_MOBILE_DEFAULT_SNAP_POINT = 0.23;
 export const EDITOR_MOBILE_FULL_SNAP_POINT = 1;
 
-const EDITOR_MOBILE_SNAP_POINTS = [
-  EDITOR_MOBILE_DEFAULT_SNAP_POINT,
-  EDITOR_MOBILE_FULL_SNAP_POINT,
-];
-
 /* ==========================================================================
    Types
 ========================================================================== */
@@ -25,6 +20,8 @@ export type EditorMobilePanelChangeDetails = Parameters<
 >[1];
 
 interface EditorMobilePanelProps {
+  defaultSnapPoint?: number;
+  scrollResetKey?: string;
   snapPoint?: number;
   onSnapPointChange?: (snapPoint: number) => void;
   handleOnly?: boolean;
@@ -40,6 +37,8 @@ interface EditorMobilePanelProps {
 ========================================================================== */
 
 export default function EditorMobilePanel({
+  defaultSnapPoint = EDITOR_MOBILE_DEFAULT_SNAP_POINT,
+  scrollResetKey,
   open,
   children,
   onOpenChange,
@@ -47,6 +46,11 @@ export default function EditorMobilePanel({
   onSnapPointChange,
   handleOnly,
 }: EditorMobilePanelProps) {
+  const snapPoints = useMemo(() => [defaultSnapPoint, EDITOR_MOBILE_FULL_SNAP_POINT], [defaultSnapPoint]);
+  const content = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    if (open && scrollResetKey !== undefined && content.current) content.current.scrollTop = 0;
+  }, [open, scrollResetKey]);
   /* ==========================================================================
      Render
   ========================================================================== */
@@ -62,9 +66,9 @@ export default function EditorMobilePanel({
           onSnapPointChange?.(point);
         }
       }}
-      snapPoints={EDITOR_MOBILE_SNAP_POINTS}
+      snapPoints={snapPoints}
     >
-      <DrawerContent handleOnly={handleOnly}>{children}</DrawerContent>
+      <DrawerContent contentRef={content} initialFocus={scrollResetKey !== undefined ? false : undefined} handleOnly={handleOnly}>{children}</DrawerContent>
     </Drawer>
   );
 }

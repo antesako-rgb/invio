@@ -14,6 +14,7 @@ import styles
 ========================================================================== */
 
 interface DigitalAlbumEditorWorkspaceProps {
+  sidebarCollapsed?: boolean;
   toolRail?:
     ReactNode;
 
@@ -30,6 +31,7 @@ interface DigitalAlbumEditorWorkspaceProps {
 ========================================================================== */
 
 export default function DigitalAlbumEditorWorkspace({
+  sidebarCollapsed = false,
   toolRail,
   sidebar,
   children,
@@ -40,6 +42,7 @@ export default function DigitalAlbumEditorWorkspace({
 
   return (
     <EditorWorkspace
+      sidebarCollapsed={sidebarCollapsed}
       toolRail={toolRail}
       sidebar={
         sidebar

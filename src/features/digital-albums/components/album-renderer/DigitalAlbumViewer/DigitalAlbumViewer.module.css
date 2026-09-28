@@ -55,3 +55,21 @@
 }
 
 .mobileDrawer { height: 82dvh; }
+
+/* Editor shares reader controls while keeping its existing canvas. */
+.root.editor { min-height: 0; padding: 0; overflow: visible; }
+.editor .workspace { width: 100%; max-width: none; }
+@media (min-width: 768px) {
+  .editor .workspace { width: min(100%, calc((100dvh - 12rem) * 1.375)); max-width: 880px; }
+  .editor .workspace[data-docked] { width: min(100%, calc((100dvh - 12rem) * 1.375 + 21rem)); max-width: calc(880px + 21rem); }
+  .editor .dockedPanel { max-height: min(640px, calc(100dvh - 12rem)); }
+}
+@media (max-width: 767px) {
+  .root.editor { gap: .5rem; }
+}
+
+/* The editor rail remains desktop-sized here, but the book is single-page. */
+@media (min-width: 768px) and (max-width: 900px) {
+  .editor .workspace { width: min(100%, calc((100dvh - 12rem) * .6875)); max-width: 440px; }
+  .editor .workspace[data-docked] { width: min(100%, calc((100dvh - 12rem) * .6875 + 21rem)); max-width: calc(440px + 21rem); }
+}
