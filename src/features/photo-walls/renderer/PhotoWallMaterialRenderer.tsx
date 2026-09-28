@@ -1,3 +1,4 @@
+import { photoWallMaterialFonts } from "../editor/fonts/photoWallMaterialFonts";
 import type { CSSProperties } from "react";
 import { getPhotoWallMaterialTemplate } from "../cards/registry/photoWallMaterialTemplateRegistry";
 import type { PhotoWallMaterialRendererProps } from "../types/photoWallMaterialRenderer.types";
@@ -11,7 +12,7 @@ export default function PhotoWallMaterialRenderer({ templateId, variantId, mode,
     "--material-ratio": definition.config.card.aspectRatio,
   };
   return (
-    <div className={styles.paper} data-photo-wall-material data-template={templateId}
+    <div className={`${styles.paper} ${photoWallMaterialFonts}`} data-photo-wall-material data-template={templateId}
       data-variant={variantId} data-mode={mode} style={style}>
       <Card data={data} />
     </div>

@@ -1,7 +1,7 @@
+import { allura, marcellus, playfairDisplay } from "@/styles/fonts/albumMaterialFonts";
 import {
   Alex_Brush,
   Allison,
-  Allura,
   Arizonia,
   Bangers,
   Beau_Rivage,
@@ -20,11 +20,9 @@ import {
   Kalnia_Glaze,
   Luckiest_Guy,
   Manrope,
-  Marcellus,
   Mrs_Saint_Delafield,
   Parisienne,
   Pinyon_Script,
-  Playfair_Display,
   Plus_Jakarta_Sans,
   Sacramento,
   Style_Script,
@@ -63,18 +61,7 @@ const allison =
       "400",
   });
 
-const allura =
-  Allura({
-    variable:
-      "--font-allura",
 
-    subsets: [
-      "latin",
-    ],
-
-    weight:
-      "400",
-  });
 
 const arizonia =
   Arizonia({
@@ -292,18 +279,7 @@ const manrope =
     ],
   });
 
-const marcellus =
-  Marcellus({
-    variable:
-      "--font-marcellus",
 
-    subsets: [
-      "latin",
-    ],
-
-    weight:
-      "400",
-  });
 
 const mrsSaintDelafield =
   Mrs_Saint_Delafield({
@@ -344,15 +320,7 @@ const pinyonScript =
       "400",
   });
 
-const playfairDisplay =
-  Playfair_Display({
-    variable:
-      "--font-playfair-display",
 
-    subsets: [
-      "latin",
-    ],
-  });
 
 const plusJakartaSans =
   Plus_Jakarta_Sans({

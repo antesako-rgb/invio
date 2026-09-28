@@ -33,6 +33,7 @@ export async function generateDigitalAlbumPdf({
   let browser: Browser | undefined;
   let stage = "configuration";
   const responses = new Map<string, number>();
+  const failedFontRequests: Array<{ assetId: string; httpStatus: number | null; result: string }> = [];
   try {
     assertPdfRenderConfiguration();
     const origin = new URL(printUrl).origin;
@@ -49,6 +50,14 @@ export async function generateDigitalAlbumPdf({
     const page = await browser.newPage();
     page.on("response", (response) => {
       if (responses.size < 1000) responses.set(response.url(), response.status());
+      if (response.request().resourceType() === "font" && response.status() >= 400 && failedFontRequests.length < 20) {
+        failedFontRequests.push({ assetId: createHash("sha256").update(new URL(response.url()).pathname).digest("hex").slice(0, 16), httpStatus: response.status(), result: "http-error" });
+      }
+    });
+    page.on("requestfailed", (request) => {
+      if (request.resourceType() === "font" && failedFontRequests.length < 20) {
+        failedFontRequests.push({ assetId: createHash("sha256").update(new URL(request.url()).pathname).digest("hex").slice(0, 16), httpStatus: responses.get(request.url()) ?? null, result: "request-failed" });
+      }
     });
     page.setDefaultTimeout(45_000);
     page.setDefaultNavigationTimeout(45_000);
@@ -115,6 +124,7 @@ export async function generateDigitalAlbumPdf({
   } catch (error) {
     if (error instanceof PdfAssetError) {
       const { url, ...safeDetails } = error.details;
+      if (error.stage === "assets:fonts") safeDetails.failedFontRequests = failedFontRequests;
       if (typeof url === "string") {
         try {
           const asset = new URL(url);

@@ -1,4 +1,6 @@
 "use client";
+import { digitalAlbumFonts } from "../themes/digitalAlbumFonts";
+
 
 import { useEffect, useMemo, useRef } from "react";
 import { indexDigitalAlbumPhotos } from "../utils/indexDigitalAlbumPhotos";
@@ -46,7 +48,7 @@ export default function DigitalAlbumPrintRenderer({
   return (
     <div
       ref={rootRef}
-      className={styles.root}
+      className={`${styles.root} ${digitalAlbumFonts}`}
       data-album-theme={document.theme}
     >
       {document.pages.map((page) => (

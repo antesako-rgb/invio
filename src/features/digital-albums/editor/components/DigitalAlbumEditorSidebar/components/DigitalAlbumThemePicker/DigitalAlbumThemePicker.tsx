@@ -1,4 +1,5 @@
 "use client";
+import { digitalAlbumFonts } from "@/features/digital-albums/components/album-renderer/themes/digitalAlbumFonts";
 import { useState } from "react";
 import Image from "next/image";
 import { DIGITAL_ALBUM_THEMES, DIGITAL_ALBUM_THEME_IDS } from "@/features/digital-albums/config/digitalAlbumThemes";
@@ -81,7 +82,7 @@ export default function DigitalAlbumThemePicker({
 }
 function ThemePreview({ theme, label }: { theme: DigitalAlbumTheme; label: string }) {
   const [failed, setFailed] = useState(false);
-  return <span className={styles.preview} data-album-theme={theme} aria-hidden="true">
+  return <span className={`${styles.preview} ${digitalAlbumFonts}`} data-album-theme={theme} aria-hidden="true">
     {failed ? <span className={styles.sample}>
       <span className={styles.type}>Aa</span>
       <span className={styles.name}>{label}</span>

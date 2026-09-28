@@ -10,10 +10,6 @@ import {
   Toaster,
 } from "sonner";
 
-import {
-  photoWallMaterialFonts,
-} from "@/features/photo-walls/editor/fonts/photoWallMaterialFonts";
-
 import "./globals.css";
 
 
@@ -63,7 +59,6 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`
         ${inter.variable}
-        ${photoWallMaterialFonts}
         h-full
         antialiased
       `}

@@ -14,6 +14,7 @@ const require = createRequire(import.meta.url);
 const cache = new Map();
 const mocks = {
   "server-only": {},
+  "next/font/google": new Proxy({}, { get: (_, name) => () => ({ variable: `font-${String(name)}` }) }),
   "next-intl": { useTranslations: () => (key) => key, useLocale: () => "en" },
   "next/image": ({ src, alt, style }) => React.createElement("img", { src, alt, style }),
   "@/components/ui/dialog/dialog": {
@@ -1094,6 +1095,8 @@ test("flip sound unlocks on gestures, plays once per turn, resumes after suspens
   globalThis.fetch = async () => ({ ok: true, arrayBuffer: async () => new ArrayBuffer(1) });
   globalThis.AudioContext = class {
     state = "suspended";
+    // Capture the mock instance so the test can simulate browser suspension.
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     constructor() { audio = this; }
     resume() { this.state = "running"; return Promise.resolve(); }
     close() { this.state = "closed"; return Promise.resolve(); }
@@ -1127,4 +1130,51 @@ test("flip sound unlocks on gestures, plays once per turn, resumes after suspens
   }
   assert.equal(audio.state, "closed");
   assert.equal(listeners.size, 0);
+});
+
+
+test("PDF validates only required theme fonts and rejects missing/failed families", async () => {
+  const { validateDigitalAlbumFonts: validate } = album("server/pdf/validateDigitalAlbumFonts");
+  const oldDocument = globalThis.document;
+  const oldStyle = globalThis.getComputedStyle;
+  try {
+    for (const families of [["Allura", "Marcellus", "Allura"], ["Inter", "Inter", "Inter"], ["Playfair Display", "Inter", "Playfair Display"]]) {
+      const tokens = ["--album-title-font", "--album-body-font", "--album-script-font"];
+      const faces = [...new Set(families)].map((family) => ({ family, status: "loaded" }));
+      faces.push({ family: "Unrelated Material", status: "error" });
+      const requested = [];
+      const fonts = {
+        [Symbol.iterator]: () => faces[Symbol.iterator](),
+        load: async (spec) => { requested.push(spec); const face = faces.find((face) => spec.includes(JSON.stringify(face.family))); if (face?.status === "error") throw new Error("private URL must not leak"); return face ? [face] : []; },
+        check: () => true,
+      };
+      globalThis.document = { querySelector: () => ({ querySelectorAll: () => [] }), fonts };
+      globalThis.getComputedStyle = () => ({ getPropertyValue: (name) => `"${families[tokens.indexOf(name)]}", serif` });
+      assert.equal(await validate(), null);
+      assert.equal(requested.length, new Set(families).size);
+      faces[0].status = "error";
+      const failed = await validate();
+      assert.equal(failed.reason, "required-font-load-failed");
+      assert.equal(failed.fonts[0].family, families[0]);
+      assert.equal(failed.fonts[0].weight, "400");
+      assert.equal(failed.fonts[0].style, "normal");
+      assert.doesNotMatch(JSON.stringify(failed), /private URL|Unrelated Material/);
+      faces.shift();
+      assert.equal((await validate()).fonts[0].status, "unregistered");
+    }
+  } finally { globalThis.document = oldDocument; globalThis.getComputedStyle = oldStyle; }
+});
+
+
+test("album font scope is shared by print, flipbook and previews; Materials keeps its catalog", () => {
+  const read = (path) => readFileSync(resolve(root, "src", path), "utf8");
+  assert.doesNotMatch(read("app/layout.tsx"), /photoWallMaterialFonts/);
+  assert.match(read("app/layout.tsx"), /inter.variable/);
+  for (const name of ["DigitalAlbumFlipBook", "DigitalAlbumPrintRenderer", "DigitalAlbumPagePreview"]) {
+    assert.match(read(`features/digital-albums/components/album-renderer/${name}/${name}.tsx`), /digitalAlbumFonts/);
+  }
+  assert.match(read("features/photo-walls/renderer/PhotoWallMaterialRenderer.tsx"), /photoWallMaterialFonts/);
+  const catalog = read("features/photo-walls/editor/fonts/photoWallMaterialFonts.ts");
+  for (const name of ["allura", "marcellus", "playfairDisplay"]) assert.ok(catalog.includes(`${name}.variable`));
+  assert.doesNotMatch(catalog, /Allura\(|Marcellus\(|Playfair_Display\(/);
 });

@@ -1,4 +1,6 @@
 "use client";
+import { digitalAlbumFonts } from "../themes/digitalAlbumFonts";
+
 
 import { useTranslations } from "next-intl";
 
@@ -115,7 +117,7 @@ export default function DigitalAlbumFlipBook({
   return (
     <div
       ref={rootRef}
-      className={styles.root}
+      className={`${styles.root} ${digitalAlbumFonts}`}
       style={stageStyle}
       data-album-theme={theme}
     >

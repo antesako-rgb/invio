@@ -1,3 +1,4 @@
+import { validateDigitalAlbumFonts } from "./validateDigitalAlbumFonts";
 import { getDigitalAlbumTextOverflow } from "../../utils/getDigitalAlbumTextOverflow";
 import "server-only";
 
@@ -21,7 +22,7 @@ export async function waitForDigitalAlbumPrintReady(page: Page) {
       throw { stage: "assets:photos", details: { reason: "unresolved-photo-reference" } };
     }
 
-    const pending = { photos: 0, backgrounds: 0, fonts: 1 };
+    const pending = { photos: 0, backgrounds: 0 };
     const decode = async (image: HTMLImageElement, type: "photos" | "backgrounds") => {
       pending[type]++;
       try {
@@ -62,20 +63,12 @@ export async function waitForDigitalAlbumPrintReady(page: Page) {
               image.src = url;
               await decode(image, "backgrounds");
             }),
-            document.fonts.ready.then(() => { pending.fonts = 0; }, () => {
-              throw { stage: "assets:fonts", details: { reason: "font-readiness-failed" } };
-            }),
           ]);
-          if (Array.from(document.fonts).some((font) => font.status === "error")) {
-            throw { stage: "assets:fonts", details: { reason: "font-load-failed", fonts: Array.from(document.fonts)
-              .filter((font) => font.status === "error").slice(0, 10)
-              .map((font) => ({ family: font.family.replace(/[^a-zA-Z0-9 _,-]/g, "").slice(0, 100), status: font.status })) } };
-          }
-          // Allow decoded assets and font metrics to participate in layout.
+          // Allow decoded assets to participate in layout.
           await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
         })(),
         new Promise<never>((_, reject) => {
-          timer = setTimeout(() => reject({ stage: pending.photos ? "assets:photos" : pending.backgrounds ? "assets:backgrounds" : pending.fonts ? "assets:fonts" : "assets:hydration",
+          timer = setTimeout(() => reject({ stage: pending.photos ? "assets:photos" : pending.backgrounds ? "assets:backgrounds" : "assets:hydration",
             details: { reason: "timeout", pending } }), 45_000);
         }),
       ]);
@@ -91,6 +84,13 @@ export async function waitForDigitalAlbumPrintReady(page: Page) {
     }
   }).catch(() => { throw new PdfAssetError("assets:hydration", { reason: "browser-evaluation-failed" }); });
   if (result) throw new PdfAssetError(result.stage, result.details);
+  const fonts = await page.evaluate(validateDigitalAlbumFonts).catch(() => {
+    throw new PdfAssetError("assets:fonts", { reason: "font-evaluation-failed" });
+  });
+  if (fonts) throw new PdfAssetError("assets:fonts", fonts);
+  await page.evaluate(() => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))))
+    .catch(() => { throw new PdfAssetError("assets:fonts", { reason: "font-layout-settle-failed" }); });
+
   let overflow: string[];
   const rootHandle = await page.$('[data-album-print-hydrated="true"]');
   try {

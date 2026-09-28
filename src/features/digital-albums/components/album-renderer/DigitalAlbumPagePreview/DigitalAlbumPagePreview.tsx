@@ -1,3 +1,4 @@
+import { digitalAlbumFonts } from "../themes/digitalAlbumFonts";
 import DigitalAlbumPageRenderer from "@/features/digital-albums/components/album-renderer/DigitalAlbumPageRenderer/DigitalAlbumPageRenderer";
 
 import type { DigitalAlbumRendererPhoto } from "@/features/digital-albums/components/album-renderer/types/digitalAlbumRenderer.types";
@@ -53,7 +54,7 @@ export default function DigitalAlbumPagePreview({
   ========================================================================== */
 
   return (
-    <div className={styles.root} data-album-theme={theme}>
+    <div className={`${styles.root} ${digitalAlbumFonts}`} data-album-theme={theme}>
       <DigitalAlbumPageRenderer page={page} photos={rendererPhotos} photosById={photosById} />
     </div>
   );

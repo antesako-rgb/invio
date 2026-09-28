@@ -98,11 +98,11 @@ export async function POST(request: Request, { params }: DigitalAlbumPdfRoutePro
     });
   } catch (error) {
     const status = error instanceof DigitalAlbumPdfError ? error.status : 500;
-    console.error("Digital album PDF export failed.", {
+    console.error("Digital album PDF export failed.", JSON.stringify({
       stage: error instanceof DigitalAlbumPdfError ? error.stage : stage,
       status,
       ...(error instanceof DigitalAlbumPdfError && error.diagnostics ? { diagnostics: error.diagnostics } : {}),
-    });
+    }));
     return NextResponse.json({ error: "Digital album PDF export failed." }, {
       status,
       headers: {
