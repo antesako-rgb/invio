@@ -5,6 +5,9 @@ import { useRouter, Link } from "@/i18n/navigation";
 import { ArrowLeft, Undo2, Redo2, Eye, Globe, ExternalLink } from "lucide-react";
 import EditorHeader from "@/features/editor/components/EditorHeader/EditorHeader";
 import EditorSaveStatus from "@/features/editor/components/EditorSaveStatus/EditorSaveStatus";
+import EditorPhotoFraming from "@/features/editor/components/EditorPhotoFraming/EditorPhotoFraming";
+import type { EditorPhotoFramingValue } from "@/features/editor/types/editorPhotoFraming.types";
+import { getProjectPhotoUrl } from "@/features/project-photos/utils/getProjectPhotoUrl";
 import InvitationEditor, { type InvitationEditorTab } from "../InvitationEditor/InvitationEditor";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,6 +21,8 @@ import { setInvitationPublishedAction } from "../../../actions/invitation/setInv
 import { updateInvitationAction } from "../../../actions/invitation/updateInvitationAction";
 import InvitationRenderer from "../../../components/invitation-renderer/InvitationRenderer";
 import InvitationCanvas from "../InvitationCanvas/InvitationCanvas";
+import InvitationPageNavigator from "../InvitationPageNavigator/InvitationPageNavigator";
+import { applyInvitationTemplate, resolveInvitationPageDateTime, setInvitationDateTime } from "../../../utils/invitationSharedDateTime";
 import InvitationPagesPanel from "../InvitationPagesPanel/InvitationPagesPanel";
 import InvitationContentPanel from "../InvitationContentPanel/InvitationContentPanel";
 import InvitationTemplatesPanel from "../InvitationTemplatesPanel/InvitationTemplatesPanel";
@@ -26,7 +31,7 @@ import { createInvitationTemplateDocument } from "../../../templates/createInvit
 import InvitationPhotosPanel from "../InvitationPhotosPanel/InvitationPhotosPanel";
 import type { Invitation } from "../../../types/invitation.types";
 import type { InvitationPhotoWithPhoto } from "../../../types/invitationPhoto.types";
-import type { InvitationDocumentPage } from "../../../types/invitationDocument.types";
+import type { InvitationDocumentPage, InvitationPhotoSlot } from "../../../types/invitationDocument.types";
 import styles from "./InvitationEditorView.module.css";
 interface InvitationEditorViewProps {
   invitation: Invitation;
@@ -54,7 +59,15 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
   const [deletion, setDeletion] = useState<{ kind: "page" | "photo"; id: string } | null>(null);
   const [templateSelection, setTemplateSelection] = useState<InvitationTemplateSelection | null>(null);
   const lock = useRef(false);
-  const disabled = busy || preview || editor.conflict || Boolean(deletion) || Boolean(templateSelection) || renaming;
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const [framing, setFraming] = useState<{
+    pageId: string;
+    slot: InvitationPhotoSlot;
+    imageUrl: string;
+    aspectRatio: number;
+    allowContain: boolean;
+  } | null>(null);
+  const disabled = busy || preview || editor.conflict || Boolean(deletion) || Boolean(templateSelection) || renaming || Boolean(framing);
   const validTarget = target && editor.document.pages.some(page => page.id === target.pageId && page.photos.some(slot => slot.id === target.slotId));
 
   useEffect(() => {
@@ -98,9 +111,11 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
 
     session.commit(document => ({
       ...document,
-      pages: document.pages.map(page => (
-        page.id === activePage.id ? update(page) : page
-      )),
+      pages: document.pages.map(page => {
+        if (page.id !== activePage.id) return page;
+        const updated = update(page);
+        return updated;
+      }),
     }));
   }
 
@@ -112,12 +127,45 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
       pages: document.pages.map(page => page.id === target.pageId ? {
         ...page,
         photos: page.photos.map(slot => (
-          slot.id === target.slotId ? { ...slot, photoId } : slot
+          slot.id === target.slotId && slot.photoId !== photoId ? { id: slot.id, photoId } : slot
         )),
       } : page),
     }));
     setTarget(null);
     setTab("content");
+  }
+
+  function startFraming(slotId: string) {
+    if (disabled || lock.current || !activePage) return;
+    const slot = activePage.photos.find(item => item.id === slotId);
+    const photo = photos.find(item => item.photo_id === slot?.photoId);
+    const image = canvasRef.current?.querySelector<HTMLImageElement>(
+      `[data-invitation-photo-slot="${CSS.escape(slotId)}"]`,
+    );
+    if (!slot || !photo || !image?.clientWidth || !image.clientHeight) return;
+    setFraming({
+      pageId: activePage.id,
+      slot,
+      imageUrl: getProjectPhotoUrl(photo.photo.image_path),
+      aspectRatio: image.clientWidth / image.clientHeight,
+      allowContain: ["poster", "photo-strip", "grid", "photo-text", "photo-left", "split", "editorial"].includes(activePage.layout),
+    });
+  }
+
+  function applyFraming(value: EditorPhotoFramingValue) {
+    if (!framing || lock.current || busy || editor.conflict) return;
+    session.commit(document => ({
+      ...document,
+      pages: document.pages.map(page => page.id === framing.pageId ? {
+        ...page,
+        photos: page.photos.map(slot => (
+          slot.id === framing.slot.id && slot.photoId === framing.slot.photoId
+            ? { ...slot, ...value }
+            : slot
+        )),
+      } : page),
+    }));
+    setFraming(null);
   }
 
   async function confirmDelete() {
@@ -183,7 +231,10 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
     if (lock.current || disabled) return;
     const page = changeInvitationPageDesign(createInvitationPage(type), designId, editor.document.theme);
 
-    session.commit(document => ({ ...document, pages: [...document.pages, page] }));
+    session.commit(document => ({
+      ...document,
+      pages: [...document.pages, page],
+    }));
 
     editor.selectPage(page.id);
     setTab("content");
@@ -192,7 +243,7 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
   function applyTemplate() {
     if (!templateSelection || lock.current || busy || editor.conflict) return;
 
-    session.commit(() => templateSelection.document);
+    session.commit(document => applyInvitationTemplate(document, templateSelection.document));
 
     editor.selectPage(templateSelection.document.pages[0]?.id ?? null);
     setTarget(null);
@@ -205,7 +256,7 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
   return <>
     <InvitationEditor
       tab={tab}
-      onTabChange={setTab}
+      onTabChange={tab => { setTarget(null); setTab(tab); }}
       disabled={disabled}
       preview={preview}
       onClosePreview={closePreview}
@@ -305,6 +356,7 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
           }} />}
 
         {tab === "pages" && <InvitationPagesPanel
+          sharedDateTime={editor.document}
           theme={editor.document.theme}
           photos={renderPhotos}
           onDuplicate={id => {
@@ -324,26 +376,40 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
           }}
           onRemove={id => setDeletion({ kind: "page", id })} />}
 
-        {tab === "content" && (activePage ? <InvitationContentPanel
+        <div hidden={tab !== "content"}>
+        {activePage ? <InvitationContentPanel
+          key={activePage.id}
           theme={editor.document.theme}
           photos={renderPhotos}
           page={activePage}
+          dateTimeContent={resolveInvitationPageDateTime(editor.document, activePage).content}
           disabled={disabled}
           onChange={updatePage}
+          onFramePhoto={startFraming}
+          onDateTimeChange={(field, value) => {
+            if (disabled || lock.current) return;
+            session.commit(document => setInvitationDateTime(document, field, value));
+          }}
           onChoosePhoto={slotId => {
             setTarget({ pageId: activePage.id, slotId });
             setTab("photos");
           }} /> : <p className={styles.panel}>
           {t("editor.empty")}
-        </p>)}
+        </p>}
+        </div>
 
         {tab === "photos" && <InvitationPhotosPanel
           invitationId={invitation.id}
           photos={photos}
           disabled={disabled}
           picking={Boolean(validTarget)}
+          selectionLabel={validTarget && target ? t("photoUx.selection", {
+            page: editor.document.pages.findIndex(page => page.id === target.pageId) + 1,
+            number: (editor.document.pages.find(page => page.id === target.pageId)?.photos.findIndex(slot => slot.id === target.slotId) ?? 0) + 1,
+          }) : undefined}
+          selectedPhotoId={validTarget && target ? editor.document.pages.find(page => page.id === target.pageId)?.photos.find(slot => slot.id === target.slotId)?.photoId : undefined}
           onSelect={selectPhoto}
-          onCancel={() => setTarget(null)}
+          onCancel={() => { setTarget(null); setTab("content"); }}
           onDelete={id => setDeletion({ kind: "photo", id })}
           onUpload={file => run(async () => {
             const result = await uploadInvitationPhotoAction(invitation.id, file);
@@ -378,7 +444,21 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
             {t("retry")}
           </Button>}
       </div>}
-      <InvitationCanvas>
+      {(editor.document.legacyDateTime?.date || editor.document.legacyDateTime?.time) && (
+        <p className={styles.notice} role="status">{t("editor.legacyDateTime")}</p>
+      )}
+      <InvitationCanvas navigator={
+        <InvitationPageNavigator
+          document={editor.document}
+          photos={renderPhotos}
+          activeId={activePage?.id}
+          onSelect={id => {
+            editor.selectPage(id);
+            setTarget(null);
+          }}
+        />
+      }>
+        <div ref={canvasRef}>
         {activePage ? <InvitationRenderer
           document={{ ...editor.document, pages: [activePage] }}
           photos={renderPhotos}
@@ -392,8 +472,32 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
               {t("editor.emptyHint")}
             </p>
           </div>}
+        </div>
       </InvitationCanvas>
     </InvitationEditor>
+    <Dialog open={Boolean(framing)} onOpenChange={open => { if (!open) setFraming(null); }}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t("framing.position")}</DialogTitle>
+          <DialogDescription>{t("framing.dialogDescription")}</DialogDescription>
+        </DialogHeader>
+        {framing && <EditorPhotoFraming
+          key={framing.slot.id}
+          value={framing.slot}
+          imageUrl={framing.imageUrl}
+          aspectRatio={framing.aspectRatio}
+          allowContain={framing.allowContain}
+          labels={{
+            position: t("framing.position"), positionHelp: t("framing.positionHelp"),
+            horizontal: t("framing.horizontal"), vertical: t("framing.vertical"),
+            contain: t("framing.contain"), reset: t("framing.reset"),
+            cancel: t("cancel"), apply: t("framing.apply"),
+          }}
+          onApply={applyFraming}
+          onCancel={() => setFraming(null)}
+        />}
+      </DialogContent>
+    </Dialog>
     <Dialog open={renaming} onOpenChange={open => {
       if (!busy) setRenaming(open);
     }}>

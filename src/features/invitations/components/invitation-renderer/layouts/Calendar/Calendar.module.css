@@ -1,0 +1,108 @@
+/* ==========================================================================
+   Calendar
+========================================================================== */
+
+.calendarLayout {
+  display: grid;
+  justify-items: center;
+  gap: clamp(1.5rem, 4cqi, 3rem);
+  padding: clamp(2.5rem, 7cqi, 6rem) clamp(1rem, 5cqi, 4rem);
+  background: var(--invitation-paper);
+  color: var(--invitation-ink);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.names {
+  max-width: 100%;
+  margin: 0;
+  font-family: var(--invitation-script-font);
+  font-size: var(--invitation-script-size);
+  font-weight: var(--invitation-script-weight);
+  line-height: var(--invitation-script-leading);
+  letter-spacing: var(--invitation-script-tracking);
+  color: var(--invitation-accent);
+  white-space: pre-wrap;
+  text-wrap: balance;
+}
+
+.calendar {
+  width: min(100%, 30rem);
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0 .4rem;
+  font-family: var(--invitation-body-font);
+  font-variant-numeric: tabular-nums;
+}
+
+.calendar caption {
+  margin-bottom: clamp(1rem, 3cqi, 2rem);
+  font-size: clamp(1rem, 2.5cqi, 1.5rem);
+  text-transform: var(--invitation-subtitle-transform);
+  letter-spacing: .05em;
+}
+
+.calendar th {
+  padding-bottom: .5rem;
+  font-size: clamp(.625rem, 1.5cqi, .875rem);
+  font-weight: var(--invitation-body-weight);
+  color: var(--invitation-muted-ink);
+}
+
+.calendar td { padding: 0; }
+
+.day,
+.selected {
+  display: grid;
+  place-items: center;
+  width: min(100%, 2.75rem);
+  aspect-ratio: 1;
+  margin-inline: auto;
+  font-size: clamp(.75rem, 1.8cqi, 1rem);
+}
+
+.selected {
+  border: 1px solid var(--invitation-accent);
+  border-radius: 50%;
+  background: var(--invitation-surface);
+  color: var(--invitation-ink);
+}
+
+.calendarLayout p { margin: 0; white-space: pre-wrap; }
+.date,
+.venue { display: grid; gap: .5rem; }
+.date { font-size: clamp(1rem, 2.2cqi, 1.375rem); }
+.venue,
+.message {
+  max-width: 36rem;
+  line-height: var(--invitation-body-leading);
+  color: var(--invitation-muted-ink);
+}
+
+.separator {
+  width: clamp(3rem, 12cqi, 7rem);
+  height: .3rem;
+  border-block: 1px solid var(--invitation-accent);
+  opacity: var(--invitation-frame-opacity);
+}
+
+@container (min-width: 900px) {
+  .calendar {
+    width: min(100%, 36rem);
+    border-spacing: 0 .5rem;
+  }
+
+  .calendar caption {
+    font-size: 1.75rem;
+  }
+
+  .calendar th {
+    font-size: 1rem;
+  }
+
+  .day,
+  .selected {
+    width: min(100%, 3.25rem);
+    font-size: 1.125rem;
+  }
+}

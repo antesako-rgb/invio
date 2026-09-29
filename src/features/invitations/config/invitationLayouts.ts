@@ -3,6 +3,7 @@
 ========================================================================== */
 
 export const invitationLayouts = {
+  calendar: { photoSlotCount: 0 },
   "date-card": {
     photoSlotCount: 0,
   },

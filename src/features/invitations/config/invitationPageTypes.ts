@@ -83,6 +83,7 @@ cover: {
       "split",
       "photo-left",
       "date-card",
+      "calendar",
     ],
 
     fields: [

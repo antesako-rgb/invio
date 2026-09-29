@@ -39,6 +39,7 @@ import PortraitCover from "./layouts/PortraitCover/PortraitCover";
 import TornPaper from "./layouts/TornPaper/TornPaper";
 import PhotoStrip from "./layouts/PhotoStrip/PhotoStrip";
 import DateCard from "./layouts/DateCard/DateCard";
+import Calendar from "./layouts/Calendar/Calendar";
 
 
 /* ==========================================================================
@@ -63,6 +64,7 @@ export const invitationLayoutComponents: Record<
 > = {
   "photo-strip": PhotoStrip,
   "date-card": DateCard,
+  calendar: Calendar,
   "portrait-cover": PortraitCover,
   "torn-paper": TornPaper,
   poster: Poster,

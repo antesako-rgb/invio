@@ -1,6 +1,7 @@
 import {
   z,
 } from "zod";
+import { invitationEventDateSchema, invitationEventTimeSchema, normalizeInvitationDateTime } from "./invitationSharedDateTime";
 
 import {
   getInvitationLayout,
@@ -29,6 +30,11 @@ import type {
 const invitationPhotoSlotSchema =
   z
     .object({
+      position: z.object({
+        x: z.number().finite().min(0).max(1),
+        y: z.number().finite().min(0).max(1),
+      }).strict().optional(),
+      fit: z.enum(["cover", "contain"]).optional(),
       id:
         z.string()
           .uuid(),
@@ -98,6 +104,9 @@ const invitationPageSchema =
 const invitationDocumentSchema =
   z
     .object({
+      eventDate: invitationEventDateSchema.nullable().optional(),
+      eventTime: invitationEventTimeSchema.nullable().optional(),
+      legacyDateTime: z.object({ date: z.literal(true).optional(), time: z.literal(true).optional() }).strict().optional(),
       theme:
         z.enum(
           invitationThemes
@@ -213,7 +222,7 @@ export function parseInvitationDocument(
     }
   }
 
-  return document as InvitationDocument;
+  return normalizeInvitationDateTime(document as InvitationDocument);
 }
 
 

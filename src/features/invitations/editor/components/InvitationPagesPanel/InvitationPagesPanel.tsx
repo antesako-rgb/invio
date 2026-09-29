@@ -6,10 +6,11 @@ import InvitationPagePicker from "../InvitationPagePicker/InvitationPagePicker";
 import type { InvitationTheme } from "../../../config/invitationThemes";
 import type { InvitationRenderPhoto } from "../../../types/invitationPhoto.types";
 import { type InvitationPageType } from "../../../config/invitationPageTypes";
-import type { InvitationDocumentPage } from "../../../types/invitationDocument.types";
+import type { InvitationDocument, InvitationDocumentPage } from "../../../types/invitationDocument.types";
 import InvitationPageRow from "./InvitationPageRow";
 import styles from "./InvitationPagesPanel.module.css";
 interface InvitationPagesPanelProps {
+  sharedDateTime: Pick<InvitationDocument, "eventDate" | "eventTime" | "legacyDateTime">;
   theme: InvitationTheme;
   photos: InvitationRenderPhoto[];
   onDuplicate: (id: string) => void;
@@ -22,7 +23,7 @@ interface InvitationPagesPanelProps {
   onRemove: (id: string) => void;
 }
 
-export default function InvitationPagesPanel({ pages, activeId, disabled, onSelect, onAdd, onMove, onRemove, onDuplicate, theme, photos }: InvitationPagesPanelProps) {
+export default function InvitationPagesPanel({ pages, activeId, disabled, onSelect, onAdd, onMove, onRemove, onDuplicate, theme, photos, sharedDateTime }: InvitationPagesPanelProps) {
   const t = useTranslations("Invitations");
 
   function dragEnd(event: Parameters<NonNullable<ComponentProps<typeof DragDropProvider>["onDragEnd"]>>[0]) {
@@ -41,6 +42,7 @@ export default function InvitationPagesPanel({ pages, activeId, disabled, onSele
         {pages.map((page, index) => <InvitationPageRow
           key={page.id}
           page={page}
+          sharedDateTime={sharedDateTime}
           theme={theme}
           photos={photos}
           onDuplicate={() => onDuplicate(page.id)}

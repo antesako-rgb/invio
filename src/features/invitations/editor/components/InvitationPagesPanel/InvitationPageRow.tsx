@@ -6,9 +6,10 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import InvitationThumbnail from "../InvitationThumbnail/InvitationThumbnail";
 import type { InvitationTheme } from "../../../config/invitationThemes";
 import type { InvitationRenderPhoto } from "../../../types/invitationPhoto.types";
-import type { InvitationDocumentPage } from "../../../types/invitationDocument.types";
+import type { InvitationDocument, InvitationDocumentPage } from "../../../types/invitationDocument.types";
 import styles from "./InvitationPageRow.module.css";
 interface InvitationPageRowProps {
+  sharedDateTime: Pick<InvitationDocument, "eventDate" | "eventTime" | "legacyDateTime">;
   theme: InvitationTheme;
   photos: InvitationRenderPhoto[];
   onDuplicate: () => void;
@@ -23,7 +24,7 @@ interface InvitationPageRowProps {
   onDown?: () => void;
 }
 
-export default function InvitationPageRow({ page, index, active, disabled, onSelect, onRemove, onUp, onDown, onDuplicate, canDuplicate, theme, photos }: InvitationPageRowProps) {
+export default function InvitationPageRow({ page, index, active, disabled, onSelect, onRemove, onUp, onDown, onDuplicate, canDuplicate, theme, photos, sharedDateTime }: InvitationPageRowProps) {
   const t = useTranslations("Invitations");
   const { ref: dragRef, handleRef, isDragging } = useDraggable({ id: page.id, disabled });
   const { ref: dropRef } = useDroppable({ id: page.id, disabled });
@@ -51,7 +52,7 @@ export default function InvitationPageRow({ page, index, active, disabled, onSel
         onClick={onSelect}
         disabled={disabled}
         aria-current={active ? "true" : undefined}>
-        <InvitationThumbnail document={{ theme, pages: [page] }} photos={photos} />
+        <InvitationThumbnail document={{ ...sharedDateTime, theme, pages: [page] }} photos={photos} />
         <span>
           <strong>
             {index + 1}

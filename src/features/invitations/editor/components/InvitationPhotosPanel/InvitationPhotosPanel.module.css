@@ -47,6 +47,7 @@
 }
 
 .photoItem > button:first-child,
+.libraryPhoto,
 .importPhoto {
   border: 1px solid var(--border);
   border-radius: .5rem;
@@ -54,6 +55,13 @@
   padding: 0;
   background: var(--muted);
 }
+
+.context { display: grid; gap: .5rem; padding: .75rem; background: var(--muted); border-radius: .5rem; font-size: .8125rem; }
+.context > button { justify-self: start; min-height: 2.75rem; }
+.hint { margin: 0; font-size: .8125rem; line-height: 1.6; color: var(--muted-foreground); }
+.selectLabel { display: block; padding: .625rem .25rem; font-size: .8125rem; min-height: 2.75rem; }
+.photos button[aria-pressed="true"] { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+.photos button:not(:disabled) { cursor: pointer; }
 
 .photos img {
   display: block;
@@ -117,4 +125,3 @@
   }
 
 }
-

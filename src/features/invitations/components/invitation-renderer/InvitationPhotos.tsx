@@ -1,4 +1,5 @@
 import { ImageIcon } from "lucide-react";
+import { editorPhotoStyle } from "@/features/editor/utils/editorPhotoStyle";
 
 import { getProjectPhotoUrl } from "@/features/project-photos/utils/getProjectPhotoUrl";
 import type { InvitationDocumentPage } from "../../types/invitationDocument.types";
@@ -11,6 +12,7 @@ import styles from "./InvitationPhotos.module.css";
 ========================================================================== */
 
 interface InvitationPhotosProps {
+  decorative?: boolean;
   page: InvitationDocumentPage;
   photos: ReadonlyMap<string, InvitationRenderPhoto>;
   showPhotoPlaceholders?: boolean;
@@ -26,6 +28,7 @@ export default function InvitationPhotos({
   photos,
   showPhotoPlaceholders,
   className,
+  decorative = false,
 }: InvitationPhotosProps) {
   const photoClassName = [styles.photo, className].filter(Boolean).join(" ");
 
@@ -40,8 +43,10 @@ export default function InvitationPhotos({
               {/* Static assets use the same CDN URL primitive as other products. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                data-invitation-photo-slot={decorative ? undefined : slot.id}
+                style={decorative ? undefined : editorPhotoStyle(slot)}
                 src={getProjectPhotoUrl(photo.image_path)}
-                alt={photo.description ?? ""}
+                alt={decorative ? "" : photo.description ?? ""}
                 loading="lazy"
                 decoding="async"
               />

@@ -17,7 +17,7 @@ export default function Poster({ page, photos, locale, showPhotoPlaceholders }: 
   // Decorative repetitions resolve the same slot through the shared photo component.
   const backdrop = (
     <div className={styles.backdrop} aria-hidden="true">
-      <InvitationPhotos page={page} photos={photos} className={styles.backgroundPhoto} />
+      <InvitationPhotos page={page} photos={photos} className={styles.backgroundPhoto} decorative />
     </div>
   );
 

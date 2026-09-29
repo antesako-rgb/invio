@@ -1,5 +1,6 @@
 import { allura, marcellus, playfairDisplay } from "@/styles/fonts/albumMaterialFonts";
 import { resolveInvitationPageDesign } from "../../config/invitationPageDesigns";
+import { resolveInvitationPageDateTime } from "../../utils/invitationSharedDateTime";
 
 import type {
   InvitationDocument,
@@ -93,7 +94,7 @@ export default function InvitationRenderer({
             >
               <Layout
                 page={
-                  page
+                  resolveInvitationPageDateTime(document, page)
                 }
                 photos={
                   assets

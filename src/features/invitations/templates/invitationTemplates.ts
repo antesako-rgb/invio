@@ -25,6 +25,8 @@ type InvitationTemplatePage = {
 };
 
 export type InvitationTemplate = {
+  eventDate: string;
+  eventTime: string;
   id: string;
   version: 1;
   category:
@@ -42,6 +44,8 @@ export type InvitationTemplate = {
 
 export const invitationTemplates = [
   {
+    eventDate: "2027-06-14",
+    eventTime: "16:00",
     id:
       "botanical",
 
@@ -131,6 +135,9 @@ export const invitationTemplates = [
     id:
       "celebration",
 
+    eventDate: "2027-08-21",
+    eventTime: "18:00",
+
     version:
       1,
 
@@ -196,6 +203,9 @@ export const invitationTemplates = [
   {
     id:
       "conference",
+
+    eventDate: "2027-10-08",
+    eventTime: "10:00",
 
     version:
       1,

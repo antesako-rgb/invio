@@ -1,0 +1,102 @@
+.navigator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 1rem;
+}
+
+.arrow {
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.counter {
+  min-width: 4rem;
+  text-align: center;
+  font-size: .8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-foreground);
+}
+
+.strip {
+  display: none;
+  position: relative;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  gap: .375rem;
+  padding: .25rem;
+}
+
+.strip::-webkit-scrollbar {
+  display: none;
+}
+
+.page {
+  flex: 0 0 auto;
+  display: grid;
+  justify-items: center;
+  gap: .125rem;
+  padding: .25rem;
+  min-width: 48px;
+  border: 2px solid transparent;
+  border-radius: .5rem;
+  background: var(--card);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  font-size: .6875rem;
+}
+
+.page[aria-current="page"] {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--secondary);
+}
+
+.page:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 1px;
+}
+
+.thumbnail {
+  display: block;
+  width: 40px;
+  height: 54px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.miniature {
+  display: block;
+  transform: scale(.5);
+  transform-origin: top left;
+}
+
+@media (max-width: 1024px), (hover: none) and (pointer: coarse) {
+  .navigator {
+    gap: .375rem;
+    margin-bottom: .5rem;
+  }
+  .strip { display: flex; }
+  .counter {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    min-width: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip {
+    scroll-behavior: auto;
+  }
+}

@@ -10,6 +10,8 @@ import type {
 export function createDefaultInvitationDocument():
   InvitationDocument {
   return {
+    eventDate: null,
+    eventTime: null,
     theme:
       "classic",
 

@@ -20,8 +20,8 @@ import type {
 } from "../../../types/digitalAlbumDocument.types";
 
 import {
-  digitalAlbumPhotoStyle,
-} from "../../../utils/digitalAlbumPhotoStyle";
+  editorPhotoStyle,
+} from "@/features/editor/utils/editorPhotoStyle";
 
 import DigitalAlbumPhotoSlot
   from "../DigitalAlbumPhotoSlot/DigitalAlbumPhotoSlot";
@@ -118,7 +118,7 @@ export default function DigitalAlbumPhoto({
           fill
           sizes="(max-width: 768px) 100vw, 440px"
           style={
-            digitalAlbumPhotoStyle(
+            editorPhotoStyle(
               slot
             )
           }

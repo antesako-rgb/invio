@@ -14,6 +14,8 @@ interface InvitationPhotosPanelProps {
   photos: InvitationPhotoWithPhoto[];
   disabled: boolean;
   picking: boolean;
+  selectionLabel?: string;
+  selectedPhotoId?: string | null;
   onUpload: (file: File) => Promise<void>;
   onImport: (id: string) => Promise<void>;
   onSelect: (id: string) => void;
@@ -21,7 +23,7 @@ interface InvitationPhotosPanelProps {
   onCancel: () => void;
 }
 
-export default function InvitationPhotosPanel({ invitationId, photos, disabled, picking, onUpload, onImport, onSelect, onDelete, onCancel }: InvitationPhotosPanelProps) {
+export default function InvitationPhotosPanel({ invitationId, photos, disabled, picking, selectionLabel, selectedPhotoId, onUpload, onImport, onSelect, onDelete, onCancel }: InvitationPhotosPanelProps) {
   const t = useTranslations("Invitations");
   const [library, setLibrary] = useState<ProjectPhoto[]>([]);
   const [nextOffset, setNextOffset] = useState<number | null>(0);
@@ -63,17 +65,16 @@ export default function InvitationPhotosPanel({ invitationId, photos, disabled, 
 
   return <section className={styles.panel}>
     <h2>
-      {t("editor.photos")}
+      {t(picking ? "photoUx.choose" : "photoUx.library")}
     </h2>
 
-    {picking && <div className={styles.row}>
-      <p>
-        {t("editor.pickHint")}
-      </p>
+    <div className={styles.context}>
+      {picking && <strong>{selectionLabel}</strong>}
+      <p className={styles.hint}>{t(picking ? "photoUx.chooseHint" : "photoUx.libraryHint")}</p>
       <Button variant="ghost" disabled={disabled} onClick={onCancel}>
-        {t("cancel")}
+        {t("photoUx.backToPage")}
       </Button>
-    </div>}
+    </div>
     <input
       ref={fileInput}
       className={styles.srOnly}
@@ -94,20 +95,22 @@ export default function InvitationPhotosPanel({ invitationId, photos, disabled, 
       onClick={() => fileInput.current?.click()}>
       <Plus aria-hidden="true" />
       <strong>
-        {t("editor.upload")}
+        {t("photoUx.upload")}
       </strong>
       <span>
         {t("editor.uploadHint")}
       </span>
     </button>
     <h3>
-      {t("editor.yourPhotos")}
+      {t("photoUx.available", { count: photos.length })}
     </h3>
+    {!photos.length && <p className={styles.hint}>{t("photoUx.empty")}</p>}
     <div className={styles.photos}>
       {photos.map((photo, index) => <div key={photo.photo_id} className={styles.photoItem}>
-        <button
+        {picking ? <button
           type="button"
-          disabled={disabled || !picking}
+          disabled={disabled}
+          aria-pressed={selectedPhotoId === photo.photo_id}
           onClick={() => onSelect(photo.photo_id)}
           aria-label={t("editor.selectPhoto", { number: index + 1 })}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -115,16 +118,21 @@ export default function InvitationPhotosPanel({ invitationId, photos, disabled, 
             src={getProjectPhotoUrl(photo.photo.image_path)}
             alt={photo.description ?? ""}
             loading="lazy" />
-        </button>
-        <Button
+          <span className={styles.selectLabel}>{t(selectedPhotoId === photo.photo_id ? "photoUx.current" : "photoUx.use")}</span>
+        </button> : <div className={styles.libraryPhoto}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={getProjectPhotoUrl(photo.photo.image_path)} alt={photo.description ?? t("photoUx.photoNumber", { number: index + 1 })} loading="lazy" />
+        </div>}
+        {!picking && <Button
           className={styles.photoRemove}
           size="icon"
           variant="secondary"
           disabled={disabled}
           aria-label={t("editor.deletePhoto")}
+          title={t("editor.deletePhoto")}
           onClick={() => onDelete(photo.photo_id)}>
           <Trash2 aria-hidden="true" />
-        </Button>
+        </Button>}
       </div>)}
     </div>
     <Button
@@ -170,6 +178,7 @@ export default function InvitationPhotosPanel({ invitationId, photos, disabled, 
         {failed && <p role="alert">
           {t("error")}
         </p>}
+        <Button variant="outline" onClick={() => setProjectPicker(false)}>{t("photoUx.backToPhotos")}</Button>
       </DialogContent>
     </Dialog>
   </section>;

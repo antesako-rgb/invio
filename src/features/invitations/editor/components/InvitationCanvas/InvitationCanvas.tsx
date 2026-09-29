@@ -3,9 +3,9 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import styles from "./InvitationCanvas.module.css";
 
-interface InvitationCanvasProps { children: ReactNode }
+interface InvitationCanvasProps { children: ReactNode; navigator?: ReactNode }
 
-export default function InvitationCanvas({ children }: InvitationCanvasProps) {
+export default function InvitationCanvas({ children, navigator }: InvitationCanvasProps) {
   const t = useTranslations("Invitations.editor");
   const [device, setDevice] = useState<"desktop" | "tablet" | "mobile">("desktop");
 
@@ -20,6 +20,7 @@ export default function InvitationCanvas({ children }: InvitationCanvasProps) {
         {t(value)}
       </Button>)}
     </div>
+    {navigator}
     <div className={styles.frame} data-device={device}>
       {children}
     </div>

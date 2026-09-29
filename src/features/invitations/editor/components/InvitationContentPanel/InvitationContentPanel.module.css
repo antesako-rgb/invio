@@ -1,5 +1,41 @@
 /* Component styles */
 
+.contentTabs {
+  padding: 0;
+  gap: .25rem;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+}
+
+.contentTabs > button {
+  min-height: 2.75rem;
+  padding: .5rem .25rem;
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  font-size: .8125rem;
+  background: transparent;
+  box-shadow: none;
+}
+
+.contentTabs > button[aria-pressed="true"] {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background: transparent;
+}
+
+.contentTabs > button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+
+.sectionBody:not([hidden]) {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
 .panel {
   display: grid;
   gap: 1rem;
@@ -43,18 +79,20 @@
 
 .photos {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: .75rem;
 }
 
 .photoItem {
   min-width: 0;
   display: grid;
-  gap: .25rem;
+  gap: .5rem;
+  padding: 0 0 1rem;
+  border-bottom: 1px solid var(--border);
   position: relative;
 }
 
-.photoItem > button:first-child {
+.slotButton {
   border: 1px solid var(--border);
   border-radius: .5rem;
   overflow: hidden;
@@ -65,14 +103,14 @@
 .photos img {
   display: block;
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 2;
   object-fit: cover;
 }
 
 .photoRemove {
   position: absolute;
   top: .25rem;
-  right: .25rem;
+  right: 0;
 }
 
 .photoRemove svg {
@@ -83,19 +121,26 @@
 .slotButton {
   display: grid;
   place-items: center;
-  aspect-ratio: 1;
   width: 100%;
+  min-height: 5rem;
+  cursor: pointer;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .photoRemove {
-    opacity: 0;
-  }
-
-  .photoItem:hover .photoRemove,
-  .photoItem:focus-within .photoRemove {
-    opacity: 1;
-  }
-
+.photoLabel {
+  font-size: .8125rem;
+  font-weight: 600;
+  padding-right: 2.75rem;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
 }
 
+.slotLabel {
+  padding: .625rem;
+  font-size: .8125rem;
+  font-weight: 500;
+}
+
+.photoItem > button {
+  min-height: 2.75rem;
+}

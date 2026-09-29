@@ -306,7 +306,7 @@ export function removeInvitationPhotoReferences(
               (slot) =>
                 slot.photoId === photoId
                   ? {
-                      ...slot,
+                      id: slot.id,
                       photoId: null,
                     }
                   : slot

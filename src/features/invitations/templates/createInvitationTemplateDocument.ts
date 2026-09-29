@@ -30,7 +30,8 @@ export function createInvitationTemplateDocument(
   id: InvitationTemplateId,
   translate: (
     key: string
-  ) => string
+  ) => string,
+  initialEvent: Pick<InvitationDocument, "eventDate" | "eventTime"> = {},
 ): InvitationDocument {
   const template:
     InvitationTemplate | undefined =
@@ -63,6 +64,7 @@ export function createInvitationTemplateDocument(
           const field
           of definition.fields
         ) {
+          if (field === "date" || field === "time") continue;
           content[field] =
             translate(
               `templates.copy.${template.id}.${definition.copy}.${field}`
@@ -78,6 +80,8 @@ export function createInvitationTemplateDocument(
     );
 
   return parseInvitationDocument({
+    eventDate: initialEvent.eventDate !== undefined ? initialEvent.eventDate : template.eventDate,
+    eventTime: initialEvent.eventTime !== undefined ? initialEvent.eventTime : template.eventTime,
     theme:
       template.theme,
 

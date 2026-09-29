@@ -1,3 +1,4 @@
+import type { EditorPhotoFramingValue } from "@/features/editor/types/editorPhotoFraming.types";
 import type { AlbumThemeId } from "../config/digitalAlbumThemes";
 
 export type DigitalAlbumPageLayout =
@@ -25,28 +26,12 @@ export type DigitalAlbumPageLayout =
 export type DigitalAlbumTheme = AlbumThemeId;
 
 
-export interface DigitalAlbumPhotoSlot {
+export interface DigitalAlbumPhotoSlot extends EditorPhotoFramingValue {
   id:
     string;
 
   photoId:
     string | null;
-
-  /**
-   * Normalized CSS object-position,
-   * not a source crop rectangle.
-   */
-  position?: {
-    x:
-      number;
-
-    y:
-      number;
-  };
-
-  fit?:
-    | "cover"
-    | "contain";
 
   /**
    * Undefined inherits description;

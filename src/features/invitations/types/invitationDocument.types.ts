@@ -19,7 +19,9 @@ export type InvitationContent =
     >
   >;
 
-export type InvitationPhotoSlot = {
+import type { EditorPhotoFramingValue } from "@/features/editor/types/editorPhotoFraming.types";
+
+export type InvitationPhotoSlot = EditorPhotoFramingValue & {
   id: string;
   photoId: string | null;
 };
@@ -36,6 +38,9 @@ export type InvitationDocumentPage = {
 };
 
 export type InvitationDocument = {
+  eventDate?: string | null;
+  eventTime?: string | null;
+  legacyDateTime?: { date?: true; time?: true };
   theme: InvitationTheme;
   pages: InvitationDocumentPage[];
 };

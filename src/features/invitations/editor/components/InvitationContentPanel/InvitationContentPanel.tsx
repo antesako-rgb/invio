@@ -1,5 +1,5 @@
 "use client";
-import { useId } from "react";
+import { useId, useState } from "react";
 import { format, isValid, parseISO, startOfDay } from "date-fns";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -9,8 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
+import TabsFilter from "@/components/ui/filter/TabsFilter";
 import { useTranslations } from "next-intl";
-import { Plus, X } from "lucide-react";
+import { Crop, Plus, X } from "lucide-react";
 import { getProjectPhotoUrl } from "@/features/project-photos/utils/getProjectPhotoUrl";
 import type { InvitationRenderPhoto } from "../../../types/invitationPhoto.types";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ import type { InvitationTheme } from "../../../config/invitationThemes";
 import { changeInvitationPageLayout, changeInvitationPageDesign } from "../../../utils/invitationDocumentOperations";
 import type { InvitationDocumentPage } from "../../../types/invitationDocument.types";
 import styles from "./InvitationContentPanel.module.css";
+import type { InvitationDateTimeField } from "../../../utils/invitationSharedDateTime";
 
 // Validate newly selected dates, not historical document content.
 const selectedDateSchema = z.date().refine(
@@ -27,16 +29,22 @@ const selectedDateSchema = z.date().refine(
 ).optional();
 
 interface InvitationContentPanelProps {
+  dateTimeContent: InvitationDocumentPage["content"];
   photos: InvitationRenderPhoto[];
   page: InvitationDocumentPage;
   theme: InvitationTheme;
   disabled: boolean;
   onChange: (update: (page: InvitationDocumentPage) => InvitationDocumentPage) => void;
   onChoosePhoto: (slotId: string) => void;
+  onFramePhoto: (slotId: string) => void;
+  onDateTimeChange: (field: InvitationDateTimeField, value: string) => void;
 }
 
-export default function InvitationContentPanel({ page, theme, photos, disabled, onChange, onChoosePhoto }: InvitationContentPanelProps) {
+export default function InvitationContentPanel({ page, theme, photos, disabled, onChange, onChoosePhoto, onFramePhoto, onDateTimeChange, dateTimeContent }: InvitationContentPanelProps) {
   const fieldId = useId();
+  const [section, setSection] = useState<"text" | "photos" | "design">("text");
+  const hasPhotos = page.photos.length > 0;
+  const visibleSection = section === "photos" && !hasPhotos ? "text" : section;
   const t = useTranslations("Invitations");
   const config = getInvitationPageType(page.type);
   const designs = getInvitationPageDesigns(page.type, theme);
@@ -44,13 +52,17 @@ export default function InvitationContentPanel({ page, theme, photos, disabled, 
 
   function renderField(field: (typeof config.fields)[number]) {
     const id = `${fieldId}-${field}`;
-    const value = page.content[field] ?? "";
+    const value = (field === "date" || field === "time" ? dateTimeContent[field] : page.content[field]) ?? "";
     const parsedDate = field === "date" && /^\d{4}-\d{2}-\d{2}$/.test(value)
       ? parseISO(value)
       : undefined;
     const selectedDate = parsedDate && isValid(parsedDate) ? parsedDate : undefined;
     const validTime = /^([01]\d|2[0-3]):[0-5]\d$/.test(value);
     const changeContent = (value: string) => {
+      if (field === "date" || field === "time") {
+        onDateTimeChange(field, value);
+        return;
+      }
       onChange(current => ({ ...current, content: { ...current.content, [field]: value } }));
     };
 
@@ -60,7 +72,7 @@ export default function InvitationContentPanel({ page, theme, photos, disabled, 
           {t(`fields.${field}`)}
         </Label>
 
-        {field === "date" && page.layout === "date-card" ? (
+        {field === "date" ? (
           <DatePicker
             id={id}
             value={selectedDate}
@@ -77,7 +89,7 @@ export default function InvitationContentPanel({ page, theme, photos, disabled, 
             disablePast
             clearable
           />
-        ) : field === "time" && page.layout === "date-card" ? (
+        ) : field === "time" ? (
           <>
             {value && !validTime && <p className={styles.hint}>{value}</p>}
             <TimePicker
@@ -103,6 +115,9 @@ export default function InvitationContentPanel({ page, theme, photos, disabled, 
             value={page.content[field] ?? ""}
             onChange={event => changeContent(event.target.value)} />
         )}
+        {(field === "date" || field === "time") && (
+          <p className={styles.hint}>{t(field === "date" ? "photoUx.sharedDate" : "photoUx.sharedTime")}</p>
+        )}
       </div>
     );
   }
@@ -127,6 +142,23 @@ export default function InvitationContentPanel({ page, theme, photos, disabled, 
       {t(`types.${page.type}`)}
     </legend>
 
+    <div role="group" aria-label={t("photoUx.sections")}>
+      <TabsFilter
+        className={styles.contentTabs}
+        items={(["text", ...(hasPhotos ? ["photos"] : []), "design"]).map(value => ({
+          value,
+          label: t(`photoUx.section_${value}`),
+          disabled,
+        }))}
+        value={visibleSection}
+        onValueChange={value => {
+          if (value === "text" || value === "photos" || value === "design") setSection(value);
+        }}
+        equalWidth
+      />
+    </div>
+    <div id={`${fieldId}-text-panel`} className={styles.sectionBody} hidden={visibleSection !== "text"}>
+    {!config.fields.length && <p className={styles.hint}>{t("photoUx.noText")}</p>}
     {page.type === "cover" && page.layout === "photo-strip" ? (
       <>
         {renderField("firstName")}
@@ -155,15 +187,19 @@ export default function InvitationContentPanel({ page, theme, photos, disabled, 
       {t("editor.rsvpNote")}
     </p>}
 
+    </div>
+    <div id={`${fieldId}-photos-panel`} className={styles.sectionBody} hidden={visibleSection !== "photos"}>
     {page.photos.length > 0 && <>
       <h3>
-        {t("editor.photos")}
+        {t("photoUx.pagePhotos")}
       </h3>
+      <p className={styles.hint}>{t("photoUx.pageHint")}</p>
       <div className={styles.photos}>
         {page.photos.map((slot, index) => {
           const photo = photos.find(photo => photo.id === slot.photoId);
 
           return <div key={slot.id} className={styles.photoItem}>
+            <span className={styles.photoLabel}>{t("photoUx.photoNumber", { number: index + 1 })}</span>
             <button
               type="button"
               className={styles.slotButton}
@@ -173,14 +209,24 @@ export default function InvitationContentPanel({ page, theme, photos, disabled, 
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={getProjectPhotoUrl(photo.image_path)} alt={photo.description ?? ""} />
               </> : <Plus aria-hidden="true" />}
+              <span className={styles.slotLabel}>{t(photo ? "photoUx.replace" : "photoUx.add")}</span>
             </button>
+
+            {photo && <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => onFramePhoto(slot.id)}>
+              <Crop aria-hidden="true" />{t("framing.position")}
+            </Button>}
 
             {slot.photoId && <Button
               className={styles.photoRemove}
               size="icon"
               variant="secondary"
               aria-label={t("editor.clearPhoto")}
-              onClick={() => onChange(current => ({ ...current, photos: current.photos.map(item => item.id === slot.id ? { ...item, photoId: null } : item) }))}>
+              title={t("editor.clearPhoto")}
+              onClick={() => onChange(current => ({ ...current, photos: current.photos.map(item => item.id === slot.id ? { id: item.id, photoId: null } : item) }))}>
               <X aria-hidden="true" />
             </Button>}
           </div>;
@@ -188,6 +234,10 @@ export default function InvitationContentPanel({ page, theme, photos, disabled, 
       </div>
     </>}
 
+
+
+    </div>
+    <div id={`${fieldId}-design-panel`} className={styles.sectionBody} hidden={visibleSection !== "design"}>
     {!!page.unplacedPhotos?.length && <p className={styles.hint}>
       {t("editor.retained", { count: page.unplacedPhotos.length })}
     </p>}
@@ -201,10 +251,7 @@ export default function InvitationContentPanel({ page, theme, photos, disabled, 
         onValueChange={changeDesign}
         options={designs.map(design => ({ value: design.id, label: t(design.label) }))} />
     </div>
-    <details>
-      <summary>
-        {t("editor.changeType")}
-      </summary>
+    <div>
       <div className={styles.field}>
         <Label htmlFor={`${fieldId}-type`}>
           {t("editor.pageType")}
@@ -215,6 +262,7 @@ export default function InvitationContentPanel({ page, theme, photos, disabled, 
           onValueChange={changeType}
           options={Object.keys(invitationPageTypes).map(type => ({ value: type, label: t(`types.${type}`) }))} />
       </div>
-    </details>
+    </div>
+    </div>
   </fieldset>;
 }
