@@ -18,7 +18,7 @@ import styles from "./DashboardProductsIntro.module.css";
 export default async function DashboardProductsIntro() {
   const t =
     await getTranslations(
-      "Dashboard.overview.events.empty"
+      "Dashboard.overview.products"
     );
 
   return (

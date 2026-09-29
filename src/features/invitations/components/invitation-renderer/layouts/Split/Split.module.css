@@ -1,0 +1,29 @@
+/* ==========================================================================
+   Split Layout
+========================================================================== */
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(1.75rem, 5cqi, 4.5rem);
+  padding: clamp(1.25rem, 5cqi, 4.5rem);
+}
+
+.split:not(:has(.photo)) {
+  grid-template-columns: 1fr;
+}
+
+.split > .photo {
+  min-width: 0;
+}
+
+@container (max-width: 700px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .split > .photo img {
+    max-height: 34rem;
+  }
+}

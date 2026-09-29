@@ -1,0 +1,136 @@
+/* ==========================================================================
+   Poster — three zones, one shared user photograph
+========================================================================== */
+
+.poster {
+  background: var(--invitation-paper);
+  color: var(--invitation-ink);
+  overflow-wrap: anywhere;
+}
+
+.heading,
+.footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(1.5rem, 4cqi, 3.5rem);
+}
+
+.heading {
+  display: grid;
+  align-items: center;
+  min-height: clamp(10rem, 28cqi, 22rem);
+  text-align: center;
+}
+
+.heading h2 {
+  margin: 0;
+  font-family: var(--invitation-poster-title-font, var(--invitation-display-font));
+  font-size: var(--invitation-poster-title-size, var(--invitation-heading-size));
+  font-weight: var(--invitation-poster-title-weight, var(--invitation-heading-weight));
+  letter-spacing: var(--invitation-poster-title-tracking, var(--invitation-heading-tracking));
+  line-height: var(--invitation-poster-title-leading, var(--invitation-heading-leading));
+  white-space: pre-wrap;
+}
+
+.poster[data-has-photo="true"] .heading,
+.poster[data-has-photo="true"] .footer {
+  color: var(--invitation-photo-text);
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.backdrop:has(img)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--invitation-photo-overlay);
+}
+
+.backdrop > .backgroundPhoto {
+  position: absolute;
+  inset: -1rem;
+  filter: blur(.6rem);
+}
+
+.backdrop > .backgroundPhoto img {
+  aspect-ratio: auto;
+  border-radius: 0;
+  outline: none;
+}
+
+.main {
+  background: var(--invitation-surface);
+}
+
+.main > .mainPhoto {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.main > .mainPhoto img {
+  aspect-ratio: auto;
+  border-radius: 0;
+  outline: none;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 4cqi, 3rem);
+}
+
+.group {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: .75rem;
+}
+
+.group:empty {
+  display: none;
+}
+
+.details:has(.group:empty) {
+  grid-template-columns: 1fr;
+}
+
+.group + .group:not(:empty) {
+  border-inline-start: 1px solid currentColor;
+  padding-inline-start: clamp(1rem, 4cqi, 3rem);
+}
+
+.group:empty + .group {
+  border-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+.group p {
+  margin: 0;
+  white-space: pre-wrap;
+  font-size: clamp(.875rem, 1.6cqi, 1.125rem);
+  line-height: var(--invitation-body-leading);
+}
+
+.group .primary {
+  font-family: var(--invitation-display-font);
+  font-weight: var(--invitation-heading-weight);
+  font-size: clamp(1.125rem, 2.5cqi, 1.75rem);
+  line-height: var(--invitation-heading-leading);
+}
+
+@container (max-width: 440px) {
+  .main > .mainPhoto {
+    aspect-ratio: 1;
+  }
+
+  .heading,
+  .footer {
+    padding: 1.25rem;
+  }
+}

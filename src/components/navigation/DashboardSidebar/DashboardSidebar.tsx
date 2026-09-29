@@ -56,9 +56,9 @@ export default function DashboardSidebar() {
       "Navigation.dashboard"
     );
 
-  const eventText =
+  const projectText =
     useTranslations(
-      "Events.header"
+      "Projects.navigation"
     );
 
   const {
@@ -72,9 +72,9 @@ export default function DashboardSidebar() {
   const pathname =
     usePathname();
 
-  const eventId =
+  const projectId =
     pathname.match(
-      /^\/dashboard\/dogadaji\/([0-9a-f]{8}-[0-9a-f-]{27})(?:\/|$)/i
+      /^\/dashboard\/projects\/([0-9a-f]{8}-[0-9a-f-]{27})(?:\/|$)/i
     )?.[1];
 
   const [
@@ -227,7 +227,7 @@ export default function DashboardSidebar() {
           }
         )}
 
-        {eventId && (
+        {projectId && (
           <div
             className={
               styles.group
@@ -239,7 +239,7 @@ export default function DashboardSidebar() {
                   styles.groupLabel
                 }
               >
-                {eventText(
+                {projectText(
                   "workspace"
                 )}
               </span>
@@ -249,15 +249,15 @@ export default function DashboardSidebar() {
               items={[
                 {
                   id:
-                    "eventOverview",
+                    "projectOverview",
 
                   label:
-                    eventText(
+                    projectText(
                       "overview"
                     ),
 
                   href:
-                    `/dashboard/dogadaji/${eventId}`,
+                    `/dashboard/projects/${projectId}`,
 
                   icon:
                     LayoutDashboard,
@@ -271,12 +271,12 @@ export default function DashboardSidebar() {
                     "collaborators",
 
                   label:
-                    eventText(
+                    projectText(
                       "collaborators"
                     ),
 
                   href:
-                    `/dashboard/dogadaji/${eventId}/suradnici`,
+                    `/dashboard/projects/${projectId}/collaborators`,
 
                   icon:
                     UsersRound,
@@ -289,7 +289,7 @@ export default function DashboardSidebar() {
                 collapsed
               }
               ariaLabel={
-                eventText(
+                projectText(
                   "workspace"
                 )
               }

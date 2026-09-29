@@ -4,8 +4,8 @@ import Container
 import Page
   from "@/components/layout/PageContainer/Page";
 
-import EventProductContext
-  from "@/features/events/components/EventWorkspace/EventProductContext/EventProductContext";
+import ProjectProductContext
+  from "@/features/projects/components/ProjectProductContext/ProjectProductContext";
 
 import DigitalAlbumManagementHeader
   from "@/features/digital-albums/components/album-management/DigitalAlbumManagementHeader/DigitalAlbumManagementHeader";
@@ -45,9 +45,9 @@ export default function DigitalAlbumManagementPage({
   return (
     <Container>
       <Page>
-        <EventProductContext
-          eventId={
-            album.event_id
+        <ProjectProductContext
+          projectId={
+            album.project_id
           }
         />
 

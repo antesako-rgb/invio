@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Torn Paper — photo above a responsive, irregular paper edge
+========================================================================== */
+
+.tornPaper {
+  background: var(--invitation-paper);
+  color: var(--invitation-ink);
+}
+
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero > .photo {
+  aspect-ratio: 6 / 5;
+  overflow: hidden;
+}
+
+.hero > .photo img {
+  aspect-ratio: auto;
+  border-radius: 0;
+  outline: none;
+}
+
+.subtitle {
+  position: relative;
+  margin: 0;
+  padding: clamp(1.5rem, 5cqi, 4rem) clamp(1.5rem, 7cqi, 5rem);
+  text-align: center;
+  font-family: var(--invitation-display-font);
+  font-size: clamp(1rem, 2.5cqi, 1.75rem);
+  line-height: var(--invitation-heading-leading);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.tornPaper[data-photo-area="true"] .hero {
+  display: grid;
+}
+
+.tornPaper[data-photo-area="true"] .photo,
+.tornPaper[data-photo-area="true"] .subtitle {
+  grid-area: 1 / 1;
+}
+
+.tornPaper[data-photo-area="true"] .subtitle {
+  align-self: start;
+  z-index: 1;
+}
+
+.tornPaper[data-has-photo="true"] .subtitle {
+  color: var(--invitation-photo-text);
+  background: var(--invitation-photo-overlay);
+}
+
+.paper {
+  position: relative;
+  padding: clamp(2.5rem, 7cqi, 6rem) clamp(1.75rem, 7cqi, 6rem);
+  text-align: center;
+}
+
+/* Percentage coordinates scale with the canvas. No theme-specific mask asset. */
+.tornPaper[data-photo-area="true"] .paper::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 calc(100% - 1px);
+  height: clamp(2rem, 9cqi, 6rem);
+  background: var(--invitation-paper);
+  clip-path: polygon(
+    0 87%, 4% 88%, 8% 85%, 12% 78%, 16% 67%, 19% 56%,
+    23% 48%, 27% 44%, 30% 39%, 32% 45%, 34% 30%, 38% 18%,
+    42% 23%, 46% 32%, 50% 37%, 53% 33%, 56% 41%, 59% 55%,
+    62% 58%, 65% 52%, 69% 61%, 73% 68%, 76% 70%, 79% 79%,
+    82% 77%, 85% 89%, 89% 84%, 93% 91%, 97% 88%, 100% 90%,
+    100% 100%, 0 100%
+  );
+  pointer-events: none;
+}
+
+@container (max-width: 440px) {
+  .hero > .photo {
+    aspect-ratio: 1;
+  }
+}

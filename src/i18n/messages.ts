@@ -16,7 +16,8 @@ export async function loadMessages(
     auth,
     navigation,
     dashboard,
-    events,
+    projects,
+    invitations,
     digitalAlbums,
     digitalAlbumEditor,
     photoWalls,
@@ -45,9 +46,8 @@ export async function loadMessages(
         `../messages/${locale}/dashboard.json`
       ),
 
-      import(
-        `../messages/${locale}/events.json`
-      ),
+      import(`../messages/${locale}/projects.json`),
+      import(`../messages/${locale}/invitations.json`),
 
       import(
         `../messages/${locale}/digital-albums.json`
@@ -90,8 +90,8 @@ export async function loadMessages(
     Dashboard:
       dashboard.default,
 
-    Events:
-      events.default,
+    Projects: projects.default,
+    Invitations: invitations.default,
 
     DigitalAlbums:
       digitalAlbums.default,

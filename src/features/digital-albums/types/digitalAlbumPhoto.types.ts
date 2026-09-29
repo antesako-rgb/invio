@@ -3,8 +3,8 @@ import type {
 } from "@/lib/supabase/database.types";
 
 import type {
-  EventPhoto,
-} from "@/features/event-photos/types/eventPhoto.types";
+  ProjectPhoto,
+} from "@/features/project-photos/types/projectPhoto.types";
 
 
 /* ==========================================================================
@@ -22,7 +22,7 @@ export type DigitalAlbumPhoto =
 export type DigitalAlbumPhotoWithPhoto =
   DigitalAlbumPhoto & {
     photo:
-      EventPhoto;
+      ProjectPhoto;
   };
 
 

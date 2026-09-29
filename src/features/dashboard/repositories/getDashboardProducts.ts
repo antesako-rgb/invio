@@ -11,7 +11,7 @@ export interface DashboardProduct {
   id:
     string;
 
-  event_id:
+  project_id:
     string;
 
   name:
@@ -22,6 +22,7 @@ export interface DashboardProduct {
 }
 
 export interface DashboardProducts {
+  invitations: DashboardProduct[];
   walls:
     DashboardProduct[];
 
@@ -35,11 +36,12 @@ export interface DashboardProducts {
 ========================================================================== */
 
 export async function getDashboardProducts(
-  eventIds:
+  projectIds:
     string[]
 ): Promise<DashboardProducts> {
-  if (eventIds.length === 0) {
+  if (projectIds.length === 0) {
     return {
+      invitations: [],
       walls: [],
       albums: [],
     };
@@ -51,6 +53,7 @@ export async function getDashboardProducts(
   const [
     walls,
     albums,
+    invitations,
   ] =
     await Promise.all([
       supabase
@@ -58,11 +61,11 @@ export async function getDashboardProducts(
           "photo_walls"
         )
         .select(
-          "id,event_id,name,is_public"
+          "id,project_id,name,is_public"
         )
         .in(
-          "event_id",
-          eventIds
+          "project_id",
+          projectIds
         ),
 
       supabase
@@ -70,12 +73,13 @@ export async function getDashboardProducts(
           "digital_albums"
         )
         .select(
-          "id,event_id,name,is_public"
+          "id,project_id,name,is_public"
         )
         .in(
-          "event_id",
-          eventIds
+          "project_id",
+          projectIds
         ),
+      supabase.from("invitations").select("id,project_id,name,is_public").in("project_id", projectIds),
     ]);
 
   if (walls.error) {
@@ -86,7 +90,10 @@ export async function getDashboardProducts(
     throw albums.error;
   }
 
+  if (invitations.error) throw invitations.error;
+
   return {
+    invitations: invitations.data,
     walls:
       walls.data,
 

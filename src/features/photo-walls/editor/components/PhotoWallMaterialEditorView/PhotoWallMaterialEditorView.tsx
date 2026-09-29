@@ -18,7 +18,7 @@ import styles from "./PhotoWallMaterialEditorView.module.css";
 
 export interface PhotoWallMaterialEditorViewProps {
   materialId: string; materialName: string; templateId: string; variantId: string;
-  updatedAt: string; eventId: string; isPublic: boolean; locale: string;
+  updatedAt: string; projectId: string; isPublic: boolean; locale: string;
   data: PhotoWallMaterialRenderData;
 }
 
@@ -37,7 +37,7 @@ export default function PhotoWallMaterialEditorView(props: PhotoWallMaterialEdit
   const config = getPhotoWallMaterialTemplateConfig(draft.templateId);
   const data = { ...props.data, content: draft.content, presentation: draft.presentation,
     display: buildPhotoWallMaterialDisplay(draft.content, props.locale) };
-  const leave = () => router.push(`/dashboard/dogadaji/${props.eventId}/photo-wall/materijali`);
+  const leave = () => router.push(`/dashboard/projects/${props.projectId}/photo-wall/materials`);
 
   useEffect(() => {
     const root = paper.current;

@@ -3,16 +3,16 @@ import Container from "@/components/layout/Container/Container";
 import Page from "@/components/layout/PageContainer/Page";
 
 import {
-  getEvents,
-} from "@/features/events/repositories/getEvents";
+  getProjects,
+} from "@/features/projects/repositories/getProjects";
 
 import DashboardBrandMessage from "../../components/DashboardBrandMessage/DashboardBrandMessage";
 
-import DashboardEvents from "../../components/DashboardEvents/DashboardEvents";
+import DashboardProjects from "../../components/DashboardProjects/DashboardProjects";
 
 import DashboardInvites from "../../components/DashboardInvites/DashboardInvites";
 
-import DashboardProductsIntro from "../../components/DashboardProductsIntro/DashboardProductsIntro";
+import DashboardOnboarding from "../../components/DashboardOnboarding/DashboardOnboarding";
 
 import DashboardWelcome from "../../components/DashboardWelcome/DashboardWelcome";
 
@@ -33,31 +33,25 @@ interface DashboardOverviewPageProps {
 export default async function DashboardOverviewPage({
   firstName,
 }: DashboardOverviewPageProps) {
-  const events =
-    await getEvents();
+  const projects =
+    await getProjects();
 
   return (
     <Container>
       <Page>
-        <DashboardWelcome
-          firstName={
-            firstName
-          }
-        />
-
-        <DashboardInvites />
-
-        <DashboardEvents
-          events={
-            events
-          }
-        />
-
-        {events.length === 0 && (
-          <DashboardProductsIntro />
+        {projects.length === 0 ? (
+          <>
+            <DashboardOnboarding />
+            <DashboardInvites />
+          </>
+        ) : (
+          <>
+            <DashboardWelcome firstName={firstName} />
+            <DashboardInvites />
+            <DashboardProjects projects={projects} />
+            <DashboardBrandMessage />
+          </>
         )}
-
-        <DashboardBrandMessage />
       </Page>
     </Container>
   );

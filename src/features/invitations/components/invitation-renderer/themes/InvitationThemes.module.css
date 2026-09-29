@@ -1,0 +1,217 @@
+/* ==========================================================================
+   Shared Design Tokens — defaults preserve the existing themes
+========================================================================== */
+
+.theme {
+  --invitation-paper: #faf7f1;
+  --invitation-ink: #342e29;
+  --invitation-muted-ink: var(--invitation-ink);
+  --invitation-accent: #8a7157;
+  --invitation-surface:
+    color-mix(
+      in srgb,
+      var(--invitation-accent) 12%,
+      var(--invitation-paper)
+    );
+  --invitation-border:
+    color-mix(
+      in srgb,
+      var(--invitation-ink) 10%,
+      transparent
+    );
+
+  --invitation-display-font: Georgia, serif;
+  --invitation-body-font: Georgia, serif;
+
+  --invitation-script-font: var(--invitation-display-font);
+  --invitation-script-size: var(--invitation-heading-size);
+  --invitation-script-weight: var(--invitation-heading-weight);
+  --invitation-script-leading: var(--invitation-heading-leading);
+  --invitation-script-tracking: var(--invitation-heading-tracking);
+  --invitation-heading-weight: 400;
+  --invitation-body-weight: 400;
+  --invitation-heading-tracking: normal;
+  --invitation-heading-leading: 1.15;
+  --invitation-body-leading: 1.85;
+  --invitation-heading-size: clamp(1.8rem, 4cqi, 3.75rem);
+  --invitation-subtitle-transform: uppercase;
+  --invitation-subtitle-tracking: .12em;
+  --invitation-copy-gap: 1.25rem;
+
+  --invitation-section-space: 0rem;
+
+  --invitation-frame-color: var(--invitation-accent);
+  --invitation-frame-width: 1px;
+  --invitation-frame-style: solid;
+  --invitation-frame-opacity: .45;
+  --invitation-frame-inner-opacity: .14;
+  --invitation-frame-radius: 0;
+
+  --invitation-photo-radius: 0;
+  --invitation-photo-filter: none;
+  --invitation-photo-outline: none;
+  --invitation-photo-text: #fff;
+  --invitation-photo-overlay:
+    linear-gradient(
+      to bottom,
+      rgb(0 0 0 / .32),
+      rgb(0 0 0 / .52) 45%,
+      rgb(0 0 0 / .58)
+    );
+
+  --invitation-decoration: none;
+  --invitation-decoration-primary: var(--invitation-decoration);
+  --invitation-decoration-secondary: none;
+  --invitation-decoration-size: clamp(4rem, 16cqi, 11rem);
+  --invitation-decoration-opacity: .7;
+  --invitation-decoration-secondary-size: .72;
+  --invitation-decoration-secondary-opacity: .55;
+
+  font-family: var(--invitation-body-font);
+  font-weight: var(--invitation-body-weight);
+}
+
+
+/* ==========================================================================
+   Modern
+========================================================================== */
+
+.theme[data-theme="modern"] {
+  --invitation-paper: #fff;
+  --invitation-ink: #202638;
+  --invitation-accent: #5653bd;
+  --invitation-display-font: var(--font-inter), sans-serif;
+  --invitation-body-font: var(--font-inter), sans-serif;
+}
+
+
+/* ==========================================================================
+   Editorial
+========================================================================== */
+
+.theme[data-theme="editorial"] {
+  --invitation-paper: #f2eee7;
+  --invitation-ink: #262322;
+  --invitation-accent: #84523f;
+  --invitation-decoration:
+    url("/invitations/themes/editorial/lines.svg");
+}
+
+
+/* ==========================================================================
+   Botanical — ivory stationery, fine botanical engraving and forest ink
+========================================================================== */
+
+.theme[data-theme="botanical"] {
+  --invitation-script-font: var(--font-allura), cursive;
+  --invitation-script-size: clamp(3.5rem, 10cqi, 7.5rem);
+  --invitation-script-weight: 400;
+  --invitation-script-leading: 1.25;
+  --invitation-script-tracking: 0em;
+  --invitation-paper: #fffdf8;
+  --invitation-ink: #080808;
+  --invitation-muted-ink: #596457;
+  --invitation-accent: #7b896e;
+  --invitation-surface: #edeedf;
+  --invitation-border: #dddccd;
+
+  --invitation-display-font:
+    var(--font-playfair-display),
+    Georgia,
+    serif;
+
+  --invitation-body-font:
+    var(--font-marcellus),
+    Georgia,
+    serif;
+
+  --invitation-heading-tracking: -.035em;
+  --invitation-heading-leading: 1.18;
+  --invitation-heading-size: clamp(2.2rem, 5.4cqi, 4.6rem);
+  --invitation-body-leading: 1.95;
+  --invitation-subtitle-tracking: .18em;
+  --invitation-copy-gap: clamp(1.5rem, 3cqi, 2.25rem);
+
+  --invitation-section-space: clamp(.5rem, 2cqi, 1.5rem);
+
+  --invitation-frame-color: #929c80;
+  --invitation-frame-opacity: .6;
+  --invitation-frame-inner-opacity: .2;
+
+  --invitation-photo-radius: 2px;
+  --invitation-photo-outline:
+    1px solid rgb(38 59 48 / .14);
+
+  --invitation-photo-text: #fffaf0;
+  --invitation-photo-overlay:
+    linear-gradient(
+      165deg,
+      rgb(16 29 22 / .38),
+      rgb(16 29 22 / .56) 48%,
+      rgb(16 29 22 / .68)
+    );
+
+  --invitation-decoration-primary:
+    url("/invitations/themes/botanical/branch.svg");
+
+  --invitation-decoration-secondary:
+    url("/invitations/themes/botanical/sprig.svg");
+
+  --invitation-decoration-size:
+    clamp(4.5rem, 16cqi, 11rem);
+
+  --invitation-decoration-opacity: .68;
+  --invitation-decoration-secondary-size: .58;
+  --invitation-decoration-secondary-opacity: .42;
+}
+
+
+/* ==========================================================================
+   Celebration
+========================================================================== */
+
+.theme[data-theme="celebration"] {
+  --invitation-paper: #fff8f1;
+  --invitation-ink: #41335b;
+  --invitation-accent: #a54b79;
+  --invitation-decoration:
+    url("/invitations/themes/celebration/confetti.svg");
+  --invitation-display-font: var(--font-inter), sans-serif;
+  --invitation-body-font: var(--font-inter), sans-serif;
+}
+/* Page artwork belongs to theme + design, never to structural layout CSS. */
+.pageDesign {
+  --invitation-ornamental-artwork: none;
+}
+
+.theme[data-theme="botanical"] .pageDesign[data-layout="photo-strip"] {
+  --invitation-photo-strip-paper: var(--invitation-paper);
+  --invitation-photo-strip-ink: #283e33;
+}
+
+.theme[data-theme="botanical"] .pageDesign[data-layout="torn-paper"] h2 {
+  font-family: var(--invitation-script-font);
+  font-size: calc(var(--invitation-script-size) * 1.1);
+  font-weight: var(--invitation-script-weight);
+  line-height: var(--invitation-script-leading);
+  letter-spacing: var(--invitation-script-tracking);
+  overflow-wrap: anywhere;
+}
+
+.theme[data-theme="botanical"] .pageDesign[data-layout="poster"] {
+  --invitation-poster-title-font: var(--invitation-script-font);
+  --invitation-poster-title-size: calc(var(--invitation-script-size) * 1.1);
+  --invitation-poster-title-weight: var(--invitation-script-weight);
+  --invitation-poster-title-leading: var(--invitation-script-leading);
+  --invitation-poster-title-tracking: var(--invitation-script-tracking);
+}
+
+.theme[data-theme="botanical"] .pageDesign[data-layout="ornamental"][data-variant="watercolor"] {
+  --invitation-names-font: var(--invitation-script-font);
+  --invitation-names-size: var(--invitation-script-size);
+  --invitation-names-weight: var(--invitation-script-weight);
+  --invitation-names-leading: var(--invitation-script-leading);
+  --invitation-names-tracking: var(--invitation-script-tracking);
+  --invitation-names-width: min(82%, 36rem);
+  --invitation-ornamental-artwork: url("/invitations/themes/botanical/ornamental-cover.png");
+}

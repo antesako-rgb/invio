@@ -1,0 +1,137 @@
+/* ==========================================================================
+   Photo Strip
+========================================================================== */
+
+.photoStrip {
+  display: grid;
+  grid-template-columns: minmax(0, 38fr) minmax(0, 62fr);
+  background: var(--invitation-paper);
+}
+
+.photoStrip:not(:has(.strip)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.strip {
+  display: grid;
+  align-content: stretch;
+  gap: clamp(.625rem, 2cqi, 1.5rem);
+  padding: clamp(.625rem, 2cqi, 1.5rem);
+  min-width: 0;
+}
+
+.strip > .photo {
+  min-height: 0;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.strip > .photo img,
+.strip > .photo > span {
+  aspect-ratio: auto;
+  min-height: 0;
+}
+
+.panel {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(1.5rem, 5cqi, 4rem);
+  padding: clamp(2rem, 7cqi, 6rem) clamp(1rem, 4cqi, 3rem);
+  background: var(--invitation-photo-strip-paper, var(--invitation-ink));
+  color: var(--invitation-photo-strip-ink, var(--invitation-paper));
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.monogram {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--invitation-display-font);
+  font-weight: var(--invitation-heading-weight);
+  font-size: clamp(3rem, 16cqi, 10rem);
+  line-height: 1;
+  padding-bottom: .2em;
+}
+
+.monogram span + span {
+  margin-left: -.15em;
+  transform: translateY(.2em);
+}
+
+.monogram::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--invitation-decoration-primary);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+}
+
+.names {
+  display: grid;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  font-family: var(--invitation-display-font);
+  font-weight: var(--invitation-heading-weight);
+  line-height: var(--invitation-heading-leading);
+  letter-spacing: var(--invitation-heading-tracking);
+}
+
+.names > span:not(.ampersand) {
+  font-family: var(--invitation-script-font);
+  font-size: calc(var(--invitation-script-size) * .8);
+  font-weight: var(--invitation-script-weight);
+  line-height: var(--invitation-script-leading);
+  letter-spacing: var(--invitation-script-tracking);
+}
+
+.ampersand {
+  font-size: .55em;
+}
+
+.message {
+  margin: 0;
+  font-family: var(--invitation-body-font);
+  font-size: clamp(.75rem, 1.6cqi, 1.125rem);
+  line-height: var(--invitation-body-leading);
+  white-space: pre-wrap;
+}
+
+.subtitle {
+  margin: 0;
+  font-family: var(--invitation-body-font);
+  font-size: clamp(.75rem, 1.6cqi, 1.125rem);
+  line-height: var(--invitation-body-leading);
+  letter-spacing: var(--invitation-subtitle-tracking);
+  text-transform: var(--invitation-subtitle-transform);
+  white-space: pre-wrap;
+}
+
+.panel h2 {
+  font-size: clamp(1.75rem, 5.5cqi, 4.75rem);
+  text-wrap: balance;
+}
+
+.panel time {
+  display: block;
+  margin-top: clamp(1rem, 5cqi, 4rem);
+}
+
+@container (max-width: 440px) {
+  .panel {
+    gap: 1.5rem;
+    padding-inline: .875rem;
+  }
+
+  .panel h2 {
+    font-size: clamp(1.5rem, 7cqi, 2rem);
+  }
+}

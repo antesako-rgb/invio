@@ -18,8 +18,8 @@ import {
 } from "@/features/digital-albums/utils/parseDigitalAlbumDocument";
 
 import {
-  getEventPhotoWall,
-} from "@/features/photo-walls/repositories/photo-wall/getEventPhotoWall";
+  getProjectPhotoWall,
+} from "@/features/photo-walls/repositories/photo-wall/getProjectPhotoWall";
 
 
 /* ==========================================================================
@@ -89,8 +89,8 @@ export default async function DigitalAlbumEditorPage({
         album.id
       ),
 
-      getEventPhotoWall(
-        album.event_id
+      getProjectPhotoWall(
+        album.project_id
       ),
     ]);
 
@@ -101,7 +101,7 @@ export default async function DigitalAlbumEditorPage({
 
   return (
     <DigitalAlbumEditorView
-      eventId={album.event_id}
+      projectId={album.project_id}
       albumId={
         album.id
       }

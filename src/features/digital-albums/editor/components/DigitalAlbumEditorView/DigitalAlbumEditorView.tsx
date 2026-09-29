@@ -25,7 +25,7 @@ import {
   changeDigitalAlbumPageLayout,
 } from "../../../utils/digitalAlbumDocumentOperations";
 import { getDigitalAlbumTextOverflow } from "../../../utils/getDigitalAlbumTextOverflow";
-import { getEventPhotoUrl } from "@/features/event-photos/utils/getEventPhotoUrl";
+import { getProjectPhotoUrl } from "@/features/project-photos/utils/getProjectPhotoUrl";
 import type { DigitalAlbumEditorStep } from "../../types/digitalAlbumEditor.types";
 import type {
   DigitalAlbumDocument,
@@ -44,7 +44,7 @@ import { getAlbumVisibleIndexes, getAlbumPhotoUsage } from "../../../utils/digit
 import DigitalAlbumPhotoUsageDialog from "../DigitalAlbumPhotoUsageDialog/DigitalAlbumPhotoUsageDialog";
 import styles from "./DigitalAlbumEditorView.module.css";
 interface Props {
-  eventId: string;
+  projectId: string;
   albumId: string;
   document: DigitalAlbumDocument;
   documentVersion: number;
@@ -53,7 +53,7 @@ interface Props {
   photoWalls: PhotoWall[];
 }
 export default function DigitalAlbumEditorView({
-  eventId,
+  projectId,
   albumId,
   document: initialDocument,
   documentVersion,
@@ -236,7 +236,7 @@ export default function DigitalAlbumEditorView({
         pageId: activePage.id,
         allowContain: getDigitalAlbumLayout(activePage.layout).supportsContain,
         slot: activeSlot,
-        url: getEventPhotoUrl(photo.photo.image_path),
+        url: getProjectPhotoUrl(photo.photo.image_path),
         ratio: width / height,
         caption: photo.description,
       });
@@ -252,7 +252,7 @@ export default function DigitalAlbumEditorView({
         activeStep={activeStep}
         onStepChange={(step) => { if (assetLock.current) return; closePhotoDialog(); setPhotoView(null); setMobileSnapPoint(EDITOR_MOBILE_DEFAULT_SNAP_POINT); setActiveStep(step); }}
         headerProps={{
-          eventId,
+          projectId,
           onExportBusy: setExportBusy,
           saveStatus: editor.saveStatus,
           saveConflict: editor.saveConflict,
@@ -301,7 +301,7 @@ export default function DigitalAlbumEditorView({
                             <li key={slot.id} className={styles.retainedPhoto}>
                               {photo && (
                                 // eslint-disable-next-line @next/next/no-img-element
-                                <img src={getEventPhotoUrl(photo.photo.image_path)} alt="" loading="lazy" />
+                                <img src={getProjectPhotoUrl(photo.photo.image_path)} alt="" loading="lazy" />
                               )}
                               <button
                                 type="button"
@@ -324,7 +324,7 @@ export default function DigitalAlbumEditorView({
                   <DigitalAlbumPhotoContext
                     key={activeSlot.id}
                     label={pageLabel}
-                    imageUrl={activePhoto ? getEventPhotoUrl(activePhoto.photo.image_path) : undefined}
+                    imageUrl={activePhoto ? getProjectPhotoUrl(activePhoto.photo.image_path) : undefined}
                     slots={contextSlots.map(({ slot }, index) => ({ slot, number: index + 1 }))}
                     activeSlotId={activeSlot.id}
                     disabled={editingLocked}
@@ -481,7 +481,7 @@ export default function DigitalAlbumEditorView({
       </DigitalAlbumEditor>
       {photoDialog?.used && (
         <DigitalAlbumPhotoUsageDialog key={photoDialog.photoId}
-          imageUrl={usagePhoto ? getEventPhotoUrl(usagePhoto.photo.image_path) : undefined}
+          imageUrl={usagePhoto ? getProjectPhotoUrl(usagePhoto.photo.image_path) : undefined}
           references={usageReferences}
           onClose={closePhotoDialog}
           onNavigate={(reference) => {

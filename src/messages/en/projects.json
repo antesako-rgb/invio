@@ -1,0 +1,179 @@
+{
+  "allContent": "My memories",
+  "back": "Back",
+  "backToContent": "Back: {name}",
+  "editEvent": "Edit event details",
+  "navigation": {
+    "workspace": "Workspace",
+    "overview": "Overview",
+    "collaborators": "Collaborators",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "My memories",
+    "description": "Your events and digital albums in one place.",
+    "create": "Create",
+    "emptyTitle": "Save your first memories",
+    "emptyDescription": "Create an event or start a standalone digital album.",
+    "albumContent": "Digital Album",
+    "emptyContent": "A space for your memories",
+    "photoWall": "Photo Wall",
+    "albumCount": "{count, plural, one {# Digital Album} other {# Digital Albums}}",
+    "noProducts": "No products added yet.",
+    "openAlbum": "Edit album",
+    "open": "Open",
+    "manage": "Manage",
+    "all": "View all",
+    "invitation": "Invitation"
+  },
+  "create": {
+    "title": "What would you like to create?",
+    "description": "Start with an event or a digital album.",
+    "back": "Back",
+    "event": "Event",
+    "eventDescription": "Add event details. You can create a Photo Wall and albums later.",
+    "album": "Digital Album",
+    "albumDescription": "Create your own book of memories, without creating an event.",
+    "createAlbum": "Create album",
+    "albumName": "Album name",
+    "albumPlaceholder": "e.g. Trip to Japan",
+    "cancel": "Cancel",
+    "error": "The album could not be created. Please try again.",
+    "partialError": "Your space was saved, but the album could not be created. Try again or open the saved space.",
+    "openSaved": "Open saved space"
+  },
+  "products": {
+    "photoWall": "Photo Wall",
+    "wallDescription": "Collect and share your guests\u2019 photos.",
+    "openWall": "Open Photo Wall",
+    "createWall": "Create Photo Wall",
+    "noWall": "No Photo Wall yet.",
+    "albums": "Digital Albums",
+    "newAlbum": "New Digital Album",
+    "noAlbums": "No digital albums yet.",
+    "published": "Published",
+    "draft": "Draft",
+    "editAlbum": "Edit album",
+    "manageAlbum": "Album settings",
+    "createError": "The Photo Wall could not be created. Please try again."
+  },
+  "settings": {
+    "title": "Settings",
+    "name": "Name",
+    "save": "Save changes",
+    "saved": "Changes saved.",
+    "error": "The operation did not complete. Refresh the overview before trying again.",
+    "deleteEvent": "Delete event",
+    "deleteContent": "Delete content",
+    "deleteDescription": "Permanently deletes this space, all its albums, Photo Wall, photos and collaborations.",
+    "confirm": "Permanently delete",
+    "cancel": "Cancel",
+    "confirmTitle": "Delete {name}?"
+  },
+  "collaboration": {
+    "title": "Collaborators",
+    "description": "Manage collaborators.",
+    "invite": "Invite a collaborator",
+    "email": "Collaborator email",
+    "linkHelp": "Create a link and share it with this person. An email is not sent automatically.",
+    "createLink": "Create invitation link",
+    "createError": "Unable to create or copy the link. Check the address and try again.",
+    "link": "Invitation link",
+    "copy": "Copy link",
+    "copied": "Copied",
+    "shareHelp": "Share this link only with the person using {email}. Save it before leaving this page.",
+    "ownerOnly": "Only the owner can invite collaborators.",
+    "members": "Collaborators",
+    "member": "Collaborator",
+    "empty": "No collaborators yet.",
+    "pendingTitle": "Pending invitations",
+    "pending": "Pending",
+    "response": {
+      "title": "Collaboration invitation",
+      "account": "You are signed in as {email}. Only the intended account can accept this invitation.",
+      "signInHelp": "Sign in with the email address this invitation was intended for.",
+      "link": "Received invitation link",
+      "linkHelp": "Paste the full invitation link shared by the owner.",
+      "load": "Open link",
+      "accept": "Accept",
+      "decline": "Decline",
+      "signIn": "Sign in to respond",
+      "accepted": "Invitation accepted. You can now collaborate.",
+      "declined": "Invitation declined.",
+      "continue": "Continue",
+      "error": "Unable to open or process the invitation. Check the link and account; it may have expired or already been used."
+    }
+  },
+  "eventDetails": {
+    "types": {
+      "wedding": "Wedding",
+      "birthday": "Birthday",
+      "baptism": "Baptism",
+      "communion": "First Communion",
+      "confirmation": "Confirmation",
+      "business": "Business Event",
+      "other": "Other"
+    },
+    "create": {
+      "backToEvents": "Back",
+      "title": "New event",
+      "description": "Enter the basic details and start planning your event.",
+      "success": "Event created successfully."
+    },
+    "edit": {
+      "backToEvent": "Back to event",
+      "title": "Edit event",
+      "description": "Update your event details and settings.",
+      "success": "Changes saved successfully."
+    },
+    "form": {
+      "validationError": "Please check the entered information and try again.",
+      "submitError": "An error occurred while saving the event.",
+      "actions": {
+        "create": "Create event",
+        "save": "Save changes",
+        "clear": "Clear",
+        "reset": "Discard changes"
+      },
+      "basic": {
+        "title": "Basic information",
+        "description": "Enter the basic details of your event.",
+        "name": {
+          "label": "Event name",
+          "placeholder": "e.g. Matilda & Daniel"
+        },
+        "type": {
+          "label": "Event type",
+          "placeholder": "Select an event type"
+        },
+        "customType": {
+          "label": "Other event type",
+          "description": "Enter the event type that best describes your event.",
+          "placeholder": "e.g. Family gathering"
+        },
+        "locationName": {
+          "label": "Venue name",
+          "placeholder": "e.g. The Grand Hall"
+        },
+        "locationAddress": {
+          "label": "Venue address",
+          "placeholder": "e.g. 25 Main Street"
+        },
+        "location": {
+          "title": "Location"
+        }
+      },
+      "schedule": {
+        "title": "Date and time",
+        "description": "Choose the event date and start time.",
+        "date": {
+          "label": "Date",
+          "placeholder": "Select a date"
+        },
+        "time": {
+          "start": "Start time"
+        }
+      }
+    }
+  }
+}

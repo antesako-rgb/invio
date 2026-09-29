@@ -1,0 +1,241 @@
+{
+  "title": "Invitation",
+  "dateNotPast": "Choose today or a future date.",
+  "description": "Build a web invitation from pages that flow naturally as you scroll.",
+  "create": "Create invitation",
+  "open": "Open invitation",
+  "notCreated": "No invitation yet.",
+  "published": "Published",
+  "draft": "Draft",
+  "publish": "Publish",
+  "unpublish": "Unpublish",
+  "openPublic": "Open public invitation",
+  "name": "Invitation name",
+  "saveName": "Save name",
+  "back": "Back",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "retry": "Retry saving",
+  "reload": "Reload",
+  "error": "The operation did not complete. Check your connection and try again.",
+  "status": {
+    "saved": "Saved",
+    "saving": "Saving\u2026",
+    "error": "Save failed",
+    "conflict": "This invitation changed in another session. Reload before continuing to edit."
+  },
+  "editor": {
+    "pageDesign": "Page design",
+    "chooseDesign": "Choose a page design. You can change it later.",
+    "title": "Invitation editor",
+    "pages": "Pages",
+    "content": "Content",
+    "photos": "Photos",
+    "tools": "Invitation tools",
+    "theme": "Theme",
+    "pageType": "Page type",
+    "layout": "Layout",
+    "addPage": "Add page",
+    "removePage": "Remove page",
+    "removePageDescription": "This page will be removed. Photos stay in the invitation library. You can undo this change.",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "reorder": "Reorder page {number}",
+    "choosePhoto": "Add photo {number}",
+    "replacePhoto": "Replace photo {number}",
+    "clearPhoto": "Remove from page",
+    "retained": "Retained photos: {count}. They return to free slots when you change the layout.",
+    "rsvpNote": "You can explain how guests should confirm attendance here. Automatic response collection is not available yet.",
+    "undo": "Undo",
+    "redo": "Redo",
+    "preview": "Preview",
+    "edit": "Continue editing",
+    "empty": "Add your first page",
+    "emptyHint": "Choose a page type in the panel to start your invitation.",
+    "upload": "Add photo",
+    "uploadHint": "JPG, PNG or WebP, up to 10 MB.",
+    "pickHint": "Choose a photo for the selected slot.",
+    "selectPhoto": "Select photo {number}",
+    "deletePhoto": "Remove from invitation",
+    "deletePhotoDescription": "This photo will be removed from every page and the library of this invitation. Photos used by other products are retained. This action cannot be undone.",
+    "projectPhotos": "Existing photos",
+    "importHint": "Add a photo from the same space without uploading it again.",
+    "importPhoto": "Add existing photo {number}",
+    "loadProjectPhotos": "Show existing photos",
+    "loadMore": "Load more",
+    "templates": "Templates",
+    "rename": "Rename invitation",
+    "renameHint": "The name identifies this invitation and does not change page content.",
+    "choosePageType": "Choose the purpose of your new page.",
+    "chooseLayout": "Choose a layout. You can change it later.",
+    "pageActions": "Actions for page {number}",
+    "duplicate": "Duplicate page",
+    "changeType": "Change page type",
+    "yourPhotos": "Your photos",
+    "viewport": "Device preview",
+    "desktop": "Desktop",
+    "tablet": "Tablet",
+    "mobile": "Mobile",
+    "fitWidth": "Fit to width",
+    "themeHint": "Choose a coordinated set of colours, typography and decorations for the whole invitation. Your content stays the same.",
+    "moreContent": "Additional content"
+  },
+  "types": {
+    "cover": "Cover",
+    "story": "Story",
+    "details": "Details",
+    "schedule": "Schedule",
+    "gallery": "Gallery",
+    "rsvp": "RSVP",
+    "closing": "Closing message"
+  },
+  "designs": {
+    "watercolor": "Botanical watercolor"
+  },
+  "layouts": {
+    "portrait-cover": "Portrait cover",
+    "torn-paper": "Torn paper",
+    "poster": "Photo poster",
+    "photo-strip": "Photo strip",
+    "date-card": "Date centerpiece",
+    "full-photo": "Full photo",
+  "ornamental": "Ornamental",
+    "editorial": "Editorial",
+    "timeline": "Timeline",
+    "photo-text": "Photo and text",
+    "split": "Split",
+    "photo-left": "Photo on the left",
+    "grid": "Photo grid"
+  },
+  "fields": {
+    "firstName": "First name",
+    "secondName": "Second name",
+    "title": "Title",
+    "subtitle": "Subtitle",
+    "text": "Text",
+    "date": "Date",
+    "time": "Time",
+    "location": "Location",
+    "address": "Address",
+    "schedule": "Schedule (one entry per line)",
+    "contact": "RSVP contact"
+  },
+  "themes": {
+    "classic": "Classic",
+    "modern": "Modern",
+    "editorial": "Editorial",
+    "botanical": "Botanical",
+    "celebration": "Celebration"
+  },
+  "templates": {
+    "hint": "A template is a starting point. Every page, text and photo can be changed. The theme comes with the template.",
+    "filter": "Template category",
+    "categories": {
+      "all": "All",
+      "wedding": "Wedding",
+      "birthday": "Birthday",
+      "business": "Business"
+    },
+    "names": {
+      "botanical": "Botanical story",
+      "celebration": "Time to celebrate",
+      "conference": "New ideas"
+    },
+    "pageCount": "{count} pages",
+    "preview": "Preview template",
+    "apply": "Use template",
+    "replace": "Replace pages",
+    "applyHint": "Edit the sample text and add photos from your library.",
+    "replaceHint": "This replaces all current pages and the theme. Photos stay in your library. You can undo this change.",
+    "copy": {
+      "botanical": {
+        "cover": {
+          "title": "Ana & Marko",
+          "subtitle": "Join us for our wedding",
+          "date": "14 June 2027"
+        },
+        "story": {
+          "title": "Our story",
+          "text": "Every shared moment has brought us here. Tell your guests how your story began."
+        },
+        "ceremony": {
+          "title": "The ceremony",
+          "time": "16:00",
+          "location": "Ceremony venue",
+          "address": "Enter the venue address"
+        },
+        "celebration": {
+          "title": "Dinner and celebration",
+          "time": "18:00",
+          "location": "Celebration venue"
+        },
+        "gallery": {
+          "title": "Moments together",
+          "subtitle": "Add your favourite photographs"
+        },
+        "rsvp": {
+          "title": "Will you join us?",
+          "text": "Please contact us to confirm your attendance. Add your reply deadline here.",
+          "contact": "Add your phone number or email"
+        },
+        "closing": {
+          "title": "See you soon",
+          "text": "We look forward to sharing this day with you."
+        }
+      },
+      "celebration": {
+        "cover": {
+          "title": "A birthday to remember",
+          "subtitle": "You are invited!",
+          "date": "21 August 2027"
+        },
+        "details": {
+          "title": "Let us celebrate together",
+          "time": "18:00",
+          "location": "Party venue",
+          "address": "Enter the venue address"
+        },
+        "gallery": {
+          "title": "Good times",
+          "subtitle": "Add the memories that make you smile"
+        },
+        "rsvp": {
+          "title": "Save your place",
+          "text": "Let us know if you can make it. Add your reply deadline here.",
+          "contact": "Add your phone number or email"
+        },
+        "closing": {
+          "title": "Let the celebration begin",
+          "text": "Bring your good mood. We will take care of the rest!"
+        }
+      },
+      "conference": {
+        "cover": {
+          "title": "New ideas, shared opportunities",
+          "subtitle": "An invitation to connect",
+          "date": "8 October 2027"
+        },
+        "details": {
+          "title": "About the event",
+          "text": "Introduce your event, its purpose and what participants can expect.",
+          "time": "10:00",
+          "location": "Conference venue",
+          "address": "Enter the venue address"
+        },
+        "schedule": {
+          "title": "Programme",
+          "schedule": "10:00 Welcome and introductions\n10:30 Presentations\n12:00 Discussion and networking"
+        },
+        "rsvp": {
+          "title": "Confirm attendance",
+          "text": "Contact the organiser to confirm your attendance or ask a question.",
+          "contact": "Add organiser contact details"
+        },
+        "closing": {
+          "title": "We look forward to meeting you",
+          "text": "Add your organisation name and closing message."
+        }
+      }
+    }
+  }
+}

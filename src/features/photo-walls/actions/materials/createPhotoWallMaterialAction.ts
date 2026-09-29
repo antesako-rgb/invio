@@ -6,7 +6,7 @@ import { createPhotoWallMaterial, type CreatePhotoWallMaterialInput } from "../.
 export async function createPhotoWallMaterialAction(input: CreatePhotoWallMaterialInput) {
   try {
     const material = await createPhotoWallMaterial(input);
-    revalidatePath("/[locale]/dashboard/dogadaji/[eventId]/photo-wall/materijali", "page");
+    revalidatePath("/[locale]/dashboard/projects/[projectId]/photo-wall/materials", "page");
     return { success: true as const, materialId: material.id };
   } catch {
     return { success: false as const };

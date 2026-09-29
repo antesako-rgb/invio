@@ -1,0 +1,88 @@
+/* ==========================================================================
+   FullPhoto Layout
+========================================================================== */
+
+.fullPhoto {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: min(85svh, 52rem);
+  padding: calc(clamp(3rem, 8cqi, 7rem) + var(--invitation-section-space)) clamp(1.5rem, 6cqi, 5rem);
+  text-align: center;
+}
+
+.fullPhoto > .photo {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.fullPhoto[data-has-photo="true"] {
+  --invitation-muted-ink: var(--invitation-photo-text);
+  color: var(--invitation-photo-text);
+  text-shadow: 0 1px 12px rgb(0 0 0 / .25);
+}
+
+.fullPhoto[data-has-photo="true"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--invitation-photo-overlay);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.fullPhoto > .photo img {
+  aspect-ratio: auto;
+  border-radius: 0;
+  outline: none;
+}
+
+@container (max-width: 700px) {
+  .fullPhoto {
+    min-height: 65svh;
+  }
+}
+
+/* Cover composition: fixed lettering above, editable content below.
+   Gallery and closing retain their existing full-photo composition. */
+.fullPhoto[data-cover="true"] {
+  align-content: space-between;
+  align-items: start;
+  gap: clamp(8rem, 25cqi, 20rem);
+  min-height: clamp(38rem, 135cqi, 74rem);
+  padding: clamp(2rem, 7cqi, 5rem) clamp(1.5rem, 8cqi, 6rem);
+  text-align: start;
+}
+
+.saveTheDate {
+  margin: 0;
+  display: grid;
+  justify-items: start;
+  font-family: var(--font-allura), cursive;
+  font-size: clamp(4rem, 13cqi, 10rem);
+  font-weight: 400;
+  line-height: .9;
+  transform: rotate(-7deg);
+  transform-origin: left center;
+  overflow-wrap: normal;
+}
+
+.saveTheDate span {
+  display: block;
+}
+
+.coverContent {
+  width: min(100%, 40rem);
+}
+
+.coverContent h2 {
+  font-size: clamp(1.75rem, 4cqi, 3.25rem);
+}
+
+.coverContent time {
+  display: block;
+  font-size: clamp(1.5rem, 4.5cqi, 3.75rem);
+  line-height: 1.2;
+}

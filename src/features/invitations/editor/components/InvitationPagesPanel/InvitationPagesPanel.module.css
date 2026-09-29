@@ -1,0 +1,38 @@
+/* Component styles */
+
+.panel {
+  display: grid;
+  gap: 1rem;
+  padding: 0 0 1.25rem;
+  min-width: 0;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  margin: 0;
+}
+
+.panel h2,
+.panel h3,
+.panel legend {
+  font-size: .9375rem;
+  font-weight: 600;
+}
+
+.panel legend {
+  padding-top: 1rem;
+}
+
+.hint {
+  font-size: .8125rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+.pageList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: grid;
+  gap: .5rem;
+}
+

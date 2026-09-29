@@ -16,7 +16,7 @@ import {
 
 import {
   getReceivedCollaborationInvites,
-} from "@/features/event-collaboration/repositories/getReceivedCollaborationInvites";
+} from "@/features/project-collaboration/repositories/getReceivedCollaborationInvites";
 
 import styles from "./DashboardInvites.module.css";
 
@@ -66,13 +66,13 @@ export default async function DashboardInvites() {
             )}
           </h2>
 
-          {invite.events?.name && (
+          {invite.projects?.name && (
             <p
               className={
                 styles.name
               }
             >
-              {invite.events.name}
+              {invite.projects.name}
             </p>
           )}
 

@@ -1,0 +1,12 @@
+.canvas { width: 100%; }
+.controls { display: flex; align-items: center; justify-content: center; gap: .25rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.frame { width: 100%; max-width: 68rem; min-height: 65svh; margin-inline: auto; border: 1px solid var(--border); border-radius: .75rem; overflow: hidden; background: var(--card); box-shadow: var(--shadow-sm); }
+.frame[data-device="desktop"] { max-width: 1024px; }
+.frame[data-device="tablet"] { max-width: 768px; }
+.frame[data-device="mobile"] { max-width: 390px; }
+
+/* Physical mobile/tablet viewports use available space, regardless of preview selection. */
+@media (max-width: 1024px), (hover: none) and (pointer: coarse) {
+  .controls { display: none; }
+  .frame[data-device] { max-width: none; }
+}

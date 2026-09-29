@@ -8,7 +8,7 @@ import type { UpdatePhotoWallMaterialInput } from "../../validation/photoWallMat
 export async function updatePhotoWallMaterialAction(input: UpdatePhotoWallMaterialInput) {
   try {
     const material = await updatePhotoWallMaterial(input);
-    revalidatePath("/[locale]/dashboard/dogadaji/[eventId]/photo-wall/materijali", "page");
+    revalidatePath("/[locale]/dashboard/projects/[projectId]/photo-wall/materials", "page");
     return { success: true as const, updatedAt: material.updated_at };
   } catch (error) {
     const code = error instanceof ZodError ? "VALIDATION"

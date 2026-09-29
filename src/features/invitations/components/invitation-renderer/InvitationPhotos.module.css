@@ -1,0 +1,37 @@
+/* ==========================================================================
+   Photos
+========================================================================== */
+
+.photo {
+  margin: 0;
+  min-width: 0;
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: var(--invitation-photo-filter);
+  outline: var(--invitation-photo-outline);
+  outline-offset: -1px;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--invitation-photo-radius);
+}
+
+.photoPlaceholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 8rem;
+  aspect-ratio: 4 / 5;
+  background: var(--invitation-surface);
+  color: var(--invitation-accent);
+}
+
+.photoPlaceholder svg {
+  width: 3rem;
+  height: 3rem;
+  opacity: .45;
+}

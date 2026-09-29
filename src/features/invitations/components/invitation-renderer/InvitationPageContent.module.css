@@ -1,0 +1,51 @@
+/* ==========================================================================
+   PageContent
+========================================================================== */
+
+.copy {
+  display: grid;
+  align-content: center;
+  gap: var(--invitation-copy-gap);
+  min-width: 0;
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.copy h2 {
+  margin: 0;
+  font-size: var(--invitation-heading-size);
+  font-family: var(--invitation-display-font);
+  letter-spacing: var(--invitation-heading-tracking);
+  line-height: var(--invitation-heading-leading);
+  font-weight: var(--invitation-heading-weight);
+  white-space: pre-wrap;
+}
+
+.copy p {
+  margin: 0;
+  font-size: clamp(1rem, 1.4cqi, 1.1875rem);
+  line-height: var(--invitation-body-leading);
+  white-space: pre-wrap;
+}
+
+.copy .subtitle {
+  color: var(--invitation-muted-ink);
+  letter-spacing: var(--invitation-subtitle-tracking);
+  text-transform: var(--invitation-subtitle-transform);
+  font-size: .8125rem;
+}
+
+.schedule {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.schedule li {
+  border-inline-start: 2px solid var(--invitation-accent);
+  padding-inline-start: 1.25rem;
+  line-height: var(--invitation-body-leading);
+  white-space: pre-wrap;
+}

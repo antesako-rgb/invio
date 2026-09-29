@@ -8,10 +8,10 @@ export async function requirePhotoWallMaterialOwner(photoWallId: string) {
   const { data: { user }, error: authError } = await supabase.auth.getUser();
   if (authError || !user) throw new Error("UNAUTHORIZED");
   const { data: wall, error: wallError } = await supabase.from("photo_walls")
-    .select("id,event_id").eq("id", photoWallId).maybeSingle();
+    .select("id,project_id").eq("id", photoWallId).maybeSingle();
   if (wallError || !wall) throw new Error("UNAUTHORIZED");
-  const { data: event, error: eventError } = await supabase.from("events")
-    .select("id,owner_id").eq("id", wall.event_id).eq("owner_id", user.id).maybeSingle();
-  if (eventError || !event) throw new Error("UNAUTHORIZED");
+  const { data: project, error: projectError } = await supabase.from("projects")
+    .select("id,owner_id").eq("id", wall.project_id).eq("owner_id", user.id).maybeSingle();
+  if (projectError || !project) throw new Error("UNAUTHORIZED");
   return { supabase, wall };
 }

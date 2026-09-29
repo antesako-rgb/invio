@@ -19,13 +19,13 @@
     "ariaLabel": "Dashboard navigation",
     "overview": "Overview",
     "organize": "Organize",
-    "events": "Events",
     "account": "Account",
     "more": "More",
     "moreDescription": "Events and signing out",
     "logout": "Sign out",
     "collapse": "Collapse navigation",
     "expand": "Expand navigation",
-    "newEvent": "New event"
+    "content": "My memories",
+    "create": "Create"
   }
 }

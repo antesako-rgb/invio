@@ -1,0 +1,241 @@
+{
+  "title": "Pozivnica",
+  "dateNotPast": "Odaberite današnji ili budući datum.",
+  "description": "Slo\u017eite web pozivnicu od stranica koje se prirodno ni\u017eu pri pomicanju.",
+  "create": "Kreiraj pozivnicu",
+  "open": "Otvori pozivnicu",
+  "notCreated": "Pozivnica jo\u0161 nije kreirana.",
+  "published": "Objavljeno",
+  "draft": "Skica",
+  "publish": "Objavi",
+  "unpublish": "Povuci objavu",
+  "openPublic": "Otvori javnu pozivnicu",
+  "name": "Naziv pozivnice",
+  "saveName": "Spremi naziv",
+  "back": "Natrag",
+  "cancel": "Odustani",
+  "confirm": "Potvrdi",
+  "retry": "Poku\u0161aj ponovno spremiti",
+  "reload": "Ponovno u\u010ditaj",
+  "error": "Radnja nije dovr\u0161ena. Provjerite vezu i poku\u0161ajte ponovno.",
+  "status": {
+    "saved": "Spremljeno",
+    "saving": "Spremanje\u2026",
+    "error": "Spremanje nije uspjelo",
+    "conflict": "Pozivnica je promijenjena u drugoj sesiji. Ponovno u\u010ditajte prije daljnjeg ure\u0111ivanja."
+  },
+  "editor": {
+    "pageDesign": "Dizajn stranice",
+    "chooseDesign": "Odaberite dizajn stranice. Kasnije ga mo?ete promijeniti.",
+    "title": "Ure\u0111ivanje pozivnice",
+    "pages": "Stranice",
+    "content": "Sadr\u017eaj",
+    "photos": "Fotografije",
+    "tools": "Alati pozivnice",
+    "theme": "Tema",
+    "pageType": "Vrsta stranice",
+    "layout": "Raspored",
+    "addPage": "Dodaj stranicu",
+    "removePage": "Ukloni stranicu",
+    "removePageDescription": "Stranica \u0107e biti uklonjena. Fotografije ostaju u biblioteci pozivnice. Radnju mo\u017eete poni\u0161titi.",
+    "moveUp": "Pomakni gore",
+    "moveDown": "Pomakni dolje",
+    "reorder": "Premjesti stranicu {number}",
+    "choosePhoto": "Dodaj fotografiju {number}",
+    "replacePhoto": "Zamijeni fotografiju {number}",
+    "clearPhoto": "Ukloni sa stranice",
+    "retained": "Sa\u010duvane fotografije: {count}. Vra\u0107aju se u slobodna mjesta pri promjeni rasporeda.",
+    "rsvpNote": "Ovdje mo\u017eete navesti kako vam gosti mogu potvrditi dolazak. Automatsko prikupljanje odgovora jo\u0161 nije dostupno.",
+    "undo": "Poni\u0161ti",
+    "redo": "Ponovi",
+    "preview": "Pregled",
+    "edit": "Nastavi ure\u0111ivati",
+    "empty": "Dodajte prvu stranicu",
+    "emptyHint": "Odaberite vrstu stranice u panelu i zapo\u010dnite svoju pozivnicu.",
+    "upload": "Dodaj fotografiju",
+    "uploadHint": "JPG, PNG ili WebP, do 10 MB.",
+    "pickHint": "Odaberite fotografiju za ozna\u010deno mjesto.",
+    "selectPhoto": "Odaberi fotografiju {number}",
+    "deletePhoto": "Ukloni iz pozivnice",
+    "deletePhotoDescription": "Fotografija \u0107e se ukloniti iz svih stranica i biblioteke ove pozivnice. Fotografije koje koriste drugi proizvodi ostaju sa\u010duvane. Ova radnja se ne mo\u017ee poni\u0161titi.",
+    "projectPhotos": "Postoje\u0107e fotografije",
+    "importHint": "Dodajte postoje\u0107u fotografiju iz istog prostora bez ponovnog uploada.",
+    "importPhoto": "Dodaj postoje\u0107u fotografiju {number}",
+    "loadProjectPhotos": "Prika\u017ei postoje\u0107e fotografije",
+    "loadMore": "U\u010ditaj jo\u0161",
+    "templates": "Predlo\u0161ci",
+    "rename": "Preimenuj pozivnicu",
+    "renameHint": "Naziv slu\u017ei za prepoznavanje pozivnice i ne mijenja tekst stranica.",
+    "choosePageType": "Odaberite vrstu nove stranice.",
+    "chooseLayout": "Odaberite izgled. Kasnije ga mo\u017eete promijeniti.",
+    "pageActions": "Radnje za stranicu {number}",
+    "duplicate": "Dupliciraj stranicu",
+    "changeType": "Promijeni vrstu stranice",
+    "yourPhotos": "Va\u0161e fotografije",
+    "viewport": "Prikaz ure\u0111aja",
+    "desktop": "Desktop",
+    "tablet": "Tablet",
+    "mobile": "Mobitel",
+    "fitWidth": "Prilagodi \u0161irini",
+    "themeHint": "Odaberite uskla\u0111ene boje, tipografiju i dekoracije. Tema vrijedi za cijelu pozivnicu; sadr\u017eaj ostaje isti.",
+    "moreContent": "Dodatni sadr\u017eaj"
+  },
+  "types": {
+    "cover": "Naslovnica",
+    "story": "Pri\u010da",
+    "details": "Detalji",
+    "schedule": "Program",
+    "gallery": "Galerija",
+    "rsvp": "Potvrda dolaska",
+    "closing": "Zavr\u0161na poruka"
+  },
+  "designs": {
+    "watercolor": "Botani?ki akvarel"
+  },
+  "layouts": {
+    "portrait-cover": "Portretna naslovnica",
+    "torn-paper": "Poderani rub",
+    "poster": "Fotografski poster",
+    "photo-strip": "Foto traka",
+    "date-card": "Svečani datum",
+    "full-photo": "Fotografija preko sekcije",
+    "ornamental": "Ornamentalna",
+    "editorial": "Uredni\u010dki",
+    "timeline": "Vremenska crta",
+    "photo-text": "Fotografija i tekst",
+    "split": "Podijeljeno",
+    "photo-left": "Fotografija lijevo",
+    "grid": "Mre\u017ea fotografija"
+  },
+  "fields": {
+    "firstName": "Prvo ime",
+    "secondName": "Drugo ime",
+    "title": "Naslov",
+    "subtitle": "Podnaslov",
+    "text": "Tekst",
+    "date": "Datum",
+    "time": "Vrijeme",
+    "location": "Lokacija",
+    "address": "Adresa",
+    "schedule": "Program (jedna stavka po retku)",
+    "contact": "Kontakt za potvrdu dolaska"
+  },
+  "themes": {
+    "classic": "Classic",
+    "modern": "Modern",
+    "editorial": "Editorial",
+    "botanical": "Botani\u010dka",
+    "celebration": "Slavlje"
+  },
+  "templates": {
+    "hint": "Predlo?ak je po?etna to?ka. Svaku stranicu, tekst i fotografiju mo?ete promijeniti. Tema dolazi s predlo?kom.",
+    "filter": "Vrsta predlo\u0161ka",
+    "categories": {
+      "all": "Sve",
+      "wedding": "Vjen\u010danje",
+      "birthday": "Ro\u0111endan",
+      "business": "Poslovni doga\u0111aj"
+    },
+    "names": {
+      "botanical": "Botani\u010dka pri\u010da",
+      "celebration": "Vrijeme za slavlje",
+      "conference": "Nove ideje"
+    },
+    "pageCount": "{count} stranica",
+    "preview": "Pregledaj predlo\u017eak",
+    "apply": "Koristi predlo\u017eak",
+    "replace": "Zamijeni stranice",
+    "applyHint": "Primjer teksta mo\u017eete odmah urediti. Fotografije dodajte iz svoje biblioteke.",
+    "replaceHint": "Ovo zamjenjuje sve trenutne stranice i temu. Fotografije ostaju u biblioteci. Promjenu mo\u017eete poni\u0161titi.",
+    "copy": {
+      "botanical": {
+        "cover": {
+          "title": "Ana & Marko",
+          "subtitle": "Pozivamo vas na na\u0161e vjen\u010danje",
+          "date": "14. lipnja 2027."
+        },
+        "story": {
+          "title": "Na\u0161a pri\u010da",
+          "text": "Svaki zajedni\u010dki trenutak doveo nas je ovdje. Ispri\u010dajte gostima kako je zapo\u010dela va\u0161a pri\u010da."
+        },
+        "ceremony": {
+          "title": "Obred",
+          "time": "16:00",
+          "location": "Mjesto obreda",
+          "address": "Upi\u0161ite adresu lokacije"
+        },
+        "celebration": {
+          "title": "Ve\u010dera i slavlje",
+          "time": "18:00",
+          "location": "Mjesto proslave"
+        },
+        "gallery": {
+          "title": "Zajedni\u010dki trenuci",
+          "subtitle": "Dodajte omiljene fotografije"
+        },
+        "rsvp": {
+          "title": "Dolazite li?",
+          "text": "Javite nam dolazite li. Ovdje dodajte rok za potvrdu dolaska.",
+          "contact": "Dodajte svoj broj telefona ili e-mail"
+        },
+        "closing": {
+          "title": "Vidimo se uskoro",
+          "text": "Veselimo se \u0161to \u0107emo ovaj dan podijeliti s vama."
+        }
+      },
+      "celebration": {
+        "cover": {
+          "title": "Ro\u0111endan za pam\u0107enje",
+          "subtitle": "Pozvani ste!",
+          "date": "21. kolovoza 2027."
+        },
+        "details": {
+          "title": "Proslavimo zajedno",
+          "time": "18:00",
+          "location": "Mjesto proslave",
+          "address": "Upi\u0161ite adresu lokacije"
+        },
+        "gallery": {
+          "title": "Lijepi trenuci",
+          "subtitle": "Dodajte uspomene koje vas vesele"
+        },
+        "rsvp": {
+          "title": "Javite da dolazite",
+          "text": "Javite nam mo\u017eete li do\u0107i. Ovdje dodajte rok za potvrdu.",
+          "contact": "Dodajte svoj broj telefona ili e-mail"
+        },
+        "closing": {
+          "title": "Neka slavlje po\u010dne",
+          "text": "Ponesite dobro raspolo\u017eenje. Za ostalo \u0107emo se pobrinuti mi!"
+        }
+      },
+      "conference": {
+        "cover": {
+          "title": "Nove ideje, zajedni\u010dke prilike",
+          "subtitle": "Poziv na susret",
+          "date": "8. listopada 2027."
+        },
+        "details": {
+          "title": "O doga\u0111aju",
+          "text": "Predstavite doga\u0111aj, njegov cilj i \u0161to sudionici mogu o\u010dekivati.",
+          "time": "10:00",
+          "location": "Konferencijski prostor",
+          "address": "Upi\u0161ite adresu lokacije"
+        },
+        "schedule": {
+          "title": "Program",
+          "schedule": "10:00 Dobrodo\u0161lica i upoznavanje\n10:30 Predavanja\n12:00 Razgovor i povezivanje"
+        },
+        "rsvp": {
+          "title": "Potvrdite dolazak",
+          "text": "Kontaktirajte organizatora kako biste potvrdili dolazak ili postavili pitanje.",
+          "contact": "Dodajte kontakt organizatora"
+        },
+        "closing": {
+          "title": "Veselimo se susretu",
+          "text": "Dodajte naziv svoje organizacije i zavr\u0161nu poruku."
+        }
+      }
+    }
+  }
+}

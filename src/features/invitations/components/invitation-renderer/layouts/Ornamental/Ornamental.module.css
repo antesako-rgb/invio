@@ -1,0 +1,108 @@
+/* ==========================================================================
+   Ornamental Layout
+========================================================================== */
+
+.ornamental {
+  position: relative;
+  display: grid;
+  min-height: clamp(46rem, 100cqi, 64rem);
+  overflow: hidden;
+  text-align: center;
+}
+
+
+/* ==========================================================================
+   Hero
+========================================================================== */
+
+.hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: inherit;
+  padding:
+    clamp(5rem, 12cqi, 9rem)
+    clamp(2rem, 8cqi, 6rem);
+}
+
+
+/* ==========================================================================
+   Decoration
+========================================================================== */
+
+.decoration {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background-image:
+    var(--invitation-ornamental-artwork, none);
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  pointer-events: none;
+}
+
+
+/* ==========================================================================
+   Names
+========================================================================== */
+
+.names {
+  position: relative;
+  z-index: 1;
+  width: var(--invitation-names-width, min(58%, 30rem));
+}
+
+.names h2 {
+  margin: 0;
+  color: var(--invitation-ink);
+  font-family: var(--invitation-names-font, var(--invitation-display-font));
+  font-size: var(--invitation-names-size, clamp(3rem, 8cqi, 6rem));
+  font-weight: var(--invitation-names-weight, var(--invitation-heading-weight));
+  line-height: var(--invitation-names-leading, 1.05);
+  letter-spacing: var(--invitation-names-tracking, -.04em);
+  white-space: pre-wrap;
+}
+
+
+/* ==========================================================================
+   Details
+========================================================================== */
+
+.details {
+  position: absolute;
+  z-index: 1;
+  inset:
+    auto
+    50%
+    clamp(3rem, 7cqi, 5rem)
+    auto;
+
+  display: grid;
+  justify-items: center;
+  gap: clamp(.75rem, 2cqi, 1.25rem);
+
+  width: min(80%, 32rem);
+
+  transform: translateX(50%);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--invitation-muted-ink);
+  font-size: clamp(.95rem, 1.8cqi, 1.125rem);
+  line-height: var(--invitation-body-leading);
+  white-space: pre-wrap;
+}
+
+.date {
+  margin: 0;
+  color: var(--invitation-accent);
+  font-size: clamp(.9rem, 1.6cqi, 1.0625rem);
+  letter-spacing: .08em;
+  line-height: 1.5;
+}

@@ -1,61 +1,67 @@
 {
   "overview": {
     "welcome": {
-      "title": "Dobrodošli, {name}!",
-      "titleFallback": "Dobrodošli!",
-      "description": "Vaši događaji, fotografije i uspomene na jednom mjestu."
-    },
-    "events": {
-      "title": "Vaši događaji",
-      "description": "Svaki događaj ima svoj Photo Wall i Digitalni album.",
-      "newEvent": "Novi događaj",
-      "openEvent": "Otvori događaj",
-      "viewAll": "Prikaži sve događaje",
-      "types": {
-        "wedding": "Vjenčanje",
-        "birthday": "Rođendan",
-        "baptism": "Krštenje",
-        "communion": "Prva pričest",
-        "confirmation": "Krizma",
-        "business": "Poslovni događaj",
-        "other": "Ostalo"
-      },
-      "products": {
-        "photoWall": {
-          "title": "Photo Wall",
-          "edit": "Uredi Photo Wall",
-          "missing": "Nije postavljen"
-        },
-        "album": {
-          "title": "Digitalni album",
-          "edit": "Uredi album",
-          "missing": "Nedostupno"
-        },
-        "draft": "Skica",
-        "published": "Objavljeno"
-      },
-      "empty": {
-        "title": "Još nemate događaja",
-        "description": "Kreirajte svoj prvi događaj i Memiva će automatski pripremiti vaš Photo Wall i Digitalni album.",
-        "action": "Kreiraj prvi događaj",
-        "photoWall": {
-          "title": "Photo Wall",
-          "description": "Mjesto za fotografije gostiju s vašeg događaja."
-        },
-        "album": {
-          "title": "Digitalni album",
-          "description": "Vaša digitalna knjiga uspomena."
-        }
-      }
+      "title": "Dobrodo\u0161li, {name}!",
+      "titleFallback": "Dobrodo\u0161li!",
+      "description": "Va\u0161i doga\u0111aji, fotografije i uspomene na jednom mjestu."
     },
     "brandMessage": {
-      "title": "Memiva je ovdje kako bi važne životne trenutke učinila još posebnijima.",
-      "description": "Hvala vam što ste dio naše priče!"
+      "title": "Memiva je ovdje kako bi va\u017ene \u017eivotne trenutke u\u010dinila jo\u0161 posebnijima.",
+      "description": "Hvala vam \u0161to ste dio na\u0161e pri\u010de!"
     },
     "invites": {
       "title": "Poziv za suradnju",
-      "description": "Pozvani ste na suradnju na ovom događaju.",
+      "description": "Pozvani ste na suradnju.",
       "open": "Pogledaj poziv"
+    },
+    "products": {
+      "photoWall": {
+        "title": "Photo Wall",
+        "description": "Mjesto za fotografije gostiju s va\u0161eg doga\u0111aja."
+      },
+      "album": {
+        "title": "Digitalni album",
+        "description": "Va\u0161a digitalna knjiga uspomena."
+      }
+    }
+  },
+  "onboarding": {
+    "eyebrow": "Dobrodo\u0161li u Memivu",
+    "title": "Zapo\u010dnite svoju pri\u010du",
+    "description": "Kreirajte doga\u0111aj i organizirajte sve na jednom mjestu ili izradite samostalni digitalni album.",
+    "event": {
+      "title": "Doga\u0111aj",
+      "description": "Organizirajte svoj doga\u0111aj na jednom mjestu. Dodajte Photo Wall, digitalne albume i pozivnicu \u2014 sve jednostavno i pregledno.",
+      "futureNote": "Uskoro i raspored sjedenja, unutar va\u0161eg doga\u0111aja.",
+      "action": "Kreiraj doga\u0111aj"
+    },
+    "album": {
+      "title": "Digitalni album",
+      "description": "Kreirajte samostalnu digitalnu knjigu uspomena. Idealno za putovanja, obitelj, poseban poklon ili bilo koju kolekciju fotografija.",
+      "action": "Kreiraj digitalni album"
+    },
+    "productsTitle": "Sve za va\u0161e doga\u0111aje i uspomene",
+    "productsDescription": "Photo Wall, pozivnice i raspored sjedenja dio su doga\u0111aja. Digitalni album mo\u017ee biti dio doga\u0111aja ili va\u0161a samostalna pri\u010da.",
+    "comingSoon": "Uskoro",
+    "partOfEvent": "Dio doga\u0111aja",
+    "eventOrStandalone": "Dio doga\u0111aja ili samostalno",
+    "products": {
+      "photoWall": {
+        "title": "Photo Wall",
+        "description": "Prikupljajte i dijelite fotografije gostiju s va\u0161eg doga\u0111aja."
+      },
+      "albums": {
+        "title": "Digitalni albumi",
+        "description": "Izradite jedan ili vi\u0161e albuma uspomena."
+      },
+      "invitations": {
+        "title": "Pozivnice",
+        "description": "Kreirajte moderne digitalne pozivnice za va\u0161 doga\u0111aj."
+      },
+      "seating": {
+        "title": "Raspored sjedenja",
+        "description": "Organizirajte stolove i goste jednostavno i pregledno."
+      }
     }
   }
 }

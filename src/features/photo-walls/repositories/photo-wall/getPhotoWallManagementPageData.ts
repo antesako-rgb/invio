@@ -39,8 +39,8 @@ export async function getPhotoWallManagementPageData(
       error: authError,
     },
     {
-      data: event,
-      error: eventError,
+      data: project,
+      error: projectError,
     },
   ] =
     await Promise.all([
@@ -48,14 +48,14 @@ export async function getPhotoWallManagementPageData(
 
       supabase
         .from(
-          "events"
+          "projects"
         )
         .select(
           "owner_id"
         )
         .eq(
           "id",
-          photoWall.event_id
+          photoWall.project_id
         )
         .maybeSingle(),
     ]);
@@ -69,16 +69,16 @@ export async function getPhotoWallManagementPageData(
   }
 
   if (
-    eventError
+    projectError
   ) {
     throw new Error(
-      eventError.message
+      projectError.message
     );
   }
 
   if (
     !user ||
-    !event
+    !project
   ) {
     return null;
   }
@@ -87,6 +87,6 @@ export async function getPhotoWallManagementPageData(
     photoWall,
     isOwner:
       user.id ===
-      event.owner_id,
+      project.owner_id,
   };
 }

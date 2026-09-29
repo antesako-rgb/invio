@@ -1,0 +1,27 @@
+/* Component styles */
+
+.pickerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: .75rem;
+}
+
+.pickerCard {
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+  border: 1px solid var(--border);
+  padding: .75rem;
+  border-radius: .75rem;
+  background: var(--card);
+  cursor: pointer;
+  font-size: .875rem;
+  flex-direction: column;
+  text-align: center;
+}
+
+.pickerCard:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+

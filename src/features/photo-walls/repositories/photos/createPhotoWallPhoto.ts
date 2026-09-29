@@ -39,7 +39,7 @@ export async function createPhotoWallPhoto({
       .select(
         `
           id,
-          event_id
+          project_id
         `
       )
       .eq(
@@ -68,16 +68,16 @@ export async function createPhotoWallPhoto({
   ========================================================================== */
 
   const {
-    data: eventPhoto,
-    error: eventPhotoError,
+    data: projectPhoto,
+    error: projectPhotoError,
   } =
     await admin
       .from(
-        "event_photos"
+        "project_photos"
       )
       .insert({
-        event_id:
-          photoWall.event_id,
+        project_id:
+          photoWall.project_id,
 
         image_path:
           imagePath,
@@ -102,12 +102,12 @@ export async function createPhotoWallPhoto({
       .single();
 
   if (
-    eventPhotoError ||
-    !eventPhoto
+    projectPhotoError ||
+    !projectPhoto
   ) {
     console.error(
       "createPhotoWallPhoto event photo error:",
-      eventPhotoError
+      projectPhotoError
     );
 
     throw new Error(
@@ -133,7 +133,7 @@ export async function createPhotoWallPhoto({
           photoWall.id,
 
         photo_id:
-          eventPhoto.id,
+          projectPhoto.id,
 
         description:
           description,
@@ -168,12 +168,12 @@ export async function createPhotoWallPhoto({
     } =
       await admin
         .from(
-          "event_photos"
+          "project_photos"
         )
         .delete()
         .eq(
           "id",
-          eventPhoto.id
+          projectPhoto.id
         );
 
     if (
@@ -197,16 +197,16 @@ export async function createPhotoWallPhoto({
 
   return {
     id:
-      eventPhoto.id,
+      projectPhoto.id,
 
     photoWallId:
       photoWall.id,
 
     imagePath:
-      eventPhoto.image_path,
+      projectPhoto.image_path,
 
     fileSize:
-      eventPhoto.file_size,
+      projectPhoto.file_size,
 
     description:
       association.description,
@@ -215,6 +215,6 @@ export async function createPhotoWallPhoto({
       association.is_favorite,
 
     createdAt:
-      eventPhoto.created_at,
+      projectPhoto.created_at,
   };
 }

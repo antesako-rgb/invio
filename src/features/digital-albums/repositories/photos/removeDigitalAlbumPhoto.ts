@@ -16,11 +16,11 @@ import {
 
 import {
   deleteEmptyDigitalAlbumPhotoDirectory,
-} from "@/features/event-photos/services/deleteEmptyDigitalAlbumPhotoDirectory";
+} from "@/features/project-photos/services/deleteEmptyDigitalAlbumPhotoDirectory";
 
 import {
-  deleteOrphanEventPhoto,
-} from "@/features/event-photos/services/deleteOrphanEventPhoto";
+  deleteOrphanProjectPhoto,
+} from "@/features/project-photos/services/deleteOrphanProjectPhoto";
 
 import type {
   RemoveDigitalAlbumPhotoInput,
@@ -83,10 +83,10 @@ export async function removeDigitalAlbumPhoto(
   } =
     await supabase
       .from(
-        "event_photos"
+        "project_photos"
       )
       .select(
-        "id, image_path, source_type"
+        "id, image_path"
       )
       .eq(
         "id",
@@ -149,22 +149,10 @@ export async function removeDigitalAlbumPhoto(
 
 
   /* ==========================================================================
-     Keep Photo Wall Source
-  ========================================================================== */
-
-  if (
-    photo.source_type ===
-    "photo-wall"
-  ) {
-    return;
-  }
-
-
-  /* ==========================================================================
      Delete Orphan Event Photo
   ========================================================================== */
 
-  await deleteOrphanEventPhoto({
+  await deleteOrphanProjectPhoto({
     photoId:
       input.photoId,
 

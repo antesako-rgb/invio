@@ -1,0 +1,179 @@
+{
+  "allContent": "Moje uspomene",
+  "back": "Natrag",
+  "backToContent": "Natrag: {name}",
+  "editEvent": "Uredi podatke o doga\u0111aju",
+  "navigation": {
+    "workspace": "Radni prostor",
+    "overview": "Pregled",
+    "collaborators": "Suradnici",
+    "settings": "Postavke"
+  },
+  "dashboard": {
+    "title": "Moje uspomene",
+    "description": "Va\u0161i doga\u0111aji i digitalni albumi na jednom mjestu.",
+    "create": "Kreiraj",
+    "emptyTitle": "Sa\u010duvajte prve uspomene",
+    "emptyDescription": "Kreirajte doga\u0111aj ili zapo\u010dnite samostalni digitalni album.",
+    "albumContent": "Digitalni album",
+    "emptyContent": "Prostor za va\u0161e uspomene",
+    "photoWall": "Photo Wall",
+    "albumCount": "{count, plural, one {# digitalni album} few {# digitalna albuma} other {# digitalnih albuma}}",
+    "noProducts": "Jo\u0161 nema dodanih proizvoda.",
+    "openAlbum": "Uredi album",
+    "open": "Otvori",
+    "manage": "Upravljaj",
+    "all": "Prika\u017ei sve",
+    "invitation": "Pozivnica"
+  },
+  "create": {
+    "title": "\u0160to \u017eelite kreirati?",
+    "description": "Zapo\u010dnite doga\u0111ajem ili digitalnim albumom.",
+    "back": "Natrag",
+    "event": "Doga\u0111aj",
+    "eventDescription": "Unesite podatke o doga\u0111aju. Photo Wall i albume mo\u017eete dodati kasnije.",
+    "album": "Digitalni album",
+    "albumDescription": "Slo\u017eite vlastitu knjigu uspomena, bez kreiranja doga\u0111aja.",
+    "createAlbum": "Kreiraj album",
+    "albumName": "Naziv albuma",
+    "albumPlaceholder": "npr. Putovanje u Japan",
+    "cancel": "Odustani",
+    "error": "Album nije kreiran. Poku\u0161ajte ponovno.",
+    "partialError": "Prostor je spremljen, ali album nije kreiran. Poku\u0161ajte ponovno ili otvorite spremljeni prostor.",
+    "openSaved": "Otvori spremljeno"
+  },
+  "products": {
+    "photoWall": "Photo Wall",
+    "wallDescription": "Prikupite i podijelite fotografije gostiju.",
+    "openWall": "Otvori Photo Wall",
+    "createWall": "Kreiraj Photo Wall",
+    "noWall": "Photo Wall jo\u0161 nije kreiran.",
+    "albums": "Digitalni albumi",
+    "newAlbum": "Novi digitalni album",
+    "noAlbums": "Jo\u0161 nema digitalnih albuma.",
+    "published": "Objavljeno",
+    "draft": "Skica",
+    "editAlbum": "Uredi album",
+    "manageAlbum": "Postavke albuma",
+    "createError": "Photo Wall nije kreiran. Poku\u0161ajte ponovno."
+  },
+  "settings": {
+    "title": "Postavke",
+    "name": "Naziv",
+    "save": "Spremi promjene",
+    "saved": "Promjene su spremljene.",
+    "error": "Promjena nije dovr\u0161ena. Osvje\u017eite pregled prije ponovnog poku\u0161aja.",
+    "deleteEvent": "Izbri\u0161i doga\u0111aj",
+    "deleteContent": "Izbri\u0161i sadr\u017eaj",
+    "deleteDescription": "Trajno bri\u0161e ovaj prostor, sve njegove albume, Photo Wall, fotografije i suradnje.",
+    "confirm": "Trajno izbri\u0161i",
+    "cancel": "Odustani",
+    "confirmTitle": "Izbrisati {name}?"
+  },
+  "collaboration": {
+    "title": "Suradnici",
+    "description": "Upravljajte suradnicima.",
+    "invite": "Pozovi suradnika",
+    "email": "E-mail suradnika",
+    "linkHelp": "Kreirajte poveznicu i podijelite je s ovom osobom. E-mail se ne \u0161alje automatski.",
+    "createLink": "Kreiraj poveznicu za poziv",
+    "createError": "Nije mogu\u0107e kreirati ili kopirati poveznicu. Provjerite adresu i poku\u0161ajte ponovno.",
+    "link": "Poveznica za poziv",
+    "copy": "Kopiraj poveznicu",
+    "copied": "Kopirano",
+    "shareHelp": "Podijelite ovu poveznicu samo s osobom koja koristi {email}. Spremite je prije napu\u0161tanja ove stranice.",
+    "ownerOnly": "Samo vlasnik mo\u017ee pozivati suradnike.",
+    "members": "Suradnici",
+    "member": "Suradnik",
+    "empty": "Jo\u0161 nema suradnika.",
+    "pendingTitle": "Pozivi na \u010dekanju",
+    "pending": "Na \u010dekanju",
+    "response": {
+      "title": "Poziv za suradnju",
+      "account": "Prijavljeni ste kao {email}. Samo ra\u010dun kojem je poziv namijenjen mo\u017ee ga prihvatiti.",
+      "signInHelp": "Prijavite se e-mail adresom kojoj je ovaj poziv namijenjen.",
+      "link": "Primljena poveznica za poziv",
+      "linkHelp": "Zalijepite cijelu poveznicu koju vam je podijelio vlasnik.",
+      "load": "Otvori poveznicu",
+      "accept": "Prihvati",
+      "decline": "Odbij",
+      "signIn": "Prijavi se za odgovor",
+      "accepted": "Poziv je prihva\u0107en. Sada mo\u017eete sura\u0111ivati.",
+      "declined": "Poziv je odbijen.",
+      "continue": "Nastavi",
+      "error": "Nije mogu\u0107e otvoriti ili obraditi poziv. Provjerite poveznicu i ra\u010dun; poziv je mo\u017eda istekao ili je ve\u0107 iskori\u0161ten."
+    }
+  },
+  "eventDetails": {
+    "types": {
+      "wedding": "Vjen\u010danje",
+      "birthday": "Ro\u0111endan",
+      "baptism": "Kr\u0161tenje",
+      "communion": "Prva pri\u010dest",
+      "confirmation": "Krizma",
+      "business": "Poslovni doga\u0111aj",
+      "other": "Ostalo"
+    },
+    "create": {
+      "backToEvents": "Natrag",
+      "title": "Novi doga\u0111aj",
+      "description": "Unesite osnovne podatke i zapo\u010dnite organizaciju doga\u0111aja.",
+      "success": "Doga\u0111aj je uspje\u0161no kreiran."
+    },
+    "edit": {
+      "backToEvent": "Natrag na doga\u0111aj",
+      "title": "Uredi doga\u0111aj",
+      "description": "A\u017eurirajte podatke i postavke doga\u0111aja.",
+      "success": "Promjene su uspje\u0161no spremljene."
+    },
+    "form": {
+      "validationError": "Provjerite unesene podatke i poku\u0161ajte ponovno.",
+      "submitError": "Do\u0161lo je do pogre\u0161ke prilikom spremanja doga\u0111aja.",
+      "actions": {
+        "create": "Kreiraj doga\u0111aj",
+        "save": "Spremi promjene",
+        "clear": "O\u010disti",
+        "reset": "Odbaci promjene"
+      },
+      "basic": {
+        "title": "Osnovni podaci",
+        "description": "Unesite osnovne podatke o doga\u0111aju.",
+        "name": {
+          "label": "Naziv doga\u0111aja",
+          "placeholder": "npr. Ana & Marko"
+        },
+        "type": {
+          "label": "Vrsta doga\u0111aja",
+          "placeholder": "Odaberite vrstu doga\u0111aja"
+        },
+        "customType": {
+          "label": "Druga vrsta doga\u0111aja",
+          "description": "Unesite vrstu koja najbolje opisuje va\u0161 doga\u0111aj.",
+          "placeholder": "npr. Obiteljsko okupljanje"
+        },
+        "locationName": {
+          "label": "Naziv lokacije",
+          "placeholder": "npr. Hotel Esplanade"
+        },
+        "locationAddress": {
+          "label": "Adresa lokacije",
+          "placeholder": "npr. Mihanovi\u0107eva 1, Zagreb"
+        },
+        "location": {
+          "title": "Lokacija"
+        }
+      },
+      "schedule": {
+        "title": "Datum i vrijeme",
+        "description": "Odaberite datum i vrijeme po\u010detka doga\u0111aja.",
+        "date": {
+          "label": "Datum",
+          "placeholder": "Odaberite datum"
+        },
+        "time": {
+          "start": "Vrijeme po\u010detka"
+        }
+      }
+    }
+  }
+}

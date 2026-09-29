@@ -18,8 +18,8 @@ import {
 } from "@/features/photo-walls/renderer/data/buildPhotoWallGalleryPhotos";
 
 import {
-  formatEventDate,
-} from "@/features/events/utils/eventDisplay.utils";
+  formatProjectEventDate,
+} from "@/features/projects/utils/projectEventDisplay.utils";
 
 
 /* ==========================================================================
@@ -66,11 +66,11 @@ export default async function PublicPhotoWallPage({
         publicId
       }
       eventName={
-        photoWall.event_name
+        photoWall.project_name
       }
       date={
         photoWall.event_start_date
-          ? formatEventDate(
+          ? formatProjectEventDate(
               photoWall.event_start_date,
               locale
             )

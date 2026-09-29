@@ -1,0 +1,4 @@
+.thumbnail { width: 80px; height: 108px; flex-shrink: 0; overflow: hidden; border: 1px solid var(--border); border-radius: .5rem; background: var(--card); pointer-events: none; content-visibility: auto; }
+.surface { width: 400px; transform: scale(.2); transform-origin: top left; }
+.thumbnail[data-large="true"] { width: 220px; height: 297px; max-width: 100%; margin-inline: auto; }
+.thumbnail[data-large="true"] .surface { transform: scale(.55); }

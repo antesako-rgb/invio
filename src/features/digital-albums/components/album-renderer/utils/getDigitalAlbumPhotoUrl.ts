@@ -1,4 +1,4 @@
-import { getEventPhotoUrl } from "@/features/event-photos/utils/getEventPhotoUrl";
+import { getProjectPhotoUrl } from "@/features/project-photos/utils/getProjectPhotoUrl";
 import type { DigitalAlbumRendererPhoto } from "../types/digitalAlbumRenderer.types";
 
 export function getDigitalAlbumPhotoUrl(photo: DigitalAlbumRendererPhoto): string {
@@ -8,5 +8,5 @@ export function getDigitalAlbumPhotoUrl(photo: DigitalAlbumRendererPhoto): strin
     }
     return photo.imagePath;
   }
-  return getEventPhotoUrl(photo.imagePath);
+  return getProjectPhotoUrl(photo.imagePath);
 }

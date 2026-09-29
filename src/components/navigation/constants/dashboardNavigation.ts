@@ -16,8 +16,8 @@ export const dashboardNavigation: DashboardNavigationGroup[] = [
     id: "organize",
     label: "organize",
     items: [
-      { id: "events", label: "events", href: "/dashboard/dogadaji", icon: CalendarDays, exact: true },
-      { id: "newEvent", label: "newEvent", href: "/dashboard/dogadaji/novi", icon: Plus, exact: true },
+      { id: "content", label: "content", href: "/dashboard/projects", icon: CalendarDays, exact: true },
+      { id: "create", label: "create", href: "/dashboard/projects/new", icon: Plus, exact: true },
     ],
   },
 ];

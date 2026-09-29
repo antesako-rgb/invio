@@ -1,0 +1,101 @@
+/* Component styles */
+
+.panel {
+  display: grid;
+  gap: 1rem;
+  padding: 0 0 1.25rem;
+  min-width: 0;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  margin: 0;
+}
+
+.panel h2,
+.panel h3,
+.panel legend {
+  font-size: .9375rem;
+  font-weight: 600;
+}
+
+.panel legend {
+  padding-top: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: .375rem;
+  font-size: .8125rem;
+  font-weight: 500;
+  min-width: 0;
+}
+
+.photos button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.hint {
+  font-size: .8125rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+.photos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+}
+
+.photoItem {
+  min-width: 0;
+  display: grid;
+  gap: .25rem;
+  position: relative;
+}
+
+.photoItem > button:first-child {
+  border: 1px solid var(--border);
+  border-radius: .5rem;
+  overflow: hidden;
+  padding: 0;
+  background: var(--muted);
+}
+
+.photos img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.photoRemove {
+  position: absolute;
+  top: .25rem;
+  right: .25rem;
+}
+
+.photoRemove svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.slotButton {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  width: 100%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .photoRemove {
+    opacity: 0;
+  }
+
+  .photoItem:hover .photoRemove,
+  .photoItem:focus-within .photoRemove {
+    opacity: 1;
+  }
+
+}
+

@@ -5,57 +5,63 @@
       "titleFallback": "Welcome!",
       "description": "Your events, photos and memories in one place."
     },
-    "events": {
-      "title": "Your events",
-      "description": "Each event has its own Photo Wall and Digital Album.",
-      "newEvent": "New event",
-      "openEvent": "Open event",
-      "viewAll": "View all events",
-      "types": {
-        "wedding": "Wedding",
-        "birthday": "Birthday",
-        "baptism": "Baptism",
-        "communion": "First Communion",
-        "confirmation": "Confirmation",
-        "business": "Business Event",
-        "other": "Other"
-      },
-      "products": {
-        "photoWall": {
-          "title": "Photo Wall",
-          "edit": "Edit Photo Wall",
-          "missing": "Not set up"
-        },
-        "album": {
-          "title": "Digital Album",
-          "edit": "Edit album",
-          "missing": "Unavailable"
-        },
-        "draft": "Draft",
-        "published": "Published"
-      },
-      "empty": {
-        "title": "No events yet",
-        "description": "Create your first event and Memiva will automatically prepare your Photo Wall and Digital Album.",
-        "action": "Create your first event",
-        "photoWall": {
-          "title": "Photo Wall",
-          "description": "A place for your guests' event photos."
-        },
-        "album": {
-          "title": "Digital Album",
-          "description": "Your digital book of memories."
-        }
-      }
-    },
     "brandMessage": {
       "title": "Memiva is here to make life's important moments even more special.",
       "description": "Thank you for being part of our story!"
     },
     "invites": {
       "title": "Collaboration invitation",
-      "description": "You have been invited to collaborate on this event.",
+      "description": "You have been invited to collaborate.",
       "open": "View invitation"
+    },
+    "products": {
+      "photoWall": {
+        "title": "Photo Wall",
+        "description": "A place for your guests' event photos."
+      },
+      "album": {
+        "title": "Digital Album",
+        "description": "Your digital book of memories."
+      }
+    }
+  },
+  "onboarding": {
+    "eyebrow": "Welcome to Memiva",
+    "title": "Start your story",
+    "description": "Create an event and bring everything together in one place, or make a standalone digital album.",
+    "event": {
+      "title": "Event",
+      "description": "Organize your event in one place. Add a Photo Wall, digital albums and an invitation.",
+      "futureNote": "Seating plans are coming soon, within your event.",
+      "action": "Create event"
+    },
+    "album": {
+      "title": "Digital Album",
+      "description": "Create a standalone digital book of memories. Perfect for travel, family, a special gift or any collection of photos.",
+      "action": "Create digital album"
+    },
+    "productsTitle": "Everything for your events and memories",
+    "productsDescription": "Photo Wall, invitations and seating plans belong to an event. A digital album can be part of an event or a story of its own.",
+    "comingSoon": "Coming soon",
+    "partOfEvent": "Part of an event",
+    "eventOrStandalone": "Part of an event or standalone",
+    "products": {
+      "photoWall": {
+        "title": "Photo Wall",
+        "description": "Collect and share photos from your event guests."
+      },
+      "albums": {
+        "title": "Digital Albums",
+        "description": "Create one or more albums of memories."
+      },
+      "invitations": {
+        "title": "Invitations",
+        "description": "Create modern digital invitations for your event."
+      },
+      "seating": {
+        "title": "Seating Plan",
+        "description": "Organize tables and guests simply and clearly."
+      }
     }
   }
 }

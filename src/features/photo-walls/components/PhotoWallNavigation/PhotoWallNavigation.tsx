@@ -11,7 +11,7 @@ import SideNavigation
 ========================================================================== */
 
 interface PhotoWallNavigationProps {
-  eventId:
+  projectId:
     string;
 }
 
@@ -21,7 +21,7 @@ interface PhotoWallNavigationProps {
 ========================================================================== */
 
 export default async function PhotoWallNavigation({
-  eventId,
+  projectId,
 }: PhotoWallNavigationProps) {
   const t =
     await getTranslations(
@@ -29,7 +29,7 @@ export default async function PhotoWallNavigation({
     );
 
   const base =
-    `/dashboard/dogadaji/${eventId}/photo-wall`;
+    `/dashboard/projects/${projectId}/photo-wall`;
 
   const items = [
     {
@@ -57,7 +57,7 @@ export default async function PhotoWallNavigation({
         ),
 
       href:
-        `${base}/fotografije`,
+        `${base}/photos`,
     },
     {
       id:
@@ -69,7 +69,7 @@ export default async function PhotoWallNavigation({
         ),
 
       href:
-        `${base}/materijali`,
+        `${base}/materials`,
     },
     {
       id:
@@ -81,7 +81,7 @@ export default async function PhotoWallNavigation({
         ),
 
       href:
-        `${base}/postavke`,
+        `${base}/settings`,
     },
   ];
 

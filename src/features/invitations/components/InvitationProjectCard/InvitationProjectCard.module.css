@@ -1,0 +1,3 @@
+ .card { display: grid; gap: 1rem; }
+.card p { color: var(--muted-foreground); line-height: 1.6; }
+.actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }

@@ -21,7 +21,7 @@ import DigitalAlbumAddPhotosDialog from "@/features/digital-albums/editor/compon
 
 import type { DigitalAlbumPhotoWithPhoto } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
 
-import { getEventPhotoUrl } from "@/features/event-photos/utils/getEventPhotoUrl";
+import { getProjectPhotoUrl } from "@/features/project-photos/utils/getProjectPhotoUrl";
 
 import type { PhotoWall } from "@/features/photo-walls/types/photoWall.types";
 
@@ -192,7 +192,7 @@ export default function DigitalAlbumPhotosPanel({
                 return (
                   <DigitalAlbumLibraryPhoto key={albumPhoto.photo_id}
                     selectable={pickerTargetId !== null} selected={selectedPhotoId === albumPhoto.photo_id}
-                    isUsed={isUsed} imageUrl={getEventPhotoUrl(albumPhoto.photo.image_path)}
+                    isUsed={isUsed} imageUrl={getProjectPhotoUrl(albumPhoto.photo.image_path)}
                     selectLabel={t("selectPhoto", { number: index + 1 }) + (uses ? ". " + t("usedTimes", { count: uses }) : "")}
                     deleteLabel={t("remove")}
                     usageBadge={uses ? (uses === 1 ? "\u2713" : `${uses}\u00d7`) : t("retainedBadge")}

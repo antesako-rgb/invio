@@ -1,0 +1,106 @@
+/* ==========================================================================
+   Date Card
+========================================================================== */
+
+.dateCard {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: clamp(1.5rem, 4cqi, 3rem);
+  min-height: clamp(24rem, 65cqi, 44rem);
+  padding: clamp(2.5rem, 8cqi, 6rem) clamp(1.25rem, 6cqi, 5rem);
+  text-align: center;
+  overflow-wrap: anywhere;
+  color: var(--invitation-ink);
+  background: var(--invitation-paper);
+}
+
+.dateCard p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--invitation-display-font);
+  font-size: var(--invitation-heading-size);
+  font-weight: var(--invitation-heading-weight);
+  line-height: var(--invitation-heading-leading);
+  letter-spacing: var(--invitation-heading-tracking);
+  text-wrap: balance;
+}
+
+.calendar {
+  display: grid;
+  gap: clamp(.75rem, 2cqi, 1.5rem);
+  width: min(100%, 40rem);
+}
+
+.month,
+.side,
+.venue {
+  font-family: var(--invitation-body-font);
+  text-transform: var(--invitation-subtitle-transform);
+  font-size: clamp(.75rem, 2cqi, 1.25rem);
+  line-height: var(--invitation-body-leading);
+}
+
+.dateRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(.75rem, 3cqi, 2.5rem);
+}
+
+.side {
+  border-block: var(--invitation-frame-width) var(--invitation-frame-style) var(--invitation-frame-color);
+  padding-block: .625rem;
+}
+
+.day {
+  font-family: var(--invitation-display-font);
+  font-weight: var(--invitation-heading-weight);
+  font-size: clamp(3rem, 9cqi, 6.5rem);
+  line-height: 1.2;
+}
+
+.year {
+  font-size: clamp(.875rem, 2cqi, 1.25rem);
+  letter-spacing: .25em;
+}
+
+.venue,
+.fallback {
+  display: grid;
+  gap: 1rem;
+  max-width: 100%;
+}
+
+.venue {
+  letter-spacing: var(--invitation-subtitle-tracking);
+}
+
+.address,
+.message {
+  color: var(--invitation-muted-ink);
+}
+
+.message,
+.fallback {
+  max-width: 36rem;
+  line-height: var(--invitation-body-leading);
+}
+
+.fallback:empty {
+  display: none;
+}
+
+@container (max-width: 440px) {
+  .dateCard {
+    padding-inline: 1rem;
+  }
+
+  .dateRow {
+    gap: .625rem;
+  }
+}

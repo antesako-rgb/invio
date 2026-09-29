@@ -57,7 +57,7 @@ export async function getPhotoWallPhotosPage({
         description,
         is_favorite,
         created_at,
-        photo:event_photos!photo_wall_photos_photo_id_fkey (
+        photo:project_photos!photo_wall_photos_photo_id_fkey (
           id,
           image_path,
           file_size

@@ -124,7 +124,7 @@ export async function deleteFromBunny(
     );
 
   if (
-    !response.ok
+    !response.ok && response.status !== 404
   ) {
     const error =
       await response.text();
@@ -171,7 +171,7 @@ export async function deleteDirectoryFromBunny(
     );
 
   if (
-    !response.ok
+    !response.ok && response.status !== 404
   ) {
     const error =
       await response.text();

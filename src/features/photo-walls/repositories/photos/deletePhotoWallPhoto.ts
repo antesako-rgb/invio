@@ -4,11 +4,11 @@ import {
 
 import {
   deleteEmptyPhotoWallPhotoDirectory,
-} from "@/features/event-photos/services/deleteEmptyPhotoWallPhotoDirectory";
+} from "@/features/project-photos/services/deleteEmptyPhotoWallPhotoDirectory";
 
 import {
-  deleteOrphanEventPhoto,
-} from "@/features/event-photos/services/deleteOrphanEventPhoto";
+  deleteOrphanProjectPhoto,
+} from "@/features/project-photos/services/deleteOrphanProjectPhoto";
 
 import type {
   DeletePhotoWallPhotoInput,
@@ -37,7 +37,7 @@ export async function deletePhotoWallPhoto(
   } =
     await supabase
       .from(
-        "event_photos"
+        "project_photos"
       )
       .select(
         "id, image_path"
@@ -106,7 +106,7 @@ export async function deletePhotoWallPhoto(
      Delete Orphan Event Photo
   ========================================================================== */
 
-  await deleteOrphanEventPhoto({
+  await deleteOrphanProjectPhoto({
     photoId:
       input.photoId,
 

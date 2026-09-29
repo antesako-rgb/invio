@@ -63,9 +63,9 @@ export default function DashboardMoreMenu({
       "Navigation.dashboard"
     );
 
-  const eventText =
+  const projectText =
     useTranslations(
-      "Events.header"
+      "Projects.navigation"
     );
 
   const {
@@ -79,9 +79,9 @@ export default function DashboardMoreMenu({
   const pathname =
     usePathname();
 
-  const eventId =
+  const projectId =
     pathname.match(
-      /^\/dashboard\/dogadaji\/([0-9a-f]{8}-[0-9a-f-]{27})(?:\/|$)/i
+      /^\/dashboard\/projects\/([0-9a-f]{8}-[0-9a-f-]{27})(?:\/|$)/i
     )?.[1];
 
 
@@ -194,7 +194,7 @@ export default function DashboardMoreMenu({
               }
             >
               <Link
-                href="/dashboard/dogadaji"
+                href="/dashboard/projects"
                 className={
                   styles.item
                 }
@@ -211,13 +211,13 @@ export default function DashboardMoreMenu({
 
                 <span>
                   {t(
-                    "events"
+                    "content"
                   )}
                 </span>
               </Link>
 
               <Link
-                href="/dashboard/dogadaji/novi"
+                href="/dashboard/projects/new"
                 className={
                   styles.item
                 }
@@ -234,14 +234,14 @@ export default function DashboardMoreMenu({
 
                 <span>
                   {t(
-                    "newEvent"
+                    "create"
                   )}
                 </span>
               </Link>
             </nav>
           </section>
 
-          {eventId && (
+          {projectId && (
             <section
               className={
                 styles.section
@@ -252,7 +252,7 @@ export default function DashboardMoreMenu({
                   styles.sectionLabel
                 }
               >
-                 {eventText(
+                 {projectText(
     "workspace"
                 )}
               </span>
@@ -262,13 +262,13 @@ export default function DashboardMoreMenu({
                   styles.menu
                 }
                 aria-label={
-                  eventText(
+                  projectText(
                    "workspace"
                   )
                 }
               >
                 <Link
-                  href={`/dashboard/dogadaji/${eventId}`}
+                  href={`/dashboard/projects/${projectId}`}
                   className={
                     styles.item
                   }
@@ -284,14 +284,14 @@ export default function DashboardMoreMenu({
                   />
 
                   <span>
-                    {eventText(
+                    {projectText(
                       "overview"
                     )}
                   </span>
                 </Link>
 
                 <Link
-                  href={`/dashboard/dogadaji/${eventId}/suradnici`}
+                  href={`/dashboard/projects/${projectId}/collaborators`}
                   className={
                     styles.item
                   }
@@ -307,7 +307,7 @@ export default function DashboardMoreMenu({
                   />
 
                   <span>
-                    {eventText(
+                    {projectText(
                       "collaborators"
                     )}
                   </span>

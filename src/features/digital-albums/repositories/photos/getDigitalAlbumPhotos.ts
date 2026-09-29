@@ -28,7 +28,7 @@ export async function getDigitalAlbumPhotos(
       )
       .select(`
         *,
-        photo:event_photos!digital_album_photos_photo_id_fkey (
+        photo:project_photos!digital_album_photos_photo_id_fkey (
           *
         )
       `)

@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Editorial Layout
+========================================================================== */
+
+.editorial {
+  display: grid;
+  gap: clamp(2rem, 5cqi, 4rem);
+  padding: calc(clamp(2.5rem, 7cqi, 6rem) + var(--invitation-section-space)) clamp(1.25rem, 5cqi, 5rem);
+}
+
+.editorial > .photo {
+  max-width: 48rem;
+  width: 100%;
+  margin-inline: auto;
+}
+
+.editorial > .photo img {
+  aspect-ratio: 3 / 2;
+}
+
+@container (max-width: 440px) {
+  .editorial > .photo img {
+    aspect-ratio: 4 / 5;
+  }
+}

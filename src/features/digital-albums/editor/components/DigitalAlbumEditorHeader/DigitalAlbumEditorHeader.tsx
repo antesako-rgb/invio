@@ -9,7 +9,7 @@ import DigitalAlbumPdfExportAction from "../DigitalAlbumPdfExportAction/DigitalA
 import type { AlbumSaveStatus } from "../../state/DigitalAlbumSession";
 export interface DigitalAlbumEditorHeaderProps {
   albumId: string;
-  eventId?: string;
+  projectId?: string;
   saveConflict?: boolean;
   saveStatus?: AlbumSaveStatus;
   canUndo?: boolean;
@@ -23,7 +23,7 @@ export interface DigitalAlbumEditorHeaderProps {
 }
 export default function DigitalAlbumEditorHeader({
   albumId,
-  eventId,
+  projectId,
   saveStatus = "saved",
   saveConflict,
   canUndo,
@@ -48,7 +48,7 @@ export default function DigitalAlbumEditorHeader({
               event.preventDefault();
           }}
         >
-          <BackLink href={eventId ? `/dashboard/dogadaji/${eventId}/albumi` : "/dashboard/dogadaji"} label={t("navigation.back")} />
+          <BackLink href={projectId ? `/dashboard/projects/${projectId}/albums/${albumId}` : "/dashboard/projects"} label={t("navigation.back")} />
         </span>
       }
       end={

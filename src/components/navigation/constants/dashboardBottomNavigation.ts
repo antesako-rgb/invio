@@ -79,19 +79,19 @@ export const dashboardBottomNavigation:
 
     {
       id:
-        "events",
+        "content",
 
       label:
-        "events",
+        "content",
 
       href:
-        "/dashboard/dogadaji",
+        "/dashboard/projects",
 
       icon: CalendarDays,
       exact: true,
     },
 
-    { id: "newEvent", label: "newEvent", href: "/dashboard/dogadaji/novi", icon: Plus, exact: true },
+    { id: "create", label: "create", href: "/dashboard/projects/new", icon: Plus, exact: true },
 
     {
       id:

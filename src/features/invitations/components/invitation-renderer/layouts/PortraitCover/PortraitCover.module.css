@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Portrait Cover
+========================================================================== */
+
+.portraitCover {
+  --portrait-inset: clamp(1.25rem, 9cqi, 6rem);
+  --portrait-gutter: clamp(1rem, 4cqi, 3rem);
+  background: var(--invitation-paper);
+  color: var(--invitation-ink);
+  overflow-wrap: anywhere;
+}
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  min-height: clamp(26rem, 120cqi, 56rem);
+}
+
+.hero > .photo {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.hero > .photo img {
+  aspect-ratio: auto;
+  border-radius: 0;
+  outline: none;
+}
+
+.heading {
+  margin-inline: var(--portrait-inset);
+  border-inline-start: 2px solid currentColor;
+  padding: .5rem 0 .5rem var(--portrait-gutter);
+}
+
+.portraitCover[data-has-photo="true"] .heading {
+  color: var(--invitation-photo-text);
+}
+
+.heading h2 {
+  margin: 0;
+  font-family: var(--invitation-display-font);
+  font-size: clamp(3rem, 12cqi, 8rem);
+  font-weight: var(--invitation-heading-weight);
+  letter-spacing: var(--invitation-heading-tracking);
+  line-height: .95;
+  text-transform: uppercase;
+  white-space: pre-wrap;
+}
+
+.caption {
+  padding: 0 var(--portrait-inset) clamp(2rem, 7cqi, 5rem);
+}
+
+.captionContent {
+  border-inline-start: 2px solid var(--invitation-ink);
+  padding: clamp(1.5rem, 5cqi, 3rem) 0 1rem var(--portrait-gutter);
+}
+
+@container (max-width: 440px) {
+  .heading h2 {
+    font-size: clamp(2.5rem, 13cqi, 3.5rem);
+  }
+}

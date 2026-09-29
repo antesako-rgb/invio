@@ -1,6 +1,6 @@
 import {
-  getEventPhotoUrl,
-} from "@/features/event-photos/utils/getEventPhotoUrl";
+  getProjectPhotoUrl,
+} from "@/features/project-photos/utils/getProjectPhotoUrl";
 
 import type {
   PhotoWallRenderPhoto,
@@ -52,7 +52,7 @@ export function buildPhotoWallGalleryPhotos(
           photo.id,
 
         imageUrl:
-          getEventPhotoUrl(
+          getProjectPhotoUrl(
             imagePath
           ),
 

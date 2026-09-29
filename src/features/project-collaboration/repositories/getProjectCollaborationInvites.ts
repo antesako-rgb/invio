@@ -1,0 +1,45 @@
+import {
+  createServerClient,
+} from "@/lib/supabase/server";
+
+import type {
+  ProjectCollaborationInvite,
+} from "../types/projectCollaboration.types";
+
+
+/* ==========================================================================
+   Get Project Collaboration Invitations
+========================================================================== */
+
+export async function getProjectCollaborationInvites(
+  projectId: string
+): Promise<ProjectCollaborationInvite[]> {
+  const supabase =
+    await createServerClient();
+
+  const {
+    data,
+    error,
+  } =
+    await supabase
+      .from(
+        "project_collaboration_invites"
+      )
+      .select("*")
+      .eq(
+        "project_id",
+        projectId
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false,
+        }
+      );
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
