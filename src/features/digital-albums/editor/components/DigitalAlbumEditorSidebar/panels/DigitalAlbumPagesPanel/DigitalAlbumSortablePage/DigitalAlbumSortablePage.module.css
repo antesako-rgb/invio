@@ -11,6 +11,7 @@
   border-radius: 0.5rem;
 }
 
+
 /* ==========================================================================
    Drop Target
 ========================================================================== */
@@ -28,9 +29,15 @@
   z-index: 30;
   border: 3px solid var(--primary);
   border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  background:
+    color-mix(
+      in srgb,
+      var(--primary) 8%,
+      transparent
+    );
   pointer-events: none;
 }
+
 
 /* ==========================================================================
    Page
@@ -51,10 +58,6 @@
   cursor: pointer;
 }
 
-/* ==========================================================================
-   Hover
-========================================================================== */
-
 .page:not([data-active]):hover::after {
   content: "";
   position: absolute;
@@ -64,10 +67,6 @@
   border-radius: 0.5rem;
   pointer-events: none;
 }
-
-/* ==========================================================================
-   Active
-========================================================================== */
 
 .page[data-active]::after {
   content: "";
@@ -79,6 +78,12 @@
   pointer-events: none;
 }
 
+.page:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -3px;
+}
+
+
 /* ==========================================================================
    Drag Handle
 ========================================================================== */
@@ -88,48 +93,14 @@
   z-index: 20;
   top: 0.375rem;
   left: 0.375rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  padding: 0;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 0.375rem;
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--foreground);
   cursor: grab;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  opacity: 0;
-  transition:
-    opacity 150ms ease,
-    background 150ms ease,
-    box-shadow 150ms ease;
-}
-
-.dragHandle svg {
-  width: 1rem;
-  height: 1rem;
-}
-
-.root:hover .dragHandle,
-.dragHandle:focus-visible {
-  opacity: 1;
-}
-
-.dragHandle:hover {
-  background: #ffffff;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+  touch-action: none;
 }
 
 .dragHandle:active {
   cursor: grabbing;
 }
 
-.dragHandle:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
 
 /* ==========================================================================
    Dragging
@@ -138,6 +109,7 @@
 .root[data-dragging] {
   opacity: 0.6;
 }
+
 
 /* ==========================================================================
    Page Actions
@@ -151,63 +123,32 @@
 }
 
 .actionsTrigger {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  padding: 0;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 0.375rem;
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--foreground);
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  opacity: 0;
-  transition:
-    opacity 150ms ease,
-    background 150ms ease,
-    box-shadow 150ms ease;
 }
 
-.actionsTrigger svg {
-  width: 1rem;
-  height: 1rem;
-}
 
+/* ==========================================================================
+   Action Visibility
+========================================================================== */
+
+.root:focus-within .dragHandle,
+.root:focus-within .actionsTrigger,
+.root:hover .dragHandle,
 .root:hover .actionsTrigger,
+.dragHandle:focus-visible,
 .actionsTrigger:focus-visible,
 .actionsTrigger[data-popup-open] {
   opacity: 1;
 }
 
-.actionsTrigger:hover {
-  background: #ffffff;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-}
-
-.actionsTrigger:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
 
 /* ==========================================================================
-   Mobile
+   Touch
 ========================================================================== */
 
-@media (max-width: 767px) {
-  .dragHandle {
-    touch-action: none;
-  }
-
-  .actionsTrigger,
-  .dragHandle {
+@media (pointer: coarse) {
+  .dragHandle,
+  .actionsTrigger {
     opacity: 1;
   }
-}
-
-.page:focus-visible { outline: 2px solid var(--ring); outline-offset: -3px; }
-@media (pointer: coarse) {
-  .dragHandle, .actionsTrigger { width: 2.75rem; height: 2.75rem; opacity: 1; }
-  .dragHandle { touch-action: none; }
 }

@@ -1,3 +1,4 @@
+import type { InvitationPresentation } from "./InvitationPresentation";
 import type {
   ComponentType,
 } from "react";
@@ -47,6 +48,7 @@ import Calendar from "./layouts/Calendar/Calendar";
 ========================================================================== */
 
 export interface InvitationLayoutProps {
+  presentation?: InvitationPresentation;
   page: InvitationDocumentPage;
   photos: ReadonlyMap<string, InvitationRenderPhoto>;
   locale: string;

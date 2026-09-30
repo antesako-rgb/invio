@@ -1,4 +1,6 @@
 {
+  "photoLibraryHelp": {"placement": "Za dodavanje ili zamjenu fotografije prvo odaberi mjesto za fotografiju na stranici, zatim fotografiju ovdje.", "usage": "\u2713 ozna\u010dava kori\u0161tenu fotografiju; 3\u00d7 zna\u010di da se koristi na tri mjesta.", "description": "Olovkom uredi opis, a ko\u0161em ukloni fotografiju iz biblioteke."},
+  "photoDescription": {"edit": "Uredi opis fotografije", "label": "Opis", "hint": "Vrijedi na svim mjestima unutar ovog proizvoda. Druge pozivnice, albumi i Photo Wallovi zadr\u017eavaju svoje opise.", "legacy": "Poseban tekst ovog mjesta", "legacyHint": "Ovo mjesto koristi vlastiti spremljeni tekst umjesto opisa fotografije.", "reset": "Koristi opis fotografije", "cancel": "Odustani", "save": "Primijeni", "error": "Opis nije spremljen. Poku\u0161aj ponovno."},
   "appName": "Memiva",
   "loading": "Učitavanje...",
   "backToTop": "Natrag na vrh",

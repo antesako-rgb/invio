@@ -1,3 +1,4 @@
+import type { InvitationPresentation } from "./InvitationPresentation";
 import { allura, marcellus, playfairDisplay } from "@/styles/fonts/albumMaterialFonts";
 import { resolveInvitationPageDesign } from "../../config/invitationPageDesigns";
 import { resolveInvitationPageDateTime } from "../../utils/invitationSharedDateTime";
@@ -26,6 +27,7 @@ import themes
 ========================================================================== */
 
 interface InvitationRendererProps {
+  presentation?: (page: InvitationDocument["pages"][number]) => InvitationPresentation;
   document: InvitationDocument;
   photos: InvitationRenderPhoto[];
   locale: string;
@@ -39,6 +41,7 @@ interface InvitationRendererProps {
 
 export default function InvitationRenderer({
   document,
+  presentation,
   photos,
   locale,
   showPhotoPlaceholders = false,
@@ -93,6 +96,7 @@ export default function InvitationRenderer({
               }
             >
               <Layout
+                presentation={presentation?.(page)}
                 page={
                   resolveInvitationPageDateTime(document, page)
                 }

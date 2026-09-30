@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, Images, Plus } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 import { useTranslations } from "next-intl";
 
@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 
-import { EmptyState } from "@/components/ui/empty-state/EmptyState";
+import EditorPhotoLibrary from "@/features/editor/components/EditorPhotoLibrary/EditorPhotoLibrary";
 
 import { addDigitalAlbumPhotosAction } from "@/features/digital-albums/actions/photos/addDigitalAlbumPhotosAction";
 
@@ -25,7 +25,8 @@ import { getProjectPhotoUrl } from "@/features/project-photos/utils/getProjectPh
 
 import type { PhotoWall } from "@/features/photo-walls/types/photoWall.types";
 
-import DigitalAlbumLibraryPhoto from "./DigitalAlbumLibraryPhoto";
+import EditorPhotoDescription from "@/features/editor/components/EditorPhotoDescription/EditorPhotoDescription";
+import EditorLibraryPhoto from "@/features/editor/components/EditorPhotoLibrary/EditorLibraryPhoto";
 import styles from "./DigitalAlbumPhotosPanel.module.css";
 
 /* ==========================================================================
@@ -33,6 +34,7 @@ import styles from "./DigitalAlbumPhotosPanel.module.css";
 ========================================================================== */
 
 interface DigitalAlbumPhotosPanelProps {
+  onDescriptionSave: (id: string, value: string) => Promise<void>;
   pageLabel?: string;
   onRequestDeletePhoto: (id: string) => void;
   albumId: string;
@@ -57,11 +59,11 @@ interface DigitalAlbumPhotosPanelProps {
 ========================================================================== */
 
 export default function DigitalAlbumPhotosPanel({
+  onDescriptionSave,
   albumId,
   pageLabel,
   onRequestDeletePhoto,
   photos,
-  photoWalls,
   pickerTargetId,
   photoUsage,
   retainedPhotoIds,
@@ -106,17 +108,17 @@ export default function DigitalAlbumPhotosPanel({
   const existingPhotoIds = photos.map((albumPhoto) => albumPhoto.photo_id);
 
   /* ==========================================================================
-     Add From Photo Wall
+     Add Existing Project Photos
   ========================================================================== */
 
-  async function handleAddFromPhotoWall(photoIds: string[]) {
+  async function handleAddExisting(photoIds: string[]) {
     const result = await addDigitalAlbumPhotosAction({
       albumId,
       photoIds,
     });
 
     if (!result.success) {
-      throw new Error("Unable to add Photo Wall photos to album.");
+      throw new Error("Unable to add project photos to album.");
     }
 
     router.refresh();
@@ -140,8 +142,9 @@ export default function DigitalAlbumPhotosPanel({
 
   return (
     <>
-      <div ref={panel} className={styles.root}>
-        <div className={styles.header} aria-live="polite">
+      <div ref={panel}>
+      <EditorPhotoLibrary picking={pickerTargetId !== null} addLabel={t("add")} empty={photos.length === 0} emptyLabel={t("empty.description")}
+        onAdd={() => setIsAddPhotosOpen(true)} header={<>
           {pickerTargetId !== null && selectedPhotoId && <Button type="button" variant="ghost" onClick={onCancelPicker}>
             <ArrowLeft aria-hidden="true" />{t("backToPhoto")}
           </Button>}
@@ -150,47 +153,14 @@ export default function DigitalAlbumPhotosPanel({
             ? t(selectedPhotoId ? "replaceTitle" : "addTitle")
             : t("libraryCount", { count: photos.length, used: photos.filter((photo) => photoUsage[photo.photo_id]).length })}</p>
           {pickerTargetId !== null && <span className={styles.count}>{t(selectedPhotoId ? "replaceHelp" : "addHelp")}</span>}
-        </div>
-        {photos.length === 0 ? (
-          <>
-            <EmptyState
-              icon={Images}
-              title={t("empty.title")}
-              description={t("empty.description")}
-            />
-
-            <Button
-              type="button"
-              className={styles.addButton}
-              onClick={() => setIsAddPhotosOpen(true)}
-            >
-              <Plus aria-hidden="true" />
-
-              {t("add")}
-            </Button>
-          </>
-        ) : (
-          <>
-            <div className={styles.actions}>
-              <Button
-                type="button"
-                variant="outline"
-                className={styles.actionButton}
-                onClick={() => setIsAddPhotosOpen(true)}
-              >
-                <Plus aria-hidden="true" />
-
-                {t("add")}
-              </Button>
-            </div>
-
-            <div className={styles.grid}>
+        </>}>
               {photos.map((albumPhoto, index) => {
                 const uses = photoUsage[albumPhoto.photo_id] ?? 0;
                 const isUsed = uses > 0 || retainedPhotoIds.has(albumPhoto.photo_id);
 
                 return (
-                  <DigitalAlbumLibraryPhoto key={albumPhoto.photo_id}
+                  <EditorLibraryPhoto key={albumPhoto.photo_id}
+                    descriptionControl={pickerTargetId === null && <EditorPhotoDescription compact value={albumPhoto.description} onSave={value => onDescriptionSave(albumPhoto.photo_id, value)} />}
                     selectable={pickerTargetId !== null} selected={selectedPhotoId === albumPhoto.photo_id}
                     isUsed={isUsed} imageUrl={getProjectPhotoUrl(albumPhoto.photo.image_path)}
                     selectLabel={t("selectPhoto", { number: index + 1 }) + (uses ? ". " + t("usedTimes", { count: uses }) : "")}
@@ -200,18 +170,16 @@ export default function DigitalAlbumPhotosPanel({
                     onDelete={() => onRequestDeletePhoto(albumPhoto.photo_id)} />
                 );
               })}
-            </div>
-          </>
-        )}
+
+      </EditorPhotoLibrary>
       </div>
 
       <DigitalAlbumAddPhotosDialog
         open={isAddPhotosOpen}
         albumId={albumId}
-        photoWalls={photoWalls}
         excludedPhotoIds={existingPhotoIds}
         onOpenChange={setIsAddPhotosOpen}
-        onAddFromPhotoWall={handleAddFromPhotoWall}
+        onAddExisting={handleAddExisting}
         onUploadSuccess={handleUploadSuccess}
       />
     </>

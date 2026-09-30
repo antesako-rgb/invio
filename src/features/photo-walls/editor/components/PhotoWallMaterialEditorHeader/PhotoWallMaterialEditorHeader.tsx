@@ -3,8 +3,8 @@
 import { ArrowLeft, Save } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import EditorHeader from "@/features/editor/components/EditorHeader/EditorHeader";
-import EditorSaveStatus from "@/features/editor/components/EditorSaveStatus/EditorSaveStatus";
+import EditorHeader from "@/features/editor/components/header/EditorHeader/EditorHeader";
+import EditorSaveStatus from "@/features/editor/components/header/EditorSaveStatus/EditorSaveStatus";
 import styles from "./PhotoWallMaterialEditorHeader.module.css";
 
 export default function PhotoWallMaterialEditorHeader({ name, dirty, isSaving, error, onSave, onBack }: {

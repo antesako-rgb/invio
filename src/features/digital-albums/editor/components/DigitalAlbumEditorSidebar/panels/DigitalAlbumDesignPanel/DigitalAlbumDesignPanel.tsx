@@ -1,16 +1,13 @@
 "use client";
 
 import type { ReactNode } from "react";
-import {
-  useState,
-} from "react";
+
 
 import {
   useTranslations,
 } from "next-intl";
 
-import TabsFilter
-  from "@/components/ui/filter/TabsFilter";
+
 
 import DigitalAlbumLayoutPicker
   from "@/features/digital-albums/editor/components/DigitalAlbumEditorSidebar/components/DigitalAlbumLayoutPicker/DigitalAlbumLayoutPicker";
@@ -36,6 +33,7 @@ type DigitalAlbumDesignSection =
   | "theme";
 
 interface DigitalAlbumDesignPanelProps {
+  section: DigitalAlbumDesignSection;
   pageControls?: ReactNode;
   theme:
     DigitalAlbumTheme;
@@ -68,6 +66,7 @@ interface DigitalAlbumDesignPanelProps {
 
 export default function DigitalAlbumDesignPanel({
   theme,
+  section,
   pageControls,
   activePageId,
   activePageLayout,
@@ -86,57 +85,6 @@ export default function DigitalAlbumDesignPanel({
 
   /* ==========================================================================
      State
-  ========================================================================== */
-
-  const [
-    section,
-    setSection,
-  ] =
-    useState<DigitalAlbumDesignSection>(
-      "page"
-    );
-
-
-  /* ==========================================================================
-     Tabs
-  ========================================================================== */
-
-  const tabItems = [
-    {
-      value:
-        "page",
-
-      label:
-        t(
-          "tabs.page"
-        ),
-    },
-    {
-      value:
-        "theme",
-
-      label:
-        t(
-          "tabs.theme"
-        ),
-    },
-  ];
-
-
-  /* ==========================================================================
-     Change Section
-  ========================================================================== */
-
-  function handleSectionChange(
-    value:
-      string
-  ) {
-    if (value === "page" || value === "theme") setSection(value);
-  }
-
-
-  /* ==========================================================================
-     Change Layout
   ========================================================================== */
 
   function handleChangeLayout(
@@ -166,18 +114,6 @@ export default function DigitalAlbumDesignPanel({
         styles.root
       }
     >
-      <TabsFilter
-        items={
-          tabItems
-        }
-        value={
-          section
-        }
-        onValueChange={
-          handleSectionChange
-        }
-        equalWidth
-      />
 
       {section ===
         "page" && (

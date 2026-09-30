@@ -13,6 +13,8 @@ interface InvitationPagesPanelProps {
   sharedDateTime: Pick<InvitationDocument, "eventDate" | "eventTime" | "legacyDateTime">;
   theme: InvitationTheme;
   photos: InvitationRenderPhoto[];
+  onChangeType: (id: string) => void;
+  onChangeDesign: (id: string) => void;
   onDuplicate: (id: string) => void;
   pages: InvitationDocumentPage[];
   activeId?: string;
@@ -23,7 +25,7 @@ interface InvitationPagesPanelProps {
   onRemove: (id: string) => void;
 }
 
-export default function InvitationPagesPanel({ pages, activeId, disabled, onSelect, onAdd, onMove, onRemove, onDuplicate, theme, photos, sharedDateTime }: InvitationPagesPanelProps) {
+export default function InvitationPagesPanel({ onChangeType, onChangeDesign, pages, activeId, disabled, onSelect, onAdd, onMove, onRemove, onDuplicate, theme, photos, sharedDateTime }: InvitationPagesPanelProps) {
   const t = useTranslations("Invitations");
 
   function dragEnd(event: Parameters<NonNullable<ComponentProps<typeof DragDropProvider>["onDragEnd"]>>[0]) {
@@ -40,6 +42,8 @@ export default function InvitationPagesPanel({ pages, activeId, disabled, onSele
     <DragDropProvider onDragEnd={dragEnd}>
       <ol className={styles.pageList}>
         {pages.map((page, index) => <InvitationPageRow
+          onChangeType={() => onChangeType(page.id)}
+          onChangeDesign={() => onChangeDesign(page.id)}
           key={page.id}
           page={page}
           sharedDateTime={sharedDateTime}

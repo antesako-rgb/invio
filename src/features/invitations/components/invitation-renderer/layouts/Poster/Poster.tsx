@@ -1,3 +1,4 @@
+import { invitationText } from "../../InvitationPresentation";
 import type { InvitationLayoutProps } from "../../InvitationLayouts";
 import InvitationPhotos from "../../InvitationPhotos";
 import styles from "./Poster.module.css";
@@ -6,7 +7,7 @@ import styles from "./Poster.module.css";
    Poster Layout
 ========================================================================== */
 
-export default function Poster({ page, photos, locale, showPhotoPlaceholders }: InvitationLayoutProps) {
+export default function Poster({ presentation, page, photos, locale, showPhotoPlaceholders }: InvitationLayoutProps) {
   const { title, subtitle, date, location, address } = page.content;
   const hasPhoto = page.photos.some(slot => slot.photoId && photos.has(slot.photoId));
   const isDate = Boolean(date && /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(Date.parse(date)));
@@ -17,7 +18,7 @@ export default function Poster({ page, photos, locale, showPhotoPlaceholders }: 
   // Decorative repetitions resolve the same slot through the shared photo component.
   const backdrop = (
     <div className={styles.backdrop} aria-hidden="true">
-      <InvitationPhotos page={page} photos={photos} className={styles.backgroundPhoto} decorative />
+      <InvitationPhotos presentation={presentation} page={page} photos={photos} className={styles.backgroundPhoto} decorative />
     </div>
   );
 
@@ -25,11 +26,11 @@ export default function Poster({ page, photos, locale, showPhotoPlaceholders }: 
     <div className={styles.poster} data-has-photo={hasPhoto}>
       <header className={styles.heading}>
         {backdrop}
-        {title?.trim() && <h2>{title}</h2>}
+        {(title?.trim() || presentation) && <h2>{invitationText(presentation, "title", title)}</h2>}
       </header>
 
       <div className={styles.main}>
-        <InvitationPhotos
+        <InvitationPhotos presentation={presentation}
           page={page}
           photos={photos}
           showPhotoPlaceholders={showPhotoPlaceholders}
@@ -41,12 +42,12 @@ export default function Poster({ page, photos, locale, showPhotoPlaceholders }: 
         {backdrop}
         <div className={styles.details}>
           <div className={styles.group}>
-            {subtitle?.trim() && <p className={styles.primary}>{subtitle}</p>}
-            {date?.trim() && <p>{isDate ? <time dateTime={date}>{formattedDate}</time> : date}</p>}
+            {(subtitle?.trim() || presentation) && <p className={styles.primary}>{invitationText(presentation, "subtitle", subtitle)}</p>}
+            {(date?.trim() || presentation) && <p>{isDate ? <time dateTime={date}>{invitationText(presentation, "date", date, formattedDate)}</time> : invitationText(presentation, "date", date)}</p>}
           </div>
           <div className={styles.group}>
-            {location?.trim() && <p className={styles.primary}>{location}</p>}
-            {address?.trim() && <p>{address}</p>}
+            {(location?.trim() || presentation) && <p className={styles.primary}>{invitationText(presentation, "location", location)}</p>}
+            {(address?.trim() || presentation) && <p>{invitationText(presentation, "address", address)}</p>}
           </div>
         </div>
       </div>

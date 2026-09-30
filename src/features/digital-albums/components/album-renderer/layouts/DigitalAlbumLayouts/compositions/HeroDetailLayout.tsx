@@ -11,10 +11,7 @@ export default function HeroDetailLayout({
           styles.hero
         }
       >
-        {photo(
-          0,
-          false,
-        )}
+        {photo(0)}
       </div>
 
       <div

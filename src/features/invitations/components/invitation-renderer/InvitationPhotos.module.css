@@ -3,6 +3,7 @@
 ========================================================================== */
 
 .photo {
+  position: relative;
   margin: 0;
   min-width: 0;
 }
@@ -35,3 +36,23 @@
   height: 3rem;
   opacity: .45;
 }
+
+.caption {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  margin: 0;
+  padding: clamp(.5rem, 2cqi, 1.5rem);
+  max-height: 45%;
+  overflow: auto;
+  font-family: var(--invitation-body-font);
+  font-size: clamp(.65rem, 2cqi, 1rem);
+  line-height: 1.5;
+  font-weight: var(--invitation-body-weight);
+  color: var(--invitation-photo-text);
+  background: linear-gradient(rgb(0 0 0 / .65), rgb(0 0 0 / .1));
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.photo[data-editable] .caption { pointer-events: none; }

@@ -7,10 +7,7 @@ export default function CoverLayout({
 }: Parts) {
   return (
     <>
-      {photo(
-        0,
-        false,
-      )}
+      {photo(0)}
 
       <div
         className={

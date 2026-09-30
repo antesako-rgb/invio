@@ -1,3 +1,4 @@
+import { invitationText } from "../../InvitationPresentation";
 import type {
   InvitationLayoutProps,
 } from "../../InvitationLayouts";
@@ -10,7 +11,7 @@ import styles
    Ornamental Layout
 ========================================================================== */
 
-export default function Ornamental({
+export default function Ornamental({ presentation,
   page,
   locale,
 }: InvitationLayoutProps) {
@@ -69,32 +70,32 @@ export default function Ornamental({
             styles.names
           }
         >
-          {title && (
+          {(title || presentation) && (
             <h2>
-              {title}
+              {invitationText(presentation, "title", title)}
             </h2>
           )}
         </div>
       </div>
 
       {(subtitle ||
-        formattedDate) && (
+        formattedDate || presentation) && (
         <div
           className={
             styles.details
           }
         >
-          {subtitle && (
+          {(subtitle || presentation) && (
             <p
               className={
                 styles.subtitle
               }
             >
-              {subtitle}
+              {invitationText(presentation, "subtitle", subtitle)}
             </p>
           )}
 
-          {formattedDate && (
+          {(formattedDate || presentation) && (
             <p
               className={
                 styles.date
@@ -110,11 +111,11 @@ export default function Ornamental({
                   }
                 >
                   {
-                    formattedDate
+                    invitationText(presentation, "date", date, formattedDate)
                   }
                 </time>
               ) : (
-                formattedDate
+                invitationText(presentation, "date", date, formattedDate)
               )}
             </p>
           )}

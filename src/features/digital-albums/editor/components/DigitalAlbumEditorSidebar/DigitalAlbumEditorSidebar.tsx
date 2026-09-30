@@ -28,6 +28,7 @@ import type { PhotoWall } from "@/features/photo-walls/types/photoWall.types";
 ========================================================================== */
 
 interface DigitalAlbumEditorSidebarProps {
+  onChangeDesign: (id: string) => void;
   photoContext?: ReactNode;
   designPageControls?: ReactNode;
   pickerPageLabel?: string;
@@ -57,6 +58,7 @@ interface DigitalAlbumEditorSidebarProps {
 
   selectedPhotoId: string | null;
 
+  onDescriptionSave: (id: string, value: string) => Promise<void>;
   onSelectPhoto: (photoId: string) => void;
 
 
@@ -81,6 +83,7 @@ interface DigitalAlbumEditorSidebarProps {
 
 export default function DigitalAlbumEditorSidebar({
   albumId,
+  onChangeDesign,
   photoContext,
   designPageControls,
   pickerPageLabel,
@@ -98,6 +101,7 @@ export default function DigitalAlbumEditorSidebar({
   activePageLayout,
   visiblePageIndexes,
   selectedPhotoId,
+  onDescriptionSave,
   onSelectPhoto,
   onSelectPage,
   onChangePageLayout,
@@ -125,9 +129,10 @@ export default function DigitalAlbumEditorSidebar({
       case "pages":
         return t("navigation.pages");
 
-      case "design":
+      case "theme": return t("navigation.theme");
+      case "templates":
       default:
-        return t("navigation.design");
+        return t("navigation.templates");
     }
   }
 
@@ -140,6 +145,7 @@ export default function DigitalAlbumEditorSidebar({
       case "photos":
         return photoContext ?? (
           <DigitalAlbumPhotosPanel
+              onDescriptionSave={onDescriptionSave}
             pageLabel={pickerPageLabel}
             onRequestDeletePhoto={onRequestDeletePhoto}
             albumId={albumId}
@@ -156,7 +162,7 @@ export default function DigitalAlbumEditorSidebar({
 
       case "pages":
         return (
-          <DigitalAlbumPagesPanel
+          <DigitalAlbumPagesPanel onChangeDesign={onChangeDesign}
             theme={theme}
             pages={pages}
             photos={photos}
@@ -170,10 +176,11 @@ export default function DigitalAlbumEditorSidebar({
           />
         );
 
-      case "design":
+      case "theme":
+      case "templates":
         return (
-          <DigitalAlbumDesignPanel
-            pageControls={designPageControls}
+          <DigitalAlbumDesignPanel section={activeStep === "theme" ? "theme" : "page"}
+            pageControls={<><p>{t("upgrade.pageContext", { number: pages.findIndex(page => page.id === activePageId) + 1 })}</p>{designPageControls}</>}
             theme={theme}
             activePageId={activePageId}
             activePageLayout={activePageLayout}

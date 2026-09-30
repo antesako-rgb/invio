@@ -5,4 +5,5 @@
 export type DigitalAlbumEditorStep =
   | "photos"
   | "pages"
-  | "design";
+  | "templates"
+  | "theme";

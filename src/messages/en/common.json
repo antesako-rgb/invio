@@ -1,4 +1,6 @@
 {
+  "photoLibraryHelp": {"placement": "To add or replace a photo, first select a photo area on the page, then choose a photo here.", "usage": "\u2713 marks a photo in use; 3\u00d7 means it is used in three places.", "description": "Use the pencil to edit the description or the bin to remove a photo from the library."},
+  "photoDescription": {"edit": "Edit photo description", "label": "Description", "hint": "Applies wherever this photo is used within this product. Other albums, invitations and Photo Walls keep their own descriptions.", "legacy": "Custom text for this placement", "legacyHint": "This placement uses its own saved text instead of the photo description.", "reset": "Use photo description", "cancel": "Cancel", "save": "Apply", "error": "Could not save the description. Try again."},
   "appName": "Memiva",
   "loading": "Loading...",
   "backToTop": "Back to top",

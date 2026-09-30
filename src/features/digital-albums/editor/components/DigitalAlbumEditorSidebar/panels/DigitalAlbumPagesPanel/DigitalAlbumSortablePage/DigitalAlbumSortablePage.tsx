@@ -1,11 +1,20 @@
 "use client";
-import type { DigitalAlbumTheme } from "@/features/digital-albums/types/digitalAlbumDocument.types";
 
-import { Copy, GripVertical, MoreHorizontal, Trash2 } from "lucide-react";
+import {
+  Copy,
+  GripVertical,
+  MoreHorizontal,
+  Trash2,
+} from "lucide-react";
 
-import { useTranslations } from "next-intl";
+import {
+  useTranslations,
+} from "next-intl";
 
-import { useDraggable, useDroppable } from "@dnd-kit/react";
+import {
+  useDraggable,
+  useDroppable,
+} from "@dnd-kit/react";
 
 import {
   DropdownMenu,
@@ -15,44 +24,72 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import DigitalAlbumPagePreview from "@/features/digital-albums/components/album-renderer/DigitalAlbumPagePreview/DigitalAlbumPagePreview";
+import EditorPageActionButton
+  from "@/features/editor/components/pages/EditorPageActionButton/EditorPageActionButton";
 
-import type { DigitalAlbumDocumentPage } from "@/features/digital-albums/types/digitalAlbumDocument.types";
+import DigitalAlbumPagePreview
+  from "@/features/digital-albums/components/album-renderer/DigitalAlbumPagePreview/DigitalAlbumPagePreview";
 
-import type { DigitalAlbumPhotoWithPhoto } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
+import type {
+  DigitalAlbumDocumentPage,
+  DigitalAlbumTheme,
+} from "@/features/digital-albums/types/digitalAlbumDocument.types";
 
-import styles from "./DigitalAlbumSortablePage.module.css";
+import type {
+  DigitalAlbumPhotoWithPhoto,
+} from "@/features/digital-albums/types/digitalAlbumPhoto.types";
+
+import styles
+  from "./DigitalAlbumSortablePage.module.css";
+
 
 /* ==========================================================================
    Types
 ========================================================================== */
 
 interface DigitalAlbumSortablePageProps {
-  theme: DigitalAlbumTheme;
-  onMoveBefore?: () => void;
-  onMoveAfter?: () => void;
-  page: DigitalAlbumDocumentPage;
+  onChangeDesign: () => void;
+  theme:
+    DigitalAlbumTheme;
 
-  photos: DigitalAlbumPhotoWithPhoto[];
+  onMoveBefore?:
+    () => void;
 
-  pageNumber: number;
+  onMoveAfter?:
+    () => void;
 
-  isActive: boolean;
+  page:
+    DigitalAlbumDocumentPage;
 
-  canDelete: boolean;
+  photos:
+    DigitalAlbumPhotoWithPhoto[];
 
-  onSelect: () => void;
+  pageNumber:
+    number;
 
-  onDuplicate: () => void;
+  isActive:
+    boolean;
 
-  onDelete: () => void;
+  canDelete:
+    boolean;
+
+  onSelect:
+    () => void;
+
+  onDuplicate:
+    () => void;
+
+  onDelete:
+    () => void;
 }
+
 
 /* ==========================================================================
    Digital Album Sortable Page
 ========================================================================== */
 
 export default function DigitalAlbumSortablePage({
+  onChangeDesign,
   theme,
   page,
   onMoveBefore,
@@ -65,12 +102,16 @@ export default function DigitalAlbumSortablePage({
   onDuplicate,
   onDelete,
 }: DigitalAlbumSortablePageProps) {
-  /* ==========================================================================
-     Translations
-  ========================================================================== */
+  const u =
+    useTranslations(
+      "DigitalAlbumEditor.upgrade"
+    );
 
-  const u = useTranslations("DigitalAlbumEditor.upgrade");
-  const t = useTranslations("DigitalAlbumEditor.pages");
+  const t =
+    useTranslations(
+      "DigitalAlbumEditor.pages"
+    );
+
 
   /* ==========================================================================
      Drag
@@ -78,13 +119,14 @@ export default function DigitalAlbumSortablePage({
 
   const {
     ref: draggableRef,
-
     handleRef,
-
     isDragging,
-  } = useDraggable({
-    id: page.id,
-  });
+  } =
+    useDraggable({
+      id:
+        page.id,
+    });
+
 
   /* ==========================================================================
      Drop
@@ -92,11 +134,13 @@ export default function DigitalAlbumSortablePage({
 
   const {
     ref: droppableRef,
-
     isDropTarget,
-  } = useDroppable({
-    id: page.id,
-  });
+  } =
+    useDroppable({
+      id:
+        page.id,
+    });
+
 
   /* ==========================================================================
      Render
@@ -104,74 +148,184 @@ export default function DigitalAlbumSortablePage({
 
   return (
     <div
-      ref={draggableRef}
-      className={styles.root}
-      data-dragging={isDragging ? "" : undefined}
+      ref={
+        draggableRef
+      }
+      className={
+        styles.root
+      }
+      data-editor-page
+      data-dragging={
+        isDragging
+          ? ""
+          : undefined
+      }
     >
       <div
-        ref={droppableRef}
-        className={styles.dropTarget}
-        data-drop-target={isDropTarget && !isDragging ? "" : undefined}
+        ref={
+          droppableRef
+        }
+        className={
+          styles.dropTarget
+        }
+        data-drop-target={
+          isDropTarget &&
+          !isDragging
+            ? ""
+            : undefined
+        }
       >
         <button
           type="button"
-          className={styles.page}
-          data-active={isActive ? "" : undefined}
-          aria-pressed={isActive}
-          onClick={onSelect}
-          aria-label={t("page", {
-            number: pageNumber,
-          })}
+          className={
+            styles.page
+          }
+          data-active={
+            isActive
+              ? ""
+              : undefined
+          }
+          aria-pressed={
+            isActive
+          }
+          onClick={
+            onSelect
+          }
+          aria-label={
+            t(
+              "page",
+              {
+                number:
+                  pageNumber,
+              }
+            )
+          }
         >
-          <DigitalAlbumPagePreview theme={theme} page={page} photos={photos} />
+          <DigitalAlbumPagePreview
+            theme={
+              theme
+            }
+            page={
+              page
+            }
+            photos={
+              photos
+            }
+          />
         </button>
 
-        <button
-          ref={handleRef}
-          type="button"
-          className={styles.dragHandle}
-          aria-label={t("move", { number: pageNumber })}
+        <EditorPageActionButton
+          ref={
+            handleRef
+          }
+          className={
+            styles.dragHandle
+          }
+          aria-label={
+            t(
+              "move",
+              {
+                number:
+                  pageNumber,
+              }
+            )
+          }
         >
-          <GripVertical aria-hidden="true" />
-        </button>
+          <GripVertical
+            aria-hidden="true"
+          />
+        </EditorPageActionButton>
 
-        <div className={styles.actions}>
+        <div
+          className={
+            styles.actions
+          }
+        >
           <DropdownMenu>
             <DropdownMenuTrigger
               render={
-                <button
-                  type="button"
-                  className={styles.actionsTrigger}
-                  aria-label={t("actions")}
-                />
+                <EditorPageActionButton
+                  className={
+                    styles.actionsTrigger
+                  }
+                  aria-label={
+                    t(
+                      "actions"
+                    )
+                  }
+                >
+                  <MoreHorizontal
+                    aria-hidden="true"
+                  />
+                </EditorPageActionButton>
+              }
+            />
+
+            <DropdownMenuContent
+              align="end"
+              sideOffset={
+                6
               }
             >
-              <MoreHorizontal aria-hidden="true" />
-            </DropdownMenuTrigger>
+              <DropdownMenuItem onClick={onChangeDesign}>{t("changeLayout")}</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={
+                  onDuplicate
+                }
+              >
+                <Copy
+                  aria-hidden="true"
+                />
 
-            <DropdownMenuContent align="end" sideOffset={6}>
-              <DropdownMenuItem onClick={onDuplicate}>
-                <Copy aria-hidden="true" />
-
-                {t("duplicate")}
+                {t(
+                  "duplicate"
+                )}
               </DropdownMenuItem>
 
-              <DropdownMenuItem disabled={!onMoveBefore} onClick={onMoveBefore}>
-                {u("moveBefore")}
+              <DropdownMenuItem
+                disabled={
+                  !onMoveBefore
+                }
+                onClick={
+                  onMoveBefore
+                }
+              >
+                {u(
+                  "moveBefore"
+                )}
               </DropdownMenuItem>
-              <DropdownMenuItem disabled={!onMoveAfter} onClick={onMoveAfter}>
-                {u("moveAfter")}
+
+              <DropdownMenuItem
+                disabled={
+                  !onMoveAfter
+                }
+                onClick={
+                  onMoveAfter
+                }
+              >
+                {u(
+                  "moveAfter"
+                )}
               </DropdownMenuItem>
+
               <DropdownMenuSeparator />
 
               <DropdownMenuItem
                 variant="destructive"
-                disabled={!canDelete}
-                onClick={onDelete}
+                disabled={
+                  !canDelete
+                }
+                onClick={
+                  onDelete
+                }
               >
-                <Trash2 aria-hidden="true" />
+                <Trash2
+                  aria-hidden="true"
+                />
 
-                {t("delete")}
+                {t(
+                  "delete"
+                )}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

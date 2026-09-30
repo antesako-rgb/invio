@@ -55,14 +55,16 @@ type InvitationProjectPhotosActionData =
 
 export async function uploadInvitationPhotoAction(
   invitationId: string,
-  file: File
+  file: File,
+  description = ""
 ): Promise<
   ActionResult<InvitationPhotosActionData>
 > {
   try {
     await uploadInvitationPhoto(
       invitationId,
-      file
+      file,
+      description
     );
 
     const photos =

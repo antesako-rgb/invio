@@ -3,8 +3,8 @@ import { Undo2, Redo2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import BackLink from "@/components/ui/back-link/BackLink";
-import EditorHeader from "@/features/editor/components/EditorHeader/EditorHeader";
-import EditorSaveStatus from "@/features/editor/components/EditorSaveStatus/EditorSaveStatus";
+import EditorHeader from "@/features/editor/components/header/EditorHeader/EditorHeader";
+import EditorSaveStatus from "@/features/editor/components/header/EditorSaveStatus/EditorSaveStatus";
 import DigitalAlbumPdfExportAction from "../DigitalAlbumPdfExportAction/DigitalAlbumPdfExportAction";
 import type { AlbumSaveStatus } from "../../state/DigitalAlbumSession";
 export interface DigitalAlbumEditorHeaderProps {

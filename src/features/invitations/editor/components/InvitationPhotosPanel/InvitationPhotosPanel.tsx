@@ -1,185 +1,77 @@
 "use client";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Plus, Trash2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog/dialog";
 import { Button } from "@/components/ui/button";
+import FilePicker from "@/components/ui/file-picker/FilePicker";
+import EditorPhotoSource from "@/features/editor/components/EditorPhotoLibrary/EditorPhotoSource";
+import EditorPhotoLibrary from "@/features/editor/components/EditorPhotoLibrary/EditorPhotoLibrary";
+import EditorLibraryPhoto from "@/features/editor/components/EditorPhotoLibrary/EditorLibraryPhoto";
+import EditorExistingPhotosPicker from "@/features/editor/components/EditorExistingPhotosPicker/EditorExistingPhotosPicker";
 import { getProjectPhotoUrl } from "@/features/project-photos/utils/getProjectPhotoUrl";
 import { getInvitationProjectPhotosAction } from "../../../actions/photos/invitationPhotoActions";
 import type { InvitationPhotoWithPhoto } from "../../../types/invitationPhoto.types";
-import type { ProjectPhoto } from "@/features/project-photos/types/projectPhoto.types";
+import EditorPhotoDescription from "@/features/editor/components/EditorPhotoDescription/EditorPhotoDescription";
+import InvitationPhotoUpload from "./InvitationPhotoUpload";
 import styles from "./InvitationPhotosPanel.module.css";
 interface InvitationPhotosPanelProps {
-  invitationId: string;
-  photos: InvitationPhotoWithPhoto[];
-  disabled: boolean;
-  picking: boolean;
-  selectionLabel?: string;
-  selectedPhotoId?: string | null;
-  onUpload: (file: File) => Promise<void>;
-  onImport: (id: string) => Promise<void>;
-  onSelect: (id: string) => void;
-  onDelete: (id: string) => void;
-  onCancel: () => void;
+  onDescriptionSave: (id: string, value: string) => Promise<void>;
+  invitationId: string; photos: InvitationPhotoWithPhoto[]; disabled: boolean; picking: boolean;
+  photoUsage: Record<string, number>; retainedPhotoIds: ReadonlySet<string>;
+  selectionLabel?: string; selectedPhotoId?: string | null;
+  onUpload: (file: File, description: string) => Promise<void>; onImport: (ids: string[]) => Promise<void>;
+  onSelect: (id: string) => void; onDelete: (id: string) => void; onCancel: () => void;
 }
-
-export default function InvitationPhotosPanel({ invitationId, photos, disabled, picking, selectionLabel, selectedPhotoId, onUpload, onImport, onSelect, onDelete, onCancel }: InvitationPhotosPanelProps) {
+export default function InvitationPhotosPanel({ onDescriptionSave, invitationId, photos, disabled, picking, photoUsage, retainedPhotoIds, selectionLabel, selectedPhotoId, onUpload, onImport, onSelect, onDelete, onCancel }: InvitationPhotosPanelProps) {
   const t = useTranslations("Invitations");
-  const [library, setLibrary] = useState<ProjectPhoto[]>([]);
-  const [nextOffset, setNextOffset] = useState<number | null>(0);
-  const [loading, setLoading] = useState(false);
-  const [failed, setFailed] = useState(false);
-  const lock = useRef(false);
-  const fileInput = useRef<HTMLInputElement>(null);
-  const [projectPicker, setProjectPicker] = useState(false);
-
-  async function load() {
-    if (lock.current || nextOffset === null) return;
-
-    lock.current = true;
-    setLoading(true);
-    setFailed(false);
-
-    try {
-      const result = await getInvitationProjectPhotosAction(invitationId, nextOffset);
-
-      if (!result.success) {
-        setFailed(true);
-        return;
-      }
-      setLibrary(current => [
-        ...new Map(
-          [...current, ...result.data.photos].map(photo => [photo.id, photo]),
-        ).values(),
-      ]);
-      setNextOffset(result.data.nextOffset);
-    } catch {
-      setFailed(true);
-    }
-    finally {
-      lock.current = false;
-      setLoading(false);
-    }
-  }
-  const used = new Set(photos.map(photo => photo.photo_id));
-
-  return <section className={styles.panel}>
-    <h2>
-      {t(picking ? "photoUx.choose" : "photoUx.library")}
-    </h2>
-
-    <div className={styles.context}>
-      {picking && <strong>{selectionLabel}</strong>}
-      <p className={styles.hint}>{t(picking ? "photoUx.chooseHint" : "photoUx.libraryHint")}</p>
-      <Button variant="ghost" disabled={disabled} onClick={onCancel}>
-        {t("photoUx.backToPage")}
-      </Button>
-    </div>
-    <input
-      ref={fileInput}
-      className={styles.srOnly}
-      tabIndex={-1}
-      aria-label={t("editor.upload")}
-      type="file"
-      accept="image/jpeg,image/png,image/webp"
-      disabled={disabled}
-      onChange={event => {
-        const file = event.target.files?.[0];
-        event.target.value = "";
-        if (file) void onUpload(file);
-      }} />
-    <button
-      type="button"
-      className={styles.uploadCard}
-      disabled={disabled}
-      onClick={() => fileInput.current?.click()}>
-      <Plus aria-hidden="true" />
-      <strong>
-        {t("photoUx.upload")}
-      </strong>
-      <span>
-        {t("editor.uploadHint")}
-      </span>
-    </button>
-    <h3>
-      {t("photoUx.available", { count: photos.length })}
-    </h3>
-    {!photos.length && <p className={styles.hint}>{t("photoUx.empty")}</p>}
-    <div className={styles.photos}>
-      {photos.map((photo, index) => <div key={photo.photo_id} className={styles.photoItem}>
-        {picking ? <button
-          type="button"
-          disabled={disabled}
-          aria-pressed={selectedPhotoId === photo.photo_id}
-          onClick={() => onSelect(photo.photo_id)}
-          aria-label={t("editor.selectPhoto", { number: index + 1 })}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={getProjectPhotoUrl(photo.photo.image_path)}
-            alt={photo.description ?? ""}
-            loading="lazy" />
-          <span className={styles.selectLabel}>{t(selectedPhotoId === photo.photo_id ? "photoUx.current" : "photoUx.use")}</span>
-        </button> : <div className={styles.libraryPhoto}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={getProjectPhotoUrl(photo.photo.image_path)} alt={photo.description ?? t("photoUx.photoNumber", { number: index + 1 })} loading="lazy" />
-        </div>}
-        {!picking && <Button
-          className={styles.photoRemove}
-          size="icon"
-          variant="secondary"
-          disabled={disabled}
-          aria-label={t("editor.deletePhoto")}
-          title={t("editor.deletePhoto")}
-          onClick={() => onDelete(photo.photo_id)}>
-          <Trash2 aria-hidden="true" />
-        </Button>}
-      </div>)}
-    </div>
-    <Button
-      variant="outline"
-      disabled={disabled}
-      onClick={() => {
-        setProjectPicker(true);
-        if (!library.length) void load();
-      }}>
-      {t("editor.projectPhotos")}
-    </Button>
-    <Dialog open={projectPicker} onOpenChange={setProjectPicker}>
+  const l = useTranslations("Invitations.photoLibrary");
+  const [step, setStep] = useState<"source" | "existing" | "upload" | null>(null);
+  const [uploadFile, setUploadFile] = useState<{ file: File; preview: string } | null>(null);
+  useEffect(() => () => { if (uploadFile) URL.revokeObjectURL(uploadFile.preview); }, [uploadFile]);
+  const loadPage = useCallback(async (offset: number) => {
+    const result = await getInvitationProjectPhotosAction(invitationId, offset);
+    if (!result.success) throw new Error(result.message);
+    return { photos: result.data.photos.map(photo => ({ id: photo.id, imageUrl: getProjectPhotoUrl(photo.image_path) })), nextOffset: result.data.nextOffset };
+  }, [invitationId]);
+  return <>
+    <EditorPhotoLibrary picking={picking} addLabel={l("add")} empty={photos.length === 0} emptyLabel={t("photoUx.empty")} disabled={disabled} onAdd={() => setStep("source")}
+      header={<>
+        {picking && <Button variant="ghost" disabled={disabled} onClick={onCancel}><ArrowLeft aria-hidden="true" />{t(selectedPhotoId ? "photoInspector.back" : "photoInspector.library")}</Button>}
+        {picking && <p className={styles.hint}>{selectionLabel}</p>}
+        <p className={styles.hint}>{picking ? t("photoUx.chooseHint") : l("count", { count: photos.length, used: photos.filter(photo => photoUsage[photo.photo_id]).length })}</p>
+      </>}>
+      {photos.map((photo, index) => {
+        const uses = photoUsage[photo.photo_id] ?? 0;
+        const retained = retainedPhotoIds.has(photo.photo_id);
+        return <EditorLibraryPhoto key={photo.photo_id}
+          descriptionControl={!picking && <EditorPhotoDescription compact value={photo.description} disabled={disabled} onSave={value => onDescriptionSave(photo.photo_id, value)} />} selectable={picking} selected={selectedPhotoId === photo.photo_id} disabled={disabled}
+          isUsed={uses > 0 || retained} imageUrl={getProjectPhotoUrl(photo.photo.image_path)}
+          selectLabel={t("editor.selectPhoto", { number: index + 1 }) + (uses ? ". " + l("used", { count: uses }) : "")}
+          deleteLabel={t("editor.deletePhoto")}
+          usageBadge={uses ? (uses === 1 ? "\u2713" : `${uses}\u00d7`) : l("retained")}
+          onSelect={() => onSelect(photo.photo_id)} onDelete={picking ? undefined : () => onDelete(photo.photo_id)} />;
+      })}
+    </EditorPhotoLibrary>
+    <Dialog open={step !== null} onOpenChange={open => { if (!open && !disabled) { setStep(null); setUploadFile(null); } }}>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>
-            {t("editor.projectPhotos")}
-          </DialogTitle>
-          <DialogDescription>
-            {t("editor.importHint")}
-          </DialogDescription>
-        </DialogHeader>
-        <div className={styles.photos}>
-          {library.filter(photo => !used.has(photo.id)).map((photo, index) => <button
-            type="button"
-            className={styles.importPhoto}
-            key={photo.id}
-            disabled={disabled}
-            onClick={() => void onImport(photo.id)}
-            aria-label={t("editor.importPhoto", { number: index + 1 })}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={getProjectPhotoUrl(photo.image_path)} alt="" loading="lazy" />
-          </button>)}
-        </div>
-
-        {nextOffset !== null && <Button
-          variant="outline"
-          disabled={disabled || loading}
-          loading={loading}
-          onClick={() => void load()}>
-          {t(nextOffset === 0 ? "editor.loadProjectPhotos" : "editor.loadMore")}
-        </Button>}
-
-        {failed && <p role="alert">
-          {t("error")}
-        </p>}
-        <Button variant="outline" onClick={() => setProjectPicker(false)}>{t("photoUx.backToPhotos")}</Button>
+        {step === "source" && <FilePicker accept="image/jpeg,image/png,image/webp" onSelect={files => {
+          if (!files[0] || disabled) return;
+          setUploadFile({ file: files[0], preview: URL.createObjectURL(files[0]) }); setStep("upload");
+        }}>
+          {openGallery => <EditorPhotoSource disabled={disabled} onUpload={openGallery} onExisting={() => setStep("existing")}
+            labels={{ title: l("add"), description: l("description"), upload: l("upload"), uploadHint: t("editor.uploadHint"), existing: l("existing"), existingHint: l("existingHint") }} />}
+        </FilePicker>}
+        {step === "upload" && uploadFile && <InvitationPhotoUpload file={uploadFile.file} preview={uploadFile.preview} disabled={disabled} onUpload={onUpload}
+          onBack={() => { setUploadFile(null); setStep("source"); }}
+          onSuccess={() => { setUploadFile(null); setStep(null); }} />}
+        {step === "existing" && <>
+          <DialogHeader><DialogTitle>{l("existing")}</DialogTitle><DialogDescription>{l("existingHint")}</DialogDescription></DialogHeader>
+          <EditorExistingPhotosPicker loadPage={loadPage} excludedIds={photos.map(photo => photo.photo_id)} disabled={disabled}
+            labels={{ back: l("back"), add: l("addSelected"), more: l("more"), loading: l("loading"), empty: l("empty"), error: l("error"), retry: l("retry"), select: number => l("select", { number }) }}
+            onBack={() => setStep("source")} onAdd={async ids => { await onImport(ids); setStep(null); }} />
+        </>}
       </DialogContent>
     </Dialog>
-  </section>;
+  </>;
 }

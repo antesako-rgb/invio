@@ -10,14 +10,14 @@ import styles from "./PhotoText.module.css";
 export default function PhotoText(props: InvitationLayoutProps) {
   return (
     <div className={styles.photoText}>
-      <InvitationPhotos
+      <InvitationPhotos presentation={props.presentation}
         page={props.page}
         photos={props.photos}
         showPhotoPlaceholders={props.showPhotoPlaceholders}
         className={styles.photo}
       />
 
-      <InvitationPageContent page={props.page} locale={props.locale} />
+      <InvitationPageContent presentation={props.presentation} page={props.page} locale={props.locale} />
     </div>
   );
 }

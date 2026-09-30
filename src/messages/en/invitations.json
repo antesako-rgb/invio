@@ -1,4 +1,55 @@
 {
+  "uploadReview": {
+    "title": "Review photo",
+    "hint": "Optionally add a description before uploading.",
+    "description": "Photo description (optional)",
+    "placeholder": "Write something about this photo...",
+    "submit": "Upload photo"
+  },
+  "photoUsage": {
+    "title": "Photo is used in this invitation",
+    "description": "This photo is used in {count} places. View its pages or remove it from all placements and delete it from this invitation.",
+    "locations": "Used on:",
+    "page": "Page {number}",
+    "retained": "Retained from a previous layout",
+    "removeAll": "Remove from all pages and delete",
+    "confirmTitle": "Delete photo from invitation?",
+    "confirmDescription": "The photo will be removed from all pages and this invitation library. Deletion cannot be undone.",
+    "confirm": "Remove and delete"
+  },
+  "photoLibrary": {
+    "add": "Add photos",
+    "description": "Upload new photos or choose photos already in this project.",
+    "upload": "Upload from device",
+    "uploadHint": "Select photos from your device.",
+    "existing": "Existing project photos",
+    "existingHint": "Photos from this project, including Photo Walls, albums and invitations.",
+    "back": "Back",
+    "addSelected": "Add selected",
+    "more": "Load more",
+    "loading": "Loading photos...",
+    "empty": "No more photos available to add.",
+    "error": "Could not complete the request. Please try again.",
+    "retry": "Try again",
+    "select": "Select photo {number}",
+    "count": "{count} photos \u00b7 {used} used",
+    "used": "Used {count} times",
+    "protected": "Remove this photo from all pages before deleting it from the library.",
+    "retained": "Saved"
+  },
+  "photoInspector": {
+    "selected": "Selected photo",
+    "library": "All photos",
+    "missing": "Photo unavailable",
+    "back": "Back to photo"
+  },
+  "textEditing": {
+    "edit": "Edit text",
+    "hint": "Click text on the page to edit it.",
+    "clearValue": "Clear value",
+    "savedText": "Saved text not shown by this design",
+    "invalidValue": "Choose a valid value."
+  },
   "photoUx": {
     "sharedDate": "The date is shared across the invitation.",
     "sharedTime": "The time is shared across the invitation.",
@@ -121,7 +172,11 @@
     "mobile": "Mobile",
     "fitWidth": "Fit to width",
     "themeHint": "Choose a coordinated set of colours, typography and decorations for the whole invitation. Your content stays the same.",
-    "moreContent": "Additional content"
+    "moreContent": "Additional content",
+    "thisPage": "This page",
+    "wholeInvitation": "Whole invitation",
+    "changeLayout": "Change layout",
+    "typeHint": "Choose the purpose of this page."
   },
   "types": {
     "cover": "Cover",
@@ -143,7 +198,7 @@
     "date-card": "Date centerpiece",
     "calendar": "Calendar",
     "full-photo": "Full photo",
-  "ornamental": "Ornamental",
+    "ornamental": "Ornamental",
     "editorial": "Editorial",
     "timeline": "Timeline",
     "photo-text": "Photo and text",

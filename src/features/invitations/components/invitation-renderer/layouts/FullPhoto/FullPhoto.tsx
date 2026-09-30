@@ -17,10 +17,13 @@ export default function FullPhoto(props: InvitationLayoutProps) {
   return (
     <div
       className={`${styles.fullPhoto} ${isCover ? allura.variable : ""}`}
+      onClick={props.presentation ? event => {
+        if (event.target === event.currentTarget && props.page.photos[0]) props.presentation?.selectPhoto?.(props.page.photos[0].id);
+      } : undefined}
       data-has-photo={hasPhoto}
       data-cover={isCover}
     >
-      <InvitationPhotos
+      <InvitationPhotos presentation={props.presentation}
         page={props.page}
         photos={props.photos}
         showPhotoPlaceholders={props.showPhotoPlaceholders}
@@ -34,11 +37,11 @@ export default function FullPhoto(props: InvitationLayoutProps) {
             <span>Date</span>
           </p>
           <div className={styles.coverContent}>
-            <InvitationPageContent page={props.page} locale={props.locale} />
+            <InvitationPageContent presentation={props.presentation} page={props.page} locale={props.locale} />
           </div>
         </>
       ) : (
-        <InvitationPageContent page={props.page} locale={props.locale} />
+        <InvitationPageContent presentation={props.presentation} page={props.page} locale={props.locale} />
       )}
     </div>
   );

@@ -37,7 +37,7 @@ export default function DigitalAlbumEditorToolRail({
     if (
       id === "photos" ||
       id === "pages" ||
-      id === "design"
+      id === "templates" || id === "theme"
     ) {
       onStepChange(id);
     }

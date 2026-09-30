@@ -18,6 +18,7 @@
 
 
 .figure {
+  position: relative;
   display: flex;
   flex-direction: column;
 
@@ -42,22 +43,19 @@
 
 
 .caption {
-  flex: 0 0 auto;
-
-  padding-top:
-    var(--album-caption-gap);
-
-  font-size:
-    var(--album-type-caption);
-
-  line-height:
-    var(--album-caption-line-height);
-
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 1;
+  margin: 0;
+  padding: 5cqw 3cqw 2cqw;
+  max-height: 50%;
+  overflow: auto;
+  font-size: var(--album-type-caption);
+  line-height: var(--album-caption-line-height);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-
-  color:
-    var(--album-muted-ink);
+  color: var(--album-photo-ink);
+  background: var(--album-photo-caption-shade);
 }
 
 
@@ -118,9 +116,11 @@
 
 
 .title, .subtitle, .date, .text { min-width: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
-.caption { max-height: 24cqw; overflow: visible; }
+
 
 /* Theme-owned Canva backgrounds, behind the real photos and editable text. */
 .page[data-composition="editorial"] { background-image: var(--album-editorial-background-image); }
 .page[data-composition="story"] { background-image: var(--album-story-background-image); }
 .page[data-composition="collage"] { background-image: var(--album-collage-background-image); }
+
+.figure[data-editable] > .caption { pointer-events: none; }

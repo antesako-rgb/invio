@@ -75,7 +75,7 @@ export default function DigitalAlbumEditorMobileNavigation({
     if (
       id !== "photos" &&
       id !== "pages" &&
-      id !== "design"
+      id !== "templates" && id !== "theme"
     ) {
       return;
     }

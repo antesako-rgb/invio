@@ -9,7 +9,7 @@ import styles from "./Timeline.module.css";
 export default function Timeline(props: InvitationLayoutProps) {
   return (
     <div className={styles.timeline}>
-      <InvitationPageContent page={props.page} locale={props.locale} />
+      <InvitationPageContent presentation={props.presentation} page={props.page} locale={props.locale} />
     </div>
   );
 }

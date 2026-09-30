@@ -1,3 +1,4 @@
+import { invitationText } from "../../InvitationPresentation";
 import type { InvitationLayoutProps } from "../../InvitationLayouts";
 import styles from "./DateCard.module.css";
 
@@ -5,7 +6,7 @@ import styles from "./DateCard.module.css";
    Date Card — a calendar centerpiece with event details
 ========================================================================== */
 
-export default function DateCard({ page, locale }: InvitationLayoutProps) {
+export default function DateCard({ presentation, page, locale }: InvitationLayoutProps) {
   const { title, text, date, time, location, address } = page.content;
   const dateValue = date?.trim() ?? "";
   const parsedDate = /^\d{4}-\d{2}-\d{2}$/.test(dateValue)
@@ -24,35 +25,35 @@ export default function DateCard({ page, locale }: InvitationLayoutProps) {
 
   return (
     <div className={styles.dateCard}>
-      {title?.trim() && <h2 className={styles.title}>{title}</h2>}
+      {(title?.trim() || presentation) && <h2 className={styles.title}>{invitationText(presentation, "title", title)}</h2>}
 
       {validDate ? (
         <div className={styles.calendar}>
-          <p className={styles.month}>{formatDate({ month: "long" })}</p>
+          <p className={styles.month}>{invitationText(presentation, "date", date, formatDate({ month: "long" }))}</p>
           <div className={styles.dateRow}>
-            <p className={styles.side}>{formatDate({ weekday: "long" })}</p>
+            <p className={styles.side}>{invitationText(presentation, "date", date, formatDate({ weekday: "long" }))}</p>
             <time className={styles.day} dateTime={dateValue}>
-              {formatDate({ day: "numeric" })}
+              {invitationText(presentation, "date", date, formatDate({ day: "numeric" }))}
             </time>
-            <p className={styles.side}>{time?.trim()}</p>
+            <p className={styles.side}>{invitationText(presentation, "time", time)}</p>
           </div>
-          <p className={styles.year}>{formatDate({ year: "numeric" })}</p>
+          <p className={styles.year}>{invitationText(presentation, "date", date, formatDate({ year: "numeric" }))}</p>
         </div>
       ) : (
         <div className={styles.fallback}>
-          {dateValue && <p>{dateValue}</p>}
-          {time?.trim() && <p>{time}</p>}
+          {(dateValue || presentation) && <p>{invitationText(presentation, "date", date)}</p>}
+          {(time?.trim() || presentation) && <p>{invitationText(presentation, "time", time)}</p>}
         </div>
       )}
 
-      {(location?.trim() || address?.trim()) && (
+      {(location?.trim() || address?.trim() || presentation) && (
         <div className={styles.venue}>
-          {location?.trim() && <p>{location}</p>}
-          {address?.trim() && <p className={styles.address}>{address}</p>}
+          {(location?.trim() || presentation) && <p>{invitationText(presentation, "location", location)}</p>}
+          {(address?.trim() || presentation) && <p className={styles.address}>{invitationText(presentation, "address", address)}</p>}
         </div>
       )}
 
-      {text?.trim() && <p className={styles.message}>{text}</p>}
+      {(text?.trim() || presentation) && <p className={styles.message}>{invitationText(presentation, "text", text)}</p>}
     </div>
   );
 }

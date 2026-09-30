@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
-import { Images, Layers, LayoutTemplate, TextCursorInput, PanelLeftOpen, PanelLeftClose } from "lucide-react";
+import { Images, Layers, LayoutTemplate, Palette, PanelLeftOpen, PanelLeftClose } from "lucide-react";
 import EditorShell from "@/features/editor/components/EditorShell/EditorShell";
 import EditorWorkspace from "@/features/editor/components/EditorWorkspace/EditorWorkspace";
 import EditorSidebar from "@/features/editor/components/EditorSidebar/EditorSidebar";
@@ -13,11 +13,12 @@ import SideNavigation from "@/components/ui/side-navigation/SideNavigation";
 import IconButton from "@/components/ui/icon-button/IconButton";
 import { DrawerTitle } from "@/components/ui/drawer/Drawer";
 import styles from "./InvitationEditor.module.css";
-const tools = { pages: Layers, content: TextCursorInput, templates: LayoutTemplate, photos: Images };
+const tools = { pages: Layers, photos: Images, templates: LayoutTemplate, theme: Palette };
 export type InvitationEditorTab = keyof typeof tools;
 const DEFAULT_SNAP = 0.35;
 
 interface Props {
+  openPanelRequest?: number;
   header: ReactNode;
   sidebar: ReactNode;
   children: ReactNode;
@@ -30,12 +31,19 @@ interface Props {
 }
 
 /** Invitation composes the same editor primitives as Album; domain state stays in its view. */
-export default function InvitationEditor({ header, sidebar, children, tab, onTabChange, disabled, preview, previewContent, onClosePreview }: Props) {
+export default function InvitationEditor({ openPanelRequest, header, sidebar, children, tab, onTabChange, disabled, preview, previewContent, onClosePreview }: Props) {
   const t = useTranslations("Invitations");
   const navigationT = useTranslations("Navigation.dashboard");
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [snap, setSnap] = useState(DEFAULT_SNAP);
+  const [handledRequest, setHandledRequest] = useState(openPanelRequest);
+  if (openPanelRequest !== handledRequest) {
+    setHandledRequest(openPanelRequest);
+    setCollapsed(false);
+    setMobileOpen(window.matchMedia("(max-width: 767px)").matches);
+    setSnap(DEFAULT_SNAP);
+  }
   const previewRoot = useRef<HTMLDivElement>(null);
   const items = (Object.keys(tools) as InvitationEditorTab[]).map(id => ({ id, href: `#${id}`, label: t(`editor.${id}`), icon: tools[id] }));
 

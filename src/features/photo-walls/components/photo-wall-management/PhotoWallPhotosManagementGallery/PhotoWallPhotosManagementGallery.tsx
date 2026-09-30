@@ -125,6 +125,7 @@ export default function PhotoWallPhotosManagementGallery({
     handleLoadMore,
     handleFavoriteChange,
     handleDelete,
+    updateDescription,
   } =
     usePhotoWallPhotosManagement({
       photoWallId,
@@ -300,6 +301,7 @@ export default function PhotoWallPhotosManagementGallery({
                           }
                           photoAction={
                             <PhotoWallPhotoManagementActions
+                              description={photo.description} onDescriptionSave={value => updateDescription(photo.id, value)}
                               isFavorite={
                                 photo.isFavorite
                               }
@@ -406,6 +408,7 @@ export default function PhotoWallPhotosManagementGallery({
           selectedPhoto
             ? (
                 <PhotoWallPhotoManagementActions
+                  description={selectedPhoto.description} onDescriptionSave={value => updateDescription(selectedPhoto.id, value)}
                   isFavorite={
                     selectedPhoto.isFavorite
                   }

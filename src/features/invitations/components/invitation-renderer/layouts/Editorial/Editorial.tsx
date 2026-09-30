@@ -10,9 +10,9 @@ import styles from "./Editorial.module.css";
 export default function Editorial(props: InvitationLayoutProps) {
   return (
     <div className={styles.editorial}>
-      <InvitationPageContent page={props.page} locale={props.locale} />
+      <InvitationPageContent presentation={props.presentation} page={props.page} locale={props.locale} />
 
-      <InvitationPhotos
+      <InvitationPhotos presentation={props.presentation}
         page={props.page}
         photos={props.photos}
         showPhotoPlaceholders={props.showPhotoPlaceholders}

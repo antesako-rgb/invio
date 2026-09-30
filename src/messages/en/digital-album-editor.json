@@ -1,4 +1,24 @@
 {
+  "photoLibrary": {
+    "add": "Add photos",
+    "description": "Upload new photos or choose photos already in this project.",
+    "upload": "Upload from device",
+    "uploadHint": "Select photos from your device.",
+    "existing": "Existing project photos",
+    "existingHint": "Photos from this project, including Photo Walls, albums and invitations.",
+    "back": "Back",
+    "addSelected": "Add selected",
+    "more": "Load more",
+    "loading": "Loading photos...",
+    "empty": "No more photos available to add.",
+    "error": "Could not complete the request. Please try again.",
+    "retry": "Try again",
+    "select": "Select photo {number}",
+    "count": "{count} photos \u00b7 {used} used",
+    "used": "Used {count} times",
+    "protected": "Remove this photo from all pages before deleting it from the library.",
+    "retained": "Saved"
+  },
   "navigation": {
     "previousPage": "Previous page",
     "nextPage": "Next page",
@@ -7,7 +27,9 @@
     "photos": "Photos",
     "pages": "Pages",
     "design": "Design",
-    "preview": "Preview"
+    "preview": "Preview",
+    "templates": "Templates",
+    "theme": "Theme"
   },
   "status": {
     "saving": "Saving...",
@@ -101,7 +123,7 @@
       }
     },
     "selectPhoto": "Select photo {number}",
-    "libraryCount": "{count, plural, one {# photo} other {# photos}} · {used} used",
+    "libraryCount": "{count, plural, one {# photo} other {# photos}} \u00c2\u00b7 {used} used",
     "replaceTitle": "Replace photo",
     "addTitle": "Add photo",
     "replaceHelp": "Choose the photo to replace it with.",
@@ -122,7 +144,8 @@
       "title": "Add page",
       "description": "Choose a layout for the new page."
     },
-    "move": "Move page {number}"
+    "move": "Move page {number}",
+    "changeLayout": "Change layout"
   },
   "photoSlot": {
     "addPhoto": "Add photo",
@@ -173,6 +196,7 @@
     "apply": "Apply",
     "cancel": "Cancel",
     "reset": "Reset framing",
+    "invalidDate": "Choose a valid date.",
     "editText": "Edit text",
     "position": "Adjust framing",
     "positionHelp": "Drag the photo or use the sliders. Framing and caption apply to this photo on this page.",
@@ -191,7 +215,7 @@
     "backCover": "back cover",
     "slot": "Photo {number}",
     "noSlots": "This page has no photo slots.",
-    "unplaced": "Saved photos · {count}",
+    "unplaced": "Saved photos \u00c2\u00b7 {count}",
     "coverChange": "This changes the front or back cover of the album. Continue?",
     "category": "Layout category",
     "categories": {
@@ -219,7 +243,7 @@
     "deletePageTitle": "Delete this page?",
     "deletePageDescription": "The page, its text and photo placements will be removed. Album photos remain available. Deleting the first or last page changes the album cover. You can undo this change.",
     "deletePageConfirm": "Delete page",
-    "spreadContext": "Pages {from}–{to}",
+    "spreadContext": "Pages {from}\u00e2\u20ac\u201c{to}",
     "layoutTarget": "Choose the page to lay out"
   },
   "photoContext": {
@@ -227,7 +251,7 @@
     "replace": "Replace photo",
     "crop": "Adjust framing",
     "remove": "Remove from page",
-    "swap": "Swap with…",
+    "swap": "Swap with\u00e2\u20ac\u00a6",
     "back": "Back to photos",
     "missing": "Photo unavailable.",
     "selectedPhoto": "Selected photo"

@@ -1,3 +1,4 @@
+import { z } from "zod";
 import {
   randomUUID,
 } from "crypto";
@@ -26,8 +27,10 @@ import {
 
 export async function uploadInvitationPhoto(
   invitationId: string,
-  file: File
+  file: File,
+  description = ""
 ) {
+  const validatedDescription = z.string().trim().max(300).parse(description);
   validateImage(
     file
   );
@@ -71,6 +74,7 @@ export async function uploadInvitationPhoto(
       await supabase.rpc(
         "create_invitation_photo",
         {
+          p_description: validatedDescription || undefined,
           p_invitation_id:
             invitationId,
 

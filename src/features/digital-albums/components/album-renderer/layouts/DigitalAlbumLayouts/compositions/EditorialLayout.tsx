@@ -16,10 +16,7 @@ export default function EditorialLayout({
           styles.essayPhoto
         }
       >
-        {photo(
-          0,
-          false,
-        )}
+        {photo(0)}
       </div>
 
       <div

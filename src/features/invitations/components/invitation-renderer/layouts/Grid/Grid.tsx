@@ -10,10 +10,10 @@ import styles from "./Grid.module.css";
 export default function Grid(props: InvitationLayoutProps) {
   return (
     <div className={styles.gallery}>
-      <InvitationPageContent page={props.page} locale={props.locale} />
+      <InvitationPageContent presentation={props.presentation} page={props.page} locale={props.locale} />
 
       <div className={styles.grid}>
-        <InvitationPhotos
+        <InvitationPhotos presentation={props.presentation}
           page={props.page}
           photos={props.photos}
           showPhotoPlaceholders={props.showPhotoPlaceholders}

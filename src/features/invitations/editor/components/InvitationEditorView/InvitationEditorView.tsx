@@ -1,10 +1,19 @@
 "use client";
-import { type FormEvent, useCallback, useEffect, useId, useRef, useState } from "react";
+import SideNavigation from "@/components/ui/side-navigation/SideNavigation";
+import { Select } from "@/components/ui/select";
+import { invitationThemes, isInvitationTheme } from "../../../config/invitationThemes";
+import EditorPhotoDescription from "@/features/editor/components/EditorPhotoDescription/EditorPhotoDescription";
+import { updateInvitationPhotoDescriptionAction } from "../../../actions/photos/updateInvitationPhotoDescriptionAction";
+import { invitationInlineFields } from "../../../config/invitationInlineFields";
+import { invitationContentFields } from "../../../config/invitationPageTypes";
+import EditorDateTimeValue from "@/features/editor/components/EditorDateTimeValue/EditorDateTimeValue";
+import EditorEditableText from "@/features/editor/components/EditorEditableText/EditorEditableText";
+import { type FormEvent, useCallback, useEffect, useMemo, useId, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, Link } from "@/i18n/navigation";
 import { ArrowLeft, Undo2, Redo2, Eye, Globe, ExternalLink } from "lucide-react";
-import EditorHeader from "@/features/editor/components/EditorHeader/EditorHeader";
-import EditorSaveStatus from "@/features/editor/components/EditorSaveStatus/EditorSaveStatus";
+import EditorHeader from "@/features/editor/components/header/EditorHeader/EditorHeader";
+import EditorSaveStatus from "@/features/editor/components/header/EditorSaveStatus/EditorSaveStatus";
 import EditorPhotoFraming from "@/features/editor/components/EditorPhotoFraming/EditorPhotoFraming";
 import type { EditorPhotoFramingValue } from "@/features/editor/types/editorPhotoFraming.types";
 import { getProjectPhotoUrl } from "@/features/project-photos/utils/getProjectPhotoUrl";
@@ -22,12 +31,15 @@ import { updateInvitationAction } from "../../../actions/invitation/updateInvita
 import InvitationRenderer from "../../../components/invitation-renderer/InvitationRenderer";
 import InvitationCanvas from "../InvitationCanvas/InvitationCanvas";
 import InvitationPageNavigator from "../InvitationPageNavigator/InvitationPageNavigator";
-import { applyInvitationTemplate, resolveInvitationPageDateTime, setInvitationDateTime } from "../../../utils/invitationSharedDateTime";
+import { applyInvitationTemplate, setInvitationDateTime } from "../../../utils/invitationSharedDateTime";
 import InvitationPagesPanel from "../InvitationPagesPanel/InvitationPagesPanel";
 import InvitationContentPanel from "../InvitationContentPanel/InvitationContentPanel";
 import InvitationTemplatesPanel from "../InvitationTemplatesPanel/InvitationTemplatesPanel";
 import InvitationTemplatePreview, { type InvitationTemplateSelection } from "../InvitationTemplatesPanel/InvitationTemplatePreview";
 import { createInvitationTemplateDocument } from "../../../templates/createInvitationTemplateDocument";
+import EditorPhotoInspector from "@/features/editor/components/EditorPhotoInspector/EditorPhotoInspector";
+import EditorPhotoUsageDialog from "@/features/editor/components/EditorPhotoUsageDialog/EditorPhotoUsageDialog";
+import { getInvitationPhotoUsage, getInvitationPhotoReferences } from "../../../utils/invitationPhotoUsage";
 import InvitationPhotosPanel from "../InvitationPhotosPanel/InvitationPhotosPanel";
 import type { Invitation } from "../../../types/invitation.types";
 import type { InvitationPhotoWithPhoto } from "../../../types/invitationPhoto.types";
@@ -45,10 +57,15 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
   const router = useRouter();
   const editor = useInvitationEditor(invitation);
   const { session, activePage } = editor;
+  const photoReferences = useMemo(() => getInvitationPhotoUsage(editor.document.pages), [editor.document.pages]);
   const [photos, setPhotos] = useState(initialPhotos);
   const [preview, setPreview] = useState(false);
   const closePreview = useCallback(() => setPreview(false), []);
+  const [controlRequest, setControlRequest] = useState<{ section: "photos"; slotId?: string; token: number } | null>(null);
+  const [templateScope, setTemplateScope] = useState("page");
+  const [editingType, setEditingType] = useState(false);
   const [tab, setTab] = useState<InvitationEditorTab>("pages");
+  const [picking, setPicking] = useState(false);
   const [target, setTarget] = useState<{ pageId: string; slotId: string } | null>(null);
   const [name, setName] = useState(invitation.name);
   const [savedName, setSavedName] = useState(invitation.name);
@@ -56,8 +73,10 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
   const [published, setPublished] = useState(invitation.is_public);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
-  const [deletion, setDeletion] = useState<{ kind: "page" | "photo"; id: string } | null>(null);
+  const [deletion, setDeletion] = useState<{ kind: "page" | "photo"; id: string; used?: boolean; replacement?: { pageId: string; slotId: string } } | null>(null);
   const [templateSelection, setTemplateSelection] = useState<InvitationTemplateSelection | null>(null);
+  const deletionReferences = deletion?.kind === "photo" ? getInvitationPhotoReferences(editor.document.pages, deletion.id) : [];
+  const deletionPhoto = photos.find(photo => photo.photo_id === deletion?.id);
   const lock = useRef(false);
   const canvasRef = useRef<HTMLDivElement>(null);
   const [framing, setFraming] = useState<{
@@ -69,6 +88,18 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
   } | null>(null);
   const disabled = busy || preview || editor.conflict || Boolean(deletion) || Boolean(templateSelection) || renaming || Boolean(framing);
   const validTarget = target && editor.document.pages.some(page => page.id === target.pageId && page.photos.some(slot => slot.id === target.slotId));
+
+  const targetPage = validTarget ? editor.document.pages.find(page => page.id === target?.pageId) : undefined;
+  const targetSlot = targetPage?.photos.find(slot => slot.id === target?.slotId);
+  const targetPhoto = photos.find(photo => photo.photo_id === targetSlot?.photoId);
+
+  function openPhoto(page: InvitationDocumentPage, slotId: string) {
+    if (disabled || lock.current) return;
+    setTarget({ pageId: page.id, slotId });
+    setPicking(!page.photos.find(slot => slot.id === slotId)?.photoId);
+    setTab("photos");
+    setControlRequest(current => ({ section: "photos", slotId, token: (current?.token ?? 0) + 1 }));
+  }
 
   useEffect(() => {
     function history(event: KeyboardEvent) {
@@ -106,6 +137,21 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
     }
   }
 
+  async function savePhotoDescription(photoId: string, value: string) {
+    if (lock.current) throw new Error("Photo operation already in progress");
+    lock.current = true;
+    setBusy(true);
+    try {
+      const result = await updateInvitationPhotoDescriptionAction(invitation.id, photoId, value);
+      if (!result.success) throw new Error(result.message);
+      setPhotos(current => current.map(photo => photo.photo_id === photoId ? { ...photo, description: result.data.description } : photo));
+    } finally {
+      // The description dialog owns errors/retry; document saving is unrelated.
+      lock.current = false;
+      setBusy(false);
+    }
+  }
+
   function updatePage(update: (page: InvitationDocumentPage) => InvitationDocumentPage) {
     if (disabled || lock.current || !activePage) return;
 
@@ -131,8 +177,7 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
         )),
       } : page),
     }));
-    setTarget(null);
-    setTab("content");
+    setPicking(false);
   }
 
   function startFraming(slotId: string) {
@@ -169,7 +214,8 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
   }
 
   async function confirmDelete() {
-    if (!deletion) return;
+    if (!deletion || lock.current || editor.conflict) return false;
+    let succeeded = false;
 
     await run(async () => {
       if (deletion.kind === "page") {
@@ -187,8 +233,14 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
         setPhotos(result.data.photos);
       }
       setDeletion(null);
-      setTarget(null);
+      setTarget(deletion.replacement ?? null);
+      if (deletion.replacement) {
+        setPicking(true);
+        setTab("photos");
+      }
+      succeeded = true;
     });
+    return succeeded;
   }
 
   /* ========================================================================
@@ -237,7 +289,7 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
     }));
 
     editor.selectPage(page.id);
-    setTab("content");
+    setTab("pages");
   }
 
   function applyTemplate() {
@@ -248,13 +300,14 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
     editor.selectPage(templateSelection.document.pages[0]?.id ?? null);
     setTarget(null);
     setTemplateSelection(null);
-    setTab("content");
+    setTab("pages");
   }
 
   const renderPhotos = photos.map(photo => ({ id: photo.photo_id, image_path: photo.photo.image_path, description: photo.description }));
 
   return <>
     <InvitationEditor
+      openPanelRequest={controlRequest?.token}
       tab={tab}
       onTabChange={tab => { setTarget(null); setTab(tab); }}
       disabled={disabled}
@@ -347,8 +400,25 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
         </div>}
       />}
       sidebar={<>
+        <Dialog open={editingType} onOpenChange={setEditingType}>
+          <DialogContent>
+            <DialogHeader><DialogTitle>{t("editor.changeType")}</DialogTitle><DialogDescription>{t("editor.typeHint")}</DialogDescription></DialogHeader>
+            {activePage && <InvitationContentPanel mode="type" page={activePage} theme={editor.document.theme} disabled={disabled}
+              onChange={update => { updatePage(update); setEditingType(false); }} />}
+          </DialogContent>
+        </Dialog>
 
-        {tab === "templates" && <InvitationTemplatesPanel
+        {tab === "templates" && <SideNavigation variant="controlled" appearance="underline"
+          activeId={templateScope} onControlledNavigate={setTemplateScope} ariaLabel={t("editor.templates")}
+          items={[{ id: "page", href: "#page", label: t("editor.thisPage") }, { id: "document", href: "#document", label: t("editor.wholeInvitation") }]} />}
+        {tab === "theme" && <div className={styles.panel}>
+          <p>{t("editor.themeHint")}</p>
+          <Label htmlFor="invitation-theme">{t("editor.theme")}</Label>
+          <Select id="invitation-theme" value={editor.document.theme} disabled={disabled}
+            options={invitationThemes.map(theme => ({ value: theme, label: t(`themes.${theme}`) }))}
+            onValueChange={value => { if (!disabled && isInvitationTheme(value)) session.commit(document => ({ ...document, theme: value })); }} />
+        </div>}
+        {tab === "templates" && templateScope === "document" && <InvitationTemplatesPanel
           disabled={disabled}
           onPreview={id => {
             if (disabled || lock.current) return;
@@ -356,6 +426,8 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
           }} />}
 
         {tab === "pages" && <InvitationPagesPanel
+          onChangeType={id => { editor.selectPage(id); setEditingType(true); }}
+          onChangeDesign={id => { editor.selectPage(id); setTemplateScope("page"); setTab("templates"); }}
           sharedDateTime={editor.document}
           theme={editor.document.theme}
           photos={renderPhotos}
@@ -368,7 +440,7 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
           onSelect={id => {
             editor.selectPage(id);
             setTarget(null);
-            setTab("content");
+            setTab("pages");
           }}
           onAdd={addPage}
           onMove={(from, to) => {
@@ -376,31 +448,40 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
           }}
           onRemove={id => setDeletion({ kind: "page", id })} />}
 
-        <div hidden={tab !== "content"}>
+        <div hidden={tab !== "templates" || templateScope !== "page"}>
         {activePage ? <InvitationContentPanel
           key={activePage.id}
           theme={editor.document.theme}
-          photos={renderPhotos}
           page={activePage}
-          dateTimeContent={resolveInvitationPageDateTime(editor.document, activePage).content}
           disabled={disabled}
-          onChange={updatePage}
-          onFramePhoto={startFraming}
-          onDateTimeChange={(field, value) => {
-            if (disabled || lock.current) return;
-            session.commit(document => setInvitationDateTime(document, field, value));
-          }}
-          onChoosePhoto={slotId => {
-            setTarget({ pageId: activePage.id, slotId });
-            setTab("photos");
-          }} /> : <p className={styles.panel}>
+          onChange={updatePage} /> : <p className={styles.panel}>
           {t("editor.empty")}
         </p>}
         </div>
 
-        {tab === "photos" && <InvitationPhotosPanel
+        {tab === "photos" && targetSlot?.photoId && !picking ? <EditorPhotoInspector
+          descriptionControl={targetPhoto && <EditorPhotoDescription value={targetPhoto.description} disabled={disabled}
+            onSave={value => savePhotoDescription(targetPhoto.photo_id, value)} />}
+          activeSlotId={targetSlot.id}
+          label={t("photoUx.selection", { page: editor.document.pages.findIndex(page => page.id === targetPage?.id) + 1, number: (targetPage?.photos.findIndex(slot => slot.id === targetSlot.id) ?? 0) + 1 })}
+          imageUrl={targetPhoto ? getProjectPhotoUrl(targetPhoto.photo.image_path) : undefined}
+          disabled={disabled} canCrop={Boolean(targetPhoto)}
+          labels={{ selectedPhoto: t("photoInspector.selected"), back: t("photoInspector.library"), missing: t("photoInspector.missing"), replace: t("photoUx.replace"), crop: t("framing.position"), remove: t("editor.clearPhoto"), swap: "" }}
+          onBack={() => { setTarget(null); setPicking(false); }}
+          onChoose={() => setPicking(true)}
+          onCrop={() => startFraming(targetSlot.id)}
+          onRemove={() => {
+            if (disabled || lock.current || !target) return;
+            session.commit(document => ({ ...document, pages: document.pages.map(page => page.id === target.pageId
+              ? { ...page, photos: page.photos.map(slot => slot.id === target.slotId ? { id: slot.id, photoId: null } : slot) } : page) }));
+            setPicking(true);
+          }}
+        /> : tab === "photos" && <InvitationPhotosPanel
+          onDescriptionSave={savePhotoDescription}
           invitationId={invitation.id}
           photos={photos}
+          photoUsage={photoReferences.usage}
+          retainedPhotoIds={photoReferences.retained}
           disabled={disabled}
           picking={Boolean(validTarget)}
           selectionLabel={validTarget && target ? t("photoUx.selection", {
@@ -409,24 +490,37 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
           }) : undefined}
           selectedPhotoId={validTarget && target ? editor.document.pages.find(page => page.id === target.pageId)?.photos.find(slot => slot.id === target.slotId)?.photoId : undefined}
           onSelect={selectPhoto}
-          onCancel={() => { setTarget(null); setTab("content"); }}
-          onDelete={id => setDeletion({ kind: "photo", id })}
-          onUpload={file => run(async () => {
-            const result = await uploadInvitationPhotoAction(invitation.id, file);
+          onCancel={() => { if (targetSlot?.photoId) setPicking(false); else setTarget(null); }}
+          onDelete={id => { if (!disabled && !lock.current) { setError(false); const slot = activePage?.photos.find(item => item.id === target?.slotId && item.photoId === id)
+              ?? activePage?.photos.find(item => item.photoId === id);
+              setDeletion({ kind: "photo", id, used: getInvitationPhotoReferences(editor.document.pages, id).length > 0,
+                replacement: activePage && slot ? { pageId: activePage.id, slotId: slot.id } : undefined }); } }}
+          onUpload={async (file, description) => {
+            let succeeded = false;
+            await run(async () => {
+            const result = await uploadInvitationPhotoAction(invitation.id, file, description);
 
             if (!result.success) {
               throw new Error("Upload failed");
             }
             setPhotos(result.data.photos);
-          })}
-          onImport={id => run(async () => {
-            const result = await addInvitationPhotosAction(invitation.id, [id]);
+            succeeded = true;
+          });
+          if (!succeeded) throw new Error("Upload failed");
+          }}
+          onImport={async ids => {
+            let succeeded = false;
+            await run(async () => {
+            const result = await addInvitationPhotosAction(invitation.id, ids);
 
             if (!result.success) {
               throw new Error("Import failed");
             }
             setPhotos(result.data.photos);
-          })} />}
+            succeeded = true;
+          });
+          if (!succeeded) throw new Error("Import failed");
+          }} />}
       </>}
     >
       {(error || editor.status === "error") && <div className={styles.notice} role="alert">
@@ -463,6 +557,31 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
           document={{ ...editor.document, pages: [activePage] }}
           photos={renderPhotos}
           locale={locale}
+          presentation={disabled ? undefined : page => ({
+            text: (field, value, display) => field === "date" || field === "time" ? (
+              <EditorDateTimeValue kind={field} value={value} display={display} label={t(`fields.${field}`)}
+                disablePast={field === "date"}
+                hint={t(field === "date" ? "photoUx.sharedDate" : "photoUx.sharedTime")}
+                labels={{ clear: t("textEditing.clearValue"), cancel: t("cancel"), apply: t("framing.apply"), invalid: t(field === "date" ? "dateNotPast" : "textEditing.invalidValue") }}
+                onApply={next => {
+                  if (lock.current || disabled) return;
+                  session.commit(document => setInvitationDateTime(document, field, next));
+                }} />
+            ) : (
+              <EditorEditableText key={`${page.id}:${field}`} value={value} placeholder={t(`fields.${field}`)}
+                editable maxLength={10000}
+                labels={{ edit: t("textEditing.edit"), cancel: t("cancel"), apply: t("framing.apply") }}
+                onApply={next => {
+                  if (lock.current || disabled) return;
+                  session.commit(document => ({ ...document, pages: document.pages.map(item => item.id === page.id
+                    ? { ...item, content: { ...item.content, [field]: next } } : item) }));
+                }} />
+            ),
+            selectPhoto: slotId => openPhoto(page, slotId),
+            photo: slotId => <button type="button" className={styles.photoControl}
+              aria-label={t("editor.selectPhoto", { number: page.photos.findIndex(slot => slot.id === slotId) + 1 })}
+              onClick={() => openPhoto(page, slotId)} />,
+          })}
           showPhotoPlaceholders />
           : <div className={styles.empty}>
             <h2>
@@ -473,6 +592,19 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
             </p>
           </div>}
         </div>
+        {activePage && invitationContentFields.some(field => field !== "date" && field !== "time" && !invitationInlineFields(activePage).includes(field) && activePage.content[field]?.trim()) && (
+          <details className={styles.extraContent}>
+            <summary>{t("textEditing.savedText")}</summary>
+            {invitationContentFields.filter(field => field !== "date" && field !== "time" && !invitationInlineFields(activePage).includes(field) && activePage.content[field]?.trim()).map(field => (
+              <div key={`${activePage.id}:${field}`}>
+                <p>{t(`fields.${field}`)}</p>
+                <EditorEditableText value={activePage.content[field]} placeholder={t(`fields.${field}`)} editable={!disabled}
+                  maxLength={10000} labels={{ edit: t("textEditing.edit"), cancel: t("cancel"), apply: t("framing.apply") }}
+                  onApply={value => updatePage(page => ({ ...page, content: { ...page.content, [field]: value } }))} />
+              </div>
+            ))}
+          </details>
+        )}
       </InvitationCanvas>
     </InvitationEditor>
     <Dialog open={Boolean(framing)} onOpenChange={open => { if (!open) setFraming(null); }}>
@@ -538,8 +670,28 @@ export default function InvitationEditorView({ invitation, photos: initialPhotos
       disabled={busy || editor.conflict}
       onClose={() => setTemplateSelection(null)}
       onApply={applyTemplate} />
+    {deletion?.kind === "photo" && deletion.used && <EditorPhotoUsageDialog
+      key={deletion.id}
+      imageUrl={deletionPhoto ? getProjectPhotoUrl(deletionPhoto.photo.image_path) : undefined}
+      references={deletionReferences.map(reference => ({ id: reference.slotId, label: t("photoUsage.page", { number: reference.pageNumber }), hint: reference.retained ? t("photoUsage.retained") : undefined }))}
+      deleting busy={busy || editor.conflict} error={error ? t("error") : undefined}
+      onClose={() => { if (!lock.current) setDeletion(null); }}
+      onNavigate={id => {
+        if (lock.current) return;
+        const reference = deletionReferences.find(item => item.slotId === id);
+        if (!reference) return;
+        setDeletion(null);
+        editor.selectPage(reference.pageId);
+        setTarget(reference.retained ? null : { pageId: reference.pageId, slotId: reference.slotId });
+        setPicking(false);
+        if (reference.retained) setTemplateScope("page");
+        setTab(reference.retained ? "templates" : "photos");
+        setControlRequest(current => ({ section: "photos", slotId: reference.slotId, token: (current?.token ?? 0) + 1 }));
+      }}
+      onDelete={confirmDelete}
+      labels={{ title: t("photoUsage.title"), description: t("photoUsage.description", { count: deletionReferences.length }), locations: t("photoUsage.locations"), cancel: t("cancel"), removeAll: t("photoUsage.removeAll"), confirmTitle: t("photoUsage.confirmTitle"), confirmDescription: t("photoUsage.confirmDescription"), confirm: t("photoUsage.confirm") }} />}
     <Dialog
-      open={Boolean(deletion)}
+      open={Boolean(deletion && !deletion.used)}
       onOpenChange={open => {
         if (!open && !lock.current) setDeletion(null);
       }}>

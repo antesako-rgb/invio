@@ -125,7 +125,6 @@ export default function DigitalAlbumLayouts({
 
   function photo(
     index: number,
-    caption = true,
   ) {
     const slot =
       page.photos[
@@ -151,6 +150,7 @@ export default function DigitalAlbumLayouts({
     return (
       <figure
         data-album-photo-figure
+        data-editable={Boolean(onSelectPhotoSlot) || undefined}
         className={
           styles.figure
         }
@@ -179,8 +179,7 @@ export default function DigitalAlbumLayouts({
         </div>
 
         {
-          caption &&
-          description && (
+          asset && description && (
             <figcaption
               data-album-text-area
               data-album-caption

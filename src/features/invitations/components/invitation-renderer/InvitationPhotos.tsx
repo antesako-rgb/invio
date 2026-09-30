@@ -1,3 +1,4 @@
+import type { InvitationPresentation } from "./InvitationPresentation";
 import { ImageIcon } from "lucide-react";
 import { editorPhotoStyle } from "@/features/editor/utils/editorPhotoStyle";
 
@@ -12,6 +13,7 @@ import styles from "./InvitationPhotos.module.css";
 ========================================================================== */
 
 interface InvitationPhotosProps {
+  presentation?: InvitationPresentation;
   decorative?: boolean;
   page: InvitationDocumentPage;
   photos: ReadonlyMap<string, InvitationRenderPhoto>;
@@ -25,6 +27,7 @@ interface InvitationPhotosProps {
 
 export default function InvitationPhotos({
   page,
+  presentation,
   photos,
   showPhotoPlaceholders,
   className,
@@ -39,7 +42,8 @@ export default function InvitationPhotos({
 
         if (photo) {
           return (
-            <figure key={slot.id} className={photoClassName}>
+            <figure key={slot.id} className={photoClassName} data-editable={Boolean(presentation) || undefined}>
+              {!decorative && presentation?.photo(slot.id)}
               {/* Static assets use the same CDN URL primitive as other products. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -50,6 +54,7 @@ export default function InvitationPhotos({
                 loading="lazy"
                 decoding="async"
               />
+              {!decorative && photo.description?.trim() && <figcaption className={styles.caption}>{photo.description}</figcaption>}
             </figure>
           );
         }
@@ -59,7 +64,8 @@ export default function InvitationPhotos({
         }
 
         return (
-          <figure key={slot.id} className={photoClassName}>
+          <figure key={slot.id} className={photoClassName} data-editable={Boolean(presentation) || undefined}>
+            {!decorative && presentation?.photo(slot.id)}
             <span className={styles.photoPlaceholder} aria-hidden="true">
               <ImageIcon />
             </span>

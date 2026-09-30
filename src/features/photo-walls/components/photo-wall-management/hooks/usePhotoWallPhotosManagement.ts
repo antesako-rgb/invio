@@ -1,3 +1,4 @@
+import { updatePhotoWallPhotoDescriptionAction } from "../../../actions/photos/updatePhotoWallPhotoDescriptionAction";
 import {
   useState,
   useTransition,
@@ -603,7 +604,13 @@ export function usePhotoWallPhotosManagement({
      Result
   ========================================================================== */
 
+  async function updateDescription(photoId: string, value: string) {
+    const result = await updatePhotoWallPhotoDescriptionAction(photoWallId, photoId, value);
+    if (!result.success) throw new Error(result.message);
+    setGalleryPhotos(current => current.map(photo => photo.id === photoId ? { ...photo, description: result.data.description, alt: result.data.description ?? "" } : photo));
+  }
   return {
+    updateDescription,
     filter,
 
     galleryPhotos,

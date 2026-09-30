@@ -1,4 +1,5 @@
 "use client";
+import EditorPhotoDescription from "@/features/editor/components/EditorPhotoDescription/EditorPhotoDescription";
 import { DIGITAL_ALBUM_MOBILE_DEFAULT_SNAP_POINT as EDITOR_MOBILE_DEFAULT_SNAP_POINT } from "../../hooks/useDigitalAlbumMobilePanel";
 import DigitalAlbumReaderFrame from "../../../components/album-renderer/DigitalAlbumViewer/DigitalAlbumReaderFrame";
 import { X } from "lucide-react";
@@ -64,7 +65,7 @@ export default function DigitalAlbumEditorView({
   const t = useTranslations("DigitalAlbumEditor.upgrade");
   const photosT = useTranslations("DigitalAlbumEditor.photos");
   const [activeStep, setActiveStep] =
-    useState<DigitalAlbumEditorStep>("photos");
+    useState<DigitalAlbumEditorStep>("pages");
   const editor = useDigitalAlbumEditor({
     albumId,
     initialDocument,
@@ -84,9 +85,20 @@ export default function DigitalAlbumEditorView({
   } | null>(null);
   const [exportBusy, setExportBusy] = useState(false);
   const canvas = useRef<HTMLDivElement>(null);
-  const { photos, photoDialog, usagePhotoId, usagePhoto, usageReferences,
+  const deletedPhotoTarget = useRef<{ pageId: string; slotId: string } | null>(null);
+  const { updateDescription, photos, photoDialog, usagePhotoId, usagePhoto, usageReferences,
     assetBusy, assetLock, requestPhotoDelete, closePhotoDialog, deleteLibraryPhoto } = useDigitalAlbumPhotoLibrary({
-      albumId, suppliedPhotos, editor, exportBusy, onDeleted: () => setPhotoView(null),
+      albumId, suppliedPhotos, editor, exportBusy, onDeleted: () => {
+        const target = deletedPhotoTarget.current;
+        deletedPhotoTarget.current = null;
+        const slot = target && editor.getDocument().pages.find(page => page.id === target.pageId)?.photos.find(item => item.id === target.slotId);
+        if (target && slot && !slot.photoId) {
+          editor.selectPhotoSlot(target.pageId, target.slotId);
+          setPhotoView({ slotId: target.slotId, mode: "pick" });
+          setActiveStep("photos");
+          setMobileSnapPoint(EDITOR_MOBILE_FULL_SNAP_POINT);
+        } else setPhotoView(null);
+      },
     });
   const [confirmCover, setConfirmCover] = useState(false);
   const [deletePageId, setDeletePageId] = useState<string | null>(null);
@@ -278,6 +290,8 @@ export default function DigitalAlbumEditorView({
             </div>
             <fieldset disabled={editingLocked} className={styles.fieldset}>
               <DigitalAlbumEditorSidebar
+                onChangeDesign={id => { if (editingLocked || assetLock.current) return; editor.selectPage(id); setPhotoView(null); setActiveStep("templates"); }}
+                onDescriptionSave={updateDescription}
                 designPageControls={<>
                   {contextIndexes.length > 1 && (
                     <div className={styles.pageSelector} aria-label={t("layoutTarget")}>
@@ -329,14 +343,20 @@ export default function DigitalAlbumEditorView({
                     activeSlotId={activeSlot.id}
                     disabled={editingLocked}
                     canCrop={Boolean(activePhoto)}
+                    descriptionControl={activePhoto && <>
+                      <EditorPhotoDescription value={activePhoto.description} disabled={editingLocked} onSave={value => updateDescription(activePhoto.photo_id, value)} />
+                      {activeSlot.caption != null && <EditorPhotoDescription legacy value={activeSlot.caption} disabled={editingLocked}
+                        onSave={async value => { editor.updateSlot(activeSlot.id, slot => ({ ...slot, caption: value })); }}
+                        onReset={() => editor.updateSlot(activeSlot.id, slot => { const next = { ...slot }; delete next.caption; return next; })} />}
+                    </>}
                     onBack={() => setPhotoView(null)}
                     onChoose={choosePhoto}
                     onCrop={startCrop}
                     onRemove={() => {
                       if (editingLocked || assetLock.current) return;
                       editor.removePhotoFromPage(activeSlot.id);
-                      setPhotoView(null);
-                      setMobileSnapPoint(EDITOR_MOBILE_DEFAULT_SNAP_POINT);
+                      setPhotoView({ slotId: activeSlot.id, mode: "pick" });
+                      setMobileSnapPoint(EDITOR_MOBILE_FULL_SNAP_POINT);
                     }}
                     onSwap={(targetId) => {
                       if (editingLocked || assetLock.current) return;
@@ -364,7 +384,12 @@ export default function DigitalAlbumEditorView({
                 visiblePageIndexes={editor.visiblePageIndexes}
                 selectedPhotoId={choosingPhoto ? editor.selectedPhotoId : null}
                 onRequestDeletePhoto={(id) => {
-                  if (!editingLocked && !assetLock.current) requestPhotoDelete(id);
+                  if (!editingLocked && !assetLock.current) {
+                      const placement = contextSlots.find(item => item.slot.id === activeSlot?.id && item.slot.photoId === id)
+                        ?? contextSlots.find(item => item.slot.photoId === id);
+                      deletedPhotoTarget.current = placement ? { pageId: placement.pageId, slotId: placement.slot.id } : null;
+                      requestPhotoDelete(id);
+                    }
                 }}
                 onSelectPhoto={(id) => {
                   if (editingLocked || assetLock.current) return;
@@ -404,7 +429,7 @@ export default function DigitalAlbumEditorView({
                   setActiveStep(
                     getDigitalAlbumLayout(layout).photoSlotCount
                       ? "photos"
-                      : "design",
+                      : "templates",
                   );
                 }}
                 onDuplicatePage={(id) => {
@@ -488,7 +513,7 @@ export default function DigitalAlbumEditorView({
             closePhotoDialog();
             setPhotoView(null);
             editor.selectPage(reference.pageId);
-            setActiveStep(reference.retained ? "design" : "photos");
+            setActiveStep(reference.retained ? "templates" : "photos");
             setMobilePanelOpen(false);
           }}
           deleting

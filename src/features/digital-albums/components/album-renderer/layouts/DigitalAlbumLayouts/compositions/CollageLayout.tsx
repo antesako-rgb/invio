@@ -16,24 +16,15 @@ export default function CollageLayout({
           styles.collageLead
         }
       >
-        {photo(
-          0,
-          false,
-        )}
+        {photo(0)}
       </div>
 
       <div>
-        {photo(
-          1,
-          false,
-        )}
+        {photo(1)}
       </div>
 
       <div>
-        {photo(
-          2,
-          false,
-        )}
+        {photo(2)}
       </div>
 
       <div

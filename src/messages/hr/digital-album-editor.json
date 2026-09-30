@@ -1,13 +1,35 @@
 {
+  "photoLibrary": {
+    "add": "Dodaj fotografije",
+    "description": "U\u010ditaj nove fotografije ili odaberi postoje\u0107e fotografije projekta.",
+    "upload": "U\u010ditaj s ure\u0111aja",
+    "uploadHint": "Odaberi fotografije sa svojeg ure\u0111aja.",
+    "existing": "Postoje\u0107e fotografije projekta",
+    "existingHint": "Fotografije ovog projekta, uklju\u010duju\u0107i Photo Wallove, albume i pozivnice.",
+    "back": "Natrag",
+    "addSelected": "Dodaj odabrane",
+    "more": "U\u010ditaj jo\u0161",
+    "loading": "U\u010ditavanje fotografija...",
+    "empty": "Nema dodatnih fotografija za dodavanje.",
+    "error": "Radnja nije uspjela. Poku\u0161aj ponovno.",
+    "retry": "Poku\u0161aj ponovno",
+    "select": "Odaberi fotografiju {number}",
+    "count": "{count} fotografija \u00b7 {used} kori\u0161teno",
+    "used": "Kori\u0161tena {count} puta",
+    "protected": "Prije brisanja iz biblioteke ukloni fotografiju sa svih stranica.",
+    "retained": "Sa\u010duvano"
+  },
   "navigation": {
     "previousPage": "Prethodna stranica",
-    "nextPage": "Sljedeća stranica",
+    "nextPage": "Sljede\u00c4\u2021a stranica",
     "back": "Natrag",
-    "label": "Navigacija uređivača albuma",
+    "label": "Navigacija ure\u00c4\u2018iva\u00c4\u0164a albuma",
     "photos": "Fotografije",
     "pages": "Stranice",
     "design": "Dizajn",
-    "preview": "Pregled"
+    "preview": "Pregled",
+    "templates": "Predlo\u0161ci",
+    "theme": "Tema"
   },
   "status": {
     "saving": "Spremanje...",
@@ -22,38 +44,38 @@
     "count": "{count, plural, one {# fotografija} few {# fotografije} other {# fotografija}}",
     "remove": "Ukloni fotografiju",
     "removeSuccess": "Fotografija je uklonjena iz albuma.",
-    "removeError": "Fotografiju nije moguće ukloniti iz albuma.",
+    "removeError": "Fotografiju nije mogu\u00c4\u2021e ukloniti iz albuma.",
     "empty": {
-      "title": "Još nema fotografija",
-      "description": "Dodaj fotografije kako bi započeo s izradom digitalnog albuma."
+      "title": "Jo\u0139\u02c7 nema fotografija",
+      "description": "Dodaj fotografije kako bi zapo\u00c4\u0164eo s izradom digitalnog albuma."
     },
     "removeConfirm": {
       "title": "Ukloniti fotografiju?",
-      "description": "Fotografija će biti uklonjena iz ovog albuma.",
+      "description": "Fotografija \u00c4\u2021e biti uklonjena iz ovog albuma.",
       "confirm": "Ukloni"
     },
     "addDialog": {
       "title": "Dodaj fotografije",
-      "description": "Odaberi kako želiš dodati fotografije u album.",
+      "description": "Odaberi kako \u0139\u013eeli\u0139\u02c7 dodati fotografije u album.",
       "sources": {
         "upload": "Prenesi fotografije",
         "uploadDescription": "Prenesi nove fotografije izravno u ovaj album.",
         "photoWall": "Odaberi iz Photo Walla",
-        "photoWallDescription": "Odaberi fotografije koje su već podijeljene na Photo Wallu."
+        "photoWallDescription": "Odaberi fotografije koje su ve\u00c4\u2021 podijeljene na Photo Wallu."
       },
       "photoWallSelect": {
         "title": "Odaberi Photo Wall",
-        "description": "Odaberi Photo Wall iz kojeg želiš dodati fotografije."
+        "description": "Odaberi Photo Wall iz kojeg \u0139\u013eeli\u0139\u02c7 dodati fotografije."
       },
       "photoWall": {
         "title": "Fotografije iz Photo Walla",
-        "description": "Odaberi fotografije koje želiš dodati u album."
+        "description": "Odaberi fotografije koje \u0139\u013eeli\u0139\u02c7 dodati u album."
       },
       "actions": {
         "back": "Natrag",
         "close": "Zatvori"
       },
-      "addError": "Fotografije nije moguće dodati. Pokušajte ponovno."
+      "addError": "Fotografije nije mogu\u00c4\u2021e dodati. Poku\u0139\u02c7ajte ponovno."
     },
     "upload": {
       "back": "Natrag",
@@ -61,23 +83,23 @@
       "preparing": "Priprema fotografija...",
       "remove": "Ukloni fotografiju",
       "selectPhoto": "Odaberi fotografiju",
-      "addMore": "Dodaj još fotografija",
+      "addMore": "Dodaj jo\u0139\u02c7 fotografija",
       "submit": "Prenesi ({count})",
       "submitting": "Prijenos...",
       "descriptionPlaceholder": "Dodaj opis fotografije...",
       "descriptionLabel": "Opis fotografije",
       "errors": {
-        "invalidFiles": "Neke datoteke nije moguće dodati. Koristi JPEG, PNG ili WebP slike do 10 MB.",
-        "tooManyFiles": "Odjednom možeš prenijeti najviše {count} fotografija.",
-        "upload": "Fotografije nije moguće prenijeti. Pokušaj ponovno.",
-        "uncertain": "Veza je prekinuta i ne možemo potvrditi zadnji upload. Zatvorite dijalog i provjerite fotografije u albumu prije ponovnog dodavanja."
+        "invalidFiles": "Neke datoteke nije mogu\u00c4\u2021e dodati. Koristi JPEG, PNG ili WebP slike do 10 MB.",
+        "tooManyFiles": "Odjednom mo\u0139\u013ee\u0139\u02c7 prenijeti najvi\u0139\u02c7e {count} fotografija.",
+        "upload": "Fotografije nije mogu\u00c4\u2021e prenijeti. Poku\u0139\u02c7aj ponovno.",
+        "uncertain": "Veza je prekinuta i ne mo\u0139\u013eemo potvrditi zadnji upload. Zatvorite dijalog i provjerite fotografije u albumu prije ponovnog dodavanja."
       }
     },
     "picker": {
       "title": "Dodaj fotografije",
-      "description": "Odaberi fotografije iz Photo Walla koje želiš dodati u album.",
-      "error": "Fotografije nije moguće učitati. Pokušajte ponovno.",
-      "loading": "Učitavanje fotografija...",
+      "description": "Odaberi fotografije iz Photo Walla koje \u0139\u013eeli\u0139\u02c7 dodati u album.",
+      "error": "Fotografije nije mogu\u00c4\u2021e u\u00c4\u0164itati. Poku\u0139\u02c7ajte ponovno.",
+      "loading": "U\u00c4\u0164itavanje fotografija...",
       "filters": {
         "all": "Sve",
         "favorites": "Favoriti"
@@ -85,31 +107,31 @@
       "empty": {
         "all": {
           "title": "Nema fotografija",
-          "description": "Na Photo Wallu još nema fotografija dostupnih za dodavanje."
+          "description": "Na Photo Wallu jo\u0139\u02c7 nema fotografija dostupnih za dodavanje."
         },
         "favorites": {
           "title": "Nema favorita",
-          "description": "Još nisi označio nijednu fotografiju kao favorit."
+          "description": "Jo\u0139\u02c7 nisi ozna\u00c4\u0164io nijednu fotografiju kao favorit."
         }
       },
       "actions": {
-        "loadMore": "Učitaj još",
+        "loadMore": "U\u00c4\u0164itaj jo\u0139\u02c7",
         "cancel": "Odustani",
         "add": "Dodaj ({count})",
         "adding": "Dodavanje...",
-        "retry": "Pokušaj ponovno"
+        "retry": "Poku\u0139\u02c7aj ponovno"
       }
     },
     "selectPhoto": "Odaberi fotografiju {number}",
-    "libraryCount": "{count, plural, one {# fotografija} few {# fotografije} other {# fotografija}} · {used} korišteno",
+    "libraryCount": "{count, plural, one {# fotografija} few {# fotografije} other {# fotografija}} \u00c2\u00b7 {used} kori\u0139\u02c7teno",
     "replaceTitle": "Zamijeni fotografiju",
     "addTitle": "Dodaj fotografiju",
-    "replaceHelp": "Odaberite fotografiju koja će je zamijeniti.",
+    "replaceHelp": "Odaberite fotografiju koja \u00c4\u2021e je zamijeniti.",
     "addHelp": "Odaberite fotografiju za prazno mjesto.",
-    "usedTimes": "Korišteno {count}×",
+    "usedTimes": "Kori\u0139\u02c7teno {count}\u0102\u2014",
     "backToPhoto": "Natrag na fotografiju",
     "showUsage": "Pogledaj gdje se fotografija koristi",
-    "retainedBadge": "Sačuvano"
+    "retainedBadge": "Sa\u00c4\u0164uvano"
   },
   "pages": {
     "add": "Dodaj stranicu",
@@ -117,12 +139,13 @@
     "page": "Stranica {number}",
     "actions": "Radnje stranice",
     "duplicate": "Dupliciraj",
-    "delete": "Izbriši",
+    "delete": "Izbri\u0139\u02c7i",
     "addDialog": {
       "title": "Dodaj stranicu",
       "description": "Odaberi izgled nove stranice."
     },
-    "move": "Premjesti stranicu {number}"
+    "move": "Premjesti stranicu {number}",
+    "changeLayout": "Promijeni raspored"
   },
   "photoSlot": {
     "addPhoto": "Dodaj fotografiju",
@@ -137,68 +160,69 @@
       "cover": "Naslovnica",
       "full-photo": "Jedna fotografija",
       "two-photos": "Dvije fotografije",
-      "editorial": "Fotografija i priča",
-      "story": "Priča",
-      "collage": "Kolaž",
+      "editorial": "Fotografija i pri\u00c4\u0164a",
+      "story": "Pri\u00c4\u0164a",
+      "collage": "Kola\u0139\u013e",
       "portrait-plate": "Portret na papiru",
       "landscape-plate": "Horizontalna fotografija",
       "portrait-diptych": "Dva portreta",
       "mixed-pair": "Portret i trenutak",
       "hero-detail": "Veliki kadar i detalj",
       "quote": "Citat",
-      "closing": "Završna riječ",
+      "closing": "Zavr\u0139\u02c7na rije\u00c4\u0164",
       "split": "Fotografija i tekst",
       "three-grid": "Tri fotografije",
-      "four-grid": "Četiri fotografije",
-      "hero-text": "Fotografija i priča",
+      "four-grid": "\u00c4\u015aetiri fotografije",
+      "hero-text": "Fotografija i pri\u00c4\u0164a",
       "portrait-pair-text": "Portreti i naslov",
       "mosaic": "Mozaik"
     },
     "themes": {
-      "classic": "Klasična",
+      "classic": "Klasi\u00c4\u0164na",
       "modern": "Modern",
       "editorial": "Editorial"
     }
   },
   "pdfExport": {
-    "rateLimited": "Previše zahtjeva za PDF. Pokušajte ponovno za {seconds} sekundi.",
-    "busy": "Generiranje PDF-a trenutačno je zauzeto. Pokušajte ponovno za {seconds} sekundi.",
+    "rateLimited": "Previ\u0139\u02c7e zahtjeva za PDF. Poku\u0139\u02c7ajte ponovno za {seconds} sekundi.",
+    "busy": "Generiranje PDF-a trenuta\u00c4\u0164no je zauzeto. Poku\u0139\u02c7ajte ponovno za {seconds} sekundi.",
     "action": "Izvezi u PDF",
     "exporting": "Generiranje PDF-a...",
-    "error": "PDF nije moguće generirati. Pokušajte ponovno."
+    "error": "PDF nije mogu\u00c4\u2021e generirati. Poku\u0139\u02c7ajte ponovno."
   },
   "upgrade": {
-    "undo": "Poništi",
-    "retry": "Pokušaj ponovno",
+    "undo": "Poni\u0139\u02c7ti",
+    "retry": "Poku\u0139\u02c7aj ponovno",
     "apply": "Primijeni",
     "cancel": "Odustani",
     "reset": "Vrati izvorni kadar",
+    "invalidDate": "Odaberite valjan datum.",
     "editText": "Uredi tekst",
     "position": "Namjesti kadar",
-    "positionHelp": "Povucite fotografiju ili koristite klizače. Kadar i opis vrijede za ovu fotografiju na ovoj stranici.",
+    "positionHelp": "Povucite fotografiju ili koristite kliza\u00c4\u0164e. Kadar i opis vrijede za ovu fotografiju na ovoj stranici.",
     "horizontal": "Vodoravno",
     "vertical": "Okomito",
-    "contain": "Prikaži cijelu fotografiju",
+    "contain": "Prika\u0139\u013ei cijelu fotografiju",
     "caption": "Opis na ovoj stranici",
-    "leaveUnsaved": "Postoje nespremljene izmjene. Želite li napustiti editor?",
-    "exportNotReady": "Prvo spremite izmjene i riješite upozorenja na stranicama.",
+    "leaveUnsaved": "Postoje nespremljene izmjene. \u0139\u02ddelite li napustiti editor?",
+    "exportNotReady": "Prvo spremite izmjene i rije\u0139\u02c7ite upozorenja na stranicama.",
     "overflow": "Dio teksta ne stane na stranicu. Skratite tekst ili odaberite drugi raspored.",
-    "saveError": "Izmjene nisu spremljene. Ostaju u ovom editoru; pokušajte ponovno prije odlaska.",
+    "saveError": "Izmjene nisu spremljene. Ostaju u ovom editoru; poku\u0139\u02c7ajte ponovno prije odlaska.",
     "layoutConfirmTitle": "Primijeniti novi raspored?",
-    "layoutConfirmRetained": "{count, plural, one {# fotografija ostaje sačuvana izvan rasporeda.} few {# fotografije ostaju sačuvane izvan rasporeda.} other {# fotografija ostaje sačuvano izvan rasporeda.}}",
+    "layoutConfirmRetained": "{count, plural, one {# fotografija ostaje sa\u00c4\u0164uvana izvan rasporeda.} few {# fotografije ostaju sa\u00c4\u0164uvane izvan rasporeda.} other {# fotografija ostaje sa\u00c4\u0164uvano izvan rasporeda.}}",
     "pageContext": "Stranica {number}",
     "frontCover": "prednja korica",
-    "backCover": "stražnja korica",
+    "backCover": "stra\u0139\u013enja korica",
     "slot": "Fotografija {number}",
     "noSlots": "Ova stranica nema mjesta za fotografije.",
-    "unplaced": "Sačuvane fotografije · {count}",
-    "coverChange": "Ova promjena mijenja prednju ili stražnju koricu albuma. Želite li nastaviti?",
+    "unplaced": "Sa\u00c4\u0164uvane fotografije \u00c2\u00b7 {count}",
+    "coverChange": "Ova promjena mijenja prednju ili stra\u0139\u013enju koricu albuma. \u0139\u02ddelite li nastaviti?",
     "category": "Vrsta rasporeda",
     "categories": {
       "all": "Sve",
       "single": "1 foto",
       "pairs": "2 foto",
-      "sequence": "Više",
+      "sequence": "Vi\u0139\u02c7e",
       "text": "Tekst"
     },
     "photoCount": "{count, plural, =0 {Bez fotografija} one {# fotografija} few {# fotografije} other {# fotografija}}",
@@ -210,16 +234,16 @@
       "text": "Tekst",
       "date": "Datum"
     },
-    "removeRetained": "Ukloni sačuvanu fotografiju",
-    "photoError": "Fotografiju nije moguće učitati.",
-    "saveConflict": "Album je izmijenjen u drugom tabu ili uređaju. Lokalne izmjene nisu izgubljene, ali ih ne možemo spremiti preko novije verzije. Sačuvajte ih prije ponovnog učitavanja stranice.",
+    "removeRetained": "Ukloni sa\u00c4\u0164uvanu fotografiju",
+    "photoError": "Fotografiju nije mogu\u00c4\u2021e u\u00c4\u0164itati.",
+    "saveConflict": "Album je izmijenjen u drugom tabu ili ure\u00c4\u2018aju. Lokalne izmjene nisu izgubljene, ali ih ne mo\u0139\u013eemo spremiti preko novije verzije. Sa\u00c4\u0164uvajte ih prije ponovnog u\u00c4\u0164itavanja stranice.",
     "redo": "Ponovi",
     "confirm": "Nastavi",
     "coverChangeTitle": "Promjena korica",
     "deletePageTitle": "Obrisati ovu stranicu?",
-    "deletePageDescription": "Stranica, njezin tekst i raspored fotografija bit će uklonjeni. Fotografije ostaju u albumu. Brisanje prve ili zadnje stranice mijenja korice albuma. Promjenu možete poništiti.",
-    "deletePageConfirm": "Obriši stranicu",
-    "spreadContext": "Stranice {from}–{to}",
+    "deletePageDescription": "Stranica, njezin tekst i raspored fotografija bit \u00c4\u2021e uklonjeni. Fotografije ostaju u albumu. Brisanje prve ili zadnje stranice mijenja korice albuma. Promjenu mo\u0139\u013eete poni\u0139\u02c7titi.",
+    "deletePageConfirm": "Obri\u0139\u02c7i stranicu",
+    "spreadContext": "Stranice {from}\u00e2\u20ac\u201c{to}",
     "layoutTarget": "Odaberite stranicu za raspored"
   },
   "photoContext": {
@@ -227,7 +251,7 @@
     "replace": "Zamijeni fotografiju",
     "crop": "Namjesti kadar",
     "remove": "Ukloni sa stranice",
-    "swap": "Zamijeni mjesto s…",
+    "swap": "Zamijeni mjesto s\u00e2\u20ac\u00a6",
     "back": "Sve fotografije",
     "missing": "Fotografija nije dostupna.",
     "selectedPhoto": "Odabrana fotografija"
@@ -237,12 +261,12 @@
     "description": "Ova fotografija koristi se na {count} mjesta. Prije brisanja uklonite je s tih mjesta.",
     "locations": "Koristi se na:",
     "page": "Stranica {number}",
-    "retained": "Sačuvano za drugi raspored",
+    "retained": "Sa\u00c4\u0164uvano za drugi raspored",
     "cancel": "Odustani",
-    "removeAll": "Ukloni sa svih stranica i izbriši",
+    "removeAll": "Ukloni sa svih stranica i izbri\u0139\u02c7i",
     "confirmTitle": "Izbrisati fotografiju iz albuma?",
-    "confirmDescription": "Fotografija će biti uklonjena sa svih {count} mjesta, uključujući mjesta sačuvana za drugi raspored, a zatim iz biblioteke ovog albuma. Mjesta na stranicama ostat će prazna. Ovu radnju nije moguće poništiti.",
-    "confirm": "Ukloni sa svih stranica i izbriši",
+    "confirmDescription": "Fotografija \u00c4\u2021e biti uklonjena sa svih {count} mjesta, uklju\u00c4\u0164uju\u00c4\u2021i mjesta sa\u00c4\u0164uvana za drugi raspored, a zatim iz biblioteke ovog albuma. Mjesta na stranicama ostat \u00c4\u2021e prazna. Ovu radnju nije mogu\u00c4\u2021e poni\u0139\u02c7titi.",
+    "confirm": "Ukloni sa svih stranica i izbri\u0139\u02c7i",
     "infoDescription": "Ova fotografija koristi se na {count} mjesta. Odaberite mjesto za prikaz stranice."
   }
 }

@@ -10,9 +10,9 @@ import styles from "./Split.module.css";
 export default function Split(props: InvitationLayoutProps) {
   return (
     <div className={styles.split}>
-      <InvitationPageContent page={props.page} locale={props.locale} />
+      <InvitationPageContent presentation={props.presentation} page={props.page} locale={props.locale} />
 
-      <InvitationPhotos
+      <InvitationPhotos presentation={props.presentation}
         page={props.page}
         photos={props.photos}
         showPhotoPlaceholders={props.showPhotoPlaceholders}

@@ -1,0 +1,77 @@
+/* ==========================================================================
+   Button
+========================================================================== */
+
+.button {
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--foreground) 8%,
+      transparent
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--background) 90%,
+      transparent
+    );
+
+  color: var(--foreground);
+
+  box-shadow:
+    0 2px 8px
+    color-mix(
+      in srgb,
+      var(--foreground) 8%,
+      transparent
+    );
+
+  opacity: 0;
+
+  transition:
+    opacity 150ms ease,
+    background 150ms ease,
+    box-shadow 150ms ease;
+}
+
+
+/* ==========================================================================
+   Visibility
+========================================================================== */
+
+.button[data-visibility="always"],
+.button:focus-visible,
+.button[data-popup-open] {
+  opacity: 1;
+}
+
+
+/* ==========================================================================
+   Hover
+========================================================================== */
+
+.button:hover:not(:disabled) {
+  background: var(--background);
+
+  box-shadow:
+    0 3px 10px
+    color-mix(
+      in srgb,
+      var(--foreground) 12%,
+      transparent
+    );
+}
+
+
+/* ==========================================================================
+   Touch
+========================================================================== */
+
+@media (hover: none), (pointer: coarse) {
+  .button {
+    width: 2.75rem;
+    height: 2.75rem;
+    opacity: 1;
+  }
+}

@@ -64,6 +64,11 @@ const END_YEAR =
 ========================================================================== */
 
 interface DatePickerProps {
+  /** Optional canvas trigger; calendar behavior remains identical to the form picker. */
+  trigger?: React.ReactElement;
+  footer?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   id?:
     string;
 
@@ -100,6 +105,10 @@ interface DatePickerProps {
 ========================================================================== */
 
 function DatePicker({
+  trigger,
+  footer,
+  open: controlledOpen,
+  onOpenChange,
   id,
   value,
   onChange,
@@ -111,10 +120,16 @@ function DatePicker({
   disablePast = false,
 }: DatePickerProps) {
   const [
-    open,
-    setOpen,
+    internalOpen,
+    setInternalOpen,
   ] =
     React.useState(false);
+
+  const open = controlledOpen ?? internalOpen;
+  function setOpen(next: boolean) {
+    if (controlledOpen === undefined) setInternalOpen(next);
+    onOpenChange?.(next);
+  }
 
   const locale =
     useLocale();
@@ -262,7 +277,8 @@ function DatePicker({
       }
     >
       <PopoverTrigger
-        render={
+        disabled={disabled}
+        render={trigger ?? (
           <Button
             id={
               id
@@ -338,7 +354,7 @@ function DatePicker({
               />
             </span>
           </Button>
-        }
+        )}
       />
 
       <PopoverContent
@@ -350,6 +366,7 @@ function DatePicker({
         }
       >
         <DayPicker
+          defaultMonth={value}
           mode="single"
           locale={
             dateLocale
@@ -483,6 +500,7 @@ function DatePicker({
             handleSelect
           }
         />
+        {footer}
       </PopoverContent>
     </Popover>
   );

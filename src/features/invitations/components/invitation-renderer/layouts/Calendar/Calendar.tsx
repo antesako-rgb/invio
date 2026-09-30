@@ -1,3 +1,4 @@
+import { invitationText } from "../../InvitationPresentation";
 import type { InvitationLayoutProps } from "../../InvitationLayouts";
 import styles from "./Calendar.module.css";
 
@@ -5,7 +6,7 @@ import styles from "./Calendar.module.css";
    Calendar — purely derived from the renderer's resolved shared date
 ========================================================================== */
 
-export default function Calendar({ page, locale }: InvitationLayoutProps) {
+export default function Calendar({ presentation, page, locale }: InvitationLayoutProps) {
   const { title, date, time, location, address, text } = page.content;
   const value = date?.trim() ?? "";
   const parsed = /^\d{4}-\d{2}-\d{2}$/.test(value) ? new Date(`${value}T00:00:00Z`) : null;
@@ -26,13 +27,13 @@ export default function Calendar({ page, locale }: InvitationLayoutProps) {
 
   return (
     <div className={styles.calendarLayout}>
-      {title?.trim() && <h2 className={styles.names}>{title}</h2>}
+      {(title?.trim() || presentation) && <h2 className={styles.names}>{invitationText(presentation, "title", title)}</h2>}
       {valid && (
         <table className={styles.calendar}>
           <caption>
-            {new Intl.DateTimeFormat(locale, {
+            {invitationText(presentation, "date", date, new Intl.DateTimeFormat(locale, {
               month: "long", year: "numeric", timeZone: "UTC",
-            }).format(valid)}
+            }).format(valid))}
           </caption>
           <thead>
             <tr>
@@ -53,7 +54,7 @@ export default function Calendar({ page, locale }: InvitationLayoutProps) {
                   return (
                     <td key={column}>
                       {inMonth && (selected ? (
-                        <time className={styles.selected} dateTime={value} aria-label={fullDate}>{day}</time>
+                        <time className={styles.selected} dateTime={value} aria-label={fullDate}>{invitationText(presentation, "date", date, day)}</time>
                       ) : <span className={styles.day}>{day}</span>)}
                     </td>
                   );
@@ -63,22 +64,22 @@ export default function Calendar({ page, locale }: InvitationLayoutProps) {
           </tbody>
         </table>
       )}
-      {(fullDate || time?.trim()) && (
+      {(fullDate || time?.trim() || presentation) && (
         <div className={styles.date}>
-          {fullDate && (valid ? <time dateTime={value}>{fullDate}</time> : <p>{fullDate}</p>)}
-          {time?.trim() && <p>{time}</p>}
+          {(fullDate || presentation) && (valid ? <time dateTime={value}>{invitationText(presentation, "date", date, fullDate)}</time> : <p>{invitationText(presentation, "date", date)}</p>)}
+          {(time?.trim() || presentation) && <p>{invitationText(presentation, "time", time)}</p>}
         </div>
       )}
-      {(location?.trim() || address?.trim()) && (
+      {(location?.trim() || address?.trim() || presentation) && (
         <>
           <span className={styles.separator} aria-hidden="true" />
           <div className={styles.venue}>
-            {location?.trim() && <p>{location}</p>}
-            {address?.trim() && <p>{address}</p>}
+            {(location?.trim() || presentation) && <p>{invitationText(presentation, "location", location)}</p>}
+            {(address?.trim() || presentation) && <p>{invitationText(presentation, "address", address)}</p>}
           </div>
         </>
       )}
-      {text?.trim() && <p className={styles.message}>{text}</p>}
+      {(text?.trim() || presentation) && <p className={styles.message}>{invitationText(presentation, "text", text)}</p>}
     </div>
   );
 }

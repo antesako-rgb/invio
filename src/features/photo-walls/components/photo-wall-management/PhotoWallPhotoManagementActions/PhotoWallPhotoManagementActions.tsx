@@ -1,4 +1,5 @@
 "use client";
+import EditorPhotoDescription from "@/features/editor/components/EditorPhotoDescription/EditorPhotoDescription";
 
 import {
   Heart,
@@ -20,6 +21,8 @@ import styles
 ========================================================================== */
 
 interface PhotoWallPhotoManagementActionsProps {
+  description: string | null;
+  onDescriptionSave: (value: string) => Promise<void>;
   isFavorite:
     boolean;
 
@@ -42,6 +45,7 @@ interface PhotoWallPhotoManagementActionsProps {
 ========================================================================== */
 
 export default function PhotoWallPhotoManagementActions({
+  description, onDescriptionSave,
   isFavorite,
   isFavoritePending,
   isDeleting,
@@ -113,6 +117,7 @@ export default function PhotoWallPhotoManagementActions({
         />
       </button>
 
+      <EditorPhotoDescription compact value={description} onSave={onDescriptionSave} disabled={isFavoritePending || isDeleting} />
       <DeleteButton
         display="icon"
         ariaLabel={

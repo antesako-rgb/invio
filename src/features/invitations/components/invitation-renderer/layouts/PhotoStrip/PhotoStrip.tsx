@@ -1,3 +1,4 @@
+import { invitationText } from "../../InvitationPresentation";
 import type { InvitationLayoutProps } from "../../InvitationLayouts";
 import InvitationPhotos from "../../InvitationPhotos";
 import { InvitationPageContent } from "../../InvitationPageContent";
@@ -7,7 +8,7 @@ import styles from "./PhotoStrip.module.css";
    Photo Strip — three photographs alongside a typographic cover
 ========================================================================== */
 
-export default function PhotoStrip({
+export default function PhotoStrip({ presentation,
   page,
   photos,
   locale,
@@ -28,7 +29,7 @@ export default function PhotoStrip({
     <div className={styles.photoStrip}>
       {(hasPhotos || showPhotoPlaceholders) && (
         <div className={styles.strip}>
-          <InvitationPhotos
+          <InvitationPhotos presentation={presentation}
             page={page}
             photos={photos}
             showPhotoPlaceholders={showPhotoPlaceholders}
@@ -45,23 +46,23 @@ export default function PhotoStrip({
           </div>
         )}
 
-        {hasNames && (
+        {(hasNames || presentation) && (
           <h2 className={styles.names}>
-            {firstName && <span>{firstName}</span>}
-            {firstName && secondName && <span className={styles.ampersand}>&amp;</span>}
-            {secondName && <span>{secondName}</span>}
+            {(firstName || presentation) && <span>{invitationText(presentation, "firstName", firstName)}</span>}
+            {((firstName && secondName) || presentation) && <span className={styles.ampersand}>&amp;</span>}
+            {(secondName || presentation) && <span>{invitationText(presentation, "secondName", secondName)}</span>}
           </h2>
         )}
 
-        {page.content.subtitle?.trim() && (
-          <p className={styles.subtitle}>{page.content.subtitle}</p>
+        {(page.content.subtitle?.trim() || presentation) && (
+          <p className={styles.subtitle}>{invitationText(presentation, "subtitle", page.content.subtitle)}</p>
         )}
 
-        {page.content.text?.trim() && (
-          <p className={styles.message}>{page.content.text}</p>
+        {(page.content.text?.trim() || presentation) && (
+          <p className={styles.message}>{invitationText(presentation, "text", page.content.text)}</p>
         )}
 
-        <InvitationPageContent
+        <InvitationPageContent omit={presentation ? [...(hasNames || !page.content.title?.trim() ? ["title" as const] : []), "subtitle", "text", "firstName", "secondName"] : []} presentation={presentation}
           page={{
             ...page,
             content: {

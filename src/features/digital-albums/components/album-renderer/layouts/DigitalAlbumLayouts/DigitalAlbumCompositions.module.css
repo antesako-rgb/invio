@@ -92,21 +92,10 @@
    Full Photo
 ========================================================================== */
 
-.composition[data-composition="full-photo"] > [data-album-photo-figure] > [data-album-caption] {
-  position: absolute;
-
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  padding:
-    10cqw 6cqw 6cqw;
-
-  color:
-    var(--album-photo-ink);
-
-  background:
-    var(--album-photo-caption-shade);
+.composition[data-composition="cover"] > [data-album-photo-figure] > [data-album-caption] {
+  inset: 0 0 auto;
+  padding: 3cqw;
+  background: linear-gradient(rgb(0 0 0 / .55), transparent);
 }
 
 
