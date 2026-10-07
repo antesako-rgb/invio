@@ -1,0 +1,8 @@
+.card { display: grid; gap: 1.25rem; padding: 1.5rem; min-width: 0; }
+.card h2 { margin: 0 0 .5rem; font-size: 1.1rem; font-weight: 600; }
+.hint { color: var(--muted-foreground); font-size: .875rem; line-height: 1.6; margin: 0; overflow-wrap: anywhere; }
+.fields { display: flex; flex-direction: column; gap: 1.25rem; padding: 0; margin: 0; border: 0; min-width: 0; }
+.toggle { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.toggle label { display: block; font-weight: 500; margin-bottom: .375rem; }
+.actions { display: flex; justify-content: flex-end; }
+@media (max-width: 600px) { .card { padding: 1rem; } }

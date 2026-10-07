@@ -4,10 +4,12 @@ import {
 } from "@/lib/utils/date";
 
 import type {
-  CreateProjectEventInput,
-  ProjectEvent,
-  UpdateProjectEventInput,
-} from "../types/projectEvent.types";
+  CreateProjectInput,
+  Project,
+  UpdateProjectInput,
+} from "../types/project.types";
+
+import { isProjectEventType } from "../types/projectEvent.types";
 
 import {
   projectEventSchema,
@@ -19,7 +21,7 @@ import {
    Default Values
 ========================================================================== */
 
-export function getProjectEventDefaultValues(): ProjectEventFormValues {
+export function getProjectDefaultValues(): ProjectEventFormValues {
   return {
     name: "",
     type: "wedding",
@@ -33,12 +35,16 @@ export function getProjectEventDefaultValues(): ProjectEventFormValues {
 
 
 /* ==========================================================================
-   ProjectEvent → Form
+   Project → Form
 ========================================================================== */
 
-export function getProjectEventFormValues(
-  event: ProjectEvent
+export function getProjectFormValues(
+  event: Project
 ): ProjectEventFormValues {
+  if (!isProjectEventType(event.type)) {
+    throw new Error("Unsupported project event type.");
+  }
+
   return {
     name: event.name,
     type: event.type,
@@ -95,7 +101,7 @@ export function setProjectEventFormField<
 
 export function buildCreateProjectEventPayload(
   input: ProjectEventFormValues
-): CreateProjectEventInput {
+): CreateProjectInput {
   const values =
     projectEventSchema.parse(input);
 
@@ -141,37 +147,7 @@ export function buildCreateProjectEventPayload(
 export function buildUpdateProjectEventPayload(
   projectId: string,
   input: ProjectEventFormValues
-): UpdateProjectEventInput {
-  const values =
-    projectEventSchema.parse(input);
-
-  return {
-    p_project_id:
-      projectId,
-
-    p_name:
-      values.name,
-
-    p_type:
-      values.type,
-
-    p_start_date:
-      formatDateAsLocalDate(
-        values.start_date
-      ),
-
-    p_custom_type:
-      values.type === "other"
-        ? values.custom_type
-        : null,
-
-    p_start_time:
-      values.start_time?.trim() || null,
-
-    p_location_name:
-      values.location_name || null,
-
-    p_location_address:
-      values.location_address || null,
-  };
+): UpdateProjectInput {
+  // Both RPCs have the same event arguments and optional SQL defaults.
+  return { ...buildCreateProjectEventPayload(input), p_project_id: projectId };
 }

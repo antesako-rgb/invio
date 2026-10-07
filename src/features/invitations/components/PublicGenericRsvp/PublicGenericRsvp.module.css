@@ -1,0 +1,7 @@
+.form, .fields, .guest { display: grid; gap: 1rem; min-width: 0; }
+.fields, .guest { border: 0; margin: 0; padding: 0; }
+.guest { border-bottom: 1px solid var(--border); padding-bottom: 1.25rem; }
+.guest legend { font-weight: 500; margin-bottom: .75rem; }
+.hint { color: var(--muted-foreground); font-size: .875rem; }
+.error { color: var(--destructive); }
+.form p { margin: 0; overflow-wrap: anywhere; }

@@ -18,7 +18,6 @@ const badgeVariants = cva(
     "font-medium",
     "whitespace-nowrap",
     "select-none",
-    "transition-colors",
   ],
   {
     variants: {
@@ -31,12 +30,8 @@ const badgeVariants = cva(
 
         secondary: [
           "border-transparent",
-          "bg-amber-50",
-          "text-amber-800",
-          "hover:bg-amber-100",
-          "dark:bg-amber-500/10",
-          "dark:text-amber-300",
-          "dark:hover:bg-amber-500/20",
+          "bg-warning/10",
+          "text-[color:color-mix(in_oklab,var(--warning)_35%,var(--foreground))]",
         ],
 
         soft: [
@@ -59,42 +54,26 @@ const badgeVariants = cva(
 
         success: [
           "border-transparent",
-          "bg-emerald-50",
-          "text-emerald-800",
-          "hover:bg-emerald-100",
-          "dark:bg-emerald-500/10",
-          "dark:text-emerald-300",
-          "dark:hover:bg-emerald-500/20",
+          "bg-success/10",
+          "text-[color:color-mix(in_oklab,var(--success)_35%,var(--foreground))]",
         ],
 
         warning: [
           "border-transparent",
-          "bg-orange-50",
-          "text-orange-800",
-          "hover:bg-orange-100",
-          "dark:bg-orange-500/10",
-          "dark:text-orange-300",
-          "dark:hover:bg-orange-500/20",
+          "bg-warning/10",
+          "text-[color:color-mix(in_oklab,var(--warning)_35%,var(--foreground))]",
         ],
 
         info: [
           "border-transparent",
-          "bg-sky-50",
-          "text-sky-800",
-          "hover:bg-sky-100",
-          "dark:bg-sky-500/10",
-          "dark:text-sky-300",
-          "dark:hover:bg-sky-500/20",
+          "bg-info/10",
+          "text-[color:color-mix(in_oklab,var(--info)_35%,var(--foreground))]",
         ],
 
         destructive: [
           "border-transparent",
-          "bg-red-50",
-          "text-red-800",
-          "hover:bg-red-100",
-          "dark:bg-red-500/10",
-          "dark:text-red-300",
-          "dark:hover:bg-red-500/20",
+          "bg-destructive/10",
+          "text-[color:color-mix(in_oklab,var(--destructive)_35%,var(--foreground))]",
         ],
       },
 

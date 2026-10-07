@@ -24,8 +24,10 @@ import type {
 export async function uploadDigitalAlbumPhotoAction(
   albumId:
     string,
+
   file:
     File,
+
   description?:
     string
 ): Promise<ActionResult<DigitalAlbumPhoto>> {
@@ -33,7 +35,9 @@ export async function uploadDigitalAlbumPhotoAction(
     const photo =
       await uploadDigitalAlbumPhoto({
         albumId,
+
         file,
+
         description,
       });
 
@@ -58,10 +62,8 @@ export async function uploadDigitalAlbumPhotoAction(
       success:
         false,
 
-      message:
-        error instanceof Error
-          ? error.message
-          : "Fotografiju nije moguće prenijeti.",
+      code:
+        "PHOTO_UPLOAD_FAILED",
     };
   }
 }

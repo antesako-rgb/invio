@@ -23,7 +23,6 @@ export interface DigitalAlbumEditorHeaderProps {
 }
 export default function DigitalAlbumEditorHeader({
   albumId,
-  projectId,
   saveStatus = "saved",
   saveConflict,
   canUndo,
@@ -48,7 +47,7 @@ export default function DigitalAlbumEditorHeader({
               event.preventDefault();
           }}
         >
-          <BackLink href={projectId ? `/dashboard/projects/${projectId}/albums/${albumId}` : "/dashboard/projects"} label={t("navigation.back")} />
+          <BackLink href={`/dashboard/albums/${albumId}`} label={t("navigation.back")} />
         </span>
       }
       end={

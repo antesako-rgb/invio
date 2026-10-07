@@ -7,6 +7,7 @@ import {
   Plus,
   LayoutDashboard,
   MoreHorizontal,
+  Mail,
 
 } from "lucide-react";
 
@@ -91,7 +92,7 @@ export const dashboardBottomNavigation:
       exact: true,
     },
 
-    { id: "create", label: "create", href: "/dashboard/projects/new", icon: Plus, exact: true },
+    { id: "create", label: "create", href: "/dashboard/projects/new/event", icon: Plus, exact: true },
 
     {
       id:
@@ -104,3 +105,12 @@ export const dashboardBottomNavigation:
         MoreHorizontal,
     },
   ];    
+
+export function projectBottomNavigation(projectId: string): DashboardBottomNavigationItem[] {
+  const base = `/dashboard/projects/${projectId}`;
+  return [
+    { id: "event", label: "projectEvent", href: base, icon: CalendarDays, exact: true },
+    { id: "invitations", label: "projectInvitations", href: `${base}/invitations`, icon: Mail },
+    { id: "more", label: "more", icon: MoreHorizontal },
+  ];
+}

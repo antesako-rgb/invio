@@ -16,6 +16,7 @@ import {
 
 import {
   getReceivedCollaborationInvites,
+  CollaborationProfileMissingError,
 } from "@/features/project-collaboration/repositories/getReceivedCollaborationInvites";
 
 import styles from "./DashboardInvites.module.css";
@@ -26,17 +27,20 @@ import styles from "./DashboardInvites.module.css";
 ========================================================================== */
 
 export default async function DashboardInvites() {
-  const [
-    invites,
-    t,
-  ] =
-    await Promise.all([
-      getReceivedCollaborationInvites(),
-
-      getTranslations(
-        "Dashboard.overview.invites"
-      ),
-    ]);
+  const t = await getTranslations("Dashboard.overview.invites");
+  let invites;
+  try {
+    invites = await getReceivedCollaborationInvites();
+  } catch (error) {
+    if (!(error instanceof CollaborationProfileMissingError)) throw error;
+    return <Card className={styles.card}>
+      <UsersRound className={styles.icon} aria-hidden="true" />
+      <div className={styles.content} role="status">
+        <h2>{t("title")}</h2>
+        <p>{t("profileMissing")}</p>
+      </div>
+    </Card>;
+  }
 
   return invites.map(
     (invite) => (
@@ -66,13 +70,13 @@ export default async function DashboardInvites() {
             )}
           </h2>
 
-          {invite.projects?.name && (
+          {invite.project_name && (
             <p
               className={
                 styles.name
               }
             >
-              {invite.projects.name}
+              {invite.project_name}
             </p>
           )}
 
@@ -86,7 +90,7 @@ export default async function DashboardInvites() {
         <ButtonLink
           size="lg"
           variant="outline"
-          href="/dashboard/poziv"
+          href={{ pathname: "/dashboard/poziv", query: { invite: invite.id } }}
         >
           {t(
             "open"

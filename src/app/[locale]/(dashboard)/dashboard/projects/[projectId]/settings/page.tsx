@@ -13,6 +13,6 @@ export default async function ProjectSettingsPage({ params }: { params: Promise<
   const t = await getTranslations("Projects");
   return <Container><Page>
     <PageHeader title={t("settings.title")} backHref={`/dashboard/projects/${projectId}`} backLabel={t("back")} />
-    <ProjectSettings projectId={projectId} initialName={project.name} isEvent={Boolean(project.project_event_details)} />
+    <ProjectSettings projectId={projectId} initialName={project.name} />
   </Page></Container>;
 }

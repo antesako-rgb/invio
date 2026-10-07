@@ -8,39 +8,28 @@ import {
   setPhotoWallPhotoFavorite,
 } from "@/features/photo-walls/repositories/photos/setPhotoWallPhotoFavorite";
 
-
 /* ==========================================================================
-   Types
+ Types
 ========================================================================== */
-
 interface SetPhotoWallPhotoFavoriteInput {
-  photoWallId:
-    string;
-
-  photoId:
-    string;
-
-  isFavorite:
-    boolean;
+  photoWallId: string;
+  photoId: string;
+  isFavorite: boolean;
 }
-
-
 /* ==========================================================================
-   Set Photo Wall Photo Favorite Action
+ Set Photo Wall Photo Favorite Action
 ========================================================================== */
 
-export async function setPhotoWallPhotoFavoriteAction({
-  photoWallId,
-  photoId,
-  isFavorite,
-}: SetPhotoWallPhotoFavoriteInput): Promise<ActionResult<void>> {
+export async function setPhotoWallPhotoFavoriteAction(
+  { photoWallId, photoId, isFavorite, }:
+    SetPhotoWallPhotoFavoriteInput
+): Promise<ActionResult<void>> {
   try {
     await setPhotoWallPhotoFavorite(
       photoWallId,
       photoId,
       isFavorite
     );
-
     return {
       success:
         true,
@@ -48,17 +37,17 @@ export async function setPhotoWallPhotoFavoriteAction({
       data:
         undefined,
     };
-  } catch (
-    error
-  ) {
+  } catch (error) {
+    console.error(
+      "setPhotoWallPhotoFavoriteAction failed:",
+      error
+    );
     return {
       success:
         false,
 
-      message:
-        error instanceof Error
-          ? error.message
-          : "Favorit nije moguće ažurirati.",
+      code:
+        "PHOTO_FAVORITE_FAILED",
     };
   }
 }

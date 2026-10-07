@@ -14,6 +14,6 @@ export default async function MaterialEditorPage({ params }: { params: Promise<{
   if (!wall) notFound();
   const data = buildPhotoWallMaterialRenderData({ material, locale, photoWallPublicId: wall.public_id });
   return <PhotoWallMaterialEditorView key={material.id} materialId={material.id} materialName={material.name}
-    updatedAt={material.updated_at} projectId={wall.project_id} isPublic={wall.is_public}
+    updatedAt={material.updated_at} photoWallId={wall.id} isPublic={wall.is_public}
     templateId={material.template_id} variantId={material.variant_id} locale={locale} data={data} />;
 }

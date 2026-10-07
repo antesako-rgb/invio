@@ -52,14 +52,17 @@ revalidatePath(
   } catch (
     error
   ) {
+    console.error(
+      "publishPhotoWallAction failed:",
+      error
+    );
+
     return {
       success:
         false,
 
-      message:
-        error instanceof Error
-          ? error.message
-          : "Photo Wall operation failed.",
+      code:
+        "PHOTO_WALL_PUBLISH_FAILED",
     };
   }
 }

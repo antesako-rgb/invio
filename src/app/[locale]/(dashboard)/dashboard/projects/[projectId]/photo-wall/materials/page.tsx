@@ -1,47 +1,9 @@
-import {
-  notFound,
-} from "next/navigation";
-
-import PhotoWallMaterialsPage
-  from "@/features/photo-walls/pages/PhotoWallMaterialsPage/PhotoWallMaterialsPage";
-
-import {
-  getProjectPhotoWall,
-} from "@/features/photo-walls/repositories/photo-wall/getProjectPhotoWall";
-
-
-/* ==========================================================================
-   Project Photo Wall Materials Page
-========================================================================== */
-
-export default async function ProjectPhotoWallMaterialsPage({
-  params,
-}: {
-  params:
-    Promise<{
-      projectId:
-        string;
-    }>;
-}) {
-  const {
-    projectId,
-  } =
-    await params;
-
-  const photoWall =
-    await getProjectPhotoWall(
-      projectId
-    );
-
-  if (!photoWall) {
-    notFound();
-  }
-
-  return (
-    <PhotoWallMaterialsPage
-      photoWallId={
-        photoWall.id
-      }
-    />
-  );
+import { notFound } from "next/navigation";
+import { redirect } from "@/i18n/navigation";
+import { getProjectPhotoWall } from "@/features/photo-walls/repositories/photo-wall/getProjectPhotoWall";
+export default async function Page({ params }: { params: Promise<{ projectId: string; locale: string }> }) {
+ const { projectId, locale } = await params;
+ const wall = await getProjectPhotoWall(projectId);
+ if (!wall) notFound();
+ redirect({ href: `/dashboard/photo-walls/${wall.id}/materials`, locale });
 }

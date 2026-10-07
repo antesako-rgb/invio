@@ -1,39 +1,265 @@
 "use client";
-import { useRef, useState, type FormEvent } from "react";
-import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
-import { Button } from "@/components/ui/button";
-import { ButtonLink } from "@/components/ui/button-link";
-import { Input } from "@/components/ui/input";
-import { Field } from "@/components/ui/field";
-import { createAlbumEntryAction } from "../../actions/createAlbumEntryAction";
+
+import {
+  useRef,
+  useId,
+  useState,
+  type FormEvent,
+} from "react";
+
+import {
+  useTranslations,
+} from "next-intl";
+
+import {
+  useRouter,
+} from "@/i18n/navigation";
+
+import type {
+  ActionErrorCode,
+} from "@/lib/actions/actionErrorCodes";
+
+import {
+  useActionError,
+} from "@/lib/actions/useActionError";
+
+import {
+  Button,
+} from "@/components/ui/button";
+
+import {
+  Field,
+} from "@/components/ui/field";
+
+import {
+  Input,
+} from "@/components/ui/input";
+
+import {
+  DialogFooter,
+} from "@/components/ui/dialog/dialog";
+
+import {
+  createAlbumEntryAction,
+} from "../../actions/createAlbumEntryAction";
+
 import styles from "./CreateAlbumForm.module.css";
 
-export default function CreateAlbumForm({ projectId }: { projectId?: string }) {
-  const t = useTranslations("Projects.create");
-  const router = useRouter();
-  const [name, setName] = useState("");
-  const [savedProjectId, setSavedProjectId] = useState(projectId);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState(false);
-  const lock = useRef(false);
-  async function submit(event: FormEvent<HTMLFormElement>) {
+
+/* ==========================================================================
+   Types
+========================================================================== */
+
+interface CreateAlbumFormProps {
+  projectId:
+    string;
+  onCancel: () => void;
+  onBusyChange: (busy: boolean) => void;
+}
+
+
+/* ==========================================================================
+   Create Album Form
+========================================================================== */
+
+export default function CreateAlbumForm({
+  projectId,
+  onCancel,
+  onBusyChange,
+}: CreateAlbumFormProps) {
+  const nameId = useId();
+  const t =
+    useTranslations(
+      "Projects.create"
+    );
+
+  const actionError =
+    useActionError();
+
+  const router =
+    useRouter();
+
+  const [
+    name,
+    setName,
+  ] =
+    useState("");
+
+  const [
+    busy,
+    setBusy,
+  ] =
+    useState(false);
+
+  const [
+    error,
+    setError,
+  ] =
+    useState<ActionErrorCode | null>(
+      null
+    );
+
+  const lock =
+    useRef(false);
+
+
+  /* ==========================================================================
+     Submit
+  ========================================================================== */
+
+  async function submit(
+    event: FormEvent<HTMLFormElement>
+  ) {
     event.preventDefault();
-    if (lock.current || !name.trim()) return;
-    lock.current = true; setBusy(true); setError(false);
+
+    const trimmedName =
+      name.trim();
+
+    if (
+      lock.current ||
+      !trimmedName
+    ) {
+      return;
+    }
+
+    lock.current =
+      true;
+
+    onBusyChange(true);
+
+    setBusy(
+      true
+    );
+
+    setError(
+      null
+    );
+
     try {
-      const result = await createAlbumEntryAction({ name: name.trim(), ...(savedProjectId ? { projectId: savedProjectId } : {}) });
-      if (!result.success) { setSavedProjectId(result.projectId ?? savedProjectId); setError(true); return; }
-      router.push(`/editor/album/${result.albumId}/uredi`); router.refresh();
-    } catch { setError(true); }
-    finally { lock.current = false; setBusy(false); }
+      const result =
+        await createAlbumEntryAction({
+          name:
+            trimmedName,
+
+          projectId,
+        });
+
+      if (
+        !result.success
+      ) {
+        setError(
+          result.code
+        );
+
+        return;
+      }
+
+      router.push(
+        `/editor/album/${result.data.albumId}/uredi`
+      );
+
+      router.refresh();
+    } catch {
+      setError(
+        "ALBUM_CREATE_FAILED"
+      );
+    } finally {
+      onBusyChange(false);
+      lock.current =
+        false;
+
+      setBusy(
+        false
+      );
+    }
   }
-  return <form className={styles.form} onSubmit={submit} aria-busy={busy}>
-    <Field id="album-name" label={t("albumName")}><Input id="album-name" required maxLength={150} value={name} disabled={busy} onChange={event => setName(event.target.value)} placeholder={t("albumPlaceholder")} /></Field>
-    {error && <p role="alert" className={styles.error}>{t(!projectId && savedProjectId ? "partialError" : "error")}</p>}
-    <div className={styles.actions}>
-      <Button type="submit" disabled={busy || !name.trim()} loading={busy}>{t("createAlbum")}</Button>
-      <ButtonLink href={savedProjectId ? `/dashboard/projects/${savedProjectId}` : "/dashboard/projects/new"} variant="ghost">{t(savedProjectId && error ? "openSaved" : "cancel")}</ButtonLink>
-    </div>
-  </form>;
+
+
+  /* ==========================================================================
+     Render
+  ========================================================================== */
+
+  return (
+    <form
+      className={
+        styles.form
+      }
+      onSubmit={
+        submit
+      }
+      aria-busy={
+        busy
+      }
+    >
+      <Field
+        id={nameId}
+        label={
+          t(
+            "albumName"
+          )
+        }
+      >
+        <Input
+          id={nameId}
+          required
+          maxLength={
+            150
+          }
+          value={
+            name
+          }
+          disabled={
+            busy
+          }
+          onChange={
+            (event) =>
+              setName(
+                event.target.value
+              )
+          }
+          placeholder={
+            t(
+              "albumPlaceholder"
+            )
+          }
+        />
+      </Field>
+
+      {error && (
+        <p
+          role="alert"
+          className={
+            styles.error
+          }
+        >
+          {actionError(error)}
+        </p>
+      )}
+
+      <DialogFooter
+        className={
+          styles.actions
+        }
+      >
+        <Button type="button" variant="ghost" disabled={busy} onClick={onCancel}>
+          {t("cancel")}
+        </Button>
+        <Button
+          type="submit"
+          disabled={
+            busy ||
+            !name.trim()
+          }
+          loading={
+            busy
+          }
+        >
+          {t(
+            "createAlbum"
+          )}
+        </Button>
+
+      </DialogFooter>
+    </form>
+  );
 }

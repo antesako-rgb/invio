@@ -1,4 +1,5 @@
 "use client";
+import { useActionError } from "@/lib/actions/useActionError";
 
 import {
   useTranslations,
@@ -41,6 +42,7 @@ export default function PhotoWallNameEdit({
   name,
   appearance,
 }: PhotoWallNameEditProps) {
+  const actionError = useActionError();
   const t =
     useTranslations(
       "PhotoWalls.management.name"
@@ -66,7 +68,7 @@ export default function PhotoWallNameEdit({
       !result.success
     ) {
       throw new Error(
-        result.message
+        actionError(result.code)
       );
     }
 

@@ -26,7 +26,7 @@ export function usePhotoWallMaterialEditor(materialId: string, initial: PhotoWal
           materialId, expectedUpdatedAt: revision.current, draft: parsed.data,
         });
         if (result.success) {
-          revision.current = result.updatedAt;
+          revision.current = result.data.updatedAt;
           setSaved(JSON.stringify(parsed.data));
           setDraft(current => JSON.stringify(current) === snapshot ? parsed.data : current);
         } else {

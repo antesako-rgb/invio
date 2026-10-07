@@ -1,31 +1,35 @@
 {
   "public": {
     "ariaLabel": "Glavna navigacija",
-    "templates": "Predlo\u0161ci",
+    "templates": "Predlošci",
     "howItWorks": "Kako funkcionira",
     "login": "Prijava",
-    "register": "Zapo\u010dni",
-    "dashboard": "Nadzorna plo\u010da"
+    "register": "Započni",
+    "dashboard": "Nadzorna ploča"
   },
   "user": {
     "fallbackName": "Korisnik",
-    "dashboard": "Nadzorna plo\u010da",
+    "dashboard": "Nadzorna ploča",
     "logout": "Odjava"
   },
   "language": {
     "ariaLabel": "Promijeni jezik"
   },
   "dashboard": {
-    "ariaLabel": "Navigacija nadzorne plo\u010de",
+    "projectEvent": "Događaj",
+    "projectInvitations": "Pozivnice",
+    "ariaLabel": "Navigacija nadzorne ploče",
     "overview": "Pregled",
     "organize": "Organiziraj",
-    "account": "Ra\u010dun",
-    "more": "Vi\u0161e",
-    "moreDescription": "Doga\u0111aji i odjava s ra\u010duna",
+    "account": "Račun",
+    "more": "Više",
+    "moreDescription": "Događaji, moj profil i odjava s računa",
     "logout": "Odjava",
-    "collapse": "Sa\u017emi navigaciju",
-    "expand": "Pro\u0161iri navigaciju",
-    "content": "Moje uspomene",
-    "create": "Kreiraj"
+    "collapse": "Sažmi navigaciju",
+    "expand": "Proširi navigaciju",
+    "content": "Moji događaji",
+    "create": "Kreiraj",
+    "albums": "Digitalni albumi",
+    "profile": "Moj profil"
   }
 }

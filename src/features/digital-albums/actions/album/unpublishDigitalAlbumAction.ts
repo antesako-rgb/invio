@@ -17,9 +17,8 @@ import type {
   UnpublishDigitalAlbumInput,
 } from "@/features/digital-albums/types/digitalAlbum.types";
 
-
 /* ==========================================================================
-   Unpublish Digital Album Action
+ Unpublish Digital Album Action
 ========================================================================== */
 
 export async function unpublishDigitalAlbumAction(
@@ -27,15 +26,13 @@ export async function unpublishDigitalAlbumAction(
     UnpublishDigitalAlbumInput
 ): Promise<ActionResult<DigitalAlbum>> {
   try {
-    const album =
-      await unpublishDigitalAlbum(
-        input
-      );
-
-revalidatePath(
-  `/dashboard/projects/${album.project_id}/albums/${album.id}`
-);
-
+    const album = await unpublishDigitalAlbum(
+      input
+    );
+    revalidatePath(
+      "/[locale]/dashboard",
+      "layout"
+    );
     return {
       success:
         true,
@@ -48,15 +45,12 @@ revalidatePath(
       "unpublishDigitalAlbumAction error:",
       error
     );
-
     return {
       success:
         false,
 
-      message:
-        error instanceof Error
-          ? error.message
-          : "Nije moguće ukloniti objavu digitalnog albuma.",
+      code:
+        "ALBUM_PUBLISH_FAILED",
     };
   }
 }

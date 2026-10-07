@@ -1,4 +1,5 @@
 "use client";
+import { useActionError } from "@/lib/actions/useActionError";
 
 import {
   useEffect,
@@ -88,6 +89,7 @@ export function usePhotoWallUpload({
   uploadError,
   onSuccess,
 }: UsePhotoWallUploadOptions) {
+  const actionError = useActionError();
   /* ==========================================================================
      State
   ========================================================================== */
@@ -557,7 +559,7 @@ export function usePhotoWallUpload({
           );
 
           setError(
-            result.message ||
+            actionError(result.code) ||
               uploadError
           );
 

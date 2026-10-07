@@ -45,7 +45,7 @@ export default function DigitalAlbumManagementPage({
   return (
     <Container>
       <Page>
-        <ProjectProductContext
+        <ProjectProductContext product="albums"
           projectId={
             album.project_id
           }

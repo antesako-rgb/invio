@@ -1,62 +1,57 @@
 {
   "overview": {
     "welcome": {
-      "title": "Dobrodo\u0161li, {name}!",
-      "titleFallback": "Dobrodo\u0161li!",
-      "description": "Va\u0161i doga\u0111aji, fotografije i uspomene na jednom mjestu."
+      "title": "Dobrodošli, {name}!",
+      "titleFallback": "Dobrodošli!",
+      "description": "Vaši događaji, fotografije i uspomene na jednom mjestu."
     },
     "brandMessage": {
-      "title": "Memiva je ovdje kako bi va\u017ene \u017eivotne trenutke u\u010dinila jo\u0161 posebnijima.",
-      "description": "Hvala vam \u0161to ste dio na\u0161e pri\u010de!"
+      "title": "Memiva je ovdje kako bi važne životne trenutke učinila još posebnijima.",
+      "description": "Hvala vam što ste dio naše priče!"
     },
     "invites": {
       "title": "Poziv za suradnju",
       "description": "Pozvani ste na suradnju.",
-      "open": "Pogledaj poziv"
+      "open": "Pogledaj poziv",
+      "profileMissing": "Pozive za suradnju trenutačno nije moguće prikazati jer profil vašeg računa nije dostupan. Obratite se podršci za provjeru računa."
     },
     "products": {
       "photoWall": {
         "title": "Photo Wall",
-        "description": "Mjesto za fotografije gostiju s va\u0161eg doga\u0111aja."
+        "description": "Mjesto za fotografije gostiju s vašeg događaja."
       },
       "album": {
         "title": "Digitalni album",
-        "description": "Va\u0161a digitalna knjiga uspomena."
+        "description": "Vaša digitalna knjiga uspomena."
       }
     }
   },
   "onboarding": {
-    "eyebrow": "Dobrodo\u0161li u Memivu",
-    "title": "Zapo\u010dnite svoju pri\u010du",
-    "description": "Kreirajte doga\u0111aj i organizirajte sve na jednom mjestu ili izradite samostalni digitalni album.",
+    "eyebrow": "Dobrodošli u Memivu",
+    "title": "Započnite svoju priču",
+    "description": "Kreirajte događaj i organizirajte sve na jednom mjestu.",
     "event": {
-      "title": "Doga\u0111aj",
-      "description": "Organizirajte svoj doga\u0111aj na jednom mjestu. Dodajte Photo Wall, digitalne albume i pozivnicu \u2014 sve jednostavno i pregledno.",
-      "futureNote": "Uskoro i raspored sjedenja, unutar va\u0161eg doga\u0111aja.",
-      "action": "Kreiraj doga\u0111aj"
+      "title": "Kreiraj događaj",
+      "description": "Unesite podatke o događaju. Photo Wall kreira se automatski, a pozivnice i digitalne albume možete dodati kasnije.",
+      "futureNote": "Uskoro i raspored sjedenja, unutar vašeg događaja.",
+      "action": "Kreiraj događaj"
     },
-    "album": {
-      "title": "Digitalni album",
-      "description": "Kreirajte samostalnu digitalnu knjigu uspomena. Idealno za putovanja, obitelj, poseban poklon ili bilo koju kolekciju fotografija.",
-      "action": "Kreiraj digitalni album"
-    },
-    "productsTitle": "Sve za va\u0161e doga\u0111aje i uspomene",
-    "productsDescription": "Photo Wall, pozivnice i raspored sjedenja dio su doga\u0111aja. Digitalni album mo\u017ee biti dio doga\u0111aja ili va\u0161a samostalna pri\u010da.",
+    "productsTitle": "Sve za vaše događaje i uspomene",
+    "productsDescription": "Photo Wall, pozivnice i digitalni albumi dio su vašeg događaja. Raspored sjedenja dolazi uskoro.",
     "comingSoon": "Uskoro",
-    "partOfEvent": "Dio doga\u0111aja",
-    "eventOrStandalone": "Dio doga\u0111aja ili samostalno",
+    "partOfEvent": "Dio događaja",
     "products": {
       "photoWall": {
         "title": "Photo Wall",
-        "description": "Prikupljajte i dijelite fotografije gostiju s va\u0161eg doga\u0111aja."
+        "description": "Prikupljajte i dijelite fotografije gostiju s vašeg događaja."
       },
       "albums": {
         "title": "Digitalni albumi",
-        "description": "Izradite jedan ili vi\u0161e albuma uspomena."
+        "description": "Izradite jedan ili više albuma uspomena."
       },
       "invitations": {
         "title": "Pozivnice",
-        "description": "Kreirajte moderne digitalne pozivnice za va\u0161 doga\u0111aj."
+        "description": "Kreirajte moderne digitalne pozivnice za vaš događaj."
       },
       "seating": {
         "title": "Raspored sjedenja",

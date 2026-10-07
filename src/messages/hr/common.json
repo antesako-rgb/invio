@@ -1,6 +1,25 @@
 {
-  "photoLibraryHelp": {"placement": "Za dodavanje ili zamjenu fotografije prvo odaberi mjesto za fotografiju na stranici, zatim fotografiju ovdje.", "usage": "\u2713 ozna\u010dava kori\u0161tenu fotografiju; 3\u00d7 zna\u010di da se koristi na tri mjesta.", "description": "Olovkom uredi opis, a ko\u0161em ukloni fotografiju iz biblioteke."},
-  "photoDescription": {"edit": "Uredi opis fotografije", "label": "Opis", "hint": "Vrijedi na svim mjestima unutar ovog proizvoda. Druge pozivnice, albumi i Photo Wallovi zadr\u017eavaju svoje opise.", "legacy": "Poseban tekst ovog mjesta", "legacyHint": "Ovo mjesto koristi vlastiti spremljeni tekst umjesto opisa fotografije.", "reset": "Koristi opis fotografije", "cancel": "Odustani", "save": "Primijeni", "error": "Opis nije spremljen. Poku\u0161aj ponovno."},
+  "notFound": {
+    "title": "Stranica nije pronađena",
+    "description": "Stranica koju tražite ne postoji ili je premještena.",
+    "backHome": "Povratak na početnu"
+  },
+  "photoLibraryHelp": {
+    "placement": "Za dodavanje ili zamjenu fotografije prvo odaberi mjesto za fotografiju na stranici, zatim fotografiju ovdje.",
+    "usage": "✓ označava korištenu fotografiju; 3× znači da se koristi na tri mjesta.",
+    "description": "Olovkom uredi opis, a košem ukloni fotografiju iz biblioteke."
+  },
+  "photoDescription": {
+    "edit": "Uredi opis fotografije",
+    "label": "Opis",
+    "hint": "Vrijedi na svim mjestima unutar ovog proizvoda. Druge pozivnice, albumi i Photo Wallovi zadržavaju svoje opise.",
+    "legacy": "Poseban tekst ovog mjesta",
+    "legacyHint": "Ovo mjesto koristi vlastiti spremljeni tekst umjesto opisa fotografije.",
+    "reset": "Koristi opis fotografije",
+    "cancel": "Odustani",
+    "save": "Primijeni",
+    "error": "Opis nije spremljen. Pokušaj ponovno."
+  },
   "appName": "Memiva",
   "loading": "Učitavanje...",
   "backToTop": "Natrag na vrh",
@@ -16,5 +35,48 @@
   "filePicker": {
     "select": "Odaberi fotografiju"
   },
-  "metaDescription": "Memiva ? podijelite fotografije i sa?uvajte uspomene sa svojih doga?aja."
+  "metaDescription": "Memiva ? podijelite fotografije i sa?uvajte uspomene sa svojih doga?aja.",
+  "errors": {
+    "INVALID_INPUT": "Provjerite unesene podatke.",
+    "VALIDATION": "Provjerite unesene podatke.",
+    "NOT_FOUND": "Traženi sadržaj nije pronađen.",
+    "FORBIDDEN": "Nemate dopuštenje za ovu radnju.",
+    "ACTION_FAILED": "Radnja nije dovršena. Pokušajte ponovno.",
+    "CONFLICT": "Sadržaj je promijenjen u drugoj sesiji. Ponovno ga učitajte prije spremanja.",
+    "SAVE_FAILED": "Promjene nije moguće spremiti. Pokušajte ponovno.",
+    "PROJECT_CREATE_FAILED": "Projekt nije moguće izraditi.",
+    "PROJECT_UPDATE_FAILED": "Projekt nije moguće ažurirati.",
+    "PROJECT_DELETE_FAILED": "Brisanje projekta ili čišćenje datoteka nije dovršeno.",
+    "EVENT_CREATE_FAILED": "Događaj nije moguće izraditi.",
+    "EVENT_UPDATE_FAILED": "Podatke o događaju nije moguće spremiti.",
+    "COLLABORATION_FAILED": "Radnju sa suradnjom nije moguće dovršiti.",
+    "ALBUM_CREATE_FAILED": "Digitalni album nije moguće izraditi.",
+    "ALBUM_UPDATE_FAILED": "Digitalni album nije moguće ažurirati.",
+    "ALBUM_DELETE_FAILED": "Brisanje albuma ili čišćenje datoteka nije dovršeno.",
+    "ALBUM_PUBLISH_FAILED": "Status objave albuma nije moguće promijeniti.",
+    "INVITATION_CREATE_FAILED": "Pozivnicu nije moguće izraditi.",
+    "INVITATION_UPDATE_FAILED": "Radnju s pozivnicom nije moguće dovršiti.",
+    "INVITATION_PUBLISH_FAILED": "Status objave pozivnice nije moguće promijeniti.",
+    "INVITATION_MISSING_PHOTO": "Pozivnica sadrži fotografiju koja više nije dostupna.",
+    "PHOTO_WALL_UPDATE_FAILED": "Photo Wall nije moguće ažurirati.",
+    "PHOTO_WALL_PUBLISH_FAILED": "Status objave Photo Walla nije moguće promijeniti.",
+    "MATERIAL_CREATE_FAILED": "Materijal nije moguće izraditi.",
+    "PHOTO_DESCRIPTION_FAILED": "Opis fotografije nije moguće spremiti.",
+    "PHOTO_UPLOAD_FAILED": "Fotografiju nije moguće prenijeti.",
+    "PHOTO_REMOVE_FAILED": "Uklanjanje fotografije nije dovršeno.",
+    "PHOTO_ADD_FAILED": "Fotografije nije moguće dodati.",
+    "PHOTO_FAVORITE_FAILED": "Oznaku omiljene fotografije nije moguće promijeniti.",
+    "PHOTOS_LOAD_FAILED": "Fotografije nije moguće učitati.",
+    "GUEST_ACTION_FAILED": "Radnju s gostima nije moguće dovršiti. Pokušajte ponovno.",
+    "GUEST_GROUP_EXISTS": "Grupa s ovim nazivom već postoji. Odaberite drugi naziv.",
+    "INVITATION_RSVP_SETTINGS_FAILED": "RSVP postavke nije moguće spremiti. Pokušajte ponovno.",
+    "RSVP_UNAVAILABLE": "Poveznica nije valjana ili pozivnica više nije dostupna.",
+    "RSVP_SUBMIT_FAILED": "Odgovor nije moguće spremiti. Pokušajte ponovno.",
+    "RSVP_CAPACITY_EXCEEDED": "Nema dovoljno slobodnih mjesta za ovaj RSVP odgovor.",
+    "RSVP_GUEST_LIMIT_EXCEEDED": "Broj osoba prelazi dopušteni broj za jedan RSVP odgovor.",
+    "RSVP_ANSWERS_INVALID": "Provjerite odgovore na obavezna pitanja. Obrazac se možda promijenio; osvježite stranicu.",
+    "RECIPIENT_ACTION_FAILED": "Radnju s primateljem nije moguće dovršiti. Pokušajte ponovno.",
+    "RECIPIENT_GUEST_CONFLICT": "Odabrani gost već pripada drugom primatelju ove pozivnice. Osvježite popis i odaberite dostupne goste.",
+    "RECIPIENT_GUESTS_LOCKED": "Nakon poslanog RSVP odgovora nije moguće mijenjati sastav gostiju primatelja."
+  }
 }

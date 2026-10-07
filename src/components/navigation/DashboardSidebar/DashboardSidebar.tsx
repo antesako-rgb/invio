@@ -1,4 +1,5 @@
 "use client";
+import { useProjectNavigation } from "../ProjectNavigationContext";
 
 import {
   useState,
@@ -35,7 +36,6 @@ import {
 } from "@/features/auth/hooks/useAuth";
 
 import {
-  usePathname,
   useRouter,
 } from "@/i18n/navigation";
 
@@ -69,13 +69,7 @@ export default function DashboardSidebar() {
   const router =
     useRouter();
 
-  const pathname =
-    usePathname();
-
-  const projectId =
-    pathname.match(
-      /^\/dashboard\/projects\/([0-9a-f]{8}-[0-9a-f-]{27})(?:\/|$)/i
-    )?.[1];
+  const { projectId, activeId } = useProjectNavigation();
 
   const [
     collapsed,
@@ -246,6 +240,7 @@ export default function DashboardSidebar() {
             )}
 
             <SideNavigation
+              activeId={activeId}
               items={[
                 {
                   id:
@@ -267,8 +262,7 @@ export default function DashboardSidebar() {
                 },
 
                 {
-                  id:
-                    "collaborators",
+                  id: "collaborators",
 
                   label:
                     projectText(

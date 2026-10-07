@@ -1,0 +1,87 @@
+{
+  "title": "Invitation guests",
+  "columns": {
+    "guest": "Guest",
+    "group": "Group",
+    "notes": "Notes",
+    "status": "RSVP status",
+    "actions": "Actions"
+  },
+  "rowActions": "Actions for: {name}",
+  "deleteGuest": "Delete guest",
+  "clearSearch": "Clear search",
+  "description": "Add guests for this invitation, organize groups and assign personalized links.",
+  "addGuest": "Add guest",
+  "editGuest": "Edit guest",
+  "edit": "Edit",
+  "delete": "Delete",
+  "save": "Save",
+  "cancel": "Cancel",
+  "close": "Close",
+  "loading": "Please wait…",
+  "retry": "Try again",
+  "all": "All",
+  "noGroup": "No group",
+  "search": "Search by first or last name",
+  "resetFilters": "Clear filters",
+  "results": "{count, plural, one {# guest} other {# guests}}",
+  "editNamed": "Edit {name}",
+  "deleteNamed": "Delete {name}",
+  "deleteTitle": "Delete guest?",
+  "deleteDescription": "Deleting a guest removes their answers. If they are the recipient’s last guest, the recipient and link are also deleted. Delete {name}?",
+  "status": {
+    "pending": "No response",
+    "attending": "Attending",
+    "not_attending": "Not attending"
+  },
+  "form": {
+    "description": "Add a name, choose a group and leave a note if needed.",
+    "firstName": "First name",
+    "lastName": "Last name (optional)",
+    "group": "Group (optional)",
+    "notes": "Note (optional)",
+    "notesHelp": "A private reminder for organising your event."
+  },
+  "validation": {
+    "firstName": "Enter the guest's first name.",
+    "invalid": "Check this field and its length.",
+    "groupName": "Enter a group name of up to 150 characters."
+  },
+  "empty": {
+    "title": "No guests yet",
+    "description": "Add the first guests for this invitation."
+  },
+  "noResults": {
+    "title": "No matching guests",
+    "description": "Try another name or clear the filters."
+  },
+  "groups": {
+    "title": "Guest groups",
+    "description": "Keep families, friends and colleagues together. Guests can also remain without a group.",
+    "new": "New group",
+    "rename": "Rename group",
+    "placeholder": "e.g. Friends from work",
+    "create": "Create group",
+    "empty": "No groups yet. Create one when you need it.",
+    "editNamed": "Rename group {name}",
+    "deleteNamed": "Delete group {name}",
+    "deleteTitle": "Delete group?",
+    "deleteDescription": "Delete “{name}”? Guests will stay on the list, without a group."
+  },
+  "success": {
+    "guestCreated": "Guest added.",
+    "guestUpdated": "Guest updated.",
+    "guestDeleted": "Guest deleted.",
+    "groupCreated": "Group created.",
+    "groupUpdated": "Group renamed.",
+    "groupDeleted": "Group deleted. Guests remain on the list."
+  },
+  "errors": {
+    "transport": "The action could not be completed. Please try again.",
+    "loadTitle": "Could not load guests",
+    "loadDescription": "Please try again. Your guest list has not been changed."
+  },
+  "workspaceLabel": "Guests and responses",
+  "guestList": "Guest list",
+  "linksAndResponses": "Links and responses"
+}

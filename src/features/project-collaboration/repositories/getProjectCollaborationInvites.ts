@@ -25,7 +25,7 @@ export async function getProjectCollaborationInvites(
       .from(
         "project_collaboration_invites"
       )
-      .select("*")
+      .select("id,project_id,email,invited_by,status,expires_at,responded_at,created_at,updated_at")
       .eq(
         "project_id",
         projectId

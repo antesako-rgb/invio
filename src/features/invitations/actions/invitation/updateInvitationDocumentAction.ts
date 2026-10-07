@@ -1,5 +1,9 @@
 "use server";
 
+import type {
+  ActionResult,
+} from "@/lib/actions/actionResult";
+
 import {
   revalidatePath,
 } from "next/cache";
@@ -22,20 +26,10 @@ import type {
 ========================================================================== */
 
 type UpdateInvitationDocumentActionResult =
-  | {
-      success: true;
-      data: Awaited<
-        ReturnType<
-          typeof updateInvitationDocument
-        >
-      >;
-    }
-  | {
-      success: false;
-      code:
-        | "CONFLICT"
-        | "SAVE_FAILED";
-    };
+  ActionResult<
+    Awaited<ReturnType<typeof updateInvitationDocument>>,
+    "CONFLICT" | "SAVE_FAILED"
+  >;
 
 
 /* ==========================================================================
@@ -43,7 +37,8 @@ type UpdateInvitationDocumentActionResult =
 ========================================================================== */
 
 export async function updateInvitationDocumentAction(
-  input: UpdateInvitationDocumentInput
+  input:
+    UpdateInvitationDocumentInput
 ): Promise<UpdateInvitationDocumentActionResult> {
   try {
     const data =
@@ -57,16 +52,20 @@ export async function updateInvitationDocumentAction(
     );
 
     return {
-      success: true,
+      success:
+        true,
+
       data,
     };
   } catch (error) {
     return {
-      success: false,
+      success:
+        false,
+
       code:
         error instanceof InvitationSaveConflict
-          ? "CONFLICT"
-          : "SAVE_FAILED",
+            ? "CONFLICT"
+            : "SAVE_FAILED",
     };
   }
 }

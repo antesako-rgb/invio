@@ -1,4 +1,5 @@
 "use client";
+import { useActionError } from "@/lib/actions/useActionError";
 
 import {
   useState,
@@ -54,6 +55,7 @@ export default function DigitalAlbumStatusAction({
      Translation
   ========================================================================== */
 
+  const actionError = useActionError();
   const t =
     useTranslations(
       "DigitalAlbums.management.statusCard"
@@ -104,7 +106,7 @@ export default function DigitalAlbumStatusAction({
 
       if (!result.success) {
         toast.error(
-          result.message
+          actionError(result.code)
         );
 
         return;

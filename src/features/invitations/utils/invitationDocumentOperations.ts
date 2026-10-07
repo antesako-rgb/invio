@@ -176,6 +176,7 @@ export function changeInvitationPageLayout(
   return {
     ...page,
     type,
+    rsvp: type === "rsvp" ? page.rsvp : undefined,
     layout,
     photos,
     unplacedPhotos:
@@ -348,6 +349,7 @@ export function duplicateInvitationPage(
     document.pages[
       pageIndex
     ];
+  if (source.type === "rsvp") return document;
 
   const duplicate: InvitationDocumentPage = {
     ...source,

@@ -31,31 +31,36 @@ const buttonVariants =
       "items-center",
       "justify-center",
 
-      "rounded-xl",
+      "rounded-full",
 
       "border",
       "border-transparent",
 
       "text-sm",
-      "font-semibold",
+      "font-medium",
       "whitespace-nowrap",
 
-      "shadow-xs",
+      "shadow-none",
 
-      "transition-all",
+      "transition-[color,background-color,border-color,box-shadow]",
       "duration-200",
+      "motion-reduce:transition-none",
 
       "outline-none",
       "select-none",
 
-      "focus-visible:border-primary",
-      "focus-visible:ring-4",
-      "focus-visible:ring-ring/30",
+      "focus-visible:ring-offset-2",
+      "focus-visible:ring-offset-background",
+      "focus-visible:ring-2",
+      "focus-visible:ring-ring",
 
-      "active:scale-[0.98]",
 
       "disabled:pointer-events-none",
       "disabled:opacity-50",
+      "disabled:shadow-none",
+      "aria-disabled:pointer-events-none",
+      "aria-disabled:opacity-50",
+      "aria-disabled:shadow-none",
 
       "aria-invalid:border-destructive",
       "aria-invalid:ring-4",
@@ -69,25 +74,25 @@ const buttonVariants =
       variants: {
         variant: {
           default:
-            "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-sm",
+            "bg-primary text-primary-foreground shadow-xs hover:bg-primary-dark active:bg-primary-dark",
 
           secondary:
-            "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+            "border-primary/20 bg-secondary text-primary-dark font-semibold shadow-xs hover:border-primary/40 hover:bg-primary/15 active:bg-primary/20",
 
           outline:
-            "border-primary/40 bg-background text-primary hover:border-primary/60 hover:bg-primary/5",
+            "border-border bg-background text-foreground hover:border-primary/30 hover:bg-secondary/60 active:bg-secondary",
 
           ghost:
-            "shadow-none hover:bg-muted hover:text-foreground",
+            "bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground active:bg-secondary",
 
           destructive:
-            "bg-destructive text-white hover:bg-destructive/90 hover:shadow-sm",
+            "bg-destructive text-white shadow-xs hover:bg-destructive/90 active:bg-destructive/85 focus-visible:ring-destructive",
 
           destructiveOutline:
-            "border-destructive/40 bg-destructive/5 text-destructive hover:border-destructive/60 hover:bg-destructive/10",
+            "border-destructive/25 bg-transparent text-destructive hover:border-destructive/40 hover:bg-destructive/5 active:bg-destructive/10 focus-visible:ring-destructive",
 
           link:
-            "border-transparent bg-transparent text-primary shadow-none underline-offset-4 hover:underline",
+            "border-transparent bg-transparent text-primary underline-offset-4 decoration-primary/40 hover:underline hover:decoration-primary active:text-primary-dark",
         },
 
         size: {
@@ -95,16 +100,16 @@ const buttonVariants =
             "h-10 gap-2 px-5 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
 
           xs:
-            "h-7 gap-1 rounded-lg px-2 text-xs [&_svg]:size-3",
+            "h-7 gap-1 px-2.5 text-xs [&_svg]:size-3",
 
           sm:
-            "h-9 gap-1.5 rounded-lg px-3 text-sm [&_svg]:size-3.5",
+            "h-9 gap-1.5 px-4 text-sm [&_svg]:size-3.5",
 
           lg:
             "h-11 gap-2 px-6 text-sm",
 
           icon:
-            "size-10",
+            "size-10 rounded-xl",
 
           "icon-xs":
             "size-7 rounded-lg [&_svg]:size-3",
@@ -113,7 +118,7 @@ const buttonVariants =
             "size-9 rounded-lg",
 
           "icon-lg":
-            "size-11",
+            "size-11 rounded-xl",
         },
       },
 

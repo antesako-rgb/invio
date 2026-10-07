@@ -17,9 +17,8 @@ import type {
   DigitalAlbumPhoto,
 } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
 
-
 /* ==========================================================================
-   Add Digital Album Photos Action
+ Add Digital Album Photos Action
 ========================================================================== */
 
 export async function addDigitalAlbumPhotosAction(
@@ -27,11 +26,12 @@ export async function addDigitalAlbumPhotosAction(
     AddDigitalAlbumPhotosInput
 ): Promise<ActionResult<DigitalAlbumPhoto[]>> {
   try {
-    const photos =
-      await addDigitalAlbumPhotos(
-        input
-      );
-    revalidatePath(`/editor/album/${input.albumId}/uredi`);
+    const photos = await addDigitalAlbumPhotos(
+      input
+    );
+    revalidatePath(
+      `/editor/album/${input.albumId}/uredi`
+    );
     return {
       success:
         true,
@@ -44,15 +44,12 @@ export async function addDigitalAlbumPhotosAction(
       "addDigitalAlbumPhotosAction error:",
       error
     );
-
     return {
       success:
         false,
 
-      message:
-        error instanceof Error
-          ? error.message
-          : "Nije moguće dodati fotografije u digitalni album.",
+      code:
+        "PHOTO_ADD_FAILED",
     };
   }
 }

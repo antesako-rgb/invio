@@ -16,9 +16,10 @@ interface InvitationContentPanelProps {
   theme: InvitationTheme;
   disabled: boolean;
   onChange: (update: (page: InvitationDocumentPage) => InvitationDocumentPage) => void;
+  rsvpExists?: boolean;
 }
 
-export default function InvitationContentPanel({ page, theme, disabled, onChange, mode = "design" }: InvitationContentPanelProps) {
+export default function InvitationContentPanel({ page, theme, disabled, onChange, mode = "design", rsvpExists = false }: InvitationContentPanelProps) {
   const fieldId = useId();
   const t = useTranslations("Invitations");
   const designs = getInvitationPageDesigns(page.type, theme);
@@ -29,7 +30,7 @@ export default function InvitationContentPanel({ page, theme, disabled, onChange
   }
 
   function changeType(type: string) {
-    if (!isInvitationPageType(type)) return;
+    if (!isInvitationPageType(type) || (type === "rsvp" && page.type !== "rsvp" && rsvpExists)) return;
     const layouts = getInvitationPageType(type).layouts;
 
     onChange(current => changeInvitationPageLayout(
@@ -67,7 +68,7 @@ export default function InvitationContentPanel({ page, theme, disabled, onChange
           id={`${fieldId}-type`}
           value={page.type}
           onValueChange={changeType}
-          options={Object.keys(invitationPageTypes).map(type => ({ value: type, label: t(`types.${type}`) }))} />
+          options={Object.keys(invitationPageTypes).filter(type => type !== "rsvp" || page.type === "rsvp" || !rsvpExists).map(type => ({ value: type, label: t(`types.${type}`) }))} />
       </div>
     </div>}
     </div>

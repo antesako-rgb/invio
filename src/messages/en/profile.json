@@ -1,0 +1,14 @@
+{
+  "title": "My profile",
+  "description": "Update your first and last name.",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "email": "Email",
+  "emailHelp": "Your email address cannot be changed here.",
+  "save": "Save changes",
+  "saved": "Profile saved.",
+  "error": "Changes could not be saved. Please try again.",
+  "invalidNames": "Names must contain at most 100 characters.",
+  "unavailable": "Your profile could not be loaded.",
+  "retry": "Try again"
+}

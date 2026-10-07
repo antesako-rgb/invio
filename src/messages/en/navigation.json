@@ -16,16 +16,20 @@
     "ariaLabel": "Change language"
   },
   "dashboard": {
+    "projectEvent": "Event",
+    "projectInvitations": "Invitations",
     "ariaLabel": "Dashboard navigation",
     "overview": "Overview",
     "organize": "Organize",
     "account": "Account",
     "more": "More",
-    "moreDescription": "Events and signing out",
+    "moreDescription": "Events, your profile and sign out",
     "logout": "Sign out",
     "collapse": "Collapse navigation",
     "expand": "Expand navigation",
-    "content": "My memories",
-    "create": "Create"
+    "content": "My events",
+    "create": "Create",
+    "albums": "Digital Albums",
+    "profile": "My profile"
   }
 }

@@ -33,9 +33,15 @@ export type InvitationDocumentPage = {
   variant?: string;
   layoutVersion: 1;
   content: InvitationContent;
+  rsvp?: InvitationRsvpConfiguration;
   photos: InvitationPhotoSlot[];
   unplacedPhotos?: InvitationPhotoSlot[];
 };
+
+export type RsvpQuestion = { id: string; type: "short_text" | "long_text" | "choice"; label: string; required: boolean; options?: { id: string; label: string }[] };
+export type RsvpAttendance = { label: string; attendingLabel: string; notAttendingLabel: string };
+export type InvitationRsvpConfiguration = { attendance: RsvpAttendance; questions: RsvpQuestion[] };
+export type RsvpAnswers = Record<string, string>;
 
 export type InvitationDocument = {
   eventDate?: string | null;

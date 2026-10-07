@@ -38,7 +38,7 @@ export default function InvitationPagesPanel({ onChangeType, onChangeDesign, pag
     <p className={styles.hint}>
       {t("templates.pageCount", { count: pages.length })}
     </p>
-    <InvitationPagePicker theme={theme} disabled={disabled || pages.length >= 100} onAdd={onAdd} />
+    <InvitationPagePicker rsvpExists={pages.some(page => page.type === "rsvp")} theme={theme} disabled={disabled || pages.length >= 100} onAdd={onAdd} />
     <DragDropProvider onDragEnd={dragEnd}>
       <ol className={styles.pageList}>
         {pages.map((page, index) => <InvitationPageRow
@@ -50,7 +50,7 @@ export default function InvitationPagesPanel({ onChangeType, onChangeDesign, pag
           theme={theme}
           photos={photos}
           onDuplicate={() => onDuplicate(page.id)}
-          canDuplicate={pages.length < 100}
+          canDuplicate={pages.length < 100 && page.type !== "rsvp"}
           index={index}
           active={page.id === activeId}
           disabled={disabled}

@@ -1,3 +1,4 @@
+import { ProjectNavigationProvider } from "@/components/navigation/ProjectNavigationContext";
 import type {
   ReactNode,
 } from "react";
@@ -32,7 +33,7 @@ export default function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   return (
-    <div
+    <ProjectNavigationProvider><div
       className={
         styles.layout
       }
@@ -56,6 +57,6 @@ export default function DashboardLayout({
       </div>
 
       <DashboardBottomNavigation />
-    </div>
+    </div></ProjectNavigationProvider>
   );
 }

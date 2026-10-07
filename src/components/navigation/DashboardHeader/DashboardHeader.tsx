@@ -1,5 +1,3 @@
-"use client";
-
 import LanguageSwitcher
   from "@/components/navigation/LanguageSwitcher/LanguageSwitcher";
 

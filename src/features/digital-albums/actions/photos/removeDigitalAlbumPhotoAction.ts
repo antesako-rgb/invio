@@ -16,9 +16,8 @@ import type {
   RemoveDigitalAlbumPhotoInput,
 } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
 
-
 /* ==========================================================================
-   Remove Digital Album Photo Action
+ Remove Digital Album Photo Action
 ========================================================================== */
 
 export async function removeDigitalAlbumPhotoAction(
@@ -26,14 +25,12 @@ export async function removeDigitalAlbumPhotoAction(
     RemoveDigitalAlbumPhotoInput
 ): Promise<ActionResult<void>> {
   try {
-await removeDigitalAlbumPhoto(
-  input
-);
-
-revalidatePath(
-  `/editor/album/${input.albumId}/uredi`
-);
-
+    await removeDigitalAlbumPhoto(
+      input
+    );
+    revalidatePath(
+      `/editor/album/${input.albumId}/uredi`
+    );
     return {
       success:
         true,
@@ -46,15 +43,12 @@ revalidatePath(
       "removeDigitalAlbumPhotoAction error:",
       error
     );
-
     return {
       success:
         false,
 
-      message:
-        error instanceof Error
-          ? error.message
-          : "Nije moguće ukloniti fotografiju iz digitalnog albuma.",
+      code:
+        "PHOTO_REMOVE_FAILED",
     };
   }
 }

@@ -51,6 +51,7 @@ import styles
 ========================================================================== */
 
 interface InvitationPagePickerProps {
+  rsvpExists?: boolean;
   theme: InvitationTheme;
   disabled: boolean;
   onAdd: (
@@ -68,6 +69,7 @@ export default function InvitationPagePicker({
   theme,
   disabled,
   onAdd,
+  rsvpExists = false,
 }: InvitationPagePickerProps) {
   const t =
     useTranslations(
@@ -93,7 +95,7 @@ export default function InvitationPagePicker({
   const types =
     Object.keys(
       invitationPageTypes
-    ) as InvitationPageType[];
+    ).filter(type => type !== "rsvp" || !rsvpExists) as InvitationPageType[];
 
   const choices =
     selected

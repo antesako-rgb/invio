@@ -11,7 +11,7 @@ import SideNavigation
 ========================================================================== */
 
 interface PhotoWallNavigationProps {
-  projectId:
+  photoWallId:
     string;
 }
 
@@ -21,7 +21,7 @@ interface PhotoWallNavigationProps {
 ========================================================================== */
 
 export default async function PhotoWallNavigation({
-  projectId,
+  photoWallId,
 }: PhotoWallNavigationProps) {
   const t =
     await getTranslations(
@@ -29,7 +29,7 @@ export default async function PhotoWallNavigation({
     );
 
   const base =
-    `/dashboard/projects/${projectId}/photo-wall`;
+    `/dashboard/photo-walls/${photoWallId}`;
 
   const items = [
     {

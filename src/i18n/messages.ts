@@ -11,6 +11,8 @@ export async function loadMessages(
   locale: Locale
 ) {
   const [
+    invitationGuests,
+    profile,
     common,
     footer,
     auth,
@@ -26,6 +28,8 @@ export async function loadMessages(
     photoWallMaterialTemplates,
   ] =
     await Promise.all([
+      import(`../messages/${locale}/invitation-guests.json`),
+      import(`../messages/${locale}/profile.json`),
       import(
         `../messages/${locale}/common.json`
       ),
@@ -75,6 +79,8 @@ export async function loadMessages(
     ]);
 
   return {
+    InvitationGuests: invitationGuests.default,
+    Profile: profile.default,
     Common:
       common.default,
 

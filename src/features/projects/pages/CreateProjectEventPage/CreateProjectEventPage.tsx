@@ -1,4 +1,5 @@
 "use client";
+import { ActionFailure } from "@/lib/actions/ActionFailure";
 
 import {
   useRouter,
@@ -16,8 +17,8 @@ import PageHeader
   from "@/components/ui/page-header/PageHeader";
 
 import {
-  createProjectEventAction,
-} from "../../actions/createProjectEventAction";
+  createProjectAction,
+} from "../../actions/createProjectAction";
 
 import ProjectEventForm
   from "../../components/ProjectEventForm/ProjectEventForm";
@@ -60,13 +61,13 @@ export default function CreateProjectEventPage() {
       );
 
     const result =
-      await createProjectEventAction(
+      await createProjectAction(
         payload
       );
 
     if (!result.success) {
-      throw new Error(
-        result.message
+      throw new ActionFailure(
+        result.code
       );
     }
 
@@ -95,7 +96,7 @@ export default function CreateProjectEventPage() {
       }
     >
       <PageHeader
-        backHref="/dashboard/projects/new"
+        backHref="/dashboard/projects"
         backLabel={
           t(
             "backToEvents"

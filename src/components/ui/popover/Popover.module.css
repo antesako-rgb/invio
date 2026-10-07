@@ -8,12 +8,13 @@
   padding: 0.5rem;
 
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: calc(var(--radius) * 1.35);
 
-  background: var(--card);
+  background: var(--popover);
+  color: var(--popover-foreground);
 
   box-shadow:
-    0 20px 60px rgb(0 0 0 / 0.12);
+    var(--shadow-md);
 
   animation: popoverIn 0.18s ease;
 }
@@ -21,11 +22,14 @@
 @keyframes popoverIn {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-3px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+@media (prefers-reduced-motion: reduce) {
+  .content { animation: none; }
 }

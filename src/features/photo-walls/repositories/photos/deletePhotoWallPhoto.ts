@@ -1,125 +1,15 @@
-import {
-  createServerClient,
-} from "@/lib/supabase/server";
+import { z } from "zod";
+import { createServerClient } from "@/lib/supabase/server";
+import { deleteOrphanProjectPhoto } from "@/features/project-photos/services/deleteOrphanProjectPhoto";
+import type { DeletePhotoWallPhotoInput } from "../../types/photoWallPhoto.types";
 
-import {
-  deleteEmptyPhotoWallPhotoDirectory,
-} from "@/features/project-photos/services/deleteEmptyPhotoWallPhotoDirectory";
-
-import {
-  deleteOrphanProjectPhoto,
-} from "@/features/project-photos/services/deleteOrphanProjectPhoto";
-
-import type {
-  DeletePhotoWallPhotoInput,
-} from "@/features/photo-walls/types/photoWallPhoto.types";
-
-
-/* ==========================================================================
-   Delete Photo Wall Photo
-========================================================================== */
-
-export async function deletePhotoWallPhoto(
-  input:
-    DeletePhotoWallPhotoInput
-): Promise<void> {
-  const supabase =
-    await createServerClient();
-
-
-  /* ==========================================================================
-     Get Photo
-  ========================================================================== */
-
-  const {
-    data: photo,
-    error: photoError,
-  } =
-    await supabase
-      .from(
-        "project_photos"
-      )
-      .select(
-        "id, image_path"
-      )
-      .eq(
-        "id",
-        input.photoId
-      )
-      .maybeSingle();
-
-  if (
-    photoError
-  ) {
-    console.error(
-      "deletePhotoWallPhoto get photo error:",
-      photoError
-    );
-
-    throw new Error(
-      "Fotografiju nije moguće učitati."
-    );
-  }
-
-  if (
-    !photo
-  ) {
-    throw new Error(
-      "Fotografija nije pronađena."
-    );
-  }
-
-
-  /* ==========================================================================
-     Remove Photo Wall Association
-  ========================================================================== */
-
-  const {
-    error,
-  } =
-    await supabase.rpc(
-      "remove_photo_wall_photo",
-      {
-        p_photo_wall_id:
-          input.photoWallId,
-
-        p_photo_id:
-          input.photoId,
-      }
-    );
-
-  if (
-    error
-  ) {
-    console.error(
-      "deletePhotoWallPhoto error:",
-      error
-    );
-
-    throw new Error(
-      error.message
-    );
-  }
-
-
-  /* ==========================================================================
-     Delete Orphan Event Photo
-  ========================================================================== */
-
-  await deleteOrphanProjectPhoto({
-    photoId:
-      input.photoId,
-
-    imagePath:
-      photo.image_path,
+export async function deletePhotoWallPhoto(input: DeletePhotoWallPhotoInput): Promise<void> {
+  z.string().uuid().parse(input.photoWallId);
+  z.string().uuid().parse(input.photoId);
+  const client = await createServerClient();
+  const { error } = await client.rpc("remove_photo_wall_photo", {
+    p_photo_wall_id: input.photoWallId, p_photo_id: input.photoId,
   });
-
-
-  /* ==========================================================================
-     Delete Empty Photo Wall Directory
-  ========================================================================== */
-
-  await deleteEmptyPhotoWallPhotoDirectory(
-    input.photoWallId
-  );
+  if (error) throw error;
+  await deleteOrphanProjectPhoto({ photoId: input.photoId });
 }

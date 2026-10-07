@@ -1,5 +1,5 @@
 import type {
-  ProjectEventDetails,
+  Project,
 } from "@/features/projects/types/project.types";
 
 import {
@@ -45,7 +45,7 @@ interface PhotoWallMaterialContentDefaults {
 
 export function createInitialPhotoWallMaterialContent(
   event:
-    ProjectEventDetails | null,
+    Pick<Project, "start_date" | "start_time" | "location_name" | "location_address">,
 
   defaults:
     PhotoWallMaterialContentDefaults
@@ -85,24 +85,24 @@ export function createInitialPhotoWallMaterialContent(
       ...content.date,
 
       start_date:
-        event?.start_date ?? null,
+        event.start_date ?? null,
     },
 
     time: {
       ...content.time,
 
       start_time:
-        event?.start_time ?? null,
+        event.start_time ?? null,
     },
 
     location: {
       ...content.location,
 
       name:
-        event?.location_name ?? null,
+        event.location_name ?? null,
 
       address:
-        event?.location_address ?? null,
+        event.location_address ?? null,
     },
   };
 }

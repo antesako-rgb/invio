@@ -1,0 +1,14 @@
+{
+  "title": "Moj profil",
+  "description": "Uredi svoje ime i prezime.",
+  "firstName": "Ime",
+  "lastName": "Prezime",
+  "email": "Email",
+  "emailHelp": "Email adresu ovdje nije moguće promijeniti.",
+  "save": "Spremi promjene",
+  "saved": "Profil je spremljen.",
+  "error": "Promjene nisu spremljene. Pokušaj ponovno.",
+  "invalidNames": "Ime i prezime mogu imati najviše 100 znakova.",
+  "unavailable": "Profil nije moguće učitati.",
+  "retry": "Pokušaj ponovno"
+}

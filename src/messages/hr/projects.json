@@ -1,8 +1,8 @@
 {
-  "allContent": "Moje uspomene",
+  "allContent": "Moji događaji",
   "back": "Natrag",
   "backToContent": "Natrag: {name}",
-  "editEvent": "Uredi podatke o doga\u0111aju",
+  "editEvent": "Uredi podatke o događaju",
   "navigation": {
     "workspace": "Radni prostor",
     "overview": "Pregled",
@@ -10,63 +10,74 @@
     "settings": "Postavke"
   },
   "dashboard": {
-    "title": "Moje uspomene",
-    "description": "Va\u0161i doga\u0111aji i digitalni albumi na jednom mjestu.",
+    "newEvent": "Novi događaj",
+    "title": "Moji događaji",
+    "description": "Vaši događaji i njihove uspomene na jednom mjestu.",
     "create": "Kreiraj",
-    "emptyTitle": "Sa\u010duvajte prve uspomene",
-    "emptyDescription": "Kreirajte doga\u0111aj ili zapo\u010dnite samostalni digitalni album.",
-    "albumContent": "Digitalni album",
-    "emptyContent": "Prostor za va\u0161e uspomene",
+    "emptyTitle": "Sačuvajte prve uspomene",
+    "emptyDescription": "Kreirajte događaj pa dodajte pozivnice i digitalne albume.",
     "photoWall": "Photo Wall",
     "albumCount": "{count, plural, one {# digitalni album} few {# digitalna albuma} other {# digitalnih albuma}}",
-    "noProducts": "Jo\u0161 nema dodanih proizvoda.",
-    "openAlbum": "Uredi album",
+    "noProducts": "Još nema dodanih proizvoda.",
     "open": "Otvori",
     "manage": "Upravljaj",
-    "all": "Prika\u017ei sve",
+    "all": "Prikaži sve",
     "invitation": "Pozivnica"
   },
   "create": {
-    "title": "\u0160to \u017eelite kreirati?",
-    "description": "Zapo\u010dnite doga\u0111ajem ili digitalnim albumom.",
     "back": "Natrag",
-    "event": "Doga\u0111aj",
-    "eventDescription": "Unesite podatke o doga\u0111aju. Photo Wall i albume mo\u017eete dodati kasnije.",
-    "album": "Digitalni album",
-    "albumDescription": "Slo\u017eite vlastitu knjigu uspomena, bez kreiranja doga\u0111aja.",
+    "albumDescription": "Dodajte digitalni album ovom događaju.",
     "createAlbum": "Kreiraj album",
     "albumName": "Naziv albuma",
     "albumPlaceholder": "npr. Putovanje u Japan",
     "cancel": "Odustani",
-    "error": "Album nije kreiran. Poku\u0161ajte ponovno.",
-    "partialError": "Prostor je spremljen, ali album nije kreiran. Poku\u0161ajte ponovno ili otvorite spremljeni prostor.",
-    "openSaved": "Otvori spremljeno"
+    "error": "Album nije kreiran. Pokušajte ponovno."
   },
   "products": {
     "photoWall": "Photo Wall",
     "wallDescription": "Prikupite i podijelite fotografije gostiju.",
-    "openWall": "Otvori Photo Wall",
+    "openWall": "Upravljaj Photo Wallom",
     "createWall": "Kreiraj Photo Wall",
-    "noWall": "Photo Wall jo\u0161 nije kreiran.",
+    "noWall": "Photo Wall još nije kreiran.",
     "albums": "Digitalni albumi",
     "newAlbum": "Novi digitalni album",
-    "noAlbums": "Jo\u0161 nema digitalnih albuma.",
+    "noAlbums": "Nema albuma",
+    "noInvitations": "Nema pozivnica",
+    "createInvitation": "Kreiraj pozivnicu",
+    "createAlbum": "Kreiraj album",
     "published": "Objavljeno",
     "draft": "Skica",
     "editAlbum": "Uredi album",
     "manageAlbum": "Postavke albuma",
-    "createError": "Photo Wall nije kreiran. Poku\u0161ajte ponovno."
+    "createError": "Photo Wall nije kreiran. Pokušajte ponovno.",
+    "invitations": "Pozivnice",
+    "invitationDescription": "Kreirajte pozivnice i podijelite detalje događaja.",
+    "invitationCount": "{count, plural, one {# pozivnica} few {# pozivnice} other {# pozivnica}}",
+    "invitationEmpty": "Odaberite predložak i izradite prvu pozivnicu.",
+    "manageInvitations": "Upravljaj pozivnicama",
+    "chooseTemplate": "Odaberi predložak",
+    "wallPublishedHint": "Javna poveznica je aktivna. Upravljajte fotografijama i dijeljenjem.",
+    "wallDraftHint": "Photo Wall je pripremljen. Objavite ga kada budete spremni za dijeljenje.",
+    "seating": "Raspored sjedenja",
+    "seatingDescription": "Planiranje stolova i mjesta za goste.",
+    "comingSoon": "Uskoro",
+    "seatingHint": "Ova funkcionalnost još nije dostupna.",
+    "albumDescription": "Sačuvajte fotografije u digitalnim albumima.",
+    "albumCount": "{count, plural, one {# album} few {# albuma} other {# albuma}}",
+    "manageAlbums": "Upravljaj albumima",
+    "publishedCount": "Objavljeno: {count}",
+    "navigation": "Proizvodi projekta"
   },
   "settings": {
     "title": "Postavke",
     "name": "Naziv",
     "save": "Spremi promjene",
     "saved": "Promjene su spremljene.",
-    "error": "Promjena nije dovr\u0161ena. Osvje\u017eite pregled prije ponovnog poku\u0161aja.",
-    "deleteEvent": "Izbri\u0161i doga\u0111aj",
-    "deleteContent": "Izbri\u0161i sadr\u017eaj",
-    "deleteDescription": "Trajno bri\u0161e ovaj prostor, sve njegove albume, Photo Wall, fotografije i suradnje.",
-    "confirm": "Trajno izbri\u0161i",
+    "error": "Promjena nije dovršena. Osvježite pregled prije ponovnog pokušaja.",
+    "deleteEvent": "Izbriši događaj",
+    "deleteContent": "Izbriši sadržaj",
+    "deleteDescription": "Trajno briše ovaj prostor, sve njegove albume, Photo Wall, fotografije i suradnje.",
+    "confirm": "Trajno izbriši",
     "cancel": "Odustani",
     "confirmTitle": "Izbrisati {name}?"
   },
@@ -75,22 +86,37 @@
     "description": "Upravljajte suradnicima.",
     "invite": "Pozovi suradnika",
     "email": "E-mail suradnika",
-    "linkHelp": "Kreirajte poveznicu i podijelite je s ovom osobom. E-mail se ne \u0161alje automatski.",
+    "linkHelp": "Poziv će se prikazati na dashboardu osobe koja se prijavi ovom e-mail adresom. Možete joj podijeliti i poveznicu. E-mail se ne šalje automatski.",
     "createLink": "Kreiraj poveznicu za poziv",
-    "createError": "Nije mogu\u0107e kreirati ili kopirati poveznicu. Provjerite adresu i poku\u0161ajte ponovno.",
+    "createError": "Nije moguće kreirati ili kopirati poveznicu. Provjerite adresu i pokušajte ponovno.",
     "link": "Poveznica za poziv",
     "copy": "Kopiraj poveznicu",
     "copied": "Kopirano",
-    "shareHelp": "Podijelite ovu poveznicu samo s osobom koja koristi {email}. Spremite je prije napu\u0161tanja ove stranice.",
-    "ownerOnly": "Samo vlasnik mo\u017ee pozivati suradnike.",
+    "shareHelp": "Podijelite ovu poveznicu samo s osobom koja koristi {email}. Spremite je prije napuštanja ove stranice.",
+    "ownerOnly": "Samo vlasnik može pozivati suradnike.",
     "members": "Suradnici",
     "member": "Suradnik",
-    "empty": "Jo\u0161 nema suradnika.",
-    "pendingTitle": "Pozivi na \u010dekanju",
-    "pending": "Na \u010dekanju",
+    "empty": "Još nema suradnika.",
+    "pendingTitle": "Pozivi na čekanju",
+    "pending": "Na čekanju",
+    "pendingHelp": "Primatelj može odgovoriti na dashboardu ili putem poveznice. Ako trebate ponovno podijeliti poziv, kreirajte novu poveznicu.",
+    "renewLink": "Nova poveznica",
+    "renewHelp": "Kreirajte novu poveznicu za {email}. Prethodni poziv i njegova poveznica više neće vrijediti.",
+    "expires": "Vrijedi do {date}",
+    "expired": "Istekao",
+    "cancelInvite": "Poništi poziv",
+    "removeMember": "Ukloni suradnika",
+    "cancelConfirm": "Poništiti poziv za {email}? Osoba više neće moći prihvatiti ovaj poziv.",
+    "removeConfirm": "Ukloniti suradnika {email}? Osoba će izgubiti pristup ovom događaju.",
+    "keep": "Odustani",
     "response": {
       "title": "Poziv za suradnju",
-      "account": "Prijavljeni ste kao {email}. Samo ra\u010dun kojem je poziv namijenjen mo\u017ee ga prihvatiti.",
+      "expires": "Vrijedi do {date}",
+      "backToDashboard": "Natrag na pregled",
+      "unavailable": "Poziv više nije dostupan za ovaj račun. Možda je istekao, poništen ili je na njega već odgovoreno.",
+      "account": "Prijavljeni ste kao {email}. Samo račun kojem je poziv namijenjen može ga prihvatiti.",
+      "accountHelp": "Samo račun kojem je poziv namijenjen može odgovoriti na njega.",
+      "profileMissing": "Pozive za suradnju trenutačno nije moguće prikazati jer profil vašeg računa nije dostupan. Obratite se podršci za provjeru računa.",
       "signInHelp": "Prijavite se e-mail adresom kojoj je ovaj poziv namijenjen.",
       "link": "Primljena poveznica za poziv",
       "linkHelp": "Zalijepite cijelu poveznicu koju vam je podijelio vlasnik.",
@@ -98,57 +124,57 @@
       "accept": "Prihvati",
       "decline": "Odbij",
       "signIn": "Prijavi se za odgovor",
-      "accepted": "Poziv je prihva\u0107en. Sada mo\u017eete sura\u0111ivati.",
+      "accepted": "Poziv je prihvaćen. Sada možete surađivati.",
       "declined": "Poziv je odbijen.",
       "continue": "Nastavi",
-      "error": "Nije mogu\u0107e otvoriti ili obraditi poziv. Provjerite poveznicu i ra\u010dun; poziv je mo\u017eda istekao ili je ve\u0107 iskori\u0161ten."
+      "error": "Nije moguće otvoriti ili obraditi poziv. Provjerite poveznicu i račun; poziv je možda istekao ili je već iskorišten."
     }
   },
   "eventDetails": {
     "types": {
-      "wedding": "Vjen\u010danje",
-      "birthday": "Ro\u0111endan",
-      "baptism": "Kr\u0161tenje",
-      "communion": "Prva pri\u010dest",
+      "wedding": "Vjenčanje",
+      "birthday": "Rođendan",
+      "baptism": "Krštenje",
+      "communion": "Prva pričest",
       "confirmation": "Krizma",
-      "business": "Poslovni doga\u0111aj",
+      "business": "Poslovni događaj",
       "other": "Ostalo"
     },
     "create": {
       "backToEvents": "Natrag",
-      "title": "Novi doga\u0111aj",
-      "description": "Unesite osnovne podatke i zapo\u010dnite organizaciju doga\u0111aja.",
-      "success": "Doga\u0111aj je uspje\u0161no kreiran."
+      "title": "Novi događaj",
+      "description": "Unesite osnovne podatke i započnite organizaciju događaja.",
+      "success": "Događaj je uspješno kreiran."
     },
     "edit": {
-      "backToEvent": "Natrag na doga\u0111aj",
-      "title": "Uredi doga\u0111aj",
-      "description": "A\u017eurirajte podatke i postavke doga\u0111aja.",
-      "success": "Promjene su uspje\u0161no spremljene."
+      "backToEvent": "Natrag na događaj",
+      "title": "Uredi događaj",
+      "description": "Ažurirajte podatke i postavke događaja.",
+      "success": "Promjene su uspješno spremljene."
     },
     "form": {
-      "validationError": "Provjerite unesene podatke i poku\u0161ajte ponovno.",
-      "submitError": "Do\u0161lo je do pogre\u0161ke prilikom spremanja doga\u0111aja.",
+      "validationError": "Provjerite unesene podatke i pokušajte ponovno.",
+      "submitError": "Došlo je do pogreške prilikom spremanja događaja.",
       "actions": {
-        "create": "Kreiraj doga\u0111aj",
+        "create": "Kreiraj događaj",
         "save": "Spremi promjene",
-        "clear": "O\u010disti",
+        "clear": "Očisti",
         "reset": "Odbaci promjene"
       },
       "basic": {
         "title": "Osnovni podaci",
-        "description": "Unesite osnovne podatke o doga\u0111aju.",
+        "description": "Unesite osnovne podatke o događaju.",
         "name": {
-          "label": "Naziv doga\u0111aja",
+          "label": "Naziv događaja",
           "placeholder": "npr. Ana & Marko"
         },
         "type": {
-          "label": "Vrsta doga\u0111aja",
-          "placeholder": "Odaberite vrstu doga\u0111aja"
+          "label": "Vrsta događaja",
+          "placeholder": "Odaberite vrstu događaja"
         },
         "customType": {
-          "label": "Druga vrsta doga\u0111aja",
-          "description": "Unesite vrstu koja najbolje opisuje va\u0161 doga\u0111aj.",
+          "label": "Druga vrsta događaja",
+          "description": "Unesite vrstu koja najbolje opisuje vaš događaj.",
           "placeholder": "npr. Obiteljsko okupljanje"
         },
         "locationName": {
@@ -157,7 +183,7 @@
         },
         "locationAddress": {
           "label": "Adresa lokacije",
-          "placeholder": "npr. Mihanovi\u0107eva 1, Zagreb"
+          "placeholder": "npr. Mihanovićeva 1, Zagreb"
         },
         "location": {
           "title": "Lokacija"
@@ -165,13 +191,13 @@
       },
       "schedule": {
         "title": "Datum i vrijeme",
-        "description": "Odaberite datum i vrijeme po\u010detka doga\u0111aja.",
+        "description": "Odaberite datum i vrijeme početka događaja.",
         "date": {
           "label": "Datum",
           "placeholder": "Odaberite datum"
         },
         "time": {
-          "start": "Vrijeme po\u010detka"
+          "start": "Vrijeme početka"
         }
       }
     }

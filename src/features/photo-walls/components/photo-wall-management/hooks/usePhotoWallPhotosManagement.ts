@@ -1,3 +1,4 @@
+import { useActionError } from "@/lib/actions/useActionError";
 import { updatePhotoWallPhotoDescriptionAction } from "../../../actions/photos/updatePhotoWallPhotoDescriptionAction";
 import {
   useState,
@@ -76,6 +77,7 @@ export function usePhotoWallPhotosManagement({
   favoriteCount,
   deleteSuccessMessage,
 }: UsePhotoWallPhotosManagementInput) {
+  const actionError = useActionError();
   /* ==========================================================================
      State
   ========================================================================== */
@@ -245,7 +247,7 @@ export function usePhotoWallPhotosManagement({
         !result.success
       ) {
         toast.error(
-          result.message
+          actionError(result.code)
         );
 
         return;
@@ -317,7 +319,7 @@ export function usePhotoWallPhotosManagement({
         !result.success
       ) {
         toast.error(
-          result.message
+          actionError(result.code)
         );
 
         return;
@@ -474,7 +476,7 @@ export function usePhotoWallPhotosManagement({
           );
 
           toast.error(
-            result.message
+            actionError(result.code)
           );
 
           setPendingPhotoId(
@@ -552,7 +554,7 @@ export function usePhotoWallPhotosManagement({
         !result.success
       ) {
         toast.error(
-          result.message
+          actionError(result.code)
         );
 
         return;
@@ -606,7 +608,7 @@ export function usePhotoWallPhotosManagement({
 
   async function updateDescription(photoId: string, value: string) {
     const result = await updatePhotoWallPhotoDescriptionAction(photoWallId, photoId, value);
-    if (!result.success) throw new Error(result.message);
+    if (!result.success) throw new Error(actionError(result.code));
     setGalleryPhotos(current => current.map(photo => photo.id === photoId ? { ...photo, description: result.data.description, alt: result.data.description ?? "" } : photo));
   }
   return {

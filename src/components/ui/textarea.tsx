@@ -38,18 +38,22 @@ const Textarea =
             "py-2",
             "text-base",
             "text-foreground",
-            "shadow-xs",
-            "transition-all",
+            "shadow-none",
+            "transition-[border-color,box-shadow,background-color]",
+            "duration-200",
+            "motion-reduce:transition-none",
             "outline-none",
 
             "placeholder:text-muted-foreground",
 
+            "hover:not-disabled:border-primary/30",
             "focus-visible:border-primary",
-            "focus-visible:ring-4",
-            "focus-visible:ring-ring/30",
+            "focus-visible:ring-2",
+            "focus-visible:ring-ring/20",
 
             "disabled:pointer-events-none",
             "disabled:opacity-50",
+            "disabled:bg-muted",
 
             "aria-invalid:border-destructive",
             "aria-invalid:ring-4",

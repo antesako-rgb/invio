@@ -1,0 +1,4 @@
+.options { display: grid; gap: .75rem; min-width: 0; }
+.option { display: flex; align-items: center; gap: .75rem; padding: .5rem 0; cursor: pointer; overflow-wrap: anywhere; }
+.option input { accent-color: var(--invitation-accent); width: 1rem; height: 1rem; flex-shrink: 0; }
+.option input:focus-visible { outline: 2px solid var(--invitation-accent); outline-offset: 3px; }

@@ -3,6 +3,7 @@ import type { InvitationContentField } from "../../config/invitationPageTypes";
 import { getInvitationPageType } from "../../config/invitationPageTypes";
 import type { InvitationDocumentPage } from "../../types/invitationDocument.types";
 import styles from "./InvitationPageContent.module.css";
+import InvitationRsvpPreview from "./InvitationRsvpPreview";
 
 /* ==========================================================================
    Types
@@ -58,6 +59,7 @@ export function InvitationPageContent({ page, locale, presentation, omit = [] }:
         }
         return <p key={field}>{invitationText(presentation, field, text)}</p>;
       })}
+      {page.type === "rsvp" && <InvitationRsvpPreview page={page} />}
     </div>
   );
 }

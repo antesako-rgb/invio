@@ -1,10 +1,9 @@
+import { ProjectNavigationBridge } from "@/components/navigation/ProjectNavigationContext";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
 import BackLink from "@/components/ui/back-link/BackLink";
 import { getProject } from "../../repositories/getProject";
-
-export default async function ProjectProductContext({ projectId }: { projectId: string }) {
-  const [project, t] = await Promise.all([getProject(projectId), getTranslations("Projects")]);
-  if (!project) notFound();
-  return <BackLink href={`/dashboard/projects/${projectId}`} label={t("backToContent", { name: project.name })} />;
+export default async function ProjectProductContext({ projectId, product }: { projectId: string; product?: "invitations" | "albums" | "photo-wall" }) {
+ const project = await getProject(projectId);
+ if (!project) notFound();
+ return <><ProjectNavigationBridge projectId={projectId} /><BackLink href={`/dashboard/projects/${projectId}${product ? `/${product}` : ""}`} label={project.name} /></>;
 }

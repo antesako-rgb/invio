@@ -84,24 +84,3 @@
 }
 
 
-/* ==========================================================================
-   Dropdown Profile
-========================================================================== */
-
-.profile {
-  display: flex;
-  align-items: center;
-
-  gap: 0.75rem;
-
-  padding: 0.625rem 0.5rem;
-}
-
-
-.profileIdentity {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-
-  min-width: 0;
-}

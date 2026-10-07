@@ -1,0 +1,20 @@
+.surface {
+  --background: var(--invitation-paper);
+  --foreground: var(--invitation-ink);
+  --primary: color-mix(in srgb, var(--invitation-accent) 55%, var(--invitation-ink));
+  --primary-dark: color-mix(in srgb, var(--invitation-accent) 35%, var(--invitation-ink));
+  --primary-foreground: var(--invitation-paper);
+  --secondary: var(--invitation-surface);
+  --secondary-foreground: var(--invitation-ink);
+  --muted: var(--invitation-surface);
+  --muted-foreground: color-mix(in srgb, var(--invitation-ink) 70%, var(--invitation-paper));
+  --border: var(--invitation-border);
+  --ring: var(--invitation-accent);
+  min-width: 0;
+  color: var(--invitation-ink);
+  font-family: var(--invitation-body-font);
+}
+.surface :is(input, textarea, select, button, label) { font-family: inherit; }
+.surface :is(input, textarea, select) { border-radius: .5rem; background-color: var(--invitation-surface); }
+.surface :is(input, textarea, select):disabled { opacity: .7; }
+.surface [data-slot="button"] { border-radius: .5rem; }

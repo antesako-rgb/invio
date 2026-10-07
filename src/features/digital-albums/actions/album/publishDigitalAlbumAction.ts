@@ -17,9 +17,8 @@ import type {
   PublishDigitalAlbumInput,
 } from "@/features/digital-albums/types/digitalAlbum.types";
 
-
 /* ==========================================================================
-   Publish Digital Album Action
+ Publish Digital Album Action
 ========================================================================== */
 
 export async function publishDigitalAlbumAction(
@@ -27,15 +26,13 @@ export async function publishDigitalAlbumAction(
     PublishDigitalAlbumInput
 ): Promise<ActionResult<DigitalAlbum>> {
   try {
-    const album =
-      await publishDigitalAlbum(
-        input
-      );
-
-revalidatePath(
-  `/dashboard/projects/${album.project_id}/albums/${album.id}`
-);
-
+    const album = await publishDigitalAlbum(
+      input
+    );
+    revalidatePath(
+      "/[locale]/dashboard",
+      "layout"
+    );
     return {
       success:
         true,
@@ -48,15 +45,12 @@ revalidatePath(
       "publishDigitalAlbumAction error:",
       error
     );
-
     return {
       success:
         false,
 
-      message:
-        error instanceof Error
-          ? error.message
-          : "Nije moguće objaviti digitalni album.",
+      code:
+        "ALBUM_PUBLISH_FAILED",
     };
   }
 }

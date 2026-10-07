@@ -9,5 +9,7 @@ export const metadata: Metadata = { robots: { index: false, follow: false }, ref
 export default async function CollaborationInvitePage() {
   const supabase = await createServerClient();
   const { data: { user } } = await supabase.auth.getUser();
-  return <Container><Page><CollaborationInviteResponse email={user?.email ?? null} /></Page></Container>;
+  const profile = user ? await supabase.from("profiles").select("email").eq("id", user.id).maybeSingle() : null;
+  if (profile?.error) throw profile.error;
+  return <Container><Page><CollaborationInviteResponse email={profile?.data?.email ?? null} isAuthenticated={!!user} /></Page></Container>;
 }

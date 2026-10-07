@@ -46,10 +46,10 @@ export default function EditorPhotoInspector({ label, imageUrl, destinations = [
       </div>
       <div className={styles.actions}>
         {descriptionControl}
-        <Button type="button" disabled={disabled} onClick={onChoose}><Replace aria-hidden="true" />{labels.replace}</Button>
+        <Button type="button" variant="secondary" disabled={disabled} onClick={onChoose}><Replace aria-hidden="true" />{labels.replace}</Button>
         <Button type="button" variant="outline" disabled={disabled || !canCrop} onClick={onCrop}><Crop aria-hidden="true" />{labels.crop}</Button>
         {onSwap && destinations.length > 0 && <DropdownMenu>
-          <DropdownMenuTrigger render={<Button type="button" variant="outline" disabled={disabled} />}>
+          <DropdownMenuTrigger render={<Button type="button" variant="ghost" disabled={disabled} />}>
             <ArrowLeftRight aria-hidden="true" />{labels.swap}
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className={styles.swapMenu}>

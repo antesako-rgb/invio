@@ -1,5 +1,8 @@
 "use server";
 
+import { z } from "zod";
+import { revalidatePath } from "next/cache";
+
 import type {
   ActionResult,
 } from "@/lib/actions/actionResult";
@@ -12,31 +15,40 @@ import type {
   CancelProjectCollaborationInviteInput,
 } from "@/features/project-collaboration/types/projectCollaboration.types";
 
-
 /* ==========================================================================
-   Cancel Project Collaboration Action
+ Cancel Project Collaboration Action
 ========================================================================== */
 
 export async function cancelProjectCollaborationAction(
-  input: CancelProjectCollaborationInviteInput
+  input:
+    CancelProjectCollaborationInviteInput
 ): Promise<ActionResult<string>> {
+  if (!z.string().uuid().safeParse(input?.p_invite_id).success) {
+    return { success: false, code: "INVALID_INPUT" };
+  }
   try {
-    const projectId =
-      await cancelProjectCollaborationInvite(
-        input
-      );
-
+    const projectId = await cancelProjectCollaborationInvite(
+      input
+    );
+    revalidatePath("/[locale]/dashboard", "layout");
     return {
-      success: true,
-      data: projectId,
+      success:
+        true,
+
+      data:
+        projectId,
     };
   } catch (error) {
+    console.error(
+      "cancelProjectCollaborationAction failed:",
+      error
+    );
     return {
-      success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Nije moguće otkazati poziv za suradnju.",
+      success:
+        false,
+
+      code:
+        "COLLABORATION_FAILED",
     };
   }
 }

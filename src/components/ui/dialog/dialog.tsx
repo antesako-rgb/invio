@@ -83,6 +83,7 @@ function DialogOverlay({
         "bg-black/25 backdrop-blur-[2px]",
         "data-open:animate-in data-open:fade-in-0",
         "data-closed:animate-out data-closed:fade-out-0",
+        "motion-reduce:animate-none",
         className
       )}
       {...props}
@@ -124,10 +125,15 @@ function DialogCloseButton({
 function DialogContent({
   className,
   children,
+  keepMounted,
+  closeLabel = "Close",
   ...props
-}: DialogPrimitive.Popup.Props) {
+}: DialogPrimitive.Popup.Props & {
+  keepMounted?: boolean;
+  closeLabel?: string;
+}) {
   return (
-    <DialogPortal>
+    <DialogPortal keepMounted={keepMounted}>
       <DialogOverlay />
 
       <DialogPrimitive.Popup
@@ -139,7 +145,7 @@ function DialogContent({
           "w-[calc(100vw-2rem)]",
           "max-w-2xl",
 
-          "max-h-[90vh]",
+          "max-h-[90dvh]",
           "overflow-y-auto",
 
           "rounded-2xl",
@@ -148,16 +154,10 @@ function DialogContent({
           "bg-dialog",
 
           // Border
-          "border border-border/70",
+          "border border-border",
 
           // Shadow
           "shadow-lg",
-
-          // Ring
-          "ring-1 ring-border/30",
-
-          // Blur
-          "backdrop-blur-xl",
 
           // Padding
           "p-4 sm:p-6",
@@ -168,13 +168,12 @@ function DialogContent({
           // Animation
           "data-open:animate-in",
           "data-open:fade-in-0",
-          "data-open:zoom-in-95",
           "data-open:duration-200",
 
           "data-closed:animate-out",
           "data-closed:fade-out-0",
-          "data-closed:zoom-out-95",
           "data-closed:duration-150",
+          "motion-reduce:animate-none",
 
           className
         )}
@@ -183,7 +182,7 @@ function DialogContent({
         {children}
 
         <DialogCloseButton
-          aria-label="Close"
+          aria-label={closeLabel}
         />
       </DialogPrimitive.Popup>
     </DialogPortal>

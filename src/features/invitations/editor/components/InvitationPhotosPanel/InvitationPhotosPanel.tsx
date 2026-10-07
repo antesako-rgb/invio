@@ -1,4 +1,5 @@
 "use client";
+import { useActionError } from "@/lib/actions/useActionError";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowLeft } from "lucide-react";
@@ -24,6 +25,7 @@ interface InvitationPhotosPanelProps {
   onSelect: (id: string) => void; onDelete: (id: string) => void; onCancel: () => void;
 }
 export default function InvitationPhotosPanel({ onDescriptionSave, invitationId, photos, disabled, picking, photoUsage, retainedPhotoIds, selectionLabel, selectedPhotoId, onUpload, onImport, onSelect, onDelete, onCancel }: InvitationPhotosPanelProps) {
+  const actionError = useActionError();
   const t = useTranslations("Invitations");
   const l = useTranslations("Invitations.photoLibrary");
   const [step, setStep] = useState<"source" | "existing" | "upload" | null>(null);
@@ -31,9 +33,9 @@ export default function InvitationPhotosPanel({ onDescriptionSave, invitationId,
   useEffect(() => () => { if (uploadFile) URL.revokeObjectURL(uploadFile.preview); }, [uploadFile]);
   const loadPage = useCallback(async (offset: number) => {
     const result = await getInvitationProjectPhotosAction(invitationId, offset);
-    if (!result.success) throw new Error(result.message);
+    if (!result.success) throw new Error(actionError(result.code));
     return { photos: result.data.photos.map(photo => ({ id: photo.id, imageUrl: getProjectPhotoUrl(photo.image_path) })), nextOffset: result.data.nextOffset };
-  }, [invitationId]);
+  }, [invitationId, actionError]);
   return <>
     <EditorPhotoLibrary picking={picking} addLabel={l("add")} empty={photos.length === 0} emptyLabel={t("photoUx.empty")} disabled={disabled} onAdd={() => setStep("source")}
       header={<>

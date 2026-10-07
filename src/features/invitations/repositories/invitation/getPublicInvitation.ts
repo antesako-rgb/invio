@@ -28,6 +28,9 @@ const publicInvitationSchema =
 
         published_at:
           z.string(),
+        generic_rsvp_enabled: z.boolean(),
+        generic_rsvp_max_guests: z.number().int().min(1),
+        generic_rsvp_capacity: z.number().int().min(1).nullable(),
 
         document:
           z

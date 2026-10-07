@@ -1,4 +1,6 @@
 import type { InvitationPresentation } from "./InvitationPresentation";
+import type { ReactNode } from "react";
+import { InvitationRsvpSlot } from "./InvitationRsvpSlot";
 import { allura, marcellus, playfairDisplay } from "@/styles/fonts/albumMaterialFonts";
 import { resolveInvitationPageDesign } from "../../config/invitationPageDesigns";
 import { resolveInvitationPageDateTime } from "../../utils/invitationSharedDateTime";
@@ -27,6 +29,7 @@ import themes
 ========================================================================== */
 
 interface InvitationRendererProps {
+  rsvpContent?: ReactNode;
   presentation?: (page: InvitationDocument["pages"][number]) => InvitationPresentation;
   document: InvitationDocument;
   photos: InvitationRenderPhoto[];
@@ -40,6 +43,7 @@ interface InvitationRendererProps {
 ========================================================================== */
 
 export default function InvitationRenderer({
+  rsvpContent,
   document,
   presentation,
   photos,
@@ -62,6 +66,7 @@ export default function InvitationRenderer({
     );
 
   return (
+    <InvitationRsvpSlot content={rsvpContent}>
     <div
       className={
         `${styles.invitation} ${themes.theme} ${themeFonts}`
@@ -115,5 +120,6 @@ export default function InvitationRenderer({
         }
       )}
     </div>
+    </InvitationRsvpSlot>
   );
 }

@@ -22,7 +22,7 @@ export default function ProjectEventScheduleSection({ form, disabled = false, se
     </Field>
     <Field id="start_time" label={t("time.start")}>
       <TimePicker id="start_time" value={form.start_time}
-        onChange={value => setField("start_time", value)} disabled={disabled} />
+        onChange={value => setField("start_time", value ?? "")} disabled={disabled} />
     </Field>
   </Section>;
 }

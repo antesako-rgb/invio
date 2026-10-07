@@ -47,10 +47,7 @@ export default async function InvitationEditorPage({
     notFound();
   }
 
-  const photos =
-    await getInvitationPhotos(
-      invitation.id
-    );
+  const photos = await getInvitationPhotos(invitation.id);
 
   return (
     <InvitationEditorView

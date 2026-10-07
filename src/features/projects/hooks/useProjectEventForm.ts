@@ -5,13 +5,13 @@ import {
 } from "react";
 
 import type {
-  ProjectEvent,
-} from "../types/projectEvent.types";
+  Project,
+} from "../types/project.types";
 
 import {
   setProjectEventFormField,
-  getProjectEventDefaultValues,
-  getProjectEventFormValues,
+  getProjectDefaultValues,
+  getProjectFormValues,
 } from "../utils/projectEventForm.utils";
 
 import type {
@@ -24,12 +24,12 @@ import type {
 ========================================================================== */
 
 interface UseProjectEventFormProps {
-  event?: ProjectEvent;
+  event?: Project;
 }
 
 
 /* ==========================================================================
-   Use ProjectEvent Form
+   Use Project Form
 ========================================================================== */
 
 export function useProjectEventForm({
@@ -42,10 +42,10 @@ export function useProjectEventForm({
     useState<ProjectEventFormValues>(
       () =>
         event
-          ? getProjectEventFormValues(
+          ? getProjectFormValues(
               event
             )
-          : getProjectEventDefaultValues()
+          : getProjectDefaultValues()
     );
 
 
@@ -72,10 +72,10 @@ export function useProjectEventForm({
   function reset() {
     setForm(
       event
-        ? getProjectEventFormValues(
+        ? getProjectFormValues(
             event
           )
-        : getProjectEventDefaultValues()
+        : getProjectDefaultValues()
     );
   }
 

@@ -1,10 +1,38 @@
-import { createServerClient } from "@/lib/supabase/server";
-import type { ProjectWithEventDetails } from "../types/project.types";
+import {
+  createServerClient,
+} from "@/lib/supabase/server";
 
-export async function getProject(projectId: string): Promise<ProjectWithEventDetails | null> {
-  const supabase = await createServerClient();
-  const { data, error } = await supabase.from("projects")
-    .select("*,project_event_details(*)").eq("id", projectId).maybeSingle();
-  if (error) throw error;
+import type {
+  Project,
+} from "../types/project.types";
+
+
+/* ==========================================================================
+   Get Project
+========================================================================== */
+
+export async function getProject(
+  projectId: string
+): Promise<Project | null> {
+  const supabase =
+    await createServerClient();
+
+  const {
+    data,
+    error,
+  } =
+    await supabase
+      .from("projects")
+      .select("*")
+      .eq(
+        "id",
+        projectId
+      )
+      .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
   return data;
 }

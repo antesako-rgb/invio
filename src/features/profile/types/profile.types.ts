@@ -21,5 +21,4 @@ export type UpdateProfileInput =
     TablesUpdate<"profiles">,
     | "first_name"
     | "last_name"
-    | "avatar_url"
   >;

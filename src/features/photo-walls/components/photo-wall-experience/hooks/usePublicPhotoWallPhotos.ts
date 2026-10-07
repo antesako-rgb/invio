@@ -1,4 +1,5 @@
 "use client";
+import { useActionError } from "@/lib/actions/useActionError";
 
 import {
   useCallback,
@@ -68,6 +69,7 @@ export function usePublicPhotoWallPhotos({
   initialPhotos,
   initialNextCursor,
 }: UsePublicPhotoWallPhotosInput): UsePublicPhotoWallPhotosResult {
+  const actionError = useActionError();
   /* ==========================================================================
      State
   ========================================================================== */
@@ -129,13 +131,19 @@ export function usePublicPhotoWallPhotos({
         );
 
         try {
-          const page =
+          const result =
             await loadPublicPhotoWallPhotosAction({
               publicId,
 
               cursor:
                 nextCursor,
             });
+
+          if (!result.success) {
+            setError(actionError(result.code));
+            return;
+          }
+          const page = result.data;
 
           const nextPhotos =
             buildPhotoWallGalleryPhotos(
@@ -179,7 +187,7 @@ export function usePublicPhotoWallPhotos({
           );
 
           setError(
-            "Fotografije nije moguće dohvatiti."
+            actionError("PHOTOS_LOAD_FAILED")
           );
         } finally {
           setIsLoading(
@@ -191,6 +199,7 @@ export function usePublicPhotoWallPhotos({
         publicId,
         nextCursor,
         isLoading,
+        actionError,
       ]
     );
 

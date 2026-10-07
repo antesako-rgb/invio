@@ -1,6 +1,10 @@
 "use server";
 
 import {
+  z,
+} from "zod";
+
+import {
   revalidatePath,
 } from "next/cache";
 
@@ -9,88 +13,63 @@ import type {
 } from "@/lib/actions/actionResult";
 
 import {
-  requireProjectOwner,
-} from "@/features/projects/repositories/requireProjectOwner";
-
-import {
   createInvitation,
 } from "../../repositories/invitation/createInvitation";
 
-import {
-  getProjectInvitation,
-} from "../../repositories/invitation/getProjectInvitation";
-
-
 /* ==========================================================================
-   Types
-========================================================================== */
-
-type CreateInvitationActionData = {
-  invitationId: string;
-};
-
-
-/* ==========================================================================
-   Create Invitation Action
+   Server Action
 ========================================================================== */
 
 export async function createInvitationAction(
-  projectId: string
-): Promise<
-  ActionResult<CreateInvitationActionData>
-> {
+  projectId:
+    string,
+
+  templateId:
+    string
+): Promise<ActionResult<{
+  invitationId: string;
+  name: string;
+}>> {
   try {
-    const project =
-      await requireProjectOwner(
-        projectId
-      );
+    z.string().uuid().parse(
+      projectId
+    );
+    z.string().uuid().parse(
+      templateId
+    );
+    // RPC checks ownership and template activity, generates the name and copies the template.
+    const invitation = await createInvitation(
+      {
+        p_project_id:
+          projectId,
 
-    let invitation =
-      await getProjectInvitation(
-        projectId
-      );
-
-    if (!invitation) {
-      try {
-        invitation =
-          await createInvitation({
-            p_project_id:
-              projectId,
-
-            p_name:
-              project.name,
-          });
-      } catch (error) {
-        invitation =
-          await getProjectInvitation(
-            projectId
-          );
-
-        if (!invitation) {
-          throw error;
-        }
+        p_template_id:
+          templateId,
       }
-    }
-
+    );
     revalidatePath(
       "/[locale]/dashboard",
       "layout"
     );
-
     return {
-      success: true,
+      success:
+        true,
+
       data: {
         invitationId:
           invitation.id,
+
+        name:
+          invitation.name,
       },
     };
-  } catch (error) {
+  } catch {
     return {
-      success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Invitation creation failed.",
+      success:
+        false,
+
+      code:
+        "INVITATION_CREATE_FAILED",
     };
   }
 }

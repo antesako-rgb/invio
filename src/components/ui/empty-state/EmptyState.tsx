@@ -54,7 +54,7 @@ function EmptyState({
         variant === "default" && [
           "rounded-xl",
           "border",
-          "border-dashed",
+          "border-border",
           "bg-card",
           "px-4",
           "py-10",
@@ -82,17 +82,17 @@ function EmptyState({
           className={cn(
             "mb-4",
             "flex",
-            "size-14",
+            "size-12",
             "items-center",
             "justify-center",
             "rounded-2xl",
-            "bg-primary/10",
+            "bg-secondary",
             "text-primary"
           )}
         >
           <Icon
             strokeWidth={1.75}
-            className="size-7"
+            className="size-6"
             aria-hidden="true"
           />
         </div>
@@ -100,7 +100,7 @@ function EmptyState({
 
       <h2
         className={
-          "text-xl font-semibold tracking-tight"
+          "max-w-lg text-pretty text-lg font-semibold tracking-tight sm:text-xl"
         }
       >
         {title}

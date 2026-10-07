@@ -1,3 +1,7 @@
+import type {
+  ActionErrorCode,
+} from "./actionErrorCodes";
+
 /* ==========================================================================
    Action Result
 ========================================================================== */
@@ -12,11 +16,11 @@ export type ActionSuccess<T = undefined> =
         data: T;
       };
 
-export type ActionError = {
+export type ActionError<Code extends ActionErrorCode = ActionErrorCode> = {
   success: false;
-  message: string;
+  code: Code;
 };
 
-export type ActionResult<T = undefined> =
+export type ActionResult<T = undefined, Code extends ActionErrorCode = ActionErrorCode> =
   | ActionSuccess<T>
-  | ActionError;
+  | ActionError<Code>;

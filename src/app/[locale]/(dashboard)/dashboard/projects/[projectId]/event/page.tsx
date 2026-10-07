@@ -3,8 +3,8 @@ import {
 } from "next/navigation";
 
 import {
-  getProjectEvent,
-} from "@/features/projects/repositories/getProjectEvent";
+  getProject,
+} from "@/features/projects/repositories/getProject";
 
 import EditProjectEventPage from "@/features/projects/pages/EditProjectEventPage/EditProjectEventPage";
 
@@ -39,7 +39,7 @@ export default async function EditEventRoute({
   ========================================================================== */
 
   const event =
-    await getProjectEvent(
+    await getProject(
       projectId
     );
 

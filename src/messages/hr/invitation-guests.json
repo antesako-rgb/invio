@@ -1,0 +1,87 @@
+{
+  "title": "Gosti pozivnice",
+  "columns": {
+    "guest": "Gost",
+    "group": "Grupa",
+    "notes": "Bilješka",
+    "status": "RSVP status",
+    "actions": "Akcije"
+  },
+  "rowActions": "Akcije za: {name}",
+  "deleteGuest": "Obriši gosta",
+  "clearSearch": "Očisti pretragu",
+  "description": "Dodajte goste ove pozivnice, organizirajte ih u grupe i povežite s personaliziranim poveznicama.",
+  "addGuest": "Dodaj gosta",
+  "editGuest": "Uredi gosta",
+  "edit": "Uredi",
+  "delete": "Obriši",
+  "save": "Spremi",
+  "cancel": "Odustani",
+  "close": "Zatvori",
+  "loading": "Molimo pričekajte…",
+  "retry": "Pokušaj ponovno",
+  "all": "Svi",
+  "noGroup": "Bez grupe",
+  "search": "Pretraži po imenu ili prezimenu",
+  "resetFilters": "Očisti filtre",
+  "results": "{count, plural, one {# gost} few {# gosta} other {# gostiju}}",
+  "editNamed": "Uredi: {name}",
+  "deleteNamed": "Obriši: {name}",
+  "deleteTitle": "Obrisati gosta?",
+  "deleteDescription": "Brisanje gosta uklanja njegove odgovore. Ako je posljednji gost primatelja, brišu se i primatelj i njegova poveznica. Obriši gosta {name}?",
+  "status": {
+    "pending": "Bez odgovora",
+    "attending": "Dolazi",
+    "not_attending": "Ne dolazi"
+  },
+  "form": {
+    "description": "Unesite ime, odaberite grupu i po potrebi dodajte bilješku.",
+    "firstName": "Ime",
+    "lastName": "Prezime (opcionalno)",
+    "group": "Grupa (opcionalno)",
+    "notes": "Bilješka (opcionalno)",
+    "notesHelp": "Privatni podsjetnik za organizaciju događaja."
+  },
+  "validation": {
+    "firstName": "Unesite ime gosta.",
+    "invalid": "Provjerite ovo polje i njegovu duljinu.",
+    "groupName": "Unesite naziv grupe do 150 znakova."
+  },
+  "empty": {
+    "title": "Još nema gostiju",
+    "description": "Dodajte prve goste ove pozivnice."
+  },
+  "noResults": {
+    "title": "Nema pronađenih gostiju",
+    "description": "Pokušajte s drugim imenom ili očistite filtre."
+  },
+  "groups": {
+    "title": "Grupe gostiju",
+    "description": "Organizirajte obitelji, prijatelje i kolege. Gost može ostati i bez grupe.",
+    "new": "Nova grupa",
+    "rename": "Preimenuj grupu",
+    "placeholder": "npr. Kolege s posla",
+    "create": "Kreiraj grupu",
+    "empty": "Još nema grupa. Kreirajte ih kada vam zatrebaju.",
+    "editNamed": "Preimenuj grupu: {name}",
+    "deleteNamed": "Obriši grupu: {name}",
+    "deleteTitle": "Obrisati grupu?",
+    "deleteDescription": "Obrisati grupu „{name}”? Gosti ostaju na popisu, bez grupe."
+  },
+  "success": {
+    "guestCreated": "Gost je dodan.",
+    "guestUpdated": "Podaci gosta su spremljeni.",
+    "guestDeleted": "Gost je obrisan.",
+    "groupCreated": "Grupa je kreirana.",
+    "groupUpdated": "Grupa je preimenovana.",
+    "groupDeleted": "Grupa je obrisana. Gosti ostaju na popisu."
+  },
+  "errors": {
+    "transport": "Radnju nije moguće dovršiti. Pokušajte ponovno.",
+    "loadTitle": "Goste nije moguće učitati",
+    "loadDescription": "Pokušajte ponovno. Vaš popis gostiju nije promijenjen."
+  },
+  "workspaceLabel": "Gosti i odgovori",
+  "guestList": "Popis gostiju",
+  "linksAndResponses": "Poveznice i odgovori"
+}

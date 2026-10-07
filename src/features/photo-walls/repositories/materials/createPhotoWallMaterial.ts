@@ -26,7 +26,7 @@ export async function createPhotoWallMaterial(input: CreatePhotoWallMaterialInpu
   const draft = photoWallMaterialDraftSchema.parse({
     name: templates(`templates.${value.templateId}.name`),
     templateId: value.templateId, variantId: value.variantId,
-    content: createInitialPhotoWallMaterialContent(project.project_event_details, {
+    content: createInitialPhotoWallMaterialContent(project, {
       primaryName: project.name.slice(0, 65), secondaryName: null, heroTitle: t("heroTitle"),
       heroSubtitle: t("heroSubtitle") || null, firstInitial: null, secondInitial: null, description: t("description"),
     }),

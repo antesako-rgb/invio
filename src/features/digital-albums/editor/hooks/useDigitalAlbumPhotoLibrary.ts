@@ -1,4 +1,5 @@
 "use client";
+import { useActionError } from "@/lib/actions/useActionError";
 
 import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -22,6 +23,7 @@ export default function useDigitalAlbumPhotoLibrary({ albumId, suppliedPhotos, e
   onDeleted: () => void;
 }) {
   const router = useRouter();
+  const actionError = useActionError();
   const t = useTranslations("DigitalAlbumEditor.photos");
   const upgrade = useTranslations("DigitalAlbumEditor.upgrade");
   const [removedMembershipIds, setRemovedMembershipIds] = useState<Set<string>>(() => new Set());
@@ -43,7 +45,7 @@ export default function useDigitalAlbumPhotoLibrary({ albumId, suppliedPhotos, e
     assetLock.current = true; setAssetBusy(true);
     try {
       const result = await updateDigitalAlbumPhotoDescriptionAction(albumId, photoId, value);
-      if (!result.success) throw new Error(result.message);
+      if (!result.success) throw new Error(actionError(result.code));
       setDescriptions(current => ({ ...current, [`${photoId}:${membership.created_at}`]: result.data.description }));
     } finally { assetLock.current = false; setAssetBusy(false); }
   }

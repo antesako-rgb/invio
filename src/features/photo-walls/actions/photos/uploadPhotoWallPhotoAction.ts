@@ -13,9 +13,8 @@ import type {
   UploadPhotoWallPhotoInput,
 } from "@/features/photo-walls/types/photoWallPhoto.types";
 
-
 /* ==========================================================================
-   Upload Photo Wall Photo Action
+ Upload Photo Wall Photo Action
 ========================================================================== */
 
 export async function uploadPhotoWallPhotoAction(
@@ -23,11 +22,9 @@ export async function uploadPhotoWallPhotoAction(
     UploadPhotoWallPhotoInput
 ): Promise<ActionResult<PhotoWallPhoto>> {
   try {
-    const photo =
-      await uploadPhotoWallPhoto(
-        input
-      );
-
+    const photo = await uploadPhotoWallPhoto(
+      input
+    );
     return {
       success:
         true,
@@ -35,17 +32,17 @@ export async function uploadPhotoWallPhotoAction(
       data:
         photo,
     };
-  } catch (
-    error
-  ) {
+  } catch (error) {
+    console.error(
+      "uploadPhotoWallPhotoAction failed:",
+      error
+    );
     return {
       success:
         false,
 
-      message:
-        error instanceof Error
-          ? error.message
-          : "Fotografiju nije moguće prenijeti.",
+      code:
+        "PHOTO_UPLOAD_FAILED",
     };
   }
 }

@@ -1,4 +1,6 @@
 "use client";
+import { useActionError } from "@/lib/actions/useActionError";
+import type { ActionErrorCode } from "@/lib/actions/actionErrorCodes";
 
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -12,40 +14,43 @@ import { createInvitationAction } from "../../actions/invitation/createInvitatio
 
 interface CreateInvitationButtonProps {
   projectId: string;
+  templateId: string;
+  disabled?: boolean;
 }
 
 /* ==========================================================================
    Create Invitation Button
 ========================================================================== */
 
-export default function CreateInvitationButton({ projectId }: CreateInvitationButtonProps) {
+export default function CreateInvitationButton({ projectId, templateId, disabled = false }: CreateInvitationButtonProps) {
+  const actionError = useActionError();
   const t = useTranslations("Invitations");
   const router = useRouter();
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<ActionErrorCode | null>(null);
   const lock = useRef(false);
 
   async function create() {
-    if (lock.current) {
+    if (lock.current || disabled) {
       return;
     }
 
     lock.current = true;
     setBusy(true);
-    setError(false);
+    setError(null);
 
     try {
-      const result = await createInvitationAction(projectId);
+      const result = await createInvitationAction(projectId, templateId);
 
       if (!result.success) {
-        setError(true);
+        setError(result.code);
         return;
       }
 
       router.push(`/editor/invitation/${result.data.invitationId}/uredi`);
       router.refresh();
     } catch {
-      setError(true);
+      setError("INVITATION_CREATE_FAILED");
     } finally {
       lock.current = false;
       setBusy(false);
@@ -54,10 +59,10 @@ export default function CreateInvitationButton({ projectId }: CreateInvitationBu
 
   return (
     <div>
-      <Button disabled={busy} loading={busy} onClick={() => void create()}>
+      <Button disabled={busy || disabled} loading={busy} onClick={() => void create()}>
         {t("create")}
       </Button>
-      {error && <p role="alert">{t("error")}</p>}
+      {error && <p role="alert">{actionError(error)}</p>}
     </div>
   );
 }

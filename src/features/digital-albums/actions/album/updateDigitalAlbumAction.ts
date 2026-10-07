@@ -17,9 +17,8 @@ import type {
   UpdateDigitalAlbumInput,
 } from "@/features/digital-albums/types/digitalAlbum.types";
 
-
 /* ==========================================================================
-   Update Digital Album Action
+ Update Digital Album Action
 ========================================================================== */
 
 export async function updateDigitalAlbumAction(
@@ -27,15 +26,13 @@ export async function updateDigitalAlbumAction(
     UpdateDigitalAlbumInput
 ): Promise<ActionResult<DigitalAlbum>> {
   try {
-    const album =
-      await updateDigitalAlbum(
-        input
-      );
-
- revalidatePath(
-  `/dashboard/projects/${album.project_id}/albums/${album.id}`
-);
-
+    const album = await updateDigitalAlbum(
+      input
+    );
+    revalidatePath(
+      "/[locale]/dashboard",
+      "layout"
+    );
     return {
       success:
         true,
@@ -48,15 +45,12 @@ export async function updateDigitalAlbumAction(
       "updateDigitalAlbumAction error:",
       error
     );
-
     return {
       success:
         false,
 
-      message:
-        error instanceof Error
-          ? error.message
-          : "Nije moguće ažurirati digitalni album.",
+      code:
+        "ALBUM_UPDATE_FAILED",
     };
   }
 }

@@ -18,6 +18,7 @@ interface SearchProps {
 
   ariaLabel?:
     string;
+  clearLabel?: string;
 
   disabled?:
     boolean;
@@ -35,6 +36,7 @@ export default function Search({
   value,
   placeholder = "Pretraži...",
   ariaLabel = "Pretraži",
+  clearLabel = "Očisti pretragu",
   disabled = false,
   onValueChange,
 }: SearchProps) {
@@ -94,7 +96,7 @@ export default function Search({
             className={
               styles.clear
             }
-            aria-label="Očisti pretragu"
+            aria-label={clearLabel}
             onClick={() =>
               onValueChange(
                 ""

@@ -54,8 +54,12 @@ type InvitationProjectPhotosActionData =
 ========================================================================== */
 
 export async function uploadInvitationPhotoAction(
-  invitationId: string,
-  file: File,
+  invitationId:
+    string,
+
+  file:
+    File,
+
   description = ""
 ): Promise<
   ActionResult<InvitationPhotosActionData>
@@ -78,18 +82,25 @@ export async function uploadInvitationPhotoAction(
     );
 
     return {
-      success: true,
+      success:
+        true,
+
       data: {
         photos,
       },
     };
   } catch (error) {
+    console.error(
+      "uploadInvitationPhotoAction failed:",
+      error
+    );
+
     return {
-      success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Photo upload failed.",
+      success:
+        false,
+
+      code:
+        "PHOTO_UPLOAD_FAILED",
     };
   }
 }
@@ -100,8 +111,11 @@ export async function uploadInvitationPhotoAction(
 ========================================================================== */
 
 export async function addInvitationPhotosAction(
-  invitationId: string,
-  photoIds: string[]
+  invitationId:
+    string,
+
+  photoIds:
+    string[]
 ): Promise<
   ActionResult<InvitationPhotosActionData>
 > {
@@ -122,18 +136,25 @@ export async function addInvitationPhotosAction(
     );
 
     return {
-      success: true,
+      success:
+        true,
+
       data: {
         photos,
       },
     };
   } catch (error) {
+    console.error(
+      "addInvitationPhotosAction failed:",
+      error
+    );
+
     return {
-      success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Photos could not be added.",
+      success:
+        false,
+
+      code:
+        "PHOTO_ADD_FAILED",
     };
   }
 }
@@ -144,8 +165,11 @@ export async function addInvitationPhotosAction(
 ========================================================================== */
 
 export async function removeInvitationPhotoAction(
-  invitationId: string,
-  photoId: string
+  invitationId:
+    string,
+
+  photoId:
+    string
 ): Promise<
   ActionResult<InvitationPhotosActionData>
 > {
@@ -166,18 +190,25 @@ export async function removeInvitationPhotoAction(
     );
 
     return {
-      success: true,
+      success:
+        true,
+
       data: {
         photos,
       },
     };
   } catch (error) {
+    console.error(
+      "removeInvitationPhotoAction failed:",
+      error
+    );
+
     return {
-      success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Photo removal failed.",
+      success:
+        false,
+
+      code:
+        "PHOTO_REMOVE_FAILED",
     };
   }
 }
@@ -188,8 +219,11 @@ export async function removeInvitationPhotoAction(
 ========================================================================== */
 
 export async function getInvitationProjectPhotosAction(
-  invitationId: string,
-  offset: number
+  invitationId:
+    string,
+
+  offset:
+    number
 ): Promise<
   ActionResult<InvitationProjectPhotosActionData>
 > {
@@ -201,16 +235,23 @@ export async function getInvitationProjectPhotosAction(
       );
 
     return {
-      success: true,
+      success:
+        true,
+
       data,
     };
   } catch (error) {
+    console.error(
+      "getInvitationProjectPhotosAction failed:",
+      error
+    );
+
     return {
-      success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Project photos could not be loaded.",
+      success:
+        false,
+
+      code:
+        "PHOTOS_LOAD_FAILED",
     };
   }
 }

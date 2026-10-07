@@ -47,6 +47,9 @@ import {
 import CollaborationLinkForm
   from "@/features/project-collaboration/components/CollaborationLinkForm";
 
+import CollaborationMemberActions from "@/features/project-collaboration/components/CollaborationMemberActions";
+import PendingCollaborationInvites from "@/features/project-collaboration/components/PendingCollaborationInvites";
+
 import styles
   from "@/features/project-collaboration/components/Collaboration.module.css";
 
@@ -136,12 +139,7 @@ export default async function CollaboratorsPage({
   const pending =
     invites.filter(
       (invite) =>
-        invite.status ===
-          "pending" &&
-        new Date(
-          invite.expires_at
-        ).getTime() >
-          now.getTime()
+        invite.status === "pending"
     );
 
   const navigation =
@@ -252,6 +250,7 @@ export default async function CollaboratorsPage({
                       }
                     </span>
 
+                    <div className={styles.rowActions}>
                     <Badge
                       variant="success"
                     >
@@ -259,6 +258,10 @@ export default async function CollaboratorsPage({
                         "member"
                       )}
                     </Badge>
+                    {isOwner && member.profile_id !== project.owner_id && <CollaborationMemberActions
+                      kind="member" projectId={projectId} profileId={member.profile_id} email={member.email}
+                    />}
+                    </div>
                   </li>
                 )
               )}
@@ -288,38 +291,8 @@ export default async function CollaboratorsPage({
               )}
             </CardTitle>
 
-            <ul
-              className={
-                styles.list
-              }
-            >
-              {pending.map(
-                (invite) => (
-                  <li
-                    key={
-                      invite.id
-                    }
-                    className={
-                      styles.row
-                    }
-                  >
-                    <span>
-                      {
-                        invite.email
-                      }
-                    </span>
-
-                    <Badge
-                      variant="warning"
-                    >
-                      {t(
-                        "pending"
-                      )}
-                    </Badge>
-                  </li>
-                )
-              )}
-            </ul>
+            <p className={styles.description}>{t("pendingHelp")}</p>
+            <PendingCollaborationInvites projectId={projectId} invites={pending} now={now.toISOString()} />
           </Card>
         )}
       </Page>

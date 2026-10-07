@@ -33,25 +33,29 @@ const Input =
             "w-full",
             "rounded-xl",
             "border",
-            "border-primary/20",
+            "border-border",
             "bg-background",
             "px-3",
             "text-base",
             "text-foreground",
-            "shadow-sm",
-            "transition-all",
+            "shadow-none",
+            "transition-[border-color,box-shadow,background-color]",
+            "duration-200",
+            "motion-reduce:transition-none",
             "outline-none",
 
             "placeholder:text-muted-foreground",
 
-            "hover:border-primary/35",
+            
 
+            "hover:not-disabled:border-primary/30",
             "focus-visible:border-primary",
-            "focus-visible:ring-4",
-            "focus-visible:ring-ring/30",
+            "focus-visible:ring-2",
+            "focus-visible:ring-ring/20",
 
             "disabled:pointer-events-none",
             "disabled:opacity-50",
+            "disabled:bg-muted",
 
             "aria-invalid:border-destructive",
             "aria-invalid:ring-4",

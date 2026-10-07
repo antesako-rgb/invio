@@ -300,7 +300,7 @@ export default function ManagementNameEdit({
           >
             <Button
               type="button"
-              variant="outline"
+              variant="ghost"
               size="icon"
               className={
                 styles.editButton

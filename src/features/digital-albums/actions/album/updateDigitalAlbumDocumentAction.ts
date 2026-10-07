@@ -26,18 +26,6 @@ import type {
    Types
 ========================================================================== */
 
-interface DigitalAlbumConflictResult {
-  success:
-    false;
-
-  code:
-    "CONFLICT";
-
-  message:
-    string;
-}
-
-
 /* ==========================================================================
    Update Digital Album Document Action
 ========================================================================== */
@@ -46,8 +34,7 @@ export async function updateDigitalAlbumDocumentAction(
   input:
     UpdateDigitalAlbumDocumentInput
 ): Promise<
-  | ActionResult<DigitalAlbum>
-  | DigitalAlbumConflictResult
+  ActionResult<DigitalAlbum, "CONFLICT" | "SAVE_FAILED">
 > {
   try {
     const album =
@@ -60,7 +47,8 @@ export async function updateDigitalAlbumDocumentAction(
     );
 
     revalidatePath(
-      `/dashboard/projects/${album.project_id}/albums/${album.id}`
+      "/[locale]/dashboard",
+      "layout"
     );
 
     return {
@@ -81,9 +69,6 @@ export async function updateDigitalAlbumDocumentAction(
 
         code:
           "CONFLICT",
-
-        message:
-          error.message,
       };
     }
 
@@ -96,8 +81,8 @@ export async function updateDigitalAlbumDocumentAction(
       success:
         false,
 
-      message:
-        "Unable to save digital album.",
+      code:
+        "SAVE_FAILED",
     };
   }
 }

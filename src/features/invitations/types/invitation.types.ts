@@ -16,6 +16,13 @@ export type CreateInvitationInput =
 export type UpdateInvitationInput =
   Database["public"]["Functions"]["update_invitation"]["Args"];
 
+export type UpdateInvitationRsvpSettingsInput = Omit<
+  Database["public"]["Functions"]["update_invitation_rsvp_settings"]["Args"],
+  "p_generic_rsvp_capacity"
+> & {
+  p_generic_rsvp_capacity: Invitation["generic_rsvp_capacity"];
+};
+
 export interface UpdateInvitationDocumentInput {
   invitationId: string;
   document: InvitationDocument;

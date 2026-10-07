@@ -1,4 +1,5 @@
 "use client";
+import { useActionError } from "@/lib/actions/useActionError";
 import { useCallback, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog/dialog";
@@ -16,6 +17,7 @@ interface Props {
   onAddExisting: (ids: string[]) => Promise<void>; onUploadSuccess: (photos: DigitalAlbumPhoto[]) => void;
 }
 export default function DigitalAlbumAddPhotosDialog({ open, albumId, excludedPhotoIds = [], onOpenChange, onAddExisting, onUploadSuccess }: Props) {
+  const actionError = useActionError();
   const t = useTranslations("DigitalAlbumEditor.photoLibrary");
   const [step, setStep] = useState<"source" | "upload" | "existing">("source");
   const [files, setFiles] = useState<File[]>([]);
@@ -23,9 +25,9 @@ export default function DigitalAlbumAddPhotosDialog({ open, albumId, excludedPho
   const lock = useRef(false);
   const loadPage = useCallback(async (offset: number) => {
     const result = await getDigitalAlbumProjectPhotosAction(albumId, offset);
-    if (!result.success) throw new Error(result.message);
+    if (!result.success) throw new Error(actionError(result.code));
     return { photos: result.data.photos.map(photo => ({ id: photo.id, imageUrl: getProjectPhotoUrl(photo.image_path) })), nextOffset: result.data.nextOffset };
-  }, [albumId]);
+  }, [albumId, actionError]);
   function close() { setStep("source"); setFiles([]); onOpenChange(false); }
   return <PhotoUploadDialog open={open} disabled={busy} closeLabel={t("back")} onOpenChange={value => { if (!busy && !lock.current) { if (!value) close(); else onOpenChange(true); } }}>
     {step === "source" && <FilePicker accept={ACCEPTED_IMAGE_TYPES_VALUE} multiple onSelect={next => { if (next.length) { setFiles(next); setStep("upload"); } }}>

@@ -13,9 +13,8 @@ import type {
   PhotoWallPhotosPage,
 } from "@/features/photo-walls/types/photoWallPhoto.types";
 
-
 /* ==========================================================================
-   Get Photo Wall Photos Page Action
+ Get Photo Wall Photos Page Action
 ========================================================================== */
 
 export async function getPhotoWallPhotosPageAction(
@@ -23,11 +22,9 @@ export async function getPhotoWallPhotosPageAction(
     GetPhotoWallPhotosPageInput
 ): Promise<ActionResult<PhotoWallPhotosPage>> {
   try {
-    const page =
-      await getPhotoWallPhotosPage(
-        input
-      );
-
+    const page = await getPhotoWallPhotosPage(
+      input
+    );
     return {
       success:
         true,
@@ -40,13 +37,12 @@ export async function getPhotoWallPhotosPageAction(
       "getPhotoWallPhotosPageAction error:",
       error
     );
-
     return {
       success:
         false,
 
-      message:
-        "Fotografije nije moguće dohvatiti.",
+      code:
+        "PHOTOS_LOAD_FAILED",
     };
   }
 }

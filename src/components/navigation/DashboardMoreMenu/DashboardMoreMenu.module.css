@@ -215,3 +215,7 @@
     display: none;
   }
 }
+.item[aria-current="page"] {
+  background: var(--secondary);
+  color: var(--primary);
+}

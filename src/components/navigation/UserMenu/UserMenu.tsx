@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  UserRound,
   ChevronDown,
   LayoutDashboard,
   LogOut,
@@ -69,6 +70,8 @@ export default function UserMenu({
   } =
     useAuth();
 
+  const profileText = useTranslations("Profile");
+
   const router =
     useRouter();
 
@@ -98,7 +101,7 @@ export default function UserMenu({
 
   const initials =
     getInitials(
-      fullName
+      [firstName, lastName].filter(Boolean).join(" ")
     );
 
 
@@ -147,9 +150,6 @@ export default function UserMenu({
         }
       >
         <Avatar
-          src={
-            profile?.avatar_url
-          }
           alt={
             fullName
           }
@@ -203,48 +203,7 @@ export default function UserMenu({
           styles.content
         }
       >
-        <div
-          className={
-            styles.profile
-          }
-        >
-          <Avatar
-            src={
-              profile?.avatar_url
-            }
-            alt={
-              fullName
-            }
-            fallback={
-              initials
-            }
-            size="sm"
-          />
-
-          <div
-            className={
-              styles.profileIdentity
-            }
-          >
-            <span
-              className={
-                styles.name
-              }
-            >
-              {fullName}
-            </span>
-
-            {profile?.email && (
-              <span
-                className={
-                  styles.email
-                }
-              >
-                {profile.email}
-              </span>
-            )}
-          </div>
-        </div>
+        <DropdownMenuItem render={<Link href="/dashboard/profile" />}><UserRound size={16} aria-hidden="true" />{profileText("title")}</DropdownMenuItem>
 
         <DropdownMenuSeparator />
 

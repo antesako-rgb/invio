@@ -45,8 +45,11 @@ type PublishedInvitationActionData =
 ========================================================================== */
 
 export async function setInvitationPublishedAction(
-  invitationId: string,
-  published: boolean
+  invitationId:
+    string,
+
+  published:
+    boolean
 ): Promise<ActionResult<PublishedInvitationActionData>> {
   try {
     const invitation =
@@ -55,9 +58,13 @@ export async function setInvitationPublishedAction(
       );
 
     if (!invitation) {
-      throw new Error(
-        "Invitation not found."
-      );
+      return {
+        success:
+          false,
+
+        code:
+          "NOT_FOUND",
+      };
     }
 
     if (published) {
@@ -70,9 +77,11 @@ export async function setInvitationPublishedAction(
         document.pages.length === 0
       ) {
         return {
-          success: false,
-          message:
-            "Invitation has no pages.",
+          success:
+            false,
+
+          code:
+            "INVITATION_PUBLISH_FAILED",
         };
       }
 
@@ -101,17 +110,23 @@ export async function setInvitationPublishedAction(
 
       if (hasMissingPhoto) {
         return {
-          success: false,
-          message:
-            "Invitation contains a missing photo.",
+          success:
+            false,
+
+          code:
+            "INVITATION_MISSING_PHOTO",
         };
       }
 
     }
 
     const data = published
-      ? await publishInvitation(invitationId)
-      : await unpublishInvitation(invitationId);
+      ? await publishInvitation(
+        invitationId
+      )
+      : await unpublishInvitation(
+        invitationId
+      );
 
     revalidatePath(
       "/[locale]/dashboard",
@@ -124,16 +139,23 @@ export async function setInvitationPublishedAction(
     );
 
     return {
-      success: true,
+      success:
+        true,
+
       data,
     };
   } catch (error) {
+    console.error(
+      "setInvitationPublishedAction failed:",
+      error
+    );
+
     return {
-      success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Invitation publication failed.",
+      success:
+        false,
+
+      code:
+        "INVITATION_PUBLISH_FAILED",
     };
   }
 }

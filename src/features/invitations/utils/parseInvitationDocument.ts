@@ -2,6 +2,7 @@ import {
   z,
 } from "zod";
 import { invitationEventDateSchema, invitationEventTimeSchema, normalizeInvitationDateTime } from "./invitationSharedDateTime";
+import { invitationRsvpSchema } from "./invitationRsvp";
 
 import {
   getInvitationLayout,
@@ -85,6 +86,7 @@ const invitationPageSchema =
             invitationPhotoSlotSchema
           )
           .max(20),
+      rsvp: invitationRsvpSchema.optional(),
 
       unplacedPhotos:
         z
@@ -136,6 +138,7 @@ export function parseInvitationDocument(
 
   const ids =
     new Set<string>();
+  if (document.pages.filter(page => page.type === "rsvp").length > 1) throw new Error("Only one RSVP section is allowed");
 
   for (
     const page
@@ -200,7 +203,9 @@ export function parseInvitationDocument(
       page,
       ...page.photos,
       ...(page.unplacedPhotos ?? []),
+      ...(page.rsvp?.questions ?? []),
     ];
+    if (page.rsvp && page.type !== "rsvp") throw new Error("RSVP configuration requires an RSVP page");
 
     for (
       const item

@@ -1,4 +1,5 @@
 "use client";
+import { useProjectNavigation } from "../ProjectNavigationContext";
 
 import {
   useState,
@@ -15,6 +16,7 @@ import {
 
 import {
   dashboardBottomNavigation,
+  projectBottomNavigation,
 } from "@/components/navigation/constants/dashboardBottomNavigation";
 
 import DashboardMoreMenu
@@ -37,6 +39,7 @@ export default function DashboardBottomNavigation() {
       "Navigation.dashboard"
     );
 
+  const { projectId } = useProjectNavigation();
   const pathname =
     usePathname();
 
@@ -77,7 +80,7 @@ export default function DashboardBottomNavigation() {
 
   return (
     <>
-      <nav
+      <nav data-project={!!projectId}
         className={
           styles.navigation
         }
@@ -87,7 +90,7 @@ export default function DashboardBottomNavigation() {
           )
         }
       >
-     {dashboardBottomNavigation.map(
+     {(projectId ? projectBottomNavigation(projectId) : dashboardBottomNavigation).map(
   (item) => {
     const Icon =
       item.icon;
@@ -109,7 +112,7 @@ export default function DashboardBottomNavigation() {
           className={cn(
             styles.item,
 
-            moreOpen &&
+            (moreOpen || pathname === "/dashboard/profile" || (!!projectId && (pathname.endsWith("/collaborators") || pathname === `/dashboard/projects/${projectId}/settings`))) &&
               styles.active
           )}
           onClick={() =>
@@ -152,7 +155,7 @@ export default function DashboardBottomNavigation() {
        Navigation Link
     ============================================================== */
 
-    const active =
+    const active = projectId && item.id === "invitations" ? (pathname === `/dashboard/projects/${projectId}/invitations` || pathname.startsWith(`/dashboard/projects/${projectId}/invitations/`) || pathname.startsWith("/dashboard/invitations/")) : projectId && item.id === "event" ? !(pathname.startsWith(`/dashboard/projects/${projectId}/invitations`) || pathname.startsWith("/dashboard/invitations/") || pathname.endsWith("/collaborators") || pathname === `/dashboard/projects/${projectId}/settings`) :
       isActive(
         item.href,
         item.exact

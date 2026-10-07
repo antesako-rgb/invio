@@ -32,6 +32,7 @@ interface ConfirmDialogProps {
   cancelText?: string;
 
   loading?: boolean;
+  loadingText?: string;
 
   variant?: ConfirmDialogVariant;
 
@@ -47,6 +48,7 @@ export default function ConfirmDialog({
   confirmText = "Potvrdi",
   cancelText = "Odustani",
   loading = false,
+  loadingText = "Molimo pričekajte...",
   variant = "default",
   onConfirm,
   onClose,
@@ -106,7 +108,7 @@ export default function ConfirmDialog({
             onClick={handleConfirm}
           >
             {loading
-              ? "Molimo pričekajte..."
+              ? loadingText
               : confirmText}
           </AlertDialogAction>
         </AlertDialogFooter>

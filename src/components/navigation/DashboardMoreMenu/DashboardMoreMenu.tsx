@@ -1,11 +1,13 @@
 "use client";
+import { useProjectNavigation } from "../ProjectNavigationContext";
 
 import {
   CalendarDays,
-  LayoutDashboard,
+  Settings,
   LogOut,
   Plus,
   UsersRound,
+  UserRound,
 } from "lucide-react";
 
 import {
@@ -79,10 +81,7 @@ export default function DashboardMoreMenu({
   const pathname =
     usePathname();
 
-  const projectId =
-    pathname.match(
-      /^\/dashboard\/projects\/([0-9a-f]{8}-[0-9a-f-]{27})(?:\/|$)/i
-    )?.[1];
+  const { projectId, activeId } = useProjectNavigation();
 
 
   /* ==========================================================================
@@ -216,8 +215,8 @@ export default function DashboardMoreMenu({
                 </span>
               </Link>
 
-              <Link
-                href="/dashboard/projects/new"
+              {!projectId && (              <Link
+                href="/dashboard/projects/new/event"
                 className={
                   styles.item
                 }
@@ -237,7 +236,7 @@ export default function DashboardMoreMenu({
                     "create"
                   )}
                 </span>
-              </Link>
+              </Link>)}
             </nav>
           </section>
 
@@ -268,30 +267,8 @@ export default function DashboardMoreMenu({
                 }
               >
                 <Link
-                  href={`/dashboard/projects/${projectId}`}
-                  className={
-                    styles.item
-                  }
-                  onClick={
-                    handleNavigate
-                  }
-                >
-                  <LayoutDashboard
-                    size={
-                      20
-                    }
-                    aria-hidden="true"
-                  />
-
-                  <span>
-                    {projectText(
-                      "overview"
-                    )}
-                  </span>
-                </Link>
-
-                <Link
                   href={`/dashboard/projects/${projectId}/collaborators`}
+                  aria-current={activeId === "collaborators" ? "page" : undefined}
                   className={
                     styles.item
                   }
@@ -312,6 +289,7 @@ export default function DashboardMoreMenu({
                     )}
                   </span>
                 </Link>
+                <Link href={`/dashboard/projects/${projectId}/settings`} className={styles.item} aria-current={pathname === `/dashboard/projects/${projectId}/settings` ? "page" : undefined} onClick={handleNavigate}><Settings size={20} aria-hidden="true" /><span>{projectText("settings")}</span></Link>
               </nav>
             </section>
           )}
@@ -321,6 +299,9 @@ export default function DashboardMoreMenu({
               styles.section
             }
           >
+            <Link href="/dashboard/profile" className={styles.item} aria-current={pathname === "/dashboard/profile" ? "page" : undefined} onClick={handleNavigate}>
+              <UserRound size={20} aria-hidden="true" /><span>{t("profile")}</span>
+            </Link>
             <Button
               type="button"
               variant="ghost"

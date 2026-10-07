@@ -22,8 +22,11 @@ import {
 ========================================================================== */
 
 export async function updateInvitationAction(
-  invitationId: string,
-  name: string
+  invitationId:
+    string,
+
+  name:
+    string
 ): Promise<ActionResult> {
   try {
     const parsedName =
@@ -55,15 +58,21 @@ export async function updateInvitationAction(
     );
 
     return {
-      success: true,
+      success:
+        true,
     };
   } catch (error) {
+    console.error(
+      "updateInvitationAction failed:",
+      error
+    );
+
     return {
-      success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Invitation update failed.",
+      success:
+        false,
+
+      code:
+        "INVITATION_UPDATE_FAILED",
     };
   }
 }

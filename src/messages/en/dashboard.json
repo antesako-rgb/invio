@@ -12,7 +12,8 @@
     "invites": {
       "title": "Collaboration invitation",
       "description": "You have been invited to collaborate.",
-      "open": "View invitation"
+      "open": "View invitation",
+      "profileMissing": "Collaboration invitations cannot be displayed because your account profile is unavailable. Contact support to check your account."
     },
     "products": {
       "photoWall": {
@@ -28,23 +29,17 @@
   "onboarding": {
     "eyebrow": "Welcome to Memiva",
     "title": "Start your story",
-    "description": "Create an event and bring everything together in one place, or make a standalone digital album.",
+    "description": "Create an event and bring everything together in one place.",
     "event": {
-      "title": "Event",
-      "description": "Organize your event in one place. Add a Photo Wall, digital albums and an invitation.",
+      "title": "Create Event",
+      "description": "Add event details. Your Photo Wall is created automatically; invitations and digital albums can be added later.",
       "futureNote": "Seating plans are coming soon, within your event.",
       "action": "Create event"
     },
-    "album": {
-      "title": "Digital Album",
-      "description": "Create a standalone digital book of memories. Perfect for travel, family, a special gift or any collection of photos.",
-      "action": "Create digital album"
-    },
     "productsTitle": "Everything for your events and memories",
-    "productsDescription": "Photo Wall, invitations and seating plans belong to an event. A digital album can be part of an event or a story of its own.",
+    "productsDescription": "Photo Wall, invitations and digital albums belong to your event. Seating plans are coming soon.",
     "comingSoon": "Coming soon",
     "partOfEvent": "Part of an event",
-    "eventOrStandalone": "Part of an event or standalone",
     "products": {
       "photoWall": {
         "title": "Photo Wall",

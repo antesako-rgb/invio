@@ -1,4 +1,5 @@
 "use client";
+import { ActionFailure } from "@/lib/actions/ActionFailure";
 
 import {
   useRouter,
@@ -15,15 +16,15 @@ import PageHeader
   from "@/components/ui/page-header/PageHeader";
 
 import {
-  updateProjectEventAction,
-} from "../../actions/updateProjectEventAction";
+  updateProjectAction,
+} from "../../actions/updateProjectAction";
 
 import ProjectEventForm
   from "../../components/ProjectEventForm/ProjectEventForm";
 
 import type {
-  ProjectEvent,
-} from "../../types/projectEvent.types";
+  Project,
+} from "../../types/project.types";
 
 import {
   buildUpdateProjectEventPayload,
@@ -42,12 +43,12 @@ import styles from "./EditProjectEventPage.module.css";
 
 interface EditProjectEventPageProps {
   event:
-    ProjectEvent;
+    Project;
 }
 
 
 /* ==========================================================================
-   Edit ProjectEvent Page
+   Edit Project Page
 ========================================================================== */
 
 export default function EditProjectEventPage({
@@ -63,7 +64,7 @@ export default function EditProjectEventPage({
 
 
   /* ==========================================================================
-     Update ProjectEvent
+     Update Project
   ========================================================================== */
 
   async function handleSubmit(
@@ -76,13 +77,13 @@ export default function EditProjectEventPage({
       );
 
     const result =
-      await updateProjectEventAction(
+      await updateProjectAction(
         payload
       );
 
     if (!result.success) {
-      throw new Error(
-        result.message
+      throw new ActionFailure(
+        result.code
       );
     }
 

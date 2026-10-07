@@ -1,4 +1,5 @@
 "use client";
+import { useActionError } from "@/lib/actions/useActionError";
 
 import {
   useTranslations,
@@ -37,6 +38,7 @@ export default function DigitalAlbumNameEdit({
      Translations
   ========================================================================== */
 
+  const actionError = useActionError();
   const t =
     useTranslations(
       "DigitalAlbums.management.name"
@@ -60,7 +62,7 @@ export default function DigitalAlbumNameEdit({
 
     if (!result.success) {
       throw new Error(
-        result.message
+        actionError(result.code)
       );
     }
 

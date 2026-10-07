@@ -1,4 +1,5 @@
 "use client";
+import { useActionError } from "@/lib/actions/useActionError";
 
 import {
   useState,
@@ -57,6 +58,7 @@ export default function PhotoWallStatusAction({
      Translation
   ========================================================================== */
 
+  const actionError = useActionError();
   const t =
     useTranslations(
       "PhotoWalls.management.statusCard"
@@ -107,7 +109,7 @@ export default function PhotoWallStatusAction({
 
       if (!result.success) {
         toast.error(
-          result.message
+          actionError(result.code)
         );
 
         return;

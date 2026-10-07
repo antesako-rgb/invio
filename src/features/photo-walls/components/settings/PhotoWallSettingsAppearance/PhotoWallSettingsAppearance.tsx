@@ -1,4 +1,5 @@
 "use client";
+import { useActionError } from "@/lib/actions/useActionError";
 
 import {
   useState,
@@ -90,6 +91,7 @@ export default function PhotoWallSettingsAppearance({
      Translation
   ========================================================================== */
 
+  const actionError = useActionError();
   const t =
      useTranslations(
     "PhotoWalls.management.settings.appearance"
@@ -176,7 +178,7 @@ export default function PhotoWallSettingsAppearance({
           );
 
           setError(
-            result.message
+            actionError(result.code)
           );
 
           return;

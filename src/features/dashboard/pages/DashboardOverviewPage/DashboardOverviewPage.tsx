@@ -16,6 +16,8 @@ import DashboardOnboarding from "../../components/DashboardOnboarding/DashboardO
 
 import DashboardWelcome from "../../components/DashboardWelcome/DashboardWelcome";
 
+import styles from "./DashboardOverviewPage.module.css";
+
 
 /* ==========================================================================
    Types
@@ -23,6 +25,7 @@ import DashboardWelcome from "../../components/DashboardWelcome/DashboardWelcome
 
 interface DashboardOverviewPageProps {
   firstName?: string | null;
+  view?: "overview" | "projects";
 }
 
 
@@ -32,26 +35,31 @@ interface DashboardOverviewPageProps {
 
 export default async function DashboardOverviewPage({
   firstName,
+  view = "overview",
 }: DashboardOverviewPageProps) {
   const projects =
     await getProjects();
 
   return (
-    <Container>
-      <Page>
+    <Container className={styles.container}>
+      <Page className={styles.page}>
+        {view === "overview" && <DashboardInvites />}
         {projects.length === 0 ? (
-          <>
-            <DashboardOnboarding />
-            <DashboardInvites />
-          </>
+          <DashboardOnboarding />
         ) : (
           <>
-            <DashboardWelcome firstName={firstName} />
-            <DashboardInvites />
-            <DashboardProjects projects={projects} />
-            <DashboardBrandMessage />
+            {view === "overview" && (
+              <>
+                <DashboardWelcome firstName={firstName} />
+              </>
+            )}
+            <DashboardProjects projects={projects} limit={view === "overview" ? 3 : null} />
           </>
         )}
+
+        <footer className={styles.footer}>
+          <DashboardBrandMessage />
+        </footer>
       </Page>
     </Container>
   );

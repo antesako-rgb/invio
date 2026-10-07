@@ -25,7 +25,7 @@ export type ProjectCollaborator =
 ========================================================================== */
 
 export type ProjectCollaborationInvite =
-  Tables<"project_collaboration_invites">;
+  Omit<Tables<"project_collaboration_invites">, "token_hash">;
 
 
 /* ==========================================================================
@@ -48,6 +48,9 @@ export type InviteProjectCollaboratorInput =
 
 export type InviteProjectCollaboratorResult =
   Database["public"]["Functions"]["invite_project_collaborator"]["Returns"][number];
+
+export type RenewProjectCollaborationInviteResult =
+  Database["public"]["Functions"]["renew_project_collaboration_invite"]["Returns"][number];
 
 
 /* ==========================================================================

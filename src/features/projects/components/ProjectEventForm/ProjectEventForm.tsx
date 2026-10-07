@@ -1,4 +1,6 @@
 "use client";
+import { ActionFailure } from "@/lib/actions/ActionFailure";
+import { useActionError } from "@/lib/actions/useActionError";
 
 import {
   useState,
@@ -28,8 +30,8 @@ import {
 } from "../../hooks/useProjectEventForm";
 
 import type {
-  ProjectEvent,
-} from "../../types/projectEvent.types";
+  Project,
+} from "../../types/project.types";
 
 import {
   projectEventSchema,
@@ -48,7 +50,7 @@ import styles from "./ProjectEventForm.module.css";
 ========================================================================== */
 
 interface ProjectEventFormProps {
-  event?: ProjectEvent;
+  event?: Project;
 
   onSubmit: (
     values: ProjectEventFormValues
@@ -57,13 +59,14 @@ interface ProjectEventFormProps {
 
 
 /* ==========================================================================
-   ProjectEvent Form
+   Project Form
 ========================================================================== */
 
 export default function ProjectEventForm({
   event,
   onSubmit,
 }: ProjectEventFormProps) {
+  const actionError = useActionError();
   const t =
     useTranslations(
       "Projects.eventDetails.form"
@@ -147,8 +150,8 @@ export default function ProjectEventForm({
       );
     } catch (error) {
       toast.error(
-        error instanceof Error
-          ? error.message
+        error instanceof ActionFailure
+          ? actionError(error.code)
           : t(
               "submitError"
             )

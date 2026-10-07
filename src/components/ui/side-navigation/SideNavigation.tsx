@@ -138,7 +138,7 @@ export default function SideNavigation({
 
           const active =
             variant === "route"
-              ? item.exact
+              ? activeId !== undefined ? activeId === item.id : item.exact
                 ? pathname ===
                   item.href
                 : pathname ===

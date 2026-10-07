@@ -1,6 +1,25 @@
 {
-  "photoLibraryHelp": {"placement": "To add or replace a photo, first select a photo area on the page, then choose a photo here.", "usage": "\u2713 marks a photo in use; 3\u00d7 means it is used in three places.", "description": "Use the pencil to edit the description or the bin to remove a photo from the library."},
-  "photoDescription": {"edit": "Edit photo description", "label": "Description", "hint": "Applies wherever this photo is used within this product. Other albums, invitations and Photo Walls keep their own descriptions.", "legacy": "Custom text for this placement", "legacyHint": "This placement uses its own saved text instead of the photo description.", "reset": "Use photo description", "cancel": "Cancel", "save": "Apply", "error": "Could not save the description. Try again."},
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to home"
+  },
+  "photoLibraryHelp": {
+    "placement": "To add or replace a photo, first select a photo area on the page, then choose a photo here.",
+    "usage": "✓ marks a photo in use; 3× means it is used in three places.",
+    "description": "Use the pencil to edit the description or the bin to remove a photo from the library."
+  },
+  "photoDescription": {
+    "edit": "Edit photo description",
+    "label": "Description",
+    "hint": "Applies wherever this photo is used within this product. Other albums, invitations and Photo Walls keep their own descriptions.",
+    "legacy": "Custom text for this placement",
+    "legacyHint": "This placement uses its own saved text instead of the photo description.",
+    "reset": "Use photo description",
+    "cancel": "Cancel",
+    "save": "Apply",
+    "error": "Could not save the description. Try again."
+  },
   "appName": "Memiva",
   "loading": "Loading...",
   "backToTop": "Back to top",
@@ -16,5 +35,48 @@
   "filePicker": {
     "select": "Choose photo"
   },
-  "metaDescription": "Memiva ? share photos and preserve memories from your events."
+  "metaDescription": "Memiva ? share photos and preserve memories from your events.",
+  "errors": {
+    "INVALID_INPUT": "Please check the entered information.",
+    "VALIDATION": "Please check the entered information.",
+    "NOT_FOUND": "The requested content was not found.",
+    "FORBIDDEN": "You do not have permission to perform this action.",
+    "ACTION_FAILED": "The action could not be completed. Please try again.",
+    "CONFLICT": "The content changed in another session. Reload it before saving.",
+    "SAVE_FAILED": "Changes could not be saved. Please try again.",
+    "PROJECT_CREATE_FAILED": "The project could not be created.",
+    "PROJECT_UPDATE_FAILED": "The project could not be updated.",
+    "PROJECT_DELETE_FAILED": "Project deletion or file cleanup could not be completed.",
+    "EVENT_CREATE_FAILED": "The event could not be created.",
+    "EVENT_UPDATE_FAILED": "Event details could not be saved.",
+    "COLLABORATION_FAILED": "The collaboration action could not be completed.",
+    "ALBUM_CREATE_FAILED": "The digital album could not be created.",
+    "ALBUM_UPDATE_FAILED": "The digital album could not be updated.",
+    "ALBUM_DELETE_FAILED": "Album deletion or file cleanup could not be completed.",
+    "ALBUM_PUBLISH_FAILED": "The album publication status could not be changed.",
+    "INVITATION_CREATE_FAILED": "The invitation could not be created.",
+    "INVITATION_UPDATE_FAILED": "The invitation action could not be completed.",
+    "INVITATION_PUBLISH_FAILED": "The invitation publication status could not be changed.",
+    "INVITATION_MISSING_PHOTO": "The invitation contains a photo that is no longer available.",
+    "PHOTO_WALL_UPDATE_FAILED": "The Photo Wall could not be updated.",
+    "PHOTO_WALL_PUBLISH_FAILED": "The Photo Wall publication status could not be changed.",
+    "MATERIAL_CREATE_FAILED": "The material could not be created.",
+    "PHOTO_DESCRIPTION_FAILED": "The photo description could not be saved.",
+    "PHOTO_UPLOAD_FAILED": "The photo could not be uploaded.",
+    "PHOTO_REMOVE_FAILED": "Photo removal could not be completed.",
+    "PHOTO_ADD_FAILED": "The photos could not be added.",
+    "PHOTO_FAVORITE_FAILED": "The photo favorite status could not be changed.",
+    "PHOTOS_LOAD_FAILED": "The photos could not be loaded.",
+    "GUEST_ACTION_FAILED": "The guest action could not be completed. Please try again.",
+    "GUEST_GROUP_EXISTS": "A group with this name already exists. Choose another name.",
+    "INVITATION_RSVP_SETTINGS_FAILED": "Could not save RSVP settings. Please try again.",
+    "RSVP_UNAVAILABLE": "The link is invalid or the invitation is no longer available.",
+    "RSVP_SUBMIT_FAILED": "Could not save your response. Please try again.",
+    "RSVP_CAPACITY_EXCEEDED": "There are not enough available places for this RSVP response.",
+    "RSVP_GUEST_LIMIT_EXCEEDED": "The number of people exceeds the limit for one RSVP response.",
+    "RSVP_ANSWERS_INVALID": "Check the required answers. The form may have changed; refresh the page.",
+    "RECIPIENT_ACTION_FAILED": "Could not complete the recipient action. Please try again.",
+    "RECIPIENT_GUEST_CONFLICT": "A selected guest already belongs to another recipient of this invitation. Refresh the list and choose available guests.",
+    "RECIPIENT_GUESTS_LOCKED": "The recipient guest list cannot change after an RSVP response."
+  }
 }

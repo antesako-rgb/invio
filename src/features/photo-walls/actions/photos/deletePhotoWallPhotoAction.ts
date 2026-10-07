@@ -12,9 +12,8 @@ import type {
   DeletePhotoWallPhotoInput,
 } from "@/features/photo-walls/types/photoWallPhoto.types";
 
-
 /* ==========================================================================
-   Delete Photo Wall Photo Action
+ Delete Photo Wall Photo Action
 ========================================================================== */
 
 export async function deletePhotoWallPhotoAction(
@@ -25,21 +24,24 @@ export async function deletePhotoWallPhotoAction(
     await deletePhotoWallPhoto(
       input
     );
-
     return {
-      success: true,
-      data: undefined,
+      success:
+        true,
+
+      data:
+        undefined,
     };
   } catch (error) {
     console.error(
       "deletePhotoWallPhotoAction error:",
       error
     );
-
     return {
-      success: false,
-      message:
-        "Fotografiju nije moguće obrisati.",
+      success:
+        false,
+
+      code:
+        "PHOTO_REMOVE_FAILED",
     };
   }
 }

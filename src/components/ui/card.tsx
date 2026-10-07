@@ -27,8 +27,9 @@ const cardVariants =
       "border-border",
       "bg-card",
       "text-card-foreground",
-      "transition-all",
+      "transition-[border-color,box-shadow]",
       "duration-200",
+      "motion-reduce:transition-none",
     ],
     {
       variants: {
@@ -43,7 +44,7 @@ const cardVariants =
             "border-transparent bg-transparent shadow-none",
 
           interactive:
-            "cursor-pointer hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md",
+            "cursor-pointer hover:border-primary/30 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         },
 
         shadow: {

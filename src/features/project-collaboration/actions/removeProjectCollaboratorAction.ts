@@ -1,5 +1,8 @@
 "use server";
 
+import { z } from "zod";
+import { revalidatePath } from "next/cache";
+
 import type {
   ActionResult,
 } from "@/lib/actions/actionResult";
@@ -12,29 +15,37 @@ import type {
   RemoveProjectCollaboratorInput,
 } from "@/features/project-collaboration/types/projectCollaboration.types";
 
-
 /* ==========================================================================
-   Remove Project Collaborator Action
+ Remove Project Collaborator Action
 ========================================================================== */
 
 export async function removeProjectCollaboratorAction(
-  input: RemoveProjectCollaboratorInput
+  input:
+    RemoveProjectCollaboratorInput
 ): Promise<ActionResult> {
+  if (!z.object({ p_project_id: z.string().uuid(), p_profile_id: z.string().uuid() }).safeParse(input).success) {
+    return { success: false, code: "INVALID_INPUT" };
+  }
   try {
     await removeProjectCollaborator(
       input
     );
-
+    revalidatePath("/[locale]/dashboard", "layout");
     return {
-      success: true,
+      success:
+        true,
     };
   } catch (error) {
+    console.error(
+      "removeProjectCollaboratorAction failed:",
+      error
+    );
     return {
-      success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Nije moguće ukloniti suradnika.",
+      success:
+        false,
+
+      code:
+        "COLLABORATION_FAILED",
     };
   }
 }

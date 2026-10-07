@@ -1,25 +1,123 @@
 "use server";
-import { z } from "zod";
-import { revalidatePath } from "next/cache";
-import { createProject } from "../repositories/createProject";
-import { createInitializedDigitalAlbum } from "@/features/digital-albums/services/createInitializedDigitalAlbum";
 
-const schema = z.object({ name: z.string().trim().min(1).max(150), projectId: z.string().uuid().optional() }).strict();
-type Result = { success: true; albumId: string; projectId: string } | { success: false; projectId?: string };
+import {
+  revalidatePath,
+} from "next/cache";
 
-export async function createAlbumEntryAction(input: z.infer<typeof schema>): Promise<Result> {
-  const parsed = schema.safeParse(input);
-  if (!parsed.success) return { success: false };
-  let projectId = parsed.data.projectId;
+import {
+  z,
+} from "zod";
+
+import type {
+  ActionResult,
+} from "@/lib/actions/actionResult";
+
+import {
+  createInitializedDigitalAlbum,
+} from "@/features/digital-albums/services/createInitializedDigitalAlbum";
+
+
+/* ==========================================================================
+   Schema
+========================================================================== */
+
+const schema =
+  z
+    .object({
+      name:
+        z
+            .string()
+            .trim()
+            .min(1)
+            .max(150),
+
+      projectId:
+        z
+            .string()
+            .uuid(),
+    })
+    .strict();
+
+
+/* ==========================================================================
+   Types
+========================================================================== */
+
+interface CreateAlbumEntryData {
+  albumId:
+    string;
+
+  projectId:
+    string;
+}
+
+type CreateAlbumEntryResult =
+  ActionResult<CreateAlbumEntryData, "INVALID_INPUT" | "ALBUM_CREATE_FAILED">;
+
+
+/* ==========================================================================
+   Create Album Entry Action
+========================================================================== */
+
+export async function createAlbumEntryAction(
+  input:
+    z.infer<typeof schema>
+): Promise<CreateAlbumEntryResult> {
+  const parsed =
+    schema.safeParse(
+      input
+    );
+
+  if (
+    !parsed.success
+  ) {
+    return {
+      success:
+        false,
+
+      code:
+        "INVALID_INPUT",
+    };
+  }
+
+  const projectId =
+    parsed.data.projectId;
+
   try {
-    if (!projectId) projectId = (await createProject({ p_name: parsed.data.name })).id;
-    const album = await createInitializedDigitalAlbum(projectId, parsed.data.name);
-    revalidatePath("/[locale]/dashboard", "layout");
-    return { success: true, albumId: album.id, projectId };
+    const album =
+      await createInitializedDigitalAlbum(
+        projectId,
+        parsed.data.name
+      );
+
+    revalidatePath(
+      "/[locale]/dashboard",
+      "layout"
+    );
+
+    return {
+      success:
+        true,
+
+      data: {
+        albumId:
+          album.id,
+
+        projectId,
+      },
+    };
   } catch {
-    revalidatePath("/[locale]/dashboard", "layout");
-    // Keep a successfully created neutral Project recoverable after a product failure.
-    // The form retries with this ID, so it does not create another Project each time.
-    return { success: false, projectId };
+    revalidatePath(
+      "/[locale]/dashboard",
+      "layout"
+    );
+
+    return {
+      success:
+        false,
+
+      code:
+        "ALBUM_CREATE_FAILED",
+    };
   }
 }
