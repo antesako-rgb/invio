@@ -43,7 +43,27 @@ def build():
         elif sql.lower().startswith(('revoke ', 'grant ')):
             grouped['storage_lifecycle/grants.sql'].append(
                 '-- Source: maintenance/020_finalized_only_cleanup.sql (APPLIED)\n' + sql)
-    return {name: HEADER + '\n' + '\n\n'.join(items) + '\n' for name, items in grouped.items()}
+    output = {name: HEADER + '\n' + '\n\n'.join(items) + '\n' for name, items in grouped.items()}
+    planned_groups = defaultdict(list)
+    for sql in statements((ROOT / 'maintenance/021_signed_cleanup_requests.sql').read_text(encoding='utf-8')):
+        lower = sql.lower()
+        target = None
+        if lower.startswith('create table private.storage_cleanup_request_ids'):
+            target = 'storage_cleanup_request_ids/table.sql'
+        elif lower.startswith(('alter table private.storage_cleanup_request_ids', 'create policy deny_clients on private.storage_cleanup_request_ids')):
+            target = 'storage_cleanup_request_ids/rls.sql'
+        elif lower.startswith('revoke all on private.storage_cleanup_request_ids'):
+            target = 'storage_cleanup_request_ids/grants.sql'
+        elif lower.startswith('create function '):
+            name = re.search(r'function ([\w.]+)', sql)[1]
+            target = 'storage_lifecycle/' + name + '.sql'
+        elif lower.startswith(('revoke ', 'grant ')):
+            target = 'storage_lifecycle/signed_request_grants.sql'
+        if target:
+            planned_groups[target].append(sql)
+    for name, items in planned_groups.items():
+        output[name] = '-- PLANNED DEFINITION / SAVE ONLY. SQL021 NOT APPLIED; do not execute separately.\n' + '\n\n'.join(items) + '\n'
+    return output
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)

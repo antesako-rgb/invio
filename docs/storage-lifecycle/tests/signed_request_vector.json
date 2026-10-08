@@ -1,0 +1,9 @@
+{
+  "key": "test-key-ž-😀-not-a-production-secret",
+  "timestamp": "1800000000",
+  "requestId": "00000000-0000-4000-8000-000000000001",
+  "bodyHex": "7b7d",
+  "bodySha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+  "canonical": "memora-cleanup-v1\nPOST\n/api/internal/storage-cleanup\n1800000000\n00000000-0000-4000-8000-000000000001\n44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+  "signature": "632cbdb2e1cb37d3cff9f32ff19e6ebe20e10dbccf2522e823884eab160b8d8a"
+}

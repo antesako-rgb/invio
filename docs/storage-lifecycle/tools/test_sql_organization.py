@@ -49,9 +49,10 @@ class SqlOrganizationTests(unittest.TestCase):
         original.extend(sql for sql in originals_020 if sql.lower() not in ("begin;", "commit;"))
         extracted = []
         for name, text in definitions.items():
-            self.assertTrue(text.startswith("-- SAVE / REVIEW ONLY"))
+            self.assertTrue(text.startswith(("-- SAVE / REVIEW ONLY", "-- PLANNED DEFINITION")))
             self.assertEqual((ROOT / "definitions" / name).read_text(encoding="utf-8"), text)
-            extracted.extend(statements(text))
+            if not text.startswith("-- PLANNED DEFINITION"):
+                extracted.extend(statements(text))
         self.assertEqual(Counter(original), Counter(extracted))
 
     def test_storage_objects_definitions_have_no_empty_trigger(self):

@@ -21,7 +21,7 @@ function loader(mocks = {}, globals = {}) {
       compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
     }).outputText;
     vm.runInNewContext(code, {
-      exports, Buffer, File, AbortSignal, Response,
+      exports, Buffer, File, AbortSignal, Response, URL,
       process: { env: {} },
       fetch() { throw new Error("REAL NETWORK IS FORBIDDEN IN TESTS"); },
       ...globals,
@@ -29,7 +29,7 @@ function loader(mocks = {}, globals = {}) {
         if (Object.hasOwn(mocks, name)) return mocks[name];
         if (name === "server-only") return {};
         if (name === "zod") return require("zod");
-        if (name === "crypto") return { randomUUID: () => id, timingSafeEqual: require("node:crypto").timingSafeEqual };
+        if (name === "crypto") return { ...require("node:crypto"), randomUUID: () => id };
         const target = name.startsWith("@/") ? path.join(root, "src", name.slice(2))
           : name.startsWith(".") ? path.resolve(path.dirname(file), name) : null;
         if (!target) throw new Error(`Unmocked import: ${name}`);
@@ -201,18 +201,38 @@ test("Bunny failure does not expose response body; PUT uses canonical key and bo
   assert.ok(request.signal);
 });
 
-test("scheduler endpoint is disabled by default and rejects missing/wrong credentials without running worker", async () => {
-  let calls = 0;
-  const worker = { runStorageCleanup: async () => { calls++; return { completed: 0, failed: 0 }; } };
+test("signed endpoint gates worker behind atomic nonce consumption", async () => {
+  let calls = 0; const seen = new Set();
+  const secret = "x".repeat(64);
+  const mocks = {
+    "@/features/project-photos/storage/runStorageCleanup": { runStorageCleanup: async () => { calls++; return { completed: 0, failed: 0 }; } },
+    "@/features/project-photos/storage/consumeCleanupRequest": { consumeCleanupRequest: async requestId => { if(seen.has(requestId))return false;seen.add(requestId);return true; } },
+  };
   const route = "src/app/api/internal/storage-cleanup/route.ts";
-  const mocks = { "@/features/project-photos/storage/runStorageCleanup": worker };
-  assert.equal((await loader(mocks)(route).POST(new Request("http://local"))).status, 503);
-  const secret = "x".repeat(32);
-  const post = loader(mocks, { process: { env: { STORAGE_CLEANUP_ENABLED: "true", STORAGE_CLEANUP_SECRET: secret } } })(route).POST;
-  assert.equal((await post(new Request("http://local"))).status, 401);
-  assert.equal(calls, 0);
-  assert.equal((await post(new Request("http://local", { headers: { authorization: `Bearer ${secret}` } }))).status, 200);
-  assert.equal(calls, 1);
+  assert.equal((await loader(mocks)(route).POST(new Request("http://local/api/internal/storage-cleanup", {method:"POST",body:"{}"}))).status, 503);
+  const post = loader(mocks, {process:{env:{STORAGE_CLEANUP_ENABLED:"true",STORAGE_CLEANUP_SECRET:secret}}})(route).POST;
+  const timestamp = String(Math.floor(Date.now()/1000));
+  const canonical = ["memora-cleanup-v1","POST","/api/internal/storage-cleanup",timestamp,id,require("node:crypto").createHash("sha256").update("{}").digest("hex")].join("\n");
+  const signature = require("node:crypto").createHmac("sha256",secret).update(canonical).digest("hex");
+  const make = (body="{}",headers={}) => new Request("http://local/api/internal/storage-cleanup",{method:"POST",body,headers:{"x-cleanup-timestamp":timestamp,"x-cleanup-id":id,"x-cleanup-signature":signature,...headers}});
+  assert.equal((await post(make("{ }"))).status,401);
+  assert.equal((await post(make("{}",{"x-cleanup-signature":"0".repeat(64)}))).status,401);
+  assert.equal((await post(new Request("http://local/api/internal/storage-cleanup",{method:"POST",body:"{}",headers:{authorization:"Bearer "+secret}}))).status,401);
+  assert.equal(calls,0);
+  const results=await Promise.all([post(make()),post(make())]);
+  assert.deepEqual(results.map(r=>r.status).sort(),[200,409]);assert.equal(calls,1);
+  const fail=loader({...mocks,"@/features/project-photos/storage/consumeCleanupRequest":{consumeCleanupRequest:async()=>{throw Error("DB unavailable");}}},{process:{env:{STORAGE_CLEANUP_ENABLED:"true",STORAGE_CLEANUP_SECRET:secret}}})(route).POST;
+  assert.equal((await fail(make())).status,500);assert.equal(calls,1);
+});
+
+test("signature binds method/path/body/time/id and rejects expired/future/malformed inputs", () => {
+ const verify=loader()("src/features/project-photos/storage/cleanupRequestAuth.ts").verifyCleanupRequest;
+ const secret="s".repeat(64);const now=1800000000000;const timestamp=String(now/1000);
+ const canonical=["memora-cleanup-v1","POST","/api/internal/storage-cleanup",timestamp,id,require("node:crypto").createHash("sha256").update("{}").digest("hex")].join("\n");
+ const signature=require("node:crypto").createHmac("sha256",secret).update(canonical).digest("hex");
+ const request=(method="POST",pathname="/api/internal/storage-cleanup",overrides={})=>new Request("https://local"+pathname,{method,headers:{"x-cleanup-id":id,"x-cleanup-timestamp":timestamp,"x-cleanup-signature":signature,...overrides}});
+ assert.ok(verify(request(),"{}",secret,now));
+ for(const args of [[request("GET"),"{}",secret,now],[request("POST","/other"),"{}",secret,now],[request(),"[]",secret,now],[request(),"{}","wrong",now],[request(),"{}",secret,now+121000],[request(),"{}",secret,now-31000],[request("POST","/api/internal/storage-cleanup",{"x-cleanup-id":"bad"}),"{}",secret,now]])assert.equal(verify(...args),null);
 });
 
 test("SQL package has durable ledger/jobs, alias guards, state gates and explicitly closed arbitrary-path RPCs (structural only)", () => {
@@ -248,3 +268,20 @@ test("cleanup rejects old/unproven claims before any DELETE", async () => {
   assert.equal(deletes, 0);
 });
 
+
+test("raw body vector, UTF-8 key and exact 120/30 second boundaries match protocol", () => {
+ const vector=JSON.parse(fs.readFileSync(path.join(root,"docs/storage-lifecycle/tests/signed_request_vector.json"),"utf8"));
+ const verify=loader()("src/features/project-photos/storage/cleanupRequestAuth.ts").verifyCleanupRequest;
+ const req=new Request("https://local/api/internal/storage-cleanup",{method:"POST",headers:{"x-cleanup-id":vector.requestId,"x-cleanup-timestamp":vector.timestamp,"x-cleanup-signature":vector.signature}});
+ const now=Number(vector.timestamp)*1000;
+ const body=Buffer.from(vector.bodyHex,"hex");
+ assert.ok(verify(req,body,vector.key,now));
+ assert.ok(verify(req,body,vector.key,now+120000));
+ assert.equal(verify(req,body,vector.key,now+121000),null);
+ assert.ok(verify(req,body,vector.key,now-30000));
+ assert.equal(verify(req,body,vector.key,now-31000),null);
+ assert.equal(verify(req,Buffer.from([0xff,0xfe]),vector.key,now),null);
+ assert.equal(verify(req,Buffer.from("{}\n"),vector.key,now),null);
+ assert.equal(verify(req,Buffer.from("{ }"),vector.key,now),null);
+ assert.equal(verify(req,body,vector.key,now+240000),null);
+});

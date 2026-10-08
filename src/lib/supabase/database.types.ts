@@ -1192,6 +1192,10 @@ export type Database = {
         }
       }
       storage_claim_cleanup: { Args: { p_limit: number }; Returns: Json }
+      storage_consume_cleanup_request: {
+        Args: { p_request_id: string; p_timestamp: number }
+        Returns: boolean
+      }
       storage_finalize_upload: {
         Args: { p_description: string; p_file_size: number; p_id: string }
         Returns: Json
