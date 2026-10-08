@@ -94,3 +94,17 @@ TypeScript: PASS. Ciljani seating ESLint: PASS. Svih 12 testova: PASS, uključuj
 Na izričit zahtjev korisnika izvršen je samo agregatni SELECT u READ ONLY transakciji nad seating_tables njegova projekta. Šest okruglih stolova: zaokruženi prosjek 479 × 479 cm, raspon promjera 431–560 cm. Dva pravokutna: prosjek 444 × 398 cm, širine 401–487, visine 395–400 cm. U aplikaciji su nove fiksne početne vrijednosti zaokružene na Ø 480 cm i 440 × 400 cm; u manjim prostorijama ostaje proporcionalno prilagođavanje. Kapacitet ostaje 8. Postojeći stolovi, predlošci i baza nisu mijenjani. Nema automatskog približavanja stola ili Prikaži stolove gumba iz otkazanog pokušaja.
 
 Ciljani ESLint: PASS. TypeScript --noEmit: PASS. Ova dorada mijenja samo konstante novih stolova; browser upisi nisu izvršeni.
+
+## Prekid resizea pri promjeni prikaza i aktualne početne dimenzije — 2026-10-08
+
+Otkriven je put kojim promjena širine/visine canvasa mijenja Stage viewport dok Konva Transformer još ima aktivan potez i apsolutne koordinate početka. Prekinuta transformacija može ostaviti scale na čvoru; stari table commit spremao je i taj scale pri običnom drag-u. Canvas sada prije responsive fit-a/zoom-a/fit-a zaustavlja i invalidira aktivne geste te vraća potvrđenu geometriju i preview. Završni događaj koji nastane tijekom stopTransform/stopDrag ili stigne kasnije ne pokreće upis. Isti prekid vrijedi za pinch, Space/Ruka, promjenu odabira, touch/pointer cancel i blur. Drag stola odvojeno normalizira samo položaj.
+
+Na novi izričit zahtjev korisnika ponovljen je READ ONLY SELECT nad seating_plans/seating_tables njegova projekta. Trenutni plan ima 2000 × 1500 cm, jedan okrugli stol 229 × 229 cm i jedan pravokutni 237 × 206 cm, oba kapaciteta 8. Novi stolovi koriste te točne fiksne početne dimenzije, uz postojeće proporcionalno smanjenje u manjim prostorijama. To zamjenjuje ranije konstante 480 i 440 × 400 cm. Baza, postojeći stolovi i predlošci nisu mijenjani; nema automatskog focus-a ili Fit tables funkcije iz otkazanog pokušaja.
+
+- Svih 14 trajnih seating testova: PASS. Dva nova testa koriste stvarne Konva objekte bez DOM-a i sintetizirano aktivno stanje Transformera; provjeravaju emitirani transformend pri zaustavljanju, ignoriranje zakašnjelog završetka, vraćanje geometrije, idući dovršen resize i očuvanje dimenzija/rotacije pri pomicanju. To nisu browser gesture testovi.
+- npx tsc --noEmit: PASS.
+- Ciljani ESLint za dvije komponente, geometriju, canvasGesture i test: PASS. Tri lokalna izuzeća set-state-in-effect dokumentiraju usklađivanje vanjskih mutable Konva transformacija i React previewa; ostala pravila ostaju uključena.
+- npm run build: PASS (Next 16.3.8).
+- Browser/DevTools/touch QA i live RPC upisi nisu izvršeni. EDITOR.md sadrži desktop → mobitel → desktop i prekid resizea prije promjene prikaza kao ručne korake.
+
+Nema novih paketa, SQL izmjena, promjene flaga ili commita.
