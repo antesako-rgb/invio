@@ -24,3 +24,9 @@ export async function deleteInvitationGuestAction(input: unknown) { return mutat
 export async function createInvitationGuestGroupAction(input: unknown) { return mutate(input, schemas.createGroupSchema, repository.createInvitationGuestGroup, true); }
 export async function updateInvitationGuestGroupAction(input: unknown) { return mutate(input, schemas.updateGroupSchema, repository.updateInvitationGuestGroup, true); }
 export async function deleteInvitationGuestGroupAction(input: unknown) { return mutate(input, schemas.groupIdSchema, repository.deleteInvitationGuestGroup, true); }
+
+export async function linkExistingInvitationGuestAction(input: unknown) {
+  if (process.env.PROJECT_GUESTS_ENABLED !== "true")
+    return { success: false as const, code: "INVALID_INPUT" as const };
+  return mutate(input, schemas.linkExistingGuestSchema, repository.linkExistingInvitationGuest);
+}

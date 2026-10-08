@@ -57,3 +57,5 @@
 @media (max-width: 900px) {
   .page { padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px)); }
 }
+
+.identityChoices { display: flex; flex-wrap: wrap; gap: .5rem; padding: 1rem 1.5rem 0; }

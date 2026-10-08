@@ -1,4 +1,4 @@
--- PLANNED DEFINITION / SAVE ONLY. SQL021 NOT APPLIED; do not execute separately.
+-- SAVE / REVIEW ONLY. SQL021 APPLIED by operator; do not execute separately.
 create function private.enqueue_signed_storage_cleanup() returns bigint
 language plpgsql security definer set search_path = '' as $$
 declare signing_key text; issued text; request_id text; body jsonb := '{}'::jsonb; body_bytes bytea; canonical text; signature text;

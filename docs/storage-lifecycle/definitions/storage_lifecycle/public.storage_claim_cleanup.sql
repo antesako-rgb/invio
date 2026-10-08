@@ -1,10 +1,10 @@
 -- SAVE / REVIEW ONLY: save in SQL Editor; DO NOT execute after install.
 -- Initial application: install/001-018 in README order, with atomic activation.
 
--- Source: maintenance/020_finalized_only_cleanup.sql (APPLIED)
+-- Source: install/maintenance/022_cleanup_claim_variable_fix.sql (APPLIED, operator-confirmed)
 create or replace function public.storage_claim_cleanup(p_limit integer) returns jsonb
 language plpgsql security definer set search_path = '' as $$
-declare v_id uuid; result jsonb;
+declare v_id uuid; v_result jsonb;
 begin
   perform private.storage_lock();
   if p_limit is null or p_limit not between 1 and 50 then raise exception 'Invalid batch' using errcode = '22023'; end if;
@@ -17,7 +17,7 @@ begin
     return '[]'::jsonb;
   end if;
   -- Only finalized uploads are eligible. No timeout/grace proves remote PUT completion.
-  for v_id in select id from private.storage_objects where state = 'ready' and result is not null order by swept_at nulls first, created_at limit 25
+  for v_id in select o.id from private.storage_objects o where o.state = 'ready' and o.result is not null order by o.swept_at nulls first, o.created_at limit 25
   loop perform private.storage_queue(v_id); end loop;
   -- Re-check aliases/references immediately before authorizing physical deletion.
   for v_id in select o.id from private.storage_objects o where o.state = 'deleting'
@@ -42,7 +42,7 @@ begin
       where j.object_id = due.object_id returning j.object_id, j.lease_token
   ) select coalesce(jsonb_agg(jsonb_build_object('object_id', c.object_id,
       'storage_key', o.storage_key, 'lease_token', c.lease_token, 'finalized', true)), '[]'::jsonb)
-    into result from claimed c join private.storage_objects o on o.id = c.object_id;
-  return result;
+    into v_result from claimed c join private.storage_objects o on o.id = c.object_id;
+  return v_result;
 end;
 $$;

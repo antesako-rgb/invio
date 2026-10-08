@@ -5,7 +5,7 @@ import {
 } from "next-intl";
 
 import PhotoUploadComposer
-  from "@/features/photo-upload/components/PhotoUploadComposer/PhotoUploadComposer";
+  from "@/features/project-photos/upload/components/PhotoUploadComposer/PhotoUploadComposer";
 
 
 /* ==========================================================================

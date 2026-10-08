@@ -61,12 +61,14 @@
     "seating": "Seating plan",
     "seatingDescription": "Plan tables and seating for your guests.",
     "comingSoon": "Coming soon",
-    "seatingHint": "This feature is not available yet.",
+    "seatingHint": "Tables, selected participants and guest assignments.",
     "albumDescription": "Preserve your photos in digital albums.",
     "albumCount": "{count, plural, one {# album} other {# albums}}",
     "manageAlbums": "Manage albums",
     "publishedCount": "Published: {count}",
-    "navigation": "Project products"
+    "navigation": "Project products",
+    "seatingAvailable": "Available",
+    "openSeating": "Open seating"
   },
   "settings": {
     "title": "Settings",

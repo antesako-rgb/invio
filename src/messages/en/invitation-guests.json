@@ -83,5 +83,26 @@
   },
   "workspaceLabel": "Guests and responses",
   "guestList": "Guest list",
-  "linksAndResponses": "Links and responses"
+  "linksAndResponses": "Links and responses",
+  "identity": {
+    "title": "Link guest",
+    "select": "Select an existing guest",
+    "existing": "Link existing person",
+    "new": "Add new person",
+    "linked": "Linked: {name}",
+    "unlink": "Unlink",
+    "error": "Link failed. Refresh and try again.",
+    "saved": "Link saved.",
+    "conflict": "Conflicting RSVP responses",
+    "renameHelp": "Changing the name updates this person across all invitations.",
+    "archived": "Archived",
+    "addMode": "Add guest",
+    "noAvailable": "No available people. Add a new person.",
+    "deleteDescription": "Remove “{name}” from this invitation? The person remains available for other invitations and seating plans.",
+    "genericHelp": "Explicitly select the person this answer belongs to, or create a new person. Names are never merged automatically.",
+    "unlinkTitle": "Remove this person link?",
+    "unlinkHelp": "The original RSVP answer and person are preserved. You can link a different person afterwards.",
+    "unavailable": "Unavailable person",
+    "cancel": "Cancel"
+  }
 }

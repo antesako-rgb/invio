@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createServerClient } from "@/lib/supabase/server";
-import { deleteOrphanProjectPhoto } from "@/features/project-photos/services/deleteOrphanProjectPhoto";
+import { requestProjectPhotoCleanup } from "@/features/project-photos/storage/requestProjectPhotoCleanup";
 import type { RemoveDigitalAlbumPhotoInput } from "../../types/digitalAlbumPhoto.types";
 
 export async function removeDigitalAlbumPhoto(input: RemoveDigitalAlbumPhotoInput): Promise<void> {
@@ -11,5 +11,5 @@ export async function removeDigitalAlbumPhoto(input: RemoveDigitalAlbumPhotoInpu
     p_album_id: input.albumId, p_photo_id: input.photoId,
   });
   if (error) throw error;
-  await deleteOrphanProjectPhoto({ photoId: input.photoId });
+  await requestProjectPhotoCleanup({ photoId: input.photoId });
 }

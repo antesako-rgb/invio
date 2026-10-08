@@ -1,3 +1,4 @@
+import { getProjectGuests, getGenericGuestLinks } from "@/features/project-guests/repositories/projectGuests";
 import { getGenericInvitationResponses } from "@/features/invitation-guests/repositories/rsvp/getGenericInvitationResponses";
 import { notFound } from "next/navigation";
 import { getInvitation } from "@/features/invitations/repositories/invitation/getInvitation";
@@ -9,6 +10,8 @@ export default async function Page({ params }: { params: Promise<{ invitationId:
   const invitation = await getInvitation((await params).invitationId);
   if (!invitation) notFound();
   const [{ recipients, guests }, genericResponses, groups] = await Promise.all([getInvitationRecipientManagement(invitation.id), getGenericInvitationResponses(invitation.id), getInvitationGuestGroups(invitation.id)]);
+  const projectGuestsEnabled=process.env.PROJECT_GUESTS_ENABLED === "true";
+  const [projectGuests,genericLinks]=projectGuestsEnabled?await Promise.all([getProjectGuests(invitation.project_id),getGenericGuestLinks(invitation.id)]):[[],[]];
   const questions = parseInvitationDocument(invitation.document).pages.find(page => page.type === "rsvp")?.rsvp?.questions ?? [];
-  return <InvitationGuestWorkspace invitationId={invitation.id} groups={groups} recipients={recipients} guests={guests} questions={questions} genericResponses={genericResponses} />;
+  return <InvitationGuestWorkspace projectGuestsEnabled={projectGuestsEnabled} projectGuests={projectGuests} genericLinks={genericLinks} invitationId={invitation.id} groups={groups} recipients={recipients} guests={guests} questions={questions} genericResponses={genericResponses} />;
 }

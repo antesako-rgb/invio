@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { storageKeySchema } from "@/lib/upload/storageKey.schema";
+import { storageKeySchema } from "@/features/project-photos/storage/storageKey.schema";
 
 export const storageUploadSchema = z.object({
   kind: z.enum(["invitation", "digital-album", "photo-wall"]),

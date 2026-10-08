@@ -23,14 +23,15 @@ import * as actions from "../actions/guests/invitationGuestActions";
 import { type InvitationGuest, type InvitationGuestGroup } from "../types/invitationGuest.types";
 import InvitationGuestForm from "./InvitationGuestForm";
 import InvitationGuestGroupsDialog from "./InvitationGuestGroupsDialog";
+import type { ProjectGuest } from "@/features/project-guests/types/database";
 import styles from "./InvitationGuests.module.css";
 
 type Removal = { kind: "guest"; item: InvitationGuest } | { kind: "group"; item: InvitationGuestGroup };
 const fullName = (guest: InvitationGuest) => [guest.first_name, guest.last_name].filter(Boolean).join(" ");
 const searchableName = (value: string) => value.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase().replace(/đ/g, "d");
 
-export default function InvitationGuests({ invitationId, guests, groups, statuses = {} }: {
-  invitationId: string; guests: InvitationGuest[]; groups: InvitationGuestGroup[]; statuses?: Record<string, RsvpStatus>;
+export default function InvitationGuests({ invitationId, guests, groups, statuses = {}, conflicts = {}, sharedNames=false, archivedGuests=[], projectGuests=[] }: {
+  projectGuests?: ProjectGuest[]; invitationId: string; guests: InvitationGuest[]; groups: InvitationGuestGroup[]; statuses?: Record<string, RsvpStatus>;conflicts?:Record<string,boolean>;sharedNames?:boolean;archivedGuests?:string[];
 }) {
   const t = useTranslations("InvitationGuests");
   const actionError = useActionError();
@@ -62,10 +63,10 @@ export default function InvitationGuests({ invitationId, guests, groups, statuse
     if (removal.kind === "guest") run(() => actions.deleteInvitationGuestAction({ p_guest_id: removal.item.id }), "success.guestDeleted", () => setRemoval(null));
     else run(() => actions.deleteInvitationGuestGroupAction({ p_group_id: removal.item.id }), "success.groupDeleted", () => setRemoval(null));
   }
-  const add = <Button disabled={busy} onClick={() => setEditor("new")}><Plus aria-hidden="true" />{t("addGuest")}</Button>;
+  const add = <Button disabled={busy} onClick={() => setEditor("new")}><Plus aria-hidden="true" />{t(sharedNames ? "identity.new" : "addGuest")}</Button>;
   function statusControl(guest: InvitationGuest) {
     const status = statuses[guest.id];
-    return <Badge dot variant={status === "attending" ? "success" : status === "not_attending" ? "muted" : "warning"}>{t(`status.${status ?? "pending"}`)}</Badge>;
+    return <span>{archivedGuests.includes(guest.id)&&<Badge variant="muted">{t("identity.archived")}</Badge>}{conflicts[guest.id]&&<Badge variant="warning">{t("identity.conflict")}</Badge>}<Badge dot variant={status === "attending" ? "success" : status === "not_attending" ? "muted" : "warning"}>{t(`status.${status ?? "pending"}`)}</Badge></span>;
   }
   function rowActions(guest: InvitationGuest) {
     return <DropdownMenu>
@@ -101,7 +102,7 @@ export default function InvitationGuests({ invitationId, guests, groups, statuse
         </>}
     </DataTable>}
     <GuestManagementSurface open={editor !== null} busy={busy} onClose={() => { if (!lock.current) setEditor(null); }} title={t(editor === "new" ? "addGuest" : "editGuest")} description={t("form.description")}>
-        {Footer => editor && <InvitationGuestForm Footer={Footer} key={editor === "new" ? "new" : editor.id} guest={editor === "new" ? undefined : editor} groups={groups} busy={busy} onCancel={() => { if (!lock.current) setEditor(null); }}
+        {Footer => editor && <InvitationGuestForm invitationId={invitationId} people={projectGuests} linkedPersonIds={guests.map(guest => guest.project_guest_id)} onLinkExisting={(personId, groupId) => run(() => actions.linkExistingInvitationGuestAction({ p_invitation_id: invitationId, p_project_guest_id: personId, p_group_id: groupId }), "success.guestCreated", () => setEditor(null))} sharedNames={sharedNames} Footer={Footer} key={editor === "new" ? "new" : editor.id} guest={editor === "new" ? undefined : editor} groups={groups} busy={busy} onCancel={() => { if (!lock.current) setEditor(null); }}
           onSave={fields => { if (editor === "new") run(() => actions.createInvitationGuestAction({ ...fields, p_invitation_id: invitationId }), "success.guestCreated", () => setEditor(null));
             else run(() => actions.updateInvitationGuestAction({ ...fields, p_guest_id: editor.id }), "success.guestUpdated", () => setEditor(null)); }} />}
     </GuestManagementSurface>
@@ -111,7 +112,7 @@ export default function InvitationGuests({ invitationId, guests, groups, statuse
         else run(() => actions.createInvitationGuestGroupAction({ p_invitation_id: invitationId, p_name: name }), "success.groupCreated", onSuccess); }} />
     <ConfirmDialog open={!!removal} variant="danger" loading={busy} loadingText={t("loading")} confirmText={t("delete")} cancelText={t("cancel")}
       title={t(removal?.kind === "group" ? "groups.deleteTitle" : "deleteTitle")}
-      description={removal ? t(removal.kind === "group" ? "groups.deleteDescription" : "deleteDescription", { name: removal.kind === "group" ? removal.item.name : fullName(removal.item) }) : undefined}
+      description={removal ? t(removal.kind === "group" ? "groups.deleteDescription" : sharedNames ? "identity.deleteDescription" : "deleteDescription", { name: removal.kind === "group" ? removal.item.name : fullName(removal.item) }) : undefined}
       onConfirm={remove} onClose={() => { if (!lock.current) setRemoval(null); }} />
   </section>;
 }

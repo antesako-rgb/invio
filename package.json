@@ -28,9 +28,10 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
+    "konva": "^10.7.1",
     "lucide-react": "^1.33.0",
     "motion": "^13.4.6",
-    "next": "^16.3.5",
+    "next": "16.3.8",
     "next-intl": "^4.13.7",
     "puppeteer-core": "25.11.0",
     "qrcode.react": "^4.2.0",
@@ -38,7 +39,8 @@
     "react-day-picker": "^10.0.1",
     "react-dom": "19.2.8",
     "react-hook-form": "^7.86.0",
-    "sharp": "0.35.4",
+    "react-konva": "~19.2.7",
+    "sharp": "0.35.5",
     "sonner": "^2.0.8",
     "tailwind-merge": "^3.6.0",
     "zod": "^3.25.76"
@@ -49,10 +51,15 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.2",
+    "eslint-config-next": "16.3.8",
     "patch-package": "^8.0.1",
     "supabase": "^2.119.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "allowScripts": {
+    "@parcel/watcher": false,
+    "@swc/core": false,
+    "unrs-resolver": false
   }
 }

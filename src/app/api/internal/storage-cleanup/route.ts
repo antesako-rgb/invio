@@ -2,6 +2,8 @@ import { runStorageCleanup } from "@/features/project-photos/storage/runStorageC
 import { verifyCleanupRequest } from "@/features/project-photos/storage/cleanupRequestAuth";
 import { consumeCleanupRequest } from "@/features/project-photos/storage/consumeCleanupRequest";
 
+import { logCleanupFailure } from "@/features/project-photos/storage/cleanupLogging";
+
 export const runtime = "nodejs";
 export const maxDuration = 300;
 
@@ -31,13 +33,16 @@ export async function POST(request: Request) {
   }
   const verified = verifyCleanupRequest(request, body, secret);
   if (!verified) return new Response(null, { status: 401, headers });
+  let authorizing = true;
   try {
     // UNIQUE DB insert is committed before worker starts: concurrent replay loses.
     if (!await consumeCleanupRequest(verified.requestId, verified.issuedAt)) {
       return new Response(null, { status: 409, headers });
     }
+    authorizing = false;
     return Response.json(await runStorageCleanup(3), { headers });
-  } catch {
+  } catch (error) {
+    if (authorizing) logCleanupFailure("authorize", error);
     return Response.json({ error: "Storage cleanup failed" }, { status: 500, headers });
   }
 }

@@ -1,0 +1,154 @@
+[
+  {
+    "name": "Prazan prostor",
+    "slug": "prazan-prostor",
+    "document_version": 1,
+    "document": {
+      "width_cm": 1500,
+      "height_cm": 900,
+      "tables": []
+    }
+  },
+  {
+    "name": "10 okruglih stolova",
+    "slug": "10-okruglih-stolova",
+    "document_version": 1,
+    "document": {
+      "width_cm": 1500,
+      "height_cm": 900,
+      "tables": [
+        {
+          "name": "Stol 1",
+          "shape": "round",
+          "capacity": 8,
+          "x_cm": 170,
+          "y_cm": 210,
+          "width_cm": 180,
+          "height_cm": 180,
+          "rotation_deg": 0
+        },
+        {
+          "name": "Stol 2",
+          "shape": "round",
+          "capacity": 8,
+          "x_cm": 430,
+          "y_cm": 210,
+          "width_cm": 180,
+          "height_cm": 180,
+          "rotation_deg": 0
+        },
+        {
+          "name": "Stol 3",
+          "shape": "round",
+          "capacity": 8,
+          "x_cm": 690,
+          "y_cm": 210,
+          "width_cm": 180,
+          "height_cm": 180,
+          "rotation_deg": 0
+        },
+        {
+          "name": "Stol 4",
+          "shape": "round",
+          "capacity": 8,
+          "x_cm": 950,
+          "y_cm": 210,
+          "width_cm": 180,
+          "height_cm": 180,
+          "rotation_deg": 0
+        },
+        {
+          "name": "Stol 5",
+          "shape": "round",
+          "capacity": 8,
+          "x_cm": 1210,
+          "y_cm": 210,
+          "width_cm": 180,
+          "height_cm": 180,
+          "rotation_deg": 0
+        },
+        {
+          "name": "Stol 6",
+          "shape": "round",
+          "capacity": 8,
+          "x_cm": 170,
+          "y_cm": 570,
+          "width_cm": 180,
+          "height_cm": 180,
+          "rotation_deg": 0
+        },
+        {
+          "name": "Stol 7",
+          "shape": "round",
+          "capacity": 8,
+          "x_cm": 430,
+          "y_cm": 570,
+          "width_cm": 180,
+          "height_cm": 180,
+          "rotation_deg": 0
+        },
+        {
+          "name": "Stol 8",
+          "shape": "round",
+          "capacity": 8,
+          "x_cm": 690,
+          "y_cm": 570,
+          "width_cm": 180,
+          "height_cm": 180,
+          "rotation_deg": 0
+        },
+        {
+          "name": "Stol 9",
+          "shape": "round",
+          "capacity": 8,
+          "x_cm": 950,
+          "y_cm": 570,
+          "width_cm": 180,
+          "height_cm": 180,
+          "rotation_deg": 0
+        },
+        {
+          "name": "Stol 10",
+          "shape": "round",
+          "capacity": 8,
+          "x_cm": 1210,
+          "y_cm": 570,
+          "width_cm": 180,
+          "height_cm": 180,
+          "rotation_deg": 0
+        }
+      ]
+    }
+  },
+  {
+    "name": "Dugi stolovi",
+    "slug": "dugi-stolovi",
+    "document_version": 1,
+    "document": {
+      "width_cm": 1200,
+      "height_cm": 900,
+      "tables": [
+        {
+          "name": "Stol 1",
+          "shape": "rectangle",
+          "capacity": 16,
+          "x_cm": 500,
+          "y_cm": 270,
+          "width_cm": 800,
+          "height_cm": 140,
+          "rotation_deg": 0
+        },
+        {
+          "name": "Stol 2",
+          "shape": "rectangle",
+          "capacity": 16,
+          "x_cm": 500,
+          "y_cm": 570,
+          "width_cm": 800,
+          "height_cm": 140,
+          "rotation_deg": 0
+        }
+      ]
+    }
+  }
+]

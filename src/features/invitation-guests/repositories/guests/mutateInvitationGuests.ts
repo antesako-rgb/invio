@@ -44,3 +44,13 @@ export async function deleteInvitationGuestGroup(input: Database["public"]["Func
   if (error) throw error;
   return data;
 }
+
+export async function linkExistingInvitationGuest(input: {
+  p_invitation_id: string; p_project_guest_id: string; p_group_id: string | null;
+}) {
+  const db = await createServerClient();
+  const { data, error } = await db.rpc("link_existing_invitation_guest",
+    input as Database["public"]["Functions"]["link_existing_invitation_guest"]["Args"]);
+  if (error) throw error;
+  return data;
+}

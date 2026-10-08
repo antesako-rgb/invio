@@ -33,12 +33,12 @@ import type {
 } from "@/features/photo-walls/types/photoWallPhoto.types";
 
 import PhotoUploadControls
-  from "@/features/photo-upload/components/PhotoUploadControls/PhotoUploadControls";
+  from "@/features/project-photos/upload/components/PhotoUploadControls/PhotoUploadControls";
 
 import {
   ACCEPTED_IMAGE_TYPES_VALUE,
   MAX_FILES,
-} from "@/features/photo-upload/constants/photoUpload.constants";
+} from "@/features/project-photos/upload/constants/photoUpload.constants";
 
 import styles from "./PhotoWallUpload.module.css";
 

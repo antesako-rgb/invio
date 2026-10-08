@@ -100,6 +100,69 @@ export type Database = {
           },
         ]
       }
+      invitation_generic_guest_links: {
+        Row: {
+          created_at: string
+          invitation_id: string
+          project_guest_id: string
+          project_id: string
+          response_guest_id: string
+          response_id: string
+        }
+        Insert: {
+          created_at?: string
+          invitation_id: string
+          project_guest_id: string
+          project_id: string
+          response_guest_id: string
+          response_id: string
+        }
+        Update: {
+          created_at?: string
+          invitation_id?: string
+          project_guest_id?: string
+          project_id?: string
+          response_guest_id?: string
+          response_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "generic_link_invitation_person_fk"
+            columns: ["project_id", "invitation_id", "project_guest_id"]
+            isOneToOne: false
+            referencedRelation: "invitation_guests"
+            referencedColumns: [
+              "project_id",
+              "invitation_id",
+              "project_guest_id",
+            ]
+          },
+          {
+            foreignKeyName: "invitation_generic_guest_links_c2"
+            columns: [
+              "project_id",
+              "invitation_id",
+              "response_id",
+              "response_guest_id",
+            ]
+            isOneToOne: false
+            referencedRelation: "rsvp_response_guests"
+            referencedColumns: [
+              "project_id",
+              "invitation_id",
+              "response_id",
+              "id",
+            ]
+          },
+          {
+            foreignKeyName: "invitation_generic_guest_links_c3"
+            columns: ["project_id", "project_guest_id"]
+            isOneToOne: false
+            referencedRelation: "project_guests"
+            referencedColumns: ["project_id", "id"]
+          },
+        ]
+      }
       invitation_guest_groups: {
         Row: {
           created_at: string
@@ -145,6 +208,7 @@ export type Database = {
           is_primary: boolean
           last_name: string | null
           notes: string | null
+          project_guest_id: string
           project_id: string
           recipient_id: string | null
           updated_at: string
@@ -158,6 +222,7 @@ export type Database = {
           is_primary?: boolean
           last_name?: string | null
           notes?: string | null
+          project_guest_id: string
           project_id: string
           recipient_id?: string | null
           updated_at?: string
@@ -171,6 +236,7 @@ export type Database = {
           is_primary?: boolean
           last_name?: string | null
           notes?: string | null
+          project_guest_id?: string
           project_id?: string
           recipient_id?: string | null
           updated_at?: string
@@ -188,6 +254,13 @@ export type Database = {
             columns: ["project_id", "invitation_id"]
             isOneToOne: false
             referencedRelation: "invitations"
+            referencedColumns: ["project_id", "id"]
+          },
+          {
+            foreignKeyName: "invitation_guests_project_person_fk"
+            columns: ["project_id", "project_guest_id"]
+            isOneToOne: false
+            referencedRelation: "project_guests"
             referencedColumns: ["project_id", "id"]
           },
           {
@@ -621,6 +694,47 @@ export type Database = {
           },
         ]
       }
+      project_guests: {
+        Row: {
+          archived_at: string | null
+          created_at: string
+          first_name: string
+          id: string
+          last_name: string | null
+          notes: string | null
+          project_id: string
+          updated_at: string
+        }
+        Insert: {
+          archived_at?: string | null
+          created_at?: string
+          first_name: string
+          id?: string
+          last_name?: string | null
+          notes?: string | null
+          project_id: string
+          updated_at?: string
+        }
+        Update: {
+          archived_at?: string | null
+          created_at?: string
+          first_name?: string
+          id?: string
+          last_name?: string | null
+          notes?: string | null
+          project_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_guests_c2"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       project_photos: {
         Row: {
           created_at: string
@@ -814,6 +928,218 @@ export type Database = {
           },
         ]
       }
+      seating_assignments: {
+        Row: {
+          plan_id: string
+          project_guest_id: string
+          project_id: string
+          table_id: string
+        }
+        Insert: {
+          plan_id: string
+          project_guest_id: string
+          project_id: string
+          table_id: string
+        }
+        Update: {
+          plan_id?: string
+          project_guest_id?: string
+          project_id?: string
+          table_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seating_assignments_c2"
+            columns: ["project_id", "plan_id", "project_guest_id"]
+            isOneToOne: false
+            referencedRelation: "seating_plan_guests"
+            referencedColumns: ["project_id", "plan_id", "project_guest_id"]
+          },
+          {
+            foreignKeyName: "seating_assignments_c3"
+            columns: ["project_id", "plan_id", "table_id"]
+            isOneToOne: false
+            referencedRelation: "seating_tables"
+            referencedColumns: ["project_id", "plan_id", "id"]
+          },
+        ]
+      }
+      seating_plan_guests: {
+        Row: {
+          plan_id: string
+          project_guest_id: string
+          project_id: string
+        }
+        Insert: {
+          plan_id: string
+          project_guest_id: string
+          project_id: string
+        }
+        Update: {
+          plan_id?: string
+          project_guest_id?: string
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seating_plan_guests_c3"
+            columns: ["project_id", "plan_id"]
+            isOneToOne: false
+            referencedRelation: "seating_plans"
+            referencedColumns: ["project_id", "id"]
+          },
+          {
+            foreignKeyName: "seating_plan_guests_c4"
+            columns: ["project_id", "project_guest_id"]
+            isOneToOne: false
+            referencedRelation: "project_guests"
+            referencedColumns: ["project_id", "id"]
+          },
+        ]
+      }
+      seating_plans: {
+        Row: {
+          created_at: string
+          height_cm: number
+          id: string
+          name: string
+          project_id: string
+          revision: number
+          rsvp_invitation_id: string | null
+          updated_at: string
+          width_cm: number
+        }
+        Insert: {
+          created_at?: string
+          height_cm: number
+          id?: string
+          name: string
+          project_id: string
+          revision?: number
+          rsvp_invitation_id?: string | null
+          updated_at?: string
+          width_cm: number
+        }
+        Update: {
+          created_at?: string
+          height_cm?: number
+          id?: string
+          name?: string
+          project_id?: string
+          revision?: number
+          rsvp_invitation_id?: string | null
+          updated_at?: string
+          width_cm?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seating_plans_c2"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "seating_plans_c8"
+            columns: ["project_id", "rsvp_invitation_id"]
+            isOneToOne: false
+            referencedRelation: "invitations"
+            referencedColumns: ["project_id", "id"]
+          },
+        ]
+      }
+      seating_tables: {
+        Row: {
+          capacity: number
+          height_cm: number
+          id: string
+          name: string
+          plan_id: string
+          project_id: string
+          rotation_deg: number
+          shape: string
+          width_cm: number
+          x_cm: number
+          y_cm: number
+        }
+        Insert: {
+          capacity: number
+          height_cm: number
+          id?: string
+          name: string
+          plan_id: string
+          project_id: string
+          rotation_deg?: number
+          shape: string
+          width_cm: number
+          x_cm: number
+          y_cm: number
+        }
+        Update: {
+          capacity?: number
+          height_cm?: number
+          id?: string
+          name?: string
+          plan_id?: string
+          project_id?: string
+          rotation_deg?: number
+          shape?: string
+          width_cm?: number
+          x_cm?: number
+          y_cm?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seating_tables_c11"
+            columns: ["project_id", "plan_id"]
+            isOneToOne: false
+            referencedRelation: "seating_plans"
+            referencedColumns: ["project_id", "id"]
+          },
+        ]
+      }
+      seating_templates: {
+        Row: {
+          created_at: string
+          description: string | null
+          document: Json
+          document_version: number
+          event_type: string | null
+          id: string
+          is_active: boolean
+          name: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          document: Json
+          document_version?: number
+          event_type?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          document?: Json
+          document_version?: number
+          event_type?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -852,6 +1178,15 @@ export type Database = {
           isOneToOne: false
           isSetofReturn: true
         }
+      }
+      assign_seating_guest: {
+        Args: {
+          p_guest_id: string
+          p_plan_id: string
+          p_revision: number
+          p_table_id: string
+        }
+        Returns: number
       }
       cancel_project_collaboration_invite: {
         Args: { p_invite_id: string }
@@ -921,6 +1256,7 @@ export type Database = {
           is_primary: boolean
           last_name: string | null
           notes: string | null
+          project_guest_id: string
           project_id: string
           recipient_id: string | null
           updated_at: string
@@ -991,6 +1327,15 @@ export type Database = {
           isOneToOne: true
           isSetofReturn: false
         }
+      }
+      create_seating_plan_from_template: {
+        Args: {
+          p_name: string
+          p_project_id: string
+          p_rsvp_invitation_id?: string
+          p_template_id: string
+        }
+        Returns: Json
       }
       decline_project_collaboration_invite: {
         Args: { p_token: string }
@@ -1075,6 +1420,91 @@ export type Database = {
           invite_id: string
           token: string
         }[]
+      }
+      link_existing_invitation_guest: {
+        Args: {
+          p_group_id?: string
+          p_invitation_id: string
+          p_project_guest_id: string
+        }
+        Returns: {
+          created_at: string
+          first_name: string
+          group_id: string | null
+          id: string
+          invitation_id: string
+          is_primary: boolean
+          last_name: string | null
+          notes: string | null
+          project_guest_id: string
+          project_id: string
+          recipient_id: string | null
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "invitation_guests"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      link_generic_rsvp_guest: {
+        Args: {
+          p_create_new?: boolean
+          p_project_guest_id?: string
+          p_response_guest_id: string
+        }
+        Returns: string
+      }
+      manage_project_guest: {
+        Args: {
+          p_first_name?: string
+          p_guest_id: string
+          p_last_name?: string
+          p_notes?: string
+          p_operation: string
+          p_project_id: string
+        }
+        Returns: string
+      }
+      manage_seating_participant: {
+        Args: {
+          p_guest_id: string
+          p_operation: string
+          p_plan_id: string
+          p_revision: number
+        }
+        Returns: number
+      }
+      manage_seating_plan: {
+        Args: {
+          p_height_cm?: number
+          p_name?: string
+          p_operation: string
+          p_plan_id: string
+          p_project_id: string
+          p_revision: number
+          p_rsvp_invitation_id?: string
+          p_width_cm?: number
+        }
+        Returns: Json
+      }
+      manage_seating_table: {
+        Args: {
+          p_capacity?: number
+          p_height_cm?: number
+          p_name?: string
+          p_operation: string
+          p_plan_id: string
+          p_revision: number
+          p_rotation_deg?: number
+          p_shape?: string
+          p_table_id: string
+          p_width_cm?: number
+          p_x_cm?: number
+          p_y_cm?: number
+        }
+        Returns: Json
       }
       publish_digital_album: {
         Args: { p_album_id: string }
@@ -1223,6 +1653,10 @@ export type Database = {
         Returns: Json
       }
       submit_rsvp: { Args: { p_guests: Json; p_token: string }; Returns: Json }
+      unlink_generic_rsvp_guest: {
+        Args: { p_response_guest_id: string }
+        Returns: undefined
+      }
       unpublish_digital_album: {
         Args: { p_album_id: string }
         Returns: {
@@ -1426,6 +1860,7 @@ export type Database = {
           is_primary: boolean
           last_name: string | null
           notes: string | null
+          project_guest_id: string
           project_id: string
           recipient_id: string | null
           updated_at: string

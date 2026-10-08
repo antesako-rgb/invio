@@ -61,12 +61,14 @@
     "seating": "Raspored sjedenja",
     "seatingDescription": "Planiranje stolova i mjesta za goste.",
     "comingSoon": "Uskoro",
-    "seatingHint": "Ova funkcionalnost još nije dostupna.",
+    "seatingHint": "Stolovi, odabrani sudionici i dodjela gostiju stolovima.",
     "albumDescription": "Sačuvajte fotografije u digitalnim albumima.",
     "albumCount": "{count, plural, one {# album} few {# albuma} other {# albuma}}",
     "manageAlbums": "Upravljaj albumima",
     "publishedCount": "Objavljeno: {count}",
-    "navigation": "Proizvodi projekta"
+    "navigation": "Proizvodi projekta",
+    "seatingAvailable": "Dostupno",
+    "openSeating": "Otvori raspored"
   },
   "settings": {
     "title": "Postavke",

@@ -10,9 +10,9 @@ import {
   ACCEPTED_IMAGE_TYPES,
   MAX_FILE_SIZE,
   MAX_FILES,
-} from "@/features/photo-upload/constants/photoUpload.constants";
+} from "@/features/project-photos/upload/constants/photoUpload.constants";
 
-import { createPhotoPreview } from "@/features/photo-upload/utils/createPhotoPreview";
+import { createPhotoPreview } from "@/features/project-photos/upload/utils/createPhotoPreview";
 
 /* ==========================================================================
    Types

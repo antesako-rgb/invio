@@ -17,11 +17,11 @@ import type {
    Supabase Server Client
 ========================================================================== */
 
-export async function createServerClient() {
+export async function createServerClient<Db = Database>() {
   const cookieStore =
     await cookies();
 
-  return createSupabaseServerClient<Database>(
+  return createSupabaseServerClient<Db>(
     process.env
       .NEXT_PUBLIC_SUPABASE_URL!,
 

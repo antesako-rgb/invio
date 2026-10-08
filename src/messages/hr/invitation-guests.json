@@ -83,5 +83,26 @@
   },
   "workspaceLabel": "Gosti i odgovori",
   "guestList": "Popis gostiju",
-  "linksAndResponses": "Poveznice i odgovori"
+  "linksAndResponses": "Poveznice i odgovori",
+  "identity": {
+    "title": "Povezivanje gosta",
+    "select": "Odaberi postojećeg gosta",
+    "existing": "Poveži postojeću osobu",
+    "new": "Dodaj novu osobu",
+    "linked": "Povezano: {name}",
+    "unlink": "Ukloni vezu",
+    "error": "Povezivanje nije uspjelo. Osvježi popis i pokušaj ponovno.",
+    "saved": "Veza je spremljena.",
+    "conflict": "Sukob RSVP odgovora",
+    "renameHelp": "Promjena imena vrijedi u svim pozivnicama ove osobe.",
+    "archived": "Arhiviran",
+    "addMode": "Dodavanje gosta",
+    "noAvailable": "Nema dostupnih osoba. Dodaj novu osobu.",
+    "deleteDescription": "Ukloniti gosta „{name}” iz ove pozivnice? Osoba ostaje sačuvana za druge pozivnice i rasporede.",
+    "genericHelp": "Izričito odaberi osobu kojoj pripada ovaj odgovor ili stvori novu. Imena se ne spajaju automatski.",
+    "unlinkTitle": "Ukloniti vezu s osobom?",
+    "unlinkHelp": "Originalni RSVP odgovor i osoba ostaju sačuvani. Nakon uklanjanja možeš povezati drugu osobu.",
+    "unavailable": "Nedostupna osoba",
+    "cancel": "Odustani"
+  }
 }

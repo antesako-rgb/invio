@@ -1,0 +1,3 @@
+-- SAVE/REVIEW ONLY: final proposed definition, not a read-only query.
+-- Do not execute definitions on the installed database. Use numbered install scripts.
+create or replace function private.seating_plan_guard() returns trigger language plpgsql security definer set search_path='' as $$ begin if new.id is distinct from old.id or new.project_id is distinct from old.project_id then raise exception 'Plan identity immutable' using errcode='22023'; end if; if new.rsvp_invitation_id is distinct from old.rsvp_invitation_id and new.revision=old.revision then new.revision:=old.revision+1;new.updated_at:=now(); end if; return new; end $$;

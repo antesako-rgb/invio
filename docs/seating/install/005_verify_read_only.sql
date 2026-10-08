@@ -1,0 +1,11 @@
+-- READ ONLY metadata/counts; never contact data/token values.
+select count(*) as unmapped from public.invitation_guests g left join public.project_guests p on p.project_id=g.project_id and p.id=g.project_guest_id where p.id is null;
+select count(*) as mismatched_names from public.invitation_guests g join public.project_guests p on p.id=g.project_guest_id where g.first_name is distinct from p.first_name or g.last_name is distinct from p.last_name;
+select c.conrelid::regclass as table_name,c.conname,pg_get_constraintdef(c.oid) as definition from pg_constraint c where c.conrelid in ('public.seating_assignments'::regclass,'public.seating_plans'::regclass,'public.invitation_generic_guest_links'::regclass);
+-- Assignment FK must reference seating_plan_guests. RSVP SET NULL must name only rsvp_invitation_id.
+select n.nspname,c.relname,c.relrowsecurity,r.role,has_table_privilege(r.role,c.oid,'SELECT') as can_select,has_table_privilege(r.role,c.oid,'INSERT') as can_insert,has_table_privilege(r.role,c.oid,'UPDATE') as can_update,has_table_privilege(r.role,c.oid,'DELETE') as can_delete from pg_class c join pg_namespace n on n.oid=c.relnamespace cross join(values('anon'),('authenticated')) r(role) where n.nspname='public' and c.relname in ('project_guests','invitation_generic_guest_links','seating_plans','seating_plan_guests','seating_tables','seating_assignments');
+select p.oid::regprocedure as signature,p.prosecdef,p.proconfig,has_function_privilege('anon',p.oid,'EXECUTE') as anon_execute,has_function_privilege('authenticated',p.oid,'EXECUTE') as member_execute from pg_proc p join pg_namespace n on n.oid=p.pronamespace where p.proname in ('manage_project_guest','link_existing_invitation_guest','link_generic_rsvp_guest','unlink_generic_rsvp_guest','manage_seating_plan','manage_seating_participant','manage_seating_table','assign_seating_guest','lock_seating_project','lock_seating_plan','seating_authorize');
+
+-- Templates: metadata only.
+select policyname,roles,qual from pg_policies where schemaname='public' and tablename='seating_templates';
+select has_table_privilege('authenticated','public.seating_templates','INSERT') as client_template_write,has_function_privilege('anon','public.create_seating_plan_from_template(uuid,uuid,text,uuid)','EXECUTE') as anon_copy;

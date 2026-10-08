@@ -89,7 +89,7 @@
       "descriptionPlaceholder": "Dodaj opis fotografije...",
       "descriptionLabel": "Opis fotografije",
       "errors": {
-        "invalidFiles": "Neke datoteke nije mogu\u00c4\u2021e dodati. Koristi JPEG, PNG ili WebP slike do 10 MB.",
+        "invalidFiles": "Neke datoteke nije mogu\u00c4\u2021e dodati. Koristi JPEG, PNG ili WebP slike do 4 MB.",
         "tooManyFiles": "Odjednom mo\u0139\u013ee\u0139\u02c7 prenijeti najvi\u0139\u02c7e {count} fotografija.",
         "upload": "Fotografije nije mogu\u00c4\u2021e prenijeti. Poku\u0139\u02c7aj ponovno.",
         "uncertain": "Veza je prekinuta i ne mo\u0139\u013eemo potvrditi zadnji upload. Zatvorite dijalog i provjerite fotografije u albumu prije ponovnog dodavanja."

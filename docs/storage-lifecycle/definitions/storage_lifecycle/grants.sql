@@ -48,8 +48,8 @@ grant execute on function public.storage_reserve_upload(uuid,text,uuid,text,uuid
   public.storage_finalize_upload(uuid,bigint,text), public.storage_request_cleanup(uuid),
   public.storage_claim_cleanup(integer), public.storage_finish_cleanup(uuid,uuid,boolean) to service_role;
 
--- Source: maintenance/020_finalized_only_cleanup.sql (APPLIED)
+-- Source: install/maintenance/022_cleanup_claim_variable_fix.sql (APPLIED, operator-confirmed)
 revoke all on function public.storage_claim_cleanup(integer) from public, anon, authenticated;
 
--- Source: maintenance/020_finalized_only_cleanup.sql (APPLIED)
+-- Source: install/maintenance/022_cleanup_claim_variable_fix.sql (APPLIED, operator-confirmed)
 grant execute on function public.storage_claim_cleanup(integer) to service_role;

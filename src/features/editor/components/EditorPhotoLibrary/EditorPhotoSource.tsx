@@ -2,7 +2,7 @@
 import { DialogTitle } from "@/components/ui/dialog/dialog";
 import styles from "./EditorPhotoLibrary.module.css";
 import { Images, Upload } from "lucide-react";
-import PhotoUploadSource from "@/features/photo-upload/components/PhotoUploadSource/PhotoUploadSource";
+import PhotoUploadSource from "@/features/project-photos/upload/components/PhotoUploadSource/PhotoUploadSource";
 export default function EditorPhotoSource({ labels, disabled, onUpload, onExisting }: {
   labels: { title: string; description: string; upload: string; uploadHint: string; existing: string; existingHint: string };
   disabled?: boolean; onUpload: () => void; onExisting: () => void;

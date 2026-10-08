@@ -89,7 +89,7 @@
       "descriptionPlaceholder": "Add a photo description...",
       "descriptionLabel": "Photo description",
       "errors": {
-        "invalidFiles": "Some files could not be added. Use JPEG, PNG, or WebP images up to 10 MB.",
+        "invalidFiles": "Some files could not be added. Use JPEG, PNG, or WebP images up to 4 MB.",
         "tooManyFiles": "You can upload up to {count} photos at a time.",
         "upload": "Unable to upload the photos. Please try again.",
         "uncertain": "Connection interrupted; the last upload outcome is unknown. Close this dialog and check the album before adding files again."

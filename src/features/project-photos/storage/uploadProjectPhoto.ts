@@ -1,9 +1,9 @@
 import "server-only";
 import { randomUUID } from "crypto";
 import { createServerClient } from "@/lib/supabase/server";
-import { uploadToBunny } from "@/lib/upload/bunny";
-import { optimizeImage } from "@/lib/upload/optimizeImage";
-import { validateImage } from "@/lib/upload/validateImage";
+import { uploadToBunny } from "@/features/project-photos/storage/bunny";
+import { optimizeImage } from "@/features/project-photos/storage/optimizeImage";
+import { validateImage } from "@/features/project-photos/storage/validateImage";
 import { storageUploadSchema, type StorageUploadInput } from "./storageLifecycle.schema";
 import { finalizeStorageUpload, reserveStorageUpload } from "./storageLifecycleRepository";
 

@@ -1,82 +1,128 @@
-> Current status: install and legacy DROP have been applied by the user. Do not execute them again. Definitions reflect current objects.
+# Storage — sve što trebaš
 
-# Storage lifecycle - upute
+Storage je instaliran; automatski cleanup radi svakih 5 minuta. **Nema instalacije koju sada trebaš ponavljati.**
 
-Odabrani put je [install/README.md](install/README.md): numerirane skripte
-organizirane po objektima, za rucnu instalaciju u SQL Editoru.
+Prije javnog puštanja pročitaj [GO_LIVE.md](GO_LIVE.md): postojeće okruženje, nova domena i odvajanje testiranja.
 
-Supabase i Bunny nisu mijenjani. PostgreSQL testovi nisu izvrseni jer lokalni
-PostgreSQL alati nisu dostupni; paket jos nije potvrden za produkciju.
+Buduće limite paketa opisuje [PACKAGE_LIMITS.md](PACKAGE_LIMITS.md) — prijedlog, nije implementirano.
 
-## Folderi
+Budući video tok opisuje [VIDEO_PLAN.md](VIDEO_PLAN.md) — samo plan, nije implementirano.
 
-| Folder | Namjena |
+## Tri foldera
+
+| Folder | Kada ga otvaram |
 | --- | --- |
-| definitions/ | Zasebne definicije za spremanje, NE za primjenu. |
-| install/ | Izvrsive skripte po objektima; redoslijed 001-018. |
-| tests/ | Iskljucivo izolirana testna baza i testni scenariji. |
-| checks/ | Read-only provjere prije i nakon instalacije. |
-| rollback/ | Skripte za povratak/freeze; procitaj ogranicenja prije primjene. |
-| tools/ | Lokalne provjere i izolirani PostgreSQL runner. |
-| review/ | Arhitektura, nalazi i udaljeni PUT uvjeti. |
+| definitions/ | Želim vidjeti aktualni SQL ili ga spremiti po folderima u Supabase SQL Editor. Samo Save, ne Run. |
+| operations/ | Želim provjeriti rad ili namjerno zaustaviti/nastaviti cleanup. |
+| install/ | Povijest već izvršenog SQL-a. Ne izvršavati ponovno. Tehnički generator je u install/tools/. |
 
-## Sto spremam po folderima
+## Želim samo provjeriti radi li
 
-[definitions/README.md](definitions/README.md) opisuje zasebne queryje za SQL Editor.
-To je samo pregled/spremanje, bez ponovnog izvrsavanja nakon installa.
+Otvori **operations/monitor.sql**, kopiraj SELECT u SQL Editor i izvrši. Cron succeeded + novi HTTP 200 potvrđuju obradu; pending/leased/done opisuju zadatke. To je tvoja uobičajena provjera.
 
-## Sto izvrsavam
+## Želim zaustaviti cleanup
 
-Install ostaje jedini paket za pocetnu primjenu, redom 001-018.
+Otvori **operations/pause_resume_manual.sql** i izvrši SAMO naredbu za pauziranje. Ne izvršavaj cijeli file: sadrži i ponovno uključivanje. Već poslani zahtjevi nisu time otkazani. **emergency_freeze_manual.sql** je jači hitni stop koji zaustavlja i upload RPC-e; nije dnevna provjera.
 
-## Redoslijed rada
+Ostali operations/verify_*.sql su dodatne read-only provjere za dijagnostiku. Ne moraš ih svakodnevno izvršavati.
 
-1. Pokreni [read-only preflight](checks/000_preflight_read_only.sql) i sacuvaj definicije/grants.
-2. Prije produkcije izvrsi [izolirane PostgreSQL i staging testove](tests/README.md).
-3. Zaustavi storage upise i scheduler, ukljuci maintenance i isprazni stare in-flight zahtjeve.
-4. Kao postgres izvrsi install **001-017**, svaku skriptu cijelu jednom.
-   Slijedi [tocan popis](install/README.md), prema broju preko svih foldera.
-5. Izvrsi **install/activation/018_ACTIVATE.sql**: atomska aktivacija svih guardova i grants.
-6. Pokreni [read-only verify](checks/003_verify_read_only.sql).
-7. Regeneriraj DB tipove, zamijeni planned RPC type boundary u storage repositoryju,
-   provjeri build i pusti application kod s cleanupom iskljucenim. Zatim vrati promet.
-8. Cleanup ukljuci tek nakon potvrde [remote PUT uvjeta](review/REMOTE_PUT.md),
-   scheduler secreta i hosting limita.
+[Završni audit i ograničenja](AUDIT.md). SQL/Bunny/hosted postavke nisu mijenjane ovom organizacijom.
 
-Vec izvrsene CREATE skripte ne ponavljaj. Ako si prethodno primijenio monolitne
+---
 
-## Lokalne provjere
+# Detaljan popis za SQL Editor
 
-```powershell
-python -B docs/storage-lifecycle/tools/test_sql_organization.py
-node.exe --test src/features/project-photos/storage/storageLifecycle.test.cjs
-```
+Status 2026-10-08: instalacija 001–018, uklanjanje starih RPC-a i SQL020/021/022 primijenjeni prema potvrdi operatera. Vercel cleanup uključen; memora-storage-cleanup aktivan svakih 5 minuta. Ne ponavljaj instalaciju.
 
-Izolirani PostgreSQL runner (prilagodi putanju instalaciji):
+## Što spremam u Supabase SQL Editor
 
-```powershell
-python -B docs/storage-lifecycle/tools/run_postgres_tests.py --run-isolated --pg-bin "C:/Program Files/PostgreSQL/17/bin"
-```
+Kopiraj sadržaj datoteka iz definitions/ u istoimene foldere/queryje. To su definicije za pregled, NE naredbe za ponovno izvršavanje. Zamijeni sadržaj već spremljenih queryja i pritisni Save, ne Run. SQL Editor nema naš automatski read-only zaštitni mehanizam: CREATE/REVOKE se može izvršiti ako pritisneš Run.
 
-Runner stvara novi lokalni cluster. Ne cita .env, ne spaja se na Supabase i ne
-poziva Bunny. **tests/postgres SQL ne kopiraj u produkcijski SQL Editor.**
+Posebno zamijeni storage_lifecycle/public.storage_claim_cleanup.sql verzijom SQL022 (v_result i o.result). Ne koristi tijelo iz SQL020 ili početnog installa kao aktualnu definiciju.
 
-## Povratak i status
+| Folder u SQL Editoru | Query / datoteka |
+| --- | --- |
+| digital_albums | private.digital_album_document_photo_ids.sql |
+| `cron` | `job.sql` |
+| `digital_albums` | `trigger.sql` |
+| `digital_album_photos` | `trigger.sql` |
+| `invitation` | `private.invitation_document_photo_ids.sql` |
+| `invitations` | `trigger.sql` |
+| `invitation_photos` | `trigger.sql` |
+| `photo_wall_photos` | `trigger.sql` |
+| `projects` | `trigger.sql` |
+| `project_photos` | `trigger.sql` |
+| `storage_cleanup_jobs` | `grants.sql` |
+| `storage_cleanup_jobs` | `index.sql` |
+| `storage_cleanup_jobs` | `rls.sql` |
+| `storage_cleanup_jobs` | `table.sql` |
+| `storage_cleanup_request_ids` | `grants.sql` |
+| `storage_cleanup_request_ids` | `rls.sql` |
+| `storage_cleanup_request_ids` | `table.sql` |
+| `storage_legacy_review` | `grants.sql` |
+| `storage_legacy_review` | `rls.sql` |
+| `storage_legacy_review` | `table.sql` |
+| `storage_lifecycle` | `grants.sql` |
+| `storage_lifecycle` | `private.enqueue_signed_storage_cleanup.sql` |
+| `storage_lifecycle` | `private.storage_document_guard.sql` |
+| `storage_lifecycle` | `private.storage_has_references.sql` |
+| `storage_lifecycle` | `private.storage_key_alias.sql` |
+| `storage_lifecycle` | `private.storage_link_guard.sql` |
+| `storage_lifecycle` | `private.storage_lock.sql` |
+| `storage_lifecycle` | `private.storage_photo_guard.sql` |
+| `storage_lifecycle` | `private.storage_project_deleted.sql` |
+| `storage_lifecycle` | `private.storage_queue.sql` |
+| `storage_lifecycle` | `private.storage_unlinked.sql` |
+| `storage_lifecycle` | `public.storage_claim_cleanup.sql` |
+| `storage_lifecycle` | `public.storage_consume_cleanup_request.sql` |
+| `storage_lifecycle` | `public.storage_finalize_upload.sql` |
+| `storage_lifecycle` | `public.storage_finish_cleanup.sql` |
+| `storage_lifecycle` | `public.storage_request_cleanup.sql` |
+| `storage_lifecycle` | `public.storage_reserve_upload.sql` |
+| `storage_lifecycle` | `signed_request_grants.sql` |
+| `storage_objects` | `grants.sql` |
+| `storage_objects` | `index.sql` |
+| `storage_objects` | `rls.sql` |
+| `storage_objects` | `table.sql` |
 
-[Install upute](install/README.md) opisuju djelomicni install i rollback granice.
-[rollback_prepare_only.sql](rollback/rollback_prepare_only.sql) nije opci rollback za
-proizvoljan djelomicni install. Nakon aktivacije koristi
-[rollback_freeze.sql](rollback/rollback_freeze.sql), uz iskljucen scheduler.
-Ledger/jobs i sigurnosni guardovi ostaju; SQL ne vraca obrisani Bunny objekt.
+Tablice imaju table s constraintima, odvojene index/rls/grants gdje postoje. Triggeri se spremaju pod roditeljskom tablicom; njihove funkcije pod storage_lifecycle. Prazne trigger/index datoteke nisu stvorene. Definicije postojećih proizvoda izvan ovog paketa ne zamjenjuj ovim djelomičnim storage dodatkom.
 
-- 9 lokalnih organization testova proslo; svih 18 install skripti uskladeno.
-- Ranije provjere: 12 mock storage testova, ciljani TypeScript i ESLint prosli.
-- Stvarni PostgreSQL testovi **nisu izvrseni**: compilation, cascade i concurrency
-  nisu potvrdeni izvrsavanjem. Detalji: [FINDINGS.md](review/FINDINGS.md).
+## Cron i operativno održavanje
 
-## Post-install maintenance
+- cron/job.sql: opis stvarno potvrđenog rasporeda i SELECT za pregled; ne stvara novi job.
+- operations/monitor.sql: spremi u SQL Editor kao cron/monitor. Može se izvršavati; samo metapodaci i stanja. Cron succeeded znači enqueue; provjeri i HTTP 200.
+- operations/verify_signed_rights.sql: spremi kao storage_lifecycle/verify_signed_rights. Ne čita vrijednosti secreta.
+- operations/verify_installation.sql i operations/verify_finalized_cleanup.sql: spremi kao storage_lifecycle/verify i verify_finalized.
+- operations/pause_resume_manual.sql: spremi kao cron/pause_resume. NIJE READ ONLY: označi samo naredbu za pause ILI resume, nikad cijelu datoteku.
+- operations/emergency_freeze_manual.sql: hitno zaustavljanje storage RPC-a, nije instalacija ni uobičajena provjera; prvo pauziraj cron. Ne vraća obrisane Bunny datoteke.
 
-[Applied SQL history](history/README.md): do not replay.
-[Hosted cleanup proposal and remaining tests](review/HOSTED_CLEANUP_PLAN.md).
+Vault naziv memora_storage_cleanup_secret i Vercel varijabla STORAGE_CLEANUP_SECRET imaju istu vrijednost. Secret ne spremaj u SQL Editor, kod ili ovaj paket. Signer postgres-only; consume RPC service_role-only. Administratorski service_role Vault pristup namjerno je zadržan.
 
-[Concrete Vercel Hobby setup](review/VERCEL_HOBBY_SETUP.md) — not enabled.
+## Što koja tablica radi
+
+| Objekt | Odgovornost |
+| --- | --- |
+| storage_objects | Vlasništvo canonical keya i lifecycle; ostaje nakon brisanja projekta. |
+| storage_cleanup_jobs | Red brisanja, retry i lease; pending → leased → done. |
+| storage_cleanup_request_ids | Atomska zaštita od ponavljanja potpisanog zahtjeva. |
+| storage_legacy_review | Arhiva nepouzdanih starih putanja; nikad autorizacija Bunny brisanja. |
+
+Automatski se brišu samo finalizirani nekorišteni objekti. Pending/nejasni uploadi ostaju za pregled. Alias/reference/legacy nejasnoće mogu spriječiti cleanup. Ne briši ledger/nonce/job retke radi čišćenja baze. Lease traje sat vremena; izgubljena potvrda može ostaviti leased do idućeg pokušaja.
+
+## Sutra želim nešto promijeniti
+
+1. Izreci željeno ponašanje; pronađi aktualnu funkciju u definitions/.
+2. Pripremi NOVU numeriranu maintenance migraciju s transakcijom i provjerom grants; ne prepisuj povijest.
+3. Pregled/test, zatim ručna primjena. Za lifecycle promjene prvo pauziraj cron i razmotri upload promet.
+4. Uskladi definitions/, generated types ako se potpis promijenio, aplikaciju i ovaj status.
+5. U SQL Editoru zamijeni spremljenu definiciju bez ponovnog Run.
+
+## Što je povijest
+
+install/001–018, install/archive/019, install/maintenance/020–022 i install/archive/scheduler/001–002 su PRIMIJENJENA POVIJEST, NE ponavljati. Sačuvani su radi rekonstrukcije i ovisnosti aplikacijskih mock testova. Maintenance nije dnevni posao: to je povijest ručnih dorada.
+
+## Ograničenje završnog audita
+
+MCP read-only catalog audit uspješno dovršen 2026-10-08. Funkcijska tijela usklađena s bazom, album helper dopunjen iz live kataloga. Izravna prosrc provjera potvrdila je da oba queue regexa rade; raniji nalaz bio je JSON escaping artefakt. SQL ispravak nije potreban. Detalji i neprovjereni concurrency/cascade slučajevi: AUDIT.md.
+
+Za pending, leased, backlog i sanitizirane Vercel logove: [OPERATIONS.md](OPERATIONS.md).

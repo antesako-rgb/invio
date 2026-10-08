@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createServerClient } from "@/lib/supabase/server";
-import { deleteOrphanProjectPhoto } from "@/features/project-photos/services/deleteOrphanProjectPhoto";
+import { requestProjectPhotoCleanup } from "@/features/project-photos/storage/requestProjectPhotoCleanup";
 
 export async function removeInvitationPhoto(invitationId: string, photoId: string) {
   z.string().uuid().parse(invitationId);
@@ -10,5 +10,5 @@ export async function removeInvitationPhoto(invitationId: string, photoId: strin
     p_invitation_id: invitationId, p_photo_id: photoId,
   });
   if (error) throw error;
-  await deleteOrphanProjectPhoto({ photoId });
+  await requestProjectPhotoCleanup({ photoId });
 }

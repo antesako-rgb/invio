@@ -10,7 +10,7 @@ import {
 } from "next-intl";
 
 import PhotoUploadSource
-  from "@/features/photo-upload/components/PhotoUploadSource/PhotoUploadSource";
+  from "@/features/project-photos/upload/components/PhotoUploadSource/PhotoUploadSource";
 
 import styles from "./PhotoWallUploadSource.module.css";
 

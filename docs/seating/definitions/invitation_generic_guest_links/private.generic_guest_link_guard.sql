@@ -1,0 +1,3 @@
+-- SAVE/REVIEW ONLY: final proposed definition, not a read-only query.
+-- Do not execute definitions on the installed database. Use numbered install scripts.
+create or replace function private.generic_guest_link_guard() returns trigger language plpgsql security definer set search_path='' as $$ begin if not exists(select 1 from public.rsvp_response_guests g join public.rsvp_responses r on r.id=g.response_id and r.project_id=g.project_id and r.invitation_id=g.invitation_id where g.id=new.response_guest_id and g.project_id=new.project_id and g.invitation_id=new.invitation_id and g.response_id=new.response_id and g.invitation_guest_id is null and r.response_type='generic') then raise exception 'Not a generic response guest' using errcode='22023'; end if; return new; end $$;

@@ -14,14 +14,14 @@ import { useDigitalAlbumUpload } from "@/features/digital-albums/editor/hooks/us
 
 import type { DigitalAlbumPhoto } from "@/features/digital-albums/types/digitalAlbumPhoto.types";
 
-import PhotoUploadComposer from "@/features/photo-upload/components/PhotoUploadComposer/PhotoUploadComposer";
+import PhotoUploadComposer from "@/features/project-photos/upload/components/PhotoUploadComposer/PhotoUploadComposer";
 
-import PhotoUploadControls from "@/features/photo-upload/components/PhotoUploadControls/PhotoUploadControls";
+import PhotoUploadControls from "@/features/project-photos/upload/components/PhotoUploadControls/PhotoUploadControls";
 
 import {
   ACCEPTED_IMAGE_TYPES_VALUE,
   MAX_FILES,
-} from "@/features/photo-upload/constants/photoUpload.constants";
+} from "@/features/project-photos/upload/constants/photoUpload.constants";
 
 import styles from "./DigitalAlbumUpload.module.css";
 

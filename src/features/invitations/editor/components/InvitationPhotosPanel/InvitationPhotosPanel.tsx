@@ -10,6 +10,7 @@ import EditorPhotoSource from "@/features/editor/components/EditorPhotoLibrary/E
 import EditorPhotoLibrary from "@/features/editor/components/EditorPhotoLibrary/EditorPhotoLibrary";
 import EditorLibraryPhoto from "@/features/editor/components/EditorPhotoLibrary/EditorLibraryPhoto";
 import EditorExistingPhotosPicker from "@/features/editor/components/EditorExistingPhotosPicker/EditorExistingPhotosPicker";
+import { ACCEPTED_IMAGE_TYPES, ACCEPTED_IMAGE_TYPES_VALUE, MAX_FILE_SIZE } from "@/features/project-photos/upload/constants/photoUpload.constants";
 import { getProjectPhotoUrl } from "@/features/project-photos/utils/getProjectPhotoUrl";
 import { getInvitationProjectPhotosAction } from "../../../actions/photos/invitationPhotoActions";
 import type { InvitationPhotoWithPhoto } from "../../../types/invitationPhoto.types";
@@ -29,6 +30,7 @@ export default function InvitationPhotosPanel({ onDescriptionSave, invitationId,
   const t = useTranslations("Invitations");
   const l = useTranslations("Invitations.photoLibrary");
   const [step, setStep] = useState<"source" | "existing" | "upload" | null>(null);
+  const [uploadSelectionError, setUploadSelectionError] = useState(false);
   const [uploadFile, setUploadFile] = useState<{ file: File; preview: string } | null>(null);
   useEffect(() => () => { if (uploadFile) URL.revokeObjectURL(uploadFile.preview); }, [uploadFile]);
   const loadPage = useCallback(async (offset: number) => {
@@ -37,7 +39,7 @@ export default function InvitationPhotosPanel({ onDescriptionSave, invitationId,
     return { photos: result.data.photos.map(photo => ({ id: photo.id, imageUrl: getProjectPhotoUrl(photo.image_path) })), nextOffset: result.data.nextOffset };
   }, [invitationId, actionError]);
   return <>
-    <EditorPhotoLibrary picking={picking} addLabel={l("add")} empty={photos.length === 0} emptyLabel={t("photoUx.empty")} disabled={disabled} onAdd={() => setStep("source")}
+    <EditorPhotoLibrary picking={picking} addLabel={l("add")} empty={photos.length === 0} emptyLabel={t("photoUx.empty")} disabled={disabled} onAdd={() => { setUploadSelectionError(false); setStep("source"); }}
       header={<>
         {picking && <Button variant="ghost" disabled={disabled} onClick={onCancel}><ArrowLeft aria-hidden="true" />{t(selectedPhotoId ? "photoInspector.back" : "photoInspector.library")}</Button>}
         {picking && <p className={styles.hint}>{selectionLabel}</p>}
@@ -57,13 +59,19 @@ export default function InvitationPhotosPanel({ onDescriptionSave, invitationId,
     </EditorPhotoLibrary>
     <Dialog open={step !== null} onOpenChange={open => { if (!open && !disabled) { setStep(null); setUploadFile(null); } }}>
       <DialogContent>
-        {step === "source" && <FilePicker accept="image/jpeg,image/png,image/webp" onSelect={files => {
+        {step === "source" && <FilePicker accept={ACCEPTED_IMAGE_TYPES_VALUE} onSelect={files => {
           if (!files[0] || disabled) return;
+          if (!ACCEPTED_IMAGE_TYPES.includes(files[0].type) || files[0].size === 0 || files[0].size > MAX_FILE_SIZE) {
+            setUploadSelectionError(true);
+            return;
+          }
+          setUploadSelectionError(false);
           setUploadFile({ file: files[0], preview: URL.createObjectURL(files[0]) }); setStep("upload");
         }}>
           {openGallery => <EditorPhotoSource disabled={disabled} onUpload={openGallery} onExisting={() => setStep("existing")}
             labels={{ title: l("add"), description: l("description"), upload: l("upload"), uploadHint: t("editor.uploadHint"), existing: l("existing"), existingHint: l("existingHint") }} />}
         </FilePicker>}
+        {step === "source" && uploadSelectionError && <p role="alert">{l("invalidUploadFile")}</p>}
         {step === "upload" && uploadFile && <InvitationPhotoUpload file={uploadFile.file} preview={uploadFile.preview} disabled={disabled} onUpload={onUpload}
           onBack={() => { setUploadFile(null); setStep("source"); }}
           onSuccess={() => { setUploadFile(null); setStep(null); }} />}

@@ -15,6 +15,7 @@ export default async function ProjectProductCards({ projectId, products, compact
   canCreateAlbum?: boolean;
 }) {
   const t = await getTranslations("Projects.products");
+  const seatingEnabled = process.env.PROJECT_GUESTS_ENABLED === "true";
   const base = `/dashboard/projects/${projectId}`;
   const invitations = products.invitations.filter(item => item.project_id === projectId);
   const albums = products.albums.filter(item => item.project_id === projectId);
@@ -24,15 +25,15 @@ export default async function ProjectProductCards({ projectId, products, compact
       href: `${base}/invitations${invitations.length ? "" : "/templates"}`, action: invitations.length ? "manageInvitations" : "createInvitation" },
     { id: "photoWall", icon: Images, description: wall ? (wall.is_public ? "wallPublishedHint" : "wallDraftHint") : "wallDescription", status: wall ? t(wall.is_public ? "published" : "draft") : t("noWall"),
       href: wall ? `/dashboard/photo-walls/${wall.id}` : `${base}/photo-wall`, action: "openWall" },
-    { id: "seating", icon: Armchair, description: "seatingHint", status: t("comingSoon"),
-      href: `${base}/seating`, action: "comingSoon" },
+    { id: "seating", icon: Armchair, description: "seatingHint", status: t(seatingEnabled ? "seatingAvailable" : "comingSoon"),
+      href: `${base}/seating`, action: seatingEnabled ? "openSeating" : "comingSoon" },
     { id: "albums", icon: BookOpen, description: "albumDescription", status: albums.length ? t("albumCount", { count: albums.length }) : t("noAlbums"),
       href: `${base}/albums`, action: albums.length ? "manageAlbums" : "createAlbum" },
   ] as const;
 
   return <div className={compact ? styles.compact : styles.grid}>
     {entries.map(({ id, icon: Icon, description, status, href, action }) => compact ? (
-      id === "seating" ? <Button key={id} disabled variant="secondary" className={styles.quickLink}>
+      id === "seating" && !seatingEnabled ? <Button key={id} disabled variant="secondary" className={styles.quickLink}>
         <Icon aria-hidden="true" />
         <span><span className={styles.label}>{t(id)}</span><span className={styles.status}>{status}</span></span>
       </Button> : <ButtonLink key={id} href={href} variant="ghost" className={styles.quickLink}>
@@ -40,7 +41,7 @@ export default async function ProjectProductCards({ projectId, products, compact
         <span><span className={styles.label}>{t(id)}</span><span className={styles.status}>{status}</span></span>
       </ButtonLink>
     ) : (
-      <Card key={id} className={`${styles.card} ${id === "seating" ? styles.disabled : ""}`}>
+      <Card key={id} className={`${styles.card} ${id === "seating" && !seatingEnabled ? styles.disabled : ""}`}>
         <span className={styles.icon}><Icon aria-hidden="true" /></span>
         <div className={styles.heading}>
           <h2>{t(id)}</h2>

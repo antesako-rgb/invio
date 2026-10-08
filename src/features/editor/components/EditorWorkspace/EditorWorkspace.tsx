@@ -11,6 +11,7 @@ import styles
 ========================================================================== */
 
 interface EditorWorkspaceProps {
+  sidebarPosition?: "left" | "right";
   sidebarCollapsed?: boolean;
   toolRail?:
     ReactNode;
@@ -28,6 +29,7 @@ interface EditorWorkspaceProps {
 ========================================================================== */
 
 export default function EditorWorkspace({
+  sidebarPosition = "left",
   sidebarCollapsed = false,
   toolRail,
   sidebar,
@@ -42,6 +44,7 @@ export default function EditorWorkspace({
       className={
         styles.root
       }
+      data-sidebar-position={sidebarPosition}
       data-editor-workspace
     >
       {toolRail && (

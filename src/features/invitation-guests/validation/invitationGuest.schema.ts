@@ -33,3 +33,9 @@ export const guestIdSchema = z.object({
 export const groupIdSchema = z.object({
   p_group_id: z.string().uuid()
 }).strict();
+
+export const linkExistingGuestSchema = z.object({
+  p_invitation_id: z.string().uuid(),
+  p_project_guest_id: z.string().uuid(),
+  p_group_id: z.string().uuid().nullable(),
+}).strict();

@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog/dialog";
-import PhotoUploadComposer from "@/features/photo-upload/components/PhotoUploadComposer/PhotoUploadComposer";
+import PhotoUploadComposer from "@/features/project-photos/upload/components/PhotoUploadComposer/PhotoUploadComposer";
 export default function InvitationPhotoUpload({ file, preview, disabled, onUpload, onBack, onSuccess }: {
   file: File; preview: string; disabled: boolean; onUpload: (file: File, description: string) => Promise<void>;
   onBack: () => void; onSuccess: () => void;

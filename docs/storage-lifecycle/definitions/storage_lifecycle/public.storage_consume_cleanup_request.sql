@@ -1,4 +1,4 @@
--- PLANNED DEFINITION / SAVE ONLY. SQL021 NOT APPLIED; do not execute separately.
+-- SAVE / REVIEW ONLY. SQL021 APPLIED by operator; do not execute separately.
 create function public.storage_consume_cleanup_request(p_request_id uuid,p_timestamp bigint)
 returns boolean language plpgsql security definer set search_path = '' as $$
 declare inserted integer; current_epoch bigint;
