@@ -51,3 +51,23 @@ Rollback prije COMMIT-a je transakcijski. Nakon COMMIT-a zadržati additive mode
 ### Preostala provjera s dvije veze na stagingu
 
 Na izoliranoj/staging bazi koristiti dvije stvarno odvojene veze, iste member ovlasti i isti početni p_revision. Prva transakcija dodjeljuje slobodnu stolicu i zadržava transakciju otvorenom; druga pokušava dodijeliti drugog gosta toj stolici. Nakon COMMIT-a prve druga mora dobiti 40001, bez promjene svoje stare dodjele. Ponovni pokušaj s aktualnom revizijom mora dobiti 23505 Seat occupied. Provjeriti i istodobno smanjenje kapaciteta/assignment te očuvanje brojeva/revizija. Ovaj scenarij nije izvršen u runtimeu s jednom vezom; ne testirati upisima na live podatke kroz read-only verify.
+
+
+## 007 — skupna i automatska dodjela na instaliranom 006
+
+Dodaje samo assign_seating_guests RPC. Nema novih tablica ili migracije gostiju/dodjela, uključujući praznu bazu korisnika. Redoslijed: [007_preflight_read_only.sql](007_preflight_read_only.sql), zatim cijeli [007_bulk_seating_upgrade.sql](007_bulk_seating_upgrade.sql), potom [007_verify_read_only.sql](007_verify_read_only.sql) i regeneracija tipova. Ne ponavljati 006. Potpis, prava, atomska pravila, UX i granice provjera: [BULK_SEATING.md](../BULK_SEATING.md). 007 nije izvršen na live bazi od strane agenta.
+
+
+## 008 — atomsko ručno spremanje grupe
+
+Korisnik je 2026-10-11 potvrdio instalaciju, dostavio verify s rpc_008_verified=true/member_execute=true i regenerirao DB tipove. Frontend je povezan s generiranim potpisima 007/008. Na toj bazi ne ponavljati instalaciju; upute ispod vrijede za drugu bazu bez 008.
+
+Samo nova SQL funkcija assign_seating_guests_to_seats i njezin authenticated EXECUTE grant; nema promjene tablica ni migracije/backfilla gostiju ili dodjela. Na instaliranom 007 redom: [008_preflight_read_only.sql](008_preflight_read_only.sql), cijeli [008_manual_bulk_upgrade.sql](008_manual_bulk_upgrade.sql), [008_verify_read_only.sql](008_verify_read_only.sql), regeneracija tipova. Ne ponavljati 006/007. 008 nije izvršen na live bazi od strane agenta. Detalji i aktualni UX: [BULK_SEATING.md](../BULK_SEATING.md).
+
+## Završni RSVP model na korisnikovim praznim tablicama
+
+**Aktualna dodatna postava:** javni gosti, ručni status i grupe imaju [ATTENDANCE_AND_GROUPS.md](../ATTENDANCE_AND_GROUPS.md). Na korisnikovom već provjerenom RSVP modelu koristi se samo `PREFLIGHT_EMPTY_ATTENDANCE_MODEL.sql` → cijeli `APPLY_EMPTY_ATTENDANCE_MODEL.sql` → `VERIFY_ATTENDANCE_MODEL_READ_ONLY.sql` → regeneracija tipova. Nema numerirane migracije/backfilla. Postava zahtijeva prazne projektne goste i seating podatke i ništa ne briše. Nakon toga stari RSVP verify nije aktualni verify jer provjerava ranije tijelo sync RPC-a.
+
+Korisnik je 2026-10-11 potvrdio da je obrisao podatke, ali zadržao tablice/funkcije. Nema zasebnog guest backfilla ili numerirane migracije za taj slučaj. Pripremljene su canonical definitions i jedna prazna-model postava: [PREFLIGHT_EMPTY_RSVP_MODEL.sql](PREFLIGHT_EMPTY_RSVP_MODEL.sql) → cijeli [APPLY_EMPTY_RSVP_MODEL.sql](APPLY_EMPTY_RSVP_MODEL.sql) → [VERIFY_RSVP_MODEL_READ_ONLY.sql](VERIFY_RSVP_MODEL_READ_ONLY.sql), zatim regeneracija DB tipova. Ne ponavljati 001–008 i ne izvršavati originalni INSTALL_ALL_REVIEW.
+
+Postava dodaje private.seating_rsvp_exclusions, zamjenjuje manage_seating_participant uz isti potpis i dodaje sync_seating_rsvp_guests. Ne briše podatke, ne kopira goste i ne izvršava sync pri postavi; guard traži prazne seating sudionike/dodjele i nepromijenjen instalirani baseline. Potvrđeni dolasci zatim se automatski uključuju pri otvaranju/osvježavanju/povratku u editor; ručno uklonjeni gosti ostaju uklonjeni. Model, frontend tok i ograničenja: [RSVP_FLOW.md](../RSVP_FLOW.md). Agent nije izvršio SQL na live bazi.

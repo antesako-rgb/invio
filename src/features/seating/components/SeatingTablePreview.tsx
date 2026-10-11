@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Stage, Layer, Group, Rect } from "react-konva";
 import { TableChairs, TableLabel, type TableColors } from "./TableDecorations";
+import TableSurface, { TABLE_RIM_FILL } from "./TableSurface";
 import { getTablePreviewBounds } from "../validation/canvasInteraction";
 import type { SeatingTable } from "../types";
 import styles from "./CreateSeatingTableDialog.module.css";
@@ -34,7 +35,8 @@ export default function SeatingTablePreview({ table }: { table: SeatingTable }) 
       <Layer><Group x={size.width/2} y={size.height/2} scaleX={scale} scaleY={scale}>
         <TableChairs table={centered} colors={colors} />
         <Rect width={table.width_cm} height={table.height_cm} offsetX={table.width_cm/2} offsetY={table.height_cm/2}
-          cornerRadius={table.shape === "round" ? table.width_cm/2 : 8} fill={colors.fill} stroke={colors.text} strokeWidth={1} strokeScaleEnabled={false} />
+          cornerRadius={table.shape === "round" ? table.width_cm/2 : 8} fill={TABLE_RIM_FILL} stroke={colors.text} strokeWidth={1} strokeScaleEnabled={false} />
+        <TableSurface table={centered} colors={colors} scale={scale} />
         <TableLabel table={centered} occupancy={0} colors={colors} />
       </Group></Layer>
     </Stage>

@@ -1,0 +1,84 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path");
+exports.run=async function(db,root){
+ const read=file=>fs.readFileSync(path.join(root,file),"utf8"),id=n=>"20000000-0000-4000-8000-"+String(n).padStart(12,"0");
+ const project=id(1),other=id(2),invite=id(3),otherInvite=id(4),plan=id(5),member=id(6),outsider=id(7),person=id(8),table=id(9);
+ let checks=0;
+ // Upgrade only isolated fixtures to the real identity columns used by installed RPCs.
+ await db.exec(`reset role;delete from public.seating_plans;delete from public.project_guests;delete from public.invitation_generic_guest_links;delete from public.invitation_guests;delete from public.rsvp_response_guests;delete from public.rsvp_responses;
+  alter table public.invitation_guests add column first_name text,add column last_name text,add column group_id uuid;
+  alter table public.invitation_guests alter column id set default gen_random_uuid();
+  alter table public.invitation_guests add unique(project_id,invitation_id,project_guest_id);
+  alter table public.invitation_generic_guest_links add column response_id uuid;
+  alter table public.invitation_generic_guest_links enable row level security;
+  create policy generic_links_member_select on public.invitation_generic_guest_links for select to authenticated using(private.is_project_member(project_id));
+  grant select on public.invitation_generic_guest_links to authenticated;
+  alter table public.rsvp_response_guests add column project_id uuid,add column invitation_id uuid,add column first_name text,add column last_name text;`);
+ for(const [entity,name,args]of [["invitation_guests","public.link_existing_invitation_guest","uuid,uuid,uuid"],["invitation_generic_guest_links","public.link_generic_rsvp_guest","uuid,uuid,boolean"]]){
+  await db.exec(read(`docs/seating/definitions/${entity}/${name}.sql`));
+  await db.exec(`revoke all on function ${name}(${args}) from public,anon,authenticated,service_role;grant execute on function ${name}(${args}) to authenticated;`);
+ }
+ await db.exec(`insert into public.projects values('${project}'),('${other}');insert into public.project_members values('${project}','${member}');
+  insert into public.invitations values('${project}','${invite}'),('${other}','${otherInvite}');
+  insert into public.seating_plans(id,project_id,name,width_cm,height_cm,rsvp_invitation_id)values('${plan}','${project}','Plan',2000,1500,'${invite}');
+  insert into public.project_guests(id,project_id,first_name)values('${person}','${project}','Existing');`);
+ await assert.rejects(db.exec(read("docs/seating/install/PREFLIGHT_EMPTY_ATTENDANCE_MODEL.sql")),/requires empty project/);await db.exec("rollback");checks++;
+ await db.query("delete from public.project_guests where id=$1",[person]);
+ await db.exec(read("docs/seating/install/PREFLIGHT_EMPTY_ATTENDANCE_MODEL.sql"));checks++;
+ const setup=read("docs/seating/install/APPLY_EMPTY_ATTENDANCE_MODEL.sql");
+ await assert.rejects(db.exec(setup.replace('do $preserve$',"update public.seating_plans set revision=revision+1;do $preserve$")),/changed existing plan/);await db.exec("rollback");
+ assert.equal((await db.query("select to_regclass('public.invitation_attendance_overrides') t")).rows[0].t,null);checks++;
+ await db.exec(setup);await db.exec(read("docs/seating/install/VERIFY_ATTENDANCE_MODEL_READ_ONLY.sql"));checks++;
+ await assert.rejects(db.exec(setup),/already configured/);await db.exec("rollback");checks++;
+ await db.exec(`insert into public.project_guests(id,project_id,first_name)values('${person}','${project}','Existing'),('${id(10)}','${other}','Outside');
+  insert into public.invitation_guests(id,project_id,invitation_id,project_guest_id,first_name)values('${id(11)}','${project}','${invite}','${person}','Existing'),('${id(12)}','${other}','${otherInvite}','${id(10)}','Outside');
+  insert into public.seating_tables(id,project_id,plan_id,name,shape,capacity,x_cm,y_cm,width_cm,height_cm)values('${table}','${project}','${plan}','Stol 1','round',8,300,300,200,200);
+  insert into public.rsvp_responses values('${id(13)}','${project}','${invite}','personalized','2026-10-11T10:00:00Z');
+  insert into public.rsvp_response_guests(id,response_id,invitation_guest_id,status,project_id,invitation_id)values('${id(14)}','${id(13)}','${id(11)}','attending','${project}','${invite}');`);
+ await db.exec(`insert into public.rsvp_responses values('${id(15)}','${project}','${invite}','generic','2026-10-11T10:30:00Z');
+  insert into public.rsvp_response_guests(id,response_id,status,project_id,invitation_id,first_name)values('${id(16)}','${id(15)}','not_attending','${project}','${invite}','Existing');
+  insert into public.invitation_generic_guest_links(project_id,invitation_id,response_id,response_guest_id,project_guest_id)values('${project}','${invite}','${id(15)}','${id(16)}','${person}');`);
+ const sourceBefore=(await db.query("select * from public.rsvp_response_guests order by id")).rows;
+ await db.query("select set_config('request.jwt.claim.sub',$1,false)",[member]);await db.exec("set role authenticated");
+ const revision=async()=>(await db.query("select revision from public.seating_plans where id=$1",[plan])).rows[0].revision;
+ const sync=async()=>(await db.query("select public.sync_seating_rsvp_guests($1,$2,$3) result",[project,plan,await revision()])).rows[0].result;
+ const override=async(status,who=person,source=invite)=>(await db.query("select public.set_invitation_guest_attendance($1,$2,$3) result",[source,who,status])).rows[0].result;
+ assert.equal((await sync()).added_count,0);checks++;
+ await override("not_attending");assert.equal((await sync()).added_count,0);assert.equal(await revision(),1);checks++;
+ await override("attending");assert.equal((await sync()).added_count,1);checks++;
+ await db.query("select public.assign_seating_guest_to_seat($1,$2,$3,$4,2)",[plan,await revision(),person,table]);
+ const seated=(await db.query("select * from public.seating_assignments where plan_id=$1",[plan])).rows;
+ await override("not_attending");assert.equal((await sync()).added_count,0);
+ assert.deepEqual((await db.query("select * from public.seating_assignments where plan_id=$1",[plan])).rows,seated);checks++;
+ await override(null);assert.equal((await db.query("select count(*)::int c from public.invitation_attendance_overrides")).rows[0].c,0);checks++;
+ await assert.rejects(override("pending"),/Invalid attendance/);await assert.rejects(override("attending",id(10),otherInvite),/Access denied/);checks++;
+ await assert.rejects(db.query("insert into public.invitation_attendance_overrides values($1,$2,$3,'attending',$4,now())",[project,invite,person,member]),/permission denied/);checks++;
+ await db.query("select set_config('request.jwt.claim.sub',$1,false)",[outsider]);await assert.rejects(override("attending"),/Access denied/);checks++;
+ await db.query("select set_config('request.jwt.claim.sub',$1,false)",[member]);await db.exec("reset role");
+ assert.deepEqual((await db.query("select * from public.rsvp_response_guests order by id")).rows,sourceBefore);checks++;
+ for(const n of [20,21])await db.exec(`insert into public.rsvp_responses values('${id(100+n)}','${project}','${invite}','generic','2026-10-11T11:00:00Z');insert into public.rsvp_response_guests(id,response_id,status,project_id,invitation_id,first_name,last_name)values('${id(n)}','${id(100+n)}','attending','${project}','${invite}','Generic','Same');`);
+ await db.exec(`insert into public.rsvp_responses values('${id(200)}','${other}','${otherInvite}','generic','2026-10-11T11:00:00Z');insert into public.rsvp_response_guests(id,response_id,status,project_id,invitation_id,first_name)values('${id(201)}','${id(200)}','attending','${other}','${otherInvite}','Outside');`);
+ await db.exec("set role authenticated");
+ const include=async(answer,who=null,rev)=> (await db.query("select public.include_generic_seating_guest($1,$2,$3,$4,$5) result",[plan,rev??await revision(),id(answer),who,who===null])).rows[0].result;
+ await assert.rejects(include(201),/outside plan source/);await assert.rejects(include(20,null,1),/Revision conflict/);checks++;
+ const added=await include(20);assert.equal(added.revision,await revision());assert.ok(added.project_guest_id);checks++;
+ const beforeCount=(await db.query("select count(*)::int c from public.project_guests")).rows[0].c;
+ assert.equal((await include(20)).project_guest_id,added.project_guest_id);
+ assert.equal((await db.query("select count(*)::int c from public.project_guests")).rows[0].c,beforeCount);checks++;
+ await assert.rejects(include(20,person),/another person/);checks++;
+ assert.equal((await include(21,person)).project_guest_id,person);checks++;
+ await override("not_attending");await db.query("select public.manage_seating_participant($1,$2,$3,'remove')",[plan,await revision(),person]);
+ assert.equal((await sync()).added_count,0);await override("attending");assert.equal((await sync()).added_count,0);checks++;
+ await include(21,person);assert.equal((await db.query("select count(*)::int c from public.seating_plan_guests where plan_id=$1 and project_guest_id=$2",[plan,person])).rows[0].c,1);checks++;
+ // Atomic inclusion: a late membership failure must undo both identity creation and linking.
+ await db.exec("reset role");await db.exec(`insert into public.rsvp_responses values('${id(130)}','${project}','${invite}','generic','2026-10-11T12:00:00Z');insert into public.rsvp_response_guests(id,response_id,status,project_id,invitation_id,first_name)values('${id(30)}','${id(130)}','attending','${project}','${invite}','Rollback');
+ create function private.test_include_failure()returns trigger language plpgsql as $$begin raise exception 'Injected inclusion failure';end$$;create trigger test_include_failure before insert on public.seating_plan_guests for each row execute function private.test_include_failure();`);
+ const countBefore=(await db.query("select count(*)::int c from public.project_guests where project_id=$1",[project])).rows[0].c;
+ await db.exec("set role authenticated");await assert.rejects(include(30),/Injected inclusion failure/);
+ assert.equal((await db.query("select count(*)::int c from public.project_guests where project_id=$1",[project])).rows[0].c,countBefore);assert.equal((await db.query("select count(*)::int c from public.invitation_generic_guest_links where response_guest_id=$1",[id(30)])).rows[0].c,0);checks++;
+ await db.exec("reset role;drop trigger test_include_failure on public.seating_plan_guests;drop function private.test_include_failure();");
+ for(const role of ["anon","service_role"]){await db.exec("set role "+role);await assert.rejects(override("attending"),/permission denied/);await assert.rejects(include(20),/permission denied/);checks++;}
+ await db.exec("reset role");
+ await db.exec(read("docs/seating/install/VERIFY_ATTENDANCE_MODEL_READ_ONLY.sql"));checks++;
+ console.log(checks+" attendance model SQL checks PASS.");return checks;
+};

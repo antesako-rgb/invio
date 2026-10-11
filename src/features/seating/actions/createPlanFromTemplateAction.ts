@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { createServerClient } from "@/lib/supabase/server";
 import { nullableRpcArgs, type SeatingDatabase } from "@/features/project-guests/types/database";
+import { getDefaultRsvpInvitation } from "../repositories/getDefaultRsvpInvitation";
 const inputSchema = z.object({ projectId: z.string().uuid(), templateId: z.string().uuid(), name: z.string().trim().min(1).max(150), rsvpInvitationId: z.string().uuid().nullable() }).strict();
 const resultSchema = z.object({ id: z.string().uuid(), project_id: z.string().uuid(), revision: z.number().int().positive() });
 export async function createPlanFromTemplateAction(input: unknown) {
@@ -12,7 +13,8 @@ export async function createPlanFromTemplateAction(input: unknown) {
     if (!p.success)
         return { success: false as const };
     const db = await createServerClient<SeatingDatabase>();
-    const { data, error } = await db.rpc("create_seating_plan_from_template", nullableRpcArgs<"create_seating_plan_from_template">({ p_project_id: p.data.projectId, p_template_id: p.data.templateId, p_name: p.data.name, p_rsvp_invitation_id: p.data.rsvpInvitationId }));
+    const source = p.data.rsvpInvitationId ?? await getDefaultRsvpInvitation(db, p.data.projectId);
+    const { data, error } = await db.rpc("create_seating_plan_from_template", nullableRpcArgs<"create_seating_plan_from_template">({ p_project_id: p.data.projectId, p_template_id: p.data.templateId, p_name: p.data.name, p_rsvp_invitation_id: source }));
     if (error)
         return { success: false as const };
     const result = resultSchema.safeParse(data);

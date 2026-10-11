@@ -6,12 +6,14 @@ import { getInvitationRecipientManagement } from "@/features/invitation-guests/r
 import InvitationGuestWorkspace from "@/features/invitation-guests/components/InvitationGuestWorkspace";
 import { getInvitationGuestGroups } from "@/features/invitation-guests/repositories/guests/getInvitationGuestGroups";
 import { parseInvitationDocument } from "@/features/invitations/utils/parseInvitationDocument";
+import { getAttendanceOverrides } from "@/features/project-guests/repositories/attendanceOverrides";
 export default async function Page({ params }: { params: Promise<{ invitationId: string }> }) {
   const invitation = await getInvitation((await params).invitationId);
   if (!invitation) notFound();
   const [{ recipients, guests }, genericResponses, groups] = await Promise.all([getInvitationRecipientManagement(invitation.id), getGenericInvitationResponses(invitation.id), getInvitationGuestGroups(invitation.id)]);
   const projectGuestsEnabled=process.env.PROJECT_GUESTS_ENABLED === "true";
   const [projectGuests,genericLinks]=projectGuestsEnabled?await Promise.all([getProjectGuests(invitation.project_id),getGenericGuestLinks(invitation.id)]):[[],[]];
+  const overrides=projectGuestsEnabled?await getAttendanceOverrides(invitation.id):{rows:[],setupRequired:false};
   const questions = parseInvitationDocument(invitation.document).pages.find(page => page.type === "rsvp")?.rsvp?.questions ?? [];
-  return <InvitationGuestWorkspace projectGuestsEnabled={projectGuestsEnabled} projectGuests={projectGuests} genericLinks={genericLinks} invitationId={invitation.id} groups={groups} recipients={recipients} guests={guests} questions={questions} genericResponses={genericResponses} />;
+  return <InvitationGuestWorkspace attendanceOverrides={overrides.rows} attendanceSetupRequired={overrides.setupRequired} projectGuestsEnabled={projectGuestsEnabled} projectGuests={projectGuests} genericLinks={genericLinks} invitationId={invitation.id} groups={groups} recipients={recipients} guests={guests} questions={questions} genericResponses={genericResponses} />;
 }

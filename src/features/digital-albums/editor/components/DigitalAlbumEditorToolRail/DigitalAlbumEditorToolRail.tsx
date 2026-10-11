@@ -4,8 +4,8 @@ import {
   useTranslations,
 } from "next-intl";
 
-import SideNavigation
-  from "@/components/ui/side-navigation/SideNavigation";
+import EditorToolRail
+  from "@/features/editor/components/EditorToolRail/EditorToolRail";
 
 import {
   getDigitalAlbumEditorNavigationItems,
@@ -16,6 +16,8 @@ import type {
 } from "@/features/digital-albums/editor/types/digitalAlbumEditor.types";
 
 interface DigitalAlbumEditorToolRailProps {
+  collapsed: boolean;
+  onToggleCollapsed: () => void;
   activeStep:
     DigitalAlbumEditorStep;
 
@@ -24,6 +26,8 @@ interface DigitalAlbumEditorToolRailProps {
 }
 
 export default function DigitalAlbumEditorToolRail({
+  collapsed,
+  onToggleCollapsed,
   activeStep,
   onStepChange,
 }: DigitalAlbumEditorToolRailProps) {
@@ -44,12 +48,12 @@ export default function DigitalAlbumEditorToolRail({
   }
 
   return (
-    <SideNavigation
+    <EditorToolRail
       items={navigationItems}
-      variant="controlled"
-      appearance="rail"
       activeId={activeStep}
-      onControlledNavigate={handleNavigation}
+      collapsed={collapsed}
+      onToggleCollapsed={onToggleCollapsed}
+      onNavigate={handleNavigation}
       ariaLabel={t("navigation.label")}
     />
   );

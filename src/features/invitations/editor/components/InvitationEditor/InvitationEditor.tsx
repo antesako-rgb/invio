@@ -2,15 +2,14 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
-import { Images, Layers, LayoutTemplate, Palette, PanelLeftOpen, PanelLeftClose } from "lucide-react";
+import { Images, Layers, LayoutTemplate, Palette } from "lucide-react";
 import EditorShell from "@/features/editor/components/EditorShell/EditorShell";
 import EditorWorkspace from "@/features/editor/components/EditorWorkspace/EditorWorkspace";
 import EditorSidebar from "@/features/editor/components/EditorSidebar/EditorSidebar";
+import EditorToolRail from "@/features/editor/components/EditorToolRail/EditorToolRail";
 import EditorMobileNavigation from "@/features/editor/components/EditorMobileNavigation/EditorMobileNavigation";
 import EditorMobilePanel from "@/features/editor/components/EditorMobilePanel/EditorMobilePanel";
 import EditorPreview from "@/features/editor/components/EditorPreview/EditorPreview";
-import SideNavigation from "@/components/ui/side-navigation/SideNavigation";
-import IconButton from "@/components/ui/icon-button/IconButton";
 import { DrawerTitle } from "@/components/ui/drawer/Drawer";
 import styles from "./InvitationEditor.module.css";
 const tools = { pages: Layers, photos: Images, templates: LayoutTemplate, theme: Palette };
@@ -33,7 +32,6 @@ interface Props {
 /** Invitation composes the same editor primitives as Album; domain state stays in its view. */
 export default function InvitationEditor({ openPanelRequest, header, sidebar, children, tab, onTabChange, disabled, preview, previewContent, onClosePreview }: Props) {
   const t = useTranslations("Invitations");
-  const navigationT = useTranslations("Navigation.dashboard");
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [snap, setSnap] = useState(DEFAULT_SNAP);
@@ -122,22 +120,14 @@ export default function InvitationEditor({ openPanelRequest, header, sidebar, ch
         <EditorWorkspace
           sidebarCollapsed={collapsed}
           sidebar={panel}
-          toolRail={<>
-            <IconButton
-              className={styles.collapse}
-              aria-expanded={!collapsed}
-              aria-label={navigationT(collapsed ? "expand" : "collapse")}
-              onClick={() => setCollapsed(value => !value)}>
-              {collapsed ? <PanelLeftOpen aria-hidden="true" /> : <PanelLeftClose aria-hidden="true" />}
-            </IconButton>
-            <SideNavigation
+          toolRail={<EditorToolRail
               items={items}
-              variant="controlled"
-              appearance="rail"
               activeId={tab}
+              collapsed={collapsed}
+              disabled={disabled}
+              onToggleCollapsed={() => setCollapsed(value => !value)}
               ariaLabel={t("editor.tools")}
-              onControlledNavigate={id => navigate(id, false)} />
-          </>}>
+              onNavigate={id => navigate(id, false)} />}>
           <div className={styles.canvas}>
             {children}
           </div>

@@ -1,8 +1,15 @@
 import type { PlanData, SeatingAssignment, SeatingTable } from "../types";
 import { getSeatAssignmentIssue } from "./seatAssignment";
 
-export type SeatAssignmentRequest = { tableId: string | null; seatNumber: number | null; guestId: string | null };
-export type SeatAssignmentChoice = { tableId: string | null; seatNumber: number | null; guestId: string };
+export type SeatAssignmentRequest = { tableId: string | null; seatNumber: number | null; guestId: string | null; seatMode?: "auto" | "manual" };
+export type SeatAssignmentChoice = { tableId: string | null; seatNumber: number | null; guestId: string; seatMode?: "auto" | "manual" };
+
+/** Switching targets keeps the chosen mode; a draft chair never carries to another table. */
+export function changeSeatTable(choice: SeatAssignmentChoice, tableId: string | null, assignments: readonly SeatingAssignment[]): SeatAssignmentChoice {
+  if (choice.tableId === tableId) return choice;
+  const own = assignments.find(item => item.project_guest_id === choice.guestId && item.table_id === tableId);
+  return { ...choice, tableId, seatNumber: own?.seat_number ?? null };
+}
 
 /** An occupied chair opens its current guest; an empty chair never picks a guest implicitly. */
 export function getInitialSeatChoice(request: SeatAssignmentRequest, current: PlanData, tables: readonly SeatingTable[]): SeatAssignmentChoice {
@@ -11,10 +18,10 @@ export function getInitialSeatChoice(request: SeatAssignmentRequest, current: Pl
   const candidateId = request.guestId ?? occupant?.project_guest_id ?? "";
   const guestId = current.participants.some(item => item.project_guest_id === candidateId) ? candidateId : "";
   const assignment = current.assignments.find(item => item.project_guest_id === guestId);
-  const candidateTable = request.tableId ?? assignment?.table_id ?? tables[0]?.id ?? null;
+  const candidateTable = request.tableId ?? assignment?.table_id ?? null;
   const tableId = tables.some(item => item.id === candidateTable) ? candidateTable : null;
   const seatNumber = request.seatNumber ?? (assignment?.table_id === tableId ? assignment.seat_number : null);
-  return { guestId, tableId, seatNumber };
+  return { guestId, tableId, seatNumber, ...(request.seatMode ? { seatMode: request.seatMode } : {}) };
 }
 
 /** Mirrors the RPC's archived-person release exception without mutating assignments. */

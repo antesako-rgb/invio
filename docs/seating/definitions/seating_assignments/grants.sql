@@ -8,3 +8,7 @@ revoke all on function public.assign_seating_guest(uuid,bigint,uuid,uuid) from p
 grant execute on function public.assign_seating_guest(uuid,bigint,uuid,uuid) to authenticated;
 revoke all on function public.assign_seating_guest_to_seat(uuid,bigint,uuid,uuid,integer) from public,anon,authenticated,service_role;
 grant execute on function public.assign_seating_guest_to_seat(uuid,bigint,uuid,uuid,integer) to authenticated;
+revoke all on function public.assign_seating_guests(uuid,bigint,uuid[],uuid,text) from public,anon,authenticated,service_role;
+grant execute on function public.assign_seating_guests(uuid,bigint,uuid[],uuid,text) to authenticated;
+revoke all on function public.assign_seating_guests_to_seats(uuid,bigint,uuid,jsonb) from public,anon,authenticated,service_role;
+grant execute on function public.assign_seating_guests_to_seats(uuid,bigint,uuid,jsonb) to authenticated;

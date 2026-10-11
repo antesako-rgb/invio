@@ -27,12 +27,15 @@ import { recipientGuestName, recipientPrimaryGuest, recipientMatchesSearch } fro
 import styles from "./InvitationRecipients.module.css";
 
 import GuestIdentityLinks from "@/features/project-guests/components/GuestIdentityLinks";
+import GuestAttendanceControl from "@/features/project-guests/components/GuestAttendanceControl";
+import type { AttendanceOverride,AttendanceStatus } from "@/features/project-guests/types/attendance";
 import type { ProjectGuest, SeatingDatabase } from "@/features/project-guests/types/database";
 import type { GenericInvitationResponse, InvitationAttendanceRow } from "../../types/invitationResponse.types";
 import type { RsvpQuestion } from "@/features/invitations/types/invitationDocument.types";
 
 type CreatedSummary = { guests: { id: string; name: string; primary: boolean }[]; email: string | null; phone: string | null };
-export default function InvitationRecipients({ invitationId, recipients, guests, questions = [], genericResponses = [], projectGuestsEnabled=false, projectGuests=[], genericLinks=[], onManageGuests }: {
+export default function InvitationRecipients({ invitationId, recipients, guests, questions = [], genericResponses = [], projectGuestsEnabled=false, projectGuests=[], genericLinks=[], onManageGuests,attendanceOverrides=[],attendanceSetupRequired=false,effectiveStatuses={} }: {
+  attendanceOverrides?:AttendanceOverride[];attendanceSetupRequired?:boolean;effectiveStatuses?:Record<string,AttendanceStatus>;
   projectGuestsEnabled?: boolean; projectGuests?: ProjectGuest[]; genericLinks?: SeatingDatabase["public"]["Tables"]["invitation_generic_guest_links"]["Row"][];
   invitationId: string; recipients: InvitationRecipientWithGuests[]; guests: InvitationGuest[]; questions?: RsvpQuestion[]; genericResponses?: GenericInvitationResponse[]; onManageGuests?: () => void;
 }) {
@@ -62,6 +65,19 @@ export default function InvitationRecipients({ invitationId, recipients, guests,
   const allAssigned = new Set(recipients.flatMap(recipient => recipient.guests.map(guest => guest.id)));
   const hasAvailableGuests = guests.some(guest => !allAssigned.has(guest.id));
   const assigned = recipients.filter(recipient => recipient.id !== (editor && editor !== "new" ? editor.id : null)).flatMap(recipient => recipient.guests.map(guest => guest.id));
+  const manual=new Map(attendanceOverrides.map(o=>[o.project_guest_id,o.status]));
+  function personalStatus(recipient:InvitationRecipientWithGuests,id:string) {
+    const personId=guests.find(g=>g.id===id)?.project_guest_id;
+    return (personId?manual.get(personId):undefined)??effectiveStatuses[id]??recipient.response?.guests.find(g=>g.invitation_guest_id===id)?.status;
+  }
+  function publicStatus(guest:GenericInvitationResponse["guests"][number]):AttendanceStatus {
+    const personId=genericLinks.find(l=>l.response_guest_id===guest.id)?.project_guest_id;
+    return (personId?manual.get(personId):undefined)??guest.status;
+  }
+  function publicAttendanceControl(guest:GenericInvitationResponse["guests"][number]) {
+    const personId=genericLinks.find(l=>l.response_guest_id===guest.id)?.project_guest_id;
+    return projectGuestsEnabled&&personId?<GuestAttendanceControl invitationId={invitationId} personId={personId} name={recipientGuestName(guest)} status={publicStatus(guest)} manualStatus={manual.get(personId)} disabled={busy||attendanceSetupRequired}/>:<Badge dot variant={publicStatus(guest)==="attending"?"success":"muted"}>{t(publicStatus(guest)==="attending"?"attending":"notAttending")}</Badge>;
+  }
   function name(recipient: InvitationRecipientWithGuests) { const primary = recipientPrimaryGuest(recipient); return primary ? recipientGuestName(primary) || t("unnamed") : t("unnamed"); }
   function closeFlow() { if (!lock.current) { setEditor(null); setCreatedLink(null); setCreatedSummary(null); } }
   function edit(recipient: InvitationRecipientWithGuests) { setGenericDetailsId(null); setDetailsId(null); setEditor(recipient); }
@@ -106,22 +122,22 @@ export default function InvitationRecipients({ invitationId, recipients, guests,
     </div></div>;
   }
   function rsvpSummary(recipient: InvitationRecipientWithGuests) {
-    const answered = recipient.response?.guests ?? [];
-    const attending = answered.filter(guest => guest.status === "attending").length;
-    const declined = answered.filter(guest => guest.status === "not_attending").length;
-    const pending = recipient.guests.filter(guest => !answered.some(answer => answer.invitation_guest_id === guest.id)).length;
-    return <div className={styles.rsvpSummary}>{!recipient.response ? <Badge variant="muted" dot>{t("noResponse")}</Badge> : <>{attending > 0 && <Badge variant="success" dot>{t("attendingCount", { count: attending })}</Badge>}{declined > 0 && <Badge variant="muted" dot>{t("declinedCount", { count: declined })}</Badge>}{pending > 0 && <Badge variant="warning" dot>{t("pendingCount", { count: pending })}</Badge>}</>}</div>;
+    const attending = recipient.guests.filter(guest => personalStatus(recipient,guest.id)==="attending").length;
+    const declined = recipient.guests.filter(guest => personalStatus(recipient,guest.id)==="not_attending").length;
+    const pending = recipient.guests.length-attending-declined;
+    return <div className={styles.rsvpSummary}>{!recipient.response&&!attending&&!declined ? <Badge variant="muted" dot>{t("noResponse")}</Badge> : <>{attending > 0 && <Badge variant="success" dot>{t("attendingCount", { count: attending })}</Badge>}{declined > 0 && <Badge variant="muted" dot>{t("declinedCount", { count: declined })}</Badge>}{pending > 0 && <Badge variant="warning" dot>{t("pendingCount", { count: pending })}</Badge>}</>}</div>;
   }
   function guestResponse(recipient: InvitationRecipientWithGuests, guestId: string) {
     const answer = recipient.response?.guests.find(guest => guest.invitation_guest_id === guestId);
     const entries = Object.entries(answer?.answers ?? {});
-    return <div className={styles.guestResponse}><Badge dot variant={answer?.status === "attending" ? "success" : answer ? "muted" : "warning"}>{t(answer?.status === "attending" ? "attending" : answer ? "notAttending" : "pending")}</Badge>
+    const guest=guests.find(g=>g.id===guestId),status=personalStatus(recipient,guestId);
+    return <div className={styles.guestResponse}>{projectGuestsEnabled&&guest?<GuestAttendanceControl invitationId={invitationId} personId={guest.project_guest_id} name={recipientGuestName(guest)} status={status} manualStatus={manual.get(guest.project_guest_id)} disabled={busy||attendanceSetupRequired}/>:<Badge dot variant={status === "attending" ? "success" : status ? "muted" : "warning"}>{t(status === "attending" ? "attending" : status ? "notAttending" : "pending")}</Badge>}
       {entries.length > 0 && <dl className={styles.answers}>{entries.map(([id, value]) => <div key={id}><dt>{questions.find(question => question.id === id)?.label || t("previousQuestion")}</dt><dd>{typeof value === "string" ? questions.find(question => question.id === id)?.options?.find(option => option.id === value)?.label ?? value : JSON.stringify(value)}</dd></div>)}</dl>}
     </div>;
   }
   function genericName(response: GenericInvitationResponse) { return response.guests[0] ? recipientGuestName(response.guests[0]) : t("unnamed"); }
   function genericSummary(response: GenericInvitationResponse) {
-    const attending = response.guests.filter(guest => guest.status === "attending").length;
+    const attending = response.guests.filter(guest => publicStatus(guest) === "attending").length;
     const declined = response.guests.length - attending;
     return <div className={styles.rsvpSummary}>{attending > 0 && <Badge variant="success" dot>{t("attendingCount", { count: attending })}</Badge>}{declined > 0 && <Badge variant="muted" dot>{t("declinedCount", { count: declined })}</Badge>}</div>;
   }
@@ -145,7 +161,7 @@ export default function InvitationRecipients({ invitationId, recipients, guests,
         </>}
       </DataTable>}
     <ManagementSurface open={!!genericDetails} busy={false} title={genericDetails ? genericName(genericDetails) : t("publicDetails")} description={t("publicDetailsHelp")} onClose={() => setGenericDetailsId(null)}>
-      {Footer => genericDetails && <div className={styles.surfaceContent}><div className={styles.surfaceBody}><section className={styles.detailGroup}><h3>{t("rsvpSummary")}</h3>{genericSummary(genericDetails)}<p className={styles.hint}>{t("submittedAt", { date: submitted(genericDetails.submitted_at) })}</p></section><section className={styles.detailGroup}><h3>{t("guestCount", { count: genericDetails.guests.length })}</h3><ul className={styles.linkedGuests}>{genericDetails.guests.map(guest => <li key={guest.id}><Avatar alt={recipientGuestName(guest)} fallback={getInitials(recipientGuestName(guest))} size="xs" /><span>{recipientGuestName(guest)}</span><div className={styles.guestResponse}><Badge dot variant={guest.status === "attending" ? "success" : "muted"}>{t(guest.status === "attending" ? "attending" : "notAttending")}</Badge><dl className={styles.answers}>{Object.entries(guest.answers && typeof guest.answers === "object" && !Array.isArray(guest.answers) ? guest.answers : {}).map(([id, value]) => <div key={id}><dt>{questions.find(question => question.id === id)?.label || t("previousQuestion")}</dt><dd>{typeof value === "string" ? questions.find(question => question.id === id)?.options?.find(option => option.id === value)?.label ?? value : JSON.stringify(value)}</dd></div>)}</dl>{projectGuestsEnabled && <GuestIdentityLinks people={projectGuests} responseGuestId={guest.id} linkedPersonId={genericLinks.find(link => link.response_guest_id === guest.id)?.project_guest_id} />}</div></li>)}</ul></section></div><Footer className={styles.stickyFooter}><Button variant="secondary" onClick={() => setGenericDetailsId(null)}>{t("done")}</Button></Footer></div>}
+      {Footer => genericDetails && <div className={styles.surfaceContent}><div className={styles.surfaceBody}><section className={styles.detailGroup}><h3>{t("rsvpSummary")}</h3>{genericSummary(genericDetails)}<p className={styles.hint}>{t("submittedAt", { date: submitted(genericDetails.submitted_at) })}</p></section><section className={styles.detailGroup}><h3>{t("guestCount", { count: genericDetails.guests.length })}</h3><ul className={styles.linkedGuests}>{genericDetails.guests.map(guest => <li key={guest.id}><Avatar alt={recipientGuestName(guest)} fallback={getInitials(recipientGuestName(guest))} size="xs" /><span>{recipientGuestName(guest)}</span><div className={styles.guestResponse}>{publicAttendanceControl(guest)}<dl className={styles.answers}>{Object.entries(guest.answers && typeof guest.answers === "object" && !Array.isArray(guest.answers) ? guest.answers : {}).map(([id, value]) => <div key={id}><dt>{questions.find(question => question.id === id)?.label || t("previousQuestion")}</dt><dd>{typeof value === "string" ? questions.find(question => question.id === id)?.options?.find(option => option.id === value)?.label ?? value : JSON.stringify(value)}</dd></div>)}</dl>{projectGuestsEnabled && <GuestIdentityLinks people={projectGuests} responseGuestId={guest.id} linkedPersonId={genericLinks.find(link => link.response_guest_id === guest.id)?.project_guest_id} />}</div></li>)}</ul></section></div><Footer className={styles.stickyFooter}><Button variant="secondary" onClick={() => setGenericDetailsId(null)}>{t("done")}</Button></Footer></div>}
     </ManagementSurface>
     <ManagementSurface open={!!details && !editor && !createdLink} busy={busy} title={details ? name(details) : t("details")} description={t("detailsHelp")} onClose={() => { if (!lock.current) setDetailsId(null); }}>
       {Footer => details && <div className={styles.surfaceContent}><div className={styles.surfaceBody}>

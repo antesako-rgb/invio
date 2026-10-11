@@ -104,5 +104,18 @@
     "unlinkHelp": "The original RSVP answer and person are preserved. You can link a different person afterwards.",
     "unavailable": "Unavailable person",
     "cancel": "Cancel"
+  },
+  "attendance": {
+    "change": "Change attendance: {name}",
+    "attending": "Attending",
+    "not_attending": "Not attending",
+    "pending": "No response",
+    "useResponse": "Use guest response",
+    "manual": "Manually confirmed",
+    "saved": "Attendance updated. The original guest response is preserved.",
+    "failed": "Attendance could not be saved.",
+    "setupRequired": "Manual attendance is available after the attendance model setup.",
+    "unconfirmed": "The save outcome is unconfirmed. Reload before making another change.",
+    "reload": "Reload view"
   }
 }

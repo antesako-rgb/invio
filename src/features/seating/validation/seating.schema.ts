@@ -16,3 +16,15 @@ export const seatAssignmentSchema = z.object({
     path: ["p_seat_number"],
 });
 export const tableSchema = z.object({ p_plan_id: id, p_revision: rev, p_table_id: id.nullable(), p_operation: z.enum(["create", "update", "delete"]), p_name: z.string().trim().min(1).max(150).nullable(), p_shape: z.enum(["round", "rectangle"]).nullable(), p_capacity: z.number().int().min(1).max(100).nullable(), p_x_cm: z.number().int().min(0).max(100000).nullable(), p_y_cm: z.number().int().min(0).max(100000).nullable(), p_width_cm: z.number().int().min(10).max(10000).nullable(), p_height_cm: z.number().int().min(10).max(10000).nullable(), p_rotation_deg: z.number().int().min(0).max(359) }).strict().refine(v => v.p_operation === "create" || v.p_table_id !== null).refine(v => v.p_operation === "delete" || [v.p_name, v.p_shape, v.p_capacity, v.p_x_cm, v.p_y_cm, v.p_width_cm, v.p_height_cm].every(x => x !== null));
+
+export const batchSeatingSchema = z.object({
+ p_plan_id: id, p_revision: rev.max(Number.MAX_SAFE_INTEGER - 1),
+ p_guest_ids: z.array(id).min(1).max(100).refine(ids => new Set(ids).size === ids.length),
+ p_table_id: id.nullable(), p_mode: z.enum(["auto", "include"]),
+}).strict().refine(v => v.p_mode === "include" ? v.p_table_id === null : v.p_table_id !== null);
+
+export const manualBatchSchema=z.object({
+ p_plan_id:id,p_revision:rev.max(Number.MAX_SAFE_INTEGER-1),p_table_id:id,
+ p_seats:z.array(z.object({guest_id:id,seat_number:z.number().int().min(1).max(100)}).strict()).min(1).max(100)
+  .refine(seats=>new Set(seats.map(s=>s.guest_id)).size===seats.length&&new Set(seats.map(s=>s.seat_number)).size===seats.length),
+}).strict();

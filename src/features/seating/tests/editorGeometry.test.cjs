@@ -26,7 +26,7 @@ function load(relative) {
 const { zoomViewport, normalizeTableRotation, normalizeTablePosition, normalizeRoomTransform, fitRoomViewport, resizeRoomViewport } = load("../validation/editorGeometry.ts");
 const { CanvasGesture, cancelNodeGesture } = load("../validation/canvasGesture.ts");
 const { tableContainsPoint, getTableLabelLayout, chairPositions, getChairSize, getTablePreviewBounds, canAssignToTable,
-  getSeatSide, getSeatWorldPosition, chairContainsPoint, hitSeat, hitSeatingTarget, getSeatNameLayout } = load("../validation/canvasInteraction.ts");
+  getSeatSide, getSeatWorldPosition, chairContainsPoint, hitSeat, hitSeatingTarget, hitGuestDropTarget, clientToRoomPoint, getSeatNameLayout } = load("../validation/canvasInteraction.ts");
 const { seatingGeometryFits } = load("../validation/seatingGeometry.ts");
 const { getStandardTableDimensions, getStandardTableUpdates, withTableCapacity } = load("../validation/tableDimensions.ts");
 const { getLongTableSeatCounts, getLongTableWidth } = load("../validation/longTableGeometry.ts");
@@ -35,6 +35,49 @@ const { TableChairs, TableSeatNames } = load("../components/TableDecorations.tsx
 const { updateTableSizes } = load("../services/updateTableSizes.ts");
 const rectangle = { id: "table", plan_id: "plan", project_id: "project", name: "Table", shape: "rectangle",
   capacity: 8, x_cm: 500, y_cm: 400, width_cm: 200, height_cm: 100, rotation_deg: 0 };
+
+test("drop coordinates follow current canvas bounds, pan, zoom and CSS scale", () => {
+  const view = { x:73,y:28,scale:.4 },size = { width:800,height:600 },point = { x:500,y:400 };
+  for (const factor of [.5,1,1.5]) for (const top of [100,145]) {
+    const frame = { left:300,top,right:300+size.width*factor,bottom:top+size.height*factor };
+    const client = { x:frame.left+(view.x+point.x*view.scale)*factor,y:frame.top+(view.y+point.y*view.scale)*factor };
+    const result = clientToRoomPoint(client,frame,view,size);
+    assert.ok(Math.abs(result.x-point.x)<1e-8 && Math.abs(result.y-point.y)<1e-8);
+    assert.equal(clientToRoomPoint({ x:frame.left-1,y:frame.top },frame,view,size),null);
+    assert.equal(clientToRoomPoint(client,frame,{ ...view,scale:0 },size),null);
+  }
+});
+
+test("nearby drops choose a table across shapes, rotations and zoom levels without guessing a chair", () => {
+  for (const shape of ["round","rectangle"]) for (const rotation_deg of [0,45,90,270]) for (const scale of [.25,1,3]) {
+    const table = { ...rectangle,shape,rotation_deg,height_cm:shape==="round"?200:100 };
+    const halfWidth = getTablePreviewBounds(table).width/2,angle = rotation_deg*Math.PI/180;
+    const world = distance => ({ x:table.x_cm+distance*Math.cos(angle),y:table.y_cm+distance*Math.sin(angle) });
+    const near = world(halfWidth+10/scale);
+    assert.equal(hitSeatingTarget([table],near),null);
+    assert.deepEqual(hitGuestDropTarget([table],near,scale),{ tableId:table.id,seatNumber:null });
+    assert.equal(hitGuestDropTarget([table],world(halfWidth+50/scale),scale),null);
+  }
+});
+
+test("exact chairs keep their number and visible draw order before generous table targets", () => {
+  const table = { ...rectangle,shape:"round",height_cm:200 };
+  for (const scale of [.25,1,3]) {
+    for (const chair of chairPositions(table)) assert.deepEqual(hitGuestDropTarget([table],getSeatWorldPosition(table,chair.seatNumber),scale),{ tableId:table.id,seatNumber:chair.seatNumber });
+    assert.deepEqual(hitGuestDropTarget([table],{ x:table.x_cm,y:table.y_cm },scale),{ tableId:table.id,seatNumber:null });
+  }
+  const near = { x:table.x_cm+getTablePreviewBounds(table).width/2+10,y:table.y_cm };
+  assert.deepEqual(hitGuestDropTarget([{ ...table,id:"back" },{ ...table,id:"front" }],near,1),{ tableId:"front",seatNumber:null });
+});
+
+test("touch has a larger table margin while distant drops and invalid scales remain misses", () => {
+  const table = { ...rectangle,shape:"round",height_cm:200 };
+  const point = { x:table.x_cm+getTablePreviewBounds(table).width/2+20,y:table.y_cm };
+  assert.equal(hitGuestDropTarget([table],point,1,"mouse"),null);
+  assert.deepEqual(hitGuestDropTarget([table],point,1,"touch"),{ tableId:table.id,seatNumber:null });
+  for (const scale of [0,-1,NaN,Infinity]) assert.equal(hitGuestDropTarget([table],point,scale),null);
+  assert.equal(hitGuestDropTarget([],point,1,"touch"),null);
+});
 
 test("pointer stays at the same physical cm coordinate through zoom and pan", () => {
   const view = { x: 73, y: -28, scale: .4 }, pointer = { x: 400, y: 250 };

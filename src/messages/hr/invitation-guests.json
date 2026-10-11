@@ -104,5 +104,18 @@
     "unlinkHelp": "Originalni RSVP odgovor i osoba ostaju sačuvani. Nakon uklanjanja možeš povezati drugu osobu.",
     "unavailable": "Nedostupna osoba",
     "cancel": "Odustani"
+  },
+  "attendance": {
+    "change": "Promijeni dolazak: {name}",
+    "attending": "Dolazi",
+    "not_attending": "Ne dolazi",
+    "pending": "Bez odgovora",
+    "useResponse": "Koristi odgovor gosta",
+    "manual": "Ru?no potvr?eno",
+    "saved": "Dolazak je a?uriran. Izvorni odgovor gosta ostaje sa?uvan.",
+    "failed": "Promjenu dolaska nije mogu?e spremiti.",
+    "setupRequired": "Ru?na potvrda dolaska dostupna je nakon postave attendance modela.",
+    "unconfirmed": "Ishod spremanja nije potvr?en. Osvje?i prikaz prije nove promjene.",
+    "reload": "Osvje?i prikaz"
   }
 }

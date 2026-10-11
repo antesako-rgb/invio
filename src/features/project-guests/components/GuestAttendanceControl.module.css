@@ -1,0 +1,3 @@
+.control { display:flex; flex-wrap:wrap; align-items:center; gap:.35rem; min-width:0; }
+.trigger { min-height:44px; gap:.35rem; }
+.control p { margin:0; font-size:.8125rem; color:var(--muted-foreground); }

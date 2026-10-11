@@ -41,16 +41,14 @@ export function TooltipProvider({
    Tooltip
 ========================================================================== */
 
-interface TooltipProps {
-  children:
-    ReactNode;
-}
+type TooltipProps = ComponentProps<typeof TooltipPrimitive.Root>;
 
 export function Tooltip({
   children,
+  ...props
 }: TooltipProps) {
   return (
-    <TooltipPrimitive.Root>
+    <TooltipPrimitive.Root {...props}>
       {children}
     </TooltipPrimitive.Root>
   );
@@ -61,23 +59,19 @@ export function Tooltip({
    Tooltip Trigger
 ========================================================================== */
 
-interface TooltipTriggerProps {
-  children:
-    ReactNode;
-
-  asChild?:
-    boolean;
-}
+type TooltipTriggerProps = ComponentProps<typeof TooltipPrimitive.Trigger>;
 
 export function TooltipTrigger({
   children,
   asChild = false,
+  ...props
 }: TooltipTriggerProps) {
   return (
     <TooltipPrimitive.Trigger
       asChild={
         asChild
       }
+      {...props}
     >
       {children}
     </TooltipPrimitive.Trigger>
@@ -89,10 +83,7 @@ export function TooltipTrigger({
    Tooltip Content
 ========================================================================== */
 
-interface TooltipContentProps
-  extends ComponentProps<
-    typeof TooltipPrimitive.Content
-  > {}
+type TooltipContentProps = ComponentProps<typeof TooltipPrimitive.Content>;
 
 export function TooltipContent({
   children,

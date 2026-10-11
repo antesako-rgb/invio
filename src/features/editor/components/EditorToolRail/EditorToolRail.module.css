@@ -1,0 +1,2 @@
+.collapse { display:flex; margin:0 auto .75rem; }
+.navigation[aria-disabled="true"] { opacity:.5; }

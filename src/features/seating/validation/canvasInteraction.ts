@@ -1,6 +1,13 @@
 import type { SeatingTable, SeatTarget } from "../types";
 import { getLongTableSeatCounts, getLongTableChairSpacing } from "./longTableGeometry";
 export type Point = { x: number; y: number };
+/** Use live canvas bounds so scrolling, layout shifts and CSS scaling cannot offset a drop. */
+export function clientToRoomPoint(point: Point, frame: { left: number; top: number; right: number; bottom: number }, view: { x: number; y: number; scale: number }, size: { width: number; height: number }): Point | null {
+  const width = frame.right-frame.left,height = frame.bottom-frame.top;
+  if (width <= 0 || height <= 0 || size.width <= 0 || size.height <= 0 || !Number.isFinite(view.scale) || view.scale <= 0
+    || point.x < frame.left || point.x > frame.right || point.y < frame.top || point.y > frame.bottom) return null;
+  return { x: ((point.x-frame.left)*size.width/width-view.x)/view.scale,y: ((point.y-frame.top)*size.height/height-view.y)/view.scale };
+}
 /** Hit testing uses the same center and rotation as persisted geometry. */
 export function tableContainsPoint(table: SeatingTable, point: Point): boolean {
   const angle = -table.rotation_deg * Math.PI / 180;
@@ -120,6 +127,32 @@ export function hitSeatingTarget(tables: readonly SeatingTable[], point: Point):
     if (seat) return seat;
   }
   return null;
+}
+
+/** A near miss opens the table picker; only an exact chair hit can save a specific seat. */
+export function hitGuestDropTarget(tables: readonly SeatingTable[], point: Point, scale: number, pointerType = "mouse"): SeatTarget | null {
+  const exact = hitSeatingTarget(tables,point);
+  if (exact) return exact;
+  if (!Number.isFinite(scale) || scale <= 0) return null;
+  const tolerance = (pointerType === "touch" ? 24 : 18)/scale;
+  let closest: { tableId: string; distance: number } | null = null;
+  for (let index=tables.length-1;index>=0;index--) {
+    const table = tables[index];
+    const angle = -table.rotation_deg*Math.PI/180;
+    const dx = point.x-table.x_cm,dy = point.y-table.y_cm;
+    const x = dx*Math.cos(angle)-dy*Math.sin(angle),y = dx*Math.sin(angle)+dy*Math.cos(angle);
+    let distance = table.shape === "round" ? Math.max(0,Math.hypot(x,y)-table.width_cm/2)
+      : Math.hypot(Math.max(0,Math.abs(x)-table.width_cm/2),Math.max(0,Math.abs(y)-table.height_cm/2));
+    const halfChair = getChairSize(table)/2;
+    for (const chair of chairPositions(table)) {
+      const chairAngle = -chair.rotation*Math.PI/180;
+      const cx = x-chair.x,cy = y-chair.y;
+      const localX = cx*Math.cos(chairAngle)-cy*Math.sin(chairAngle),localY = cx*Math.sin(chairAngle)+cy*Math.cos(chairAngle);
+      distance = Math.min(distance,Math.hypot(Math.max(0,Math.abs(localX)-halfChair),Math.max(0,Math.abs(localY)-halfChair)));
+    }
+    if (distance <= tolerance && (!closest || distance < closest.distance)) closest = { tableId:table.id,distance };
+  }
+  return closest ? { tableId:closest.tableId,seatNumber:null } : null;
 }
 
 /** Upright name boxes depend on unrotated dimensions and zoom, never a rotated bounding box. */

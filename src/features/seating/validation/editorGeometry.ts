@@ -1,4 +1,5 @@
 import type { SeatingTable } from "../types";
+import { getTablePreviewBounds } from "./canvasInteraction";
 export type Viewport = { x: number; y: number; scale: number };
 export function zoomViewport(view: Viewport, factor: number, pointer: { x: number; y: number }): Viewport {
   const scale = Math.max(.0001, Math.min(20, view.scale * factor));
@@ -26,6 +27,16 @@ export function normalizeRoomTransform(width: number, height: number, transform:
 }
 
 export type CanvasSize = { width: number; height: number };
+/** Focus furniture including rotated chairs; room/table centimetres stay untouched. */
+export function focusTableViewport(table: SeatingTable, size: CanvasSize): Viewport {
+  const bounds = getTablePreviewBounds(table);
+  const angle = table.rotation_deg * Math.PI / 180;
+  const width = Math.abs(Math.cos(angle)) * bounds.width + Math.abs(Math.sin(angle)) * bounds.height;
+  const height = Math.abs(Math.sin(angle)) * bounds.width + Math.abs(Math.cos(angle)) * bounds.height;
+  const padding = Math.min(56, size.width / 4, size.height / 4);
+  const scale = Math.max(.0001, Math.min(20, (size.width - padding * 2) / width, (size.height - padding * 2) / height));
+  return { scale, x: size.width / 2 - table.x_cm * scale, y: size.height / 2 - table.y_cm * scale };
+}
 export function fitRoomViewport(roomWidth: number, roomHeight: number, size: CanvasSize): Viewport {
   const padding = Math.min(size.width < 768 ? 24 : 44, size.width/4, size.height/4);
   const scale = Math.max(.0001, Math.min((size.width-padding*2)/roomWidth, (size.height-padding*2)/roomHeight));

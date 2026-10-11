@@ -1,0 +1,17 @@
+.page { max-width: 1120px; margin: 0 auto; padding: 2rem 1.25rem; display: grid; gap: 1.25rem; }
+.header { display: grid; gap: .5rem; }
+.eyebrow { color: var(--primary); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.title { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 600; }
+.help { max-width: 65ch; color: var(--muted-foreground); font-size: .9rem; line-height: 1.6; }
+.controls { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; }
+.canvas { height: 560px; overflow: hidden; border: 1px solid var(--border); border-radius: 1.25rem; background: var(--muted); touch-action: none; }
+.caption { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; color: var(--muted-foreground); font-size: .8rem; }
+.studies { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+.study { border: 1px solid var(--border); border-radius: 1rem; padding: .75rem; background: var(--card); display: grid; justify-items: center; gap: .5rem; }
+.study p { font-size: .8rem; color: var(--muted-foreground); }
+.study h2 { font-size: .9rem; font-weight: 600; }
+@media (max-width: 600px) {
+  .page { padding: 1.25rem .75rem; }
+  .canvas { height: 380px; }
+  .studies { grid-template-columns: 1fr; }
+}

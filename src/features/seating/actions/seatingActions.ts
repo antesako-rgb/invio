@@ -8,13 +8,17 @@ import { seatingGeometryFits } from "../validation/seatingGeometry";
 import { updateTableSizes } from "../services/updateTableSizes";
 import { getSeatingAssignmentErrorCode, getSeatingErrorCode } from "../services/seatingError";
 import type { SeatingTable } from "../types";
+import { getDefaultRsvpInvitation } from "../repositories/getDefaultRsvpInvitation";
 function success<T>(data: T) { revalidatePath("/[locale]/dashboard/projects/[projectId]/seating", "page"); return { success: true as const, data }; }
 function failure(error: unknown) {
     return { success: false as const, code: getSeatingErrorCode(error) };
 }
 export async function manageSeatingPlanAction(input: unknown) { if (process.env.PROJECT_GUESTS_ENABLED !== "true")
     return failure(null); const p = schema.planSchema.safeParse(input); if (!p.success)
-    return failure(null); const db = await createServerClient<SeatingDatabase>(); const { data, error } = await db.rpc("manage_seating_plan", nullableRpcArgs<"manage_seating_plan">(p.data)); return error ? failure(error) : success(data); }
+    return failure(null); const db = await createServerClient<SeatingDatabase>();
+    if (p.data.p_operation === "create" && p.data.p_rsvp_invitation_id === null)
+        p.data.p_rsvp_invitation_id = await getDefaultRsvpInvitation(db, p.data.p_project_id);
+    const { data, error } = await db.rpc("manage_seating_plan", nullableRpcArgs<"manage_seating_plan">(p.data)); return error ? failure(error) : success(data); }
 export async function manageSeatingParticipantAction(input: unknown) { if (process.env.PROJECT_GUESTS_ENABLED !== "true")
     return failure(null); const p = schema.participantSchema.safeParse(input); if (!p.success)
     return failure(null); const db = await createServerClient<SeatingDatabase>(); const { data, error } = await db.rpc("manage_seating_participant", nullableRpcArgs<"manage_seating_participant">(p.data)); return error ? failure(error) : success(data); }
@@ -78,4 +82,37 @@ export async function standardizeSeatingTablesAction(input: unknown) {
     });
     revalidatePath("/[locale]/dashboard/projects/[projectId]/seating","page");
     return result;
+}
+
+export async function assignSeatingGuestsAction(input: unknown) {
+    if (process.env.PROJECT_GUESTS_ENABLED !== "true") return failure(null);
+    const parsed = schema.batchSeatingSchema.safeParse(input);
+    if (!parsed.success) return failure(null);
+    const db = await createServerClient<SeatingDatabase>();
+    try {
+        const { data, error, status } = await db.rpc(
+            "assign_seating_guests",
+            nullableRpcArgs<"assign_seating_guests">(parsed.data),
+        );
+        if (error?.code === "PGRST202" || error?.code === "42883")
+            return { success: false as const, code: "SEATING_UPGRADE_REQUIRED" as const };
+        return error ? { success: false as const, code: getSeatingAssignmentErrorCode(error, status) } : success(data);
+    } catch {
+        return { success: false as const, code: "SEATING_UNCONFIRMED" as const };
+    }
+}
+
+export async function assignSeatingGuestsToSeatsAction(input: unknown) {
+    if (process.env.PROJECT_GUESTS_ENABLED !== "true") return failure(null);
+    const parsed = schema.manualBatchSchema.safeParse(input);
+    if (!parsed.success) return failure(null);
+    const db = await createServerClient<SeatingDatabase>();
+    try {
+        const { data, error, status } = await db.rpc("assign_seating_guests_to_seats", parsed.data);
+        if (error?.code === "PGRST202" || error?.code === "42883")
+            return { success: false as const, code: "SEATING_MANUAL_UPGRADE_REQUIRED" as const };
+        return error ? { success: false as const, code: getSeatingAssignmentErrorCode(error, status) } : success(data);
+    } catch {
+        return { success: false as const, code: "SEATING_UNCONFIRMED" as const };
+    }
 }

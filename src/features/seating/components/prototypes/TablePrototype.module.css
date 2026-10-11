@@ -1,0 +1,16 @@
+.page { width: 100%; max-width: 1440px; margin: 0 auto; padding: 2rem 1.25rem; display: grid; gap: 1.5rem; }
+.header { display: grid; gap: .5rem; }
+.eyebrow { font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 600; color: var(--primary); }
+.title { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 600; }
+.help { color: var(--muted-foreground); font-size: .9rem; line-height: 1.6; max-width: 78ch; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.section { display: grid; gap: .75rem; }
+.section h2 { font-size: 1.1rem; font-weight: 600; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.card { min-width: 0; overflow: hidden; border: 1px solid var(--border); border-radius: 1.25rem; background: var(--card); }
+.cardHeader { padding: 1rem 1rem 0; display: flex; justify-content: space-between; align-items: center; gap: .5rem; font-size: .9rem; font-weight: 600; }
+.dimensions { font-size: .75rem; font-weight: 400; color: var(--muted-foreground); }
+.canvas { height: 360px; }
+.room { height: 540px; overflow: hidden; border: 1px solid var(--border); border-radius: 1.25rem; background: var(--muted); }
+.note { color: var(--muted-foreground); font-size: .8rem; line-height: 1.5; }
+@media (max-width: 800px) { .grid { grid-template-columns: 1fr; } .canvas { height: 380px; } .page { padding: 1.25rem .75rem; } .room { height: 380px; } }

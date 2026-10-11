@@ -1,36 +1,49 @@
 .dialog { top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; width: min(38rem, calc(100% - 2rem)); max-width: 38rem; max-height: calc(100dvh - 2rem); overflow: hidden; }
 .header { flex-shrink: 0; margin-bottom: 1rem; }
+.fixedGuest { overflow-wrap:anywhere; font-weight:600; }
+.panel { display:flex; flex-direction:column; height:100%; min-height:0; }
 .form { display: flex; flex-direction: column; flex: 1; min-height: 0; min-width: 0; overflow: hidden; }
-.body { display: flex; flex-direction: column; gap: 1rem; min-height: 0; min-width: 0; overflow-y: auto; overscroll-behavior: contain; padding: .1rem .15rem .75rem; }
+.body { flex: 1; display: flex; flex-direction: column; gap: 1rem; min-height: 0; min-width: 0; overflow-y: auto; overscroll-behavior: contain; padding: .1rem .15rem .75rem; }
 .choices { display: flex; flex-direction: column; gap: .65rem; border: 0; padding: 0; margin: 0; min-width: 0; }
 .choices > legend { padding: 0; margin-bottom: .5rem; font-size: .875rem; font-weight: 600; }
-.tableOnly { align-self: flex-start; min-height: 44px; max-width: 100%; white-space: normal; }
-.seatGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr)); gap: .5rem; }
-.seat { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .25rem; width: 100%; height: auto; min-height: 5.5rem; min-width: 0; padding: .65rem .4rem; border-radius: .875rem; white-space: normal; }
-.seat[data-occupied="true"] { border-color: var(--primary); }
-.seat:disabled { opacity: .75; }
-.seatNumber { display: flex; align-items: center; justify-content: center; gap: .35rem; font-size: 1rem; font-weight: 600; font-variant-numeric: tabular-nums; }
-.side { font-size: .75rem; font-weight: 400; }
-.occupant { width: 100%; overflow-wrap: anywhere; font-size: .75rem; line-height: 1.3; }
 .notice { display: flex; align-items: flex-start; flex-wrap: wrap; gap: .5rem; padding: .75rem; border: 1px solid var(--border); border-radius: .75rem; background: var(--muted); font-size: .875rem; }
-.summary { min-width: 0; }
-.summary > [data-slot="badge"] { max-width: 100%; height: auto; min-height: 1.5rem; white-space: normal; overflow-wrap: anywhere; text-align: left; line-height: 1.5; }
-.releaseActions { display: flex; flex-wrap: wrap; gap: .5rem; }
-.releaseActions > button, .footer > button { min-height: 44px; height: auto; white-space: normal; }
-.footer { flex-shrink: 0; padding-top: .75rem; margin-top: 0; border-top: 1px solid var(--border); background: var(--dialog); }
-@media (max-width: 640px) {
+.footerSummary { display:flex; flex-direction:column; gap:.15rem; flex-basis:100%; grid-column:1/-1; min-width:0; font-size:.8125rem; line-height:1.4; overflow-wrap:anywhere; }
+.footerSummary > span { color:var(--muted-foreground); }
+.footer { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; flex-shrink: 0; padding-top: .75rem; margin-top: 0; border-top: 1px solid var(--border); background: var(--dialog); }
+.footer > button { min-height:44px; height:auto; white-space:normal; }
+.removeAssignment { align-self:flex-start; min-height:44px; height:auto; white-space:normal; }
+.singleForm .body { gap:1.25rem; }
+.destination { display:flex; flex-direction:column; flex-shrink:0; gap:.75rem; min-width:0; padding:.875rem; border:1px solid color-mix(in srgb,var(--primary) 18%,var(--border)); border-radius:1rem; background:color-mix(in srgb,var(--primary) 4%,var(--dialog)); }
+.destination [data-slot="field-header"] { gap:.5rem; }
+.destination [data-slot="label"] { font-size:.75rem; color:var(--muted-foreground); }
+.destination [data-slot="select"] { min-width:0; min-height:44px; max-width:100%; text-overflow:ellipsis; }
+.chairLabel { display:inline-flex; align-items:center; gap:.4rem; }
+.chairField [data-slot="select"] { border-color:color-mix(in srgb,var(--primary) 35%,var(--border)); font-weight:600; }
+.chairField [data-slot="field-description"] { font-size:.75rem; line-height:1.4; }
+.guestChoices { flex-shrink:0; }
+.guestChoices > legend { margin-bottom:.75rem; }
+.guestPicker [data-slot="input"] { min-height:44px; }
+.guestPicker [data-slot="seating-guest-options"] { max-height:20rem; }
+.guestPicker [data-selected="true"] { background:color-mix(in srgb,var(--primary) 7%,var(--dialog)); box-shadow:inset 3px 0 var(--primary); }
+.guestPicker [data-slot="seating-guest-empty"] { margin:0; padding:1rem .875rem; border:1px dashed var(--border); border-radius:.875rem; background:var(--muted); text-align:center; line-height:1.6; }
+.singleForm .fixedGuest { display:flex; align-items:center; gap:.75rem; padding:.75rem; border:1px solid var(--border); border-radius:.875rem; }
+.singleForm .fixedGuest > span:last-child { min-width:0; }
+.guestIcon { display:flex; align-items:center; justify-content:center; flex-shrink:0; width:2.25rem; height:2.25rem; border-radius:.75rem; background:color-mix(in srgb,var(--primary) 9%,var(--dialog)); color:var(--primary); }
+.addGuest { width:100%; min-height:44px; height:auto; gap:.5rem; white-space:normal; }
+.singleForm .footer { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); gap:.65rem; padding-top:.875rem; }
+.singleForm .footer > button { width:100%; min-width:0; }
+@media (max-width: 767px) {
   .dialog { inset: auto 0 0; transform: none; width: 100%; max-width: none; max-height: 94dvh; padding: 1rem max(1rem, env(safe-area-inset-right, 0px)) max(.75rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px)); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
   .header { margin-bottom: .75rem; }
   .dialog > [data-slot="dialog-close-button"] { width: 44px; height: 44px; }
   .body { gap: .75rem; }
+  .singleForm .body { gap:1rem; }
   .body [data-slot="field"], .body [data-slot="select-root"] { min-width: 0; }
   .body [data-slot="select"] { min-height: 44px; min-width: 0; max-width: 100%; font-size: 1rem; text-overflow: ellipsis; }
-  .releaseActions > button { flex: 1 1 8rem; }
   .footer { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
   .footer > button { width: 100%; min-width: 0; }
-  .seatGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-@media (max-height: 480px) and (max-width: 640px) {
+@media (max-height: 480px) and (max-width: 767px) {
   .dialog { max-height: 100dvh; }
   .header { margin-bottom: .5rem; }
 }

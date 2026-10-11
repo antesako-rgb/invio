@@ -25,13 +25,15 @@ import InvitationGuestForm from "./InvitationGuestForm";
 import InvitationGuestGroupsDialog from "./InvitationGuestGroupsDialog";
 import type { ProjectGuest } from "@/features/project-guests/types/database";
 import styles from "./InvitationGuests.module.css";
+import GuestAttendanceControl from "@/features/project-guests/components/GuestAttendanceControl";
+import type { AttendanceOverride } from "@/features/project-guests/types/attendance";
 
 type Removal = { kind: "guest"; item: InvitationGuest } | { kind: "group"; item: InvitationGuestGroup };
 const fullName = (guest: InvitationGuest) => [guest.first_name, guest.last_name].filter(Boolean).join(" ");
 const searchableName = (value: string) => value.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase().replace(/đ/g, "d");
 
-export default function InvitationGuests({ invitationId, guests, groups, statuses = {}, conflicts = {}, sharedNames=false, archivedGuests=[], projectGuests=[] }: {
-  projectGuests?: ProjectGuest[]; invitationId: string; guests: InvitationGuest[]; groups: InvitationGuestGroup[]; statuses?: Record<string, RsvpStatus>;conflicts?:Record<string,boolean>;sharedNames?:boolean;archivedGuests?:string[];
+export default function InvitationGuests({ invitationId, guests, groups, statuses = {}, conflicts = {}, sharedNames=false, archivedGuests=[], projectGuests=[],attendanceOverrides=[],attendanceSetupRequired=false }: {
+  attendanceOverrides?:AttendanceOverride[];attendanceSetupRequired?:boolean;projectGuests?: ProjectGuest[]; invitationId: string; guests: InvitationGuest[]; groups: InvitationGuestGroup[]; statuses?: Record<string, RsvpStatus>;conflicts?:Record<string,boolean>;sharedNames?:boolean;archivedGuests?:string[];
 }) {
   const t = useTranslations("InvitationGuests");
   const actionError = useActionError();
@@ -66,7 +68,7 @@ export default function InvitationGuests({ invitationId, guests, groups, statuse
   const add = <Button disabled={busy} onClick={() => setEditor("new")}><Plus aria-hidden="true" />{t(sharedNames ? "identity.new" : "addGuest")}</Button>;
   function statusControl(guest: InvitationGuest) {
     const status = statuses[guest.id];
-    return <span>{archivedGuests.includes(guest.id)&&<Badge variant="muted">{t("identity.archived")}</Badge>}{conflicts[guest.id]&&<Badge variant="warning">{t("identity.conflict")}</Badge>}<Badge dot variant={status === "attending" ? "success" : status === "not_attending" ? "muted" : "warning"}>{t(`status.${status ?? "pending"}`)}</Badge></span>;
+    return <div>{archivedGuests.includes(guest.id)&&<Badge variant="muted">{t("identity.archived")}</Badge>}{conflicts[guest.id]&&<Badge variant="warning">{t("identity.conflict")}</Badge>}{sharedNames?<GuestAttendanceControl invitationId={invitationId} personId={guest.project_guest_id} status={status} name={fullName(guest)} manualStatus={attendanceOverrides.find(o=>o.project_guest_id===guest.project_guest_id)?.status} disabled={busy||attendanceSetupRequired||archivedGuests.includes(guest.id)}/>:<Badge dot variant={status === "attending" ? "success" : status === "not_attending" ? "muted" : "warning"}>{t(`status.${status ?? "pending"}`)}</Badge>}</div>;
   }
   function rowActions(guest: InvitationGuest) {
     return <DropdownMenu>
