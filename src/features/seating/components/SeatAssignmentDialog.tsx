@@ -46,7 +46,7 @@ export default function SeatAssignmentDialog({ request, current, tables, saving,
   }
   const sideKeys = { round: "seatSideRound", top: "seatSideTop", bottom: "seatSideBottom", left: "seatSideLeft", right: "seatSideRight" } as const;
   return <Dialog open onOpenChange={value => { if (!value && !saving) onClose(); }}>
-    <DialogContent className={styles.dialog} closeLabel={t("cancel")} aria-busy={saving}>
+    <DialogContent positioning="custom" className={styles.dialog} closeLabel={t("cancel")} aria-busy={saving}>
       <DialogHeader className={styles.header}><DialogTitle>{t("seatAssignmentTitle")}</DialogTitle><DialogDescription>{t("seatAssignmentHelp")}</DialogDescription></DialogHeader>
       <form onSubmit={submit} className={styles.form}>
         <div className={styles.body}>

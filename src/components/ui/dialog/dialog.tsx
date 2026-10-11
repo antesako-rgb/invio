@@ -127,10 +127,13 @@ function DialogContent({
   children,
   keepMounted,
   closeLabel = "Close",
+  positioning = "center",
   ...props
 }: DialogPrimitive.Popup.Props & {
   keepMounted?: boolean;
   closeLabel?: string;
+  /** Custom layouts supply offsets without the default translate utilities. */
+  positioning?: "center" | "custom";
 }) {
   return (
     <DialogPortal keepMounted={keepMounted}>
@@ -139,8 +142,8 @@ function DialogContent({
       <DialogPrimitive.Popup
         data-slot="dialog-content"
         className={cn(
-          "fixed left-1/2 top-1/2 z-[51]",
-          "-translate-x-1/2 -translate-y-1/2",
+          "fixed z-[51]",
+          positioning === "center" && "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
 
           "w-[calc(100vw-2rem)]",
           "max-w-2xl",

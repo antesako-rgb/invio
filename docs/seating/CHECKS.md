@@ -245,3 +245,12 @@ Oba assignment toka potvrđuju točno sljedeću sigurnu reviziju i učitavaju st
 Browser skill je učitan; runtime bootstrap i provjera dostupnih browsera vratili su „No browser is available” i prazan popis. Stvarni desktop/mobilni prikaz, touch geste i live RPC upisi kroz novo sučelje zato nisu izvršeni od strane agenta. Trajni testovi i build ne zamjenjuju te ručne provjere niti ranije nenapravljeni native test dvije istodobne DB veze.
 
 Ova frontend dorada nije mijenjala bazu, SQL install/definitions, dependencies, environment ili deployment. Korisnikova regeneracija tipova sačuvana je; agent nije ručno dodavao schema polja. Nisu stvarani privremeni PostgreSQL runtimeovi/clusteri ni jednokratni instalacijski harnessi. Testovi drugih featurea i postojeći .tmp/cleanup-control sačuvani su.
+
+
+## Mobilni dijalog konkretne stolice — 2026-10-11
+
+Prijavljen je dijalog pomaknut izvan lijevog ruba ekrana. Zajednički DialogContent dodavao je Tailwind individualne translate utilityje, a build je lokalni transform/translate reset spajao u transform, ostavljajući zajednički pomak aktivnim. Dodana je opt-in positioning=custom opcija: samo seat dijalog izostavlja zajedničke centrirajuće klase i koristi vlastiti CSS za desktop/mobitel. Svi drugi dijalozi zadržavaju zadano centriranje.
+
+Do 640 px seat dijalog je donji sheet preko cijele širine, ograničen dinamičkom visinom ekrana. Tijelo scrolla, podnožje ostaje dostupno, safe-area padding čuva kontrole. Stolice su zaobljene pravokutne kartice u tri stupca; lokalne select/close/action kontrole imaju najmanje 44 px, nazivi se prelamaju bez širenja prikaza. Nema promjene dodjela, RPC-a ili baze.
+
+TypeScript --noEmit, ciljani ESLint za shared dialog i SeatAssignmentDialog, svih 66 seating testova i production build PASS. Generirani production CSS potvrđuje mobile inset:auto 0 0 i transform:none te pravokutne kartice/44px select; zajedničke translate klase izostaju kod custom pozicioniranja. Browser bootstrap ponovno je vratio No browser is available i prazan popis; stvarni mobilni prikaz nije izvršen od strane agenta. Ručne provjere 320/390/640 px, landscape/orijentacije, 100 mjesta i dugih imena dodane su u EDITOR.md.
