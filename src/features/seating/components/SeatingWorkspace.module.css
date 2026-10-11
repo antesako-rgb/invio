@@ -58,7 +58,14 @@ fieldset.grid { border: 0; padding: 0; margin: 0; min-width: 0; }
 .canvas[data-hand="true"] { cursor:grab; }
 .canvas[data-hand="true"]:active { cursor:grabbing; }
 .canvasWorkspace { position:relative; }
-.canvasHint { position:absolute; bottom:.65rem; left:.65rem; max-width:calc(100% - 1.3rem); padding:.4rem .65rem; border:1px solid var(--border); border-radius:.6rem; background:var(--card); color:var(--muted-foreground); font-size:.7rem; pointer-events:none; }
+.canvasHint { position:absolute; bottom:.65rem; left:.65rem; max-width:calc(100% - 14rem); padding:.4rem .65rem; border:1px solid var(--border); border-radius:.6rem; background:var(--card); color:var(--muted-foreground); font-size:.7rem; pointer-events:none; }
+.seatLegend { position:absolute; bottom:.65rem; right:.65rem; display:flex; flex-wrap:wrap; align-items:center; gap:.75rem; max-width:calc(100% - 1.3rem); padding:.4rem .65rem; border:1px solid var(--border); border-radius:.6rem; background:var(--card); font-size:.75rem; pointer-events:none; }
+.seatLegend > span { display:flex; align-items:center; gap:.35rem; }
+.occupiedSeat, .freeSeat { display:grid; place-items:center; width:.85rem; height:.85rem; border:1px solid var(--foreground); border-radius:.25rem; }
+.occupiedSeat { border-color:var(--primary); background:var(--primary); color:var(--primary-foreground); }
+.occupiedSeat > svg { width:.7rem; height:.7rem; }
+.freeSeat { background:var(--card); }
+.seatNamesHint { color:var(--muted-foreground); font-size:.7rem; }
 @media (max-width:767px) {
   .canvasHint { display:none; }
   .guestSearch { position:sticky; top:0; background:var(--card); z-index:1; padding-block:.25rem; }
@@ -70,4 +77,3 @@ fieldset.grid { border: 0; padding: 0; margin: 0; min-width: 0; }
 /* Seating keeps its own scrolling while sharing the other editors' left layout. */
 .editorBody > [data-editor-workspace] > aside,
 .editorBody > [data-editor-workspace] > div:last-child { overflow:hidden; }
-

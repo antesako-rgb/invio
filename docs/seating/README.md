@@ -1,10 +1,10 @@
 # Projektni gosti i seating — paket za pregled
 
-2026-10-08. Model prihvaćen; korisnik je instalirao SQL paket i regenerirao DB tipove. Read-only provjere prošle su; lokalni flag prethodno je uključen uz korisnikovo odobrenje; hosted environment ovom doradom nije mijenjan. 2D editor V1 je implementiran; ispis i 3D ostaju za kasnije.
+2026-10-11. Model prihvaćen; korisnik je instalirao osnovni SQL paket i nadogradnju 006 te regenerirao DB tipove s seat_number/novim RPC-em. Read-only provjere baze prošle su. 2D editor sada podržava trajnu dodjelu konkretnoj stolici i ime iz project_guests uz mjesto. Lokalni flag prethodno je uključen uz korisnikovo odobrenje; environment, paketi i baza ovom frontend doradom nisu mijenjani. Ispis i 3D ostaju za kasnije.
 
 ## Gdje što naći
 
-- [install/README.md](install/README.md): promjene po koracima i jedinstvena transakcija.
+- [install/README.md](install/README.md): osnovna instalacija 001–004 i zasebna inkrementalna 006 nadogradnja za konkretne stolice.
 - [definitions/README.md](definitions/README.md): jedna mapa po tablici kao SQL Editor; table, constraints, indexes, rls, grants, trigger, verify i funkcije. Definicije spremati za pregled, ne ponovno izvršavati.
 - src/features/project-guests: regenerirani DB tipovi, member client, eksplicitno povezivanje, project person upisi i RSVP resolver.
 - src/features/seating: Konva editor V1, React paneli, postojeće server actions i RLS repositories.
@@ -16,7 +16,7 @@ project_guests je stabilni identitet unutar projekta. Ista imena dozvoljena su; 
 
 Ime i prezime uređuju se samo u project_guests. Za kompatibilnost postojeća invitation_guests name polja ostaju izvedene DB kopije: before trigger ih uzima iz osobe, after project-person rename trigger osvježava sve invitation kopije. Postojeći update_invitation_guest RPC prvo ažurira osobu pa group/notes. Browser ne može pisati kopije izravno. To je svjesna izmjena ranijeg nacrta koji je predlagao kasnije dropanje name stupaca: kompatibilni javni output i recipient RPC-i ostaju bez promjene. UI upozorava da rename vrijedi u svim pozivnicama.
 
-seating_plans pripada projektu i može odabrati nula/jednu rsvp_invitation_id. seating_plan_guests izričito odabire sudionike; novi projektni gost nije automatski sudionik. seating_assignments preko composite FK-a zahtijeva postojeći plan membership i stol iz istog projekta/plana. Jedan gost ima najviše jedan stol po planu. V1 round/rectangle stolovi, centimetri, rotacija i kapacitet; bez seats/3D/novih domaina.
+seating_plans pripada projektu i može odabrati nula/jednu rsvp_invitation_id. seating_plan_guests izričito odabire sudionike; novi projektni gost nije automatski sudionik. seating_assignments preko composite FK-a zahtijeva postojeći plan membership i stol iz istog projekta/plana. Jedan gost ima najviše jedan stol i jednu konkretnu stolicu po planu. Nullable seat_number razlikuje osobu za stolom bez mjesta od osobe na određenoj stolici. UNIQUE(plan_id,table_id,seat_number) sprječava dvije osobe na istoj stolici; NULL redci ostaju dopušteni. [006 paket](install/README.md#006--konkretne-stolice-na-već-instaliranom-modelu) instalirao je korisnik, agent je read-only potvrdio SQL stanje, a frontend koristi regenerirane tipove i instalirani RPC. Definitions opisuju završni model. Round/rectangle stolovi, centimetri, rotacija i kapacitet ostaju; nema 3D ili novih domena.
 
 ## RSVP i generic prijave
 
@@ -28,7 +28,7 @@ Resolver koristi samo odabranu pozivnicu: personalized status ima prednost, ali 
 
 ## Brisanje i arhiviranje
 
-- Archive person zadržava veze i mjesta; nove invitation/generic/plan veze i nove dodjele odbijene. Restore dopušten. Postojeći RSVP može se predati; archive nije zatvaranje pozivnice. UI picker skriva arhivirane osobe; budući editor treba označiti arhivirane sudionike.
+- Archive person zadržava veze i mjesta; nove invitation/generic/plan veze i nove dodjele odbijene. Restore dopušten. Postojeći RSVP može se predati; archive nije zatvaranje pozivnice. Picker za uključivanje skriva arhivirane osobe. Već uključeni arhivirani sudionik ostaje označen u editoru i smije osloboditi svoju stolicu uz isti stol, unassign ili napustiti plan; ne smije dobiti ili premjestiti dodjelu.
 - Owner-only hard delete osobe moguće je samo bez invitation/generic/plan veza; FK NO ACTION sprječava tiho brisanje povijesti.
 - Delete invitation guest čuva person i seating; personalized odgovor cascadea kao i ranije. Generic link se uklanja, originalna generic prijava ostaje nepovezana. Postojeći empty-recipient deletion/primary replacement sačuvani su iz live funkcije.
 - Delete invitation briše invitation podatke, ali samo rsvp_invitation_id plana postaje NULL; project_id/person/plan membership/dodjele ostaju. Plan trigger povećava revision pri gubitku izvora.
@@ -65,7 +65,7 @@ Generički RSVP zadržava originalni name snapshot i odgovore. Povezivanje posto
 
 database.types.ts je jedini schema izvor; privremeni seatingDatabase.contract.ts uklonjen je. Uska nullable RPC prilagodba čuva SQL NULL (npr. unassign) jer generirani scalar argumenti ne prikazuju tu nullability; actions prvo provjeravaju runtime sheme. Ta ranija frontend integracija nije mijenjala bazu. Naknadno je korisnik instalirao Konvu, lokalni flag je uključen uz njegovo odobrenje i implementiran je seating editor; aktualno stanje je u EDITOR.md.
 
-Provjere ove dorade: TypeScript i ciljani ESLint PASS; production build PASS. Puni lint ima 6 nepovezanih grešaka i 4 upozorenja, navedene u CHECKS.md. Browser tok iza flaga još nije provjeren.
+Ranija provjera guest/RSVP integracije: TypeScript, ciljani ESLint i production build PASS; tadašnji puni lint prijavio je 6 nepovezanih grešaka i 4 upozorenja, zapisane u CHECKS.md. Korisnik je postojeće guest/recipient/RSVP tokove potom ručno provjerio. Aktualne rezultate chair frontend provjera i granice dostupnog browsera vidi u [CHECKS.md](CHECKS.md); novi live frontend tok agent nije ručno izvršavao.
 
 Izbor postojeće osobe prikazuje samo ime za jedinstvena imena. Kod istih imena dodaje nazive povezanih pozivnica, a kratki ID samo ako oznake i dalje nisu jedinstvene. Već povezane osobe isključuju se prema project_guest_id i postojećem invitation membershipu; imena se nikada ne koriste za povezivanje ili isključivanje.
 
@@ -73,6 +73,14 @@ Prva funkcionalna verzija 2D editora i ručni testni koraci: [EDITOR.md](EDITOR.
 
 UX: /seating je pregled kartica i Novi raspored modal, /seating/[planId] je zaseban editor. Zajednički features/editor shell/header/status/sidebar/mobile panel ponovno su iskorišteni; canvas zauzima glavni ekran, a postavke su u modalu. Detalji i ručni koraci: EDITOR.md.
 
-Canvas dorada: izravni resize/rotacija/pomicanje stolova i prostorije, Ruka/Space i pinch, grupirani gosti s povlačenjem ili tap-odabirom stola, te stolice prema spremljenom kapacitetu. Dodaj gosta uključuje postojeću ili novu osobu u plan. Nova osoba + uključivanje koriste dva RPC-a uz eksplicitni prikaz djelomičnog/nejasnog ishoda; bez novog SQL-a ili paketa. Detalji, granice i mobilne ručne provjere: [EDITOR.md](EDITOR.md).
+Canvas dorada: pomicanje/rotacija stolova standardne geometrije i resize prostorije, Ruka/Space i pinch, grupirani gosti s povlačenjem ili tap-odabirom stola, te stolice prema spremljenom kapacitetu. Dodaj gosta uključuje postojeću ili novu osobu u plan. Nova osoba + uključivanje koriste dva RPC-a uz eksplicitni prikaz djelomičnog/nejasnog ishoda; bez novog SQL-a ili paketa. Detalji, granice i mobilne ručne provjere: [EDITOR.md](EDITOR.md).
 
 Panel seating editora sada je lijevo, kao na pozivnicama i digitalnom albumu. Prostorija ima resize ručke na svih osam položaja; lijevi/gornji rub mijenjaju lokalni prikaz početka prostorije uz nepromijenjene cm koordinate stolova i isti dimensions RPC.
+
+Stolovi više nemaju slobodni resize. Novi okrugli stolovi koriste isti promjer; novi pravokutni stolovi počinju kao kvadrat s 8 mjesta (po dvije stolice u sredini svake strane), a od 9. mjesta produljuju samo širinu uz istu dubinu; broj mjesta se uređuje zasebno. U postavkama plana moguće je izričito ujednačiti postojeće stolove istog oblika, uz geometrijsku provjeru, potvrdu i postojeće RPC-e/revizije. Batch nije jedna transakcija; djelomičan/nejasan ishod zaustavlja daljnje upise do reload-a.
+
+Dodavanje stola sada otvara dijalog s nazivom, oblikom, brojem mjesta (brzi izbor 6/8/10/12, unos 1–100) i živim pregledom. Stol se zapisuje tek nakon potvrde kroz postojeći RPC/reviziju; pregled i canvas dijele prikaz i geometriju. Nevaljan/prevelik stol se ne sprema, a greška/konflikt dostupni su u dijalogu. Detalji i ručna provjera: [EDITOR.md](EDITOR.md).
+
+Odabrani stol može se duplicirati iz svojstava ili toolbar ikone kroz postojeći create RPC/reviziju. Kopija čuva dimenzije, kapacitet i rotaciju, dobiva novi naziv/ID i počinje bez gostiju. Traži mjesto blizu izvora bez automatskog fit-a. Ispunjene stolice i legenda sada prikazuju stvarne konkretne dodjele, a ukupni N / kapacitet uključuje i osobe za stolom bez stolice. Nova kopija, preview i template ne kopiraju dodjele. Detalji i ručni koraci: [EDITOR.md](EDITOR.md).
+
+Dodjela stolici dostupna je klikom/tapom stolice ili opcijom „Odaberi stolicu” uz gosta, u zajedničkom dijalogu s izričitom potvrdom, brojevima i punim imenima. Drag gosta na stolicu ili aktivni gost + tap stolice izravno spremaju mjesto; tijelo stola/izbornik zadržavaju table-only tok. NULL osobe su u podgrupi „Bez stolice”, odvojeno od neraspoređenih. Stabilni brojevi čuvaju identitet pri 8 → 9 → 17, rotaciji i ujednačavanju. Imena se crtaju uspravno pri dovoljnom zoomu i dolaze iz project_guests. Smanjenje kapaciteta poštuje ukupnu zauzetost i najviši zauzeti broj. Zauzeto mjesto odbija premještanje; swap i automatsko spajanje ne postoje. Konflikt/nejasan ishod blokira upise do reload-a. Model, kompatibilnost i povijest pregleda: [SEAT_ASSIGNMENTS_REVIEW.md](SEAT_ASSIGNMENTS_REVIEW.md); detaljni desktop/mobilni/HR-EN testni koraci i granice provjere: [EDITOR.md](EDITOR.md). Live frontend RPC tokovi nisu izvršeni od strane agenta.

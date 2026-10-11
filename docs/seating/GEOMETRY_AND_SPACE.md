@@ -4,7 +4,7 @@
 
 x_cm/y_cm su centar objekta u centimetrima, ishodište prostorije gore lijevo. X raste desno, Y dolje. Width/height su dimenzije prije rotacije. Rotation_deg je u smjeru kazaljke na satu oko centra. SQL i TS koriste isti AABB rotiranog pravokutnika: halfX=(|cos|*width+|sin|*height)/2, halfY=(|sin|*width+|cos|*height)/2. Za round obje poluosi su radius i ne ovise o rotaciji. Tolerancija za trig rounding je 0.0000001 cm. Cijeli objekt mora stati u prostoriju, ne samo centar. Shrink prostorije provjerava svaki rotirani stol istim pravilom.
 
-Paket nije instaliran pa nema migracije postojećih koordinata. Primjeri predložaka ažurirani su na centre. Renderer mora koristiti center origin/pivot; ne tumačiti x/y kao kut.
+Primjeri predložaka koriste centre. Renderer koristi center origin/pivot; x/y ne predstavlja kut. U editoru stolovi imaju standardnu geometriju, pomicanje i rotaciju. Okrugli čuvaju promjer, pravokutni počinju kvadratom s 8 mjesta i od 9. mjesta produljuju lokalnu širinu prema kapacitetu uz nepromijenjenu dubinu. Stolice su centrirane na svakoj stranici s jednakim razmacima između njih i od krajeva; najviše dvije su na svakom kratkom kraju. Uspravni natpis računa veličinu iz kraće stranice, bez promjene fonta pri rotaciji. Slobodni resize stolova uklonjen je; postojeće različite dimenzije mogu se izričito ujednačiti uz istu provjeru rotiranih granica. Width/height ostaju u modelu za predloške, standardne veličine i tu provjeru.
 
 ## Predlošci
 

@@ -6,3 +6,4 @@ revoke all on function public.manage_seating_table(uuid,bigint,uuid,text,text,te
 grant execute on function public.manage_seating_table(uuid,bigint,uuid,text,text,text,integer,integer,integer,integer,integer,integer) to authenticated;
 
 revoke all on function private.seating_geometry_fits(text,integer,integer,integer,integer,integer,integer,integer) from public,anon,authenticated,service_role;
+revoke all on function private.seating_table_seat_guard() from public,anon,authenticated,service_role;

@@ -6,13 +6,9 @@ export function zoomViewport(view: Viewport, factor: number, pointer: { x: numbe
   const y = (pointer.y - view.y) / view.scale;
   return { scale, x: pointer.x - x * scale, y: pointer.y - y * scale };
 }
-export function normalizeTableTransform(table: SeatingTable, transform: {
-  x: number; y: number; scaleX: number; scaleY: number; rotation: number;
-}): SeatingTable {
-  const width = Math.round(table.width_cm * transform.scaleX);
-  return { ...table, x_cm: Math.round(transform.x), y_cm: Math.round(transform.y), width_cm: width,
-    height_cm: table.shape === "round" ? width : Math.round(table.height_cm * transform.scaleY),
-    rotation_deg: ((Math.round(transform.rotation) % 360) + 360) % 360 };
+/** Rotation changes only the angle; table dimensions and center remain fixed. */
+export function normalizeTableRotation(table: SeatingTable, rotation: number): SeatingTable {
+  return { ...table, rotation_deg: ((Math.round(rotation) % 360) + 360) % 360 };
 }
 
 /** Moving a table must never persist leftover canvas scaling or rotation. */

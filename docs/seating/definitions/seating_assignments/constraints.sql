@@ -5,3 +5,7 @@ alter table public.seating_assignments add constraint seating_assignments_c2 for
  references public.seating_plan_guests(project_id,plan_id,project_guest_id) on delete cascade;
 alter table public.seating_assignments add constraint seating_assignments_c3 foreign key(project_id,plan_id,table_id)
  references public.seating_tables(project_id,plan_id,id) on delete cascade;
+alter table public.seating_assignments add constraint seating_assignments_seat_range
+ check(seat_number is null or seat_number between 1 and 100);
+alter table public.seating_assignments add constraint seating_assignments_one_guest_per_seat
+ unique(plan_id,table_id,seat_number);

@@ -4,5 +4,6 @@ create table public.seating_assignments (
  project_id uuid not null,
  plan_id uuid not null,
  project_guest_id uuid not null,
- table_id uuid not null
+ table_id uuid not null,
+ seat_number integer
 );

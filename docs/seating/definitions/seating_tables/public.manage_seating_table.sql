@@ -1,5 +1,6 @@
 -- SAVE/REVIEW ONLY: final proposed definition, not a read-only query.
 -- Do not execute definitions on the installed database. Use numbered install scripts.
+-- 006 keeps this body/signature. seating_table_seat_guard protects occupied seats and shape changes.
 create or replace function public.manage_seating_table(p_plan_id uuid,p_revision bigint,p_table_id uuid,p_operation text,p_name text default null,p_shape text default null,p_capacity integer default null,p_x_cm integer default null,p_y_cm integer default null,p_width_cm integer default null,p_height_cm integer default null,p_rotation_deg integer default 0) returns jsonb language plpgsql security definer set search_path='' as $$ declare v public.seating_plans; v_id uuid; v_next bigint; begin v:=private.lock_seating_plan(p_plan_id,p_revision);
  if p_operation in ('update','delete') then perform 1 from public.seating_tables where plan_id=v.id and id=p_table_id; if not found then raise exception 'Table missing' using errcode='P0002'; end if; end if;
  if p_operation='delete' then delete from public.seating_tables where plan_id=v.id and id=p_table_id; v_id:=p_table_id;

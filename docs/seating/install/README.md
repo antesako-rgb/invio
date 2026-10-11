@@ -1,6 +1,6 @@
-# Redoslijed promjena — još ništa ne izvršavati
+# Instalacija i nadogradnje seating modela
 
-Paket je izvršen na izoliranom lokalnom PostgreSQL-u; rezultati i granice su u ../CHECKS.md. Produkcijska baza nije mijenjana. Prvo proći izolirane scenarije iz ../README.md. Ne pokretati definitions.
+Osnovni paket 001–004 korisnik je već instalirao i regenerirao DB tipove. Izolirane provjere i njihove granice zapisane su u [CHECKS.md](../CHECKS.md). Korisnik je instalirao i nadogradnju 006; agent je 2026-10-11 read-only provjerom live baze potvrdio sve njezine stupce, constraints, triggere, funkcijske hashove, RLS i ACL. Ne ponavljati 006 na toj bazi. Definitions su definicije za spremanje/pregled; ne izvršavati ih kao migraciju.
 
 | Korak | Što mijenja |
 | --- | --- |
@@ -11,12 +11,43 @@ Paket je izvršen na izoliranom lokalnom PostgreSQL-u; rezultati i granice su u 
 | 004_verify_commit.sql | Backfill provjere i jedini COMMIT. |
 | 005_verify_read_only.sql | Nakon instalacije: prava, FK i counts bez osobnih podataka. |
 
-Za buduće izvršavanje u Supabase SQL Editoru koristi samo INSTALL_ALL_REVIEW.sql: sadrži točno 001–004 u jednoj transakciji. Nemoj izvršavati i bundle i pojedinačne datoteke. Različita pokretanja SQL Editora ne jamče istu DB vezu; zbog toga 001–004 nisu četiri neovisna poziva. Na grešci odustani/ROLLBACK i istraži; ne nastavljaj preskakanjem koraka. CREATE bez IF NOT EXISTS namjerno zaustavlja ponovno izvršavanje.
+Samo za prvu instalaciju na bazu koja još nema ovaj model koristi INSTALL_ALL_REVIEW.sql: sadrži točno 001–004 u jednoj transakciji. Nemoj izvršavati i bundle i pojedinačne datoteke. Različita pokretanja SQL Editora ne jamče istu DB vezu; zbog toga 001–004 nisu četiri neovisna poziva. Na grešci odustani/ROLLBACK i istraži; ne nastavljaj preskakanjem koraka. CREATE bez IF NOT EXISTS namjerno zaustavlja ponovno izvršavanje.
 
-Prije cutovera backup i zaustavljanje guest/RSVP upisa. PROJECT_GUESTS_ENABLED ostaje unset/false do instalacije i provjera. SQL je instaliran i database.types.ts regeneriran; privremeni schema ugovor je uklonjen. Provjeri TS/lint/build, deployaj pa postavi PROJECT_GUESTS_ENABLED=true na odgovarajućem environmentu i redeployaj. Postojeći create/update guest RPC signatures/output ostaju kompatibilni; stare aplikacije rade preko DB name snapshot triggera i insert triggera. Nema potrebe dirati storage cleanup cron.
+Prva instalacija traži backup i zaustavljanje guest/RSVP upisa; flag se uključuje tek nakon SQL provjera i regeneracije tipova. Taj je korak korisnik već izvršio, uključujući hosted flag. Privremeni schema ugovor je uklonjen. Nadogradnja 006 ne mijenja flag ili environment. Postojeći create/update guest RPC signatures/output ostaju kompatibilni; stare aplikacije rade preko DB name snapshot triggera i insert triggera. Nema potrebe dirati storage cleanup cron.
 
 Rollback prije COMMIT-a je transakcijski. Nakon COMMIT-a ne dropati project_guests naslijepo; arhivirane/povezane osobe i nova mjesta možda već postoje. Za app rollback može se isključiti flag, uz zadržavanje kompatibilnih SQL funkcija. Nova podatkovna povratna migracija traži zaseban pregled.
 
 SQL001 ima i guard hashova četiri pregledana postojeća guest/public RSVP RPC-a. Ako se u međuvremenu promijene, instalacija staje radi novog pregleda; ne uklanjati guard da bi prošlo. Hashovi su samo SQL definicije, ne podaci ili tokeni.
 
 Predlošci su uključeni u isti 001–003 redoslijed: seating_templates tablica/constraints, JSON validator i copy RPC, RLS/index/grants. Katalog ostaje prazan; admin primjere unosi ručno. Invitation templates tablica/prava nisu mijenjani.
+
+
+## 006 — konkretne stolice na već instaliranom modelu
+
+Paket je provjeren na izoliranom PGlite 0.5.8 / PostgreSQL 18.3: 40 scenarija prolazi, uključujući bazu sa svim tablicama i nula podataka. To nije live izvršavanje ni test dviju istodobnih DB veza. Detalji su u [CHECKS.md](../CHECKS.md), model i budući UI u [SEAT_ASSIGNMENTS_REVIEW.md](../SEAT_ASSIGNMENTS_REVIEW.md).
+
+**Prazna baza s postojećim tablicama je podržana.** Ako nema tablica/funkcija iz osnovnog modela, 006 se ne može izvršiti: prvo treba osnovna aplikacijska schema i prva instalacija 001–004. Ako je osnovni paket već instaliran, ne ponavljati ga ni kada su tablice prazne.
+
+| Redoslijed | Datoteka | Namjena |
+| --- | --- | --- |
+| 1 | [006_preflight_read_only.sql](006_preflight_read_only.sql) | Read-only pregled postojećih funkcija/hashova, RLS/ACL, constraints, triggera i broja dodjela. |
+| 2 | [006_seat_assignments_upgrade.sql](006_seat_assignments_upgrade.sql) | Jedina izvršiva nadogradnja: cijela datoteka u jednoj transakciji, s vlastitim preflightom, provjerama i COMMIT-om. |
+| 3 | [006_verify_read_only.sql](006_verify_read_only.sql) | Read-only pregled instalirane nadogradnje i integriteta podataka. |
+
+Prvo pregledati SQL, napraviti backup i zaustaviti seating upise; nadogradnja kratkotrajno ekskluzivno zaključava i projects/project_guests pa planirati pauzu povezanih upisa. Izvršavati kao postgres. Prvi korak treba dati ready_* = true za sve retke, točno pet pregledanih tablica s RLS-om i jednom member SELECT politikom te tables_over_capacity = 0. Ne smije biti postojećeg seat_number stupca, novih 006 funkcija ili user triggera na seating_assignments/seating_tables. Pregledati i tri postojeća assignment PK/FK-a te constraint kapaciteta 1–100. Nadogradnja sama ponavlja stroge provjere pod zaključavanjem; hashovi uspoređuju whitespace-normalizirani pg_proc.prosrc uz owner/language/security/search_path/ACL. Ako baseline odstupa, stati radi pregleda; ne uklanjati guardove.
+
+Korak 2 kopirati **cijeli** u jedan SQL Editor poziv. Nema zasebnih 006 dijelova koji se nastavljaju na drugoj vezi. Na grešci ROLLBACK i istražiti; CREATE/ADD bez IF NOT EXISTS namjerno odbija ponavljanje. Jedini COMMIT dolazi nakon provjere očuvanja svih postojećih dodjela i revizija, stupca, constraints, triggera i funkcijskih prava. Transakcijski NOTIFY osvježava PostgREST schema/RPC cache nakon COMMIT-a.
+
+Nadogradnja dodaje nullable seating_assignments.seat_number, CHECK 1–100 i UNIQUE(plan_id,table_id,seat_number). Postojeći retci ostaju na istim stolovima uz NULL, bez automatskog odabira stolice. Nema novih tablica, promjene imena, recipienta ili RSVP-a. Novi assign_seating_guest_to_seat koristi isti p_revision i vraća bigint novu reviziju; konkretno zauzeto mjesto odbija bez promjene stare dodjele. NULL mjesto zadržava/odabire stol bez stolice, NULL stol + NULL mjesto uklanja dodjelu. Arhivirana osoba smije osloboditi postojeću stolicu ili dodjelu, ali ne dobiti/premjestiti mjesto.
+
+Postojeći assign_seating_guest čuva potpis/output: isti stol zadržava seat_number, drugi ga čisti, NULL stol briše dodjelu. Upisi koriste eksplicitni popis stupaca. manage_seating_table zadržava postojeće tijelo/potpis; novi BEFORE UPDATE guard odbija kapacitet ispod popunjenosti, uklanjanje zauzetog broja i promjenu oblika uz konkretne dodjele. Novi assignment guard štiti kapacitet/broj i kod trusted direktnog DML-a. Browser i dalje nema izravna prava upisa; private helperi nisu API. Upisi aplikacije koriste zaključavanje projekta pa plana. Trusted ručni upisi moraju se izvoditi uz zaustavljene aplikacijske upise ili isti redoslijed zaključavanja; trigger nije zamjena za RPC/reviziju.
+
+Završni verify očekuje seat_column_valid, seat_constraints_present_and_validated, seat_triggers_enabled, function_matches_review i acl_matches_review = true. Pročitati i prikazane definicije constraints/triggera. Za javne assignment RPC-e member_execute = true, za private funkcije false; anon_execute i service_execute = false. RLS = true; jedina politika svake prikazane tablice: authenticated SELECT s private.is_project_member(project_id). member_select = true, member_write i anon_access = false. invalid_* i tables_over_capacity = 0. Odmah nakon nadogradnje assignments_after mora odgovarati assignments_before, concrete_chairs = 0 i table_only_assignments = assignments_after. Ako su podaci prazni, sva tri broja su 0. Nakon stvarnih upisa mjesta concrete_chairs više ne mora biti 0.
+
+Tek nakon uspješnog koraka 3 regenerirati database.types.ts iz instalirane baze. Ne dopisivati ručno generirane tipove niti vraćati privremeni contract. Frontend konkretnih mjesta i imena iznad stolica slijedi zasebno; sadašnji editor ostaje kompatibilan i dodjeljuje goste stolovima. Nakon UI nadogradnje provjeriti TS/lint/build i ručne mobilne tokove.
+
+Rollback prije COMMIT-a je transakcijski. Nakon COMMIT-a zadržati additive model i kompatibilni RPC kod vraćanja aplikacije. Ne dropati seat_number/funkcije radi app rollbacka jer mogu sadržavati stvarne dodjele; povratna podatkovna migracija traži zaseban pregled.
+
+### Preostala provjera s dvije veze na stagingu
+
+Na izoliranoj/staging bazi koristiti dvije stvarno odvojene veze, iste member ovlasti i isti početni p_revision. Prva transakcija dodjeljuje slobodnu stolicu i zadržava transakciju otvorenom; druga pokušava dodijeliti drugog gosta toj stolici. Nakon COMMIT-a prve druga mora dobiti 40001, bez promjene svoje stare dodjele. Ponovni pokušaj s aktualnom revizijom mora dobiti 23505 Seat occupied. Provjeriti i istodobno smanjenje kapaciteta/assignment te očuvanje brojeva/revizija. Ovaj scenarij nije izvršen u runtimeu s jednom vezom; ne testirati upisima na live podatke kroz read-only verify.

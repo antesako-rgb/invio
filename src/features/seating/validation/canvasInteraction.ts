@@ -1,4 +1,5 @@
-import type { SeatingTable } from "../types";
+import type { SeatingTable, SeatTarget } from "../types";
+import { getLongTableSeatCounts, getLongTableChairSpacing } from "./longTableGeometry";
 export type Point = { x: number; y: number };
 /** Hit testing uses the same center and rotation as persisted geometry. */
 export function tableContainsPoint(table: SeatingTable, point: Point): boolean {
@@ -10,33 +11,134 @@ export function tableContainsPoint(table: SeatingTable, point: Point): boolean {
     ? x * x + y * y <= (table.width_cm / 2) ** 2
     : Math.abs(x) <= table.width_cm / 2 && Math.abs(y) <= table.height_cm / 2;
 }
+
+/** A compact upright label inside the inscribed circle: angle cannot change font or width. */
+export function getTableLabelLayout(table: Pick<SeatingTable, "shape" | "width_cm" | "height_cm">) {
+  const size = table.shape === "round" ? table.width_cm : Math.min(table.width_cm,table.height_cm);
+  const lineHeight = 1.2, nameFontSize = size*.15, occupancyFontSize = size*.12;
+  const nameHeight = nameFontSize*lineHeight+size*.005;
+  const occupancyHeight = occupancyFontSize*lineHeight+size*.005;
+  const gap = size*.015;
+  return { width:size*.8,height:nameHeight+gap+occupancyHeight,nameFontSize,occupancyFontSize,nameHeight,occupancyHeight,gap,lineHeight };
+}
 type ChairTable = Pick<SeatingTable, "shape" | "capacity" | "width_cm" | "height_cm">;
-function rectangleSeatCounts(table: ChairTable) {
-  const horizontal = Math.round(table.capacity * table.width_cm / (table.width_cm + table.height_cm));
-  return [Math.ceil(horizontal/2), Math.ceil((table.capacity-horizontal)/2), Math.floor(horizontal/2), Math.floor((table.capacity-horizontal)/2)];
+type PositionedChairTable = ChairTable & Pick<SeatingTable, "x_cm" | "y_cm" | "rotation_deg">;
+export type ChairPosition = Point & { rotation: number; seatNumber: number };
+export function getSeatSide(table: Pick<SeatingTable, "shape">, seatNumber: number): "round" | "top" | "bottom" | "left" | "right" {
+  if (table.shape === "round") return "round";
+  if (seatNumber === 1 || seatNumber === 3) return "left";
+  if (seatNumber === 2 || seatNumber === 4) return "right";
+  return seatNumber%2 ? "top" : "bottom";
 }
 /** Match chair proportions to the body; dense capacities use the available edge spacing. */
 export function getChairSize(table: ChairTable) {
   if (table.shape === "round") return Math.min(table.width_cm * .22, Math.PI * table.width_cm / table.capacity * .75);
-  const spacing = rectangleSeatCounts(table).flatMap((count, edge) => count ? [(edge % 2 === 0 ? table.width_cm : table.height_cm) / (count+1)] : []);
-  return Math.min(Math.min(table.width_cm,table.height_cm) * .3, Math.min(...spacing) * .8);
+  return Math.min(table.height_cm*.25,getLongTableChairSpacing(table.capacity,table.width_cm,table.height_cm)*.8);
 }
-/** Chairs are decorative; dimensions/capacity and table assignments remain independent. */
-export function chairPositions(table: ChairTable) {
+/** Preview includes the decorative chairs, not only the table body's dimensions. */
+export function getTablePreviewBounds(table: ChairTable) {
+  const halfChair = getChairSize(table)/2;
+  const chairs = chairPositions(table).map(chair => {
+    const angle = chair.rotation*Math.PI/180;
+    const extent = halfChair*(Math.abs(Math.cos(angle))+Math.abs(Math.sin(angle)));
+    return { x: Math.abs(chair.x)+extent, y: Math.abs(chair.y)+extent };
+  });
+  return {
+    width: 2*Math.max(table.width_cm/2,...chairs.map(chair => chair.x)),
+    height: 2*Math.max(table.height_cm/2,...chairs.map(chair => chair.y)),
+  };
+}
+/** Saved seat identities do not depend on the order in which the chair edges are drawn. */
+export function chairPositions(table: ChairTable): ChairPosition[] {
   const gap = getChairSize(table)/2 + Math.min(table.width_cm,table.height_cm)*.025;
   if (table.shape === "round") return Array.from({ length: table.capacity }, (_, i) => {
     const angle = i * 2 * Math.PI / table.capacity - Math.PI / 2;
-    return { x: Math.cos(angle) * (table.width_cm / 2 + gap), y: Math.sin(angle) * (table.height_cm / 2 + gap), rotation: angle * 180 / Math.PI + 90 };
+    return { x: Math.cos(angle) * (table.width_cm / 2 + gap), y: Math.sin(angle) * (table.height_cm / 2 + gap), rotation: angle * 180 / Math.PI + 90, seatNumber: i+1 };
   });
-  // Split seats proportionally between opposite edge pairs, distribute evenly along each edge.
-  const counts = rectangleSeatCounts(table);
-  return counts.flatMap((count, edge) => Array.from({ length: count }, (_, i) => {
-    const position = (i + 1) / (count + 1) - .5;
-    if (edge === 0) return { x: position * table.width_cm, y: -table.height_cm / 2-gap, rotation: 0 };
-    if (edge === 1) return { x: table.width_cm / 2+gap, y: position * table.height_cm, rotation: 90 };
-    if (edge === 2) return { x: position * table.width_cm, y: table.height_cm / 2+gap, rotation: 180 };
-    return { x: -table.width_cm / 2-gap, y: position * table.height_cm, rotation: 270 };
+  const counts = getLongTableSeatCounts(table.capacity);
+  return [counts.top,counts.right,counts.bottom,counts.left].flatMap((count, edge) => Array.from({ length: count }, (_, i) => {
+    const position = (i+1)/(count+1)-.5;
+    const along = position*table.width_cm;
+    const end = position*table.height_cm;
+    if (edge === 0) return { x: along, y: -table.height_cm / 2-gap, rotation: 0, seatNumber: 5+i*2 };
+    if (edge === 1) return { x: table.width_cm / 2+gap, y: end, rotation: 90, seatNumber: 2+i*2 };
+    if (edge === 2) return { x: along, y: table.height_cm / 2+gap, rotation: 180, seatNumber: 6+i*2 };
+    return { x: -table.width_cm / 2-gap, y: end, rotation: 270, seatNumber: 1+i*2 };
   }));
+}
+
+/** Project local geometry into the unchanged centimetre coordinate system of the room. */
+function chairWorldPosition(table: PositionedChairTable, chair: ChairPosition): Point {
+  const radians = table.rotation_deg*Math.PI/180;
+  return {
+    x: table.x_cm+chair.x*Math.cos(radians)-chair.y*Math.sin(radians),
+    y: table.y_cm+chair.x*Math.sin(radians)+chair.y*Math.cos(radians),
+  };
+}
+
+export function getSeatWorldPosition(table: PositionedChairTable, seatNumber: number): Point | null {
+  const chair = chairPositions(table).find(item => item.seatNumber === seatNumber);
+  return chair ? chairWorldPosition(table,chair) : null;
+}
+
+/** Match the rotated chair body, with an optional larger circular target measured in cm. */
+export function chairContainsPoint(table: PositionedChairTable, seatNumber: number, point: Point, minRadius = 0): boolean {
+  const chair = chairPositions(table).find(item => item.seatNumber === seatNumber);
+  if (!chair) return false;
+  return chairMatchesPoint(table,chair,point,minRadius);
+}
+
+function chairMatchesPoint(table: PositionedChairTable, chair: ChairPosition, point: Point, minRadius: number): boolean {
+  const world = chairWorldPosition(table,chair), dx = point.x-world.x, dy = point.y-world.y;
+  const angle = -(table.rotation_deg+chair.rotation)*Math.PI/180;
+  const x = dx*Math.cos(angle)-dy*Math.sin(angle), y = dx*Math.sin(angle)+dy*Math.cos(angle);
+  const halfSize = getChairSize(table)/2;
+  return (Math.abs(x)<=halfSize && Math.abs(y)<=halfSize) || Math.hypot(dx,dy)<=Math.max(0,minRadius);
+}
+
+/** Closest matching chair wins when mobile targets overlap; table draw order breaks ties. */
+export function hitSeat(tables: readonly SeatingTable[], point: Point, minRadius = 0): { tableId: string; seatNumber: number } | null {
+  let closest: { tableId: string; seatNumber: number; distance: number } | null = null;
+  for (let index=tables.length-1;index>=0;index--) {
+    const table = tables[index];
+    for (const chair of chairPositions(table)) {
+      if (!chairMatchesPoint(table,chair,point,minRadius)) continue;
+      const center = chairWorldPosition(table,chair), distance = Math.hypot(point.x-center.x,point.y-center.y);
+      if (!closest || distance<closest.distance) closest = { tableId: table.id,seatNumber: chair.seatNumber,distance };
+    }
+  }
+  return closest ? { tableId: closest.tableId,seatNumber: closest.seatNumber } : null;
+}
+
+/** Match canvas draw order: a front table's visible body/chairs cover all earlier tables. */
+export function hitSeatingTarget(tables: readonly SeatingTable[], point: Point): SeatTarget | null {
+  for (let index=tables.length-1;index>=0;index--) {
+    const table = tables[index];
+    // Table bodies are drawn after their own chairs, so the visible body wins any overlap.
+    if (tableContainsPoint(table,point)) return { tableId: table.id,seatNumber: null };
+    const seat = hitSeat([table],point);
+    if (seat) return seat;
+  }
+  return null;
+}
+
+/** Upright name boxes depend on unrotated dimensions and zoom, never a rotated bounding box. */
+export function getSeatNameLayout(table: PositionedChairTable, seatNumber: number, scale = 1) {
+  const chair = chairPositions(table).find(item => item.seatNumber === seatNumber);
+  if (!chair) return null;
+  const viewScale = Number.isFinite(scale) && scale>0 ? scale : 1;
+  const size = getChairSize(table);
+  const spacing = table.shape === "round" ? Math.PI*table.width_cm/table.capacity
+    : getLongTableChairSpacing(table.capacity,table.width_cm,table.height_cm);
+  const width = Math.min(90,spacing*viewScale*.9)/viewScale;
+  const fontSize = Math.max(10,Math.min(12,size*viewScale*.32))/viewScale;
+  const lineHeight = 1.15, height = fontSize*lineHeight*2+4/viewScale;
+  const angle = (table.rotation_deg+chair.rotation)*Math.PI/180;
+  const normal = { x: Math.sin(angle),y: -Math.cos(angle) };
+  const anchor = chairWorldPosition(table,chair);
+  const distance = size/2+Math.abs(normal.x)*width/2+Math.abs(normal.y)*height/2+4/viewScale;
+  return { x: anchor.x+normal.x*distance-width/2,y: anchor.y+normal.y*distance-height/2,
+    width,height,fontSize,lineHeight,anchor };
 }
 export function canAssignToTable(capacity: number, tableId: string, guestId: string, assignments: { table_id: string; project_guest_id: string }[]) {
   return assignments.filter(item => item.table_id === tableId && item.project_guest_id !== guestId).length < capacity;
