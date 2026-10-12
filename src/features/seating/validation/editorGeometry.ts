@@ -33,7 +33,7 @@ export function focusTableViewport(table: SeatingTable, size: CanvasSize): Viewp
   const angle = table.rotation_deg * Math.PI / 180;
   const width = Math.abs(Math.cos(angle)) * bounds.width + Math.abs(Math.sin(angle)) * bounds.height;
   const height = Math.abs(Math.sin(angle)) * bounds.width + Math.abs(Math.cos(angle)) * bounds.height;
-  const padding = Math.min(56, size.width / 4, size.height / 4);
+  const padding = Math.min(size.width < 768 ? 24 : 56, size.width / 4, size.height / 4);
   const scale = Math.max(.0001, Math.min(20, (size.width - padding * 2) / width, (size.height - padding * 2) / height));
   return { scale, x: size.width / 2 - table.x_cm * scale, y: size.height / 2 - table.y_cm * scale };
 }

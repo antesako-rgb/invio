@@ -23,7 +23,7 @@ function load(relative) {
   compiledModule._compile(compiled, filename);
   return compiledModule.exports;
 }
-const { zoomViewport, normalizeTableRotation, normalizeTablePosition, normalizeRoomTransform, fitRoomViewport, resizeRoomViewport } = load("../validation/editorGeometry.ts");
+const { zoomViewport, normalizeTableRotation, normalizeTablePosition, normalizeRoomTransform, fitRoomViewport, resizeRoomViewport, focusTableViewport } = load("../validation/editorGeometry.ts");
 const { CanvasGesture, cancelNodeGesture } = load("../validation/canvasGesture.ts");
 const { tableContainsPoint, getTableLabelLayout, chairPositions, getChairSize, getTablePreviewBounds, canAssignToTable,
   getSeatSide, getSeatWorldPosition, chairContainsPoint, hitSeat, hitSeatingTarget, hitGuestDropTarget, clientToRoomPoint, getSeatNameLayout } = load("../validation/canvasInteraction.ts");
@@ -36,6 +36,31 @@ const TableThemeRenderer = load("../components/appearance/TableThemeRenderer.tsx
 const { updateTableSizes } = load("../services/updateTableSizes.ts");
 const rectangle = { id: "table", plan_id: "plan", project_id: "project", name: "Table", shape: "rectangle",
   capacity: 8, x_cm: 500, y_cm: 400, width_cm: 200, height_cm: 100, rotation_deg: 0 };
+
+test("mobile table focus enlarges furniture while keeping rotated chairs visible and centimetres unchanged", () => {
+  for (const width of [320,390,767,800]) for (const shape of ["round","rectangle"]) for (const rotation_deg of [0,45,90,270]) {
+    const size={width,height:480};
+    const table={...rectangle,shape,rotation_deg,...getStandardTableDimensions(shape,3338,2499,8)};
+    const before=structuredClone(table), view=focusTableViewport(table,size);
+    const overview=fitRoomViewport(3338,2499,size);
+    assert.ok(view.scale>overview.scale*2);
+    assert.deepEqual(table,before);
+    const bounds=getTablePreviewBounds(table), angle=rotation_deg*Math.PI/180;
+    const projectedWidth=Math.abs(Math.cos(angle))*bounds.width+Math.abs(Math.sin(angle))*bounds.height;
+    const projectedHeight=Math.abs(Math.sin(angle))*bounds.width+Math.abs(Math.cos(angle))*bounds.height;
+    const padding=width<768?24:56;
+    assert.ok(projectedWidth*view.scale<=width-2*padding+1e-8);
+    assert.ok(projectedHeight*view.scale<=size.height-2*padding+1e-8);
+    assert.ok(Math.abs(view.x+table.x_cm*view.scale-width/2)<1e-8);
+    assert.ok(Math.abs(view.y+table.y_cm*view.scale-size.height/2)<1e-8);
+    for(let seat=1;seat<=table.capacity;seat++) {
+      const world=getSeatWorldPosition(table,seat);
+      const client={x:view.x+world.x*view.scale,y:view.y+world.y*view.scale};
+      const restored=clientToRoomPoint(client,{left:0,top:0,right:width,bottom:size.height},view,size);
+      assert.ok(Math.abs(restored.x-world.x)<1e-8 && Math.abs(restored.y-world.y)<1e-8);
+    }
+  }
+});
 
 test("drop coordinates follow current canvas bounds, pan, zoom and CSS scale", () => {
   const view = { x:73,y:28,scale:.4 },size = { width:800,height:600 },point = { x:500,y:400 };

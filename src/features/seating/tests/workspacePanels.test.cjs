@@ -106,6 +106,21 @@ function fixture(t, changes={}) {
   render();return {owner,find,render,submit,settle,navigate:id=>find("EditorToolRail").props.onNavigate(id),sync(){render();return owner.rsvpSync.enabled?owner.rsvpSync.onSync():Promise.resolve(false);}};
 }
 
+test("mobile toolbar focuses the selected table and closes its drawer without writing plan data", t=>{
+  const view=fixture(t);view.owner.mobile=true;
+  const focused=[];
+  view.find("Canvas").props.controlsRef.current={focusTable:id=>focused.push(id)};
+  view.find("Canvas").props.onSelect("table");
+  assert.equal(view.find("EditorMobilePanel").props.open,true);
+  const button=nodes(view.find("EditorHeader").props.end).find(node=>node.props["aria-label"]==="focusTable");
+  assert.ok(button);button.props.onClick();
+  assert.deepEqual(focused,["table"]);
+  assert.equal(view.find("EditorMobilePanel").props.open,false);
+  assert.equal(view.find("Canvas").props.selectedId,"table");
+  assert.deepEqual(view.owner.calls,[]);
+  assert.equal(view.owner.confirmed.current.plan.revision,1);
+});
+
 test("uninstalled elements leave the existing editor and navigation available", t=>{
   const view=fixture(t,{elements:[],elementsAvailable:false});
   assert.equal(view.find("EditorToolRail").props.items.some(item=>item.id==="elements"),false);
