@@ -1,8 +1,14 @@
-# Definicije za spremanje u SQL Editor
+# Prijelazne lokalne definicije seating domene
+
+Nije potrebno prepisivati ove datoteke u Supabase SQL Editor foldere.
+Novi postupak održavanja definicija opisan je u
+[supabase/README.md](../../../supabase/README.md). Ova domena još nije prenesena
+u kanonski schemas inventar; datoteke su zadržane i zbog testova/generatora.
+Prije nove promjene potvrditi DEV stanje i pripremiti pripadajuću kanonsku definiciju.
 
 Najnovije definicije uključuju `invitation_attendance_overrides` i `set_invitation_guest_attendance`, atomski `include_generic_seating_guest` te ažurirani `sync_seating_rsvp_guests` koji daje prednost ručnoj odluci. Grupe koriste postojeće tablice pozivnice. Za korisnikovu već postavljenu, naknadno ispražnjenu bazu slijedi [ATTENDANCE_AND_GROUPS.md](../ATTENDANCE_AND_GROUPS.md). Stari RSVP setup/verify ostaje zamrznut na prethodnoj verziji, a novi generator čita aktualne definicije.
 
-Jedna mapa po tablici kao u postojećoj organizaciji: table.sql, constraints.sql, indexes.sql, rls.sql, grants.sql, trigger.sql, verify.sql i funkcije. Ovo je predloženo konačno stanje nakon osnovnog install paketa 001–004 i nadogradnje 006. Osnovni model već je instaliran; 006 još nije izvršen na live bazi od strane agenta. CREATE/ALTER/GRANT definicije spremi za pregled, nemoj ih ponovno izvršavati. Samo verify.sql je read-only.
+Jedna mapa po tablici: table.sql, constraints.sql, indexes.sql, rls.sql, grants.sql, trigger.sql, verify.sql i funkcije. Model i nadogradnju 006 primijenio je korisnik; kasnije nadogradnje imaju zasebne install/verify pakete. CREATE/ALTER/GRANT definicije ne izvršavati ponovno. Samo odgovarajuće verify skripte su read-only; stari verify može biti vezan uz prethodnu verziju modela.
 
 Postojeće invitation_guests: novi project_guest_id, tri constraints, person trigger, izmijenjeni create/update/delete RPC-i. Postojeći ID, recipient/group/primary i timestamp ponašanje ostaju. rsvp_response_guests: samo dodatni composite UNIQUE. rsvp_responses: get_public_rsvp output/definicija ostaje isti. invitation_recipients i invitation_guest_groups: prikazane neizmijenjene definicije radi orijentacije; installer ih ne kreira niti resetira prava.
 

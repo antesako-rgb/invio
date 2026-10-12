@@ -1,0 +1,422 @@
+{
+  "schema_version": 1,
+  "algorithm": "SHA-256",
+  "files": [
+    {
+      "path": "supabase/install/20261012180000_seating_elements/FILES.md",
+      "sha256": "2ab886db76da591544ce4240a57509223b017cb21d59cd575aaaab639bfb3ac2"
+    },
+    {
+      "path": "supabase/install/20261012180000_seating_elements/README.md",
+      "sha256": "f5efa97eca19907892538649eb9975407a634590b30e8d48f6e9f7c2f3e7dbfa"
+    },
+    {
+      "path": "supabase/install/20261012210000_seating_appearance/FILES.md",
+      "sha256": "62d5690543b9083082490f0ba39776c93d6fa3bf17ba37f646cc820d38f131d9"
+    },
+    {
+      "path": "supabase/install/20261012210000_seating_appearance/README.md",
+      "sha256": "bef0285cb6d92f2104dace2c553dc4d1a02faf58ca9c98b906f7c90b5cf9826f"
+    },
+    {
+      "path": "supabase/install/20261012223000_seating_preset_styles/FILES.md",
+      "sha256": "ac1812ecfca22f506c113d5970b02e5b487811a961476e3788503c338454cb3b"
+    },
+    {
+      "path": "supabase/install/20261012223000_seating_preset_styles/README.md",
+      "sha256": "3f2fede05a7c3adb709cd663f3f08e1c7053c994db020460ae80595bf94cb057"
+    },
+    {
+      "path": "supabase/manifests/applications.json",
+      "sha256": "9bbcdfd6651e7d3d1ecef7057affcedbac7b72f428f37c631d1a4f0e63faf23a"
+    },
+    {
+      "path": "supabase/manifests/check-seating-appearance.cjs",
+      "sha256": "3045f337bfbbc9b4df40ad94dd928691f708f571df379554b793cf5262eafcf8"
+    },
+    {
+      "path": "supabase/manifests/check-seating-elements.cjs",
+      "sha256": "f93e48ae2e9539550f6b138097e72f35aa4c15e61a71310a02e34e13490cd547"
+    },
+    {
+      "path": "supabase/manifests/check-seating-preset-styles.cjs",
+      "sha256": "5262cb67c6777405b22409ae48b927676d5770855f93348ab20af538f7ca62b6"
+    },
+    {
+      "path": "supabase/manifests/check.cjs",
+      "sha256": "ada3b6e75d6e47d2542da7275e73cd968374567dc4d84c919af9e3c7b59ef8b7"
+    },
+    {
+      "path": "supabase/manifests/coverage.json",
+      "sha256": "5be7a9b82fa4f95fd9a09b05fe0433dcfbb39d86281c6dc62ca7579490bf0200"
+    },
+    {
+      "path": "supabase/manifests/dev-inventory.json",
+      "sha256": "1521a1a11fd0bdb421f8300d4eed270ffa5e4b7ee6f7b3e59c3ad40e420c6792"
+    },
+    {
+      "path": "supabase/manifests/load-order.json",
+      "sha256": "e64dd290d7710cb0967e5e962e9f9fc117331f64f3e0714059440a257d72e0a2"
+    },
+    {
+      "path": "supabase/manifests/platform-prerequisites.json",
+      "sha256": "d597f6ef8dd69ad98cae42243003568e8f91a281e9b9f93520f524a3e8d4210d"
+    },
+    {
+      "path": "supabase/manifests/profiles-projects.expected.json",
+      "sha256": "228461a3192de5b94b50fd3db0e0eae0dfb9804d352b97381ef0517e36845bf5"
+    },
+    {
+      "path": "supabase/manifests/seating-appearance.baseline.json",
+      "sha256": "1e867cacd323e434f09e4aa5a68a7dec001b66d8f25f6193c61f4598f09a35d5"
+    },
+    {
+      "path": "supabase/manifests/seating-appearance.change.json",
+      "sha256": "5f01876f31e34686844de637cc9c9246a0ea1e177cecce54c4222ef80bf77709"
+    },
+    {
+      "path": "supabase/manifests/seating-appearance.dev-capture.json",
+      "sha256": "535c55e1b2e90cb37873dd9a681b4023b05521f677e44465d53100e96a00f5b4"
+    },
+    {
+      "path": "supabase/manifests/seating-appearance.dev-verified.json",
+      "sha256": "59688b519c184963d3758851eb557f802442f5d8d3756a60e1f6d173f3f1286b"
+    },
+    {
+      "path": "supabase/manifests/seating-appearance.expected.json",
+      "sha256": "e8696909f3e2f917b67c0d50d4434dd8cd9131339b2f1249a7bd2cc204af20ef"
+    },
+    {
+      "path": "supabase/manifests/seating-elements.change.json",
+      "sha256": "8e6e472dde408b664c25246df5a6b587fe8a6aa1759fad2efad8bb623b2f1bbd"
+    },
+    {
+      "path": "supabase/manifests/seating-elements.dev-capture.json",
+      "sha256": "418e7fb1a522cf4cbcdb06348442ddb551019e92425670422555dc8784a02142"
+    },
+    {
+      "path": "supabase/manifests/seating-elements.dev-verified.json",
+      "sha256": "30946dc092f76b7a32473306d3093188178415346c0f66c052db6d1a63b62fad"
+    },
+    {
+      "path": "supabase/manifests/seating-elements.expected.json",
+      "sha256": "8388765c747873e17c180adb42efb07fa6b153adb43718dd34bbabab536ce9fc"
+    },
+    {
+      "path": "supabase/manifests/seating-preset-styles.baseline.json",
+      "sha256": "e8696909f3e2f917b67c0d50d4434dd8cd9131339b2f1249a7bd2cc204af20ef"
+    },
+    {
+      "path": "supabase/manifests/seating-preset-styles.change.json",
+      "sha256": "ba1a8c73f61713a14b91f482d1c9070867d73718b5421c7c6493c180b72734e1"
+    },
+    {
+      "path": "supabase/manifests/seating-preset-styles.dev-review.json",
+      "sha256": "311a296b8892ed9dbef3141d3de82edc7f4a14fcd572719f815d2c5d4d00cda7"
+    },
+    {
+      "path": "supabase/manifests/seating-preset-styles.dev-verified.json",
+      "sha256": "aee6057499f8daa0884999e97499624422e59bb6b0a5323be9dac62f9b6b325b"
+    },
+    {
+      "path": "supabase/manifests/seating-preset-styles.expected.json",
+      "sha256": "496b473a6077968ce9103c5291e4a270fa531f77bfaba8078f2bc5b8548e2956"
+    },
+    {
+      "path": "supabase/manifests/verification-evidence.json",
+      "sha256": "be03f68d09685b1592755a406d9dc1ecccb85f995d54194e06e194d3b915b52a"
+    },
+    {
+      "path": "supabase/migrations/20261012180000_seating_elements.sql",
+      "sha256": "09fd5e22b3a6cb2a9ac5eae0f84e105d42667fba2f3705e4e9af0b6843f7ce96"
+    },
+    {
+      "path": "supabase/migrations/20261012210000_seating_appearance.sql",
+      "sha256": "6bd5d2a901dd6e75d2e8161f2bb0d97f7b5dff7b9fc875e6baf0852b61e907c7"
+    },
+    {
+      "path": "supabase/migrations/20261012223000_seating_preset_styles.sql",
+      "sha256": "2475e4d667892afd5df883718ff5399a18a648721adcb8dfa15f12c1cecc7906"
+    },
+    {
+      "path": "supabase/README.md",
+      "sha256": "7601813114ba3ba096403da1f58338dd7914b8e3004eeeab6bde539b4613d34d"
+    },
+    {
+      "path": "supabase/schemas/foundation/schemas.sql",
+      "sha256": "9958e65a80730e3d7bd1c5d56266d54f6ccc8f6a4e448d4c8de7d3b2af360787"
+    },
+    {
+      "path": "supabase/schemas/global_functions/private.handle_new_user.sql",
+      "sha256": "9a4ea7b0478bd9ac8f10d7fab19c288e692991ee990d56f42cdfa2e27458a863"
+    },
+    {
+      "path": "supabase/schemas/global_functions/private.is_project_member.sql",
+      "sha256": "ac997a11dba363098287bef83ab083e928f30dbf49bfb8e5be91fc2293a05760"
+    },
+    {
+      "path": "supabase/schemas/global_functions/private.is_project_owner.sql",
+      "sha256": "5e567704eab68117d819b48d9898f4e6d244c54e57a3ed2911dc9034ef88d9b4"
+    },
+    {
+      "path": "supabase/schemas/global_functions/private.update_timestamp.sql",
+      "sha256": "ef4acea2396fc74d0b149b97157dcc2d55b6724b89bec23952d02202b2eb0335"
+    },
+    {
+      "path": "supabase/schemas/identity/profiles/grants.sql",
+      "sha256": "67451189929bed1f4fc390c7bbb56f297f5d1c2e2aae39ac5d97f68937f0ddbb"
+    },
+    {
+      "path": "supabase/schemas/identity/profiles/rls.sql",
+      "sha256": "2c1f7beb53c6519374c528178bf1f4c0ad198b22bf7320428f99e3dd961caec0"
+    },
+    {
+      "path": "supabase/schemas/identity/profiles/table.sql",
+      "sha256": "cd285b70916012e6de1b55c2f3d1612487d20f1b5e5e5c43c3330cf462c31f8a"
+    },
+    {
+      "path": "supabase/schemas/identity/profiles/triggers.sql",
+      "sha256": "745340920aa6adc3b2c3ca3888b43226808683ddab629fb09fdcf8192d69e06d"
+    },
+    {
+      "path": "supabase/schemas/projects/projects/functions/public.create_project.sql",
+      "sha256": "75ee3b59b641cf819ca66d1e89262138257e207610497eff311f62273548c4da"
+    },
+    {
+      "path": "supabase/schemas/projects/projects/functions/public.delete_project.sql",
+      "sha256": "de9c11616fb4ffae7b07e95f99b5c6a2353401ad7c323d51c92a06e4f4d25e68"
+    },
+    {
+      "path": "supabase/schemas/projects/projects/functions/public.update_project.sql",
+      "sha256": "e80a8fa5043ec4c2f0492fd14dd2aa57dbf57170f2575253abbf865358caeac2"
+    },
+    {
+      "path": "supabase/schemas/projects/projects/grants.sql",
+      "sha256": "d25d09a0dc340cee854327c625054dce1b94c24faaad30f024ee69a2c9a0c6ca"
+    },
+    {
+      "path": "supabase/schemas/projects/projects/indexes.sql",
+      "sha256": "2a291e21d42f2074eda944ab164883e98c49eada72af4cb32ae2eae4b84b9ebe"
+    },
+    {
+      "path": "supabase/schemas/projects/projects/rls.sql",
+      "sha256": "b1d4b7464fb9a0cef5a41c342958c48fee1e0afb018ee04ad81f9f969c428bd2"
+    },
+    {
+      "path": "supabase/schemas/projects/projects/table.sql",
+      "sha256": "520458673ab37f0cfadda2c5f3fd780210bc46a5af254ee9f5e037177149146e"
+    },
+    {
+      "path": "supabase/schemas/projects/projects/triggers.sql",
+      "sha256": "50c28db476f05d3a215710c0172ab9aecacb3cf1efee4c6f5e1a0ba3cd84b3b6"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_elements/functions/private.seating_element_guard.sql",
+      "sha256": "687db8f2e8a982ab31749f54005f036841f5268e65a8cade4fa6e088d32cee8b"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_elements/functions/private.seating_element_valid.sql",
+      "sha256": "dfad3239b33c231a01cc58c52222113ff54da17ffd76105f44ce51c6b7972ed8"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_elements/functions/public.manage_seating_element.sql",
+      "sha256": "6a10197858252b449f31e65abf4e570a2dbe7b0e4473a9ed89c46d9de54e91b4"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_elements/grants.sql",
+      "sha256": "030cad1a8ed810cae84610a128d376b88b74c071af2bfa1747a3e4b7afbefd3a"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_elements/indexes.sql",
+      "sha256": "6c23f5cf50e4d93bf0d68bf3005327934d213db5061fca00671f2da89cc0bc06"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_elements/rls.sql",
+      "sha256": "4983846bad0b17f9272997b592f04a16642052ba3f7094b344fb5a35c26c5918"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_elements/table.sql",
+      "sha256": "a63bb394cb9b7b6a5b4ab16de1260faf35b5c14b2f08cfd3e29e916bb14fda26"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_elements/triggers.sql",
+      "sha256": "35e40e9a7cda6517b88afb9e9f18f069403400a13d0cd01e56e985339cff99d6"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/functions/private.lock_seating_plan.sql",
+      "sha256": "ed6e4738894def7b04f7433a951da3f7d95aedfaa7d0b44b2cc40cbf734b828b"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/functions/private.lock_seating_project.sql",
+      "sha256": "3a07c2116d3abcf973fe17ebf219778e956335c1ca1722cdff1e39e28fdc680a"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/functions/private.normalize_seating_appearance.sql",
+      "sha256": "1e697f4d8cf46061c8bfb33b06b317df5ba66f6bd2988ab1bc9b40d153bd914a"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/functions/private.seating_appearance_valid.sql",
+      "sha256": "7dca0ac1eddd7aaa31afa47973aee977c5a946b13ce4af44a0800239a7300d90"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/functions/private.seating_authorize.sql",
+      "sha256": "6bd6db4ef6276b26a52871d2ee6190c6106c881f50da0f41acaa513e2adea47b"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/functions/private.seating_geometry_fits.sql",
+      "sha256": "4fcc7c30a32fe6ad8ff9b33d688ca43928eefffb79d560270385675754f3ef0a"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/functions/private.seating_plan_guard.sql",
+      "sha256": "3e3ff89083c87cfe9e34a10f00751c1220c4c4baa3cf6b9300d14a0d8e649c40"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/functions/public.manage_seating_plan.sql",
+      "sha256": "81c7a4994614920b53f9bc03bdf7f9fa32ec8d91516710e92b4ba7eb2f96a07e"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/functions/public.set_seating_appearance.sql",
+      "sha256": "3f28aa1f932390cc241ed76cf57a587b3b94fed3f5daa68614420d099fddc0ab"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/grants.sql",
+      "sha256": "7ea3084603980324a9c2d4822141e061313bbdd83dce126cd85292bd1f42b4e3"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/indexes.sql",
+      "sha256": "8d49d51c8dc10eebeb47373722a04d7122fba957b582f9e2c33f1156f2716b58"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/rls.sql",
+      "sha256": "8feeb8d7c37e07c3bad2c3fc6f99f1c39c79ac646ca9b39ca8cb694b9e8dc1ee"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/table.sql",
+      "sha256": "17afc5b1ef3872bea4ce783453a2059cd9cf707abddf8f704da33d65e627dcf2"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_plans/triggers.sql",
+      "sha256": "468d16b823cc04731a774005b80228a38f309968310c08991c2b5c8a0c257e29"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_tables/functions/private.seating_table_seat_guard.sql",
+      "sha256": "b0b31b76a219ddc8fbf929d2118c13d23f752f92411e5cc99dca1b746fca615c"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_tables/functions/public.manage_seating_table.sql",
+      "sha256": "19a185bbe698a2dab9705207f82afde4073ce10a93b6b08a02b8313bf0b70e02"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_tables/grants.sql",
+      "sha256": "40e1576903a21cded432a25cde9b17c2dcc66305c26c5638158a68555dd29aff"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_tables/indexes.sql",
+      "sha256": "9e39e43937ad45d5f7d00657ee8773678a706d6c22f259f9fe3287cb6b381c77"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_tables/rls.sql",
+      "sha256": "5e4b2cbaa13d823606ca24d3d62da37b2fd05c217de2f69336c82b8374b6ef50"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_tables/table.sql",
+      "sha256": "b3e0cf2ac2e30b1fa836d7b44faf7116d7ee2d14025ce076c926cd9f1d503522"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_tables/triggers.sql",
+      "sha256": "2b4cb5dc8b0f9370d704e2b231146826b1ca8433e2482448c817a36f4286482e"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_templates/functions/private.seating_template_guard.sql",
+      "sha256": "4f72a90460d05eb3e82178636407fd342fc8152a5c89fe32face4b1775623e0e"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_templates/functions/private.validate_seating_template.sql",
+      "sha256": "bb9819319eb951a6f2ea4445f4e69c32703ba7a44f88a2b43c0f274b83dc22c5"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_templates/functions/public.create_seating_plan_from_template.sql",
+      "sha256": "2f67599b113db5d675c476014965b73549f3e7891addcfb7fef321da94e9ba97"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_templates/grants.sql",
+      "sha256": "14b8faae9c6c88562bc319bd3c20c4ffd5027fed33a98ef0adc1c3f9ba79c290"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_templates/indexes.sql",
+      "sha256": "20068f0424df8a00ec79042e3186a4d0dcd9dced004dc8bd4d292520f6d5d638"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_templates/rls.sql",
+      "sha256": "88a0a2c903656a1ca5017c3840138359a54465221dab8b59c874e6be23a69955"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_templates/table.sql",
+      "sha256": "cda6b019270b257ebea6bb812a5278be55c30dc171b1707ad565ae234ac27aae"
+    },
+    {
+      "path": "supabase/schemas/seating/seating_templates/triggers.sql",
+      "sha256": "f1b6e9d665046054501441b096fa86e5085e478fba6695cf62a8f9b38a91a9bb"
+    },
+    {
+      "path": "supabase/tests/concurrency/seating_elements.md",
+      "sha256": "7867ba31f331e7de35bf2196a15bc20386abf7ee4a8ace874a36cc99e453b241"
+    },
+    {
+      "path": "supabase/tests/negative/seating_appearance.local.cjs",
+      "sha256": "7c65b069cf501864190258d4cdecdbbdb253d09e6a08f6245f77d6439a79fce5"
+    },
+    {
+      "path": "supabase/tests/negative/seating_elements.local.cjs",
+      "sha256": "57a26d7b13aa731ddc42f7f8c72ec80655d7f92023dab5c680caec9dc6f1d989"
+    },
+    {
+      "path": "supabase/tests/negative/seating_preset_styles.local.cjs",
+      "sha256": "a95980fb72c753d2f1ca50182b6d9fbd3fcad4e381d7422e0f9a2d4e468b3451"
+    },
+    {
+      "path": "supabase/verify/assert/profiles_projects.sql",
+      "sha256": "7ed18addc920e6df8773db37222eac6dd1a5423e577378e07e1dba65b9231d14"
+    },
+    {
+      "path": "supabase/verify/assert/seating_appearance_preflight.sql",
+      "sha256": "6c02585f63fb5058060a15d51a0c4bc27ae8efc38263830a7c894381c8c9ab2b"
+    },
+    {
+      "path": "supabase/verify/assert/seating_appearance.sql",
+      "sha256": "33a45a26a90621b942ff3c31b445ab7ec580534c5b9431aad3126d6f69e8fc7d"
+    },
+    {
+      "path": "supabase/verify/assert/seating_elements_preflight.sql",
+      "sha256": "e243366190adb47e0d8c15f3b337ae5f0145aaf442db3a128f063cc029343b1d"
+    },
+    {
+      "path": "supabase/verify/assert/seating_elements.sql",
+      "sha256": "7d94d7a979829a847c0b7e6c1a455542e0614da16dfe6ab4ee582dab85aa8fa6"
+    },
+    {
+      "path": "supabase/verify/assert/seating_preset_styles_preflight.sql",
+      "sha256": "58baa1dc0549f81841dc263ac4994be0b7f172701617256ec79623bc33104e2b"
+    },
+    {
+      "path": "supabase/verify/assert/seating_preset_styles.sql",
+      "sha256": "74c8864739d56d4369988ac39b45b766fe82fc86fac179d9c76d599bc57d505e"
+    },
+    {
+      "path": "supabase/verify/inspect/profiles_projects.sql",
+      "sha256": "4e0fbe94660cb271faaf8643b8446fb3c69fcd5140af1465df42e9650563aa83"
+    },
+    {
+      "path": "supabase/verify/inspect/seating_appearance.sql",
+      "sha256": "577e13292a224dd4ea7a2bbe5996ee24a17806a307c5a48c20c003903005dfa9"
+    },
+    {
+      "path": "supabase/verify/inspect/seating_elements.sql",
+      "sha256": "eb686a4b0543ee6395757b5ceb47fd204526c55625e5d33650107d0c8b8dabda"
+    },
+    {
+      "path": "supabase/verify/inspect/seating_preset_styles.sql",
+      "sha256": "577e13292a224dd4ea7a2bbe5996ee24a17806a307c5a48c20c003903005dfa9"
+    }
+  ]
+}

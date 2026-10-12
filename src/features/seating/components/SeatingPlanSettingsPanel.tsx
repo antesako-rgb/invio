@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, type FormEvent } from "react";
+import type { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { RotateCcw, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,8 @@ export function isPlanSettingsDraftUnchanged(draft: PlanSettingsDraft, plan: Pla
   return draft.name === plan.name && draft.source === (plan.rsvp_invitation_id ?? "");
 }
 
-export default function SeatingPlanSettingsPanel({ plan, invitations, tables, draft, disabled, saving, onDraftChange, onReset, onSubmit, onStandardize, onDelete }: {
+export default function SeatingPlanSettingsPanel({ plan, invitations, tables, draft, disabled, saving, onDraftChange, onReset, onSubmit, onStandardize, onDelete, appearancePanel }: {
+  appearancePanel?: ReactNode;
   plan: PlanData["plan"]; invitations: SeatingWorkspace["invitations"]; tables: SeatingTable[];
   draft: PlanSettingsDraft; disabled: boolean; saving: boolean;
   onDraftChange: (patch: Partial<PlanSettingsDraft>) => void; onReset: () => void;
@@ -33,6 +35,7 @@ export default function SeatingPlanSettingsPanel({ plan, invitations, tables, dr
   const rectangle = getStandardTableDimensions("rectangle", plan.width_cm, plan.height_cm);
   const unchanged = isPlanSettingsDraftUnchanged(draft, plan);
   return <div className={styles.root}>
+    {appearancePanel}
     <form onSubmit={onSubmit} className={styles.form}>
       <fieldset disabled={disabled} className={styles.fields}>
         <Field label={t("name")}><Input name="name" value={draft.name} onChange={event => onDraftChange({ name:event.target.value })} maxLength={150} required/></Field>

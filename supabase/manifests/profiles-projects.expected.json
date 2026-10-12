@@ -1,0 +1,842 @@
+{
+  "tables": [
+    {
+      "schema": "public",
+      "name": "profiles",
+      "owner": "postgres",
+      "rls": true,
+      "force_rls": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": null,
+          "identity": "",
+          "not_null": true,
+          "generated": ""
+        },
+        {
+          "name": "email",
+          "type": "text",
+          "default": null,
+          "identity": "",
+          "not_null": true,
+          "generated": ""
+        },
+        {
+          "name": "first_name",
+          "type": "text",
+          "default": null,
+          "identity": "",
+          "not_null": false,
+          "generated": ""
+        },
+        {
+          "name": "last_name",
+          "type": "text",
+          "default": null,
+          "identity": "",
+          "not_null": false,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "identity": "",
+          "not_null": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "identity": "",
+          "not_null": true,
+          "generated": ""
+        }
+      ],
+      "constraints": [
+        {
+          "name": "profiles_email_check",
+          "type": "c",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((char_length(email) > 0) AND (email = lower(TRIM(BOTH FROM email)))))",
+          "references": null
+        },
+        {
+          "name": "profiles_email_key",
+          "type": "u",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "UNIQUE (email)",
+          "references": null
+        },
+        {
+          "name": "profiles_first_name_check",
+          "type": "c",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((first_name IS NULL) OR ((char_length(TRIM(BOTH FROM first_name)) >= 1) AND (char_length(TRIM(BOTH FROM first_name)) <= 100))))",
+          "references": null
+        },
+        {
+          "name": "profiles_id_fkey",
+          "type": "f",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE",
+          "references": "auth.users"
+        },
+        {
+          "name": "profiles_last_name_check",
+          "type": "c",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((last_name IS NULL) OR ((char_length(TRIM(BOTH FROM last_name)) >= 1) AND (char_length(TRIM(BOTH FROM last_name)) <= 100))))",
+          "references": null
+        },
+        {
+          "name": "profiles_pkey",
+          "type": "p",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "PRIMARY KEY (id)",
+          "references": null
+        }
+      ],
+      "grants": [
+        {
+          "role": "authenticated",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "DELETE"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "INSERT"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "MAINTAIN"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "REFERENCES"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "TRIGGER"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "TRUNCATE"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "UPDATE"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "DELETE"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "INSERT"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "MAINTAIN"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "REFERENCES"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "TRIGGER"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "TRUNCATE"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "UPDATE"
+        }
+      ],
+      "column_grants": [
+        {
+          "role": "authenticated",
+          "column": "first_name",
+          "grantable": false,
+          "privilege": "UPDATE"
+        },
+        {
+          "role": "authenticated",
+          "column": "last_name",
+          "grantable": false,
+          "privilege": "UPDATE"
+        }
+      ]
+    },
+    {
+      "schema": "public",
+      "name": "projects",
+      "owner": "postgres",
+      "rls": true,
+      "force_rls": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "identity": "",
+          "not_null": true,
+          "generated": ""
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "default": null,
+          "identity": "",
+          "not_null": true,
+          "generated": ""
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "identity": "",
+          "not_null": true,
+          "generated": ""
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "identity": "",
+          "not_null": true,
+          "generated": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "identity": "",
+          "not_null": true,
+          "generated": ""
+        },
+        {
+          "name": "type",
+          "type": "text",
+          "default": null,
+          "identity": "",
+          "not_null": true,
+          "generated": ""
+        },
+        {
+          "name": "custom_type",
+          "type": "text",
+          "default": null,
+          "identity": "",
+          "not_null": false,
+          "generated": ""
+        },
+        {
+          "name": "start_date",
+          "type": "date",
+          "default": null,
+          "identity": "",
+          "not_null": true,
+          "generated": ""
+        },
+        {
+          "name": "start_time",
+          "type": "time without time zone",
+          "default": null,
+          "identity": "",
+          "not_null": false,
+          "generated": ""
+        },
+        {
+          "name": "location_name",
+          "type": "text",
+          "default": null,
+          "identity": "",
+          "not_null": false,
+          "generated": ""
+        },
+        {
+          "name": "location_address",
+          "type": "text",
+          "default": null,
+          "identity": "",
+          "not_null": false,
+          "generated": ""
+        }
+      ],
+      "constraints": [
+        {
+          "name": "projects_custom_type_check",
+          "type": "c",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK ((((type = 'other'::text) AND (custom_type IS NOT NULL) AND ((char_length(TRIM(BOTH FROM custom_type)) >= 1) AND (char_length(TRIM(BOTH FROM custom_type)) <= 100))) OR ((type <> 'other'::text) AND (custom_type IS NULL))))",
+          "references": null
+        },
+        {
+          "name": "projects_location_address_check",
+          "type": "c",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((location_address IS NULL) OR ((char_length(TRIM(BOTH FROM location_address)) >= 1) AND (char_length(TRIM(BOTH FROM location_address)) <= 250))))",
+          "references": null
+        },
+        {
+          "name": "projects_location_name_check",
+          "type": "c",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((location_name IS NULL) OR ((char_length(TRIM(BOTH FROM location_name)) >= 1) AND (char_length(TRIM(BOTH FROM location_name)) <= 150))))",
+          "references": null
+        },
+        {
+          "name": "projects_name_length_check",
+          "type": "c",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((char_length(TRIM(BOTH FROM name)) >= 1) AND (char_length(TRIM(BOTH FROM name)) <= 150)))",
+          "references": null
+        },
+        {
+          "name": "projects_owner_id_fkey",
+          "type": "f",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "FOREIGN KEY (owner_id) REFERENCES profiles(id) ON DELETE CASCADE",
+          "references": "profiles"
+        },
+        {
+          "name": "projects_pkey",
+          "type": "p",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "PRIMARY KEY (id)",
+          "references": null
+        },
+        {
+          "name": "projects_type_check",
+          "type": "c",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK ((type = ANY (ARRAY['wedding'::text, 'birthday'::text, 'baptism'::text, 'communion'::text, 'confirmation'::text, 'business'::text, 'other'::text])))",
+          "references": null
+        }
+      ],
+      "grants": [
+        {
+          "role": "authenticated",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "DELETE"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "INSERT"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "MAINTAIN"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "REFERENCES"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "TRIGGER"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "TRUNCATE"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "UPDATE"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "DELETE"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "INSERT"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "MAINTAIN"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "REFERENCES"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "TRIGGER"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "TRUNCATE"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "UPDATE"
+        }
+      ],
+      "column_grants": []
+    }
+  ],
+  "functions": [
+    {
+      "schema": "private",
+      "name": "handle_new_user",
+      "signature": "private.handle_new_user()",
+      "identity_arguments": "",
+      "result": "trigger",
+      "arguments": "",
+      "cost": 100,
+      "rows": 0,
+      "owner": "postgres",
+      "security_definer": true,
+      "settings": [
+        "search_path=\"\""
+      ],
+      "volatility": "v",
+      "parallel": "u",
+      "strict": false,
+      "leakproof": false,
+      "language": "plpgsql",
+      "body_lf_md5": "eb4228bb4d37aa48dcac41f7df01c039",
+      "grants": [
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ]
+    },
+    {
+      "schema": "private",
+      "name": "is_project_member",
+      "signature": "private.is_project_member(uuid,uuid)",
+      "identity_arguments": "p_project_id uuid, p_user_id uuid",
+      "result": "boolean",
+      "arguments": "p_project_id uuid, p_user_id uuid DEFAULT auth.uid()",
+      "cost": 100,
+      "rows": 0,
+      "owner": "postgres",
+      "security_definer": true,
+      "settings": [
+        "search_path=\"\""
+      ],
+      "volatility": "s",
+      "parallel": "u",
+      "strict": false,
+      "leakproof": false,
+      "language": "sql",
+      "body_lf_md5": "456f8b2b83497c80b559709e36de7ec3",
+      "grants": [
+        {
+          "role": "authenticated",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ]
+    },
+    {
+      "schema": "private",
+      "name": "is_project_owner",
+      "signature": "private.is_project_owner(uuid,uuid)",
+      "identity_arguments": "p_project_id uuid, p_user_id uuid",
+      "result": "boolean",
+      "arguments": "p_project_id uuid, p_user_id uuid DEFAULT auth.uid()",
+      "cost": 100,
+      "rows": 0,
+      "owner": "postgres",
+      "security_definer": true,
+      "settings": [
+        "search_path=\"\""
+      ],
+      "volatility": "s",
+      "parallel": "u",
+      "strict": false,
+      "leakproof": false,
+      "language": "sql",
+      "body_lf_md5": "c09ce26452f19a1aa62ae11f32737bd9",
+      "grants": [
+        {
+          "role": "authenticated",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ]
+    },
+    {
+      "schema": "private",
+      "name": "update_timestamp",
+      "signature": "private.update_timestamp()",
+      "identity_arguments": "",
+      "result": "trigger",
+      "arguments": "",
+      "cost": 100,
+      "rows": 0,
+      "owner": "postgres",
+      "security_definer": false,
+      "settings": [
+        "search_path=\"\""
+      ],
+      "volatility": "v",
+      "parallel": "u",
+      "strict": false,
+      "leakproof": false,
+      "language": "plpgsql",
+      "body_lf_md5": "edfe945cb42f07db97719fd063f86a40",
+      "grants": [
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ]
+    },
+    {
+      "schema": "public",
+      "name": "create_project",
+      "signature": "create_project(text,text,date,text,time without time zone,text,text)",
+      "identity_arguments": "p_name text, p_type text, p_start_date date, p_custom_type text, p_start_time time without time zone, p_location_name text, p_location_address text",
+      "result": "projects",
+      "arguments": "p_name text, p_type text, p_start_date date, p_custom_type text DEFAULT NULL::text, p_start_time time without time zone DEFAULT NULL::time without time zone, p_location_name text DEFAULT NULL::text, p_location_address text DEFAULT NULL::text",
+      "cost": 100,
+      "rows": 0,
+      "owner": "postgres",
+      "security_definer": true,
+      "settings": [
+        "search_path=\"\""
+      ],
+      "volatility": "v",
+      "parallel": "u",
+      "strict": false,
+      "leakproof": false,
+      "language": "plpgsql",
+      "body_lf_md5": "db6748e3e6ea4de378de9a645243ab1b",
+      "grants": [
+        {
+          "role": "authenticated",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ]
+    },
+    {
+      "schema": "public",
+      "name": "delete_project",
+      "signature": "delete_project(uuid)",
+      "identity_arguments": "p_project_id uuid",
+      "result": "void",
+      "arguments": "p_project_id uuid",
+      "cost": 100,
+      "rows": 0,
+      "owner": "postgres",
+      "security_definer": true,
+      "settings": [
+        "search_path=\"\""
+      ],
+      "volatility": "v",
+      "parallel": "u",
+      "strict": false,
+      "leakproof": false,
+      "language": "plpgsql",
+      "body_lf_md5": "4465b59415ae89c110a2d462d01f34e0",
+      "grants": [
+        {
+          "role": "authenticated",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ]
+    },
+    {
+      "schema": "public",
+      "name": "update_project",
+      "signature": "update_project(uuid,text,text,date,text,time without time zone,text,text)",
+      "identity_arguments": "p_project_id uuid, p_name text, p_type text, p_start_date date, p_custom_type text, p_start_time time without time zone, p_location_name text, p_location_address text",
+      "result": "projects",
+      "arguments": "p_project_id uuid, p_name text, p_type text, p_start_date date, p_custom_type text DEFAULT NULL::text, p_start_time time without time zone DEFAULT NULL::time without time zone, p_location_name text DEFAULT NULL::text, p_location_address text DEFAULT NULL::text",
+      "cost": 100,
+      "rows": 0,
+      "owner": "postgres",
+      "security_definer": true,
+      "settings": [
+        "search_path=\"\""
+      ],
+      "volatility": "v",
+      "parallel": "u",
+      "strict": false,
+      "leakproof": false,
+      "language": "plpgsql",
+      "body_lf_md5": "b2d043569ff932ba6a21bbea5713e977",
+      "grants": [
+        {
+          "role": "authenticated",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        },
+        {
+          "role": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        },
+        {
+          "role": "service_role",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ]
+    }
+  ],
+  "indexes": [
+    {
+      "schema": "public",
+      "table_name": "profiles",
+      "name": "profiles_email_key",
+      "definition": "CREATE UNIQUE INDEX profiles_email_key ON public.profiles USING btree (email)",
+      "primary": false,
+      "unique": true,
+      "valid": true,
+      "ready": true
+    },
+    {
+      "schema": "public",
+      "table_name": "profiles",
+      "name": "profiles_pkey",
+      "definition": "CREATE UNIQUE INDEX profiles_pkey ON public.profiles USING btree (id)",
+      "primary": true,
+      "unique": true,
+      "valid": true,
+      "ready": true
+    },
+    {
+      "schema": "public",
+      "table_name": "projects",
+      "name": "projects_owner_id_idx",
+      "definition": "CREATE INDEX projects_owner_id_idx ON public.projects USING btree (owner_id)",
+      "primary": false,
+      "unique": false,
+      "valid": true,
+      "ready": true
+    },
+    {
+      "schema": "public",
+      "table_name": "projects",
+      "name": "projects_pkey",
+      "definition": "CREATE UNIQUE INDEX projects_pkey ON public.projects USING btree (id)",
+      "primary": true,
+      "unique": true,
+      "valid": true,
+      "ready": true
+    }
+  ],
+  "policies": [
+    {
+      "schema": "public",
+      "table_name": "profiles",
+      "name": "profiles_select",
+      "command": "r",
+      "permissive": true,
+      "roles": [
+        "authenticated"
+      ],
+      "using": "(id = auth.uid())",
+      "check": null
+    },
+    {
+      "schema": "public",
+      "table_name": "profiles",
+      "name": "profiles_update",
+      "command": "w",
+      "permissive": true,
+      "roles": [
+        "authenticated"
+      ],
+      "using": "(id = auth.uid())",
+      "check": "(id = auth.uid())"
+    },
+    {
+      "schema": "public",
+      "table_name": "projects",
+      "name": "projects_select",
+      "command": "r",
+      "permissive": true,
+      "roles": [
+        "authenticated"
+      ],
+      "using": "private.is_project_member(id)",
+      "check": null
+    }
+  ],
+  "triggers": [
+    {
+      "schema": "auth",
+      "table_name": "users",
+      "name": "on_auth_user_created",
+      "enabled": "O",
+      "definition": "CREATE TRIGGER on_auth_user_created AFTER INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION private.handle_new_user()",
+      "function": "private.handle_new_user()"
+    },
+    {
+      "schema": "public",
+      "table_name": "profiles",
+      "name": "set_profiles_updated_at",
+      "enabled": "O",
+      "definition": "CREATE TRIGGER set_profiles_updated_at BEFORE UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION private.update_timestamp()",
+      "function": "private.update_timestamp()"
+    },
+    {
+      "schema": "public",
+      "table_name": "projects",
+      "name": "set_projects_updated_at",
+      "enabled": "O",
+      "definition": "CREATE TRIGGER set_projects_updated_at BEFORE UPDATE ON public.projects FOR EACH ROW EXECUTE FUNCTION private.update_timestamp()",
+      "function": "private.update_timestamp()"
+    },
+    {
+      "schema": "public",
+      "table_name": "projects",
+      "name": "storage_project_deleted",
+      "enabled": "O",
+      "definition": "CREATE TRIGGER storage_project_deleted AFTER DELETE ON public.projects FOR EACH ROW EXECUTE FUNCTION private.storage_project_deleted()",
+      "function": "private.storage_project_deleted()"
+    }
+  ],
+  "schema_permissions": [
+    {
+      "schema": "private",
+      "owner": "postgres",
+      "anon_usage": false,
+      "member_usage": false,
+      "service_usage": false,
+      "anon_create": false,
+      "member_create": false,
+      "service_create": false
+    },
+    {
+      "schema": "public",
+      "owner": "pg_database_owner",
+      "anon_usage": true,
+      "member_usage": true,
+      "service_usage": true,
+      "anon_create": false,
+      "member_create": false,
+      "service_create": false
+    }
+  ]
+}

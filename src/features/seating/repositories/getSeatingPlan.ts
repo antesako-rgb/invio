@@ -4,6 +4,7 @@ import type { SeatingDatabase } from "@/features/project-guests/types/database";
 import { resolveGuestRsvp } from "@/features/project-guests/utils/resolveRsvp";
 import { sortSeatingTables } from "../validation/seatingUx";
 import { getAttendanceOverrides } from "@/features/project-guests/repositories/attendanceOverrides";
+import { getSeatingElements } from "./getSeatingElements";
 export async function getSeatingPlan(planId: string) {
     if (process.env.PROJECT_GUESTS_ENABLED !== "true")
         return null;
@@ -14,6 +15,7 @@ export async function getSeatingPlan(planId: string) {
     const plan = planResult.data;
     if (!plan)
         return null;
+    const elements = await getSeatingElements(plan.id, plan.project_id);
     const [people, members, tables, assignments] = await Promise.all([db.from("project_guests").select("*").eq("project_id", plan.project_id), db.from("seating_plan_guests").select("*").eq("plan_id", plan.id), db.from("seating_tables").select("*").eq("plan_id", plan.id), db.from("seating_assignments").select("*").eq("plan_id", plan.id)]);
     for (const result of [people, members, tables, assignments])
         if (result.error)
@@ -68,5 +70,5 @@ export async function getSeatingPlan(planId: string) {
             attendance[person.id] = { ...resolveGuestRsvp(personalized.get(person.id), generic.get(person.id) ?? []), ...(manual?{status:manual}:{}),manual:!!manual, hasInvitationLink: linkedPeople.has(person.id) };
         }
     }
-    return { plan, people: people.data ?? [], participants: members.data ?? [], tables: sortSeatingTables(tables.data ?? []), assignments: assignments.data ?? [], attendance, invitationGroups,guestGroups,unlinkedGenericGuests,attendanceSetupRequired };
+    return { plan, ...elements, people: people.data ?? [], participants: members.data ?? [], tables: sortSeatingTables(tables.data ?? []), assignments: assignments.data ?? [], attendance, invitationGroups,guestGroups,unlinkedGenericGuests,attendanceSetupRequired };
 }

@@ -4,6 +4,8 @@ export function invitationGuestError(error: unknown, group = false): ActionError
   if (!error || typeof error !== "object") return "GUEST_ACTION_FAILED";
   const code = "code" in error ? String(error.code) : "";
   const message = "message" in error ? String(error.message).toLowerCase() : "";
+  // No automatic retry: the user must reload the changed guest before deleting.
+  if (code === "PT409" || (code === "40001" && message === "gost je u međuvremenu promijenjen. pokušajte ponovno.")) return "CONFLICT";
   if (code === "42501" || code === "PGRST301" || code === "PGRST302") return "FORBIDDEN";
   if (code === "P0002" || code === "PGRST116") return "NOT_FOUND";
   if (code === "23505") return group ? "GUEST_GROUP_EXISTS" : "GUEST_ACTION_FAILED";

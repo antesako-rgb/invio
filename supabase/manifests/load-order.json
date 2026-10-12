@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "status": "provisional",
+  "target": "clean Supabase Cloud TEST/beta ONLY; never existing DEV",
+  "executable": false,
+  "blockers": [
+    "public.project_collaborators not prepared",
+    "public.photo_walls not prepared",
+    "private.storage_project_deleted() and Storage lifecycle not prepared",
+    "TEST platform identity/prerequisites not inspected"
+  ],
+  "platform_prerequisites": [
+    "PostgreSQL 17+ (including MAINTAIN ACL parity)",
+    "Supabase roles postgres/anon/authenticated/service_role",
+    "managed public, auth.users, auth.uid()",
+    "extensions.gen_random_bytes (pgcrypto) for create_project"
+  ],
+  "phases": [
+    {
+      "id": "platform",
+      "status": "requires_target_inspection",
+      "files": []
+    },
+    {
+      "id": "foundation",
+      "status": "prepared",
+      "files": [
+        "supabase/schemas/foundation/schemas.sql"
+      ]
+    },
+    {
+      "id": "tables",
+      "status": "partial",
+      "files": [
+        "supabase/schemas/identity/profiles/table.sql",
+        "supabase/schemas/projects/projects/table.sql"
+      ],
+      "remaining_order": [
+        "project_collaborators",
+        "project_collaboration_invites",
+        "project_guests",
+        "invitations and product roots",
+        "recipient/group/guest tables",
+        "RSVP",
+        "seating",
+        "photo relations",
+        "Storage private state"
+      ]
+    },
+    {
+      "id": "supporting_indexes",
+      "status": "partial",
+      "files": [
+        "supabase/schemas/projects/projects/indexes.sql"
+      ],
+      "note": "PK/UNIQUE backing indexes come only from table constraints"
+    },
+    {
+      "id": "global_functions_independent",
+      "status": "prepared",
+      "files": [
+        "supabase/schemas/global_functions/private.update_timestamp.sql",
+        "supabase/schemas/global_functions/private.handle_new_user.sql",
+        "supabase/schemas/global_functions/private.is_project_owner.sql"
+      ]
+    },
+    {
+      "id": "global_member",
+      "status": "blocked",
+      "requires": [
+        "table:public.project_collaborators",
+        "function:private.is_project_owner(uuid,uuid)"
+      ],
+      "files": [
+        "supabase/schemas/global_functions/private.is_project_member.sql"
+      ]
+    },
+    {
+      "id": "domain_functions",
+      "status": "partial_blocked",
+      "files": [
+        "supabase/schemas/projects/projects/functions/public.create_project.sql",
+        "supabase/schemas/projects/projects/functions/public.update_project.sql",
+        "supabase/schemas/projects/projects/functions/public.delete_project.sql"
+      ],
+      "note": "create requires photo_walls; delete parity requires Storage trigger and all cascade domains"
+    },
+    {
+      "id": "rls",
+      "status": "partial_blocked",
+      "files": [
+        "supabase/schemas/identity/profiles/rls.sql",
+        "supabase/schemas/projects/projects/rls.sql"
+      ]
+    },
+    {
+      "id": "triggers",
+      "status": "partial_blocked",
+      "files": [
+        "supabase/schemas/identity/profiles/triggers.sql",
+        "supabase/schemas/projects/projects/triggers.sql"
+      ],
+      "note": "projects trigger file is blocked by Storage; Auth users is never recreated"
+    },
+    {
+      "id": "acl_before_commit",
+      "status": "prepared",
+      "files": [
+        "supabase/schemas/identity/profiles/grants.sql",
+        "supabase/schemas/projects/projects/grants.sql"
+      ],
+      "note": "Use atomic reviewed reconstruction/migration units. Function files include immediate explicit EXECUTE ACLs; never commit default broad rights."
+    },
+    {
+      "id": "verify",
+      "status": "prepared_for_existing_DEV_read_only",
+      "files": [
+        "supabase/verify/assert/profiles_projects.sql"
+      ]
+    },
+    {
+      "id": "external_storage_configuration",
+      "status": "not_started",
+      "files": [],
+      "note": "Buckets, Vault secret provisioning, HTTP endpoint and disabled-by-default TEST cron are manual reviewed setup, not copied data."
+    }
+  ],
+  "atomic_execution_rule": "No individual declarations replayed on DEV. A future user-approved reconstruction bundle must preflight target/prerequisites and wrap each safe unit in BEGIN/COMMIT with explicit grants; there is no executable baseline in this phase.",
+  "pending_feature_changes": [
+    {
+      "id": "20261012180000_seating_elements",
+      "manifest": "supabase/manifests/seating-elements.change.json",
+      "status": "applied_dev_verified",
+      "note": "Feature install order is explicit; global clean reconstruction remains blocked and non-executable."
+    },
+    {
+      "id": "20261012210000_seating_appearance",
+      "manifest": "supabase/manifests/seating-appearance.change.json",
+      "status": "applied_dev_verified",
+      "note": "User-applied DEV appearance migration, read-only catalog verified; release active. Clean baseline remains non-executable."
+    },
+    {
+      "id": "20261012223000_seating_preset_styles",
+      "manifest": "supabase/manifests/seating-preset-styles.change.json",
+      "status": "applied_dev_verified",
+      "note": "User-applied DEV migration; exact read-only verification and native type regeneration confirmed; preset frontend active. No clean baseline executed."
+    }
+  ]
+}

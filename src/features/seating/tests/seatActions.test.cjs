@@ -118,7 +118,7 @@ test("a seat RPC failure preserves its distinct code and does not invalidate suc
 });
 
 test("a stale expected revision surfaces a conflict without retrying the write", async () => {
-  rpcResult = { data: null, error: { code: "40001", message: "Revision conflict" } };
+  rpcResult = { data: null, error: { code: "PT409", message: "Revision conflict" }, status: 409 };
   assert.deepEqual(await assignSeatingGuestToSeatAction(input), { success: false, code: "REVISION_CONFLICT" });
   assert.equal(calls.length, 1);
   assert.deepEqual(revalidations, []);
@@ -186,6 +186,7 @@ test("SQL guards map to actionable editor codes without exposing raw SQL message
   for (const value of [null, undefined, "Seat occupied", {}, { message: null }])
     assert.equal(getSeatingErrorCode(value), "SEATING_FAILED");
   assert.equal(getSeatingErrorCode({ code: "40001", message: "Table full" }), "REVISION_CONFLICT");
+  assert.equal(getSeatingErrorCode({ code: "PT409", message: "Revision conflict" }), "REVISION_CONFLICT");
 });
 
 const {assignSeatingGuestsAction}=load(path.resolve(__dirname,"../actions/seatingActions.ts"));
@@ -205,7 +206,7 @@ test("missing 007 is actionable and never falls back to partially saved individu
  assert.equal(calls.length,2);
 });
 test("batch conflicts and uncertain outcomes stop without retrying the selected group",async()=>{
- rpcResult={data:null,error:{code:"40001",message:"Revision conflict"},status:409};assert.equal((await assignSeatingGuestsAction(batchPayload)).code,"REVISION_CONFLICT");
+ rpcResult={data:null,error:{code:"PT409",message:"Revision conflict"},status:409};assert.equal((await assignSeatingGuestsAction(batchPayload)).code,"REVISION_CONFLICT");
  rpcResult={data:null,error:{message:"Gateway timeout"},status:504};assert.equal((await assignSeatingGuestsAction(batchPayload)).code,"SEATING_UNCONFIRMED");
  rpcThrows=true;assert.equal((await assignSeatingGuestsAction(batchPayload)).code,"SEATING_UNCONFIRMED");assert.equal(calls.length,3);
 });
@@ -227,7 +228,7 @@ test("missing manual RPC stays actionable with no individual-write fallback",asy
 });
 test("manual groups stop on occupied chairs, conflicts and uncertain transport outcomes",async()=>{
  rpcResult={data:null,error:{code:"23505",message:"Seat occupied"},status:409};assert.equal((await assignSeatingGuestsToSeatsAction(manualPayload)).code,"SEAT_OCCUPIED");
- rpcResult={data:null,error:{code:"40001",message:"Revision conflict"},status:409};assert.equal((await assignSeatingGuestsToSeatsAction(manualPayload)).code,"REVISION_CONFLICT");
+ rpcResult={data:null,error:{code:"PT409",message:"Revision conflict"},status:409};assert.equal((await assignSeatingGuestsToSeatsAction(manualPayload)).code,"REVISION_CONFLICT");
  rpcThrows=true;assert.equal((await assignSeatingGuestsToSeatsAction(manualPayload)).code,"SEATING_UNCONFIRMED");assert.equal(calls.length,3);
 });
 test("feature flag also gates manual bulk before client creation",async()=>{

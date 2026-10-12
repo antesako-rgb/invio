@@ -51,6 +51,13 @@ import CreateSeatingTableDialog from "./CreateSeatingTableDialog";
 import SeatAssignmentDialog from "./SeatAssignmentDialog";
 import SeatingPlanSettingsPanel, { getPlanSettingsDraft, isPlanSettingsDraftUnchanged, type PlanSettingsDraft } from "./SeatingPlanSettingsPanel";
 import styles from "./SeatingWorkspace.module.css";
+import PresetPanel from "./appearance/PresetPanel";
+import { appearanceOf } from "../appearance/model";
+import { SEATING_APPEARANCE_RELEASE_ENABLED, SEATING_PRESET_STYLES_RELEASE_ENABLED } from "../appearance/release";
+import { setSeatingAppearanceAction } from "../actions/setSeatingAppearanceAction";
+import ElementsPanel from "./elements/ElementsPanel";
+import { elementDocument, elementFits, initialElement, type ElementKind, type SeatingElement } from "../elements/model";
+import { manageSeatingElementAction } from "../actions/manageSeatingElementAction";
 
 const Canvas = dynamic(() => import("./SeatingCanvas"), { ssr: false });
 const createdTableSchema = z.object({ id: z.string().uuid(), revision: z.number().int().positive() });
@@ -77,7 +84,8 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
   const [batchDraft,setBatchDraft]=useState<BatchDraft|null>(null);
   const [batchPicker,setBatchPicker]=useState<BatchRequest|null>(null);
   const [seatPicker, setSeatPicker] = useState<SeatAssignmentRequest | null>(null);
-  const [tab, setTab] = useState<"guests" | "table" | "settings">("guests");
+  const [tab, setTab] = useState<"guests" | "table" | "settings" | "elements">("guests");
+  const [selectedElementId, setSelectedElementId] = useState<string | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [planDraft, setPlanDraft] = useState<PlanSettingsDraft>(() => initial.current ? getPlanSettingsDraft(initial.current.plan) : { name:"",source:"" });
@@ -99,6 +107,43 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
     return { ...table, shape: table.shape } as SeatingTable;
   }));
   const selected = tables.find(table => table.id === selectedId) ?? null;
+  const elements = current?.elements ?? [];
+  const selectedElement = elements.find(e => e.id === selectedElementId) ?? null;
+  function geometryAlert(key: "geometry" | "elementGeometry" | "roomGeometry" | "longTableNoSpace") {
+    setMessage("");
+    toast.error(t(key), { id: "seating-geometry" });
+  }
+  function saveAppearance(target:"room"|"table_theme"|"element", id:string|null, appearance:Record<string,unknown>) {
+    if(!SEATING_APPEARANCE_RELEASE_ENABLED || !SEATING_PRESET_STYLES_RELEASE_ENABLED || !current || disabled || lock.current)return;
+    void mutate(()=>setSeatingAppearanceAction({planId:current.plan.id,revision:current.plan.revision,target,id,appearance,all:false}),{expectedRevision:current.plan.revision});
+  }
+  async function elementOperation(input: unknown) {
+    const result = await manageSeatingElementAction(input);
+    // The shared workspace confirmation expects a bigint revision number;
+    // the element action already validates its RPC's {id, revision} envelope.
+    return result.success ? { success:true as const, data:result.data.revision } : result;
+  }
+  function selectElement(id: string | null, openDetails = true) {
+    if (disabled || lock.current || seatPicker || batchPicker) return;
+    setSelectedElementId(id); setSelectedId(null);
+    if (!id && openDetails && SEATING_APPEARANCE_RELEASE_ENABLED) { setTab("settings"); setSidebarCollapsed(false); if (isMobile) setMobileOpen(true); }
+    if (id) { setTab("elements"); if (openDetails) { setSidebarCollapsed(false); if (isMobile) setMobileOpen(true); } }
+  }
+  async function addElement(kind: ElementKind) {
+    if (!current?.elementsAvailable || disabled || lock.current) return;
+    const element = initialElement(kind,t("element_" + kind),current.plan.width_cm,current.plan.height_cm);
+    if (!element || !elementFits(element,current.plan.width_cm,current.plan.height_cm)) { geometryAlert("elementGeometry"); return; }
+    await mutate(() => elementOperation({ operation:"create", planId:current.plan.id, revision:current.plan.revision, element }), {
+      expectedRevision:current.plan.revision, afterConfirmed:() => { setTab("elements"); setSelectedId(null); },
+    });
+  }
+  function saveElement(element: SeatingElement) {
+    if (!current?.elementsAvailable || disabled || lock.current) return;
+    if (!elementFits(element,current.plan.width_cm,current.plan.height_cm)) { geometryAlert("elementGeometry"); return; }
+    const previous = data;
+    setData({ ...data, current: { ...current, elements: elements.map(item => item.id === element.id ? element : item) } });
+    void mutate(() => elementOperation({ operation:"update", planId:current.plan.id, revision:current.plan.revision, id:element.id, element:elementDocument(element) }), { expectedRevision:current.plan.revision, rollback:() => setData(previous) });
+  }
   async function assignGuestToSeat(guestId: string, tableId: string | null, seatNumber: number | null) {
     if (!current || disabled || lock.current) return false;
     const person = current.people.find(item => item.id === guestId);
@@ -147,7 +192,7 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
   }
   function openBatchPicker(tableId:string|null,guestIds:string[] = [],exact=false) {
     if(disabled || lock.current) return;
-    setBatchDraft(null);setBatchPicker({tableId,guestIds,exact});setSeatPicker(null);setMobileOpen(false);setMessage("");setPan(false);
+    setSelectedElementId(null);setBatchDraft(null);setBatchPicker({tableId,guestIds,exact});setSeatPicker(null);setMobileOpen(false);setMessage("");setPan(false);
     setSidebarCollapsed(false);
     if(tableId){setSelectedId(tableId);setTab("table");}
   }
@@ -157,6 +202,7 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
   }
   function openSeatPicker(request: SeatAssignmentRequest, returnTo: "guests" | "table" = tab === "table" ? "table" : "guests") {
     if (!current || disabled || lock.current) return;
+    setSelectedElementId(null);
     if (!seatPicker) { setSeatReturn(returnTo); setTab(returnTo); }
     setBatchPicker(null); setSeatDraft(null);
     setSeatPicker(request); setPan(false); setMobileOpen(false); setMessage("");
@@ -207,7 +253,7 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
   function saveRoom(width: number, height: number) {
     if (!current || disabled || lock.current) return;
     if (width === current.plan.width_cm && height === current.plan.height_cm) return;
-    if (tables.some(table => !seatingGeometryFits(table, width, height))) { setMessage("geometry"); return; }
+    if (tables.some(table => !seatingGeometryFits(table, width, height)) || elements.some(e => !elementFits(e,width,height))) { geometryAlert("roomGeometry"); return; }
     const previous = data;
     setData({ ...data, current: { ...current, plan: { ...current.plan, width_cm: width, height_cm: height } } });
     void mutate(() => actions.manageSeatingPlanAction({
@@ -241,7 +287,7 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
       loaded = true;
       // An unconfirmed create may already exist. Review the reloaded plan before creating again.
       if (blocked) { setCreateTableShape(null); setSeatPicker(null); setBatchPicker(null); }
-      if (planId !== current?.plan.id) setSelectedId(null);
+      if (planId !== current?.plan.id) { setSelectedId(null); setSelectedElementId(null); }
     } catch { setMessage("loadFailed"); }
     finally { lock.current = false; setBusy(false); if (loaded) setRsvpRefresh(value => value + 1); }
   }
@@ -263,8 +309,9 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
         else if (result.code === "STANDARDIZE_PARTIAL") { setBlocked(true); setMessage("standardizePartial"); }
         else if (result.code === "STANDARDIZE_GEOMETRY") setMessage("standardizeGeometry");
         else {
-          const errors: Record<string, string> = { CAPACITY: "capacityError", ARCHIVED: "archivedError", SEAT_OCCUPIED: "seatOccupiedError", SEAT_RANGE: "seatRangeError", SEAT_CAPACITY: "seatCapacityError", SEAT_SHAPE: "seatShapeError", PARTICIPANT_MISSING: "seatParticipantError", SEATING_UPGRADE_REQUIRED: "batchUpgradeRequired", SEATING_MANUAL_UPGRADE_REQUIRED: "manualBatchUpgradeRequired", SEATING_RSVP_SETUP_REQUIRED:"rsvpSetupRequired",ATTENDANCE_SETUP_REQUIRED:"attendanceSetupRequired" };
-          setMessage(errors[result.code ?? ""] ?? "saveFailed");
+          const errors: Record<string, string> = { APPEARANCE_UNAVAILABLE:"appearanceUnavailable", APPEARANCE_INVALID:"appearanceInvalid", ELEMENTS_UNAVAILABLE:"elementsUnavailable", ELEMENT_GEOMETRY:"elementGeometry", ELEMENT_LOCKED:"elementLockedHelp", CAPACITY: "capacityError", ARCHIVED: "archivedError", SEAT_OCCUPIED: "seatOccupiedError", SEAT_RANGE: "seatRangeError", SEAT_CAPACITY: "seatCapacityError", SEAT_SHAPE: "seatShapeError", PARTICIPANT_MISSING: "seatParticipantError", SEATING_UPGRADE_REQUIRED: "batchUpgradeRequired", SEATING_MANUAL_UPGRADE_REQUIRED: "manualBatchUpgradeRequired", SEATING_RSVP_SETUP_REQUIRED:"rsvpSetupRequired",ATTENDANCE_SETUP_REQUIRED:"attendanceSetupRequired" };
+          if (result.code === "ELEMENT_GEOMETRY") geometryAlert("elementGeometry");
+          else setMessage(errors[result.code ?? ""] ?? "saveFailed");
         }
         return false;
       }
@@ -308,16 +355,16 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
     if (stored && stored.shape !== table.shape && assignments.some(item => item.seat_number !== null)) { setMessage("seatShapeError"); return; }
     if (capacityChanged) table = withTableCapacity({ ...table,capacity:stored.capacity,width_cm:stored.width_cm,height_cm:stored.height_cm },table.capacity);
     if (!tableSchema.safeParse(tableInput(table, "update")).success || !seatingGeometryFits(table, current.plan.width_cm, current.plan.height_cm)) {
-      setMessage(capacityChanged && table.shape === "rectangle" ? "longTableNoSpace" : "geometry"); return;
+      geometryAlert(capacityChanged && table.shape === "rectangle" ? "longTableNoSpace" : "geometry"); return;
     }
     const previous = data;
-    if (preview || capacityChanged) setData({ ...data, current: { ...current, tables: current.tables.map(item => item.id === table.id ? table : item) } });
+    if (preview || capacityChanged) setData({ ...data, current: { ...current, tables: current.tables.map(item => item.id === table.id ? {...item,...table} : item) } });
     void mutate(() => actions.manageSeatingTableAction(tableInput(table, "update")), { rollback: () => setData(previous) });
   }
   function openCreateTable(shape: SeatingTable["shape"]) {
     if (!current || disabled || lock.current) return;
      setPan(false); setMobileOpen(false); setMessage("");
-    setCreateTableShape(shape);
+    setSelectedElementId(null); setCreateTableShape(shape);
   }
   async function addTable(table: SeatingTable) {
     if (!current || disabled || lock.current) return false;
@@ -358,13 +405,13 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
     event.preventDefault(); if (!current || disabled || lock.current) return;
     const form = new FormData(event.currentTarget);
     const { width_cm:width,height_cm:height } = current.plan;
-    if (tables.some(table => !seatingGeometryFits(table, width, height))) { setMessage("geometry"); return; }
+    if (tables.some(table => !seatingGeometryFits(table, width, height)) || elements.some(e => !elementFits(e,width,height))) { geometryAlert("roomGeometry"); return; }
     await mutate(() => actions.manageSeatingPlanAction({ p_project_id: projectId, p_plan_id: current.plan.id, p_revision: current.plan.revision,
       p_operation: "update", p_name: String(form.get("name") ?? ""), p_width_cm: width, p_height_cm: height, p_rsvp_invitation_id: String(form.get("source") ?? "") || null }), { resetPlanDraft:true });
   }
 
   useSeatingRsvpSync({ planId:current?.plan.id ?? null,source:current?.plan.rsvp_invitation_id ?? null,refresh:rsvpRefresh,
-    enabled:!disabled && message !== "rsvpSetupRequired" && tab !== "table" && !seatPicker && !batchPicker && !addGuestOpen && !createTableShape && !removal && !standardize && !guestGesture.drag
+    enabled:!disabled && message !== "rsvpSetupRequired" && tab !== "table" && tab !== "elements" && !selectedElementId && !seatPicker && !batchPicker && !addGuestOpen && !createTableShape && !removal && !standardize && !guestGesture.drag
       && planDraft.source === (current?.plan.rsvp_invitation_id ?? ""),
     onSync:synchronizeRsvpGuests });
 
@@ -372,7 +419,7 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
   if (!current) return null;
   function selectTable(id: string | null, openDetails = true) {
     if (busy || lock.current) return;
-    setSelectedId(id);
+    setSelectedElementId(null); setSelectedId(id);
     if (openDetails && id) setSidebarCollapsed(false);
     if(openDetails && id && batchPicker){if(id!==batchPicker.tableId)setBatchDraft(previous=>previous?{...previous,choices:{}}:null);setBatchPicker({tableId:id,guestIds:batchDraft?.ids??batchPicker.guestIds,exact:batchDraft?.exact??batchPicker.exact});return;}
     if (openDetails && id && seatPicker) {
@@ -386,13 +433,14 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
   const navigationItems = [
     { id:"guests",href:"#guests",label:t("guestsTab"),icon:UsersRound },
     { id:"table",href:"#table",label:t("tableTab"),icon:Armchair },
+    ...(current.elementsAvailable ? [{ id:"elements",href:"#elements",label:t("elementsTab"),icon:RectangleHorizontal }] : []),
     { id:"settings",href:"#settings",label:t("settingsTab"),icon:Settings },
   ];
-  const panelTitle = tab === "guests" ? "guestsTab" : tab === "table" ? "tableTab" : "planSettings";
+  const panelTitle = tab === "elements" ? "elementsTab" : tab === "guests" ? "guestsTab" : tab === "table" ? "tableTab" : "planSettings";
   function navigatePanel(id: string, mobile = false) {
-    if (busy || lock.current || (id !== "guests" && id !== "table" && id !== "settings")) return;
+    if (busy || lock.current || (id !== "guests" && id !== "table" && id !== "settings" && id !== "elements")) return;
     setSeatPicker(null); setSeatDraft(null); setBatchPicker(null); setBatchDraft(null);
-    setTab(id); setSidebarCollapsed(false);
+    setTab(id); setSelectedElementId(null); setSidebarCollapsed(false);
     if (id === "table") setSelectedId(null);
     if (mobile || isMobile) setMobileOpen(true);
   }
@@ -411,11 +459,11 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
         <Button variant="ghost" className={ux.back} disabled={busy} onClick={closeSeatPicker}><ArrowLeft aria-hidden="true"/>{t(seatReturn==="table"?"backToTable":"backToGuests")}</Button>
         <SeatAssignmentForm key={JSON.stringify(seatPicker)+":"+current.plan.revision} request={seatPicker} current={current} tables={tables} saving={busy} blocked={blocked} error={message && message!=="saved"?message:null} fixedGuest={!!seatPicker.guestId} onClose={closeSeatPicker} onReload={()=>void reload()} onAssign={assignGuestToSeat} onAutoAssign={(id,tableId)=>assignGuestBatch([id],tableId,"auto")} initialChoice={seatDraft} onChoiceChange={setSeatDraft} onAddGuest={()=>openAddGuest(seatDraft ? seatDraft.tableId : seatPicker.tableId)}/>
       </div> : <div className={styles.panelContent}>
-        {tab === "settings" ? <SeatingPlanSettingsPanel plan={current.plan} invitations={data.invitations} tables={tables} draft={planDraft} disabled={disabled} saving={busy}
+        {tab === "elements" && current.elementsAvailable ? <ElementsPanel appearancePanel={SEATING_APPEARANCE_RELEASE_ENABLED && selectedElement?.kind === "dance_floor" ? <PresetPanel target="dance_floor" value={appearanceOf(selectedElement)} disabled={disabled} onChange={v=>saveAppearance("element",selectedElement.id,v)}/> : undefined} elements={elements} selected={selectedElement} disabled={disabled} onAdd={kind=>void addElement(kind)} onSelect={selectElement} onSave={saveElement} onDelete={e=>setRemoval({name:e.name,action:()=>elementOperation({operation:"delete",planId:current.plan.id,revision:current.plan.revision,id:e.id})})}/> : tab === "settings" ? <SeatingPlanSettingsPanel appearancePanel={SEATING_APPEARANCE_RELEASE_ENABLED ? <PresetPanel target="room" value={appearanceOf(current.plan)} disabled={disabled} onChange={v=>saveAppearance("room",null,v)}/> : undefined} plan={current.plan} invitations={data.invitations} tables={tables} draft={planDraft} disabled={disabled} saving={busy}
           onDraftChange={patch => setPlanDraft(previous => ({ ...previous,...patch }))} onReset={() => setPlanDraft(getPlanSettingsDraft(current.plan))}
           onSubmit={updatePlan} onStandardize={requestStandardize}
           onDelete={() => setRemoval({ name:current.plan.name,deletesPlan:true,action:() => actions.manageSeatingPlanAction({ p_project_id:projectId,p_plan_id:current.plan.id,p_revision:current.plan.revision,p_operation:"delete",p_name:null,p_width_cm:null,p_height_cm:null,p_rsvp_invitation_id:null }) })}/>
-          : tab === "table" ? <SeatingTablesPanel current={current} tables={tables} selected={selected} disabled={disabled} error={message && message!=="saved"?message:null}
+          : tab === "table" ? <SeatingTablesPanel appearancePanel={SEATING_PRESET_STYLES_RELEASE_ENABLED ? <PresetPanel target="table_theme" value={appearanceOf(current.plan)} disabled={disabled} onChange={v=>saveAppearance("table_theme",null,v)}/> : undefined} current={current} tables={tables} selected={selected} disabled={disabled} error={message && message!=="saved"?message:null}
           onSelect={selectTable} onFocus={focusTable} onAddGuest={tableId=>openBatchPicker(tableId)} onSelectSeat={chooseCanvasSeat}
           onSave={table=>saveTable(table)} onDuplicate={table=>void duplicateTable(table)}
           onDelete={table=>setRemoval({name:table.name,action:()=>actions.manageSeatingTableAction(tableInput(table,"delete"))})}/>
@@ -441,7 +489,7 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
         <EditorTooltip content={t("zoomOut")}><Button size="icon" variant="ghost" aria-label={t("zoomOut")} onClick={() => controls.current?.zoom(1 / 1.2)}><ZoomOut aria-hidden="true" /></Button></EditorTooltip>
         
         <EditorTooltip content={t("pan")}><Button size="icon" variant={pan ? "default" : "ghost"} aria-label={t("pan")} aria-pressed={pan} onClick={() => { setPan(value => !value); }}><Move aria-hidden="true" /></Button></EditorTooltip>
-        <EditorTooltip content={t("resizeRoom")}><Button size="icon" variant="ghost" disabled={disabled} aria-label={t("resizeRoom")} onClick={() => { setPan(false); setSelectedId(null); }}><RectangleHorizontal aria-hidden="true" /></Button></EditorTooltip>
+        <EditorTooltip content={t("resizeRoom")}><Button size="icon" variant="ghost" disabled={disabled} aria-label={t("resizeRoom")} onClick={() => { setPan(false); setSelectedId(null); setSelectedElementId(null); }}><RectangleHorizontal aria-hidden="true" /></Button></EditorTooltip>
         <EditorTooltip content={t("reload")}><Button size="icon" variant="ghost" disabled={busy} aria-label={t("reload")} onClick={() => void reload()}><RefreshCw aria-hidden="true" /></Button></EditorTooltip>
       </div>} />}
       mobileControls={<>
@@ -455,7 +503,7 @@ export default function SeatingWorkspace({ projectId, initial }: { projectId: st
         <EditorWorkspace sidebarPosition="left" sidebarCollapsed={sidebarCollapsed} sidebar={panel()}
           toolRail={<EditorToolRail items={navigationItems} activeId={tab} ariaLabel={t("inspector")} collapsed={sidebarCollapsed} disabled={busy}
             onToggleCollapsed={() => setSidebarCollapsed(value => !value)} onNavigate={navigatePanel}/>}>
-          <Canvas key={current.plan.id} controlsRef={controls} pan={pan} mobile={isMobile} guestDrag={guestGesture.drag} editingSeat={!!seatPicker || !!batchPicker} seatClicksDisabled={!!batchPicker} onSeatSelect={chooseCanvasSeat} people={current.people} onRoomChange={saveRoom} widthCm={current.plan.width_cm} heightCm={current.plan.height_cm} tables={tables} assignments={current.assignments} selectedId={selectedId} disabled={disabled || !!createTableShape || (isMobile && (!!seatPicker || !!batchPicker)) || addGuestOpen || !!removal || !!standardize} onSelect={selectTable} onChange={table => saveTable(table, true)} onInvalid={() => setMessage("geometry")} />
+          <Canvas roomAppearance={appearanceOf(current.plan)} elements={elements} selectedElementId={selectedElementId} onSelectElement={selectElement} onChangeElement={saveElement} key={current.plan.id} controlsRef={controls} pan={pan} mobile={isMobile} guestDrag={guestGesture.drag} editingSeat={!!seatPicker || !!batchPicker} seatClicksDisabled={!!batchPicker} onSeatSelect={chooseCanvasSeat} people={current.people} onRoomChange={saveRoom} widthCm={current.plan.width_cm} heightCm={current.plan.height_cm} tables={tables} assignments={current.assignments} selectedId={selectedId} disabled={disabled || !!createTableShape || (isMobile && (!!seatPicker || !!batchPicker)) || addGuestOpen || !!removal || !!standardize} onSelect={selectTable} onChange={table => saveTable(table, true)} onInvalid={kind => geometryAlert(kind === "element" ? "elementGeometry" : kind === "room" ? "roomGeometry" : "geometry")} />
         </EditorWorkspace>
       </div>
     </EditorShell>

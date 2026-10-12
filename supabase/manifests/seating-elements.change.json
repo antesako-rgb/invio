@@ -1,0 +1,55 @@
+{
+  "id": "20261012180000_seating_elements",
+  "status": "applied_dev_verified",
+  "release_enabled": true,
+  "project": "gdrwvoryapkgnfeislps",
+  "test_project": "cwhuknuhvzahxfoljohk",
+  "apply": "supabase/migrations/20261012180000_seating_elements.sql",
+  "preflight": "supabase/verify/assert/seating_elements_preflight.sql",
+  "verify": "supabase/verify/assert/seating_elements.sql",
+  "canonical_apply_sources": [
+    "supabase/schemas/seating/seating_elements/table.sql",
+    "supabase/schemas/seating/seating_elements/indexes.sql",
+    "supabase/schemas/seating/seating_elements/grants.sql",
+    "supabase/schemas/seating/seating_elements/rls.sql",
+    "supabase/schemas/seating/seating_elements/functions/private.seating_element_valid.sql",
+    "supabase/schemas/seating/seating_elements/functions/private.seating_element_guard.sql",
+    "supabase/schemas/seating/seating_elements/triggers.sql",
+    "supabase/schemas/seating/seating_elements/functions/public.manage_seating_element.sql",
+    "supabase/schemas/seating/seating_plans/functions/private.seating_plan_guard.sql",
+    "supabase/schemas/seating/seating_templates/functions/private.validate_seating_template.sql",
+    "supabase/schemas/seating/seating_templates/functions/public.create_seating_plan_from_template.sql"
+  ],
+  "applied_projects": [
+    "gdrwvoryapkgnfeislps"
+  ],
+  "scope": "existing DEV feature migration; NOT TEST reconstruction",
+  "table_grants": "authenticated SELECT only; PUBLIC/anon/service_role none",
+  "dependencies": [
+    "public.seating_plans",
+    "public.seating_templates",
+    "private.lock_seating_plan(uuid,bigint)",
+    "private.is_project_member(uuid,uuid)",
+    "private.seating_geometry_fits(text,integer,integer,integer,integer,integer,integer,integer)"
+  ],
+  "limits": {
+    "max_elements": 200
+  },
+  "baseline_executable": false,
+  "apply_sha256": "09fd5e22b3a6cb2a9ac5eae0f84e105d42667fba2f3705e4e9af0b6843f7ce96",
+  "local_sql_tests": {
+    "engine": "existing in-memory PGlite PostgreSQL 18.3",
+    "checks": 36,
+    "remote_access": false,
+    "concurrency_verified": false
+  },
+  "dev_read_only_baseline": {
+    "functions_inspected": 10,
+    "matched": true,
+    "transaction_read_only": "on",
+    "elements_installed": false
+  },
+  "verified_at": "2026-10-12",
+  "verification_evidence": "supabase/manifests/seating-elements.dev-verified.json",
+  "types_regenerated": true
+}

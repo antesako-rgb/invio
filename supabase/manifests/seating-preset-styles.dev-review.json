@@ -1,0 +1,117 @@
+{
+  "project_ref": "gdrwvoryapkgnfeislps",
+  "reviewed_at": "2026-10-12",
+  "read_only": true,
+  "catalog_match_with_baseline": true,
+  "previous_data_summary": {
+    "plans": [
+      {
+        "rows": 1,
+        "appearance": {
+          "floor_color": null,
+          "floor_style": "marble"
+        }
+      }
+    ],
+    "tables": [
+      {
+        "rows": 1,
+        "appearance": {
+          "cloth": "sage",
+          "texture": "plain",
+          "decoration": "none"
+        }
+      },
+      {
+        "rows": 1,
+        "appearance": {
+          "cloth": "sage",
+          "texture": "plain",
+          "decoration": "floral"
+        }
+      },
+      {
+        "rows": 1,
+        "appearance": {
+          "cloth": "sage",
+          "texture": "satin",
+          "decoration": "none"
+        }
+      },
+      {
+        "rows": 1,
+        "appearance": {
+          "cloth": "sage",
+          "texture": "satin",
+          "decoration": "floral"
+        }
+      }
+    ],
+    "elements": [
+      {
+        "kind": "dance_floor",
+        "rows": 2,
+        "appearance": {
+          "style": "classic_parquet",
+          "shadow": false,
+          "border_color": null
+        }
+      },
+      {
+        "kind": "dance_floor",
+        "rows": 1,
+        "appearance": {
+          "style": "classic_parquet",
+          "shadow": true,
+          "border_color": null
+        }
+      },
+      {
+        "kind": "dj_booth",
+        "rows": 1,
+        "appearance": {}
+      }
+    ],
+    "templates_count": 0,
+    "appearance_dependencies": [
+      "private.normalize_seating_appearance(text, jsonb)",
+      "private.seating_appearance_valid(text, jsonb)",
+      "private.seating_element_valid(jsonb, integer, integer)",
+      "private.validate_seating_template(jsonb, integer)",
+      "public.create_seating_plan_from_template(uuid, uuid, text, uuid)",
+      "public.get_public_photo_wall(text)",
+      "public.manage_seating_element(uuid, bigint, uuid, text, jsonb)",
+      "public.set_seating_appearance(uuid, bigint, text, uuid, jsonb, boolean)",
+      "public.update_photo_wall(uuid, text, jsonb)"
+    ],
+    "plans_with_mixed_table_appearance": 1,
+    "catalog_matches_verified_appearance": true
+  },
+  "user_reported_project_deleted": true,
+  "confirmed_after_cleanup": {
+    "plans": 0,
+    "tables": 0,
+    "elements": 0,
+    "templates": 0,
+    "table_appearance_column_dependencies": [
+      {
+        "type": "a",
+        "dependent": "default value for column appearance of table seating_tables"
+      },
+      {
+        "type": "a",
+        "dependent": "constraint seating_tables_appearance_check on table seating_tables"
+      },
+      {
+        "type": "n",
+        "dependent": "constraint seating_tables_appearance_check on table seating_tables"
+      }
+    ],
+    "table_appearance_source_dependencies": [
+      "public.create_seating_plan_from_template(uuid, uuid, text, uuid)",
+      "public.set_seating_appearance(uuid, bigint, text, uuid, jsonb, boolean)"
+    ]
+  },
+  "remote_mutations_by_agent": false,
+  "proposed_migration_not_applied": true
+}

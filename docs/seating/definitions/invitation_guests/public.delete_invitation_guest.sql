@@ -110,7 +110,7 @@ begin
   then
     raise exception
       'Gost je u međuvremenu promijenjen. Pokušajte ponovno.'
-      using errcode = '40001';
+      using errcode = 'PT409';
   end if;
 
 

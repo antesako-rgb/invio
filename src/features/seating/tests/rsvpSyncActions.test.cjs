@@ -9,9 +9,10 @@ function load(filename){
  const instance=new Module(filename);instance.filename=filename;instance.paths=Module._nodeModulePaths(path.dirname(filename));
  instance.require=function(request){
   if(request==="server-only")return {};
+  if(request.endsWith("/appearance/release"))return {SEATING_APPEARANCE_RELEASE_ENABLED:true};
   if(request==="next/cache")return {revalidatePath:(...args)=>state.revalidated.push(args)};
   if(request==="@/lib/supabase/server")return {createServerClient:async()=>{state.clients++;return {
-   from(table){assert.equal(table,"invitations");let project;return {select(){return this;},eq(key,value){assert.equal(key,"project_id");project=value;return this;},limit(limit){state.reads.push({table,project,limit});return Promise.resolve({data:state.invitations.filter(item=>item.project_id===project).slice(0,limit),error:state.readError});}};},
+   from(table){if(table==="seating_templates")return {select(){return this;},eq(){return this;},maybeSingle:async()=>({data:{document_version:2},error:null})};assert.equal(table,"invitations");let project;return {select(){return this;},eq(key,value){assert.equal(key,"project_id");project=value;return this;},limit(limit){state.reads.push({table,project,limit});return Promise.resolve({data:state.invitations.filter(item=>item.project_id===project).slice(0,limit),error:state.readError});}};},
    rpc:async(name,args)=>{state.calls.push({name,args});if(state.throws)throw Error("Transport interrupted");return state.result;},
   };}};
   if(request.startsWith(".")||request.startsWith("@/")){
@@ -51,7 +52,7 @@ test("malformed or implausible acknowledgement requires reload and never invalid
  assert.equal(state.revalidated.length,0);
 });
 test("missing model, revision conflict and transport failures remain distinct and never retry a write",async()=>{
- for(const [error,status,code]of [[{code:"PGRST202"},404,"SEATING_RSVP_SETUP_REQUIRED"],[{code:"42883"},400,"SEATING_RSVP_SETUP_REQUIRED"],[{code:"40001"},400,"REVISION_CONFLICT"],[{message:"Gateway timeout"},504,"SEATING_UNCONFIRMED"]]){
+ for(const [error,status,code]of [[{code:"PGRST202"},404,"SEATING_RSVP_SETUP_REQUIRED"],[{code:"42883"},400,"SEATING_RSVP_SETUP_REQUIRED"],[{code:"PT409"},409,"REVISION_CONFLICT"],[{code:"40001"},400,"REVISION_CONFLICT"],[{message:"Gateway timeout"},504,"SEATING_UNCONFIRMED"]]){
   state.calls=[];state.result={error,data:null,status};assert.equal((await syncSeatingRsvpGuestsAction(input)).code,code);assert.equal(state.calls.length,1);
  }
  state.throws=true;assert.equal((await syncSeatingRsvpGuestsAction(input)).code,"SEATING_UNCONFIRMED");assert.equal(state.revalidated.length,0);

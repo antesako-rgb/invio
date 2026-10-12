@@ -32,10 +32,13 @@ function load(filename) {
     if(request==="react/jsx-runtime")return runtime;
     if(request==="next-intl")return {useTranslations:()=>key=>key};
     if(request==="next/dynamic")return {__esModule:true,default:()=>"Canvas"};
-    if(request==="sonner")return {toast:{info(){},success:(...args)=>context.toasts.push(args)}};
+    if(request.endsWith("/appearance/release"))return {get SEATING_APPEARANCE_RELEASE_ENABLED(){return context?.appearanceEnabled??false;},get SEATING_PRESET_STYLES_RELEASE_ENABLED(){return context?.appearanceEnabled??false;}};
+    if(request==="sonner")return {toast:{info(){},error:(...args)=>context.toasts.push(args),success:(...args)=>context.toasts.push(args)}};
     if(request==="lucide-react")return new Proxy({},{get:(_,key)=>key});
     if(request==="@/i18n/navigation")return {useRouter:()=>({replace:value=>context.routes.push(value),push:value=>context.routes.push(value)})};
     if(request==="../actions/seatingActions")return new Proxy({},{get:(_,key)=>input=>context.action(key,input)});
+    if(request==="../actions/setSeatingAppearanceAction")return {setSeatingAppearanceAction:input=>context.action("setSeatingAppearanceAction",input)};
+    if(request==="../actions/manageSeatingElementAction")return {manageSeatingElementAction:input=>context.action("manageSeatingElementAction",input)};
     if(request==="../actions/loadSeatingWorkspaceAction")return {loadSeatingWorkspaceAction:async()=>context.loadFailure?{success:false}:({success:true,data:structuredClone(context.confirmed)})};
     if(request==="../actions/syncSeatingRsvpGuestsAction")return {syncSeatingRsvpGuestsAction:input=>context.action("syncSeatingRsvpGuestsAction",input)};
     if(request==="../actions/includeGenericSeatingGuestAction")return {includeGenericSeatingGuestAction:input=>context.action("includeGenericSeatingGuestAction",input)};
@@ -71,7 +74,7 @@ function fixture(t, changes={}) {
   const table={id:"table",name:"Stol 1",shape:"round",capacity:8,width_cm:229,height_cm:229,x_cm:500,y_cm:500,rotation_deg:0};
   const initial={invitations:[{id:"invite",name:"RSVP"}],current:{
     tables:[table],people:[],participants:[],assignments:[],attendance:{},...changes,
-    plan:{id:"plan",project_id:"project",name:"Plan",width_cm:2000,height_cm:1500,rsvp_invitation_id:null,revision:1,...changes.plan},
+    plan:{appearance:{floor_style:"neutral",table_theme:"generic"},id:"plan",project_id:"project",name:"Plan",width_cm:2000,height_cm:1500,rsvp_invitation_id:null,revision:1,...changes.plan},
   }};
   const owner={slots:[],index:0,mobile:false,calls:[],routes:[],toasts:[],confirmed:structuredClone(initial),pause:null,excluded:new Set()};
   owner.action=async(name,input)=>{
@@ -85,6 +88,11 @@ function fixture(t, changes={}) {
       return {success:true,data:{revision:current.plan.revision,added_count:added.length}};
     }
     if(name==="manageSeatingPlanAction" && input.p_operation==="update")Object.assign(owner.confirmed.current.plan,{name:input.p_name.trim(),width_cm:input.p_width_cm,height_cm:input.p_height_cm,rsvp_invitation_id:input.p_rsvp_invitation_id});
+    if(name==="setSeatingAppearanceAction") {
+      const current=owner.confirmed.current;
+      if(input.target==="room"||input.target==="table_theme")current.plan.appearance={...current.plan.appearance,...structuredClone(input.appearance)};
+      else for(const row of current.elements)if(row.id===input.id)row.appearance=structuredClone(input.appearance);
+    }
     if(name==="assignSeatingGuestsAction" && input.p_mode==="include")for(const id of input.p_guest_ids) {
       if(!owner.confirmed.current.participants.some(member=>member.project_guest_id===id))owner.confirmed.current.participants.push({project_guest_id:id});
     }
@@ -97,6 +105,96 @@ function fixture(t, changes={}) {
   async function settle(){for(let i=0;i<8;i++)await Promise.resolve();}
   render();return {owner,find,render,submit,settle,navigate:id=>find("EditorToolRail").props.onNavigate(id),sync(){render();return owner.rsvpSync.enabled?owner.rsvpSync.onSync():Promise.resolve(false);}};
 }
+
+test("uninstalled elements leave the existing editor and navigation available", t=>{
+  const view=fixture(t,{elements:[],elementsAvailable:false});
+  assert.equal(view.find("EditorToolRail").props.items.some(item=>item.id==="elements"),false);
+  assert.ok(view.find("Canvas"));assert.equal(view.owner.calls.length,0);
+});
+
+test("shared table theme without selecting a table sends one revision-checked operation without geometry or guest fields",async t=>{
+ const view=fixture(t);view.owner.appearanceEnabled=true;
+ view.navigate("table");
+ const panel=view.find("SeatingTablesPanel").props.appearancePanel;
+ assert.equal(panel.props.onAll,undefined);
+ panel.props.onChange({table_theme:"elegant_gold"});await view.settle();
+ assert.equal(view.owner.calls.length,1);
+ assert.deepEqual(view.owner.calls[0],{name:"setSeatingAppearanceAction",input:{planId:"plan",revision:1,target:"table_theme",id:null,appearance:{table_theme:"elegant_gold"},all:false}});
+ assert.equal(view.owner.confirmed.current.tables[0].width_cm,229);
+ assert.deepEqual(view.owner.confirmed.current.assignments,[]);
+});
+
+test("room appearance reloads the confirmed value and keeps unsaved plan settings",async t=>{
+ const view=fixture(t);view.owner.appearanceEnabled=true;view.navigate("settings");
+ view.find("SeatingPlanSettingsPanel").props.onDraftChange({name:"Draft"});
+ view.find("SeatingPlanSettingsPanel").props.appearancePanel.props.onChange({floor_style:"marble"});
+ await view.settle();
+ assert.deepEqual(view.find("Canvas").props.roomAppearance,{floor_style:"marble",table_theme:"generic"});
+ assert.equal(view.find("SeatingPlanSettingsPanel").props.draft.name,"Draft");
+ assert.equal(view.find("SeatingPlanSettingsPanel").props.plan.revision,2);
+ assert.equal(view.find("EditorSaveStatus").props.status,"saved");
+});
+
+test("appearance conflict blocks further appearance writes until explicit reload",async t=>{
+ const view=fixture(t);view.owner.appearanceEnabled=true;view.navigate("settings");
+ view.owner.action=async(name,input)=>{view.owner.calls.push({name,input});return {success:false,code:"REVISION_CONFLICT"};};
+ const update=()=>view.find("SeatingPlanSettingsPanel").props.appearancePanel.props.onChange({floor_style:"tiles"});
+ update();await view.settle();update();await view.settle();
+ assert.equal(view.owner.calls.length,1);assert.equal(view.find("Canvas").props.disabled,true);
+ const reload=nodes(view.find("EditorHeader").props.end).find(node=>node.props["aria-label"]==="reload");
+ reload.props.onClick();await view.settle();
+ assert.equal(view.find("Canvas").props.disabled,false);
+});
+
+test("mobile background click opens existing room settings, while pan start only clears selection",t=>{
+ const view=fixture(t);view.owner.appearanceEnabled=true;view.owner.mobile=true;
+ view.find("Canvas").props.onSelectElement(null,false);
+ assert.equal(view.find("EditorMobilePanel").props.open,false);
+ view.find("Canvas").props.onSelectElement(null,true);
+ assert.equal(view.find("EditorMobilePanel").props.open,true);
+ assert.equal(view.find("EditorMobileNavigation").props.activeId,"settings");
+ assert.ok(view.find("SeatingPlanSettingsPanel").props.appearancePanel);
+ assert.equal(view.owner.calls.length,0);
+});
+test("element JSON acknowledgements use the shared numeric revision confirmation",async t=>{
+  const e={id:"element",project_id:"project",plan_id:"plan",kind:"dj_booth",name:"DJ",width_cm:200,height_cm:100,x_cm:500,y_cm:500,rotation_deg:0,z_index:0,locked:true};
+  const view=fixture(t,{elements:[e],elementsAvailable:true});
+  view.owner.action=async(name,input)=>{view.owner.calls.push({name,input});view.owner.confirmed.current.elements=[{...e,...input.element}];view.owner.confirmed.current.plan.revision++;return {success:true,data:{id:e.id,revision:2}};};
+  view.navigate("elements");view.find("elements/ElementsPanel").props.onSelect(e.id);
+  view.find("elements/ElementsPanel").props.onSave({...e,locked:false});await view.settle();
+  assert.equal(view.owner.calls.length,1);assert.equal(view.owner.calls[0].input.revision,1);
+  assert.equal(view.find("Canvas").props.disabled,false);assert.equal(view.find("Canvas").props.elements[0].locked,false);
+});
+test("shrinking the room also checks the rotated element footprint before an RPC",t=>{
+  const view=fixture(t,{elementsAvailable:true,elements:[{kind:"stage",name:"Stage",x_cm:1700,y_cm:1000,width_cm:400,height_cm:240,rotation_deg:45,z_index:0,locked:false}]});
+  view.find("Canvas").props.onRoomChange(1000,1000);
+  assert.equal(view.owner.calls.length,0);assert.equal(view.owner.confirmed.current.plan.width_cm,2000);
+  assert.equal(view.owner.toasts[0][0],"roomGeometry");
+});
+
+test("element resize stays visible during saving and rolls back after a rejected RPC",async t=>{
+ const e={id:"element",project_id:"project",plan_id:"plan",kind:"dj_booth",name:"DJ",width_cm:200,height_cm:100,x_cm:500,y_cm:500,rotation_deg:0,z_index:0,locked:false};
+ const view=fixture(t,{elements:[e],elementsAvailable:true});
+ let finish;
+ view.owner.action=()=>new Promise(resolve=>{finish=resolve;});
+ view.find("Canvas").props.onChangeElement({...e,width_cm:240,x_cm:520});
+ assert.equal(view.find("Canvas").props.elements[0].width_cm,240);
+ assert.equal(view.find("Canvas").props.elements[0].x_cm,520);
+ assert.equal(view.find("Canvas").props.disabled,true);
+ finish({success:false,code:"ELEMENT_GEOMETRY"});await view.settle();
+ assert.deepEqual(view.find("Canvas").props.elements,[e]);
+ assert.equal(view.owner.toasts[0][0],"elementGeometry");
+ assert.notEqual(view.find("EditorSaveStatus").props.status,"error");
+});
+
+test("canvas geometry alerts distinguish the object and do not set persistent save errors",t=>{
+ const view=fixture(t);
+ view.find("Canvas").props.onInvalid("element");
+ assert.equal(view.owner.toasts[0][0],"elementGeometry");
+ view.find("Canvas").props.onInvalid("table");
+ assert.equal(view.owner.toasts[1][0],"geometry");
+ assert.ok(!nodes(view.render()).some(node=>node.props.role==="alert"));
+});
 
 test("shared desktop and mobile tools expose settings, collapse, and canvas selection without the header gear",t=>{
   const view=fixture(t);

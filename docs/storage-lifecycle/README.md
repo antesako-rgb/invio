@@ -1,5 +1,9 @@
 # Storage — sve što trebaš
 
+Upravljanje SQL-om sada slijedi [supabase/README.md](../../supabase/README.md).
+Definicije ostaju lokalno; SQL Editor služi samo pregledanoj ručnoj primjeni
+i provjerama. Ovdje je domenska dokumentacija, operacije i postojeća SQL povijest.
+
 Storage je instaliran; automatski cleanup radi svakih 5 minuta. **Nema instalacije koju sada trebaš ponavljati.**
 
 Prije javnog puštanja pročitaj [GO_LIVE.md](GO_LIVE.md): postojeće okruženje, nova domena i odvajanje testiranja.
@@ -12,7 +16,7 @@ Budući video tok opisuje [VIDEO_PLAN.md](VIDEO_PLAN.md) — samo plan, nije imp
 
 | Folder | Kada ga otvaram |
 | --- | --- |
-| definitions/ | Želim vidjeti aktualni SQL ili ga spremiti po folderima u Supabase SQL Editor. Samo Save, ne Run. |
+| definitions/ | Lokalne prijelazne definicije i izvori testova; prije promjene potvrditi DEV stanje. |
 | operations/ | Želim provjeriti rad ili namjerno zaustaviti/nastaviti cleanup. |
 | install/ | Povijest već izvršenog SQL-a. Ne izvršavati ponovno. Tehnički generator je u install/tools/. |
 
@@ -30,17 +34,22 @@ Ostali operations/verify_*.sql su dodatne read-only provjere za dijagnostiku. Ne
 
 ---
 
-# Detaljan popis za SQL Editor
+## Popis lokalnih prijelaznih definicija
 
 Status 2026-10-08: instalacija 001–018, uklanjanje starih RPC-a i SQL020/021/022 primijenjeni prema potvrdi operatera. Vercel cleanup uključen; memora-storage-cleanup aktivan svakih 5 minuta. Ne ponavljaj instalaciju.
 
-## Što spremam u Supabase SQL Editor
+### Kako koristiti popis
 
-Kopiraj sadržaj datoteka iz definitions/ u istoimene foldere/queryje. To su definicije za pregled, NE naredbe za ponovno izvršavanje. Zamijeni sadržaj već spremljenih queryja i pritisni Save, ne Run. SQL Editor nema naš automatski read-only zaštitni mehanizam: CREATE/REVOKE se može izvršiti ako pritisneš Run.
+Popis pokazuje postojeće lokalne datoteke; ne treba ih kopirati niti održavati
+u SQL Editor folderima. SQL definicije nisu naredbe za ponovnu instalaciju.
+Nove promjene pripremaju se kroz verzioniranu migraciju, kanonsku definiciju,
+minimalni verify i evidenciju pokrivenosti.
 
-Posebno zamijeni storage_lifecycle/public.storage_claim_cleanup.sql verzijom SQL022 (v_result i o.result). Ne koristi tijelo iz SQL020 ili početnog installa kao aktualnu definiciju.
+Lokalni storage_lifecycle/public.storage_claim_cleanup.sql uključuje SQL022
+(v_result i o.result), a storage_lock uključuje potvrđeni PT503 hotfix.
+Tijela iz ranijih instalacijskih paketa nisu aktualne kanonske definicije.
 
-| Folder u SQL Editoru | Query / datoteka |
+| Lokalni folder u definitions/ | Datoteka |
 | --- | --- |
 | digital_albums | private.digital_album_document_photo_ids.sql |
 | `cron` | `job.sql` |

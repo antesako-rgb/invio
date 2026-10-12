@@ -32,6 +32,7 @@ const { getStandardTableDimensions, getStandardTableUpdates, withTableCapacity }
 const { getLongTableSeatCounts, getLongTableWidth } = load("../validation/longTableGeometry.ts");
 const { getDuplicateTable, getDuplicateTableName } = load("../validation/duplicateTable.ts");
 const { TableChairs, TableSeatNames } = load("../components/TableDecorations.tsx");
+const TableThemeRenderer = load("../components/appearance/TableThemeRenderer.tsx").default;
 const { updateTableSizes } = load("../services/updateTableSizes.ts");
 const rectangle = { id: "table", plan_id: "plan", project_id: "project", name: "Table", shape: "rectangle",
   capacity: 8, x_cm: 500, y_cm: 400, width_cm: 200, height_cm: 100, rotation_deg: 0 };
@@ -486,17 +487,38 @@ test("creation preview keeps the table and all rotated chairs inside a narrow mo
 
 test("duplicating both table shapes preserves legacy size, seats and rotation without changing the original", () => {
   for (const shape of ["round","rectangle"]) for (const rotation_deg of [0,45,90,270]) {
-    const source = { ...rectangle,shape,rotation_deg,capacity:17,width_cm:470,height_cm:shape === "round" ? 470 : 439,x_cm:1600,y_cm:1400 };
+    const source = { ...rectangle,shape,rotation_deg,capacity:17,width_cm:470,height_cm:shape === "round" ? 470 : 439,x_cm:1600,y_cm:1400,appearance:{cloth:"sage",texture:"linen",decoration:"none"} };
     const snapshot = structuredClone(source);
     const copy = getDuplicateTable(source,[source],4944,7654,"Table (copy 1)");
     assert.ok(copy);
     assert.equal(seatingGeometryFits(copy,4944,7654),true);
-    assert.deepEqual({ ...copy,id:source.id,name:source.name,x_cm:source.x_cm,y_cm:source.y_cm },source);
+    assert.equal("appearance" in copy,false); // Theme is always derived from the plan.
+    assert.deepEqual({ ...copy,appearance:source.appearance,id:source.id,name:source.name,x_cm:source.x_cm,y_cm:source.y_cm },source);
     assert.notDeepEqual([copy.x_cm,copy.y_cm],[source.x_cm,source.y_cm]);
     assert.equal(copy.id,"");
     assert.ok(Number.isInteger(copy.x_cm) && Number.isInteger(copy.y_cm));
     assert.deepEqual(source,snapshot);
   }
+});
+
+test("table appearance decoration stays outside the upright label and inside both rotated footprints",async()=>{
+ const Konva=(await import("konva")).default;
+ function tree(element) {
+  const {children,...attrs}=element.props,Constructor=element.type===require("react").Fragment?Konva.Group:Konva[element.type],node=new Constructor(attrs);
+  for(const child of [children].flat(Infinity).filter(Boolean))node.add(tree(child));
+  return node;
+ }
+ for(const shape of ["round","rectangle"])for(const rotation_deg of [0,30,45,90,135,180,270,359])for(const theme of ["rustic_green","classic_ivory","elegant_gold"]) {
+  const table={...rectangle,shape,rotation_deg,width_cm:shape==="round"?229:550,height_cm:shape==="round"?229:206};
+  const snapshot=structuredClone(table);
+  const group=tree(TableThemeRenderer({table,theme,scale:1}));
+  assert.equal(group.listening(),false);
+  const decor=group.getChildren()[3],bounds=decor.getClientRect(),label=getTableLabelLayout(table);
+  assert.ok(bounds.y+bounds.height < table.y_cm-label.height/2,"decoration must not cross the name/occupancy band");
+  for(const x of [bounds.x,bounds.x+bounds.width])for(const y of [bounds.y,bounds.y+bounds.height])
+   assert.equal(tableContainsPoint(table,{x,y}),true,"decoration must stay inside the rotated body");
+  assert.deepEqual(table,snapshot);group.destroy();
+ }
 });
 
 test("blocked neighbours place a copy near its source instead of the first free room corner", () => {
@@ -694,7 +716,7 @@ test("selected chair numbers counter-rotate around chair centers and hide when t
     const group = new Konva.Group({ x:table.x_cm,y:table.y_cm,rotation:table.rotation_deg });
     for (const seat of rendered.props.children) {
       const child = new Konva.Group({ x:seat.props.x,y:seat.props.y,rotation:seat.props.rotation });
-      const props = seat.props.children[3].props;
+      const props = seat.props.children.find(node => node?.type === "Text").props;
       const number = new Konva.Group({ x:props.x,y:props.y,rotation:props.rotation });
       child.add(number); group.add(child);
       assert.ok(Math.abs(number.getAbsoluteRotation())<1e-8);
@@ -703,5 +725,5 @@ test("selected chair numbers counter-rotate around chair centers and hide when t
     group.destroy();
   }
   const small = TableChairs({ table:rectangle,colors,selected:true,scale:.05 });
-  assert.ok(small.props.children.every(chair => !chair.props.children[3]));
+  assert.ok(small.props.children.every(chair => !chair.props.children.find(node => node?.type === "Text")));
 });

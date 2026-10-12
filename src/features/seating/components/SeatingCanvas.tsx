@@ -15,17 +15,24 @@ import TableSurface, { TABLE_RIM_FILL } from "./TableSurface";
 import { seatingGeometryFits } from "../validation/seatingGeometry";
 import type { SeatingTable, PlanData, SeatTarget } from "../types";
 import styles from "./SeatingWorkspace.module.css";
+import RoomFloorRenderer from "./appearance/RoomFloorRenderer";
+import TableThemeRenderer from "./appearance/TableThemeRenderer";
+import { presetRoomSchema, TABLE_PRESETS, type TableTheme } from "../appearance/presets";
+import { SEATING_APPEARANCE_RELEASE_ENABLED, SEATING_PRESET_STYLES_RELEASE_ENABLED } from "../appearance/release";
+import ElementShape from "./elements/ElementShape";
+import { elementFits, orderedElements, type SeatingElement } from "../elements/model";
 
 export type GuestDrag = { id: string; name: string; x: number; y: number; pointerType?: string };
 export type SeatingCanvasControls = { fit: () => void; focusTable: (id: string) => void; zoom: (factor: number) => void; hitTable: (x: number, y: number) => string | null; hitTarget: (x: number, y: number, pointerType?: string) => SeatTarget | null };
 type Colors = TableColors;
 function stop(event: Konva.KonvaEventObject<Event>) { if ("touches" in event.evt && (event.evt as TouchEvent).touches.length > 1) return; event.cancelBubble = true; }
 
-function TableShape({ table, selected, occupancy, assignments, people, scale, seatsDisabled, dropSeatNumber, onSeatSelect, disabled, hand, drop, onSelect, onChange, colors, gestureCancelled, onBegin, registerCancellation }: {
+function TableShape({ table, selected, occupancy, assignments, people, scale, seatsDisabled, dropSeatNumber, onSeatSelect, disabled, hand, drop, onSelect, onChange, colors, gestureCancelled, onBegin, registerCancellation, theme }: {
   table: SeatingTable; selected: boolean; occupancy: number; disabled: boolean; hand: boolean; drop: "allowed" | "full" | null;
   assignments: PlanData["assignments"]; people: PlanData["people"]; scale: number; seatsDisabled: boolean; dropSeatNumber: number | null; onSeatSelect: (number: number) => void;
   onSelect: (openDetails?: boolean) => void; onChange: (table: SeatingTable) => void; colors: Colors; gestureCancelled: () => boolean; onBegin: () => void;
   registerCancellation: (cancel: () => void) => () => void;
+  theme: TableTheme;
 }) {
   const node = useRef<Konva.Rect>(null);
   const transformer = useRef<Konva.Transformer>(null);
@@ -53,6 +60,7 @@ function TableShape({ table, selected, occupancy, assignments, people, scale, se
     if (!selected || disabled || hand) cancel();
   }, [selected, disabled, hand, cancel]);
   const shown = preview ?? table;
+  const labelColors = theme === "generic" ? colors : {...colors,text:TABLE_PRESETS[theme].text};
   useEffect(() => {
     if (selected && node.current && transformer.current) {
       transformer.current.nodes([node.current]); transformer.current.getLayer()?.batchDraw();
@@ -74,7 +82,7 @@ function TableShape({ table, selected, occupancy, assignments, people, scale, se
   function start(event: Konva.KonvaEventObject<Event>) { if ("touches" in event.evt && (event.evt as TouchEvent).touches.length > 1) return; if (!hand) { onBegin(); stop(event); onSelect(false); } }
   return <>
     <TableChairs table={shown} assignments={assignments} selected={selected} colors={colors} scale={scale}
-      activeSeatNumber={dropSeatNumber} disabled={seatsDisabled} hand={hand} onSeatSelect={onSeatSelect} />
+      activeSeatNumber={dropSeatNumber} disabled={seatsDisabled} hand={hand} onSeatSelect={onSeatSelect} theme={theme} />
     <Rect ref={node} x={table.x_cm} y={table.y_cm} width={table.width_cm} height={table.height_cm}
       offsetX={table.width_cm/2} offsetY={table.height_cm/2} rotation={table.rotation_deg}
       draggable={!disabled && !hand} dragDistance={5} onMouseDown={start} onTouchStart={start}
@@ -86,8 +94,9 @@ function TableShape({ table, selected, occupancy, assignments, people, scale, se
       cornerRadius={table.shape === "round" ? table.width_cm/2 : 8} fill={TABLE_RIM_FILL}
       stroke={drop === "full" ? "#dc2626" : selected || drop ? colors.accent : colors.text} strokeWidth={selected || drop ? 3 : 1} strokeScaleEnabled={false} />
     <TableSurface table={shown} colors={colors} scale={scale} />
+    <TableThemeRenderer table={shown} theme={theme} scale={scale}/>
     {/* Label stays upright inside the body and zooms together with the table. */}
-    <TableLabel table={shown} occupancy={occupancy} colors={colors} />
+    <TableLabel table={shown} occupancy={occupancy} colors={labelColors} />
     {getChairSize(shown)*scale >= (selected ? 18 : 24) && <TableSeatNames table={shown} assignments={assignments} people={people} colors={colors} scale={scale} />}
     {selected && !disabled && !hand && <Transformer ref={transformer} onMouseDown={stop} onTouchStart={stop}
       resizeEnabled={false} enabledAnchors={[]} rotateEnabled ignoreStroke
@@ -95,14 +104,17 @@ function TableShape({ table, selected, occupancy, assignments, people, scale, se
   </>;
 }
 
-export default function SeatingCanvas({ widthCm, heightCm, tables, assignments, people, onSeatSelect, selectedId, disabled, onSelect, onChange, onRoomChange, onInvalid, pan, controlsRef, guestDrag, editingSeat, seatClicksDisabled = false, mobile = false }: {
+export default function SeatingCanvas({ widthCm, heightCm, tables, assignments, people, onSeatSelect, selectedId, disabled, onSelect, onChange, onRoomChange, onInvalid, pan, controlsRef, guestDrag, editingSeat, seatClicksDisabled = false, mobile = false, elements = [], selectedElementId = null, onSelectElement, onChangeElement, roomAppearance = {} }: {
+  roomAppearance?: unknown;
+  elements?: SeatingElement[]; selectedElementId?: string | null; onSelectElement?: (id: string | null, openDetails?: boolean) => void; onChangeElement?: (e: SeatingElement) => void;
   controlsRef: Ref<SeatingCanvasControls>; pan: boolean; widthCm: number; heightCm: number; tables: SeatingTable[]; assignments: PlanData["assignments"];
   people: PlanData["people"]; onSeatSelect: (tableId: string, seatNumber: number) => void;
   selectedId: string | null; disabled: boolean; onSelect: (id: string | null, openDetails?: boolean) => void; onChange: (table: SeatingTable) => void;
-  onRoomChange: (width: number, height: number) => void; onInvalid: () => void;
+  onRoomChange: (width: number, height: number) => void; onInvalid: (kind: "table" | "element" | "room") => void;
   guestDrag: GuestDrag | null; editingSeat: boolean; seatClicksDisabled?: boolean; mobile?: boolean;
 }) {
   const t = useTranslations("Seating");
+  const tableTheme = SEATING_PRESET_STYLES_RELEASE_ENABLED ? presetRoomSchema.parse(roomAppearance).table_theme : "generic";
   const container = useRef<HTMLDivElement>(null);
   const stage = useRef<Konva.Stage>(null), room = useRef<Konva.Rect>(null), roomTransformer = useRef<Konva.Transformer>(null);
   const [size, setSize] = useState({ width: 800, height: 544 });
@@ -148,8 +160,8 @@ export default function SeatingCanvas({ widthCm, heightCm, tables, assignments, 
     // Synchronize interrupted external Konva transforms before switching interaction modes.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (hand || disabled || editingSeat) cancelAll();
-    else if (selectedId) cancelRoom();
-  }, [hand, disabled, editingSeat, selectedId, cancelAll, cancelRoom]);
+    else if (selectedId || selectedElementId) cancelRoom();
+  }, [hand, disabled, editingSeat, selectedId, selectedElementId, cancelAll, cancelRoom]);
   const fit = useCallback((width: number, height: number) => {
     cancelAll();
     const dims = roomDimensions.current;
@@ -186,10 +198,10 @@ export default function SeatingCanvas({ widthCm, heightCm, tables, assignments, 
     return () => { window.removeEventListener("keydown", down); window.removeEventListener("keyup", up); window.removeEventListener("blur", blur); };
   }, [cancelAll]);
   useEffect(() => {
-    if (!selectedId && !disabled && !hand && !editingSeat && room.current && roomTransformer.current) {
+    if (!selectedId && !selectedElementId && !disabled && !hand && !editingSeat && room.current && roomTransformer.current) {
       roomTransformer.current.nodes([room.current]); roomTransformer.current.getLayer()?.batchDraw();
     }
-  }, [selectedId, disabled, hand, editingSeat, widthCm, heightCm]);
+  }, [selectedId, selectedElementId, disabled, hand, editingSeat, widthCm, heightCm]);
   function zoom(factor: number, pointer = { x: size.width/2, y: size.height/2 }) { cancelAll(); setView(old => zoomViewport(old, factor, pointer)); }
   function canvasPoint(x: number, y: number) {
     const rect = container.current?.getBoundingClientRect(), node = stage.current;
@@ -223,7 +235,7 @@ export default function SeatingCanvas({ widthCm, heightCm, tables, assignments, 
       cancelAll(); setPinching(true); return;
     }
     cancelGesture.current = false;
-    if (!hand && (event.target === stage.current || event.target === room.current)) onSelect(null, false);
+    if (!hand && (event.target === stage.current || event.target === room.current)) { onSelect(null, false); onSelectElement?.(null,false); }
   }
   function touchMove(event: Konva.KonvaEventObject<TouchEvent>) {
     if (event.evt.touches.length !== 2) return;
@@ -249,7 +261,7 @@ export default function SeatingCanvas({ widthCm, heightCm, tables, assignments, 
     const next = previewRoom();
     cancelRoom();
     if (hand || disabled || cancelGesture.current) return;
-    if (next.width < 100 || next.width > 100000 || next.height < 100 || next.height > 100000 || tables.some(table => !seatingGeometryFits(table,next.width,next.height))) { onInvalid(); return; }
+    if (next.width < 100 || next.width > 100000 || next.height < 100 || next.height > 100000 || tables.some(table => !seatingGeometryFits(table,next.width,next.height)) || elements.some(e => !elementFits(e,next.width,next.height))) { onInvalid("room"); return; }
     // Top/left handles shift the visual origin. Keep that framing in the viewport;
     // only room dimensions are persisted, table cm coordinates stay unchanged.
     setView(old => ({ ...old,x:old.x+next.x*old.scale,y:old.y+next.y*old.scale }));
@@ -260,6 +272,8 @@ export default function SeatingCanvas({ widthCm, heightCm, tables, assignments, 
       onTouchCancelCapture={() => { cancelAll(); setPinching(false); }} onPointerCancelCapture={() => { cancelAll(); setPinching(false); }} aria-label={t("canvasLabel")}>
       <Stage ref={stage} width={size.width} height={size.height} x={view.x} y={view.y} scaleX={view.scale} scaleY={view.scale}
         draggable={!pinching && !guestDrag} dragDistance={5} onMouseDown={begin} onTouchStart={begin}
+        onClick={event => { if (!hand && !disabled && !editingSeat && (event.target === stage.current || event.target === room.current)) onSelectElement?.(null,true); }}
+        onTap={event => { if (!hand && !disabled && !editingSeat && (event.target === stage.current || event.target === room.current)) onSelectElement?.(null,true); }}
         onDragEnd={event => { if (event.target === stage.current) setView(old => ({ ...old, x:event.target.x(), y:event.target.y() })); }}
         onTouchMove={touchMove} onTouchEnd={event => { if (!event.evt.touches.length) { pinch.current=null; setPinching(false); } }}
         onWheel={event => { event.evt.preventDefault(); const pointer=stage.current?.getPointerPosition(); if (pointer) zoom(event.evt.deltaY<0 ? 1.1 : 1/1.1,pointer); }}>
@@ -268,8 +282,10 @@ export default function SeatingCanvas({ widthCm, heightCm, tables, assignments, 
             onTransformStart={() => { cancelGesture.current = false; roomGesture.current.begin("transform"); }}
             onTransform={() => { if (roomGesture.current.isActive("transform")) setRoomPreview(previewRoom()); }} onTransformEnd={commitRoom} />
           <Group x={roomPreview?.x ?? 0} y={roomPreview?.y ?? 0}>
+          {SEATING_APPEARANCE_RELEASE_ENABLED && <RoomFloorRenderer width={roomPreview?.width ?? widthCm} height={roomPreview?.height ?? heightCm} value={roomAppearance}/>}
           <Text x={0} y={-26/view.scale} text={t("roomSize", { width:roomPreview?.width ?? widthCm, height:roomPreview?.height ?? heightCm })} fontSize={12/view.scale} fill={colors.text} listening={false} />
-          {tables.map(table => <TableShape key={table.id} table={table} selected={selectedId === table.id} disabled={disabled || !!editingSeat || !!roomPreview} hand={hand}
+          <Group>{orderedElements(elements,"floor").map(e => <ElementShape key={e.id} element={e} roomWidth={widthCm} roomHeight={heightCm} selected={selectedElementId === e.id} disabled={disabled || editingSeat || !!roomPreview} hand={hand} colors={colors} scale={view.scale} registerCancellation={registerCancellation} onSelect={openDetails => onSelectElement?.(e.id,openDetails)} onChange={next => { if (elementFits(next,widthCm,heightCm)) onChangeElement?.(next); else onInvalid("element"); }} />)}</Group>
+          {tables.map(table => <TableShape key={table.id} theme={tableTheme} table={table} selected={selectedId === table.id} disabled={disabled || !!editingSeat || !!roomPreview} hand={hand}
             colors={colors} occupancy={assignments.filter(item => item.table_id === table.id).length}
             assignments={assignments.filter(item => item.table_id === table.id)} people={people} scale={view.scale} seatsDisabled={disabled || !!roomPreview || seatClicksDisabled}
             dropSeatNumber={dropTarget?.tableId === table.id ? dropTarget.seatNumber : null} onSeatSelect={number => onSeatSelect(table.id, number)}
@@ -277,9 +293,10 @@ export default function SeatingCanvas({ widthCm, heightCm, tables, assignments, 
             onSelect={openDetails => onSelect(table.id, openDetails)}
             onBegin={() => { cancelGesture.current=false; }} gestureCancelled={() => cancelGesture.current}
             registerCancellation={registerCancellation}
-            onChange={next => { if (seatingGeometryFits(next,widthCm,heightCm)) onChange(next); else onInvalid(); }} />)}
+            onChange={next => { if (seatingGeometryFits(next,widthCm,heightCm)) onChange(next); else onInvalid("table"); }} />)}
+          <Group>{orderedElements(elements,"fixtures").map(e => <ElementShape key={e.id} element={e} roomWidth={widthCm} roomHeight={heightCm} selected={selectedElementId === e.id} disabled={disabled || editingSeat || !!roomPreview} hand={hand} colors={colors} scale={view.scale} registerCancellation={registerCancellation} onSelect={openDetails => onSelectElement?.(e.id,openDetails)} onChange={next => { if (elementFits(next,widthCm,heightCm)) onChangeElement?.(next); else onInvalid("element"); }} />)}</Group>
           </Group>
-          {!selectedId && !disabled && !hand && !editingSeat && <Transformer ref={roomTransformer} onMouseDown={stop} onTouchStart={stop} rotateEnabled={false} keepRatio={false}
+          {!selectedId && !selectedElementId && !disabled && !hand && !editingSeat && <Transformer ref={roomTransformer} onMouseDown={stop} onTouchStart={stop} rotateEnabled={false} keepRatio={false}
             flipEnabled={false} enabledAnchors={["top-left","top-center","top-right","middle-left","middle-right","bottom-left","bottom-center","bottom-right"]} anchorSize={14} anchorCornerRadius={3} borderStroke={colors.accent} anchorStroke={colors.accent} />}
         </Layer>
       </Stage>

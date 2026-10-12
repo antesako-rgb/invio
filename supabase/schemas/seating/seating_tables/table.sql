@@ -1,0 +1,25 @@
+CREATE TABLE public.seating_tables (
+ id uuid DEFAULT gen_random_uuid() NOT NULL,
+ project_id uuid NOT NULL,
+ plan_id uuid NOT NULL,
+ name text NOT NULL,
+ shape text NOT NULL,
+ capacity integer NOT NULL,
+ x_cm integer NOT NULL,
+ y_cm integer NOT NULL,
+ width_cm integer NOT NULL,
+ height_cm integer NOT NULL,
+ rotation_deg integer DEFAULT 0 NOT NULL,
+ CONSTRAINT seating_tables_c1 PRIMARY KEY (id),
+ CONSTRAINT seating_tables_c10 UNIQUE (project_id, plan_id, id),
+ CONSTRAINT seating_tables_c11 FOREIGN KEY (project_id, plan_id) REFERENCES seating_plans(project_id, id) ON DELETE CASCADE,
+ CONSTRAINT seating_tables_c2 CHECK (((char_length(TRIM(BOTH FROM name)) >= 1) AND (char_length(TRIM(BOTH FROM name)) <= 150))),
+ CONSTRAINT seating_tables_c3 CHECK ((shape = ANY (ARRAY['round'::text, 'rectangle'::text]))),
+ CONSTRAINT seating_tables_c4 CHECK (((capacity >= 1) AND (capacity <= 100))),
+ CONSTRAINT seating_tables_c5 CHECK (((x_cm >= 0) AND (x_cm <= 100000))),
+ CONSTRAINT seating_tables_c6 CHECK (((y_cm >= 0) AND (y_cm <= 100000))),
+ CONSTRAINT seating_tables_c7 CHECK (((width_cm >= 10) AND (width_cm <= 10000))),
+ CONSTRAINT seating_tables_c8 CHECK (((height_cm >= 10) AND (height_cm <= 10000))),
+ CONSTRAINT seating_tables_c9 CHECK (((rotation_deg >= 0) AND (rotation_deg <= 359)))
+);
+ALTER TABLE public.seating_tables OWNER TO postgres;

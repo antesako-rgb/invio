@@ -1,0 +1,42 @@
+{
+  "project_ref": "gdrwvoryapkgnfeislps",
+  "verified_at": "2026-10-12",
+  "method": "read-only MCP execution of exact catalog/assert script; no storage or seating mutating RPCs",
+  "result": "PASS",
+  "user_reported_apply": true,
+  "user_reported_verify_passed": true,
+  "user_reported_types_regenerated": true,
+  "mcp_binding": {
+    "project_ref": "gdrwvoryapkgnfeislps",
+    "read_only": true
+  },
+  "read_only_comparison": {
+    "exact_match": true,
+    "tables": 4,
+    "functions": 17,
+    "authorization_helpers_verified": true
+  },
+  "snapshot_path": "supabase/manifests/seating-preset-styles.expected.json",
+  "snapshot_sha256": "496b473a6077968ce9103c5291e4a270fa531f77bfaba8078f2bc5b8548e2956",
+  "migration_sha256": "2475e4d667892afd5df883718ff5399a18a648721adcb8dfa15f12c1cecc7906",
+  "native_types_path": "src/lib/supabase/database.types.ts",
+  "native_types_sha256": "9ba2e5f71b3054228c5a8d53d5b10c91a81fef1ccfff65fd2d47bb74340d9bf2",
+  "native_table_appearance_removed": true,
+  "assert_do_executed_by_agent": true,
+  "remote_mutations_by_agent": false,
+  "runtime_verified_on_dev": false,
+  "concurrency_tested": false,
+  "observed_dev_counts": {
+    "table": 33,
+    "function": 109,
+    "policy": 36,
+    "trigger": 32,
+    "index": 94,
+    "constraint": 200
+  },
+  "trigger_count_scope": "31 public/private non-internal triggers plus on_auth_user_created on auth.users",
+  "user_reported_verify_result": {
+    "seating_preset_styles_verified": true,
+    "revision_conflict_sqlstate": "PT409"
+  }
+}

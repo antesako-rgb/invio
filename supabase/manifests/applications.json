@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "applications": [
+    {
+      "migration_id": "20261012180000_seating_elements",
+      "kind": "development",
+      "project_ref": "gdrwvoryapkgnfeislps",
+      "file": "supabase/migrations/20261012180000_seating_elements.sql",
+      "sha256": "09fd5e22b3a6cb2a9ac5eae0f84e105d42667fba2f3705e4e9af0b6843f7ce96",
+      "applied_at": null,
+      "applied_date_reported": "2026-10-12",
+      "applied_by": "user manually in Supabase SQL Editor",
+      "verified_at": "2026-10-12",
+      "verify_files": [
+        "supabase/verify/assert/seating_elements.sql"
+      ],
+      "result": "PASS",
+      "evidence_path": "supabase/manifests/seating-elements.dev-verified.json"
+    },
+    {
+      "migration_id": "20261012210000_seating_appearance",
+      "kind": "development",
+      "project_ref": "gdrwvoryapkgnfeislps",
+      "file": "supabase/migrations/20261012210000_seating_appearance.sql",
+      "sha256": "6bd5d2a901dd6e75d2e8161f2bb0d97f7b5dff7b9fc875e6baf0852b61e907c7",
+      "applied_at": null,
+      "applied_date_reported": "2026-10-12",
+      "applied_by": "user manually in Supabase SQL Editor",
+      "verified_at": "2026-10-12",
+      "verify_files": [
+        "supabase/verify/assert/seating_appearance.sql"
+      ],
+      "result": "PASS",
+      "evidence_path": "supabase/manifests/seating-appearance.dev-verified.json"
+    },
+    {
+      "migration_id": "20261012223000_seating_preset_styles",
+      "kind": "development",
+      "project_ref": "gdrwvoryapkgnfeislps",
+      "file": "supabase/migrations/20261012223000_seating_preset_styles.sql",
+      "sha256": "2475e4d667892afd5df883718ff5399a18a648721adcb8dfa15f12c1cecc7906",
+      "applied_at": null,
+      "applied_date_reported": "2026-10-12",
+      "applied_by": "user manually in Supabase SQL Editor",
+      "verified_at": "2026-10-12",
+      "verify_files": [
+        "supabase/verify/assert/seating_preset_styles.sql"
+      ],
+      "result": "PASS",
+      "evidence_path": "supabase/manifests/seating-preset-styles.dev-verified.json"
+    }
+  ],
+  "record_fields": [
+    "migration_id",
+    "kind: development|baseline",
+    "project_ref",
+    "file",
+    "sha256",
+    "applied_at",
+    "verified_at",
+    "verify_files",
+    "result",
+    "evidence_path"
+  ],
+  "note": "Local execution ledger only; Supabase migration history was not changed. Exact manual execution timestamp was not supplied."
+}

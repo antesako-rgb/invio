@@ -36,7 +36,10 @@ export function getDuplicateTable(source: SeatingTable, tables: SeatingTable[], 
   const gap = 20;
   const occupied = tables.map(table => ({ table, bounds: halfBounds(table,true) }));
   const candidate = (x: number, y: number) => {
-    const table = { ...source, id: "", name, x_cm: Math.round(x), y_cm: Math.round(y) };
+    // Appearance is shared through the plan; copies contain geometry only.
+    const table: SeatingTable = { id: "", project_id: source.project_id, plan_id: source.plan_id,
+      name, shape: source.shape, capacity: source.capacity, width_cm: source.width_cm,
+      height_cm: source.height_cm, rotation_deg: source.rotation_deg, x_cm: Math.round(x), y_cm: Math.round(y) };
     if (!seatingGeometryFits(table,roomWidth,roomHeight)) return null;
     return occupied.every(item => Math.abs(table.x_cm-item.table.x_cm) >= footprint.x+item.bounds.x+gap ||
       Math.abs(table.y_cm-item.table.y_cm) >= footprint.y+item.bounds.y+gap) ? table : null;

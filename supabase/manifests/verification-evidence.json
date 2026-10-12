@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "project_ref": "gdrwvoryapkgnfeislps",
+  "observed_at": "2026-10-12",
+  "method": "Read-only catalog SELECT comparing the same six aggregates used by the prepared assert to captured expected metadata",
+  "tables_verified": true,
+  "functions_verified": true,
+  "indexes_verified": true,
+  "policies_verified": true,
+  "triggers_verified": true,
+  "schema_permissions_verified": true,
+  "negative_control": {
+    "expected_only_change": "profiles RLS changed to false in an in-memory expected JSON; no database change",
+    "altered_rls_expectation_matches": false
+  },
+  "local_manifest_check": "PASS",
+  "local_function_body_hashes_checked": 7,
+  "assert_do_block_executed": false,
+  "reconstruction_executed": false,
+  "runtime_authorization_tested": false,
+  "concurrency_tested": false,
+  "test_project_inspected": false,
+  "additional_verified_scopes": [
+    {
+      "scope": "seating_elements",
+      "verified_at": "2026-10-12",
+      "evidence_path": "supabase/manifests/seating-elements.dev-verified.json",
+      "method": "exact read-only catalog equality",
+      "runtime_authorization_tested": false,
+      "concurrency_tested": false
+    }
+  ]
+}

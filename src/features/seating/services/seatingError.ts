@@ -1,9 +1,13 @@
 /** Keep SQL failure details on the server; the editor receives only a known code. */
 export function getSeatingErrorCode(error: unknown) {
     if (!error || typeof error !== "object") return "SEATING_FAILED" as const;
-    if ("code" in error && error.code === "40001") return "REVISION_CONFLICT" as const;
+    // PT409 is the business conflict. Keep legacy 40001 handling while the SQL
+    // hotfix is applied; neither outcome is automatically retried by the client.
+    if ("code" in error && (error.code === "PT409" || error.code === "40001")) return "REVISION_CONFLICT" as const;
     if (!("message" in error)) return "SEATING_FAILED" as const;
     switch (error.message) {
+        case "Element locked": return "ELEMENT_LOCKED" as const;
+        case "Invalid element geometry": return "ELEMENT_GEOMETRY" as const;
         case "Seat occupied": return "SEAT_OCCUPIED" as const;
         case "Seat outside table capacity":
         case "Seat requires a table": return "SEAT_RANGE" as const;

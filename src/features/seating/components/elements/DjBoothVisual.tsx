@@ -21,10 +21,10 @@ export default function DjBoothVisual({ width = 200, height = 100, scale = 1, co
       {fine && [38, 44, 87].map(y => <Line key={y} points={[9, y, 25, y]} stroke="#a8aebb" opacity={.3} strokeWidth={.7} />)}
     </Group>)}
     <Path data="M 48 15 Q 48 8 56 8 L 264 8 Q 272 8 272 15 L 276 122 Q 276 139 160 145 Q 44 139 44 122 Z"
-      fill="#383d47" stroke={colors.text} strokeWidth={1.1} />
+      fill="#e8dfcf" stroke={colors.text} strokeWidth={1.1} />
     <Path data="M 45 116 Q 160 126 275 116 L 275 122 Q 275 138 160 144 Q 45 138 45 122 Z"
-      fill="#292d36" />
-    <Path data="M 49 118 Q 160 132 271 118" stroke={colors.accent} strokeWidth={2} opacity={.8} />
+      fill="#dfd2bd" />
+    <Path data="M 49 118 Q 160 132 271 118" stroke="#b99a5e" strokeWidth={2} opacity={.8} />
     <Rect x={53} y={16} width={214} height={96} cornerRadius={8} fill="#242832" />
     {[61, 191].map((x, index) => <Group key={x} x={x} y={23}>
       <Rect width={68} height={82} cornerRadius={5} fill="#454b57" stroke="#a8aebb" strokeWidth={.8} />

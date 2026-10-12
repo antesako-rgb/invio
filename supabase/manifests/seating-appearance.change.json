@@ -1,0 +1,56 @@
+{
+  "id": "20261012210000_seating_appearance",
+  "status": "applied_dev_verified",
+  "release_enabled": true,
+  "project_ref": "gdrwvoryapkgnfeislps",
+  "apply": "supabase/migrations/20261012210000_seating_appearance.sql",
+  "preflight": "supabase/verify/assert/seating_appearance_preflight.sql",
+  "verify": "supabase/verify/assert/seating_appearance.sql",
+  "canonical_apply_sources": [
+    "supabase/schemas/seating/seating_plans/functions/private.normalize_seating_appearance.sql",
+    "supabase/schemas/seating/seating_plans/functions/private.seating_appearance_valid.sql",
+    "supabase/schemas/seating/seating_templates/functions/public.create_seating_plan_from_template.sql",
+    "supabase/schemas/seating/seating_elements/functions/public.manage_seating_element.sql",
+    "supabase/schemas/seating/seating_elements/functions/private.seating_element_valid.sql",
+    "supabase/schemas/seating/seating_templates/functions/private.validate_seating_template.sql",
+    "supabase/schemas/seating/seating_plans/functions/public.set_seating_appearance.sql"
+  ],
+  "apply_sha256": "6bd5d2a901dd6e75d2e8161f2bb0d97f7b5dff7b9fc875e6baf0852b61e907c7",
+  "templates_observed": 0,
+  "existing_rows_preserved": true,
+  "applied_projects": [
+    "gdrwvoryapkgnfeislps"
+  ],
+  "local_sql_tests": {
+    "checks": 40,
+    "engine": "existing isolated PGlite PostgreSQL 18.3",
+    "remote_access": false,
+    "concurrency_verified": false
+  },
+  "local_frontend_tests": 206,
+  "runtime_verified_on_dev": false,
+  "templates_format": "one current document_version=2, no legacy adapters",
+  "authorization_helpers_verified_read_only": [
+    {
+      "signature": "private.is_project_member(uuid,uuid)",
+      "md5": "456f8b2b83497c80b559709e36de7ec3"
+    },
+    {
+      "signature": "private.is_project_owner(uuid,uuid)",
+      "md5": "c09ce26452f19a1aa62ae11f32737bd9"
+    }
+  ],
+  "evidence_path": "supabase/manifests/seating-appearance.dev-verified.json",
+  "verified_at": "2026-10-12",
+  "native_types_regenerated": true,
+  "native_rpc_types": true,
+  "activation_checks": {
+    "typescript": "PASS",
+    "eslint": "PASS",
+    "next_build": "PASS",
+    "native_types": "verified generated types, temporary extension removed",
+    "manual_browser_runtime": "not verified"
+  },
+  "superseded_by": "20261012223000_seating_preset_styles",
+  "superseded_scope": "Current room/element appearance and shared table themes use preset-style definitions; historical applied SQL and evidence remain immutable."
+}

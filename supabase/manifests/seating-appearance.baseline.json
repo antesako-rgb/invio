@@ -1,0 +1,1446 @@
+{
+  "tables": [
+    {
+      "acl": [
+        {
+          "grantee": "authenticated",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "DELETE"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "INSERT"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "MAINTAIN"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "REFERENCES"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRIGGER"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRUNCATE"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "UPDATE"
+        }
+      ],
+      "rls": true,
+      "name": "seating_elements",
+      "owner": "postgres",
+      "columns": [
+        {
+          "acl": null,
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "project_id",
+          "type": "uuid",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "plan_id",
+          "type": "uuid",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "kind",
+          "type": "text",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "x_cm",
+          "type": "integer",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "y_cm",
+          "type": "integer",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "width_cm",
+          "type": "integer",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "height_cm",
+          "type": "integer",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "rotation_deg",
+          "type": "integer",
+          "default": "0",
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "z_index",
+          "type": "integer",
+          "default": "0",
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "locked",
+          "type": "boolean",
+          "default": "false",
+          "not_null": true
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX seating_elements_pk ON public.seating_elements USING btree (id)",
+          "ready": true,
+          "valid": true
+        },
+        {
+          "def": "CREATE INDEX seating_elements_plan_order_idx ON public.seating_elements USING btree (plan_id, z_index, id)",
+          "ready": true,
+          "valid": true
+        },
+        {
+          "def": "CREATE INDEX seating_elements_project_idx ON public.seating_elements USING btree (project_id)",
+          "ready": true,
+          "valid": true
+        }
+      ],
+      "policies": [
+        {
+          "name": "seating_elements_member_select",
+          "qual": "private.is_project_member(project_id)",
+          "check": null,
+          "roles": [
+            "authenticated"
+          ],
+          "command": "r",
+          "permissive": true
+        }
+      ],
+      "triggers": [
+        {
+          "def": "CREATE TRIGGER seating_element_guard BEFORE INSERT OR UPDATE ON public.seating_elements FOR EACH ROW EXECUTE FUNCTION private.seating_element_guard()",
+          "enabled": "O"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "seating_elements_dimensions_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK ((((kind = 'dance_floor'::text) AND ((width_cm >= 200) AND (width_cm <= 2000)) AND ((height_cm >= 200) AND (height_cm <= 2000))) OR ((kind = 'stage'::text) AND ((width_cm >= 200) AND (width_cm <= 2000)) AND ((height_cm >= 120) AND (height_cm <= 1200))) OR ((kind = 'dj_booth'::text) AND ((width_cm >= 120) AND (width_cm <= 500)) AND ((height_cm >= 60) AND (height_cm <= 300)))))"
+        },
+        {
+          "name": "seating_elements_name_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((char_length(TRIM(BOTH FROM name)) >= 1) AND (char_length(TRIM(BOTH FROM name)) <= 150)))"
+        },
+        {
+          "name": "seating_elements_order_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((z_index >= 0) AND (z_index <= 10000)))"
+        },
+        {
+          "name": "seating_elements_pk",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "seating_elements_plan_fk",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "FOREIGN KEY (project_id, plan_id) REFERENCES seating_plans(project_id, id) ON DELETE CASCADE"
+        },
+        {
+          "name": "seating_elements_position_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK ((((x_cm >= 0) AND (x_cm <= 100000)) AND ((y_cm >= 0) AND (y_cm <= 100000))))"
+        },
+        {
+          "name": "seating_elements_rotation_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((rotation_deg >= 0) AND (rotation_deg <= 359)))"
+        }
+      ]
+    },
+    {
+      "acl": [
+        {
+          "grantee": "authenticated",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "DELETE"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "INSERT"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "MAINTAIN"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "REFERENCES"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRIGGER"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRUNCATE"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "UPDATE"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "DELETE"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "INSERT"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "MAINTAIN"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "REFERENCES"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRIGGER"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRUNCATE"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "UPDATE"
+        }
+      ],
+      "rls": true,
+      "name": "seating_plans",
+      "owner": "postgres",
+      "columns": [
+        {
+          "acl": null,
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "project_id",
+          "type": "uuid",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "rsvp_invitation_id",
+          "type": "uuid",
+          "default": null,
+          "not_null": false
+        },
+        {
+          "acl": null,
+          "name": "width_cm",
+          "type": "integer",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "height_cm",
+          "type": "integer",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "revision",
+          "type": "bigint",
+          "default": "1",
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "not_null": true
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX seating_plans_c1 ON public.seating_plans USING btree (id)",
+          "ready": true,
+          "valid": true
+        },
+        {
+          "def": "CREATE UNIQUE INDEX seating_plans_c7 ON public.seating_plans USING btree (project_id, id)",
+          "ready": true,
+          "valid": true
+        },
+        {
+          "def": "CREATE INDEX seating_plans_project_idx ON public.seating_plans USING btree (project_id)",
+          "ready": true,
+          "valid": true
+        }
+      ],
+      "policies": [
+        {
+          "name": "seating_plans_member_select",
+          "qual": "private.is_project_member(project_id)",
+          "check": null,
+          "roles": [
+            "authenticated"
+          ],
+          "command": "r",
+          "permissive": true
+        }
+      ],
+      "triggers": [
+        {
+          "def": "CREATE TRIGGER seating_plan_guard BEFORE UPDATE ON public.seating_plans FOR EACH ROW EXECUTE FUNCTION private.seating_plan_guard()",
+          "enabled": "O"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "seating_plans_c1",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "seating_plans_c2",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "seating_plans_c3",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((char_length(TRIM(BOTH FROM name)) >= 1) AND (char_length(TRIM(BOTH FROM name)) <= 150)))"
+        },
+        {
+          "name": "seating_plans_c4",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((width_cm >= 100) AND (width_cm <= 100000)))"
+        },
+        {
+          "name": "seating_plans_c5",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((height_cm >= 100) AND (height_cm <= 100000)))"
+        },
+        {
+          "name": "seating_plans_c6",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK ((revision >= 1))"
+        },
+        {
+          "name": "seating_plans_c7",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "UNIQUE (project_id, id)"
+        },
+        {
+          "name": "seating_plans_c8",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "FOREIGN KEY (project_id, rsvp_invitation_id) REFERENCES invitations(project_id, id) ON DELETE SET NULL (rsvp_invitation_id)"
+        }
+      ]
+    },
+    {
+      "acl": [
+        {
+          "grantee": "authenticated",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "DELETE"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "INSERT"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "MAINTAIN"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "REFERENCES"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRIGGER"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRUNCATE"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "UPDATE"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "DELETE"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "INSERT"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "MAINTAIN"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "REFERENCES"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRIGGER"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRUNCATE"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "UPDATE"
+        }
+      ],
+      "rls": true,
+      "name": "seating_tables",
+      "owner": "postgres",
+      "columns": [
+        {
+          "acl": null,
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "project_id",
+          "type": "uuid",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "plan_id",
+          "type": "uuid",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "shape",
+          "type": "text",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "capacity",
+          "type": "integer",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "x_cm",
+          "type": "integer",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "y_cm",
+          "type": "integer",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "width_cm",
+          "type": "integer",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "height_cm",
+          "type": "integer",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "rotation_deg",
+          "type": "integer",
+          "default": "0",
+          "not_null": true
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX seating_tables_c1 ON public.seating_tables USING btree (id)",
+          "ready": true,
+          "valid": true
+        },
+        {
+          "def": "CREATE UNIQUE INDEX seating_tables_c10 ON public.seating_tables USING btree (project_id, plan_id, id)",
+          "ready": true,
+          "valid": true
+        },
+        {
+          "def": "CREATE INDEX seating_tables_project_idx ON public.seating_tables USING btree (project_id)",
+          "ready": true,
+          "valid": true
+        }
+      ],
+      "policies": [
+        {
+          "name": "seating_tables_member_select",
+          "qual": "private.is_project_member(project_id)",
+          "check": null,
+          "roles": [
+            "authenticated"
+          ],
+          "command": "r",
+          "permissive": true
+        }
+      ],
+      "triggers": [
+        {
+          "def": "CREATE TRIGGER seating_table_seat_guard BEFORE UPDATE OF capacity, shape ON public.seating_tables FOR EACH ROW EXECUTE FUNCTION private.seating_table_seat_guard()",
+          "enabled": "O"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "seating_tables_c1",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "seating_tables_c10",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "UNIQUE (project_id, plan_id, id)"
+        },
+        {
+          "name": "seating_tables_c11",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "FOREIGN KEY (project_id, plan_id) REFERENCES seating_plans(project_id, id) ON DELETE CASCADE"
+        },
+        {
+          "name": "seating_tables_c2",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((char_length(TRIM(BOTH FROM name)) >= 1) AND (char_length(TRIM(BOTH FROM name)) <= 150)))"
+        },
+        {
+          "name": "seating_tables_c3",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK ((shape = ANY (ARRAY['round'::text, 'rectangle'::text])))"
+        },
+        {
+          "name": "seating_tables_c4",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((capacity >= 1) AND (capacity <= 100)))"
+        },
+        {
+          "name": "seating_tables_c5",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((x_cm >= 0) AND (x_cm <= 100000)))"
+        },
+        {
+          "name": "seating_tables_c6",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((y_cm >= 0) AND (y_cm <= 100000)))"
+        },
+        {
+          "name": "seating_tables_c7",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((width_cm >= 10) AND (width_cm <= 10000)))"
+        },
+        {
+          "name": "seating_tables_c8",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((height_cm >= 10) AND (height_cm <= 10000)))"
+        },
+        {
+          "name": "seating_tables_c9",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((rotation_deg >= 0) AND (rotation_deg <= 359)))"
+        }
+      ]
+    },
+    {
+      "acl": [
+        {
+          "grantee": "authenticated",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "DELETE"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "INSERT"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "MAINTAIN"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "REFERENCES"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRIGGER"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRUNCATE"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "UPDATE"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "DELETE"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "INSERT"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "MAINTAIN"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "REFERENCES"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "SELECT"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRIGGER"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "TRUNCATE"
+        },
+        {
+          "grantee": "service_role",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "UPDATE"
+        }
+      ],
+      "rls": true,
+      "name": "seating_templates",
+      "owner": "postgres",
+      "columns": [
+        {
+          "acl": null,
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "slug",
+          "type": "text",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "description",
+          "type": "text",
+          "default": null,
+          "not_null": false
+        },
+        {
+          "acl": null,
+          "name": "document",
+          "type": "jsonb",
+          "default": null,
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "document_version",
+          "type": "integer",
+          "default": "1",
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "is_active",
+          "type": "boolean",
+          "default": "false",
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "sort_order",
+          "type": "integer",
+          "default": "0",
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "event_type",
+          "type": "text",
+          "default": null,
+          "not_null": false
+        },
+        {
+          "acl": null,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "not_null": true
+        },
+        {
+          "acl": null,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "not_null": true
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX seating_templates_catalog_idx ON public.seating_templates USING btree (sort_order, id) WHERE (is_active = true)",
+          "ready": true,
+          "valid": true
+        },
+        {
+          "def": "CREATE UNIQUE INDEX seating_templates_pkey ON public.seating_templates USING btree (id)",
+          "ready": true,
+          "valid": true
+        },
+        {
+          "def": "CREATE UNIQUE INDEX seating_templates_slug_key ON public.seating_templates USING btree (slug)",
+          "ready": true,
+          "valid": true
+        }
+      ],
+      "policies": [
+        {
+          "name": "seating_templates_select",
+          "qual": "(is_active = true)",
+          "check": null,
+          "roles": [
+            "authenticated"
+          ],
+          "command": "r",
+          "permissive": true
+        }
+      ],
+      "triggers": [
+        {
+          "def": "CREATE TRIGGER seating_template_guard BEFORE INSERT OR UPDATE ON public.seating_templates FOR EACH ROW EXECUTE FUNCTION private.seating_template_guard()",
+          "enabled": "O"
+        }
+      ],
+      "force_rls": false,
+      "constraints": [
+        {
+          "name": "seating_templates_description_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((description IS NULL) OR (char_length(description) <= 2000)))"
+        },
+        {
+          "name": "seating_templates_document_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK ((jsonb_typeof(document) = 'object'::text))"
+        },
+        {
+          "name": "seating_templates_event_type_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((event_type IS NULL) OR (event_type = ANY (ARRAY['wedding'::text, 'birthday'::text, 'baptism'::text, 'communion'::text, 'confirmation'::text, 'business'::text, 'other'::text]))))"
+        },
+        {
+          "name": "seating_templates_name_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((char_length(TRIM(BOTH FROM name)) >= 1) AND (char_length(TRIM(BOTH FROM name)) <= 150)))"
+        },
+        {
+          "name": "seating_templates_pkey",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "seating_templates_slug_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'::text) AND (char_length(slug) <= 150)))"
+        },
+        {
+          "name": "seating_templates_slug_key",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "UNIQUE (slug)"
+        },
+        {
+          "name": "seating_templates_sort_order_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK ((sort_order >= 0))"
+        },
+        {
+          "name": "seating_templates_version_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK ((document_version = ANY (ARRAY[1, 2])))"
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "acl": [
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "92e8c1d8e8e377943c9d8373d37e9990",
+      "args": "p_plan uuid, p_revision bigint",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "private.lock_seating_plan(uuid, bigint)",
+      "volatility": "v",
+      "return_type": "seating_plans",
+      "security_definer": true
+    },
+    {
+      "acl": [
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "afc87aa28cec1c1f49fd3538e6500da1",
+      "args": "p_project uuid",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "private.lock_seating_project(uuid)",
+      "volatility": "v",
+      "return_type": "void",
+      "security_definer": true
+    },
+    {
+      "acl": [
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "36cf256df5cbd404712998b6cfed8707",
+      "args": "p_project uuid",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "private.seating_authorize(uuid)",
+      "volatility": "v",
+      "return_type": "void",
+      "security_definer": true
+    },
+    {
+      "acl": [
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "a1f295bc0e44fb08fac7c7736fe3a0f9",
+      "args": "",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "private.seating_element_guard()",
+      "volatility": "v",
+      "return_type": "trigger",
+      "security_definer": true
+    },
+    {
+      "acl": [
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "c0c12305bff713a896606b3b98ca1769",
+      "args": "p_element jsonb, p_room_width integer, p_room_height integer",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "private.seating_element_valid(jsonb, integer, integer)",
+      "volatility": "i",
+      "return_type": "boolean",
+      "security_definer": false
+    },
+    {
+      "acl": [
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "1189fbcd4fda859e7c6b42a9a42beff2",
+      "args": "p_shape text, p_x integer, p_y integer, p_width integer, p_height integer, p_rotation integer, p_room_width integer, p_room_height integer",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": true,
+      "language": "plpgsql",
+      "signature": "private.seating_geometry_fits(text, integer, integer, integer, integer, integer, integer, integer)",
+      "volatility": "i",
+      "return_type": "boolean",
+      "security_definer": false
+    },
+    {
+      "acl": [
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "e22cb116079d3181726f4189c9b714fc",
+      "args": "",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "private.seating_plan_guard()",
+      "volatility": "v",
+      "return_type": "trigger",
+      "security_definer": true
+    },
+    {
+      "acl": [
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "14b79c1a7acaf92aeb573dfaef6f0ec5",
+      "args": "",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "private.seating_table_seat_guard()",
+      "volatility": "v",
+      "return_type": "trigger",
+      "security_definer": true
+    },
+    {
+      "acl": [
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "00a73efea952ef30f234b6934819d455",
+      "args": "",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "private.seating_template_guard()",
+      "volatility": "v",
+      "return_type": "trigger",
+      "security_definer": true
+    },
+    {
+      "acl": [
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "64badf5c02c3331b637b9c9d6921d5fc",
+      "args": "p_document jsonb, p_version integer",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "private.validate_seating_template(jsonb, integer)",
+      "volatility": "v",
+      "return_type": "void",
+      "security_definer": true
+    },
+    {
+      "acl": [
+        {
+          "grantee": "authenticated",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "e43ee2cde7b2779ae8bedd572b534ec8",
+      "args": "p_project_id uuid, p_template_id uuid, p_name text, p_rsvp_invitation_id uuid DEFAULT NULL::uuid",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "public.create_seating_plan_from_template(uuid, uuid, text, uuid)",
+      "volatility": "v",
+      "return_type": "jsonb",
+      "security_definer": true
+    },
+    {
+      "acl": [
+        {
+          "grantee": "authenticated",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "2cbf04e042f25919f520c3d00c7683b9",
+      "args": "p_plan_id uuid, p_revision bigint, p_element_id uuid, p_operation text, p_element jsonb DEFAULT NULL::jsonb",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "public.manage_seating_element(uuid, bigint, uuid, text, jsonb)",
+      "volatility": "v",
+      "return_type": "jsonb",
+      "security_definer": true
+    },
+    {
+      "acl": [
+        {
+          "grantee": "authenticated",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "53ac76e7db25553802860762744ac86e",
+      "args": "p_project_id uuid, p_plan_id uuid, p_revision bigint, p_operation text, p_name text DEFAULT NULL::text, p_width_cm integer DEFAULT NULL::integer, p_height_cm integer DEFAULT NULL::integer, p_rsvp_invitation_id uuid DEFAULT NULL::uuid",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "public.manage_seating_plan(uuid, uuid, bigint, text, text, integer, integer, uuid)",
+      "volatility": "v",
+      "return_type": "jsonb",
+      "security_definer": true
+    },
+    {
+      "acl": [
+        {
+          "grantee": "authenticated",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        },
+        {
+          "grantee": "postgres",
+          "grantor": "postgres",
+          "grantable": false,
+          "privilege": "EXECUTE"
+        }
+      ],
+      "md5": "478a47439ea4d4094a89a4ca5ec45142",
+      "args": "p_plan_id uuid, p_revision bigint, p_table_id uuid, p_operation text, p_name text DEFAULT NULL::text, p_shape text DEFAULT NULL::text, p_capacity integer DEFAULT NULL::integer, p_x_cm integer DEFAULT NULL::integer, p_y_cm integer DEFAULT NULL::integer, p_width_cm integer DEFAULT NULL::integer, p_height_cm integer DEFAULT NULL::integer, p_rotation_deg integer DEFAULT 0",
+      "kind": "f",
+      "owner": "postgres",
+      "config": [
+        "search_path=\"\""
+      ],
+      "strict": false,
+      "language": "plpgsql",
+      "signature": "public.manage_seating_table(uuid, bigint, uuid, text, text, text, integer, integer, integer, integer, integer, integer)",
+      "volatility": "v",
+      "return_type": "jsonb",
+      "security_definer": true
+    }
+  ]
+}

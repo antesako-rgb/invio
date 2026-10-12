@@ -1,7 +1,7 @@
 import "server-only";
 
 type Stage = "authorize" | "claim" | "delete" | "acknowledge" | "complete";
-const databaseCodes = new Set(["40001", "40P01", "42501", "42883", "42702", "23505", "23503", "22023", "P0001", "PGRST202", "PGRST204"]);
+const databaseCodes = new Set(["PT503", "40001", "40P01", "42501", "42883", "42702", "23505", "23503", "22023", "P0001", "PGRST202", "PGRST204"]);
 
 // Never serialize the original error: messages/details may contain credentials or keys.
 export function logCleanupFailure(stage: Stage, error: unknown) {

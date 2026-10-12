@@ -1,0 +1,114 @@
+{
+  "id": "20261012223000_seating_preset_styles",
+  "status": "applied_dev_verified",
+  "release_enabled": true,
+  "frontend_status": "active; native regenerated types; temporary legacy controls, adapters and table appearance removed",
+  "project_ref": "gdrwvoryapkgnfeislps",
+  "apply": "supabase/migrations/20261012223000_seating_preset_styles.sql",
+  "preflight": "supabase/verify/assert/seating_preset_styles_preflight.sql",
+  "verify": "supabase/verify/assert/seating_preset_styles.sql",
+  "canonical_apply_sources": [
+    "supabase/schemas/seating/seating_plans/functions/private.normalize_seating_appearance.sql",
+    "supabase/schemas/seating/seating_plans/functions/public.set_seating_appearance.sql",
+    "supabase/schemas/seating/seating_templates/functions/private.validate_seating_template.sql",
+    "supabase/schemas/seating/seating_templates/functions/public.create_seating_plan_from_template.sql"
+  ],
+  "canonical_table_source": "supabase/schemas/seating/seating_tables/table.sql",
+  "apply_sha256": "2475e4d667892afd5df883718ff5399a18a648721adcb8dfa15f12c1cecc7906",
+  "applied_projects": [
+    "gdrwvoryapkgnfeislps"
+  ],
+  "baseline": "supabase/manifests/seating-preset-styles.baseline.json",
+  "expected": "supabase/manifests/seating-preset-styles.expected.json",
+  "requires_empty_seating_tables": true,
+  "data_backfill": false,
+  "no_new_tables_columns_or_rpc_signatures": true,
+  "removed_objects": [
+    "column:public.seating_tables.appearance",
+    "constraint:public.seating_tables.seating_tables_appearance_check"
+  ],
+  "plan_appearance": {
+    "floor_style": "neutral",
+    "table_theme": "generic"
+  },
+  "dance_floor_appearance": {
+    "style": "classic_parquet"
+  },
+  "table_theme_values": [
+    "generic",
+    "classic_ivory",
+    "rustic_green",
+    "modern_white",
+    "elegant_gold"
+  ],
+  "runtime_verified_on_dev": false,
+  "local_sql_tests": {
+    "status": "PASS",
+    "checks": 38,
+    "engine": "existing in-memory PGlite PostgreSQL 18.3",
+    "remote_access": false,
+    "concurrency_verified": false
+  },
+  "frontend_files": [
+    "src/features/seating/appearance/presets.ts",
+    "src/features/seating/appearance/presetPatterns.ts",
+    "src/features/seating/appearance/release.ts",
+    "src/features/seating/components/appearance/PresetPanel.tsx",
+    "src/features/seating/components/appearance/PresetPreview.tsx",
+    "src/features/seating/components/appearance/TableThemeRenderer.tsx",
+    "src/features/seating/components/appearance/RoomFloorRenderer.tsx",
+    "src/features/seating/components/appearance/DanceFloorAppearanceRenderer.tsx",
+    "src/features/seating/components/appearance/MaterialPanel.module.css",
+    "src/features/seating/components/TableDecorations.tsx",
+    "src/features/seating/components/SeatingCanvas.tsx",
+    "src/features/seating/components/SeatingWorkspace.tsx",
+    "src/features/seating/components/SeatingTablesPanel.tsx",
+    "src/features/seating/components/SeatingTablePreview.tsx",
+    "src/features/seating/components/CreateSeatingTableDialog.tsx",
+    "src/features/seating/actions/setSeatingAppearanceAction.ts",
+    "src/features/seating/types.ts",
+    "src/features/seating/elements/model.ts",
+    "src/features/seating/templates/seatingTemplate.schema.ts",
+    "src/features/seating/templates/buildSeatingTemplate.ts",
+    "src/features/seating/validation/duplicateTable.ts",
+    "src/features/seating/tests/presetStyles.test.cjs",
+    "src/features/seating/tests/editorGeometry.test.cjs",
+    "src/messages/hr/seating.json",
+    "src/messages/en/seating.json"
+  ],
+  "local_frontend_checks": {
+    "typescript": "PASS",
+    "native_types_after_column_removal_simulation": "PASS; now also checked against actual user-regenerated native types",
+    "eslint": "PASS",
+    "seating_tests": {
+      "status": "PASS",
+      "count": 218
+    },
+    "production_build": "PASS",
+    "visual_preview": {
+      "status": "PASS",
+      "browser": "local headless Chrome",
+      "widths": [
+        1100,
+        390
+      ],
+      "browser_errors": 0,
+      "scope": "actual shared renderers and previews; not authenticated editor E2E",
+      "remote_access": false
+    },
+    "authenticated_editor_runtime_verified": false
+  },
+  "evidence_path": "supabase/manifests/seating-preset-styles.dev-verified.json",
+  "native_rpc_types": true,
+  "verified_at": "2026-10-12",
+  "supersedes": "20261012210000_seating_appearance",
+  "visual_refinement": {
+    "date": "2026-10-12",
+    "direction": "wedding and event illustration: ivory/blush florals, garden sage, pearl white, champagne/gold candles; warmer room floors, interlocking herringbone, warm wood stage and light DJ facade",
+    "database_change": false,
+    "theme_identifiers_changed": false,
+    "geometry_or_persistence_changed": false,
+    "local_tests": 218,
+    "browser_preview_errors": 0
+  }
+}

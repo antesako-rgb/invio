@@ -12,6 +12,8 @@ import { seatingGeometryFits } from "../validation/seatingGeometry";
 import type { SeatingTable, PlanData } from "../types";
 import styles from "./CreateSeatingTableDialog.module.css";
 import workspaceStyles from "./SeatingWorkspace.module.css";
+import { SEATING_PRESET_STYLES_RELEASE_ENABLED } from "../appearance/release";
+import { presetRoomSchema } from "../appearance/presets";
 
 const Preview = dynamic(() => import("./SeatingTablePreview"), { ssr: false });
 const PRESETS = [6, 8, 10, 12];
@@ -61,7 +63,7 @@ export default function CreateSeatingTableDialog({ initialShape, defaultName, pl
         </fieldset>
         <figure className={styles.preview}>
           <figcaption className={styles.previewCaption}><span>{t("tablePreview")}</span><span>{t("roomSize", { width: table.width_cm, height: table.height_cm })}</span></figcaption>
-          {validCapacity && <Preview table={table} />}
+          {validCapacity && <Preview table={table} theme={SEATING_PRESET_STYLES_RELEASE_ENABLED ? presetRoomSchema.parse(plan.appearance).table_theme : "generic"}/>}
           <p className={workspaceStyles.help}>{t(shape === "round" ? "roundTableCreateHelp" : "rectangleTableCreateHelp")}</p>
         </figure>
         {validCapacity && !fits && <p className={workspaceStyles.warning} role="alert">{t("newTableNoSpace")}</p>}

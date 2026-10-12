@@ -37,7 +37,7 @@ beforeEach(()=>{
     seating_plans:[{id:"plan",project_id:"project",rsvp_invitation_id:"invitation",revision:1}],
     project_guests:["new","seated","declined","pending","archived","generic","unlinked"].map(id=>({id,project_id:"project",archived_at:id==="archived"?"2026-10-11":null})),
     seating_plan_guests:[{plan_id:"plan",project_guest_id:"seated"}],
-    seating_tables:[],seating_assignments:[{plan_id:"plan",project_guest_id:"seated",table_id:"table",seat_number:3}],
+    seating_tables:[],seating_elements:[],seating_assignments:[{plan_id:"plan",project_guest_id:"seated",table_id:"table",seat_number:3}],
     invitation_guests:["new","seated","declined","pending","archived","generic"].map(id=>({id:"invite-"+id,invitation_id:"invitation",project_guest_id:id})),
     rsvp_responses:[{id:"personal",invitation_id:"invitation",response_type:"personalized",submitted_at:"2026-10-11T10:00:00Z",rsvp_response_guests:["new","seated","declined","archived"].map(id=>({id:"answer-"+id,invitation_guest_id:"invite-"+id,status:id==="declined"?"not_attending":"attending"}))},
       {id:"generic",invitation_id:"invitation",response_type:"generic",submitted_at:"2026-10-11T11:00:00Z",rsvp_response_guests:[{id:"linked-answer",invitation_guest_id:null,status:"attending"},{id:"unlinked-answer",invitation_guest_id:null,status:"attending"}]}],
@@ -125,4 +125,22 @@ test("an unsupported stored manual status never becomes a frontend attendance de
  rows.invitation_attendance_overrides=[{invitation_id:"invitation",project_guest_id:"new",status:"pending"}];
  await assert.rejects(getSeatingPlan("plan"),/Invalid attendance override status/);
  assert.equal(rows.seating_plan_guests.length,1);
+});
+
+test("space elements are loaded only for the current project and plan",async()=>{
+ const element={id:"element",project_id:"project",plan_id:"plan",kind:"dj_booth",name:"DJ",x_cm:200,y_cm:200,width_cm:200,height_cm:100,rotation_deg:0,z_index:0,locked:false};
+ rows.seating_elements=[element,{...element,id:"other-project",project_id:"other"},{...element,id:"other-plan",plan_id:"other"}];
+ const current=await getSeatingPlan("plan");
+ assert.equal(current.elementsAvailable,true);
+ assert.deepEqual(current.elements,[element]);
+ assert.deepEqual(reads.find(read=>read.table==="seating_elements").filters,{plan_id:"plan",project_id:"project"});
+});
+
+test("a missing space elements table preserves existing seating and RSVP data",async()=>{
+ rows.seating_elements=null;
+ const current=await getSeatingPlan("plan");
+ assert.equal(current.elementsAvailable,false);
+ assert.deepEqual(current.elements,[]);
+ assert.deepEqual(current.assignments,rows.seating_assignments);
+ assert.equal(current.attendance.new.status,"attending");
 });

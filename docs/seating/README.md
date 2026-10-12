@@ -1,11 +1,16 @@
-# Projektni gosti i seating — paket za pregled
+# Projektni gosti i seating
+
+Database-as-Code postupak je u [supabase/README.md](../../supabase/README.md).
+Ovdje ostaju opis domene, prijelazne definicije i povijest instalacije koju
+koriste postojeći testovi. Nema potrebe održavati definicije u SQL Editor folderima.
+Stare instalacije ne izvršavati ponovno; za novu promjenu slijediti novi workflow.
 
 2026-10-11. Model prihvaćen; korisnik je instalirao osnovni SQL paket i nadogradnju 006 te regenerirao DB tipove s seat_number/novim RPC-em. Read-only provjere baze prošle su. 2D editor sada podržava trajnu dodjelu konkretnoj stolici i ime iz project_guests uz mjesto. Lokalni flag prethodno je uključen uz korisnikovo odobrenje; environment, paketi i baza ovom frontend doradom nisu mijenjani. Ispis i 3D ostaju za kasnije.
 
 ## Gdje što naći
 
-- [install/README.md](install/README.md): osnovna instalacija 001–004 i zasebna inkrementalna 006 nadogradnja za konkretne stolice.
-- [definitions/README.md](definitions/README.md): jedna mapa po tablici kao SQL Editor; table, constraints, indexes, rls, grants, trigger, verify i funkcije. Definicije spremati za pregled, ne ponovno izvršavati.
+- [install/README.md](install/README.md): povijest osnovne instalacije i kasnijih nadogradnji, ne uputa za ponavljanje na DEV-u.
+- [definitions/README.md](definitions/README.md): lokalne prijelazne definicije nepokrivene domene i izvori postojećih testova.
 - src/features/project-guests: regenerirani DB tipovi, member client, eksplicitno povezivanje, project person upisi i RSVP resolver.
 - src/features/seating: Konva editor V1, React paneli, postojeće server actions i RLS repositories.
 - Postojeći invitation-guests: nadograđene postojeće forme i RSVP detalji, upozorenje zajedničkog renamea i RSVP sukoba. Nema zasebne project guest stranice ili tablice u UI-u.
@@ -35,7 +40,7 @@ Resolver koristi samo odabranu pozivnicu: personalized status ima prednost, ali 
 - Delete table uklanja dodjele, ne sudionike; remove participant uklanja njegovo mjesto, ne osobu.
 - Delete plan uklanja njegova mjesta/stolove/sudionike, ne projektne osobe. Delete project cascadea sve projektne entitete; INITIALLY DEFERRED NO ACTION provjerava preostale veze na COMMIT-u; person delete RPC dodatno odmah odbija povezanu osobu.
 
-## Migracija
+## Povijesna početna migracija
 
 Svaki postojeći invitation_guest dobiva zaseban project_guest s istim UUID-em radi determinističke veze; invitation_guest.id nikada se ne mijenja. Nema deduplikacije među pozivnicama. Stare notes ostaju pozivničke; globalne notes počinju NULL. Generic links početno prazni, originalni generic rows/imena/odgovori netaknuti. Grupe/group_id, recipient veze, primary flags i personalized odgovori ne mijenjaju se. Seating počinje prazan.
 
